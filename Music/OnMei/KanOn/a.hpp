@@ -16,6 +16,9 @@ public:
   
 };
 
+bool operator==( const KanOn& N1 , const KanOn& N2 );
+inline bool operator!=( const KanOn& N1 , const KanOn& N2 );
+
 const KanOn& Do();
 const KanOn& Re();
 const KanOn& Mi();

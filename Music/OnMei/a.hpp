@@ -1,7 +1,7 @@
 // c:/Users/user/Documents/Programming/Music/OnMei/a.hpp
 
 #pragma once
-
+#include "KanOn/a.hpp"
 #include "../../Mathematics/Arithmetic/Mod/a.hpp"
 
 class OnMei
@@ -12,11 +12,11 @@ private:
   int m_sharp;
 
 public:
-  OnMei( const KanOn& N );
-  OnMei( const KanOn& N , const int& n );
-  OnMei( const OnMei& N );
+  inline OnMei( const KanOn& N );
+  inline OnMei( const KanOn& N , const int& n );
+  inline OnMei( const OnMei& N );
 
-  string Display() const;
-  Mod<12> GetInt() const;
+  inline const string& Display() const noexcept;
+  Mod<12> GetNumber() const;
   
 };
