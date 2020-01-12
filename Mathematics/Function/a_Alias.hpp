@@ -5,6 +5,9 @@
 template <typename Ret , typename... Args>
 using FunctionType = Ret( const Args&... );
 
+template <typename Ret , typename... Args>
+using FunctionPointerType = Ret(*)( const Args&... );
+
 template <typename Ret , typename T , typename... Args>
 using MemberFunctionPointerType = Ret( T::* )( const Args&... );
 
