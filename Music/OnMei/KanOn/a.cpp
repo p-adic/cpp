@@ -20,7 +20,7 @@ uint KanOn::StringToInt( const string& N )
 
 }
 
-const string& KanOn::IntToString( const uint& num );
+const string& KanOn::IntToString( const uint& num )
 {
 
   static const string Table[8] =
@@ -39,7 +39,7 @@ const string& KanOn::IntToString( const uint& num );
 
   if( num >= 7 ){
 
-    Table[7];
+    return Table[7];
 
   }
 
@@ -77,6 +77,6 @@ const KanOn& KanOnTable( const uint& num )
 
   }
   
-  return Table[num];
+  return ( *Table[num] )();
   
 }

@@ -9,7 +9,7 @@ inline HenkaKigou::HenkaKigou( const int& num ) : m_S( IntToString( num ) ) , m_
 inline const string& HenkaKigou::Display() const noexcept { return m_S; }
 inline const int& HenkaKigou::GetNum() const noexcept { return m_num; }
 
-inline bool operator==( const HenkaKigou& S1 , const HenkaKigou& S2 ){ return S1.m_S == S2.m_S; }
+inline bool operator==( const HenkaKigou& S1 , const HenkaKigou& S2 ){ return S1.Display() == S2.Display(); }
 inline bool operator!=( const HenkaKigou& S1 , const HenkaKigou& S2 ){ return !( S1 == S2 ); }
 
-inline const HenkaKigou& HenkaKigouTable( const string& S ){ HenkaKigouTable( HenkaKigou::StringToInt( S ) ); }
+inline const HenkaKigou& HenkaKigouTable( const string& S ){ return HenkaKigouTable( HenkaKigou::StringToInt( S ) ); }

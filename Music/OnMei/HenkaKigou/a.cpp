@@ -3,10 +3,12 @@
 #include "../../Header.hpp"
 #include "a_Body.hpp"
 
+#include "../../../Utility/String/a_Body.hpp"
+
 int HenkaKigou::StringToInt( const string& S )
 {
 
-  for( num = -1 ; num <= 1 ; num++ ){
+  for( int num = -1 ; num <= 1 ; num++ ){
 
     if( S == IntToString( num ) ){
 
@@ -46,7 +48,7 @@ const string& HenkaKigou::IntToString( const int& num )
 const HenkaKigou& Flat()
 {
 
-  static const HenkaKigou& S( "ó" );
+  static const HenkaKigou& S( to_string( "ó" ) );
   return S;
 
 }
@@ -54,7 +56,7 @@ const HenkaKigou& Flat()
 const HenkaKigou& Natural()
 {
 
-  static const HenkaKigou& S( "" );
+  static const HenkaKigou& S( to_string( "" ) );
   return S;
 
 }
@@ -62,7 +64,7 @@ const HenkaKigou& Natural()
 const HenkaKigou& Sharp()
 {
 
-  static const HenkaKigou& S( "ò" );
+  static const HenkaKigou& S( to_string( "ò" ) );
   return S;
 
 }
@@ -85,6 +87,6 @@ const HenkaKigou& HenkaKigouTable( const int& num )
 
     };
 
-  return Table[num+1];
+  return ( *Table[num+1] )();
 
 }
