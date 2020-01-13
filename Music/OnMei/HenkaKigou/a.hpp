@@ -14,8 +14,6 @@ public:
   inline string Display() const noexcept;
   inline const int& GetNum() const noexcept;
 
-  static const string& Sharp() noexcept;
-  static const string& Flat() noexcept;
   static string IntToString( const int& num ) noexcept;
 
 };
