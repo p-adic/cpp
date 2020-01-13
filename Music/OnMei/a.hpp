@@ -2,6 +2,7 @@
 
 #pragma once
 #include "KanOn/a.hpp"
+#include "HenkaKigou/a.hpp"
 #include "../../Mathematics/Arithmetic/Mod/a.hpp"
 
 class OnMei
@@ -9,14 +10,19 @@ class OnMei
 
 private:
   KanOn m_N;
-  int m_sharp;
+  HenkaKigou m_S;
+  Mod<12> m_num;
 
 public:
   inline OnMei( const KanOn& N );
-  inline OnMei( const KanOn& N , const int& n );
-  inline OnMei( const OnMei& N );
-
-  inline const string& Display() const noexcept;
-  Mod<12> GetNumber() const;
+  inline OnMei( const KanOn& N , const HenkaKigou& S );
   
+  inline string Display() const noexcept;
+  inline const Mod<12>& GetNum() const noexcept;
+  
+  static int KanOnToInt( const KanOn& N );
+
 };
+
+const OnMei& OnMeiTable( const KanOn& N , const HenkaKigou& S = Natural() );
+const OnMei& OnMeiTable( const int& num , const bool& sharp = true );

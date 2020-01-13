@@ -3,23 +3,8 @@ Music/OnMei/HenkaKigou/a.o: Music/OnMei/HenkaKigou/a.cpp \
  Music/OnMei/HenkaKigou/../../../Utility/Header.hpp \
  Music/OnMei/HenkaKigou/../../../Utility/Header_Alias.hpp \
  Music/OnMei/HenkaKigou/a_Body.hpp Music/OnMei/HenkaKigou/a.hpp \
- Music/OnMei/HenkaKigou/../../../Utility/String/a_Body.hpp \
- Music/OnMei/HenkaKigou/../../../Utility/String/a.hpp \
- Music/OnMei/HenkaKigou/../../../Utility/String/a_Macro.hpp \
- C:/Users/user/Documents/Programming/SFINAE/MemberFunction/a_Macro.hpp \
- C:/Users/user/Documents/Programming/SFINAE/a_Macro.hpp \
- C:/Users/user/Documents/Programming/Utility/Macro_Macro.hpp \
- C:/Users/user/Documents/Programming/SFINAE/MemberFunction/a.hpp \
- C:/Users/user/Documents/Programming/SFINAE/a.hpp \
- C:/Users/user/Documents/Programming/SFINAE/MetaFunction/IsPointerOf/a.hpp \
- C:/Users/user/Documents/Programming/SFINAE/MetaFunction/a.hpp \
- C:/Users/user/Documents/Programming/Mathematics/SetTheory/EmptySet/a.hpp \
- C:/Users/user/Documents/Programming/SFINAE/MetaFunction/IsReferenceOf/a.hpp \
- C:/Users/user/Documents/Programming/SFINAE/a_Alias.hpp \
- Music/OnMei/HenkaKigou/../../../Utility/String/a_Alias.hpp \
- C:/Users/user/Documents/Programming/Error/IgnoredError/a_Body.hpp \
- C:/Users/user/Documents/Programming/Error/IgnoredError/a.hpp \
- C:/Users/user/Documents/Programming/Error/IgnoredError/a_Macro.hpp \
+ Music/OnMei/HenkaKigou/../../../Error/FaultInCoding/a.hpp \
+ Music/OnMei/HenkaKigou/../../../Error/FaultInCoding/a_Macro.hpp \
  C:/Users/user/Documents/Programming/Error/a_Macro.hpp \
  C:/Users/user/Documents/Programming/Error/Position/a_Macro.hpp \
  C:/Users/user/Documents/Programming/Utility/GlobalVariable/a_Macro.hpp \
@@ -34,9 +19,24 @@ Music/OnMei/HenkaKigou/a.o: Music/OnMei/HenkaKigou/a.cpp \
  C:/Users/user/Documents/Programming/Mathematics/Function/a.hpp \
  C:/Users/user/Documents/Programming/Mathematics/Function/a_Alias.hpp \
  C:/Users/user/Documents/Programming/Utility/Macro.hpp \
+ C:/Users/user/Documents/Programming/Utility/Macro_Macro.hpp \
+ C:/Users/user/Documents/Programming/Utility/String/a.hpp \
+ C:/Users/user/Documents/Programming/Utility/String/a_Macro.hpp \
+ C:/Users/user/Documents/Programming/SFINAE/MemberFunction/a_Macro.hpp \
+ C:/Users/user/Documents/Programming/SFINAE/a_Macro.hpp \
+ C:/Users/user/Documents/Programming/SFINAE/MemberFunction/a.hpp \
+ C:/Users/user/Documents/Programming/SFINAE/a.hpp \
+ C:/Users/user/Documents/Programming/SFINAE/MetaFunction/IsPointerOf/a.hpp \
+ C:/Users/user/Documents/Programming/SFINAE/MetaFunction/a.hpp \
+ C:/Users/user/Documents/Programming/Mathematics/SetTheory/EmptySet/a.hpp \
+ C:/Users/user/Documents/Programming/SFINAE/MetaFunction/IsReferenceOf/a.hpp \
+ C:/Users/user/Documents/Programming/SFINAE/a_Alias.hpp \
+ C:/Users/user/Documents/Programming/Utility/String/a_Alias.hpp \
+ Music/OnMei/HenkaKigou/../../../Utility/String/a_Body.hpp \
+ C:/Users/user/Documents/Programming/Error/IgnoredError/a_Body.hpp \
+ C:/Users/user/Documents/Programming/Error/IgnoredError/a.hpp \
+ C:/Users/user/Documents/Programming/Error/IgnoredError/a_Macro.hpp \
  C:/Users/user/Documents/Programming/Error/a_Body.hpp \
- C:/Users/user/Documents/Programming/Error/FaultInCoding/a.hpp \
- C:/Users/user/Documents/Programming/Error/FaultInCoding/a_Macro.hpp \
  C:/Users/user/Documents/Programming/Error/Position/a_Body.hpp \
  C:/Users/user/Documents/Programming/Utility/String/Normalised/a_Body.hpp \
  C:/Users/user/Documents/Programming/Utility/String/Normalised/a.hpp \
@@ -96,39 +96,9 @@ Music/OnMei/HenkaKigou/a_Body.hpp:
 
 Music/OnMei/HenkaKigou/a.hpp:
 
-Music/OnMei/HenkaKigou/../../../Utility/String/a_Body.hpp:
+Music/OnMei/HenkaKigou/../../../Error/FaultInCoding/a.hpp:
 
-Music/OnMei/HenkaKigou/../../../Utility/String/a.hpp:
-
-Music/OnMei/HenkaKigou/../../../Utility/String/a_Macro.hpp:
-
-C:/Users/user/Documents/Programming/SFINAE/MemberFunction/a_Macro.hpp:
-
-C:/Users/user/Documents/Programming/SFINAE/a_Macro.hpp:
-
-C:/Users/user/Documents/Programming/Utility/Macro_Macro.hpp:
-
-C:/Users/user/Documents/Programming/SFINAE/MemberFunction/a.hpp:
-
-C:/Users/user/Documents/Programming/SFINAE/a.hpp:
-
-C:/Users/user/Documents/Programming/SFINAE/MetaFunction/IsPointerOf/a.hpp:
-
-C:/Users/user/Documents/Programming/SFINAE/MetaFunction/a.hpp:
-
-C:/Users/user/Documents/Programming/Mathematics/SetTheory/EmptySet/a.hpp:
-
-C:/Users/user/Documents/Programming/SFINAE/MetaFunction/IsReferenceOf/a.hpp:
-
-C:/Users/user/Documents/Programming/SFINAE/a_Alias.hpp:
-
-Music/OnMei/HenkaKigou/../../../Utility/String/a_Alias.hpp:
-
-C:/Users/user/Documents/Programming/Error/IgnoredError/a_Body.hpp:
-
-C:/Users/user/Documents/Programming/Error/IgnoredError/a.hpp:
-
-C:/Users/user/Documents/Programming/Error/IgnoredError/a_Macro.hpp:
+Music/OnMei/HenkaKigou/../../../Error/FaultInCoding/a_Macro.hpp:
 
 C:/Users/user/Documents/Programming/Error/a_Macro.hpp:
 
@@ -158,11 +128,41 @@ C:/Users/user/Documents/Programming/Mathematics/Function/a_Alias.hpp:
 
 C:/Users/user/Documents/Programming/Utility/Macro.hpp:
 
+C:/Users/user/Documents/Programming/Utility/Macro_Macro.hpp:
+
+C:/Users/user/Documents/Programming/Utility/String/a.hpp:
+
+C:/Users/user/Documents/Programming/Utility/String/a_Macro.hpp:
+
+C:/Users/user/Documents/Programming/SFINAE/MemberFunction/a_Macro.hpp:
+
+C:/Users/user/Documents/Programming/SFINAE/a_Macro.hpp:
+
+C:/Users/user/Documents/Programming/SFINAE/MemberFunction/a.hpp:
+
+C:/Users/user/Documents/Programming/SFINAE/a.hpp:
+
+C:/Users/user/Documents/Programming/SFINAE/MetaFunction/IsPointerOf/a.hpp:
+
+C:/Users/user/Documents/Programming/SFINAE/MetaFunction/a.hpp:
+
+C:/Users/user/Documents/Programming/Mathematics/SetTheory/EmptySet/a.hpp:
+
+C:/Users/user/Documents/Programming/SFINAE/MetaFunction/IsReferenceOf/a.hpp:
+
+C:/Users/user/Documents/Programming/SFINAE/a_Alias.hpp:
+
+C:/Users/user/Documents/Programming/Utility/String/a_Alias.hpp:
+
+Music/OnMei/HenkaKigou/../../../Utility/String/a_Body.hpp:
+
+C:/Users/user/Documents/Programming/Error/IgnoredError/a_Body.hpp:
+
+C:/Users/user/Documents/Programming/Error/IgnoredError/a.hpp:
+
+C:/Users/user/Documents/Programming/Error/IgnoredError/a_Macro.hpp:
+
 C:/Users/user/Documents/Programming/Error/a_Body.hpp:
-
-C:/Users/user/Documents/Programming/Error/FaultInCoding/a.hpp:
-
-C:/Users/user/Documents/Programming/Error/FaultInCoding/a_Macro.hpp:
 
 C:/Users/user/Documents/Programming/Error/Position/a_Body.hpp:
 

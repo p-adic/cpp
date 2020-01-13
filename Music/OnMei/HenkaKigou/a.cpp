@@ -3,6 +3,8 @@
 #include "../../Header.hpp"
 #include "a_Body.hpp"
 
+#include "../../../Error/FaultInCoding/a.hpp"
+#include "../../../Mathematics/Function/a.hpp"
 #include "../../../Utility/String/a_Body.hpp"
 
 int HenkaKigou::StringToInt( const string& S )

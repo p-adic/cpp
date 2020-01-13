@@ -3,6 +3,9 @@
 #include "../../Header.hpp"
 #include "a_Body.hpp"
 
+#include "../../../Error/FaultInCoding/a.hpp"
+#include "../../../Mathematics/Function/a.hpp"
+
 uint KanOn::StringToInt( const string& N )
 {
 

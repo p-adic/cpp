@@ -4,10 +4,11 @@
 #include "a.hpp"
 
 #include "KanOn/a_Body.hpp"
+#include "HenkaKigou/a_Body.hpp"
 #include "../../Mathematics/Arithmetic/Mod/a_Body.hpp"
 
-inline OnMei::OnMei( const KanOn& N ) : OnMei( N , 0 ){}
-inline OnMei::OnMei( const KanOn& N , const int& n ) : m_N( N ) , m_sharp( n ){}
-inline OnMei::OnMei( const OnMei& N ) : OnMei( N.m_N , N.m_sharp ){}
+inline OnMei::OnMei( const KanOn& N ) : OnMei( N , HenkaKigou( 0 ) ){}
+inline OnMei::OnMei( const KanOn& N , const HenkaKigou& S ) : m_N( N ) , m_S( S ), m_num( KanOnToInt( N ) + S.GetNum() ) {}
 
-inline const string& OnMei::Display() const noexcept { return m_N.Display(); }
+inline string OnMei::Display() const noexcept { return m_N.Display() + m_S.Display(); }
+inline const Mod<12>& OnMei::GetNum() const noexcept { return m_num; }
