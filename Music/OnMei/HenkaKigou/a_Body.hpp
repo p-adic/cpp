@@ -3,9 +3,13 @@
 #pragma once
 #include "a.hpp"
 
-inline HenkaKigou::HenkaKigou( const string& sym ) : m_sym( sym ) , m_num( StringToInt( sym ) ){}
-inline HenkaKigou::HenkaKigou( const int& num ) : m_sym( IntToString( num ) ) , m_num( num ){}
-inline HenkaKigou::HenkaKigou( const HenkaKigou& S ) : m_sym( S.m_sym ) , m_num( S.m_num ){}
+inline HenkaKigou::HenkaKigou( const string& S ) : m_S( S ) , m_num( StringToInt( S ) ){}
+inline HenkaKigou::HenkaKigou( const int& num ) : m_S( IntToString( num ) ) , m_num( num ){}
 
-inline const string& HenkaKigou::Display() const noexcept { return m_sym; }
+inline const string& HenkaKigou::Display() const noexcept { return m_S; }
 inline const int& HenkaKigou::GetNum() const noexcept { return m_num; }
+
+inline bool operator==( const HenkaKigou& S1 , const HenkaKigou& S2 ){ return S1.m_S == S2.m_S; }
+inline bool operator!=( const HenkaKigou& S1 , const HenkaKigou& S2 ){ return !( S1 == S2 ); }
+
+inline const HenkaKigou& HenkaKigouTable( const string& S ){ HenkaKigouTable( HenkaKigou::StringToInt( S ) ); }

@@ -13,5 +13,5 @@ inline const uint& KanOn::GetNum() const noexcept { return m_num; }
 inline bool operator==( const KanOn& N1 , const KanOn& N2 ){ return N1.Display() == N2.Display(); }
 inline bool operator!=( const KanOn& N1 , const KanOn& N2 ){ return !( N1 == N2 ); }
 
-inline const KanOn& KanOnTable( const string& N ){ return KanOnTable( StringToInt( N ) ); }
+inline const KanOn& KanOnTable( const string& N ){ return KanOnTable( KanOn::StringToInt( N ) ); }
 

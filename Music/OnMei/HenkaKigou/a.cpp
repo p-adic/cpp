@@ -3,12 +3,12 @@
 #include "../../Header.hpp"
 #include "a_Body.hpp"
 
-int HenkaKigou::StringToInt( const string& sym )
+int HenkaKigou::StringToInt( const string& S )
 {
 
   for( num = -1 ; num <= 1 ; num++ ){
 
-    if( sym == IntToString( num ) ){
+    if( S == IntToString( num ) ){
 
       return num;
 
@@ -40,5 +40,51 @@ const string& HenkaKigou::IntToString( const int& num )
   }
 
   return Table[num + 1];
+
+}
+
+const HenkaKigou& Flat()
+{
+
+  static const HenkaKigou& S( "ó" );
+  return S;
+
+}
+
+const HenkaKigou& Natural()
+{
+
+  static const HenkaKigou& S( "" );
+  return S;
+
+}
+
+const HenkaKigou& Sharp()
+{
+
+  static const HenkaKigou& S( "ò" );
+  return S;
+
+}
+
+const HenkaKigou& HenkaKigouTable( const int& num )
+{
+
+  if( num < -1 || 1 < num ){
+
+    ERR_CODE;
+
+  }
+
+  const FunctionPointerType<const HenkaKigou&> Table[3] =
+    {
+
+      &Flat ,
+      &Natural ,
+      &Sharp
+
+    };
+
+  return Table[num+1];
 
 }
