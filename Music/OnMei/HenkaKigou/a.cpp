@@ -7,88 +7,36 @@
 #include "../../../Mathematics/Function/a.hpp"
 #include "../../../Utility/String/a_Body.hpp"
 
-int HenkaKigou::StringToInt( const string& S )
+string HenkaKigou::IntToString( const int& num ) noexcept
 {
 
-  for( int num = -1 ; num <= 1 ; num++ ){
-
-    if( S == IntToString( num ) ){
-
-      return num;
-
-    }
-
-  }
-
-  return 2;
-
-}
-
-const string& HenkaKigou::IntToString( const int& num )
-{
-
-  static const string Table[4] =
+  static const string Table[num] =
     {
 
       "ó" ,
       "" ,
-      "ò" ,
-      "Error"
+      "ò"
 
     };
 
-  if( num < -1 || num > 1 ){
+  if( -1 <= num  && num <= 1 ){
 
-    return Table[3];
-
-  }
-
-  return Table[num + 1];
-
-}
-
-const HenkaKigou& Flat()
-{
-
-  static const HenkaKigou& S( to_string( "ó" ) );
-  return S;
-
-}
-
-const HenkaKigou& Natural()
-{
-
-  static const HenkaKigou& S( to_string( "" ) );
-  return S;
-
-}
-
-const HenkaKigou& Sharp()
-{
-
-  static const HenkaKigou& S( to_string( "ò" ) );
-  return S;
-
-}
-
-const HenkaKigou& HenkaKigouTable( const int& num )
-{
-
-  if( num < -1 || 1 < num ){
-
-    ERR_CODE;
+    return Table[num]
 
   }
 
-  const FunctionPointerType<const HenkaKigou&> Table[3] =
-    {
+  int d;
 
-      &Flat ,
-      &Natural ,
-      &Sharp
+  if( num > 0 ){
 
-    };
+    d = 1;
 
-  return ( *Table[num+1] )();
+  } else {
+
+    d = -1;
+
+  }
+
+  return IntToString( num - d ) + Table[d];
 
 }

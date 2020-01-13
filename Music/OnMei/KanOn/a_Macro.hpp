@@ -3,12 +3,12 @@
 #pragma once
 #include "../../../Utility/Macro.hpp"
 
-#define DEFINITION_OF_GLOBAL_CONST_KAN_ON( NAME )	\
+#define DEFINITION_OF_GLOBAL_CONST_KAN_ON( NAME , NUM )	\
 							\
-  const KanOn& NAME ()					\
+  const KanOn& NAME () noexcept				\
   {							\
 							\
-    static const KanOn N( TO_STRING( NAME ) );		\
+    static const KanOn N( NUM );			\
     return N;						\
 							\
   }							\

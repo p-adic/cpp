@@ -3,34 +3,32 @@
 #pragma once
 #include "a_Macro.hpp"
 
+#include "../../../Mathematics/Arithmetic/Mod/a.hpp"
+
 class KanOn
 {
 
 private:
-  string m_N;
-  uint m_num;
+  Mod<7> m_num;
 
 public:
-  inline KanOn( const string& N );
-  inline KanOn( const uint& num );
+  inline KanOn( const int& num ) noexcept;
 
-  inline const string& Display() const noexcept;
-  inline const uint& GetNum() const noexcept;
+  inline string Display() const noexcept;
+  inline const int& GetNum() const noexcept;
   
-  static uint StringToInt( const string& N );
-  static const string& IntToString( const uint& num );
+  static const string& IntToString( const int& num ) noexcept;
 
 };
 
-bool operator==( const KanOn& N1 , const KanOn& N2 );
-inline bool operator!=( const KanOn& N1 , const KanOn& N2 );
+bool operator==( const KanOn& N1 , const KanOn& N2 ) noexcept;
+inline bool operator!=( const KanOn& N1 , const KanOn& N2 ) noexcept;
 
-const KanOn& Do();
-const KanOn& Re();
-const KanOn& Mi();
-const KanOn& Fa();
-const KanOn& So();
-const KanOn& La();
-const KanOn& Ti();
-inline const KanOn& KanOnTable( const string& N );
-const KanOn& KanOnTable( const uint& num );
+const KanOn& Do() noexcept;
+const KanOn& Re() noexcept;
+const KanOn& Mi() noexcept;
+const KanOn& Fa() noexcept;
+const KanOn& So() noexcept;
+const KanOn& La() noexcept;
+const KanOn& Ti() noexcept;
+const KanOn& KanOnTable( const int& num ) noexcept;

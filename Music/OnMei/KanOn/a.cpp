@@ -6,24 +6,7 @@
 #include "../../../Error/FaultInCoding/a.hpp"
 #include "../../../Mathematics/Function/a.hpp"
 
-uint KanOn::StringToInt( const string& N )
-{
-
-  for( uint num = 0 ; num < 7 ; num++ ){
-
-    if( N == IntToString( num ) ){
-
-      return num;
-
-    }
-
-  }
-
-  return -1;
-
-}
-
-const string& KanOn::IntToString( const uint& num )
+const string& KanOn::IntToString( const uint& num ) noexcept
 {
 
   static const string Table[8] =
@@ -50,15 +33,15 @@ const string& KanOn::IntToString( const uint& num )
 
 }
 
-DEFINITION_OF_GLOBAL_CONST_KAN_ON( Do );
-DEFINITION_OF_GLOBAL_CONST_KAN_ON( Re );
-DEFINITION_OF_GLOBAL_CONST_KAN_ON( Mi );
-DEFINITION_OF_GLOBAL_CONST_KAN_ON( Fa );
-DEFINITION_OF_GLOBAL_CONST_KAN_ON( So );
-DEFINITION_OF_GLOBAL_CONST_KAN_ON( La );
-DEFINITION_OF_GLOBAL_CONST_KAN_ON( Ti );
+DEFINITION_OF_GLOBAL_CONST_KAN_ON( Do , 0 );
+DEFINITION_OF_GLOBAL_CONST_KAN_ON( Re , 1 );
+DEFINITION_OF_GLOBAL_CONST_KAN_ON( Mi , 2 );
+DEFINITION_OF_GLOBAL_CONST_KAN_ON( Fa , 3 );
+DEFINITION_OF_GLOBAL_CONST_KAN_ON( So , 4 );
+DEFINITION_OF_GLOBAL_CONST_KAN_ON( La , 5 );
+DEFINITION_OF_GLOBAL_CONST_KAN_ON( Ti , 6 );
 
-const KanOn& KanOnTable( const uint& num )
+const KanOn& KanOnTable( const int& num ) noexcept
 {
 
   const FunctionPointerType<const KanOn&> Table[7] =
@@ -73,13 +56,7 @@ const KanOn& KanOnTable( const uint& num )
       &Ti
 
     };
-
-  if( num >= 7 ){
-
-    ERR_CODE;
-
-  }
   
-  return ( *Table[num] )();
+  return ( *Table[num&7] )();
   
 }
