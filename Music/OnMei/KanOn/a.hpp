@@ -14,7 +14,7 @@ private:
 public:
   inline KanOn( const int& num ) noexcept;
 
-  inline string Display() const noexcept;
+  inline const string& Display() const noexcept;
   inline const int& GetNum() const noexcept;
   
   static const string& IntToString( const int& num ) noexcept;
