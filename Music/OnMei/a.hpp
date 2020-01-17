@@ -18,6 +18,8 @@ public:
   inline OnMei( const KanOn& N , const HenkaKigou& S ) noexcept;
   
   inline string Display() const noexcept;
+  inline const KanOn& GetKanOn() const noexcept;
+  inline const HenkaKigou& GetHenkaKigou() const noexcept;
   inline const Mod<12>& GetNum() const noexcept;
   
   static int KanOnToInt( const KanOn& N ) noexcept;
