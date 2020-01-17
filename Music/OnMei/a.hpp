@@ -14,12 +14,12 @@ private:
   Mod<12> m_num;
 
 public:
-  inline OnMei( const KanOn& N );
-  inline OnMei( const KanOn& N , const HenkaKigou& S );
+  inline OnMei( const KanOn& N ) noexcept;
+  inline OnMei( const KanOn& N , const HenkaKigou& S ) noexcept;
   
   inline string Display() const noexcept;
   inline const Mod<12>& GetNum() const noexcept;
   
-  static int KanOnToInt( const KanOn& N );
+  static int KanOnToInt( const KanOn& N ) noexcept;
 
 };

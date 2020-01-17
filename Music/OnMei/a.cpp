@@ -3,10 +3,10 @@
 #include "../Header.hpp"
 #include "a_Body.hpp"
 
-int OnMei::KanOnToInt( const KanOn& N )
+int OnMei::KanOnToInt( const KanOn& N ) noexcept
 {
 
-  const int Table[8] =
+  const int Table[7] =
     {
 
       0 ,
