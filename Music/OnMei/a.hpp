@@ -23,6 +23,3 @@ public:
   static int KanOnToInt( const KanOn& N );
 
 };
-
-const OnMei& OnMeiTable( const KanOn& N , const HenkaKigou& S = Natural() );
-const OnMei& OnMeiTable( const int& num , const bool& sharp = true );
