@@ -12,3 +12,6 @@ inline OnMei::OnMei( const KanOn& N , const HenkaKigou& S ) noexcept : m_N( N ) 
 
 inline string OnMei::Display() const noexcept { return m_N.Display() + m_S.Display(); }
 inline const Mod<12>& OnMei::GetNum() const noexcept { return m_num; }
+
+inline bool operator==( const OnMei& N1 , const OnMei& N2 ) noexcept { return N1.Display() == N2.Display(); }
+inline bool operator!=( const OnMei& N1 , const OnMei& N2 ) noexcept { return !( N1 == N2 ); }

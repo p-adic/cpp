@@ -23,3 +23,6 @@ public:
   static int KanOnToInt( const KanOn& N ) noexcept;
 
 };
+
+inline bool operator==( const OnMei& N1 , const OnMei& N2 ) noexcept;
+inline bool operator!=( const OnMei& N1 , const OnMei& N2 ) noexcept;
