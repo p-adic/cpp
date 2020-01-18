@@ -16,7 +16,7 @@ inline const string& IntToString( const Mod<7>& num ) noexcept { return IntToStr
 inline bool operator==( const KanOn& N1 , const KanOn& N2 ) noexcept { return N1.GetNum() == N2.GetNum(); }
 inline bool operator!=( const KanOn& N1 , const KanOn& N2 ) noexcept { return !( N1 == N2 ); }
 
-inline const KanOn& operator+( const KanOn& N1 , const Mod<7>& N2 ) noexcept { return KanOnTable( N2.GetNum() + N2 ); }
-inline const Mod<7>& operator-( const KanOn& N1 , const KanOn& N2 ) noexcept { return KanOnTable( N2.GetNum() - N2 ); }
+inline const KanOn& operator+( const KanOn& N1 , const Mod<7>& N2 ) noexcept { return KanOnTable( N1.GetNum() + N2 ); }
+inline const Mod<7>& operator-( const KanOn& N1 , const KanOn& N2 ) noexcept { return N1.GetNum() - N2.GetNum(); }
 
 inline const KanOn& KanOnTable( const Mod<7>& num ) noexcept { return KaOnTable( num.Represent() ); }
