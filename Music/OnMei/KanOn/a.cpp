@@ -6,7 +6,24 @@
 #include "../../../Error/FaultInCoding/a.hpp"
 #include "../../../Mathematics/Function/a.hpp"
 
-const string& KanOn::IntToString( const uint& num ) noexcept
+
+KanOn& KanOn::operator++( int ) noexcept
+{
+
+  m_num++;
+  return *this;
+
+}
+
+KanOn& KanOn::operator--( int ) noexcept
+{
+
+  m_num--;
+  return *this;
+
+}
+
+const string& KanOn::IntToString( const int& num ) noexcept
 {
 
   static const string Table[8] =
@@ -57,6 +74,6 @@ const KanOn& KanOnTable( const int& num ) noexcept
 
     };
   
-  return ( *Table[num&7] )();
+  return ( *Table[num] )();
   
 }

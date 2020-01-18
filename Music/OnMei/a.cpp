@@ -19,7 +19,7 @@ int OnMei::KanOnToInt( const KanOn& N ) noexcept
       
     };
 
-  return Table[ N.GetNum() ];
+  return Table[ ( N.GetNum() ).Represent() ];
 
 }
 
