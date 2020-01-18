@@ -10,7 +10,7 @@
 string HenkaKigou::IntToString( const int& num ) noexcept
 {
 
-  static const string Table[num] =
+  static const string Table[3] =
     {
 
       "ÅÛ" ,
@@ -21,7 +21,7 @@ string HenkaKigou::IntToString( const int& num ) noexcept
 
   if( -1 <= num  && num <= 1 ){
 
-    return Table[num]
+    return Table[num];
 
   }
 

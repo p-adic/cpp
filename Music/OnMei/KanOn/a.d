@@ -18,6 +18,8 @@ Music/OnMei/KanOn/a.o: Music/OnMei/KanOn/a.cpp \
  C:/Users/user/Documents/Programming/SFINAE/MetaFunction/IsReferenceOf/a.hpp \
  C:/Users/user/Documents/Programming/SFINAE/a_Alias.hpp \
  C:/Users/user/Documents/Programming/Utility/String/a_Alias.hpp \
+ Music/OnMei/KanOn/../../../Mathematics/Arithmetic/Mod/a.hpp \
+ Music/OnMei/KanOn/../../../Mathematics/Arithmetic/Mod/a_Body.hpp \
  Music/OnMei/KanOn/../../../Utility/String/a_Body.hpp \
  C:/Users/user/Documents/Programming/Error/IgnoredError/a_Body.hpp \
  C:/Users/user/Documents/Programming/Error/IgnoredError/a.hpp \
@@ -126,6 +128,10 @@ C:/Users/user/Documents/Programming/SFINAE/MetaFunction/IsReferenceOf/a.hpp:
 C:/Users/user/Documents/Programming/SFINAE/a_Alias.hpp:
 
 C:/Users/user/Documents/Programming/Utility/String/a_Alias.hpp:
+
+Music/OnMei/KanOn/../../../Mathematics/Arithmetic/Mod/a.hpp:
+
+Music/OnMei/KanOn/../../../Mathematics/Arithmetic/Mod/a_Body.hpp:
 
 Music/OnMei/KanOn/../../../Utility/String/a_Body.hpp:
 

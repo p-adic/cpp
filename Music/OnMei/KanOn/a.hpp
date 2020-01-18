@@ -29,7 +29,7 @@ inline bool operator==( const KanOn& N1 , const KanOn& N2 ) noexcept;
 inline bool operator!=( const KanOn& N1 , const KanOn& N2 ) noexcept;
 
 inline const KanOn& operator+( const KanOn& N1 , const Mod<7>& N2 ) noexcept;
-inline const Mod<7>& operator-( const KanOn& N1 , const KanOn& N2 ) noexcept;
+inline Mod<7> operator-( const KanOn& N1 , const KanOn& N2 ) noexcept;
 
 const KanOn& Do() noexcept;
 const KanOn& Re() noexcept;

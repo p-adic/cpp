@@ -10,7 +10,7 @@
 KanOn& KanOn::operator++( int ) noexcept
 {
 
-  m_num++;
+  m_num += 1;
   return *this;
 
 }
@@ -18,7 +18,7 @@ KanOn& KanOn::operator++( int ) noexcept
 KanOn& KanOn::operator--( int ) noexcept
 {
 
-  m_num--;
+  m_num -= 1;
   return *this;
 
 }
