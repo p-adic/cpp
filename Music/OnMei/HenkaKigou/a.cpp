@@ -21,7 +21,7 @@ string HenkaKigou::IntToString( const int& num ) noexcept
 
   if( -1 <= num  && num <= 1 ){
 
-    return Table[num];
+    return Table[num + 1];
 
   }
 
