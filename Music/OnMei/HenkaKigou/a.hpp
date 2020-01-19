@@ -11,6 +11,9 @@ private:
 public:
   inline HenkaKigou( const int& num ) noexcept;
 
+  HenkaKigou& operator++() noexcept;
+  HenkaKigou& operator--() noexcept;
+  
   inline string Display() const noexcept;
   inline const int& GetNum() const noexcept;
 

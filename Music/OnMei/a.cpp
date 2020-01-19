@@ -3,6 +3,22 @@
 #include "../Header.hpp"
 #include "a_Body.hpp"
 
+OnMei& OnMei::operator++() noexcept
+{
+
+  ++m_S;
+  return *this;
+
+}
+
+OnMei& OnMei::operator--() noexcept
+{
+
+  --m_S;
+  return *this;
+
+}
+
 int OnMei::KanOnToInt( const KanOn& N ) noexcept
 {
 

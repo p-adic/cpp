@@ -7,7 +7,7 @@
 #include "../../../Mathematics/Function/a.hpp"
 
 
-KanOn& KanOn::operator++( int ) noexcept
+KanOn& KanOn::operator++() noexcept
 {
 
   m_num += 1;
@@ -15,7 +15,7 @@ KanOn& KanOn::operator++( int ) noexcept
 
 }
 
-KanOn& KanOn::operator--( int ) noexcept
+KanOn& KanOn::operator--() noexcept
 {
 
   m_num -= 1;

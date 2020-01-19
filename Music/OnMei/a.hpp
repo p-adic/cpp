@@ -16,6 +16,9 @@ private:
 public:
   inline OnMei( const KanOn& N ) noexcept;
   inline OnMei( const KanOn& N , const HenkaKigou& S ) noexcept;
+
+  OnMei& operator++() noexcept;
+  OnMei& operator--() noexcept;
   
   inline string Display() const noexcept;
   inline const KanOn& GetKanOn() const noexcept;

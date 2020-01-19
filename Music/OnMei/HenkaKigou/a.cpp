@@ -7,6 +7,21 @@
 #include "../../../Mathematics/Function/a.hpp"
 #include "../../../Utility/String/a_Body.hpp"
 
+HenkaKigou& HenkaKigou::operator++() noexcept
+{
+
+  m_num += 1;
+  return *this;
+
+}
+
+HenkaKigou& HenkaKigou::operator--() noexcept
+{
+
+  m_num -= 1;
+  return *this;
+
+}
 string HenkaKigou::IntToString( const int& num ) noexcept
 {
 

@@ -14,8 +14,8 @@ private:
 public:
   inline KanOn( const int& num ) noexcept;
 
-  KanOn& operator++( int ) noexcept;
-  KanOn& operator--( int ) noexcept;
+  KanOn& operator++() noexcept;
+  KanOn& operator--() noexcept;
   
   inline const string& Display() const noexcept;
   inline const Mod<7>& GetNum() const noexcept;
