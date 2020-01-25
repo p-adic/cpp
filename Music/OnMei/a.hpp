@@ -13,7 +13,7 @@ class OnMei
 private:
   KanOn m_N;
   HenkaKigou m_S;
-  PitchClass m_pitch;
+  PitchClass m_pc;
 
 public:
   inline OnMei( const KanOn& N ) noexcept;
