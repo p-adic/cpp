@@ -6,14 +6,15 @@
 HenkaKigou Chou::HenkaKigouTable_Body( const KaiMei& num , const KanOn& N ) const noexcept
 {
 
-  const int d = ( m_N.GetPitchClass() + m_scale.PitchClassTable( num ) - OnMei( N ).GetPitchClass() ).Represent();
+  const int d = ( OnMei::KanOnToPitchClass( m_N.GetKanOn() ) + m_scale.PitchClassTable( num ) - OnMei( N ).GetPitchClass() ).Represent();
+  const HenkaKigou& S = m_N.GetHenkaKigou();
 
   if( d < 6 ){
 
-    return HenkaKigou( d );
+    return HenkaKigou( d ) + S;
   
   }
   
-  return HenkaKigou( d - 12 );
+  return HenkaKigou( d - 12 ) + S;
 
 }

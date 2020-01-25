@@ -10,3 +10,6 @@ inline const int& HenkaKigou::GetNum() const noexcept { return m_num; }
 
 inline bool operator==( const HenkaKigou& S1 , const HenkaKigou& S2 ) noexcept { return S1.GetNum() == S2.GetNum(); }
 inline bool operator!=( const HenkaKigou& S1 , const HenkaKigou& S2 ) noexcept { return !( S1 == S2 ); }
+
+inline HenkaKigou operator+( const HenkaKigou& S1 , const HenkaKigou& S2 ) noexcept { return HenkaKigou( S1.GetNum() + S2.GetNum() ); }
+inline HenkaKigou operator-( const HenkaKigou& S1 , const HenkaKigou& S2 ) noexcept { return HenkaKigou( S1.GetNum() - S2.GetNum() ); }

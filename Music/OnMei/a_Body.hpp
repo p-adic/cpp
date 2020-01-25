@@ -13,7 +13,7 @@ inline OnMei::OnMei( const KanOn& N , const HenkaKigou& S ) noexcept : m_N( N ) 
 inline string OnMei::Display() const noexcept { return m_N.Display() + m_S.Display(); }
 inline const KanOn& OnMei::GetKanOn() const noexcept { return m_N; }
 inline const HenkaKigou& OnMei::GetHenkaKigou() const noexcept { return m_S; }
-inline const PitchClass& OnMei::GetPitchClass() const noexcept { return m_pitch; }
+inline const PitchClass& OnMei::GetPitchClass() const noexcept { return m_pc; }
 
 inline bool operator==( const OnMei& N1 , const OnMei& N2 ) noexcept { return N1.Display() == N2.Display(); }
 inline bool operator!=( const OnMei& N1 , const OnMei& N2 ) noexcept { return !( N1 == N2 ); }

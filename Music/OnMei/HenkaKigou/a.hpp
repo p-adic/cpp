@@ -23,3 +23,6 @@ public:
 
 inline bool operator==( const HenkaKigou& S1 , const HenkaKigou& S2 ) noexcept;
 inline bool operator!=( const HenkaKigou& S1 , const HenkaKigou& S2 ) noexcept;
+
+inline HenkaKigou operator+( const HenkaKigou& S1 , const HenkaKigou& S2 ) noexcept;
+inline HenkaKigou operator-( const HenkaKigou& S1 , const HenkaKigou& S2 ) noexcept;
