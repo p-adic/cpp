@@ -19,7 +19,7 @@ OnMei& OnMei::operator--() noexcept
 
 }
 
-int OnMei::KanOnToInt( const KanOn& N ) noexcept
+PitchClass OnMei::KanOnToPitchClass( const KanOn& N ) noexcept
 {
 
   const int Table[7] =
@@ -35,7 +35,7 @@ int OnMei::KanOnToInt( const KanOn& N ) noexcept
       
     };
 
-  return Table[ ( N.GetNum() ).Represent() ];
+  return PitchClass( Table[ ( N.GetNum() ).Represent() ] );
 
 }
 

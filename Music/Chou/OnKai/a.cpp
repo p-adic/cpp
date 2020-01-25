@@ -5,10 +5,10 @@
 
 #include "../../../Error/FaultInCoding/a.hpp"
 
-const Mod<12>& OnKai::NumTable( const Mod<7>& N ) const noexcept
+const PitchClass& OnKai::PitchClassTable( const KaiMei& num ) const noexcept
 {
 
-  const Mod<12>* p_Table[7] =
+  const PitchClass* p_Table[7] =
     {
 
       &m_I ,
@@ -17,11 +17,11 @@ const Mod<12>& OnKai::NumTable( const Mod<7>& N ) const noexcept
       &m_IV ,
       &m_V ,
       &m_VI ,
-      &m_VII       
+      &m_VII
 
     };
   
-  return *p_Table[ N.Represent() ];
+  return *p_Table[ num.Represent() ];
   
 }
 

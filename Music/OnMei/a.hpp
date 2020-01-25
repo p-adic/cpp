@@ -5,13 +5,15 @@
 #include "HenkaKigou/a.hpp"
 #include "../../Mathematics/Arithmetic/Mod/a.hpp"
 
+#include "a_Alias.hpp"
+
 class OnMei
 {
 
 private:
   KanOn m_N;
   HenkaKigou m_S;
-  Mod<12> m_num;
+  PitchClass m_pitch;
 
 public:
   inline OnMei( const KanOn& N ) noexcept;
@@ -23,9 +25,9 @@ public:
   inline string Display() const noexcept;
   inline const KanOn& GetKanOn() const noexcept;
   inline const HenkaKigou& GetHenkaKigou() const noexcept;
-  inline const Mod<12>& GetNum() const noexcept;
+  inline const PitchClass& GetPitchClass() const noexcept;
   
-  static int KanOnToInt( const KanOn& N ) noexcept;
+  static PitchClass KanOnToPitchClass( const KanOn& N ) noexcept;
 
 };
 

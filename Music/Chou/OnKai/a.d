@@ -22,6 +22,7 @@ Music/Chou/OnKai/a.o: Music/Chou/OnKai/a.cpp \
  Music/Chou/OnKai/../../OnMei/KanOn/a_Macro.hpp \
  C:/Users/user/Documents/Programming/Mathematics/Arithmetic/Mod/a.hpp \
  Music/Chou/OnKai/../../OnMei/HenkaKigou/a.hpp \
+ Music/Chou/OnKai/../../OnMei/a_Alias.hpp Music/Chou/OnKai/a_Alias.hpp \
  Music/Chou/OnKai/../../OnMei/a_Body.hpp \
  Music/Chou/OnKai/../../OnMei/KanOn/a_Body.hpp \
  C:/Users/user/Documents/Programming/Mathematics/Arithmetic/Mod/a_Body.hpp \
@@ -144,6 +145,10 @@ Music/Chou/OnKai/../../OnMei/KanOn/a_Macro.hpp:
 C:/Users/user/Documents/Programming/Mathematics/Arithmetic/Mod/a.hpp:
 
 Music/Chou/OnKai/../../OnMei/HenkaKigou/a.hpp:
+
+Music/Chou/OnKai/../../OnMei/a_Alias.hpp:
+
+Music/Chou/OnKai/a_Alias.hpp:
 
 Music/Chou/OnKai/../../OnMei/a_Body.hpp:
 

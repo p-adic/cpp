@@ -6,24 +6,27 @@
 #include "../../OnMei/a.hpp"
 #include "../../../Mathematics/Arithmetic/Mod/a.hpp"
 
+#include "a_Alias.hpp"
+
 class OnKai
 {
 
 private:
   string m_scale;
-  Mod<12> m_I;
-  Mod<12> m_II;
-  Mod<12> m_III;
-  Mod<12> m_IV;
-  Mod<12> m_V;
-  Mod<12> m_VI;
-  Mod<12> m_VII;
+  PitchClass m_I;
+  PitchClass m_II;
+  PitchClass m_III;
+  PitchClass m_IV;
+  PitchClass m_V;
+  PitchClass m_VI;
+  PitchClass m_VII;
 
 public:
   inline OnKai( const string& scale , const int& I , const int& II , const int& III , const int& IV , const int& V , const int& VI , const int& VII ) noexcept;
   
   inline const string& Display() const noexcept;
-  const Mod<12>& NumTable( const Mod<7>& N ) const noexcept;
+  
+  const PitchClass& PitchClassTable( const KaiMei& num ) const noexcept;
 
 };
 

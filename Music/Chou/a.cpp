@@ -3,18 +3,17 @@
 #include "../Header.hpp"
 #include "a_Body.hpp"
 
-OnMei Chou::OnMeiTable( const Mod<7>& num ) const noexcept
+HenkaKigou Chou::HenkaKigouTable_Body( const KaiMei& num , const KanOn& N ) const noexcept
 {
 
-  const KanOn N = m_N.GetKanOn() + num;
-  const int d = ( m_N.GetNum() +  m_scale.NumTable( num ) - OnMei( N ).GetNum() ).Represent();
+  const int d = ( m_N.GetPitchClass() + m_scale.PitchClassTable( num ) - OnMei( N ).GetPitchClass() ).Represent();
 
   if( d < 6 ){
 
-    return OnMei( N , d );
+    return HenkaKigou( d );
   
   }
   
-  return OnMei( N , d - 12 );
+  return HenkaKigou( d - 12 );
 
 }

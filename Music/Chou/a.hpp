@@ -11,6 +11,9 @@ private:
   OnMei m_N;
   OnKai m_scale;
 
+  HenkaKigou HenkaKigouTable_Body( const KaiMei& num , const KanOn& N ) const noexcept;  
+  inline OnMei OnMeiTable_Body( const KaiMei& num , const KanOn& N ) const noexcept;  
+
 public:
   inline Chou( const OnMei& N , const OnKai& scale = Majour() ) noexcept;
 
@@ -19,7 +22,9 @@ public:
 
   inline string Display() const noexcept;
 
-  OnMei OnMeiTable( const Mod<7>& num ) const noexcept;
+  inline KanOn KanOnTable( const KaiMei& num ) const noexcept;
+  inline HenkaKigou HenkaKigouTable( const KaiMei& num ) const noexcept;
+  inline OnMei OnMeiTable( const KaiMei& num ) const noexcept;
 
 };
 
