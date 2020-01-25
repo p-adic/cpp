@@ -6,8 +6,7 @@
 #include "../../OnMei/a.hpp"
 #include "../../../Mathematics/Arithmetic/Mod/a.hpp"
 
-class OnKai :
-  public string
+class OnKai
 {
 
 private:
