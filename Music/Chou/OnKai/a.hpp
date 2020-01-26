@@ -33,5 +33,5 @@ public:
 inline bool operator==( const OnKai& N1 , const OnKai& N2 ) noexcept;
 inline bool operator!=( const OnKai& N1 , const OnKai& N2 ) noexcept;
 
-const OnKai& Majour() noexcept;
-const OnKai& HarmonicMinour() noexcept;
+const OnKai& Major() noexcept;
+const OnKai& HarmonicMinor() noexcept;
