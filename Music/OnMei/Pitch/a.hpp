@@ -25,3 +25,6 @@ public:
   inline string Display() const noexcept;
   
 };
+
+inline bool operator==( const Pitch& N1 , const Pitch& N2 ) noexcept;
+inline bool operator!=( const Pitch& N1 , const Pitch& N2 ) noexcept;

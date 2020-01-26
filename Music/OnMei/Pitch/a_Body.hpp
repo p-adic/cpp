@@ -15,3 +15,6 @@ inline double Pitch::GetShuuhasuu() const noexcept { return g_La4_shuuhasuu * po
 inline PitchClass Pitch::GetPitchClass() const noexcept { return m_N.GetPitchClass(); }
 
 inline string Pitch::Display() const noexcept { return m_N.Display() + to_string( m_octave ); }
+
+inline bool operator==( const Pitch& N1 , const Pitch& N2 ) noexcept { return ( N1.GetOnMei() == N2.GetOnMei() ) && ( N1.GetOctave() == N2.GtOctave ); }
+inline bool operator!=( const Pitch& N1 , const Pitch& N2 ) noexcept { return!( N! == N2 ); }
