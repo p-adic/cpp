@@ -17,7 +17,7 @@ inline OnMei Chou::OnMeiTable( const KaiMei& num ) const noexcept{ return OnMeiT
 inline const OnMei& Chou::GetOnMei() const noexcept{ return m_N; }
 inline const OnKai& Chou::GetOnKai() const noexcept{ return m_scale; }
 
-inline string Chou::Display() const noexcept{ return m_N.Display() + m_scale.Display(); }
+inline string Chou::Display() const noexcept{ return m_scale.Display() + ": " + m_N.Display(); }
 
 inline bool operator==( const Chou& N1 , const Chou& N2 ) noexcept { return ( N1.GetOnMei() == N2.GetOnMei() ) && ( N1.GetOnKai() == N2.GetOnKai() ); }
 inline bool operator!=( const Chou& N1 , const Chou& N2 ) noexcept { return !( N1 == N2 ); }

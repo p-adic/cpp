@@ -15,7 +15,7 @@ private:
   inline OnMei OnMeiTable_Body( const KaiMei& num , const KanOn& N ) const noexcept;  
 
 public:
-  inline Chou( const OnMei& N , const OnKai& scale = Majour() ) noexcept;
+  inline Chou( const OnMei& N , const OnKai& scale = ChouOnKai() ) noexcept;
 
   inline const OnMei& GetOnMei() const noexcept;
   inline const OnKai& GetOnKai() const noexcept;
