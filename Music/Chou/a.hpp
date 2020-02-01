@@ -11,9 +11,6 @@ private:
   OnMei m_N;
   OnKai m_scale;
 
-  HenkaKigou HenkaKigouTable_Body( const KaiMei& num , const KanOn& N ) const noexcept;  
-  inline OnMei OnMeiTable_Body( const KaiMei& num , const KanOn& N ) const noexcept;  
-
 public:
   inline Chou( const OnMei& N , const OnKai& scale = ChouOnKai() ) noexcept;
 
@@ -25,6 +22,10 @@ public:
   inline KanOn KanOnTable( const KaiMei& num ) const noexcept;
   inline HenkaKigou HenkaKigouTable( const KaiMei& num ) const noexcept;
   inline OnMei OnMeiTable( const KaiMei& num ) const noexcept;
+
+private:
+  HenkaKigou HenkaKigouTable_Body( const KaiMei& num , const KanOn& N ) const noexcept;
+  inline OnMei OnMeiTable_Body( const KaiMei& num , const KanOn& N ) const noexcept;
 
 };
 
