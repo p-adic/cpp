@@ -67,7 +67,7 @@ uint OnDo::ComputePitchDifference( const Pitch& P1 , const Pitch& P2 , const boo
 
   }
 
-  return P2.GetNum() - P1.GetNum();
+  return P2.GetNoteNumber() - P1.GetNoteNumber();
  
 }
 

@@ -11,6 +11,7 @@ class OnDo
 private:
   const string& m_settouji;
   uint m_dosuu;
+  uint m_dosuu_mod;
 
 public:
   inline OnDo( const Pitch& P1 , const Pitch& P2 ) noexcept;
