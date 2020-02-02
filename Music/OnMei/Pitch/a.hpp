@@ -16,6 +16,9 @@ private:
 public:
   inline Pitch( const OnMei& N , const int& octave ) noexcept;
 
+  Pitch& operator++() noexcept;
+  Pitch& operator--() noexcept;
+
   inline int GetNum() const noexcept;
   inline const OnMei& GetOnMei() const noexcept;
   inline const int& GetOctave() const noexcept;
