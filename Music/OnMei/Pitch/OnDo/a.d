@@ -9,7 +9,8 @@ Music/OnMei/Pitch/OnDo/a.o: Music/OnMei/Pitch/OnDo/a.cpp \
  C:/Users/user/Documents/Programming/Mathematics/Arithmetic/Mod/a.hpp \
  Music/OnMei/Pitch/OnDo/../../HenkaKigou/a.hpp \
  Music/OnMei/Pitch/OnDo/../../a_Alias.hpp \
- Music/OnMei/Pitch/OnDo/a_Macro.hpp Music/OnMei/Pitch/OnDo/../a_Body.hpp \
+ Music/OnMei/Pitch/OnDo/../a_Alias.hpp Music/OnMei/Pitch/OnDo/a_Macro.hpp \
+ Music/OnMei/Pitch/OnDo/../a_Body.hpp \
  Music/OnMei/Pitch/OnDo/../../a_Body.hpp \
  Music/OnMei/Pitch/OnDo/../../KanOn/a_Body.hpp \
  C:/Users/user/Documents/Programming/Mathematics/Arithmetic/Mod/a_Body.hpp \
@@ -120,6 +121,8 @@ C:/Users/user/Documents/Programming/Mathematics/Arithmetic/Mod/a.hpp:
 Music/OnMei/Pitch/OnDo/../../HenkaKigou/a.hpp:
 
 Music/OnMei/Pitch/OnDo/../../a_Alias.hpp:
+
+Music/OnMei/Pitch/OnDo/../a_Alias.hpp:
 
 Music/OnMei/Pitch/OnDo/a_Macro.hpp:
 

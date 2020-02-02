@@ -12,7 +12,7 @@ private:
   OnMei m_N;
   Octave m_octave;
 
-  static constexpr const Octave g_La4_octave = 45;
+  static constexpr const Octave g_La4_notenumber = 69;
   static constexpr const double g_La4_shuuhasuu = 440.0;
 
 public:

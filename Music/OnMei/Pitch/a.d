@@ -7,7 +7,8 @@ Music/OnMei/Pitch/a.o: Music/OnMei/Pitch/a.cpp \
  Music/OnMei/Pitch/../KanOn/a_Macro.hpp \
  Music/OnMei/Pitch/../KanOn/../../../Mathematics/Arithmetic/Mod/a.hpp \
  Music/OnMei/Pitch/../HenkaKigou/a.hpp Music/OnMei/Pitch/../a_Alias.hpp \
- Music/OnMei/Pitch/../a_Body.hpp Music/OnMei/Pitch/../KanOn/a_Body.hpp \
+ Music/OnMei/Pitch/a_Alias.hpp Music/OnMei/Pitch/../a_Body.hpp \
+ Music/OnMei/Pitch/../KanOn/a_Body.hpp \
  Music/OnMei/Pitch/../KanOn/../../../Mathematics/Arithmetic/Mod/a_Body.hpp \
  Music/OnMei/Pitch/../KanOn/../../../Utility/String/a_Body.hpp \
  Music/OnMei/Pitch/../KanOn/../../../Utility/String/a.hpp \
@@ -114,6 +115,8 @@ Music/OnMei/Pitch/../KanOn/../../../Mathematics/Arithmetic/Mod/a.hpp:
 Music/OnMei/Pitch/../HenkaKigou/a.hpp:
 
 Music/OnMei/Pitch/../a_Alias.hpp:
+
+Music/OnMei/Pitch/a_Alias.hpp:
 
 Music/OnMei/Pitch/../a_Body.hpp:
 
