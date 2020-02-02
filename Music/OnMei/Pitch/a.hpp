@@ -24,7 +24,7 @@ public:
   inline NoteNumber GetNoteNumber() const noexcept;
   inline const OnMei& GetOnMei() const noexcept;
   inline const Octave& GetOctave() const noexcept;
-  inline double GetShuuhasuu() const noexcept;
+  inline double GetShuuHaSuu() const noexcept;
   inline PitchClass GetPitchClass() const noexcept;
   
   inline string Display() const noexcept;
