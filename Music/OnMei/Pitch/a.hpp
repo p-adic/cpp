@@ -21,7 +21,7 @@ public:
   Pitch& operator++() noexcept;
   Pitch& operator--() noexcept;
 
-  inline Octave GetNum() const noexcept;
+  inline NoteNumber GetNoteNumber() const noexcept;
   inline const OnMei& GetOnMei() const noexcept;
   inline const Octave& GetOctave() const noexcept;
   inline double GetShuuhasuu() const noexcept;

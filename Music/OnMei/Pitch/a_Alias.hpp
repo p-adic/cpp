@@ -3,3 +3,4 @@
 #pragma once
 
 using Octave = int;
+using NoteNumber = int;

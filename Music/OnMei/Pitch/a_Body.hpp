@@ -8,7 +8,7 @@
 
 inline Pitch::Pitch( const OnMei& N , const Octave& octave ) noexcept : m_N( N ) , m_octave( octave ) {}
 
-inline Octave Pitch::GetNum() const noexcept { return ( m_N.GetPitchClass() ).Represent() + ( m_octave * 12 ); }
+inline NoteNumber Pitch::GetNoteNumber() const noexcept { return ( m_N.GetPitchClass() ).Represent() + ( ( m_octave + 1 ) * 12 ); }
 inline const OnMei& Pitch::GetOnMei() const noexcept { return m_N; }
 inline const Octave& Pitch::GetOctave() const noexcept { return m_octave; }
 inline double Pitch::GetShuuhasuu() const noexcept { return g_La4_shuuhasuu * pow( 2.0 , ( GetNum() - g_La4_octave ) / 12.0 ); }
