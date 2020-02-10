@@ -1,6 +1,7 @@
-// IllegalImput/a_Macro.hpp
+// c:/Users/user/Documents/Programming/Error/IllegalImput/a_Macro.hpp
 
 #pragma once
+
 #include "../a_Macro.hpp"
 
 #define g_OCCURRENCE_OF_ILLEGAL_IMPUT ( *GLOBAL_VARIABLE( bool , OCCURRENCE_OF_ERR_IMPUT , false ) ) 

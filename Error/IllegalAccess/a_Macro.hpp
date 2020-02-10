@@ -1,6 +1,7 @@
-// IllegalAccess/a_Macro.hpp
+// c:/Users/user/Documents/Programming/Error/IllegalAccess/a_Macro.hpp
 
 #pragma once
+
 #include "../a_Macro.hpp"
 
 #define ACCESS( ... ) Access( POSITION , ARGUMENTS( __VA_ARGS__ ) ) 

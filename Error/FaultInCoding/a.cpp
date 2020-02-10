@@ -1,3 +1,5 @@
+// c:/Users/user/Documents/Programming/Error/FaultInCoding/a.cpp
+
 #include "../Header.hpp"
 #include "a.hpp"
 
@@ -7,7 +9,7 @@ void IndicateFaultInCoding( const char* const FILE , const int& LINE , const cha
 {
 
   IndicateError( FILE , LINE , FUNC );
-  cout << "There seeems to be some mistake in the coding." << endl;
+  cout << "There seems to be some mistake in the coding." << endl;
   cout << endl;
 
   return;

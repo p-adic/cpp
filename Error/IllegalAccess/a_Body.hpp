@@ -1,4 +1,4 @@
-// IllegalAccess/a_Body.hpp
+// c:/Users/user/Documents/Programming/Error/IllegalAccess/a_Body.hpp
 
 #pragma once
 #include "a.hpp"
@@ -44,7 +44,7 @@ void ThrowUninitialisedAccess( const char* const FILE , const int& LINE , const 
 
 }
 
-// IllegalAccess.cppで定義されている。
+// a.cppで定義されている。
 void IndicateNullAccess_Body( const string& FUNC );
 
 inline void IndicateNullAccess_Body( const char* const FUNC ){ IndicateNullAccess_Body( to_string( FUNC ) );}
