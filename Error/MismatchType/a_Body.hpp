@@ -17,7 +17,7 @@ void ThrowMismatchType( const char* const FILE , const int& LINE , const char* c
     
   } else {
 
-    ERR_UNKNOWN( FILE , LINE , FUNC , to_string( typeid( Args )... ) );
+    ERR_UNKNOWN( FILE , LINE , FUNC , to_string<Args...>() );
 
   }
 
@@ -35,7 +35,7 @@ void IndicateMismatchType( const char* const FILE , const int& LINE , const char
   cout << "Mismatch type in the function `" << FUNC << "'" << endl;
   
   cout << "The typenames are:" << endl;
-  cout << "  " << to_string( typeid( Args )... ) << endl;
+  cout << "  " << to_string<Args...>() << endl;
   cout << endl;
 
   return;
