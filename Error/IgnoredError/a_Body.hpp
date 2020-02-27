@@ -22,7 +22,7 @@ void IndicateIgnoredError( const string& FILE , const int& LINE , const string& 
   if( g_OCCURRENCE_OF_ERR == false ){
     
     cout << "There is some error ignored at " << endl;
-    IndicatePosition( POSITION );
+    IndicatePosition( FILE , LINE , FUNC );
     IndicateParameters( to_string( VARIABLE_NAMES ) , ARGS... );
 
   }

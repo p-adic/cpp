@@ -13,4 +13,28 @@
 
 #define CHECK_ERR CheckError( POSITION )
 
+// リリース時にブロックが解除されるので、例外排出そのものがコードのバグである箇所にのみ用いる。
+// コロンの影響でマクロが展開できないブロックは波括弧{ }で囲む。
+#ifdef DEBUG
+
+  #define TRY_CATCH( TRY_BLOCK , ERROR_TYPE , CATCH_BLOCK )	\
+								\
+    try{							\
+								\
+      TRY_BLOCK	;						\
+								\
+    }								\
+    catch( ERROR_TYPE ){					\
+								\
+      CATCH_BLOCK ;						\
+								\
+    }								\
+  
+#else
+
+  #define TRY_CATCH( TRY_BLOCK , ERROR_TYPE , CATCH_BLOCK ) TRY_BLOCK ; 
+
+#endif
+
+
 #include "Warning/a_Macro.hpp"

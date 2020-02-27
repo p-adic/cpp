@@ -33,7 +33,6 @@ Error/Position/a.o: Error/Position/a.cpp Error/Position/../Header.hpp \
  C:/Users/user/Documents/Programming/Utility/List/LabeledList/a.hpp \
  C:/Users/user/Documents/Programming/Utility/VLArray/a.hpp \
  C:/Users/user/Documents/Programming/Utility/VLArray/Entry/a.hpp \
- C:/Users/user/Documents/Programming/Utility/VLArray/Wrap/a.hpp \
  C:/Users/user/Documents/Programming/Utility/VLArray/a_Alias.hpp \
  C:/Users/user/Documents/Programming/Utility/WrappedInt/a.hpp \
  C:/Users/user/Documents/Programming/Mathematics/SetTheory/Singleton/a.hpp \
@@ -45,7 +44,8 @@ Error/Position/a.o: Error/Position/a.cpp Error/Position/../Header.hpp \
  C:/Users/user/Documents/Programming/Utility/VLArray/Iterator/a_Body.hpp \
  C:/Users/user/Documents/Programming/Utility/VLArray/Iterator/a.hpp \
  C:/Users/user/Documents/Programming/Utility/VLArray/Entry/a_Body.hpp \
- C:/Users/user/Documents/Programming/Utility/VLArray/Wrap/a_Body.hpp \
+ C:/Users/user/Documents/Programming/Utility/WrappedType/a_Body.hpp \
+ C:/Users/user/Documents/Programming/Utility/WrappedType/a.hpp \
  C:/Users/user/Documents/Programming/Error/IllegalImput/a_Body.hpp \
  C:/Users/user/Documents/Programming/Error/IllegalImput/a.hpp \
  C:/Users/user/Documents/Programming/Error/IllegalImput/a_Macro.hpp \
@@ -158,8 +158,6 @@ C:/Users/user/Documents/Programming/Utility/VLArray/a.hpp:
 
 C:/Users/user/Documents/Programming/Utility/VLArray/Entry/a.hpp:
 
-C:/Users/user/Documents/Programming/Utility/VLArray/Wrap/a.hpp:
-
 C:/Users/user/Documents/Programming/Utility/VLArray/a_Alias.hpp:
 
 C:/Users/user/Documents/Programming/Utility/WrappedInt/a.hpp:
@@ -182,7 +180,9 @@ C:/Users/user/Documents/Programming/Utility/VLArray/Iterator/a.hpp:
 
 C:/Users/user/Documents/Programming/Utility/VLArray/Entry/a_Body.hpp:
 
-C:/Users/user/Documents/Programming/Utility/VLArray/Wrap/a_Body.hpp:
+C:/Users/user/Documents/Programming/Utility/WrappedType/a_Body.hpp:
+
+C:/Users/user/Documents/Programming/Utility/WrappedType/a.hpp:
 
 C:/Users/user/Documents/Programming/Error/IllegalImput/a_Body.hpp:
 
