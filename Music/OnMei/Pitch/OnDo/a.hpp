@@ -1,35 +1,33 @@
-// c:/Users/user/Documents/Programming/Music/OnMei/Pitch/a.hpp
+// c:/Users/user/Documents/Programming/Music/OnMei/Pitch/OnDo/a.hpp
 
 #pragma once
 #include "../a.hpp"
+#include "SetTouJi/a.hpp"
 
-#include "a_Alias.hpp"
-
-class Pitch
+class OnDo
 {
 
 private:
-  OnMei m_N;
-  Octave m_octave;
-
-  static constexpr const Octave g_La4_notenumber = 69;
-  static constexpr const double g_La4_shuuhasuu = 440.0;
+  const SetTouJiOfOnDo& m_settouji;
+  uint m_dosuu;
+  uint m_dosuu_mod;
 
 public:
-  inline Pitch( const OnMei& N , const Octave& octave ) noexcept;
+  inline OnDo( const Pitch& P1 , const Pitch& P2 ) noexcept;
 
-  Pitch& operator++() noexcept;
-  Pitch& operator--() noexcept;
-
-  inline NoteNumber GetNoteNumber() const noexcept;
-  inline const OnMei& GetOnMei() const noexcept;
-  inline const Octave& GetOctave() const noexcept;
-  inline double GetShuuHaSuu() const noexcept;
-  inline PitchClass GetPitchClass() const noexcept;
+  bool CheckKyouWaOnTei() const noexcept;
+  bool CheckKyouWaOnTeiNonBottom() const noexcept;
   
   inline string Display() const noexcept;
   
-};
+private:
+  inline OnDo( const Pitch& P1 , const Pitch& P2 , const int& signed_dosuu ) noexcept;
+  inline OnDo( const Pitch& P1 , const Pitch& P2 , const int& signed_dosuu , const bool& valid ) noexcept;
+  
+  inline OnDo( const uint& zero_indexed_dosuu , const int& pitch_difference ) noexcept;
 
-inline bool operator==( const Pitch& N1 , const Pitch& N2 ) noexcept;
-inline bool operator!=( const Pitch& N1 , const Pitch& N2 ) noexcept;
+  static int ComputeSignedDoSuu( const Pitch& P1 , const Pitch& P2 ) noexcept;
+  static uint ComputeZeroIndexedDoSuu( const int& signed_dosuu , const bool& valid ) noexcept;
+  static uint ComputePitchDifference( const Pitch& P1 , const Pitch& P2 , const bool& valid ) noexcept;
+
+};
