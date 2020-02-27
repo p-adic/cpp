@@ -2,5 +2,11 @@
 
 #pragma once
 
-template <typename... ARGS> using CheckNonVoidTypeInLine = CheckNonVoidType<typename ARGS::type...>;
-template<typename Arg1, typename Arg2> using IsSameOrVoidInLine = IsSameOrVoid<Arg1,typename Arg2::type>;
+template <typename... Args>
+using CheckNonVoidTypeInLine = CheckNonVoidType<typename Args::type...>;
+
+template<typename Arg, typename... Args>
+using AreSameOrVoidInLine = AreSameOrVoid<Arg,typename Args::type...>;
+
+template<typename Ret, typename... Args>
+using IsValidListOfLines = IsValidListOfLines_Body<Ret,typename Args::type...>;

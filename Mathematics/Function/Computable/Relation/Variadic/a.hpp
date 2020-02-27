@@ -2,15 +2,16 @@
 
 #pragma once
 #include "../a.hpp"
+#include "../../Expression/List/a.hpp"
 
-template <typename... ARGS>
+template <typename... Args>
 class VariadicRelationSymbol :
-  public RelationSymbol<ARGS...>
+  public RelationSymbol<Args...>
 {
 
 public:
-  inline VariadicRelationSymbol( const string& r , const VariableSymbol<ARGS>&... args );
+  inline VariadicRelationSymbol( const string& r , const VariableSymbol<Args>&... args );
 
-  template <typename... VA> inline ConditionOfComputableFunction operator()( const ExpressionOfComputableFunction<ARGS>&... args , const ExpressionOfComputableFunction<VA>&... va ) const;
+  template <typename... VA> inline ConditionOfComputableFunction operator()( const ExpressionOfComputableFunction<Args>&... args , const ListExpressionOfComputableFunction<VA...>& va ) const;
 
 };

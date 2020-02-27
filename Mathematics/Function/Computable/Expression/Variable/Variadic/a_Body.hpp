@@ -3,8 +3,8 @@
 #pragma once
 #include "a.hpp"
 
-#include "Body/a_Body.hpp"
 #include "../a_Body.hpp"
+#include "../../List/Body/a_Body.hpp"
 
 inline VariableSymbol<void>::VariableSymbol() : ExpressionOfComputableFunction<void>() {}
 

@@ -1,10 +1,8 @@
 // c:/Users/user/Documents/Programming/Mathematics/Function/Computable/Expression/Variable/Variadic/a.hpp
 
 #pragma once
-#include "a_Macro.hpp"
-
-#include "Body/a.hpp"
 #include "../a.hpp"
+#include "../../List/Body/a.hpp"
 
 template <>
 class VariableSymbol<void> :
@@ -20,8 +18,6 @@ private:
 public:
   
   static const VariadicVariableSymbol& LdotsSymbol();
-
-  using type = void;
 
 };
 

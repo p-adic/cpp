@@ -1,22 +1,22 @@
 // c:/Users/user/Documents/Programming/Mathematics/Function/Computable/Definition/a.hpp
 
 #pragma once
-#include "a_Macro.hpp"
 #include "Line/Void/a.hpp"
-#include "../Function/Guide/a.hpp"
 
-template <typename Ret, typename... ARGS>
+template <typename Ret, typename... Args>
 class DefinitionOfComputableFunction :
   public SyntaxOfComputableFunction
 {
 
 public:
-  template <typename... RETS> using Dummy = typename enable_if<conjunction<IsSameOrVoidInLine<Ret,RETS>...>::value && is_same<Ret,typename CheckNonVoidTypeInLine<RETS...>::type>::value ,int>::type;
+  template <typename... Rets>
+  using Dummy = typename enable_if<IsValidListOfLines<Ret,Rets...>::value,int>::type;
 
 public:
-  template <typename... RETS> inline DefinitionOfComputableFunction( const Dummy<RETS...>& dummy , const FunctionSymbol<Ret,ARGS...>& f , const LineOfDefinitionOfComputableFunction<Ret>& L , const RETS&... lines );
+  inline DefinitionOfComputableFunction( const int& dummy , const FunctionSymbol<Ret,Args...>& f , const LineOfDefinitionOfComputableFunction<Ret>& line );
+  template <typename... Rets> inline DefinitionOfComputableFunction( const Dummy<Rets...>& dummy , const FunctionSymbol<Ret,Args...>& f , const Rets&... lines );
+
+  inline const string& Name() const;
+  void Display() const noexcept;
 
 };
-
-// deduction guide
-template <typename Ret, typename... ARGS, typename... RETS> DefinitionOfComputableFunction( const int& dummy , const FunctionSymbol<Ret,ARGS...>& f , const RETS&... lines ) -> DefinitionOfComputableFunction<Ret,ARGS...>;

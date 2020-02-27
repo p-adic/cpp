@@ -6,18 +6,18 @@
 
 #include "../Expression/Condition/a.hpp"
 #include "../Expression/Variable/Variadic/a.hpp"
-#include "../Syntax/a.hpp"
+#include "../Type/Basic/a.hpp"
 
 
-template <typename Ret, typename... ARGS>
+template <typename Ret, typename... Args>
 class FunctionSymbol :
   public SyntaxOfComputableFunction
 {
 
 public:
-  inline FunctionSymbol( const string& f , const VariableSymbol<ARGS>&... args );
+  inline FunctionSymbol( const string& f , const VariableSymbol<Args>&... args );
 
-  inline ExpressionOfComputableFunction<Ret> operator()( const ExpressionOfComputableFunction<ARGS>&... args ) const;
+  inline ExpressionOfComputableFunction<Ret> operator()( const ExpressionOfComputableFunction<Args>&... args ) const;
 
 };
 
@@ -30,10 +30,21 @@ DECLARATION_OF_FUNCTION_SYMBOL_APPLICATION( Minus );
 DECLARATION_OF_FUNCTION_SYMBOL_APPLICATION( Slash );
 DECLARATION_OF_FUNCTION_SYMBOL_APPLICATION( Mod );
 
-const FunctionSymbol<bool,bool>& NegSymbol();
+inline const FunctionSymbol<bool,bool>& NegSymbol();
 DECLARATION_OF_LOGICAL_CONNECTIVE( To );
 DECLARATION_OF_LOGICAL_CONNECTIVE( Equiv );
 
 ConditionOfComputableFunction NegSymbolApplication( const ConditionOfComputableFunction& b );
 DECLARATION_OF_LOGICAL_CONNECTIVE_APPLICATION( To );
 DECLARATION_OF_LOGICAL_CONNECTIVE_APPLICATION( Equiv );
+
+
+DECLARATION_OF_GLOBAL_CONSTANT_STRING_FOR_SYMBOL( Nest );
+DECLARATION_OF_GLOBAL_CONSTANT_STRING_FOR_SYMBOL( Function );
+
+DECLARATION_OF_GLOBAL_CONSTANT_STRING_FOR_SYMBOL( Minus );
+DECLARATION_OF_GLOBAL_CONSTANT_STRING_FOR_SYMBOL( Slash );
+DECLARATION_OF_GLOBAL_CONSTANT_STRING_FOR_SYMBOL( Mod );
+DECLARATION_OF_GLOBAL_CONSTANT_STRING_FOR_SYMBOL( Neg );
+DECLARATION_OF_GLOBAL_CONSTANT_STRING_FOR_SYMBOL( To );
+DECLARATION_OF_GLOBAL_CONSTANT_STRING_FOR_SYMBOL( Equiv );

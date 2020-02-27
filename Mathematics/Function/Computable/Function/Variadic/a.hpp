@@ -4,16 +4,17 @@
 #include "a_Macro.hpp"
 
 #include "../a.hpp"
+#include "../../Expression/List/a.hpp"
 
-template <typename Ret, typename... ARGS>
+template <typename Ret, typename... Args>
 class VariadicFunctionSymbol :
-  public FunctionSymbol<Ret,ARGS...,void>
+  public FunctionSymbol<Ret,Args...,void>
 {
 
 public:
-  inline VariadicFunctionSymbol( const string& f , const VariableSymbol<ARGS>&... args );
+  inline VariadicFunctionSymbol( const string& f , const VariableSymbol<Args>&... args );
 
-  template <typename... VA> inline ExpressionOfComputableFunction<Ret> operator()( const ExpressionOfComputableFunction<ARGS>&... args , const ExpressionOfComputableFunction<VA>&... va ) const;
+  template <typename... VA> inline ExpressionOfComputableFunction<Ret> operator()( const ExpressionOfComputableFunction<Args>&... args , const ListExpressionOfComputableFunction<VA...>& va ) const;
 
 };
 
@@ -27,3 +28,9 @@ DECLARATION_OF_VARIADIC_LOGICAL_CONNECTIVE( Land );
 DECLARATION_OF_VARIADIC_LOGICAL_CONNECTIVE( Lor );
 DECLARATION_OF_VARIADIC_LOGICAL_CONNECTIVE_APPLICATION_ALL( Land );
 DECLARATION_OF_VARIADIC_LOGICAL_CONNECTIVE_APPLICATION_ALL( Lor );
+
+
+DECLARATION_OF_GLOBAL_CONSTANT_STRING_FOR_SYMBOL( Plus );
+DECLARATION_OF_GLOBAL_CONSTANT_STRING_FOR_SYMBOL( Times );
+DECLARATION_OF_GLOBAL_CONSTANT_STRING_FOR_SYMBOL( Land );
+DECLARATION_OF_GLOBAL_CONSTANT_STRING_FOR_SYMBOL( Lor );

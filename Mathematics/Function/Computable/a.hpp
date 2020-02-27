@@ -1,19 +1,43 @@
 // c:/Users/user/Documents/Programming/Mathematics/Function/Computable/a.hpp
 
 #pragma once
-#include "Order/a.hpp"
+#include "Header.hpp"
+#include "a_Macro.hpp"
 
-template <typename Ret>
-class ComputableFunction
-{
+#include "Definition/a_Body.hpp"
+#include "Function/Guide/a_Body.hpp"
+#include "Type/Valid/a_Body.hpp"
+#include "../../../Error/MismatchType/a_Body.hpp"
 
-private:
-  VLTree<string> m_syntax;
-  
-public:
-  ComputableFunction( const OrderOfComputableFunction<Ret>& definition );
-  template <typename T, typename... ARGS> ComputableFunction( const OrderOfComputableFunction<Ret>& definition , const VariableSymbol<T>& t , const ARGS&... args );
 
-  string Display( const string& mode ) const noexcept;
+/*
+Definition
 
-};
+Line
+
+VariadicRelation
+
+Relation
+
+VariadicFunction
+
+Function
+
+VariadicVariable
+
+List
+
+Variable
+
+ValidType
+
+Type
+
+Condition
+
+Expression
+
+BasicType
+
+Syntax
+*/

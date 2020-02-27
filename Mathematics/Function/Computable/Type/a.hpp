@@ -10,8 +10,9 @@ private:
   ConditionOfComputableFunction m_cond;
   
 public:
-  inline TypeOfComputableFunction();
   inline TypeOfComputableFunction( const ConditionOfComputableFunction& cond );
+
+  static inline const string& Name() noexcept;
 
   inline void SetCondition( const ConditionOfComputableFunction& cond ) noexcept;
   inline const ConditionOfComputableFunction& GetCondition() const noexcept;

@@ -4,18 +4,21 @@
 #include "a.hpp"
 
 #include "../a_Body.hpp"
+#include "../../Expression/List/a_Body.hpp"
 
-template <typename Ret, typename... ARGS> inline VariadicFunctionSymbol<Ret,ARGS...>::VariadicFunctionSymbol( const string& f , const VariableSymbol<ARGS>&... args ) : FunctionSymbol<Ret,ARGS...,void>( f , args... , LDOTS ) {}
+template <typename Ret, typename... Args> inline VariadicFunctionSymbol<Ret,Args...>::VariadicFunctionSymbol( const string& f , const VariableSymbol<Args>&... args ) : FunctionSymbol<Ret,Args...,void>( f , args... , LdotsSymbol() ) {}
 
 
-template <typename Ret, typename... ARGS> template <typename... VA> inline ExpressionOfComputableFunction<Ret> VariadicFunctionSymbol<Ret,ARGS...>::operator()( const ExpressionOfComputableFunction<ARGS>&... args , const ExpressionOfComputableFunction<VA>&... va ) const { return ExpressionOfComputableFunction<Ret>( *this , args... , va... ); }
+template <typename Ret, typename... Args> template <typename... VA> inline ExpressionOfComputableFunction<Ret> VariadicFunctionSymbol<Ret,Args...>::operator()( const ExpressionOfComputableFunction<Args>&... args , const ListExpressionOfComputableFunction<VA...>& va ) const { return ExpressionOfComputableFunction<Ret>( *this , args... , va ); }
+
 
 DEFINITION_OF_VARIADIC_FUNCTION_SYMBOL( Plus );
 DEFINITION_OF_VARIADIC_FUNCTION_SYMBOL( Times );
-DEFINITION_OF_VARIADIC_FUNCTION_SYMBOL_APPLICATION_ONE_MORE( Plus , 0 );
-DEFINITION_OF_VARIADIC_FUNCTION_SYMBOL_APPLICATION_ONE_MORE( Times , 1 );
+DEFINITION_OF_VARIADIC_FUNCTION_SYMBOL_APPLICATION_ONE_MORE( Plus );
+DEFINITION_OF_VARIADIC_FUNCTION_SYMBOL_APPLICATION_ONE_MORE( Times );
 
-DEFINITION_OF_VARIADIC_LOGICAL_CONNECTIVE( Land );
-DEFINITION_OF_VARIADIC_LOGICAL_CONNECTIVE( Lor );
-DEFINITION_OF_VARIADIC_LOGICAL_CONNECTIVE_APPLICATION_ONE_MORE( Land , true );
-DEFINITION_OF_VARIADIC_LOGICAL_CONNECTIVE_APPLICATION_ONE_MORE( Lor , false );
+
+DEFINITION_OF_GLOBAL_CONSTANT_STRING_FOR_SYMBOL( Plus , + );
+DEFINITION_OF_GLOBAL_CONSTANT_STRING_FOR_SYMBOL( Times , \\times );
+DEFINITION_OF_GLOBAL_CONSTANT_STRING_FOR_SYMBOL( Land , \\land );
+DEFINITION_OF_GLOBAL_CONSTANT_STRING_FOR_SYMBOL( Lor , \\lor );

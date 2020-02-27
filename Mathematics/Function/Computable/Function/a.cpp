@@ -1,25 +1,39 @@
 // c:/Users/user/Documents/Programming/Mathematics/Function/Computable/Function/a.cpp
 
-#include "../../../Header.hpp"
+#include "../Header.hpp"
 #include "a_Body.hpp"
-
-const FunctionSymbol<bool,bool>& NegSymbol()
-{
-
-  static const FunctionSymbol<bool,bool> f( "neg" , VariableSymbol<bool>( "x" ) );
-    return f;
-
-}
 
 ConditionOfComputableFunction NegSymbolApplication( const ConditionOfComputableFunction& b )
 {
 
-  if( b.Name() == "neg" ){
+  auto itr = ( b.Get() ).LeftMostNode();
 
-    auto b_copy = b;
-    VLTree<string>& t = b_copy.Ref();
-    t = t.RightMostSubTreeCopy();
-    return b_copyl;
+  if( ! itr.IsValid() ){
+
+    ERR_CODE;
+
+  }
+  
+  if( *itr == FunctionString() ){
+
+    itr++;
+    itr++;
+    itr++;
+    
+    if( ! itr.IsValid() ){
+
+      ERR_CODE;
+
+    }
+    
+    if( *itr == NegString() ){
+
+      auto b_copy = b;
+      VLTree<string>& t = b_copy.Ref();
+      t = t.RightMostSubTreeCopy();
+      return b_copy;
+
+    }
 
   }
 
@@ -28,5 +42,5 @@ ConditionOfComputableFunction NegSymbolApplication( const ConditionOfComputableF
 }
 
 
-DEFINITION_OF_LOGICAL_CONNECTIVE( To );
-DEFINITION_OF_LOGICAL_CONNECTIVE( Equiv );
+DEFINITION_OF_LOGICAL_CONNECTIVE( To , ToString() );
+DEFINITION_OF_LOGICAL_CONNECTIVE( Equiv , EquivString() );

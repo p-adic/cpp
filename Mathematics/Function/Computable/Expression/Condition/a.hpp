@@ -14,19 +14,21 @@ protected:
 
 public:
   // constant
+  template <typename T> inline ExpressionOfComputableFunction( const T& t ) = delete;
   inline ExpressionOfComputableFunction( const bool& t );
 
   // function
-  template <typename... ARGS> inline ExpressionOfComputableFunction( const FunctionSymbol<bool,ARGS...>& f , const ExpressionOfComputableFunction<ARGS>&... args );
+  template <typename... Args> inline ExpressionOfComputableFunction( const FunctionSymbol<bool,Args...>& f , const ExpressionOfComputableFunction<Args>&... args );
 
   // variadic function
-  template <typename... ARGS, typename... VA> inline ExpressionOfComputableFunction( const VariadicFunctionSymbol<bool,ARGS...>& f , const ExpressionOfComputableFunction<ARGS>&... args , const ExpressionOfComputableFunction<VA>&... va );
+  template <typename... Args, typename... VA> inline ExpressionOfComputableFunction( const VariadicFunctionSymbol<bool,Args...>& f , const ExpressionOfComputableFunction<Args>&... args , const ListExpressionOfComputableFunction<VA...>& va );
 
   // relaion
-  template <typename... ARGS> inline ExpressionOfComputableFunction( const RelationSymbol<ARGS...>& r , const ExpressionOfComputableFunction<ARGS>&... args );
+  template <typename... Args> inline ExpressionOfComputableFunction( const RelationSymbol<Args...>& r , const ExpressionOfComputableFunction<Args>&... args );
 
   // variadic relation
-  template <typename... ARGS, typename... VA> inline ExpressionOfComputableFunction( const VariadicRelationSymbol<ARGS...>& r , const ExpressionOfComputableFunction<ARGS>&... args , const ExpressionOfComputableFunction<VA>&... va );
+  template <typename... Args, typename... VA> inline ExpressionOfComputableFunction( const VariadicRelationSymbol<Args...>& r , const ExpressionOfComputableFunction<Args>&... args , const ListExpressionOfComputableFunction<VA...>& va );
+
 
   using type = bool;
 
@@ -44,3 +46,5 @@ template <typename Ret> inline ConditionOfComputableFunction operator>( const Ex
 inline ConditionOfComputableFunction operator!( const ConditionOfComputableFunction& b );
 inline ConditionOfComputableFunction operator&&( const ConditionOfComputableFunction& b1 , const ConditionOfComputableFunction& b2 );
 inline ConditionOfComputableFunction operator||( const ConditionOfComputableFunction& b1 , const ConditionOfComputableFunction& b2 );
+
+template <typename... Args, typename... VA> void RelationExpressionToSyntax( SyntaxOfComputableFunction& t , const RelationSymbol<Args...>& r , const ExpressionOfComputableFunction<VA>&... va );

@@ -4,8 +4,9 @@
 #include "a.hpp"
 
 #include "../a_Body.hpp"
+#include "../../Expression/List/a_Body.hpp"
 
-template <typename... ARGS> inline VariadicRelationSymbol<ARGS...>::VariadicRelationSymbol( const string& r , const VariableSymbol<ARGS>&... args ) : RelationSymbol<ARGS...>( r , args... , LDOTS ) {}
+template <typename... Args> inline VariadicRelationSymbol<Args...>::VariadicRelationSymbol( const string& r , const VariableSymbol<Args>&... args ) : RelationSymbol<Args...>( r , args... , LdotsSymbol() ) {}
 
 
-template <typename... ARGS> template <typename... VA> inline ConditionOfComputableFunction VariadicRelationSymbol<ARGS...>::operator()( const ExpressionOfComputableFunction<ARGS>&... args , const ExpressionOfComputableFunction<VA>&... va ) const { return ConditionOfComputableFunction( *this , args... , va... ); }
+template <typename... Args> template <typename... VA> inline ConditionOfComputableFunction VariadicRelationSymbol<Args...>::operator()( const ExpressionOfComputableFunction<Args>&... args , const ListExpressionOfComputableFunction<VA...>& va ) const { return ConditionOfComputableFunction( *this , args... , va ); }

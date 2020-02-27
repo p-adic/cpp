@@ -28,10 +28,3 @@
 									\
   DECLARATION_OF_RELATION_SYMBOL_APPLICATION( REL ){ return CONNECT( REL , Symbol )<Ret>()( e1 , e2 ); } \
   
-
-#define EQ( x , y ) EqSymbolApplication( x , y ) 
-#define NEQ( x , y ) NeqSymbolApplication( x , y ) 
-#define LEQ( x , y ) LeqSymbolApplication( x , y ) 
-#define GEQ( x , y ) GeqSymbolApplication( x , y ) 
-#define LNEQ( x , y ) LneqSymbolApplication( x , y ) 
-#define GNEQ( x , y ) GneqSymbolApplication( x , y ) 

@@ -2,14 +2,6 @@
 
 #pragma once
 
-#define PLUS( ... ) PlusSymbolApplication( __VA_ARGS__ ) 
-#define TIMES( ... ) TimesSymbolApplication( __VA_ARGS__ ) 
-
-#define LAND( ... ) LandSymbolApplication( __VA_ARGS__ ) 
-#define LOR( ... ) LorSymbolApplication( __VA_ARGS__ ) 
-#define EQUIV( ... ) EquivSymbolApplication( __VA_ARGS__ ) 
-
-
 #define DECLARATION_OF_VARIADIC_FUNCTION_SYMBOL_BODY( RET , FUNC )	\
 									\
   const VariadicFunctionSymbol< RET , RET >& CONNECT( FUNC , Symbol )() \
@@ -47,24 +39,36 @@
 									\
   
 
-#define DEFINITION_OF_VARIADIC_FUNCTION_SYMBOL_APPLICATION_TWO_BODY( RET , FUNC , SYMBOL , TRIV ) \
+#define DEFINITION_OF_VARIADIC_FUNCTION_SYMBOL_APPLICATION_TWO_BODY( RET , FUNC , SYMBOL , IDENTITY , ZERO ) \
 									\
   DECLARATION_OF_VARIADIC_FUNCTION_SYMBOL_APPLICATION_TWO_BODY( RET , FUNC ) \
   {									\
 									\
-    const string& name1 = e1.Name();					\
+    const string& name1 = e1.GetNodeString( 2 );			\
 									\
-    if( name1 == TO_STRING( TRIV ) ){					\
+    if( name1 == TO_STRING( IDENTITY ) ){				\
 									\
       return e2;							\
 									\
     }									\
 									\
-    const string& name2 = e2.Name();					\
-									\
-    if( name2 == TO_STRING( TRIV ) ){					\
+    if( name1 == TO_STRING( ZERO ) ){					\
 									\
       return e1;							\
+									\
+    }									\
+									\
+    const string& name2 = e2.GetNodeString( 2 );			\
+									\
+    if( name2 == TO_STRING( IDENTITY ) ){				\
+									\
+      return e1;							\
+									\
+    }									\
+									\
+    if( name2 == TO_STRING( ZERO ) ){					\
+									\
+      return e2;							\
 									\
     }									\
 									\
@@ -72,6 +76,7 @@
 									\
       auto e1_copy = e1;						\
       VLTree<string>& t1 = e1_copy.Ref();				\
+      VLSubTree<string> t1_sub = t1.RightMostSubTree();			\
       const VLTree<string>& t2 = e2.Get();				\
 									\
       if( name2 == TO_STRING( FUNC ) ){					\
@@ -80,17 +85,19 @@
 	itr++;								\
 	itr++;								\
 	itr++;								\
+	t1_sub.push_RightMost( t2.GetBranchCopy( itr ) );		\
+	itr++;								\
+	itr[2];								\
 									\
 	while( itr.IsValid() ){						\
 									\
-	  t1.push_RightMost( *itr );					\
-	  itr++;							\
+	  t1_sub.push_RightMost( t2.GetBranchCopy( itr ) );		\
 									\
 	}								\
 									\
       } else {								\
 									\
-	t1.push_RightMost( t2 );					\
+	t1_sub.push_RightMost( t2 );					\
 									\
       }									\
 									\
@@ -103,8 +110,11 @@
       auto e2_copy = e2;						\
       const VLTree<string>& t1 = e1.Get();				\
       VLTree<string>& t2 = e2_copy.Ref();				\
-      auto itr = t2.LeftMostNode();					\
+      VLSubTree<string> t2_sub = t2.RightMostSubTree();			\
+      auto itr = t2_sub.LeftMostNode();					\
       itr++;								\
+      itr++;								\
+      t2_sub.insert( itr , "" );					\
       itr++;								\
       t2.Concatenate( itr , t1 );					\
 									\
@@ -112,13 +122,13 @@
 									\
     }									\
 									\
-    return CONNECT( FUNC , SYMBOL )()( e1 , e2 );			\
+    return CONNECT( FUNC , SYMBOL )()( e1 , ListExpressionOfComputableFunction( e2 ) ); \
 									\
   }									\
 									\
   
 
-#define DEFINITION_OF_VARIADIC_FUNCTION_SYMBOL_APPLICATION_MORE_BODY( RET , FUNC , TRIV ) \
+#define DEFINITION_OF_VARIADIC_FUNCTION_SYMBOL_APPLICATION_MORE_BODY( RET , FUNC ) \
 									\
   DECLARATION_OF_VARIADIC_FUNCTION_SYMBOL_APPLICATION_MORE_BODY( RET , FUNC ){ return CONNECT( FUNC , SymbolApplication )( e1 , CONNECT( FUNC , SYMBOL_APPLICATION )( e2 , e3 , args... ) ); } \
 									\
@@ -161,20 +171,20 @@
   template <typename Ret> DEFINITION_OF_VARIADIC_FUNCTION_SYMBOL_APPLICATION_ONE_BODY( Ret , FUNC ) \
     
 
-#define DEFINITION_OF_VARIADIC_FUNCTION_SYMBOL_APPLICATION_TWO( FUNC , TRIV ) \
+#define DEFINITION_OF_VARIADIC_FUNCTION_SYMBOL_APPLICATION_TWO( FUNC , IDENTITY , ZERO ) \
 									\
-  template <typename Ret> DEFINITION_OF_VARIADIC_FUNCTION_SYMBOL_APPLICATION_TWO_BODY( Ret , FUNC , Symbol<Ret> , TRIV ) \
+  template <typename Ret> DEFINITION_OF_VARIADIC_FUNCTION_SYMBOL_APPLICATION_TWO_BODY( Ret , FUNC , Symbol<Ret> , IDENTITY , ZERO ) \
 
 
-#define DEFINITION_OF_VARIADIC_FUNCTION_SYMBOL_APPLICATION_MORE( FUNC , TRIV ) \
+#define DEFINITION_OF_VARIADIC_FUNCTION_SYMBOL_APPLICATION_MORE( FUNC ) \
 									\
-  template <typename Ret, typename... Args> DEFINITION_OF_VARIADIC_FUNCTION_SYMBOL_APPLICATION_MORE_BODY( Ret , FUNC , TRIV ) \
+  template <typename Ret, typename... Args> DEFINITION_OF_VARIADIC_FUNCTION_SYMBOL_APPLICATION_MORE_BODY( Ret , FUNC ) \
 
 
-#define DEFINITION_OF_VARIADIC_FUNCTION_SYMBOL_APPLICATION_ONE_MORE( FUNC , TRIV ) \
+#define DEFINITION_OF_VARIADIC_FUNCTION_SYMBOL_APPLICATION_ONE_MORE( FUNC ) \
 									\
   DEFINITION_OF_VARIADIC_FUNCTION_SYMBOL_APPLICATION_ONE( FUNC );	\
-  DEFINITION_OF_VARIADIC_FUNCTION_SYMBOL_APPLICATION_MORE( FUNC , TRIV ) \
+  DEFINITION_OF_VARIADIC_FUNCTION_SYMBOL_APPLICATION_MORE( FUNC )	\
 
 
 #define DECLARATION_OF_VARIADIC_LOGICAL_CONNECTIVE( FUNC )	\
@@ -214,18 +224,18 @@
   DEFINITION_OF_VARIADIC_FUNCTION_SYMBOL_APPLICATION_ONE_BODY( bool , FUNC ) \
     
 
-#define DEFINITION_OF_VARIADIC_LOGICAL_CONNECTIVE_APPLICATION_TWO( FUNC , TRIV ) \
+#define DEFINITION_OF_VARIADIC_LOGICAL_CONNECTIVE_APPLICATION_TWO( FUNC , IDENTITY , ZERO ) \
 									\
-  DEFINITION_OF_VARIADIC_FUNCTION_SYMBOL_APPLICATION_TWO_BODY( bool , FUNC , Symbol , TRIV ) \
+  DEFINITION_OF_VARIADIC_FUNCTION_SYMBOL_APPLICATION_TWO_BODY( bool , FUNC , Symbol , IDENTITY , ZERO ) \
     
 
-#define DEFINITION_OF_VARIADIC_LOGICAL_CONNECTIVE_APPLICATION_MORE( FUNC , TRIV ) \
+#define DEFINITION_OF_VARIADIC_LOGICAL_CONNECTIVE_APPLICATION_MORE( FUNC ) \
 									\
-  template <typename... Args> DEFINITION_OF_VARIADIC_FUNCTION_SYMBOL_APPLICATION_MORE_BODY( bool , FUNC , TRIV ) \
+  template <typename... Args> DEFINITION_OF_VARIADIC_FUNCTION_SYMBOL_APPLICATION_MORE_BODY( bool , FUNC ) \
     
 
-#define DEFINITION_OF_VARIADIC_LOGICAL_CONNECTIVE_APPLICATION_ONE_MORE( FUNC , TRIV ) \
+#define DEFINITION_OF_VARIADIC_LOGICAL_CONNECTIVE_APPLICATION_ONE_MORE( FUNC ) \
 									\
   DEFINITION_OF_VARIADIC_LOGICAL_CONNECTIVE_APPLICATION_ONE( FUNC );	\
-  DEFINITION_OF_VARIADIC_LOGICAL_CONNECTIVE_APPLICATION_MORE( FUNC , TRIV ) \
+  DEFINITION_OF_VARIADIC_LOGICAL_CONNECTIVE_APPLICATION_MORE( FUNC )	\
 
