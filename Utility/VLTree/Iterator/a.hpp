@@ -29,9 +29,13 @@ public:
   inline T& operator*() const;
   inline T* operator->() const;
   IteratorOfVLTree<T>& operator=( const IteratorOfVLTree<T>& ) noexcept;
-  void operator++( int );
-  void operator--( int );
-  void operator[]( const int& );
+
+  // 通常と異なり自身への参照を渡す。
+  IteratorOfVLTree<T>& operator++( int ) noexcept;
+  IteratorOfVLTree<T>& operator--( int ) noexcept;
+
+  // 引数が0の時は何もしない。正の時はm_leftmost_nodeに進んでインクリメント、負の時はm_rightmost_nodeに進んでディクリメント。
+  IteratorOfVLTree<T>& operator[]( const int& );
   
   inline bool IsLeaf() const noexcept;
   inline bool IsLeftMost() const noexcept;
@@ -64,9 +68,13 @@ public:
   inline const T* operator->() const;
   ConstIteratorOfVLTree<T>& operator=( const ConstIteratorOfVLTree<T>& ) noexcept;
   ConstIteratorOfVLTree<T>& operator=( const IteratorOfVLTree<T>& ) noexcept;
-  void operator++( int );
-  void operator--( int );
-  void operator[]( const int& );
+
+  // 通常と異なり自身への参照を渡す。
+  ConstIteratorOfVLTree<T>& operator++( int ) noexcept;
+  ConstIteratorOfVLTree<T>& operator--( int ) noexcept;
+
+  // 引数が0の時は何もしない。正の時はm_leftmost_nodeに進んでインクリメント、負の時はm_rightmost_nodeに進んでディクリメント。
+  ConstIteratorOfVLTree<T>& operator[]( const int& );
 
   inline bool IsLeaf() const noexcept;
   inline bool IsLeftMost() const noexcept;

@@ -4,6 +4,7 @@
 #include "a.hpp"
 
 #include "../Entry/a_Body.hpp"
+#include "../../../Error/IllegalAccess/a_Body.hpp"
 
 // IteratorOfVLTree
 template <typename T> inline IteratorOfVLTree<T>::IteratorOfVLTree() noexcept : m_p( nullptr ) {}
@@ -22,9 +23,15 @@ IteratorOfVLTree<T>& IteratorOfVLTree<T>::operator=( const IteratorOfVLTree<T>& 
 }
 
 template <typename T>
-void IteratorOfVLTree<T>::operator++( int )
+IteratorOfVLTree<T>& IteratorOfVLTree<T>::operator++( int ) noexcept
 {
 
+  if( m_p == nullptr ){
+
+    return *this;
+
+  }
+  
   if( m_p == ( *m_p ).m_right_branch ){
 
     m_p = nullptr;
@@ -35,13 +42,19 @@ void IteratorOfVLTree<T>::operator++( int )
 
   }
 
-  return;
+  return *this;
 
 }
 
 template <typename T>
-void IteratorOfVLTree<T>::operator--( int )
+IteratorOfVLTree<T>& IteratorOfVLTree<T>::operator--( int ) noexcept
 {
+
+  if( m_p == nullptr ){
+
+    return *this;
+
+  }
 
   if( m_p == ( *m_p ).m_left_branch ){
 
@@ -53,21 +66,21 @@ void IteratorOfVLTree<T>::operator--( int )
 
   }
 
-  return;
+  return *this;
 
 }
 
 template <typename T>
-void IteratorOfVLTree<T>::operator[]( const int& n )
+IteratorOfVLTree<T>& IteratorOfVLTree<T>::operator[]( const int& n )
 {
 
   if( n > 0 ){
       
-    m_p = ( *m_p ).m_leftmost_node;
+    m_p = ACCESS( m_p ).m_leftmost_node;
 
     for( int i = 1 ; i < n ; i++ ){
 
-      m_p = ( *m_p ).m_right_branch;
+      m_p = ACCESS( m_p ).m_right_branch;
 
     }
 
@@ -75,23 +88,23 @@ void IteratorOfVLTree<T>::operator[]( const int& n )
 
   if( n < 0 ){
       
-    m_p = ( *m_p ).m_rightmost_node;
+    m_p = ACCESS( m_p ).m_rightmost_node;
 
     for( int i = -1 ; n < i ; i-- ){
 
-      m_p = ( *m_p ).m_left_branch;
+      m_p = ACCESS( m_p ).m_left_branch;
 
     }
 
   }
 
-  return;
+  return *this;
 
 }
 
-template <typename T> inline bool IteratorOfVLTree<T>::IsLeaf() const noexcept { return m_p == ( *m_p ).m_leftmost_node; }
-template <typename T> inline bool IteratorOfVLTree<T>::IsLeftMost() const noexcept { return m_p == ( *m_p ).m_left_branch; }
-template <typename T> inline bool IteratorOfVLTree<T>::IsRightMost() const noexcept { return m_p == ( *m_p ).m_right_branch; }
+template <typename T> inline bool IteratorOfVLTree<T>::IsLeaf() const noexcept { return ( m_p == nullptr ) ? false : ( m_p == ( *m_p ).m_leftmost_node ); }
+template <typename T> inline bool IteratorOfVLTree<T>::IsLeftMost() const noexcept { return ( m_p == nullptr ) ? false : ( m_p == ( *m_p ).m_left_branch ); }
+template <typename T> inline bool IteratorOfVLTree<T>::IsRightMost() const noexcept { return ( m_p == nullptr ) ? false : ( m_p == ( *m_p ).m_right_branch ); }
 template <typename T> inline bool IteratorOfVLTree<T>::IsValid() const noexcept { return m_p != nullptr; }
 
 // ConstIteratorOfVLTree
@@ -121,8 +134,14 @@ ConstIteratorOfVLTree<T>& ConstIteratorOfVLTree<T>::operator=( const IteratorOfV
 }
 
 template <typename T>
-void ConstIteratorOfVLTree<T>::operator++( int )
+ConstIteratorOfVLTree<T>& ConstIteratorOfVLTree<T>::operator++( int ) noexcept
 {
+
+  if( m_p == nullptr ){
+
+    return *this;
+
+  }
 
   if( m_p == ( *m_p ).m_right_branch ){
 
@@ -134,13 +153,19 @@ void ConstIteratorOfVLTree<T>::operator++( int )
 
   }
 
-  return;
+  return *this;
 
 }
 
 template <typename T>
-void ConstIteratorOfVLTree<T>::operator--( int )
+ConstIteratorOfVLTree<T>& ConstIteratorOfVLTree<T>::operator--( int ) noexcept
 {
+
+  if( m_p == nullptr ){
+
+    return *this;
+
+  }
 
   if( m_p == ( *m_p ).m_left_branch ){
 
@@ -152,21 +177,21 @@ void ConstIteratorOfVLTree<T>::operator--( int )
 
   }
 
-  return;
+  return *this;
 
 }
 
 template <typename T>
-void ConstIteratorOfVLTree<T>::operator[]( const int& n )
+ConstIteratorOfVLTree<T>& ConstIteratorOfVLTree<T>::operator[]( const int& n )
 {
 
   if( n > 0 ){
       
-    m_p = ( *m_p ).m_leftmost_node;
+    m_p = ACCESS( m_p ).m_leftmost_node;
 
     for( int i = 1 ; i < n ; i++ ){
 
-      m_p = ( *m_p ).m_right_branch;
+      m_p = ACCESS( m_p ).m_right_branch;
 
     }
 
@@ -174,23 +199,23 @@ void ConstIteratorOfVLTree<T>::operator[]( const int& n )
 
   if( n < 0 ){
       
-    m_p = ( *m_p ).m_rightmost_node;
+    m_p = ACCESS( m_p ).m_rightmost_node;
 
     for( int i = -1 ; n < i ; i-- ){
 
-      m_p = ( *m_p ).m_left_branch;
+      m_p = ACCESS( m_p ).m_left_branch;
 
     }
 
   }
 
-  return;
+  return *this;
 
 }
 
-template <typename T> inline bool ConstIteratorOfVLTree<T>::IsLeaf() const noexcept { return m_p == ( *m_p ).m_leftmost_mode; }
-template <typename T> inline bool ConstIteratorOfVLTree<T>::IsLeftMost() const noexcept { return m_p == ( *m_p ).m_left_branch; }
-template <typename T> inline bool ConstIteratorOfVLTree<T>::IsRightMost() const noexcept { return m_p == ( *m_p ).m_right_branch; }
+template <typename T> inline bool ConstIteratorOfVLTree<T>::IsLeaf() const noexcept { return ( m_p == nullptr ) ? false : ( m_p == ( *m_p ).m_leftmost_mode ); }
+template <typename T> inline bool ConstIteratorOfVLTree<T>::IsLeftMost() const noexcept { return ( m_p == nullptr ) ? false : ( m_p == ( *m_p ).m_left_branch ); }
+template <typename T> inline bool ConstIteratorOfVLTree<T>::IsRightMost() const noexcept { return ( m_p == nullptr ) ? false : ( m_p == ( *m_p ).m_right_branch ); }
 template <typename T> inline bool ConstIteratorOfVLTree<T>::IsValid() const noexcept { return m_p != nullptr; }
 
 template <typename T> inline bool ConstIteratorOfVLTree<T>::Equal( const IteratorOfVLTree<T>& itr0 , const IteratorOfVLTree<T>& itr1 ) noexcept { return itr0.m_p == itr1.m_p; }

@@ -1,5 +1,6 @@
-// VLArray_Alias.hpp
+// c:/Users/user/Documents/Programming/Utility/VLArray/a_Alias.hpp
 
+#pragma once
 #include "../WrappedInt/a.hpp"
 #include "../../Mathematics/SetTheory/EmptySet/a.hpp"
 

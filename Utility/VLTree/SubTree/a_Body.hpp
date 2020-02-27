@@ -7,15 +7,18 @@
 #include "../../../Error/IllegalCall/a.hpp"
 
 #include "../Iterator/a_Body.hpp"
+#include "../../WrappedType/a_Body.hpp"
 #include "../../../Error/IllegalImput/a_Body.hpp"
 
 template <typename T> inline VLSubTree<T>::VLSubTree() : m_e() , m_root( m_e ) , m_size( 0 ) {}
 template <typename T> template <typename Arg1 , typename... Arg2> inline VLSubTree<T>::VLSubTree( const Arg1& t0 , const Arg2&... t1 ) : VLSubTree<T>() { push_RightMost( t0 , t1... ); }
-template <typename T> inline VLSubTree<T>::VLSubTree( const VLSubTree<T>& a ) : VLSubTree<T>() { *this = a; }
+
+template <typename T> template <typename Arg> inline VLSubTree<T>::VLSubTree( const WrappedType<Arg>& t ) : m_e( t.Get() ) , m_root( m_e ) , m_size( 0 ) {}
+template <typename T> inline VLSubTree<T>::VLSubTree( const VLSubTree<T>& a ) : m_e( a.m_e ) , m_root( m_e ) , m_size( 0 ) { *this = a; }
 template <typename T> inline VLSubTree<T>::VLSubTree( const ConstIteratorOfVLTree<T>& itr ) : VLSubTree<T>( *( const_cast<EntryOfVLTree<T>*>( itr.m_p ) ) ) {}
 
 template <typename T>
-VLSubTree<T>::VLSubTree( EntryOfVLTree<T>& e ) : m_e() , m_root( e ) , m_size( 0 )
+VLSubTree<T>::VLSubTree( EntryOfVLTree<T>& e ) : m_e( e ) , m_root( e ) , m_size( 0 )
 {
 
   EntryOfVLTree<T>* p = m_root.m_leftmost_node;
@@ -45,12 +48,13 @@ VLSubTree<T>& VLSubTree<T>::operator=( const VLSubTree<T>& a )
     
     CutBranches();
 
-    const EntryOfVLTree<T>* p = a.m_root.m_leftmost_node;
+    m_root.m_t = a.m_root.m_t;
+    EntryOfVLTree<T>* p = a.m_root.m_leftmost_node;
     const uint& N = a.m_size;
     
     for( uint n = 0 ; n < N ; n++ ){
 
-      push_RightMost( ( *p ).m_t );
+      push_RightMost( VLSubTree( *p ) );
       p = ( *p ).m_right_branch;
 
     }
@@ -120,16 +124,18 @@ template <typename T> template <typename... Args>
 void VLSubTree<T>::push_RightMost( const VLSubTree<T>& t0 , const Args&... t1 )
 {
 
-  push_RightMost( T() );
+  push_RightMost( t0.m_root.m_t );
   Concatenate( t0 );
+  push_RightMost( t1... );
   return;
 
 }
 
 template <typename T> template <typename... Args> inline void VLSubTree<T>::push_RightMost( const VLTree<T>& t0 , const Args&... t1 ){
 
-  push_RightMost( T() );
+  push_RightMost( t0.m_root.m_t );
   Concatenate( t0 );
+  push_RightMost( t1... );
   return;
 
 }
@@ -447,6 +453,25 @@ VLSubTree<T> VLSubTree<T>::operator[]( const uint& i )
 
 }
 
+template <typename T> inline const T& VLSubTree<T>::GetRoot() const noexcept { return m_root.m_t; }
+
+template <typename T> inline void VLSubTree<T>::SetRoot( const T& t ){ m_root.m_t = t; }
+
+template <typename T>
+void VLSubTree<T>::SetNode( const typename VLSubTree<T>::iterator& itr , const T& t )
+{
+
+  if( ! CheckContain( itr ) ){
+
+    ERR_IMPUT( itr , t );
+    
+  }
+
+  *itr = t;
+  return;
+  
+}
+
 template <typename T>
 VLSubTree<T> VLSubTree<T>::operator[]( typename VLSubTree<T>::iterator& itr )
 {
@@ -547,7 +572,7 @@ VLTree<T> VLSubTree<T>::GetBranchCopy( const typename VLSubTree<T>::const_iterat
   }
 
   auto t = VLTree<T>();
-  t = VLConstSubTree<T>( *( itr.m_p ) );
+  t = VLConstSubTree<T>( itr.m_p );
   return t;
 
 }
@@ -557,6 +582,12 @@ void VLSubTree<T>::Concatenate( const VLSubTree<T>& t )
 {
 
   EntryOfVLTree<T>* const p_rightmost = m_root.m_rightmost_node;
+
+  if( p_rightmost->m_rightmost_node != p_rightmost ){
+
+    ERR_IMPUT( t );
+
+  }
 
   if( &m_root == p_rightmost ){
     
@@ -649,9 +680,11 @@ bool VLSubTree<T>::CheckContain( const const_iterator& itr ) const noexcept
 template <typename T>
 string VLSubTree<T>::Display() const
 {
-
-  string s = "(";
-  const EntryOfVLTree<T>* p = m_root.m_leftmost_node;
+  
+  string s = to_string( m_root.m_t );
+  s += "(";
+  
+  EntryOfVLTree<T>* p = m_root.m_leftmost_node;
   
   for( uint i = 0 ; i < m_size ; i++ ){
 
@@ -661,16 +694,7 @@ string VLSubTree<T>::Display() const
 
     }
     
-    if( ( *p ).m_rightmost_node == p ){
-
-      s += to_string( ( *p ).m_t );
-
-    } else {
-
-      EntryOfVLTree<T> e = *p;
-      s += to_string( VLSubTree<T>( e ) );
-
-    }
+    s += VLSubTree<T>( *p ).Display();
     
     p = ( *p ).m_right_branch;
 

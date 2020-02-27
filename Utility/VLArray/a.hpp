@@ -1,13 +1,13 @@
-// VLArray/a.hpp
+// c:/Users/user/Documents/Programming/Utility/VLArray/a.hpp
 
 #pragma once
 #include "Entry/a.hpp"
-#include "Wrap/a.hpp"
 
 #include "a_Alias.hpp"
 
 template <typename T> class IteratorOfVLArray;
 template <typename T> class ConstIteratorOfVLArray;
+template <typename Arg> class WrappedType;
 
 template <typename T>
 class VLArray
@@ -21,11 +21,12 @@ private:
 public:
   // Tは引数0のコンストラクタを持つクラスのみ許容。
   inline VLArray();
-
-  // Tが引数0のコンストラクタを持たないクラスの場合に使用。
-  template <typename Arg> inline VLArray( const WrapForVLArray<Arg>& t );
   template <typename Arg1 , typename... Arg2> inline VLArray( const Arg1& , const Arg2&... );
   inline VLArray( const VLArray<T>& );
+
+  // Tが引数0のコンストラクタを持たないクラスの場合に使用。
+  template <typename Arg> inline VLArray( const WrappedType<Arg>& t );
+  
   inline ~VLArray();
   
   VLArray<T>& operator=( const VLArray<T>& );

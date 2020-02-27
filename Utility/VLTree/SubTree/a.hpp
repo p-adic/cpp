@@ -7,6 +7,7 @@ template <typename T> class IteratorOfVLTree;
 template <typename T> class ConstIteratorOfVLTree;
 template <typename T> class VLConstSubTree;
 template <typename T> class VLTree;
+template <typename Arg> class WrappedType;
 
 template <typename T>
 class VLSubTree
@@ -25,9 +26,14 @@ private:
   // デストラクタがdelete演算子を呼ばないため、VLTree経由でしか呼び出してはいけない。
   inline VLSubTree();
 
+  // Tは引数0のコンストラクタを持つクラスのみ許容。
   // デストラクタがdelete演算子を呼ばないため、VLTree経由でしか呼び出してはいけない。
   template <typename Arg1 , typename... Arg2> inline VLSubTree( const Arg1& , const Arg2&... );
   
+  // Tが引数0のコンストラクタを持たないクラスの場合に使用。
+  // デストラクタがdelete演算子を呼ばないため、VLTree経由でしか呼び出してはいけない。
+  template <typename Arg> inline VLSubTree( const WrappedType<Arg>& t );
+
   // 明示的に代入演算子を経由してコピーしているため、構築された木への変更がコピー元へは反映されない。
   // デストラクタがdelete演算子を呼ばないため、VLTree経由でしか呼び出してはいけない。
   inline VLSubTree( const VLSubTree<T>& );
@@ -91,11 +97,17 @@ public:
   const_iterator RightMostLeaf() const noexcept;
   inline iterator Root() noexcept;
   inline const_iterator Root() const noexcept;
-  
+
+  // iteratorの右に新たなLeafを構築する。
   template <typename Arg> void insert( const iterator& , const Arg& );
 
   // RightMostである場合はrootへのイテレータを返す。
   iterator erase( iterator& );
+
+  // RootやNodeのラベルに直接読み書きを行う。
+  inline const T& GetRoot() const noexcept;
+  inline void SetRoot( const T& );
+  void SetNode( const iterator& , const T& );
 
   // 部分木を構築して返すため、部分木への変更が自身へも反映される。
   VLSubTree<T> operator[]( const uint& );
