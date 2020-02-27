@@ -1,13 +1,20 @@
-// c:/Users/user/Documents/Programming/Music/OnMei/Pitch/OnDo/a_Body.hpp
+// c:/Users/user/Documents/Programming/Music/OnMei/Pitch/a_Body.hpp
 
 #pragma once
 #include "a.hpp"
-
 #include "../a_Body.hpp"
 
-inline string OnDo::Display() const noexcept { return m_settouji + to_string( m_dosuu ) + "Do";}
+#include <cmath>
 
-inline OnDo::OnDo( const Pitch& P1 , const Pitch& P2 ) noexcept : OnDo( P1 , P2 , ComputeSignedDosuu( P1 , P2 ) ) {}
-inline OnDo::OnDo( const Pitch& P1 , const Pitch& P2 , const int& signed_dosuu ) noexcept : OnDo( P1 , P2 , signed_dosuu , signed_dosuu >= 0 ) {}
-inline OnDo::OnDo( const Pitch& P1 , const Pitch& P2 , const int& signed_dosuu , const bool& valid ) noexcept : OnDo( ComputeZeroIndexedDosuu( signed_dosuu , valid ) , ComputePitchDifference( P1 , P2 , valid ) ) {}
-inline OnDo::OnDo( const uint& zero_indexed_dosuu , const int& pitch_difference ) noexcept : m_settouji( ComputeSettouji( zero_indexed_dosuu , pitch_difference ) ) , m_dosuu( zero_indexed_dosuu + 1 ) , m_dosuu_mod( m_dosuu % 7 ) {}
+inline Pitch::Pitch( const OnMei& N , const Octave& octave ) noexcept : m_N( N ) , m_octave( octave ) {}
+
+inline NoteNumber Pitch::GetNoteNumber() const noexcept { return ( m_N.GetPitchClass() ).Represent() + ( ( m_octave + 1 ) * 12 ); }
+inline const OnMei& Pitch::GetOnMei() const noexcept { return m_N; }
+inline const Octave& Pitch::GetOctave() const noexcept { return m_octave; }
+inline double Pitch::GetShuuHaSuu() const noexcept { return g_La4_shuuhasuu * pow( 2.0 , ( GetNoteNumber() - g_La4_notenumber ) / 12.0 ); }
+inline PitchClass Pitch::GetPitchClass() const noexcept { return m_N.GetPitchClass(); }
+
+inline string Pitch::Display() const noexcept { return m_N.Display() + to_string( m_octave ); }
+
+inline bool operator==( const Pitch& N1 , const Pitch& N2 ) noexcept { return ( N1.GetOnMei() == N2.GetOnMei() ) && ( N1.GetOctave() == N2.GetOctave() ); }
+inline bool operator!=( const Pitch& N1 , const Pitch& N2 ) noexcept { return!( N1 == N2 ); }

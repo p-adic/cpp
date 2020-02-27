@@ -1,18 +1,22 @@
-Music/OnMei/Pitch/a.o: Music/OnMei/Pitch/a.cpp \
- Music/OnMei/Pitch/../../Header.hpp \
- Music/OnMei/Pitch/../../../Utility/Header.hpp \
- Music/OnMei/Pitch/../../../Utility/Header_Alias.hpp \
- Music/OnMei/Pitch/a_Body.hpp Music/OnMei/Pitch/a.hpp \
- Music/OnMei/Pitch/../a.hpp Music/OnMei/Pitch/../KanOn/a.hpp \
- Music/OnMei/Pitch/../KanOn/a_Macro.hpp \
- Music/OnMei/Pitch/../KanOn/../../../Mathematics/Arithmetic/Mod/a.hpp \
- Music/OnMei/Pitch/../HenkaKigou/a.hpp Music/OnMei/Pitch/../a_Alias.hpp \
- Music/OnMei/Pitch/a_Alias.hpp Music/OnMei/Pitch/../a_Body.hpp \
- Music/OnMei/Pitch/../KanOn/a_Body.hpp \
- Music/OnMei/Pitch/../KanOn/../../../Mathematics/Arithmetic/Mod/a_Body.hpp \
- Music/OnMei/Pitch/../KanOn/../../../Utility/String/a_Body.hpp \
- Music/OnMei/Pitch/../KanOn/../../../Utility/String/a.hpp \
- Music/OnMei/Pitch/../KanOn/../../../Utility/String/a_Macro.hpp \
+Music/OnMei/Pitch/OnDo/a.o: Music/OnMei/Pitch/OnDo/a.cpp \
+ Music/OnMei/Pitch/OnDo/../../../Header.hpp \
+ Music/OnMei/Pitch/OnDo/../../../../Utility/Header.hpp \
+ Music/OnMei/Pitch/OnDo/../../../../Utility/Header_Alias.hpp \
+ Music/OnMei/Pitch/OnDo/a_Body.hpp Music/OnMei/Pitch/OnDo/a.hpp \
+ Music/OnMei/Pitch/OnDo/../a.hpp Music/OnMei/Pitch/OnDo/../../a.hpp \
+ Music/OnMei/Pitch/OnDo/../../KanOn/a.hpp \
+ Music/OnMei/Pitch/OnDo/../../KanOn/a_Macro.hpp \
+ C:/Users/user/Documents/Programming/Mathematics/Arithmetic/Mod/a.hpp \
+ Music/OnMei/Pitch/OnDo/../../HenkaKigou/a.hpp \
+ Music/OnMei/Pitch/OnDo/../../a_Alias.hpp \
+ Music/OnMei/Pitch/OnDo/../a_Alias.hpp Music/OnMei/Pitch/OnDo/a_Macro.hpp \
+ Music/OnMei/Pitch/OnDo/../a_Body.hpp \
+ Music/OnMei/Pitch/OnDo/../../a_Body.hpp \
+ Music/OnMei/Pitch/OnDo/../../KanOn/a_Body.hpp \
+ C:/Users/user/Documents/Programming/Mathematics/Arithmetic/Mod/a_Body.hpp \
+ C:/Users/user/Documents/Programming/Utility/String/a_Body.hpp \
+ C:/Users/user/Documents/Programming/Utility/String/a.hpp \
+ C:/Users/user/Documents/Programming/Utility/String/a_Macro.hpp \
  C:/Users/user/Documents/Programming/SFINAE/MemberFunction/a_Macro.hpp \
  C:/Users/user/Documents/Programming/SFINAE/a_Macro.hpp \
  C:/Users/user/Documents/Programming/Utility/Macro_Macro.hpp \
@@ -23,7 +27,7 @@ Music/OnMei/Pitch/a.o: Music/OnMei/Pitch/a.cpp \
  C:/Users/user/Documents/Programming/Mathematics/SetTheory/EmptySet/a.hpp \
  C:/Users/user/Documents/Programming/SFINAE/MetaFunction/IsReferenceOf/a.hpp \
  C:/Users/user/Documents/Programming/SFINAE/a_Alias.hpp \
- Music/OnMei/Pitch/../KanOn/../../../Utility/String/a_Alias.hpp \
+ C:/Users/user/Documents/Programming/Utility/String/a_Alias.hpp \
  C:/Users/user/Documents/Programming/Error/IgnoredError/a_Body.hpp \
  C:/Users/user/Documents/Programming/Error/IgnoredError/a.hpp \
  C:/Users/user/Documents/Programming/Error/IgnoredError/a_Macro.hpp \
@@ -92,43 +96,49 @@ Music/OnMei/Pitch/a.o: Music/OnMei/Pitch/a.cpp \
  C:/Users/user/Documents/Programming/Utility/VLArray/Wrap/a_Body.hpp \
  C:/Users/user/Documents/Programming/Mathematics/SetTheory/DirectProduct/a_Body.hpp \
  C:/Users/user/Documents/Programming/SFINAE/MemberFunction/a_Body.hpp \
- Music/OnMei/Pitch/../HenkaKigou/a_Body.hpp
+ Music/OnMei/Pitch/OnDo/../../HenkaKigou/a_Body.hpp
 
-Music/OnMei/Pitch/../../Header.hpp:
+Music/OnMei/Pitch/OnDo/../../../Header.hpp:
 
-Music/OnMei/Pitch/../../../Utility/Header.hpp:
+Music/OnMei/Pitch/OnDo/../../../../Utility/Header.hpp:
 
-Music/OnMei/Pitch/../../../Utility/Header_Alias.hpp:
+Music/OnMei/Pitch/OnDo/../../../../Utility/Header_Alias.hpp:
 
-Music/OnMei/Pitch/a_Body.hpp:
+Music/OnMei/Pitch/OnDo/a_Body.hpp:
 
-Music/OnMei/Pitch/a.hpp:
+Music/OnMei/Pitch/OnDo/a.hpp:
 
-Music/OnMei/Pitch/../a.hpp:
+Music/OnMei/Pitch/OnDo/../a.hpp:
 
-Music/OnMei/Pitch/../KanOn/a.hpp:
+Music/OnMei/Pitch/OnDo/../../a.hpp:
 
-Music/OnMei/Pitch/../KanOn/a_Macro.hpp:
+Music/OnMei/Pitch/OnDo/../../KanOn/a.hpp:
 
-Music/OnMei/Pitch/../KanOn/../../../Mathematics/Arithmetic/Mod/a.hpp:
+Music/OnMei/Pitch/OnDo/../../KanOn/a_Macro.hpp:
 
-Music/OnMei/Pitch/../HenkaKigou/a.hpp:
+C:/Users/user/Documents/Programming/Mathematics/Arithmetic/Mod/a.hpp:
 
-Music/OnMei/Pitch/../a_Alias.hpp:
+Music/OnMei/Pitch/OnDo/../../HenkaKigou/a.hpp:
 
-Music/OnMei/Pitch/a_Alias.hpp:
+Music/OnMei/Pitch/OnDo/../../a_Alias.hpp:
 
-Music/OnMei/Pitch/../a_Body.hpp:
+Music/OnMei/Pitch/OnDo/../a_Alias.hpp:
 
-Music/OnMei/Pitch/../KanOn/a_Body.hpp:
+Music/OnMei/Pitch/OnDo/a_Macro.hpp:
 
-Music/OnMei/Pitch/../KanOn/../../../Mathematics/Arithmetic/Mod/a_Body.hpp:
+Music/OnMei/Pitch/OnDo/../a_Body.hpp:
 
-Music/OnMei/Pitch/../KanOn/../../../Utility/String/a_Body.hpp:
+Music/OnMei/Pitch/OnDo/../../a_Body.hpp:
 
-Music/OnMei/Pitch/../KanOn/../../../Utility/String/a.hpp:
+Music/OnMei/Pitch/OnDo/../../KanOn/a_Body.hpp:
 
-Music/OnMei/Pitch/../KanOn/../../../Utility/String/a_Macro.hpp:
+C:/Users/user/Documents/Programming/Mathematics/Arithmetic/Mod/a_Body.hpp:
+
+C:/Users/user/Documents/Programming/Utility/String/a_Body.hpp:
+
+C:/Users/user/Documents/Programming/Utility/String/a.hpp:
+
+C:/Users/user/Documents/Programming/Utility/String/a_Macro.hpp:
 
 C:/Users/user/Documents/Programming/SFINAE/MemberFunction/a_Macro.hpp:
 
@@ -150,7 +160,7 @@ C:/Users/user/Documents/Programming/SFINAE/MetaFunction/IsReferenceOf/a.hpp:
 
 C:/Users/user/Documents/Programming/SFINAE/a_Alias.hpp:
 
-Music/OnMei/Pitch/../KanOn/../../../Utility/String/a_Alias.hpp:
+C:/Users/user/Documents/Programming/Utility/String/a_Alias.hpp:
 
 C:/Users/user/Documents/Programming/Error/IgnoredError/a_Body.hpp:
 
@@ -288,4 +298,4 @@ C:/Users/user/Documents/Programming/Mathematics/SetTheory/DirectProduct/a_Body.h
 
 C:/Users/user/Documents/Programming/SFINAE/MemberFunction/a_Body.hpp:
 
-Music/OnMei/Pitch/../HenkaKigou/a_Body.hpp:
+Music/OnMei/Pitch/OnDo/../../HenkaKigou/a_Body.hpp:
