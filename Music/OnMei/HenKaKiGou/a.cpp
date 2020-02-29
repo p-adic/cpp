@@ -28,9 +28,9 @@ string HenkaKigou::IntToString( const int& num ) noexcept
   static const string Table[3] =
     {
 
-      "ó" ,
+      "ÂÃ³" ,
       "" ,
-      "ò"
+      "ÂÃ²"
 
     };
 
