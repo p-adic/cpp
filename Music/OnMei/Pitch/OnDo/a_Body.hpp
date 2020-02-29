@@ -3,8 +3,9 @@
 #pragma once
 #include "a.hpp"
 
-#include "../a_Body.hpp"
 #include "SetTouJi/a_Body.hpp"
+#include "../a_Body.hpp"
+#include "../../../Chou/OnKai/a_Body.hpp"
 
 inline OnDo::OnDo( const Pitch& P1 , const Pitch& P2 ) noexcept : OnDo( ComputeSignedZeroIndexedDoSuu( P1 , P2 ) , ComputeSignedPitchDifference( P1 , P2 ) ) {}
 inline OnDo::OnDo( const int& D , const int& d ) noexcept : OnDo( D , d , D >= 0 ? 1 : -1 ) {}
@@ -13,7 +14,7 @@ inline OnDo::OnDo( const ZeroIndexedDoSuu& D , const PitchDifference& d ) noexce
 
 inline const SetTouJiOfOnDo& OnDo::GetSetTouJi() const noexcept { return m_settouji; }
 inline const DoSuu& OnDo::GetDoSuu() const noexcept { return m_dosuu; }
-inline const Mod<7>& OnDo::GetDoSuuMod() const noexcept { return m_dosuu_mod; }
+inline const KaiMei& OnDo::GetDoSuuMod() const noexcept { return m_dosuu_mod; }
 
 inline string OnDo::Display() const noexcept { return m_settouji.Get() + to_string( m_dosuu ) + "Do";}
 

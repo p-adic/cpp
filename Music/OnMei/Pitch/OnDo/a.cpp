@@ -6,7 +6,7 @@
 bool OnDo::CheckKyouWaOnTei() const noexcept
 {
 
-  if( CheckKyouWaOnTeiNonBottom() ){
+  if( CheckKyouWaOnTeiBottom() ){
 
     return true;
 
@@ -16,7 +16,7 @@ bool OnDo::CheckKyouWaOnTei() const noexcept
 
 }
 
-bool OnDo::CheckKyouWaOnTeiNonBottom() const noexcept
+bool OnDo::CheckKyouWaOnTeiBottom() const noexcept
 {
 
   if( m_dosuu_mod == 1 || m_dosuu_mod == 5 ){

@@ -1,8 +1,9 @@
 // c:/Users/user/Documents/Programming/Music/OnMei/Pitch/OnDo/a.hpp
 
 #pragma once
-#include "../a.hpp"
 #include "SetTouJi/a.hpp"
+#include "../a.hpp"
+#include "../../../Chou/OnKai/a.hpp"
 
 #include "a_Alias.hpp"
 
@@ -12,17 +13,17 @@ class OnDo
 private:
   const SetTouJiOfOnDo& m_settouji;
   const DoSuu m_dosuu;
-  const Mod<7> m_dosuu_mod;
+  const KaiMei m_dosuu_mod;
 
 public:
   inline OnDo( const Pitch& P1 , const Pitch& P2 ) noexcept;
 
   bool CheckKyouWaOnTei() const noexcept;
-  bool CheckKyouWaOnTeiNonBottom() const noexcept;
+  bool CheckKyouWaOnTeiBottom() const noexcept;
 
   inline const SetTouJiOfOnDo& GetSetTouJi() const noexcept;
   inline const DoSuu& GetDoSuu() const noexcept;
-  inline const Mod<7>& GetDoSuuMod() const noexcept;
+  inline const KaiMei& GetDoSuuMod() const noexcept;
   
   inline string Display() const noexcept;
   
