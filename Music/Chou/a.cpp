@@ -3,18 +3,18 @@
 #include "../Header.hpp"
 #include "a_Body.hpp"
 
-HenkaKigou Chou::HenkaKigouTable_Body( const KaiMei& num , const KanOn& N ) const noexcept
+HenKaKiGou Chou::HenKaKiGouTable_Body( const KaiMei& num , const KanOn& N ) const noexcept
 {
 
   const int d = ( OnMei::KanOnToPitchClass( m_N.GetKanOn() ) + m_scale.PitchClassTable( num ) - OnMei( N ).GetPitchClass() ).Represent();
-  const HenkaKigou& S = m_N.GetHenkaKigou();
+  const HenKaKiGou& S = m_N.GetHenKaKiGou();
 
   if( d < 6 ){
 
-    return HenkaKigou( d ) + S;
+    return HenKaKiGou( d ) + S;
   
   }
   
-  return HenkaKigou( d - 12 ) + S;
+  return HenKaKiGou( d - 12 ) + S;
 
 }

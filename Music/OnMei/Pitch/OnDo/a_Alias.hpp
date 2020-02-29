@@ -1,6 +1,5 @@
-// c:/Users/user/Documents/Programming/Music/OnMei/Pitch/a_Alias.hpp
+// c:/Users/user/Documents/Programming/Music/OnMei/Pitch/OnDo/a_Alias.hpp
 
 #pragma once
 
-using Octave = int;
-using NoteNumber = int;
+using DoSuu = uint;

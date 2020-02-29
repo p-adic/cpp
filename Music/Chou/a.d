@@ -20,7 +20,7 @@ Music/Chou/a.o: Music/Chou/a.cpp Music/Chou/../Header.hpp \
  Music/Chou/OnKai/../../OnMei/KanOn/a.hpp \
  Music/Chou/OnKai/../../OnMei/KanOn/a_Macro.hpp \
  C:/Users/user/Documents/Programming/Mathematics/Arithmetic/Mod/a.hpp \
- Music/Chou/OnKai/../../OnMei/HenkaKigou/a.hpp \
+ Music/Chou/OnKai/../../OnMei/HenKaKiGou/a.hpp \
  Music/Chou/OnKai/../../OnMei/a_Alias.hpp Music/Chou/OnKai/a_Alias.hpp \
  Music/Chou/OnKai/a_Body.hpp Music/Chou/OnKai/../../OnMei/a_Body.hpp \
  Music/Chou/OnKai/../../OnMei/KanOn/a_Body.hpp \
@@ -78,7 +78,6 @@ Music/Chou/a.o: Music/Chou/a.cpp Music/Chou/../Header.hpp \
  C:/Users/user/Documents/Programming/Utility/List/LabeledList/a.hpp \
  C:/Users/user/Documents/Programming/Utility/VLArray/a.hpp \
  C:/Users/user/Documents/Programming/Utility/VLArray/Entry/a.hpp \
- C:/Users/user/Documents/Programming/Utility/VLArray/Wrap/a.hpp \
  C:/Users/user/Documents/Programming/Utility/VLArray/a_Alias.hpp \
  C:/Users/user/Documents/Programming/Utility/WrappedInt/a.hpp \
  C:/Users/user/Documents/Programming/Mathematics/SetTheory/Singleton/a.hpp \
@@ -90,10 +89,11 @@ Music/Chou/a.o: Music/Chou/a.cpp Music/Chou/../Header.hpp \
  C:/Users/user/Documents/Programming/Utility/VLArray/Iterator/a_Body.hpp \
  C:/Users/user/Documents/Programming/Utility/VLArray/Iterator/a.hpp \
  C:/Users/user/Documents/Programming/Utility/VLArray/Entry/a_Body.hpp \
- C:/Users/user/Documents/Programming/Utility/VLArray/Wrap/a_Body.hpp \
+ C:/Users/user/Documents/Programming/Utility/WrappedType/a_Body.hpp \
+ C:/Users/user/Documents/Programming/Utility/WrappedType/a.hpp \
  C:/Users/user/Documents/Programming/Mathematics/SetTheory/DirectProduct/a_Body.hpp \
  C:/Users/user/Documents/Programming/SFINAE/MemberFunction/a_Body.hpp \
- Music/Chou/OnKai/../../OnMei/HenkaKigou/a_Body.hpp
+ Music/Chou/OnKai/../../OnMei/HenKaKiGou/a_Body.hpp
 
 Music/Chou/../Header.hpp:
 
@@ -145,7 +145,7 @@ Music/Chou/OnKai/../../OnMei/KanOn/a_Macro.hpp:
 
 C:/Users/user/Documents/Programming/Mathematics/Arithmetic/Mod/a.hpp:
 
-Music/Chou/OnKai/../../OnMei/HenkaKigou/a.hpp:
+Music/Chou/OnKai/../../OnMei/HenKaKiGou/a.hpp:
 
 Music/Chou/OnKai/../../OnMei/a_Alias.hpp:
 
@@ -265,8 +265,6 @@ C:/Users/user/Documents/Programming/Utility/VLArray/a.hpp:
 
 C:/Users/user/Documents/Programming/Utility/VLArray/Entry/a.hpp:
 
-C:/Users/user/Documents/Programming/Utility/VLArray/Wrap/a.hpp:
-
 C:/Users/user/Documents/Programming/Utility/VLArray/a_Alias.hpp:
 
 C:/Users/user/Documents/Programming/Utility/WrappedInt/a.hpp:
@@ -289,10 +287,12 @@ C:/Users/user/Documents/Programming/Utility/VLArray/Iterator/a.hpp:
 
 C:/Users/user/Documents/Programming/Utility/VLArray/Entry/a_Body.hpp:
 
-C:/Users/user/Documents/Programming/Utility/VLArray/Wrap/a_Body.hpp:
+C:/Users/user/Documents/Programming/Utility/WrappedType/a_Body.hpp:
+
+C:/Users/user/Documents/Programming/Utility/WrappedType/a.hpp:
 
 C:/Users/user/Documents/Programming/Mathematics/SetTheory/DirectProduct/a_Body.hpp:
 
 C:/Users/user/Documents/Programming/SFINAE/MemberFunction/a_Body.hpp:
 
-Music/Chou/OnKai/../../OnMei/HenkaKigou/a_Body.hpp:
+Music/Chou/OnKai/../../OnMei/HenKaKiGou/a_Body.hpp:

@@ -6,9 +6,20 @@
 #include "../a_Body.hpp"
 #include "SetTouJi/a_Body.hpp"
 
+inline OnDo::OnDo( const Pitch& P1 , const Pitch& P2 ) noexcept : OnDo( ComputeSignedZeroIndexedDoSuu( P1 , P2 ) , ComputeSignedPitchDifference( P1 , P2 ) ) {}
+inline OnDo::OnDo( const int& D , const int& d ) noexcept : OnDo( D , d , D >= 0 ? 1 : -1 ) {}
+inline OnDo::OnDo( const int& D , const int& d , const int& sign ) noexcept : OnDo( (uint)( sign * D ) , sign * d ) {}
+inline OnDo::OnDo( const ZeroIndexedDoSuu& D , const PitchDifference& d ) noexcept : m_settouji( SetTouJiOfOnDo::Compute( D , d ) ) , m_dosuu( D + 1 ) , m_dosuu_mod( m_dosuu ) {}
+
+inline const SetTouJiOfOnDo& OnDo::GetSetTouJi() const noexcept { return m_settouji; }
+inline const DoSuu& OnDo::GetDoSuu() const noexcept { return m_dosuu; }
+inline const Mod<7>& OnDo::GetDoSuuMod() const noexcept { return m_dosuu_mod; }
+
 inline string OnDo::Display() const noexcept { return m_settouji.Get() + to_string( m_dosuu ) + "Do";}
 
-inline OnDo::OnDo( const Pitch& P1 , const Pitch& P2 ) noexcept : OnDo( P1 , P2 , ComputeSignedDoSuu( P1 , P2 ) ) {}
-inline OnDo::OnDo( const Pitch& P1 , const Pitch& P2 , const int& signed_dosuu ) noexcept : OnDo( P1 , P2 , signed_dosuu , signed_dosuu >= 0 ) {}
-inline OnDo::OnDo( const Pitch& P1 , const Pitch& P2 , const int& signed_dosuu , const bool& valid ) noexcept : OnDo( ComputeZeroIndexedDoSuu( signed_dosuu , valid ) , ComputePitchDifference( P1 , P2 , valid ) ) {}
-inline OnDo::OnDo( const uint& zero_indexed_dosuu , const int& pitch_difference ) noexcept : m_settouji( SetTouJiOfOnDo::Compute( zero_indexed_dosuu , pitch_difference ) ) , m_dosuu( zero_indexed_dosuu + 1 ) , m_dosuu_mod( m_dosuu % 7 ) {}
+inline int OnDo::PitchToAbsoluteDoSuu( const Pitch& P ) noexcept { return ( ( ( P.GetOnMei() ).GetKanOn() ).GetNum() ).Represent() + P.GetOctave() * 7; }
+inline int OnDo::ComputeSignedZeroIndexedDoSuu( const Pitch& P1 , const Pitch& P2 ) noexcept { return PitchToAbsoluteDoSuu( P2 ) - PitchToAbsoluteDoSuu( P1 ); }
+inline int OnDo::ComputeSignedPitchDifference( const Pitch& P1 , const Pitch& P2 ) noexcept { return P2.GetNoteNumber() - P1.GetNoteNumber(); }
+
+inline bool operator==( const OnDo& D1 , const OnDo& D2 ) noexcept { return ( D1.GetSetTouJi() == D2.GetSetTouJi() ) && ( D1.GetDoSuu() == D2.GetDoSuu() ); }
+inline bool operator!=( const OnDo& D1 , const OnDo& D2 ) noexcept { return !( D1 == D2 ); }

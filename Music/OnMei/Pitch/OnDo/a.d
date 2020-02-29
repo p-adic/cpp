@@ -7,7 +7,7 @@ Music/OnMei/Pitch/OnDo/a.o: Music/OnMei/Pitch/OnDo/a.cpp \
  Music/OnMei/Pitch/OnDo/../../KanOn/a.hpp \
  Music/OnMei/Pitch/OnDo/../../KanOn/a_Macro.hpp \
  C:/Users/user/Documents/Programming/Mathematics/Arithmetic/Mod/a.hpp \
- Music/OnMei/Pitch/OnDo/../../HenkaKigou/a.hpp \
+ Music/OnMei/Pitch/OnDo/../../HenKaKiGou/a.hpp \
  Music/OnMei/Pitch/OnDo/../../a_Alias.hpp \
  Music/OnMei/Pitch/OnDo/../a_Alias.hpp \
  Music/OnMei/Pitch/OnDo/SetTouJi/a.hpp \
@@ -27,7 +27,7 @@ Music/OnMei/Pitch/OnDo/a.o: Music/OnMei/Pitch/OnDo/a.cpp \
  C:/Users/user/Documents/Programming/SFINAE/a_Alias.hpp \
  C:/Users/user/Documents/Programming/Utility/String/a_Alias.hpp \
  Music/OnMei/Pitch/OnDo/SetTouJi/a_Alias.hpp \
- Music/OnMei/Pitch/OnDo/../a_Body.hpp \
+ Music/OnMei/Pitch/OnDo/a_Alias.hpp Music/OnMei/Pitch/OnDo/../a_Body.hpp \
  Music/OnMei/Pitch/OnDo/../../a_Body.hpp \
  Music/OnMei/Pitch/OnDo/../../KanOn/a_Body.hpp \
  C:/Users/user/Documents/Programming/Mathematics/Arithmetic/Mod/a_Body.hpp \
@@ -99,7 +99,7 @@ Music/OnMei/Pitch/OnDo/a.o: Music/OnMei/Pitch/OnDo/a.cpp \
  C:/Users/user/Documents/Programming/Utility/WrappedType/a.hpp \
  C:/Users/user/Documents/Programming/Mathematics/SetTheory/DirectProduct/a_Body.hpp \
  C:/Users/user/Documents/Programming/SFINAE/MemberFunction/a_Body.hpp \
- Music/OnMei/Pitch/OnDo/../../HenkaKigou/a_Body.hpp \
+ Music/OnMei/Pitch/OnDo/../../HenKaKiGou/a_Body.hpp \
  Music/OnMei/Pitch/OnDo/SetTouJi/a_Body.hpp
 
 Music/OnMei/Pitch/OnDo/../../../Header.hpp:
@@ -122,7 +122,7 @@ Music/OnMei/Pitch/OnDo/../../KanOn/a_Macro.hpp:
 
 C:/Users/user/Documents/Programming/Mathematics/Arithmetic/Mod/a.hpp:
 
-Music/OnMei/Pitch/OnDo/../../HenkaKigou/a.hpp:
+Music/OnMei/Pitch/OnDo/../../HenKaKiGou/a.hpp:
 
 Music/OnMei/Pitch/OnDo/../../a_Alias.hpp:
 
@@ -161,6 +161,8 @@ C:/Users/user/Documents/Programming/SFINAE/a_Alias.hpp:
 C:/Users/user/Documents/Programming/Utility/String/a_Alias.hpp:
 
 Music/OnMei/Pitch/OnDo/SetTouJi/a_Alias.hpp:
+
+Music/OnMei/Pitch/OnDo/a_Alias.hpp:
 
 Music/OnMei/Pitch/OnDo/../a_Body.hpp:
 
@@ -306,6 +308,6 @@ C:/Users/user/Documents/Programming/Mathematics/SetTheory/DirectProduct/a_Body.h
 
 C:/Users/user/Documents/Programming/SFINAE/MemberFunction/a_Body.hpp:
 
-Music/OnMei/Pitch/OnDo/../../HenkaKigou/a_Body.hpp:
+Music/OnMei/Pitch/OnDo/../../HenKaKiGou/a_Body.hpp:
 
 Music/OnMei/Pitch/OnDo/SetTouJi/a_Body.hpp:

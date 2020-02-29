@@ -1,18 +1,18 @@
-// c:/Users/user/Documents/Programming/Music/OnMei/HenkaKigou/a.hpp
+// c:/Users/user/Documents/Programming/Music/OnMei/HenKaKiGou/a.hpp
 
 #pragma once
 
-class HenkaKigou
+class HenKaKiGou
 {
 
 private:
   int m_num;
 
 public:
-  inline HenkaKigou( const int& num ) noexcept;
+  inline HenKaKiGou( const int& num ) noexcept;
 
-  HenkaKigou& operator++() noexcept;
-  HenkaKigou& operator--() noexcept;
+  HenKaKiGou& operator++() noexcept;
+  HenKaKiGou& operator--() noexcept;
   
   inline string Display() const noexcept;
   inline const int& GetNum() const noexcept;
@@ -21,8 +21,8 @@ public:
 
 };
 
-inline bool operator==( const HenkaKigou& S1 , const HenkaKigou& S2 ) noexcept;
-inline bool operator!=( const HenkaKigou& S1 , const HenkaKigou& S2 ) noexcept;
+inline bool operator==( const HenKaKiGou& S1 , const HenKaKiGou& S2 ) noexcept;
+inline bool operator!=( const HenKaKiGou& S1 , const HenKaKiGou& S2 ) noexcept;
 
-inline HenkaKigou operator+( const HenkaKigou& S1 , const HenkaKigou& S2 ) noexcept;
-inline HenkaKigou operator-( const HenkaKigou& S1 , const HenkaKigou& S2 ) noexcept;
+inline HenKaKiGou operator+( const HenKaKiGou& S1 , const HenKaKiGou& S2 ) noexcept;
+inline HenKaKiGou operator-( const HenKaKiGou& S1 , const HenKaKiGou& S2 ) noexcept;

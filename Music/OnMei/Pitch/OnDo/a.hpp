@@ -4,30 +4,38 @@
 #include "../a.hpp"
 #include "SetTouJi/a.hpp"
 
+#include "a_Alias.hpp"
+
 class OnDo
 {
 
 private:
   const SetTouJiOfOnDo& m_settouji;
-  uint m_dosuu;
-  uint m_dosuu_mod;
+  const DoSuu m_dosuu;
+  const Mod<7> m_dosuu_mod;
 
 public:
   inline OnDo( const Pitch& P1 , const Pitch& P2 ) noexcept;
 
   bool CheckKyouWaOnTei() const noexcept;
   bool CheckKyouWaOnTeiNonBottom() const noexcept;
+
+  inline const SetTouJiOfOnDo& GetSetTouJi() const noexcept;
+  inline const DoSuu& GetDoSuu() const noexcept;
+  inline const Mod<7>& GetDoSuuMod() const noexcept;
   
   inline string Display() const noexcept;
   
 private:
-  inline OnDo( const Pitch& P1 , const Pitch& P2 , const int& signed_dosuu ) noexcept;
-  inline OnDo( const Pitch& P1 , const Pitch& P2 , const int& signed_dosuu , const bool& valid ) noexcept;
-  
-  inline OnDo( const uint& zero_indexed_dosuu , const int& pitch_difference ) noexcept;
+  inline OnDo( const int& D , const int& d ) noexcept;
+  inline OnDo( const int& D , const int& d , const int& sign ) noexcept;
+  inline OnDo( const ZeroIndexedDoSuu& D , const PitchDifference& d ) noexcept;
 
-  static int ComputeSignedDoSuu( const Pitch& P1 , const Pitch& P2 ) noexcept;
-  static uint ComputeZeroIndexedDoSuu( const int& signed_dosuu , const bool& valid ) noexcept;
-  static uint ComputePitchDifference( const Pitch& P1 , const Pitch& P2 , const bool& valid ) noexcept;
+  inline static int PitchToAbsoluteDoSuu( const Pitch& P ) noexcept;
+  inline static int ComputeSignedZeroIndexedDoSuu( const Pitch& P1 , const Pitch& P2 ) noexcept;
+  inline static int ComputeSignedPitchDifference( const Pitch& P1 , const Pitch& P2 ) noexcept;
 
 };
+
+inline bool operator==( const OnDo& D1 , const OnDo& D2 ) noexcept;
+inline bool operator!=( const OnDo& D1 , const OnDo& D2 ) noexcept;

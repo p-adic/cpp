@@ -1,4 +1,4 @@
-// c:/Users/user/Documents/Programming/Music/OnMei/HenkaKigou/a.cpp
+// c:/Users/user/Documents/Programming/Music/OnMei/HenKaKiGou/a.cpp
 
 #include "../../Header.hpp"
 #include "a_Body.hpp"
@@ -7,7 +7,7 @@
 #include "../../../Mathematics/Function/a.hpp"
 #include "../../../Utility/String/a_Body.hpp"
 
-HenkaKigou& HenkaKigou::operator++() noexcept
+HenKaKiGou& HenKaKiGou::operator++() noexcept
 {
 
   m_num += 1;
@@ -15,22 +15,22 @@ HenkaKigou& HenkaKigou::operator++() noexcept
 
 }
 
-HenkaKigou& HenkaKigou::operator--() noexcept
+HenKaKiGou& HenKaKiGou::operator--() noexcept
 {
 
   m_num -= 1;
   return *this;
 
 }
-string HenkaKigou::IntToString( const int& num ) noexcept
+string HenKaKiGou::IntToString( const int& num ) noexcept
 {
 
   static const string Table[3] =
     {
 
-      "¬Å√≥" ,
+      "ÅÛ" ,
       "" ,
-      "¬Å√≤"
+      "ÅÚ"
 
     };
 

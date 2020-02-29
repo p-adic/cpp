@@ -20,11 +20,11 @@ public:
   inline string Display() const noexcept;
 
   inline KanOn KanOnTable( const KaiMei& num ) const noexcept;
-  inline HenkaKigou HenkaKigouTable( const KaiMei& num ) const noexcept;
+  inline HenKaKiGou HenKaKiGouTable( const KaiMei& num ) const noexcept;
   inline OnMei OnMeiTable( const KaiMei& num ) const noexcept;
 
 private:
-  HenkaKigou HenkaKigouTable_Body( const KaiMei& num , const KanOn& N ) const noexcept;
+  HenKaKiGou HenKaKiGouTable_Body( const KaiMei& num , const KanOn& N ) const noexcept;
   inline OnMei OnMeiTable_Body( const KaiMei& num , const KanOn& N ) const noexcept;
 
 };

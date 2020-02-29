@@ -16,6 +16,9 @@ private:
 public:
   inline SetTouJiOfOnDo( const string& s ) noexcept;
 
+  SetTouJiOfOnDo( const SetTouJiOfOnDo& ) = delete;
+  SetTouJiOfOnDo& operator=( const SetTouJiOfOnDo& ) = delete;
+
   inline const string& Get() const noexcept;
 
   static const SetTouJiOfOnDo& Compute( const ZeroIndexedDoSuu& D , const PitchDifference& d ) noexcept;
