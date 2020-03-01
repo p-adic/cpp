@@ -20,6 +20,8 @@ public:
   inline const string& GetRootString() const noexcept;
   inline const string& GetNodeString( const int& n ) const;
 
+  inline string Display() const noexcept;
+
 protected:
   // definition
   void InputDefinition( ofstream& ofs ) const;
@@ -40,5 +42,8 @@ const string& SyntaxToFirstString( VLTree<string>::const_iterator& itr );
 const string& SyntaxToSecondString( VLTree<string>::const_iterator& itr );
 string ListSyntaxToSecondString( VLTree<VLTree<string>::const_iterator>& t );
 
+template <typename... Args> auto FunctionExpressionToString( const SyntaxOfComputableFunction& f , const Args&... args ) -> typename enable_if<conjunction<is_same<Args,string>...>::value,string>::type;
+
+string FunctionExpressionToString( const SyntaxOfComputableFunction& f , VLTree<string>::iterator& itr );
 
 DECLARATION_OF_GLOBAL_CONSTANT_STRING_FOR_SYMBOL( List );

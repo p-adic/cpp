@@ -5,15 +5,18 @@
 
 #include "../Function/a.hpp"
 
-template <typename... ARGS>
+template <typename... Args>
 class RelationSymbol :
   public SyntaxOfComputableFunction
 {
 
 public:
-  inline RelationSymbol( const string& r , const VariableSymbol<ARGS>&... args );
+  inline RelationSymbol( const string& r , const VariableSymbol<Args>&... args );
+  RelationSymbol( const string& r , const SeparatorOfComputableFunction& s , const VariableSymbol<Args>&... args );
 
-  inline ConditionOfComputableFunction operator()( const ExpressionOfComputableFunction<ARGS>&... args ) const;
+  template <typename... VA> auto SetSeparator( const VA&... va ) -> typename enable_if<conjunction<is_same<VA,string>...>::value,void>::type;
+
+  inline ConditionOfComputableFunction operator()( const ExpressionOfComputableFunction<Args>&... args ) const;
 
 };
 

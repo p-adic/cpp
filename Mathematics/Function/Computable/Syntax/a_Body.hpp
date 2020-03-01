@@ -15,7 +15,30 @@ inline const string& SyntaxOfComputableFunction::GetRootString() const noexcept 
 
 inline const string& SyntaxOfComputableFunction::GetNodeString( const int& n ) const { return *( m_syntax.Root()[n] );}
 
+inline string SyntaxOfComputableFunction::Display() const noexcept { return m_syntax.Display(); }
+
 inline void SyntaxOfComputableFunction::InputFinishLine( ofstream& ofs ) const noexcept { ofs << "I—¹‚·‚éB" << endl; }
+
+
+template <typename... Args>
+auto FunctionExpressionToString( const SyntaxOfComputableFunction& f , const Args&... args ) -> typename enable_if<conjunction<is_same<Args,string>...>::value,string>::type
+{
+
+  VLTree<string> t{ args... };
+  auto itr = t.LeftMostNode();
+
+  TRY_CATCH
+    (
+
+     return FunctionExpressionToString( f , itr ) ,
+     const ErrorType& e ,
+     CALL_P( e , f , args... )
+
+     );
+  
+  return "dummy";
+
+}
 
 
 DEFINITION_OF_GLOBAL_CONSTANT_STRING_FOR_SYMBOL( List , list );

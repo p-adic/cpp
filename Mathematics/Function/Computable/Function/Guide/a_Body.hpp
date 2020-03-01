@@ -5,4 +5,4 @@
 #include "../a_Body.hpp"
 #include "../../Expression/Variable/a_Body.hpp"
 
-template <typename Ret> template <typename... Args> inline FunctionSymbol<Ret,Args...> FunctionSymbol_Guide<Ret>::Get( const string& f , const VariableSymbol<Args>&... args ){ return FunctionSymbol<Ret,Args...>( f , args... ); }
+template <typename Ret> template <typename... Args> inline FunctionSymbol<Ret,Args...> FunctionSymbol_Guide<Ret>::Get( const string& name , const VariableSymbol<Args>&... args ){ return FunctionSymbol<Ret,Args...>( name , args... ); }

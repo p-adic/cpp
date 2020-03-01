@@ -4,15 +4,16 @@ Mathematics/Function/Computable/Function/a.o: \
  C:/Users/user/Documents/Programming/Mathematics/Header.hpp \
  C:/Users/user/Documents/Programming/Utility/Header.hpp \
  C:/Users/user/Documents/Programming/Utility/Header_Alias.hpp \
- C:/Users/user/Documents/Programming/Error/Debug/a_Body.hpp \
- C:/Users/user/Documents/Programming/Error/Debug/a.hpp \
  C:/Users/user/Documents/Programming/Error/Debug/a_Macro.hpp \
+ C:/Users/user/Documents/Programming/Error/a_Body.hpp \
  C:/Users/user/Documents/Programming/Error/a.hpp \
  C:/Users/user/Documents/Programming/Error/a_Macro.hpp \
  C:/Users/user/Documents/Programming/Error/Position/a_Macro.hpp \
  C:/Users/user/Documents/Programming/Utility/GlobalVariable/a_Macro.hpp \
  C:/Users/user/Documents/Programming/Error/IllegalAccess/a_Macro.hpp \
  C:/Users/user/Documents/Programming/Error/Warning/a_Macro.hpp \
+ C:/Users/user/Documents/Programming/Error/BreakPoint/a.hpp \
+ C:/Users/user/Documents/Programming/Error/BreakPoint/a_Macro.hpp \
  C:/Users/user/Documents/Programming/Utility/SmartPointer/a.hpp \
  C:/Users/user/Documents/Programming/Error/Position/a.hpp \
  C:/Users/user/Documents/Programming/Error/Warning/a.hpp \
@@ -34,9 +35,12 @@ Mathematics/Function/Computable/Function/a.o: \
  C:/Users/user/Documents/Programming/SFINAE/MetaFunction/IsReferenceOf/a.hpp \
  C:/Users/user/Documents/Programming/SFINAE/a_Alias.hpp \
  C:/Users/user/Documents/Programming/Utility/String/a_Alias.hpp \
- C:/Users/user/Documents/Programming/Error/a_Body.hpp \
  C:/Users/user/Documents/Programming/Error/FaultInCoding/a.hpp \
  C:/Users/user/Documents/Programming/Error/FaultInCoding/a_Macro.hpp \
+ C:/Users/user/Documents/Programming/Error/BreakPoint/a_Body.hpp \
+ C:/Users/user/Documents/Programming/Error/IllegalImput/a_Body.hpp \
+ C:/Users/user/Documents/Programming/Error/IllegalImput/a.hpp \
+ C:/Users/user/Documents/Programming/Error/IllegalImput/a_Macro.hpp \
  C:/Users/user/Documents/Programming/Error/Position/a_Body.hpp \
  C:/Users/user/Documents/Programming/Utility/String/Normalised/a_Body.hpp \
  C:/Users/user/Documents/Programming/Utility/String/Normalised/a.hpp \
@@ -62,9 +66,6 @@ Mathematics/Function/Computable/Function/a.o: \
  C:/Users/user/Documents/Programming/Error/IllegalAccess/a_Body.hpp \
  C:/Users/user/Documents/Programming/Error/IllegalAccess/a.hpp \
  C:/Users/user/Documents/Programming/Utility/SmartPointer/a_Body.hpp \
- C:/Users/user/Documents/Programming/Error/IllegalImput/a_Body.hpp \
- C:/Users/user/Documents/Programming/Error/IllegalImput/a.hpp \
- C:/Users/user/Documents/Programming/Error/IllegalImput/a_Macro.hpp \
  C:/Users/user/Documents/Programming/SFINAE/MetaFunction/IsList/a.hpp \
  C:/Users/user/Documents/Programming/SFINAE/NonMemberFunction/Constified/a_Body.hpp \
  C:/Users/user/Documents/Programming/SFINAE/NonMemberFunction/a_Body.hpp \
@@ -106,6 +107,7 @@ Mathematics/Function/Computable/Function/a.o: \
  Mathematics/Function/Computable/Function/../Expression/Variable/Variadic/../a.hpp \
  Mathematics/Function/Computable/Function/../Expression/Variable/Variadic/../a_Alias.hpp \
  Mathematics/Function/Computable/Function/../Expression/Variable/Variadic/../../List/Body/a.hpp \
+ Mathematics/Function/Computable/Function/../Separator/a.hpp \
  Mathematics/Function/Computable/Function/../Type/Basic/a.hpp \
  Mathematics/Function/Computable/Function/../Type/Basic/a_Macro.hpp \
  Mathematics/Function/Computable/Function/../Expression/Condition/a_Body.hpp \
@@ -131,7 +133,8 @@ Mathematics/Function/Computable/Function/a.o: \
  C:/Users/user/Documents/Programming/Utility/VLTree/Iterator/a_Body.hpp \
  C:/Users/user/Documents/Programming/Utility/VLTree/Entry/a_Body.hpp \
  C:/Users/user/Documents/Programming/Mathematics/Function/Computable/Function/Variadic/a_Body.hpp \
- Mathematics/Function/Computable/Function/../Expression/Variable/Variadic/a_Body.hpp
+ Mathematics/Function/Computable/Function/../Expression/Variable/Variadic/a_Body.hpp \
+ Mathematics/Function/Computable/Function/../Separator/a_Body.hpp
 
 Mathematics/Function/Computable/Function/../Header.hpp:
 
@@ -141,11 +144,9 @@ C:/Users/user/Documents/Programming/Utility/Header.hpp:
 
 C:/Users/user/Documents/Programming/Utility/Header_Alias.hpp:
 
-C:/Users/user/Documents/Programming/Error/Debug/a_Body.hpp:
-
-C:/Users/user/Documents/Programming/Error/Debug/a.hpp:
-
 C:/Users/user/Documents/Programming/Error/Debug/a_Macro.hpp:
+
+C:/Users/user/Documents/Programming/Error/a_Body.hpp:
 
 C:/Users/user/Documents/Programming/Error/a.hpp:
 
@@ -158,6 +159,10 @@ C:/Users/user/Documents/Programming/Utility/GlobalVariable/a_Macro.hpp:
 C:/Users/user/Documents/Programming/Error/IllegalAccess/a_Macro.hpp:
 
 C:/Users/user/Documents/Programming/Error/Warning/a_Macro.hpp:
+
+C:/Users/user/Documents/Programming/Error/BreakPoint/a.hpp:
+
+C:/Users/user/Documents/Programming/Error/BreakPoint/a_Macro.hpp:
 
 C:/Users/user/Documents/Programming/Utility/SmartPointer/a.hpp:
 
@@ -201,11 +206,17 @@ C:/Users/user/Documents/Programming/SFINAE/a_Alias.hpp:
 
 C:/Users/user/Documents/Programming/Utility/String/a_Alias.hpp:
 
-C:/Users/user/Documents/Programming/Error/a_Body.hpp:
-
 C:/Users/user/Documents/Programming/Error/FaultInCoding/a.hpp:
 
 C:/Users/user/Documents/Programming/Error/FaultInCoding/a_Macro.hpp:
+
+C:/Users/user/Documents/Programming/Error/BreakPoint/a_Body.hpp:
+
+C:/Users/user/Documents/Programming/Error/IllegalImput/a_Body.hpp:
+
+C:/Users/user/Documents/Programming/Error/IllegalImput/a.hpp:
+
+C:/Users/user/Documents/Programming/Error/IllegalImput/a_Macro.hpp:
 
 C:/Users/user/Documents/Programming/Error/Position/a_Body.hpp:
 
@@ -256,12 +267,6 @@ C:/Users/user/Documents/Programming/Error/IllegalAccess/a_Body.hpp:
 C:/Users/user/Documents/Programming/Error/IllegalAccess/a.hpp:
 
 C:/Users/user/Documents/Programming/Utility/SmartPointer/a_Body.hpp:
-
-C:/Users/user/Documents/Programming/Error/IllegalImput/a_Body.hpp:
-
-C:/Users/user/Documents/Programming/Error/IllegalImput/a.hpp:
-
-C:/Users/user/Documents/Programming/Error/IllegalImput/a_Macro.hpp:
 
 C:/Users/user/Documents/Programming/SFINAE/MetaFunction/IsList/a.hpp:
 
@@ -345,6 +350,8 @@ Mathematics/Function/Computable/Function/../Expression/Variable/Variadic/../a_Al
 
 Mathematics/Function/Computable/Function/../Expression/Variable/Variadic/../../List/Body/a.hpp:
 
+Mathematics/Function/Computable/Function/../Separator/a.hpp:
+
 Mathematics/Function/Computable/Function/../Type/Basic/a.hpp:
 
 Mathematics/Function/Computable/Function/../Type/Basic/a_Macro.hpp:
@@ -396,3 +403,5 @@ C:/Users/user/Documents/Programming/Utility/VLTree/Entry/a_Body.hpp:
 C:/Users/user/Documents/Programming/Mathematics/Function/Computable/Function/Variadic/a_Body.hpp:
 
 Mathematics/Function/Computable/Function/../Expression/Variable/Variadic/a_Body.hpp:
+
+Mathematics/Function/Computable/Function/../Separator/a_Body.hpp:

@@ -20,7 +20,8 @@ void SyntaxOfComputableFunction::InputDefinition( ofstream& ofs ) const
   const string* p_argument_name;
   const string* p_argument_type_name;
   const string* p_line_name;
-
+  const string* p_function_expression_name;
+  
   TRY_CATCH
     (
 
@@ -50,6 +51,11 @@ void SyntaxOfComputableFunction::InputDefinition( ofstream& ofs ) const
     (
 
      {
+
+       auto itr_function_expression = itr_function_symbol;
+       itr_function_expression++;
+       itr_function_expression++;
+       itr_function_expression[1];
        
        p_argument_name = &( SyntaxToSecondString( itr_function_symbol ) );
 
@@ -61,6 +67,7 @@ void SyntaxOfComputableFunction::InputDefinition( ofstream& ofs ) const
 
        p_argument_type_name = &( *itr_function_symbol );
        p_line_name = &( SyntaxToFirstString( itr_line ) );
+       p_function_expression_name = &( SyntaxToFirstString( itr_function_expression ) );
        
      } ,
      
@@ -76,10 +83,11 @@ void SyntaxOfComputableFunction::InputDefinition( ofstream& ofs ) const
   const string& argument_name = *p_argument_name;
   const string& argument_type_name = *p_argument_type_name;
   const string& line_name = *p_line_name;
-  string function_expression_name = function_name + argument_name;
+  const string& function_expression_name = *p_function_expression_name;
 
   
   ofs << "ŒvŽZ‰Â”\ŠÖ”" << endl;
+  ofs << "\\begin{eqnarray*}" << endl;
   ofs << function_name << " \\colon " << argument_type_name << " & \\to & " << return_type_name << " \\\\" << endl;
   ofs << argument_name << " & \\mapsto & " << function_expression_name << endl;
   ofs << "\\end{eqnarray*}" << endl;
@@ -390,3 +398,46 @@ string ListSyntaxToSecondString( VLTree<VLTree<string>::const_iterator>& t )
   return s;
 
 }
+
+string FunctionExpressionToString( const SyntaxOfComputableFunction& f , VLTree<string>::iterator& itr )
+{
+
+  string s = "";
+
+  auto itr_f = f.Get().LeftMostNode();
+
+  itr_f++;
+  itr_f++;
+  itr_f++;
+  itr_f++;
+  itr_f[1];
+
+  while( itr.IsValid() ){
+
+    if( ! itr_f.IsValid() ){
+
+      ERR_IMPUT( f );
+       
+    }
+
+    s += *itr_f;
+    s += *itr;
+
+    itr_f++;
+    itr++;
+
+  }
+
+  s += *itr_f;
+  itr_f++;
+
+  if( itr_f.IsValid() ){
+
+    ERR_IMPUT( f );
+       
+  }
+  
+  return s;
+  
+}
+

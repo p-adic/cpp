@@ -2,4 +2,6 @@
 
 #pragma once
 #include "../../Header.hpp"
-#include "../../../Error/Debug/a_Body.hpp"
+#include "../../../Error/Debug/a_Macro.hpp"
+#include "../../../Error/a_Body.hpp"
+#include "../../../Utility/Macro.hpp"

@@ -19,7 +19,7 @@
   DECLARATION_OF_FUNCTION_SYMBOL_BODY( RET , FUNC )			\
   {									\
 									\
-    static const FunctionSymbol< RET , RET , RET > f( NAME , VariableSymbol< RET >( "x" ) , VariableSymbol< RET >( "y" ) ); \
+    static const FunctionSymbol< RET , RET , RET > f( NAME , SeparatorOfComputableFunction( 0 , to_string( "" ) , " " + CONNECT( FUNC , String )() + " " , to_string( "" ) ) , VariableSymbol< RET >( "x" ) , VariableSymbol< RET >( "y" ) ); \
     return f;								\
 									\
   }									\

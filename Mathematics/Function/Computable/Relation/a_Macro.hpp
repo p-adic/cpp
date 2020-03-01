@@ -13,7 +13,7 @@
   DECLARATION_OF_RELATION_SYMBOL( REL )					\
   {									\
 									\
-    static const RelationSymbol<Ret,Ret> r( TO_STRING( NAME ) , VariableSymbol<Ret>( "x" ) , VariableSymbol<Ret>( "y" ) ); \
+    static const RelationSymbol<Ret,Ret> r( TO_STRING( NAME ) , SeparatorOfComputableFunction( 0 , to_string( "" ) , " " + CONNECT( REL , String )() + " " , to_string( "" ) ) , VariableSymbol<Ret>( "x" ) , VariableSymbol<Ret>( "y" ) ); \
     return r;								\
 									\
   }									\

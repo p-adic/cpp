@@ -1,7 +1,6 @@
 // c:/Users/user/Documents/Programming/Mathematics/Function/Computable/a_Macro.hpp
 
 #pragma once
-#include "../../../Utility/Macro.hpp"
 
 // constant
 #define INFTY InftySymbol() 
@@ -14,8 +13,16 @@
 // function
 #define FUNCTION_SYMBOL_CONSTRUCTOR( RET , NAME , ... )			\
 									\
-  FunctionSymbol_Guide< RET >::Get( TO_STRING( NAME ) , __VA_ARGS__ )	\
-  
+  TRY_CATCH								\
+  (									\
+									\
+   FunctionSymbol_Guide< RET >::Get( TO_STRING( NAME ) , __VA_ARGS__ ) , \
+   const ErrorType& e ,							\
+   CALL( e )								\
+									\
+									) \
+
+
 #define PLUS( ... ) PlusSymbolApplication( __VA_ARGS__ ) 
 #define TIMES( ... ) TimesSymbolApplication( __VA_ARGS__ ) 
 #define MINUS( x , y ) MinusSymbolApplication( x , y ) 

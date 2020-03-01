@@ -6,10 +6,80 @@
 #include "../Function/a_Body.hpp"
 #include "../Syntax/a_Body.hpp"
 
-template <typename... ARGS> inline RelationSymbol<ARGS...>::RelationSymbol( const string& r , const VariableSymbol<ARGS>&... args ) : SyntaxOfComputableFunction( NestString() , RelationString() , r , args.Get()... ) {}
+template <typename... Args> inline RelationSymbol<Args...>::RelationSymbol( const string& r , const VariableSymbol<Args>&... args ) : RelationSymbol( r , SeparatorOfComputableFunction( r , sizeof...( Args ) ) , args... ) {}
 
+template <typename... Args>
+RelationSymbol<Args...>::RelationSymbol( const string& r , const SeparatorOfComputableFunction& s , const VariableSymbol<Args>&... args ) :
+  SyntaxOfComputableFunction
+  (
 
-template <typename... ARGS> inline ConditionOfComputableFunction RelationSymbol<ARGS...>::operator()( const ExpressionOfComputableFunction<ARGS>&... args ) const { return ConditionOfComputableFunction( *this , args... ); }
+   NestString() ,
+   RelationString() ,
+   r ,
+   GetName<bool>() ,
+   ListExpressionOfComputableFunction( args... ).Get() ,
+   s.Get()
+   
+   )
+{
+
+  VLTree<string>& t = Ref();
+
+  TRY_CATCH
+    (
+     
+     t.push_RightMost( FunctionExpressionToString( *this , args.GetNodeString( 2 )... ) ) ,
+
+     const ErrorType& e ,
+
+     CALL_P( e , t )
+
+     );
+
+}
+
+template <typename... Args> template <typename... VA>
+auto RelationSymbol<Args...>::SetSeparator( const VA&... va ) -> typename enable_if<conjunction<is_same<VA,string>...>::value,void>::type
+{
+
+  SyntaxOfComputableFunction s{ SeparatorString() , va... };
+
+  TRY_CATCH
+    (
+
+     {
+
+       if( sizeof...( Args ) + 1 != sizeof...( VA ) ){
+
+	 ERR_CODE;
+
+       }
+       
+       VLTree<string>& t = Ref();
+  
+       t.pop_RightMost();
+       t.pop_RightMost();
+
+       auto itr = t.RightMostNode();
+       itr[1];
+
+       t.push_RightMost( s );
+       t.push_RightMost( FunctionExpressionToString( *this , itr ) );
+
+     } ,
+
+     const ErrorType& e ,
+
+     CALL( e )
+
+     );
+    
+  return;
+
+}
+
+template <typename... Args> inline ConditionOfComputableFunction RelationSymbol<Args...>::operator()( const ExpressionOfComputableFunction<Args>&... args ) const { return ConditionOfComputableFunction( *this , args... ); }
+
 
 DEFINITION_OF_RELATION_SYMBOL( Eq , eq );
 DEFINITION_OF_RELATION_SYMBOL( Neq , neq );

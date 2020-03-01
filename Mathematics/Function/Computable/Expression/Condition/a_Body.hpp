@@ -46,9 +46,19 @@ template <typename... Args, typename... VA>
 void RelationExpressionToSyntax( SyntaxOfComputableFunction& t , const RelationSymbol<Args...>& r , const ExpressionOfComputableFunction<VA>&... va )
 {
 
-  const string& relation_name = r.GetNodeString( 2 );
-  auto e = ListExpressionOfComputableFunction( va... );
-  
-  t.Ref().push_RightMost( relation_name + e.GetNodeString( 2 ) , GetName<bool>() , r.Get() , e.Get() );
+  auto arg = ListExpressionOfComputableFunction( va... );
+
+  TRY_CATCH
+    (
+     
+     t.Ref().push_RightMost( FunctionExpressionToString( r , va.GetNodeString( 2 )... ) , GetName<bool>() , r.Get() , arg.Get() ) ,
+
+     const ErrorType& e ,
+
+     CALL_P( e , r , va... )
+
+     );
+
+  return;
   
 }

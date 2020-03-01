@@ -6,9 +6,80 @@
 
 #include "../Expression/Condition/a_Body.hpp"
 #include "../Expression/Variable/Variadic/a_Body.hpp"
+#include "../Separator/a_Body.hpp"
 #include "../Type/Basic/a_Body.hpp"
 
-template <typename Ret, typename... Args> inline FunctionSymbol<Ret,Args...>::FunctionSymbol( const string& f , const VariableSymbol<Args>&... args ) : SyntaxOfComputableFunction( NestString() , FunctionString() , f , GetName<Ret>() , ListExpressionOfComputableFunction( args... ).Get() ) {}
+template <typename Ret, typename... Args> inline FunctionSymbol<Ret,Args...>::FunctionSymbol( const string& f , const VariableSymbol<Args>&... args ) : FunctionSymbol( f , SeparatorOfComputableFunction( f , sizeof...( Args ) ) , args... ) {}
+
+template <typename Ret, typename... Args>
+FunctionSymbol<Ret,Args...>::FunctionSymbol( const string& f , const SeparatorOfComputableFunction& s , const VariableSymbol<Args>&... args ) :
+  SyntaxOfComputableFunction
+  (
+
+   NestString() ,
+   FunctionString() ,
+   f ,
+   GetName<Ret>() ,
+   ListExpressionOfComputableFunction( args... ).Get() ,
+   s.Get()
+   
+   )
+{
+
+  VLTree<string>& t = Ref();
+
+  TRY_CATCH
+    (
+     
+     t.push_RightMost( FunctionExpressionToString( *this , args.GetNodeString( 2 )... ) ) ,
+
+     const ErrorType& e ,
+
+     CALL_P( e , t )
+
+     );
+
+}
+
+template <typename Ret, typename... Args> template <typename... VA>
+auto FunctionSymbol<Ret,Args...>::SetSeparator( const VA&... va ) -> typename enable_if<conjunction<is_same<VA,string>...>::value,void>::type
+{
+
+  SyntaxOfComputableFunction s{ SeparatorString() , va... };
+
+  TRY_CATCH
+    (
+
+     {
+
+       if( sizeof...( Args ) + 1 != sizeof...( VA ) ){
+
+	 ERR_CODE;
+
+       }
+       
+       VLTree<string>& t = Ref();
+  
+       t.pop_RightMost();
+       t.pop_RightMost();
+
+       auto itr = t.RightMostNode();
+       itr[1];
+
+       t.push_RightMost( s );
+       t.push_RightMost( FunctionExpressionToString( *this , itr ) );
+
+     } ,
+
+     const ErrorType& e ,
+
+     CALL( e )
+
+     );
+    
+  return;
+
+}
 
 template <typename Ret, typename... Args> inline ExpressionOfComputableFunction<Ret> FunctionSymbol<Ret,Args...>::operator()( const ExpressionOfComputableFunction<Args>&... args ) const { return ExpressionOfComputableFunction<Ret>( *this , args... ); }
 

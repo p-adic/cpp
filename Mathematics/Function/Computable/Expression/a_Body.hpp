@@ -35,10 +35,20 @@ template <typename Ret, typename... Args, typename... VA>
 void FunctionExpressionToSyntax( SyntaxOfComputableFunction& t , const FunctionSymbol<Ret,Args...>& f , const ExpressionOfComputableFunction<VA>&... va )
 {
 
-  const string& function_name = f.GetNodeString( 2 );
-  auto e = ListExpressionOfComputableFunction( va... );
-  
-  t.Ref().push_RightMost( function_name + e.GetNodeString( 2 ) , GetName<Ret>() , f.Get() , e.Get() );
+  auto arg = ListExpressionOfComputableFunction( va... );
+
+  TRY_CATCH
+    (
+     
+     t.Ref().push_RightMost( FunctionExpressionToString( f , va.GetNodeString( 2 )... ) , GetName<Ret>() , f.Get() , arg.Get() ) ,
+
+     const ErrorType& e ,
+
+     CALL_P( e , f , va... )
+
+     );
+
+  return;
   
 }
 
