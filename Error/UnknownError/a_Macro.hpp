@@ -4,4 +4,15 @@
 
 #include "../a_Macro.hpp"
 
-#define ERR_UNKNOWN( ... ) ThrowUnknownError( POSITION , ARGUMENTS( __VA_ARGS__ ) ) 
+#ifdef DEBUG
+
+  #define ERR_UNKNOWN( ... ) \
+    BreakPoint(); \
+    ThrowUnknownError( POSITION , ARGUMENTS( __VA_ARGS__ ) ) 
+
+#else
+
+  #define ERR_UNKNOWN( ... ) ThrowUnknownError( POSITION , ARGUMENTS( __VA_ARGS__ ) ) 
+
+#endif
+

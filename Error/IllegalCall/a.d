@@ -7,6 +7,8 @@ Error/IllegalCall/a.o: Error/IllegalCall/a.cpp \
  Error/IllegalCall/../../Utility/GlobalVariable/a_Macro.hpp \
  C:/Users/user/Documents/Programming/Error/IllegalAccess/a_Macro.hpp \
  Error/IllegalCall/../Warning/a_Macro.hpp Error/IllegalCall/../a.hpp \
+ Error/IllegalCall/../BreakPoint/a.hpp \
+ Error/IllegalCall/../BreakPoint/a_Macro.hpp \
  Error/IllegalCall/../../Utility/SmartPointer/a.hpp \
  Error/IllegalCall/../Position/a.hpp Error/IllegalCall/../Warning/a.hpp \
  Error/IllegalCall/../../Utility/GlobalVariable/a.hpp \
@@ -29,6 +31,10 @@ Error/IllegalCall/a.o: Error/IllegalCall/a.cpp \
  Error/IllegalCall/../../Utility/../Utility/String/a_Alias.hpp \
  Error/IllegalCall/../a_Body.hpp Error/IllegalCall/../FaultInCoding/a.hpp \
  Error/IllegalCall/../FaultInCoding/a_Macro.hpp \
+ Error/IllegalCall/../BreakPoint/a_Body.hpp \
+ Error/IllegalCall/../BreakPoint/../IllegalImput/a_Body.hpp \
+ Error/IllegalCall/../BreakPoint/../IllegalImput/a.hpp \
+ Error/IllegalCall/../BreakPoint/../IllegalImput/a_Macro.hpp \
  Error/IllegalCall/../Position/a_Body.hpp \
  Error/IllegalCall/../Position/../../Utility/String/Normalised/a_Body.hpp \
  Error/IllegalCall/../Position/../../Utility/String/Normalised/a.hpp \
@@ -54,9 +60,6 @@ Error/IllegalCall/a.o: Error/IllegalCall/a.cpp \
  C:/Users/user/Documents/Programming/Error/IllegalAccess/a_Body.hpp \
  C:/Users/user/Documents/Programming/Error/IllegalAccess/a.hpp \
  C:/Users/user/Documents/Programming/Utility/SmartPointer/a_Body.hpp \
- C:/Users/user/Documents/Programming/Error/IllegalImput/a_Body.hpp \
- C:/Users/user/Documents/Programming/Error/IllegalImput/a.hpp \
- C:/Users/user/Documents/Programming/Error/IllegalImput/a_Macro.hpp \
  C:/Users/user/Documents/Programming/SFINAE/MetaFunction/IsList/a.hpp \
  C:/Users/user/Documents/Programming/SFINAE/NonMemberFunction/Constified/a_Body.hpp \
  C:/Users/user/Documents/Programming/SFINAE/NonMemberFunction/a_Body.hpp \
@@ -101,6 +104,10 @@ C:/Users/user/Documents/Programming/Error/IllegalAccess/a_Macro.hpp:
 Error/IllegalCall/../Warning/a_Macro.hpp:
 
 Error/IllegalCall/../a.hpp:
+
+Error/IllegalCall/../BreakPoint/a.hpp:
+
+Error/IllegalCall/../BreakPoint/a_Macro.hpp:
 
 Error/IllegalCall/../../Utility/SmartPointer/a.hpp:
 
@@ -149,6 +156,14 @@ Error/IllegalCall/../a_Body.hpp:
 Error/IllegalCall/../FaultInCoding/a.hpp:
 
 Error/IllegalCall/../FaultInCoding/a_Macro.hpp:
+
+Error/IllegalCall/../BreakPoint/a_Body.hpp:
+
+Error/IllegalCall/../BreakPoint/../IllegalImput/a_Body.hpp:
+
+Error/IllegalCall/../BreakPoint/../IllegalImput/a.hpp:
+
+Error/IllegalCall/../BreakPoint/../IllegalImput/a_Macro.hpp:
 
 Error/IllegalCall/../Position/a_Body.hpp:
 
@@ -199,12 +214,6 @@ C:/Users/user/Documents/Programming/Error/IllegalAccess/a_Body.hpp:
 C:/Users/user/Documents/Programming/Error/IllegalAccess/a.hpp:
 
 C:/Users/user/Documents/Programming/Utility/SmartPointer/a_Body.hpp:
-
-C:/Users/user/Documents/Programming/Error/IllegalImput/a_Body.hpp:
-
-C:/Users/user/Documents/Programming/Error/IllegalImput/a.hpp:
-
-C:/Users/user/Documents/Programming/Error/IllegalImput/a_Macro.hpp:
 
 C:/Users/user/Documents/Programming/SFINAE/MetaFunction/IsList/a.hpp:
 

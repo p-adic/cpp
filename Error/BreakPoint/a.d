@@ -2,21 +2,26 @@ Error/BreakPoint/a.o: Error/BreakPoint/a.cpp \
  Error/BreakPoint/../Header.hpp Error/BreakPoint/../../Utility/Header.hpp \
  Error/BreakPoint/../../Utility/Header_Alias.hpp \
  Error/BreakPoint/a_Body.hpp Error/BreakPoint/a.hpp \
- Error/BreakPoint/a_Macro.hpp Error/BreakPoint/../a.hpp \
- Error/BreakPoint/../a_Macro.hpp Error/BreakPoint/../Position/a_Macro.hpp \
- Error/BreakPoint/../../Utility/GlobalVariable/a_Macro.hpp \
+ Error/BreakPoint/a_Macro.hpp Error/BreakPoint/../IllegalImput/a_Body.hpp \
+ Error/BreakPoint/../IllegalImput/a.hpp \
+ Error/BreakPoint/../IllegalImput/a_Macro.hpp \
+ Error/BreakPoint/../IllegalImput/../a_Macro.hpp \
+ Error/BreakPoint/../IllegalImput/../Position/a_Macro.hpp \
+ C:/Users/user/Documents/Programming/Utility/GlobalVariable/a_Macro.hpp \
  C:/Users/user/Documents/Programming/Error/IllegalAccess/a_Macro.hpp \
- Error/BreakPoint/../Warning/a_Macro.hpp \
- Error/BreakPoint/../../Utility/SmartPointer/a.hpp \
- Error/BreakPoint/../Position/a.hpp Error/BreakPoint/../Warning/a.hpp \
- Error/BreakPoint/../../Utility/GlobalVariable/a.hpp \
- Error/BreakPoint/../../Utility/GlobalVariable/a_Alias.hpp \
+ Error/BreakPoint/../IllegalImput/../Warning/a_Macro.hpp \
+ Error/BreakPoint/../IllegalImput/../a.hpp \
+ C:/Users/user/Documents/Programming/Utility/SmartPointer/a.hpp \
+ Error/BreakPoint/../IllegalImput/../Position/a.hpp \
+ Error/BreakPoint/../IllegalImput/../Warning/a.hpp \
+ C:/Users/user/Documents/Programming/Utility/GlobalVariable/a.hpp \
+ C:/Users/user/Documents/Programming/Utility/GlobalVariable/a_Alias.hpp \
  C:/Users/user/Documents/Programming/Mathematics/Function/a.hpp \
  C:/Users/user/Documents/Programming/Mathematics/Function/a_Alias.hpp \
- Error/BreakPoint/../../Utility/Macro.hpp \
- Error/BreakPoint/../../Utility/Macro_Macro.hpp \
- Error/BreakPoint/../../Utility/../Utility/String/a.hpp \
- Error/BreakPoint/../../Utility/../Utility/String/a_Macro.hpp \
+ C:/Users/user/Documents/Programming/Utility/Macro.hpp \
+ C:/Users/user/Documents/Programming/Utility/Macro_Macro.hpp \
+ C:/Users/user/Documents/Programming/Utility/String/a.hpp \
+ C:/Users/user/Documents/Programming/Utility/String/a_Macro.hpp \
  C:/Users/user/Documents/Programming/SFINAE/MemberFunction/a_Macro.hpp \
  C:/Users/user/Documents/Programming/SFINAE/a_Macro.hpp \
  C:/Users/user/Documents/Programming/SFINAE/MemberFunction/a.hpp \
@@ -26,10 +31,7 @@ Error/BreakPoint/a.o: Error/BreakPoint/a.cpp \
  C:/Users/user/Documents/Programming/Mathematics/SetTheory/EmptySet/a.hpp \
  C:/Users/user/Documents/Programming/SFINAE/MetaFunction/IsReferenceOf/a.hpp \
  C:/Users/user/Documents/Programming/SFINAE/a_Alias.hpp \
- Error/BreakPoint/../../Utility/../Utility/String/a_Alias.hpp \
- Error/BreakPoint/../IllegalImput/a_Body.hpp \
- Error/BreakPoint/../IllegalImput/a.hpp \
- Error/BreakPoint/../IllegalImput/a_Macro.hpp \
+ C:/Users/user/Documents/Programming/Utility/String/a_Alias.hpp \
  Error/BreakPoint/../IllegalImput/../a_Body.hpp \
  Error/BreakPoint/../IllegalImput/../FaultInCoding/a.hpp \
  Error/BreakPoint/../IllegalImput/../FaultInCoding/a_Macro.hpp \
@@ -95,39 +97,45 @@ Error/BreakPoint/a.hpp:
 
 Error/BreakPoint/a_Macro.hpp:
 
-Error/BreakPoint/../a.hpp:
+Error/BreakPoint/../IllegalImput/a_Body.hpp:
 
-Error/BreakPoint/../a_Macro.hpp:
+Error/BreakPoint/../IllegalImput/a.hpp:
 
-Error/BreakPoint/../Position/a_Macro.hpp:
+Error/BreakPoint/../IllegalImput/a_Macro.hpp:
 
-Error/BreakPoint/../../Utility/GlobalVariable/a_Macro.hpp:
+Error/BreakPoint/../IllegalImput/../a_Macro.hpp:
+
+Error/BreakPoint/../IllegalImput/../Position/a_Macro.hpp:
+
+C:/Users/user/Documents/Programming/Utility/GlobalVariable/a_Macro.hpp:
 
 C:/Users/user/Documents/Programming/Error/IllegalAccess/a_Macro.hpp:
 
-Error/BreakPoint/../Warning/a_Macro.hpp:
+Error/BreakPoint/../IllegalImput/../Warning/a_Macro.hpp:
 
-Error/BreakPoint/../../Utility/SmartPointer/a.hpp:
+Error/BreakPoint/../IllegalImput/../a.hpp:
 
-Error/BreakPoint/../Position/a.hpp:
+C:/Users/user/Documents/Programming/Utility/SmartPointer/a.hpp:
 
-Error/BreakPoint/../Warning/a.hpp:
+Error/BreakPoint/../IllegalImput/../Position/a.hpp:
 
-Error/BreakPoint/../../Utility/GlobalVariable/a.hpp:
+Error/BreakPoint/../IllegalImput/../Warning/a.hpp:
 
-Error/BreakPoint/../../Utility/GlobalVariable/a_Alias.hpp:
+C:/Users/user/Documents/Programming/Utility/GlobalVariable/a.hpp:
+
+C:/Users/user/Documents/Programming/Utility/GlobalVariable/a_Alias.hpp:
 
 C:/Users/user/Documents/Programming/Mathematics/Function/a.hpp:
 
 C:/Users/user/Documents/Programming/Mathematics/Function/a_Alias.hpp:
 
-Error/BreakPoint/../../Utility/Macro.hpp:
+C:/Users/user/Documents/Programming/Utility/Macro.hpp:
 
-Error/BreakPoint/../../Utility/Macro_Macro.hpp:
+C:/Users/user/Documents/Programming/Utility/Macro_Macro.hpp:
 
-Error/BreakPoint/../../Utility/../Utility/String/a.hpp:
+C:/Users/user/Documents/Programming/Utility/String/a.hpp:
 
-Error/BreakPoint/../../Utility/../Utility/String/a_Macro.hpp:
+C:/Users/user/Documents/Programming/Utility/String/a_Macro.hpp:
 
 C:/Users/user/Documents/Programming/SFINAE/MemberFunction/a_Macro.hpp:
 
@@ -147,13 +155,7 @@ C:/Users/user/Documents/Programming/SFINAE/MetaFunction/IsReferenceOf/a.hpp:
 
 C:/Users/user/Documents/Programming/SFINAE/a_Alias.hpp:
 
-Error/BreakPoint/../../Utility/../Utility/String/a_Alias.hpp:
-
-Error/BreakPoint/../IllegalImput/a_Body.hpp:
-
-Error/BreakPoint/../IllegalImput/a.hpp:
-
-Error/BreakPoint/../IllegalImput/a_Macro.hpp:
+C:/Users/user/Documents/Programming/Utility/String/a_Alias.hpp:
 
 Error/BreakPoint/../IllegalImput/../a_Body.hpp:
 

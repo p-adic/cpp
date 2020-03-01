@@ -4,4 +4,14 @@
 
 #include "../a_Macro.hpp"
 
-#define ERR_CODE ThrowFaultInCoding( POSITION ) 
+#ifdef DEBUG
+
+  #define ERR_CODE \
+    BreakPoint(); \
+    ThrowFaultInCoding( POSITION ) 
+
+#else
+
+  #define ERR_CODE ThrowFaultInCoding( POSITION ) 
+
+#endif

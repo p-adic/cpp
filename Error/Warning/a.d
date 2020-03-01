@@ -6,6 +6,8 @@ Error/Warning/a.o: Error/Warning/a.cpp Error/Warning/../Header.hpp \
  C:/Users/user/Documents/Programming/Error/IllegalAccess/a_Macro.hpp \
  Error/Warning/../Warning/a_Macro.hpp Error/Warning/../Position/a.hpp \
  Error/Warning/../Position/../a.hpp \
+ Error/Warning/../Position/../BreakPoint/a.hpp \
+ Error/Warning/../Position/../BreakPoint/a_Macro.hpp \
  Error/Warning/../Position/../../Utility/SmartPointer/a.hpp \
  Error/Warning/../Position/../../Utility/GlobalVariable/a.hpp \
  Error/Warning/../Position/../../Utility/GlobalVariable/a_Alias.hpp \
@@ -47,6 +49,10 @@ Error/Warning/../Warning/a_Macro.hpp:
 Error/Warning/../Position/a.hpp:
 
 Error/Warning/../Position/../a.hpp:
+
+Error/Warning/../Position/../BreakPoint/a.hpp:
+
+Error/Warning/../Position/../BreakPoint/a_Macro.hpp:
 
 Error/Warning/../Position/../../Utility/SmartPointer/a.hpp:
 

@@ -8,6 +8,8 @@ Error/IllegalImput/a.o: Error/IllegalImput/a.cpp \
  Error/IllegalImput/../../Utility/GlobalVariable/a_Macro.hpp \
  C:/Users/user/Documents/Programming/Error/IllegalAccess/a_Macro.hpp \
  Error/IllegalImput/../Warning/a_Macro.hpp Error/IllegalImput/../a.hpp \
+ Error/IllegalImput/../BreakPoint/a.hpp \
+ Error/IllegalImput/../BreakPoint/a_Macro.hpp \
  Error/IllegalImput/../../Utility/SmartPointer/a.hpp \
  Error/IllegalImput/../Position/a.hpp Error/IllegalImput/../Warning/a.hpp \
  Error/IllegalImput/../../Utility/GlobalVariable/a.hpp \
@@ -31,6 +33,7 @@ Error/IllegalImput/a.o: Error/IllegalImput/a.cpp \
  Error/IllegalImput/../a_Body.hpp \
  Error/IllegalImput/../FaultInCoding/a.hpp \
  Error/IllegalImput/../FaultInCoding/a_Macro.hpp \
+ Error/IllegalImput/../BreakPoint/a_Body.hpp \
  Error/IllegalImput/../Position/a_Body.hpp \
  C:/Users/user/Documents/Programming/Utility/String/Normalised/a_Body.hpp \
  C:/Users/user/Documents/Programming/Utility/String/Normalised/a.hpp \
@@ -105,6 +108,10 @@ Error/IllegalImput/../Warning/a_Macro.hpp:
 
 Error/IllegalImput/../a.hpp:
 
+Error/IllegalImput/../BreakPoint/a.hpp:
+
+Error/IllegalImput/../BreakPoint/a_Macro.hpp:
+
 Error/IllegalImput/../../Utility/SmartPointer/a.hpp:
 
 Error/IllegalImput/../Position/a.hpp:
@@ -152,6 +159,8 @@ Error/IllegalImput/../a_Body.hpp:
 Error/IllegalImput/../FaultInCoding/a.hpp:
 
 Error/IllegalImput/../FaultInCoding/a_Macro.hpp:
+
+Error/IllegalImput/../BreakPoint/a_Body.hpp:
 
 Error/IllegalImput/../Position/a_Body.hpp:
 

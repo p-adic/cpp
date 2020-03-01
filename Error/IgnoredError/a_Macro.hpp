@@ -4,4 +4,15 @@
 
 #include "../a_Macro.hpp"
 
-#define IGNORED_ERR( ... ) IndicateIgnoredError( POSITION , ARGUMENTS( __VA_ARGS__ ) ) 
+#ifdef DEBUG
+
+  #define IGNORED_ERR( ... ) \
+    BreakPoint(); \
+    IndicateIgnoredError( POSITION , ARGUMENTS( __VA_ARGS__ ) ) 
+
+#else
+
+  #define IGNORED_ERR( ... ) IndicateIgnoredError( POSITION , ARGUMENTS( __VA_ARGS__ ) ) 
+
+#endif
+

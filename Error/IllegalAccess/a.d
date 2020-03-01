@@ -7,6 +7,8 @@ Error/IllegalAccess/a.o: Error/IllegalAccess/a.cpp \
  Error/IllegalAccess/../Position/a_Macro.hpp \
  Error/IllegalAccess/../../Utility/GlobalVariable/a_Macro.hpp \
  Error/IllegalAccess/../Warning/a_Macro.hpp Error/IllegalAccess/../a.hpp \
+ Error/IllegalAccess/../BreakPoint/a.hpp \
+ Error/IllegalAccess/../BreakPoint/a_Macro.hpp \
  Error/IllegalAccess/../../Utility/SmartPointer/a.hpp \
  Error/IllegalAccess/../Position/a.hpp \
  Error/IllegalAccess/../Warning/a.hpp \
@@ -34,6 +36,10 @@ Error/IllegalAccess/a.o: Error/IllegalAccess/a.cpp \
  Error/IllegalAccess/../UnknownError/../a_Body.hpp \
  Error/IllegalAccess/../UnknownError/../FaultInCoding/a.hpp \
  Error/IllegalAccess/../UnknownError/../FaultInCoding/a_Macro.hpp \
+ Error/IllegalAccess/../UnknownError/../BreakPoint/a_Body.hpp \
+ C:/Users/user/Documents/Programming/Error/IllegalImput/a_Body.hpp \
+ C:/Users/user/Documents/Programming/Error/IllegalImput/a.hpp \
+ C:/Users/user/Documents/Programming/Error/IllegalImput/a_Macro.hpp \
  Error/IllegalAccess/../UnknownError/../Position/a_Body.hpp \
  C:/Users/user/Documents/Programming/Utility/String/Normalised/a_Body.hpp \
  C:/Users/user/Documents/Programming/Utility/String/Normalised/a.hpp \
@@ -53,9 +59,6 @@ Error/IllegalAccess/a.o: Error/IllegalAccess/a.cpp \
  C:/Users/user/Documents/Programming/Error/IgnoredError/a_Macro.hpp \
  C:/Users/user/Documents/Programming/SFINAE/MemberFunction/a_Body.hpp \
  C:/Users/user/Documents/Programming/SFINAE/a_Body.hpp \
- C:/Users/user/Documents/Programming/Error/IllegalImput/a_Body.hpp \
- C:/Users/user/Documents/Programming/Error/IllegalImput/a.hpp \
- C:/Users/user/Documents/Programming/Error/IllegalImput/a_Macro.hpp \
  C:/Users/user/Documents/Programming/SFINAE/MetaFunction/IsList/a.hpp \
  C:/Users/user/Documents/Programming/SFINAE/NonMemberFunction/Constified/a_Body.hpp \
  C:/Users/user/Documents/Programming/SFINAE/NonMemberFunction/a_Body.hpp \
@@ -103,6 +106,10 @@ Error/IllegalAccess/../../Utility/GlobalVariable/a_Macro.hpp:
 Error/IllegalAccess/../Warning/a_Macro.hpp:
 
 Error/IllegalAccess/../a.hpp:
+
+Error/IllegalAccess/../BreakPoint/a.hpp:
+
+Error/IllegalAccess/../BreakPoint/a_Macro.hpp:
 
 Error/IllegalAccess/../../Utility/SmartPointer/a.hpp:
 
@@ -158,6 +165,14 @@ Error/IllegalAccess/../UnknownError/../FaultInCoding/a.hpp:
 
 Error/IllegalAccess/../UnknownError/../FaultInCoding/a_Macro.hpp:
 
+Error/IllegalAccess/../UnknownError/../BreakPoint/a_Body.hpp:
+
+C:/Users/user/Documents/Programming/Error/IllegalImput/a_Body.hpp:
+
+C:/Users/user/Documents/Programming/Error/IllegalImput/a.hpp:
+
+C:/Users/user/Documents/Programming/Error/IllegalImput/a_Macro.hpp:
+
 Error/IllegalAccess/../UnknownError/../Position/a_Body.hpp:
 
 C:/Users/user/Documents/Programming/Utility/String/Normalised/a_Body.hpp:
@@ -195,12 +210,6 @@ C:/Users/user/Documents/Programming/Error/IgnoredError/a_Macro.hpp:
 C:/Users/user/Documents/Programming/SFINAE/MemberFunction/a_Body.hpp:
 
 C:/Users/user/Documents/Programming/SFINAE/a_Body.hpp:
-
-C:/Users/user/Documents/Programming/Error/IllegalImput/a_Body.hpp:
-
-C:/Users/user/Documents/Programming/Error/IllegalImput/a.hpp:
-
-C:/Users/user/Documents/Programming/Error/IllegalImput/a_Macro.hpp:
 
 C:/Users/user/Documents/Programming/SFINAE/MetaFunction/IsList/a.hpp:
 

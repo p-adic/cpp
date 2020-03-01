@@ -2,5 +2,19 @@
 
 #pragma once
 
-#define WARNING( body ) IndicateWarning( POSITION , body ) 
-#define MESSAGE( body ) IndicateMessage( POSITION , body ) 
+#ifdef DEBUG
+
+  #define WARNING( body ) \
+    BreakPoint(); \
+    IndicateWarning( POSITION , body ) 
+
+  #define MESSAGE( body ) \
+    BreakPoint(); \
+    IndicateMessage( POSITION , body ) 
+
+#else
+
+  #define WARNING( body ) IndicateWarning( POSITION , body ) 
+  #define MESSAGE( body ) IndicateMessage( POSITION , body ) 
+
+#endif

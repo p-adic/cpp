@@ -5,7 +5,8 @@ Error/Position/a.o: Error/Position/a.cpp Error/Position/../Header.hpp \
  Error/Position/../a_Macro.hpp \
  Error/Position/../../Utility/GlobalVariable/a_Macro.hpp \
  C:/Users/user/Documents/Programming/Error/IllegalAccess/a_Macro.hpp \
- Error/Position/../Warning/a_Macro.hpp \
+ Error/Position/../Warning/a_Macro.hpp Error/Position/../BreakPoint/a.hpp \
+ Error/Position/../BreakPoint/a_Macro.hpp \
  Error/Position/../../Utility/SmartPointer/a.hpp \
  Error/Position/../Warning/a.hpp \
  Error/Position/../../Utility/GlobalVariable/a.hpp \
@@ -28,6 +29,10 @@ Error/Position/a.o: Error/Position/a.cpp Error/Position/../Header.hpp \
  Error/Position/../../Utility/../Utility/String/a_Alias.hpp \
  Error/Position/../a_Body.hpp Error/Position/../FaultInCoding/a.hpp \
  Error/Position/../FaultInCoding/a_Macro.hpp \
+ Error/Position/../BreakPoint/a_Body.hpp \
+ Error/Position/../BreakPoint/../IllegalImput/a_Body.hpp \
+ Error/Position/../BreakPoint/../IllegalImput/a.hpp \
+ Error/Position/../BreakPoint/../IllegalImput/a_Macro.hpp \
  Error/Position/../../Utility/GlobalVariable/a_Body.hpp \
  C:/Users/user/Documents/Programming/Utility/List/LabeledList/a_Body.hpp \
  C:/Users/user/Documents/Programming/Utility/List/LabeledList/a.hpp \
@@ -46,9 +51,6 @@ Error/Position/a.o: Error/Position/a.cpp Error/Position/../Header.hpp \
  C:/Users/user/Documents/Programming/Utility/VLArray/Entry/a_Body.hpp \
  C:/Users/user/Documents/Programming/Utility/WrappedType/a_Body.hpp \
  C:/Users/user/Documents/Programming/Utility/WrappedType/a.hpp \
- C:/Users/user/Documents/Programming/Error/IllegalImput/a_Body.hpp \
- C:/Users/user/Documents/Programming/Error/IllegalImput/a.hpp \
- C:/Users/user/Documents/Programming/Error/IllegalImput/a_Macro.hpp \
  C:/Users/user/Documents/Programming/Mathematics/SetTheory/DirectProduct/a_Body.hpp \
  C:/Users/user/Documents/Programming/Utility/String/a_Body.hpp \
  C:/Users/user/Documents/Programming/Error/IgnoredError/a_Body.hpp \
@@ -102,6 +104,10 @@ C:/Users/user/Documents/Programming/Error/IllegalAccess/a_Macro.hpp:
 
 Error/Position/../Warning/a_Macro.hpp:
 
+Error/Position/../BreakPoint/a.hpp:
+
+Error/Position/../BreakPoint/a_Macro.hpp:
+
 Error/Position/../../Utility/SmartPointer/a.hpp:
 
 Error/Position/../Warning/a.hpp:
@@ -148,6 +154,14 @@ Error/Position/../FaultInCoding/a.hpp:
 
 Error/Position/../FaultInCoding/a_Macro.hpp:
 
+Error/Position/../BreakPoint/a_Body.hpp:
+
+Error/Position/../BreakPoint/../IllegalImput/a_Body.hpp:
+
+Error/Position/../BreakPoint/../IllegalImput/a.hpp:
+
+Error/Position/../BreakPoint/../IllegalImput/a_Macro.hpp:
+
 Error/Position/../../Utility/GlobalVariable/a_Body.hpp:
 
 C:/Users/user/Documents/Programming/Utility/List/LabeledList/a_Body.hpp:
@@ -183,12 +197,6 @@ C:/Users/user/Documents/Programming/Utility/VLArray/Entry/a_Body.hpp:
 C:/Users/user/Documents/Programming/Utility/WrappedType/a_Body.hpp:
 
 C:/Users/user/Documents/Programming/Utility/WrappedType/a.hpp:
-
-C:/Users/user/Documents/Programming/Error/IllegalImput/a_Body.hpp:
-
-C:/Users/user/Documents/Programming/Error/IllegalImput/a.hpp:
-
-C:/Users/user/Documents/Programming/Error/IllegalImput/a_Macro.hpp:
 
 C:/Users/user/Documents/Programming/Mathematics/SetTheory/DirectProduct/a_Body.hpp:
 

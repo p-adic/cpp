@@ -3,6 +3,7 @@
 #pragma once
 #include "a_Macro.hpp" 
 
+#include "BreakPoint/a.hpp"
 #include "../Utility/SmartPointer/a.hpp"
 
 class ErrorType
