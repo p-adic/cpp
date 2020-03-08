@@ -1,8 +1,10 @@
-// SFINAE/a.hpp
+// c:/Users/user/Documents/Programming/SFINAE/a.hpp
 
 #pragma once
-
 #include "a_Macro.hpp"
+
+#include <type_traits>
+#include "../Utility/Header.hpp"
 
 #include "MetaFunction/IsPointerOf/a.hpp"
 #include "MetaFunction/IsReferenceOf/a.hpp"
