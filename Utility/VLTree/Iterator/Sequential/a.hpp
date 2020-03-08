@@ -20,7 +20,8 @@ public:
   SequentialIteratorOfVLTree<T>& operator=( const SequentialIteratorOfVLTree<T>& );
   void operator[]( const int& );
 
-  inline T& Access( const uint& );
+  inline T& Ref( const uint& );
+  inline const T& Get( const uint& ) const;
 
   inline void pop_front();
   void erase_back( VLSubTree<T>& );
