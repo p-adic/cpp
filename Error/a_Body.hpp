@@ -9,6 +9,8 @@
 #include "Position/a_Body.hpp"
 #include "../Utility/GlobalVariable/a_Body.hpp"
 
+inline ErrorType::ErrorType( const ErrorType& e ) noexcept :  m_count( e.m_count ) , m_number( e.m_number ) { *m_number += 1u; }
+
 // a.cpp‚Å’è‹`‚³‚ê‚Ä‚¢‚éB
 void IndicateError_Body( const char* const FILE , const int& LINE , const char* const FUNC );
 

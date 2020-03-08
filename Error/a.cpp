@@ -3,6 +3,7 @@
 #include "Header.hpp"
 #include "a_Body.hpp"
 
+#include "BreakPoint/a_Body.hpp"
 #include "../Utility/GlobalVariable/a_Body.hpp"
 #include "../Utility/SmartPointer/a_Body.hpp"
 
@@ -15,13 +16,11 @@ ErrorType::ErrorType() noexcept :
   m_count += count;  
   count++;
 
-}
+  #ifdef DEBUG
 
-ErrorType::ErrorType( const ErrorType& e ) noexcept :
-  m_count( e.m_count ) , m_number( e.m_number )
-{
+    BreakPoint();
 
-  *m_number += 1u;
+  #endif
 
 }
 
