@@ -14,7 +14,7 @@ template <typename T> inline VLSubTree<T>::VLSubTree() : m_e() , m_root( m_e ) ,
 template <typename T> template <typename Arg1 , typename... Arg2> inline VLSubTree<T>::VLSubTree( const Arg1& t0 , const Arg2&... t1 ) : VLSubTree<T>() { push_RightMost( t0 , t1... ); }
 
 template <typename T> template <typename Arg> inline VLSubTree<T>::VLSubTree( const WrappedType<Arg>& t ) : m_e( t.Get() ) , m_root( m_e ) , m_size( 0 ) {}
-template <typename T> inline VLSubTree<T>::VLSubTree( const VLSubTree<T>& a ) : m_e( a.m_e ) , m_root( m_e ) , m_size( 0 ) { *this = a; }
+template <typename T> inline VLSubTree<T>::VLSubTree( const VLSubTree<T>& a ) : m_e( a.m_e.m_t ) , m_root( m_e ) , m_size( 0 ) { *this = a; }
 template <typename T> inline VLSubTree<T>::VLSubTree( const ConstIteratorOfVLTree<T>& itr ) : VLSubTree<T>( *( const_cast<EntryOfVLTree<T>*>( itr.m_p ) ) ) {}
 
 template <typename T>

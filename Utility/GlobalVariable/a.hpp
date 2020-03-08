@@ -1,7 +1,6 @@
-// GlobalVariable/a.hpp
+// c:/Users/user/Documents/Programming/Utility/GlobalVariable/a.hpp
 
 #pragma once
-
 #include "a_Macro.hpp"
 
 #include "a_Alias.hpp"

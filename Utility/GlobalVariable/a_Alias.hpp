@@ -1,6 +1,7 @@
-// GlobalVariable/a_Alias.hpp
+// c:/Users/user/Documents/Programming/Utility/GlobalVariable/a_Alias.hpp
 
-#include "../../Mathematics/Function/a.hpp"
+#pragma once
+#include "../../Mathematics/Function/a_Alias.hpp"
 
 template <typename T , typename Arg1 , typename... Arg2>
 using OriginalToGlobalConstant = enable_if< is_same< Arg1 , FunctionType<T,Arg2...> >::value , const T* const >;
