@@ -53,8 +53,6 @@ public:
   
   inline const uint& size() const noexcept;
   inline void CutBranches();
-  void CutBranches( const T& );
-  void CutLeaf();
   inline bool IsLeaf() const noexcept;
 
   // 部分木を構築して返すため、部分木への変更が自身へも反映される。
@@ -62,8 +60,8 @@ public:
   inline VLSubTree<T> RightMostSubTree();
   
   // 部分木のコピーを構築して返すため、部分木への変更が自身へは反映されない。
-  VLTree<T> LeftMostSubTreeCopy() const;
-  VLTree<T> RightMostSubTreeCopy() const;
+  inline VLTree<T> LeftMostSubTreeCopy() const;
+  inline VLTree<T> RightMostSubTreeCopy() const;
   
   inline void push_RightMost() const noexcept;
   template <typename Arg1 , typename... Arg2> void push_RightMost( const Arg1& , const Arg2&... );
