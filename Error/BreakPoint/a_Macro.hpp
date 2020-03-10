@@ -7,7 +7,8 @@
   #define COUNT_BODY( ... ) CountCall( __VA_ARGS__ ) 
   #define FLAG_BODY( ... ) CallFlagContainer( false , __VA_ARGS__  ) 
   #define BREAK BreakPoint() 
-  
+  #define BREAK_IF( CONDITION ) if( CONDITION ){ BreakPoint(); } 
+ 
 #endif
 
 #define COUNT( index , i0 , i1 ) CONNECT( COUNT , index )( i0 , i1 ) 
