@@ -26,7 +26,8 @@ public:
   inline IteratorOfVLTree( EntryOfVLTree<T>* const& ) noexcept;
   inline IteratorOfVLTree( const IteratorOfVLTree<T>& ) noexcept;
 
-  inline T& Access() const;
+  // 非メンバ関数のAccess用
+  inline T& Access_Body( const char* const , const int& , const char* const , const string& ) const;
   inline T& operator*() const;
   inline T* operator->() const;
   IteratorOfVLTree<T>& operator=( const IteratorOfVLTree<T>& ) noexcept;
@@ -65,7 +66,8 @@ public:
   inline ConstIteratorOfVLTree( const ConstIteratorOfVLTree<T>& ) noexcept;
   inline ConstIteratorOfVLTree( const IteratorOfVLTree<T>& ) noexcept;
 
-  inline const T& Access() const;
+  // 非メンバ関数のAccess用
+  inline const T& Access_Body( const char* const , const int& , const char* const , const string& ) const;
   inline const T& operator*() const;
   inline const T* operator->() const;
   ConstIteratorOfVLTree<T>& operator=( const ConstIteratorOfVLTree<T>& ) noexcept;
@@ -101,3 +103,7 @@ template <typename T> inline bool operator!=( const IteratorOfVLTree<T>& , const
 
 template <typename T> inline bool operator==( const ConstIteratorOfVLTree<T>& , const ConstIteratorOfVLTree<T>& ) noexcept;
 template <typename T> inline bool operator!=( const ConstIteratorOfVLTree<T>& , const ConstIteratorOfVLTree<T>& ) noexcept;
+
+// マクロACCESS( itr )を使う。
+template <typename T> inline T& Access( const char* const , const int& , const char* const , const string& , const IteratorOfVLTree<T>& );
+  template <typename T> inline const T& Access( const char* const , const int& , const char* const , const string& , const ConstIteratorOfVLTree<T>& );

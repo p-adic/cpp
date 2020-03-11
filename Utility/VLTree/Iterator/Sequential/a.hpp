@@ -4,10 +4,15 @@
 #include "../a.hpp"
 #include "../../../VLArray/a.hpp"
 
+template <typename T> class SequentialConstIteratorOfVLTree;
+
 template <typename T>
 class SequentialIteratorOfVLTree :
   public IteratorOfVLTree<T>
 {
+
+  // キャスト用のコンストラクタにのみ用いる。
+  friend SequentialConstIteratorOfVLTree<T>;
 
 private:
   VLArray<IteratorOfVLTree<T> > m_itr;
@@ -20,8 +25,7 @@ public:
   SequentialIteratorOfVLTree<T>& operator=( const SequentialIteratorOfVLTree<T>& );
   void operator[]( const int& );
 
-  inline T& Access( const uint& );
-  inline const T& Access( const uint& ) const;
+  inline T& Access_Body( const char* const , const int& , const char* const , const string& , const uint& );
   inline T& Ref( const uint& );
   inline const T& Get( const uint& ) const;
 
@@ -55,7 +59,9 @@ public:
   SequentialConstIteratorOfVLTree<T>& operator=( const SequentialConstIteratorOfVLTree<T>& );
   void operator[]( const int& );
 
-  inline const T& Access( const uint& );
+
+  inline const T& Access_Body( const char* const , const int& , const char* const , const string& , const uint& ) const;
+  inline const T& Get( const uint& ) const;
 
   inline void pop_front();
 
@@ -67,3 +73,7 @@ private:
   static bool CheckContained_Body( const VLSubTree<T>& , const SequentialConstIteratorOfVLTree<T>& );
 
 };
+
+// マクロACCESS( itr )を使う。
+template <typename T> inline T& Access( const char* const , const int& , const char* const , const string& , SequentialIteratorOfVLTree<T>& , const uint& );
+template <typename T> inline const T& Access( const char* const , const int& , const char* const , const string& VARIABLE_NAMES , const SequentialConstIteratorOfVLTree<T>& , const uint& );

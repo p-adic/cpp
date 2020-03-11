@@ -11,7 +11,8 @@ template <typename T> inline IteratorOfVLTree<T>::IteratorOfVLTree() noexcept : 
 template <typename T> inline IteratorOfVLTree<T>::IteratorOfVLTree( EntryOfVLTree<T>* const& p ) noexcept : m_p( p ) {}
 template <typename T> inline IteratorOfVLTree<T>::IteratorOfVLTree( const IteratorOfVLTree<T>& itr ) noexcept : m_p( itr.m_p ) {}
 
-template <typename T> inline T& IteratorOfVLTree<T>::Access() const { return ACCESS( m_p ).m_t; }
+template <typename T> inline T& IteratorOfVLTree<T>::Access_Body( const char* const FILE , const int& LINE , const char* const FUNC , const string& VARIABLE_NAMES ) const { TRY_CATCH( return Access<EntryOfVLTree<T> >( FILE , LINE , FUNC , VARIABLE_NAMES , m_p ).m_t , IllegalAccess& e , CALL( e ) ); return Access<EntryOfVLTree<T> >( FILE , LINE , FUNC , VARIABLE_NAMES , m_p ).m_t; }
+
 template <typename T> inline T& IteratorOfVLTree<T>::operator*() const { return ( *m_p ).m_t; }
 template <typename T> inline T* IteratorOfVLTree<T>::operator->() const { return &( *( *this ) ); }
 
@@ -115,7 +116,7 @@ template <typename T> inline ConstIteratorOfVLTree<T>::ConstIteratorOfVLTree( En
 template <typename T> inline ConstIteratorOfVLTree<T>::ConstIteratorOfVLTree( const ConstIteratorOfVLTree<T>& itr ) noexcept : m_p( itr.m_p ) {}
 template <typename T> inline ConstIteratorOfVLTree<T>::ConstIteratorOfVLTree( const IteratorOfVLTree<T>& itr ) noexcept : m_p( itr.m_p ) {}
 
-template <typename T> inline const T& ConstIteratorOfVLTree<T>::Access() const { return Access( m_p ).m_t; };
+template <typename T> inline const T& ConstIteratorOfVLTree<T>::Access_Body( const char* const FILE , const int& LINE , const char* const FUNC , const string& VARIABLE_NAMES ) const { TRY_CATCH( return Access<EntryOfVLTree<T> >( FILE , LINE , FUNC , VARIABLE_NAMES , m_p ).m_t , IllegalAccess& e , CALL( e ) ); return Access<EntryOfVLTree<T> >( FILE , LINE , FUNC , VARIABLE_NAMES , m_p ).m_t; }
 template <typename T> inline const T& ConstIteratorOfVLTree<T>::operator*() const { return ( *m_p ).m_t; };
 template <typename T> inline const T* ConstIteratorOfVLTree<T>::operator->() const { return &( *( *this ) ); }
 
@@ -238,3 +239,7 @@ template <typename T> inline bool operator!=( const IteratorOfVLTree<T>& itr0 , 
 
 template <typename T> inline bool operator==( const ConstIteratorOfVLTree<T>& itr0 , const ConstIteratorOfVLTree<T>& itr1 ) noexcept { return ConstIteratorOfVLTree<T>::Equal( itr0 , itr1 ); }
 template <typename T> inline bool operator!=( const ConstIteratorOfVLTree<T>& itr0 , const ConstIteratorOfVLTree<T>& itr1 ) noexcept { return !( itr0 == itr1 );}
+
+
+template <typename T> inline T& Access( const char* const FILE , const int& LINE , const char* const FUNC , const string& VARIABLE_NAMES , const IteratorOfVLTree<T>& itr ) { return itr.Access_Body( FILE , LINE , FUNC ); }
+template <typename T> inline const T& Access( const char* const FILE , const int& LINE , const char* const FUNC , const string& VARIABLE_NAMES , const IteratorOfVLTree<T>& itr ) { return itr.Access_Body( FILE , LINE , FUNC ); }

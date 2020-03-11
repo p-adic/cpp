@@ -55,8 +55,7 @@ void SequentialIteratorOfVLTree<T>::operator[]( const int& i )
 
 }
 
-template <typename T> inline T& SequentialIteratorOfVLTree<T>::Access( const uint& i ) { return i == m_itr.size() ? IteratorOfVLTree<T>::Access() : m_itr[i].Access(); }
-template <typename T> inline const T& SequentialIteratorOfVLTree<T>::Access( const uint& i ) const { return i == m_itr.size() ? IteratorOfVLTree<T>::Access() : m_itr[i].Access(); }
+template <typename T> inline T& SequentialIteratorOfVLTree<T>::Access_Body( const char* const FILE , const int& LINE , const char* const FUNC , const string& VARIABLE_NAMES , const uint& i ) { TRY_CATCH( return i == m_itr.size() ? IteratorOfVLTree<T>::Access_Body( FILE , LINE , FUNC , VARIABLE_NAMES ) : m_itr[i].Access_Body( FILE , LINE , FUNC , VARIABLE_NAMES ) , IllegalAccess& e , CALL_P( e , i , m_itr.size() ) ); return i == m_itr.size() ? IteratorOfVLTree<T>::Access_Body( FILE , LINE , FUNC , VARIABLE_NAMES ) : m_itr[i].Access_Body( FILE , LINE , FUNC , VARIABLE_NAMES ); }
 template <typename T> inline T& SequentialIteratorOfVLTree<T>::Ref( const uint& i ){ return i == m_itr.size() ? IteratorOfVLTree<T>::operator*() : *( m_itr[i] ); }
 template <typename T> inline const T& SequentialIteratorOfVLTree<T>::Get( const uint& i ) const { return i == m_itr.size() ? IteratorOfVLTree<T>::operator*() : *( m_itr[i] ); }
 
@@ -224,7 +223,8 @@ void SequentialConstIteratorOfVLTree<T>::operator[]( const int& i )
 
 }
 
-template <typename T> inline const T& SequentialConstIteratorOfVLTree<T>::Access( const uint& i ){ return i + 1 == size() ? ConstIteratorOfVLTree<T>::operator*() : *( m_itr[i] ); }
+template <typename T> inline const T& SequentialConstIteratorOfVLTree<T>::Access_Body( const char* const FILE , const int& LINE , const char* const FUNC , const string& VARIABLE_NAMES , const uint& i ) const  { TRY_CATCH( return i == m_itr.size() ? ConstIteratorOfVLTree<T>::Access_Body( FILE , LINE , FUNC , VARIABLE_NAMES ) : m_itr[i].Access_Body( FILE , LINE , FUNC , VARIABLE_NAMES ) , IllegalAccess& e , CALL_P( e , i , m_itr.size() ) ); return i == m_itr.size() ? ConstIteratorOfVLTree<T>::Access_Body( FILE , LINE , FUNC , VARIABLE_NAMES ) : m_itr[i].Access_Body( FILE , LINE , FUNC , VARIABLE_NAMES ); }
+template <typename T> inline const T& SequentialConstIteratorOfVLTree<T>::Get( const uint& i ) const { return i == m_itr.size() ? ConstIteratorOfVLTree<T>::operator*() : *( m_itr[i] ); }
 
 template <typename T> inline void SequentialConstIteratorOfVLTree<T>::pop_front(){ m_itr.pop_front(); }
 
@@ -271,3 +271,6 @@ bool SequentialConstIteratorOfVLTree<T>::CheckContained_Body( const VLSubTree<T>
 }
 
 template <typename T> inline uint SequentialConstIteratorOfVLTree<T>::size() const noexcept { return m_itr.size() + 1; }
+
+template <typename T> inline T& Access( const char* const FILE , const int& LINE , const char* const FUNC , const string& VARIABLE_NAMES , SequentialIteratorOfVLTree<T>& itr , const uint& i ){ return itr.Access_Body( FILE , LINE , FUNC , VARIABLE_NAMES , i ); }
+template <typename T> inline const T& Access( const char* const FILE , const int& LINE , const char* const FUNC , const string& VARIABLE_NAMES , const SequentialConstIteratorOfVLTree<T>& itr , const uint& i ){ return itr.Access_Body( FILE , LINE , FUNC , VARIABLE_NAMES , i ); }
