@@ -112,7 +112,7 @@ template <typename T> inline bool IteratorOfVLTree<T>::IsValid() const noexcept 
 
 // ConstIteratorOfVLTree
 template <typename T> inline ConstIteratorOfVLTree<T>::ConstIteratorOfVLTree() noexcept : m_p( nullptr ) {}
-template <typename T> inline ConstIteratorOfVLTree<T>::ConstIteratorOfVLTree( EntryOfVLTree<T>* const& p ) noexcept : m_p( p ) {}
+template <typename T> inline ConstIteratorOfVLTree<T>::ConstIteratorOfVLTree( const EntryOfVLTree<T>* const& p ) noexcept : m_p( p ) {}
 template <typename T> inline ConstIteratorOfVLTree<T>::ConstIteratorOfVLTree( const ConstIteratorOfVLTree<T>& itr ) noexcept : m_p( itr.m_p ) {}
 template <typename T> inline ConstIteratorOfVLTree<T>::ConstIteratorOfVLTree( const IteratorOfVLTree<T>& itr ) noexcept : m_p( itr.m_p ) {}
 

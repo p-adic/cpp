@@ -34,22 +34,25 @@ private:
   // デストラクタがdelete演算子を呼ばないため、VLTree経由でしか呼び出してはいけない。
   template <typename Arg> inline VLSubTree( const WrappedType<Arg>& t );
 
-  // 明示的に代入演算子を経由してコピーしているため、構築された木への変更がコピー元へは反映されない。
+  // 構築された木への変更がコピー元へは反映されない。
   // デストラクタがdelete演算子を呼ばないため、VLTree経由でしか呼び出してはいけない。
   inline VLSubTree( const VLSubTree<T>& );
+  inline VLSubTree( const VLConstSubTree<T>& );
 
-  // const_castを行うため、VLConstSubTree経由でしか呼び出してはいけない。
-  inline VLSubTree( const ConstIteratorOfVLTree<T>& );
+  // 構築された木への変更がコピー元へは反映されない。
+  // VLConstSubTree経由でしか呼び出してはいけない。
+  VLSubTree( const ConstIteratorOfVLTree<T>& );
 
-  // 直接木を構築して返すため、戻り値の木への変更が自身へも反映されうる。
+  // 構築された木への変更がコピー元へは反映される。
   // VLTreeを経由しなくても呼び出して良い。
   inline VLSubTree( EntryOfVLTree<T>& );
 
 public:
   virtual ~VLSubTree() = default;
 
-  // CutBranchesとpush_RightMostで新たに木を構築するため、構築された木への変更がoperator=のコピー元へは反映されないが部分木としての埋め込み先へは反映される。
-  VLSubTree<T>& operator=( const VLSubTree<T>& );
+  // 左辺への変更が右辺へは反映されない。
+  inline VLSubTree<T>& operator=( const VLSubTree<T>& );
+  VLSubTree<T>& operator=( const VLConstSubTree<T>& );
   
   inline const uint& size() const noexcept;
   inline void CutBranches();
@@ -67,7 +70,7 @@ public:
   template <typename Arg1 , typename... Arg2> void push_RightMost( const Arg1& , const Arg2&... );
 
   // 部分木のコピーを構築して挿入するため、自身への変更が部分木へは反映されない。
-  template <typename... Args> void push_RightMost( const VLSubTree<T>& , const Args&... );
+  template <typename... Args> void push_RightMost( const VLConstSubTree<T>& , const Args&... );
   template <typename Arg> void push_LeftMost( const Arg& );
   
   void pop_RightMost();
@@ -118,8 +121,8 @@ public:
   VLTree<T> GetBranchCopy( const const_iterator& ) const;
   
   // 部分木のコピーを構築して挿入するため、自身への変更が部分木へは反映されない。
-  void Concatenate( const VLSubTree<T>& );
-  void Concatenate( const iterator& , const VLSubTree<T>& );
+  void Concatenate( const VLConstSubTree<T>& );
+  void Concatenate( const iterator& , const VLConstSubTree<T>& );
 
   bool CheckContain( const iterator& ) const noexcept;
   bool CheckContain( const const_iterator& ) const noexcept;

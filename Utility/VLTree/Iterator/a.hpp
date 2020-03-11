@@ -54,7 +54,7 @@ class ConstIteratorOfVLTree
   friend EntryOfVLArray<ConstIteratorOfVLTree<T> >;
 
 private:
-  EntryOfVLTree<T>* m_p;
+  const EntryOfVLTree<T>* m_p;
 
 
 private:
@@ -62,7 +62,7 @@ private:
   inline ConstIteratorOfVLTree() noexcept;
   
 public:
-  inline ConstIteratorOfVLTree( EntryOfVLTree<T>* const& ) noexcept;
+  inline ConstIteratorOfVLTree( const EntryOfVLTree<T>* const& ) noexcept;
   inline ConstIteratorOfVLTree( const ConstIteratorOfVLTree<T>& ) noexcept;
   inline ConstIteratorOfVLTree( const IteratorOfVLTree<T>& ) noexcept;
 

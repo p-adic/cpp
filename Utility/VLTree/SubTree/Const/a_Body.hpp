@@ -6,3 +6,7 @@
 #include "../a_Body.hpp"
 
 template <typename T> inline VLConstSubTree<T>::VLConstSubTree( const ConstIteratorOfVLTree<T>& itr ) : VLSubTree<T>( itr ) {}
+
+template <typename T> inline VLConstSubTree<T>::VLConstSubTree( const EntryOfVLTree<T>& e ) : VLSubTree<T>( ConstIteratorOfVLTree<T>( &e ) ) {}
+
+template <typename T> inline VLConstSubTree<T>::VLConstSubTree( const VLSubTree<T>& t ) : VLSubTree<T>( ConstIteratorOfVLTree<T>( &( t.m_root ) ) ) {}

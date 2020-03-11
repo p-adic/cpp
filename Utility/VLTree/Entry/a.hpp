@@ -25,7 +25,7 @@ private:
   inline EntryOfVLTree();
   template <typename Arg> inline EntryOfVLTree( const Arg& );
   template <typename Arg> inline EntryOfVLTree( const Arg& , EntryOfVLTree<T>* const& , EntryOfVLTree<T>* const& );
-  inline EntryOfVLTree( const EntryOfVLTree<T>& );
+  EntryOfVLTree( const EntryOfVLTree<T>& );
   EntryOfVLTree<T>& operator=( const EntryOfVLTree<T>& );
 
 };

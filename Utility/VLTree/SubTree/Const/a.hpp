@@ -8,8 +8,12 @@ class VLConstSubTree :
   public VLSubTree<T>
 {
 
+  friend VLSubTree<T>;
+
 public:
   inline VLConstSubTree( const ConstIteratorOfVLTree<T>& );
+  inline VLConstSubTree( const EntryOfVLTree<T>& );
+  inline VLConstSubTree( const VLSubTree<T>& );
 
   // VLSubTree<T>::operator=は部分木としての埋め込み先を変更してしまうためdeleteする必要がある。
   template <typename Arg> VLConstSubTree<T>& operator=( const Arg& ) = delete;
@@ -24,7 +28,7 @@ public:
   using VLSubTree<T>::push_RightMost;
   template <typename Arg1 , typename... Arg2> void push_RightMost( const Arg1& , const Arg2&... ) = delete;
 
-  template <typename... Args> void push_RightMost( const VLSubTree<T>& , const Args&... ) = delete;
+  template <typename... Args> void push_RightMost( const VLConstSubTree<T>& , const Args&... ) = delete;
 
   template <typename Arg> void push_LeftMost( const Arg& ) = delete;
   
