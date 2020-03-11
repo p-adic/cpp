@@ -1,10 +1,10 @@
-// DirectProduct/a_Body.hpp
+// c:/Users/user/Documents/Programming/Mathematics/SetTheory/DirectProduct/a_Body.hpp
 
 #pragma once
 #include "a.hpp"
 
 #include "../../../Utility/String/a_Body.hpp"
-#include "../../../Utility/WrappedInt/a.hpp"
+#include "../../../Utility/WrappedType/Int/a.hpp"
 
 template <typename T0> inline DirectProduct<T0>::DirectProduct() :
   m_t() , m_c()

@@ -1,5 +1,6 @@
-// DirectProduct/a_Alias.hpp
+// c:/Users/user/Documents/Programming/Mathematics/SetTheory/DirectProduct/a_Alias.hpp
 
+#pragma once
 #include "../EmptySet/a.hpp"
 
 template <uint i , typename... T0> class TypeOfRestrictToRight_Body;

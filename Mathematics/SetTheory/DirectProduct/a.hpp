@@ -1,7 +1,6 @@
-// DirectProduct/a.hpp
+// c:/Users/user/Documents/Programming/Mathematics/SetTheory/DirectProduct/a.hpp
 
 #pragma once
-
 #include <functional>
 
 template <typename... T0> class DirectProduct;
