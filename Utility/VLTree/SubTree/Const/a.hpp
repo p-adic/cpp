@@ -25,7 +25,6 @@ public:
   template <typename Arg1 , typename... Arg2> void push_RightMost( const Arg1& , const Arg2&... ) = delete;
 
   template <typename... Args> void push_RightMost( const VLSubTree<T>& , const Args&... ) = delete;
-  template <typename... Args> void push_RightMost( const VLTree<T>& , const Args&... ) = delete;
 
   template <typename Arg> void push_LeftMost( const Arg& ) = delete;
   
