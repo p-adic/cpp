@@ -5,7 +5,6 @@
 
 template <typename T> class IteratorOfVLTree;
 template <typename T> class ConstIteratorOfVLTree;
-template <typename T> class VLConstSubTree;
 template <typename T> class VLTree;
 template <typename Arg> class WrappedType;
 
@@ -13,7 +12,6 @@ template <typename T>
 class VLSubTree
 {
 
-  friend VLConstSubTree<T>;
   friend VLTree<T>;
   
 private:
@@ -39,20 +37,23 @@ private:
   // 引数をVLSubConstTree<T>にしたものを定義して委譲するとループしてしまう。
   inline VLSubTree( const VLSubTree<T>& );
 
-  // 構築された木への変更がコピー元へは反映されない。
-  // VLConstSubTree経由でしか呼び出してはいけない。
-  VLSubTree( const ConstIteratorOfVLTree<T>& );
-
+public:
   // 構築された木への変更がコピー元へは反映される。
   // VLTreeを経由しなくても呼び出して良い。
+  // VLTreeを経由してはならない。
   inline VLSubTree( EntryOfVLTree<T>& );
+  inline VLSubTree( const IteratorOfVLTree<T>& );
 
-public:
+  // 構築された木への変更がコピー元へは反映されない。
+  // デストラクタがdelete演算子を呼ばないため、VLTree経由でしか呼び出してはいけない。
+  // intはダミー引数。
+  inline VLSubTree( const EntryOfVLTree<T>& , const int& );
+  inline VLSubTree( const ConstIteratorOfVLTree<T>& , const int& );
+
   virtual ~VLSubTree() = default;
 
   // 左辺への変更が右辺へは反映されない。
-  inline VLSubTree<T>& operator=( const VLSubTree<T>& );
-  VLSubTree<T>& operator=( const VLConstSubTree<T>& );
+  VLSubTree<T>& operator=( const VLSubTree<T>& );
   
   inline const uint& size() const noexcept;
   inline void CutBranches();
@@ -68,19 +69,12 @@ public:
   
   inline void push_RightMost() const noexcept;
   template <typename Arg1 , typename... Arg2> void push_RightMost( const Arg1& , const Arg2&... );
-
-  // 部分木のコピーを構築して挿入するため、自身への変更が部分木へは反映されない。
-  template <typename... Args> void push_RightMost( const VLConstSubTree<T>& , const Args&... );
+  template <typename... Args> void push_RightMost( const VLTree<T>& , const Args&... );
   template <typename Arg> void push_LeftMost( const Arg& );
   
   void pop_RightMost();
   void pop_LeftMost();
   void pop_Root();
-
-  template <typename... Args> inline void push_back( const Args&... );
-  template <typename Arg> inline void push_front( const Arg& );
-  inline void pop_back();
-  inline void pop_front();
 
   using iterator = IteratorOfVLTree<T>;
   using const_iterator = ConstIteratorOfVLTree<T>;
@@ -112,8 +106,8 @@ public:
   VLSubTree<T> operator[]( const uint& );
   VLSubTree<T> operator[]( iterator& );
   
-  // 定数部分木を構築して返すため、部分木への変更が自身へは反映されない。
-  VLConstSubTree<T> operator[]( const const_iterator& ) const;
+  // 部分木のコピーを構築して返すため、部分木への変更が自身へは反映されない。
+  VLTree<T> operator[]( const const_iterator& ) const;
 
   // 部分木のコピーを構築して返すため、部分木への変更が自身へは反映されない。
   VLTree<T> GetBranchCopy( const uint& ) const;
@@ -121,12 +115,11 @@ public:
   VLTree<T> GetBranchCopy( const const_iterator& ) const;
   
   // 部分木のコピーを構築して挿入するため、自身への変更が部分木へは反映されない。
-  void Concatenate( const VLConstSubTree<T>& );
-  void Concatenate( const iterator& , const VLConstSubTree<T>& );
+  void Concatenate( const VLSubTree<T>& );
+  void Concatenate( const iterator& , const VLSubTree<T>& );
 
   bool CheckContain( const iterator& ) const noexcept;
   bool CheckContain( const const_iterator& ) const noexcept;
-
   string Display() const;
   
 };

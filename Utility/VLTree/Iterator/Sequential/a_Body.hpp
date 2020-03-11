@@ -144,11 +144,11 @@ bool SequentialIteratorOfVLTree<T>::CheckContained_Body( const VLSubTree<T>& t ,
 
   }
 
-  const ConstIteratorOfVLTree<T>& itr_front = ( itr.m_itr ).front();
+  const IteratorOfVLTree<T>& itr_front = ( itr.m_itr ).front();
 
   if( t.CheckContain( itr_front ) ){
 
-    const VLConstSubTree<T> t_sub = t[ itr_front ];
+    const VLSubTree<T> t_sub{ itr_front };
     SequentialIteratorOfVLTree<T> itr_copy = itr;
     itr_copy.pop_front();
     
@@ -258,7 +258,7 @@ bool SequentialConstIteratorOfVLTree<T>::CheckContained_Body( const VLSubTree<T>
 
   if( t.CheckContain( itr_front ) ){
 
-    const VLConstSubTree<T> t_sub = t[ itr_front ];
+    const VLSubTree<T> t_sub{ IteratorOfVLTree<T>( const_cast<EntryOfVLTree<T>*>( itr_front.m_p ) ) };
     SequentialConstIteratorOfVLTree<T> itr_copy = itr;
     itr_copy.pop_front();
     
