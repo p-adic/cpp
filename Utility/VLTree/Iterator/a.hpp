@@ -65,6 +65,7 @@ public:
   inline ConstIteratorOfVLTree( const ConstIteratorOfVLTree<T>& ) noexcept;
   inline ConstIteratorOfVLTree( const IteratorOfVLTree<T>& ) noexcept;
 
+  inline const T& Access() const;
   inline const T& operator*() const;
   inline const T* operator->() const;
   ConstIteratorOfVLTree<T>& operator=( const ConstIteratorOfVLTree<T>& ) noexcept;

@@ -114,6 +114,8 @@ template <typename T> inline ConstIteratorOfVLTree<T>::ConstIteratorOfVLTree() n
 template <typename T> inline ConstIteratorOfVLTree<T>::ConstIteratorOfVLTree( EntryOfVLTree<T>* const& p ) noexcept : m_p( p ) {}
 template <typename T> inline ConstIteratorOfVLTree<T>::ConstIteratorOfVLTree( const ConstIteratorOfVLTree<T>& itr ) noexcept : m_p( itr.m_p ) {}
 template <typename T> inline ConstIteratorOfVLTree<T>::ConstIteratorOfVLTree( const IteratorOfVLTree<T>& itr ) noexcept : m_p( itr.m_p ) {}
+
+template <typename T> inline const T& ConstIteratorOfVLTree<T>::Access() const { return Access( m_p ).m_t; };
 template <typename T> inline const T& ConstIteratorOfVLTree<T>::operator*() const { return ( *m_p ).m_t; };
 template <typename T> inline const T* ConstIteratorOfVLTree<T>::operator->() const { return &( *( *this ) ); }
 

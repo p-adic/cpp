@@ -55,7 +55,8 @@ void SequentialIteratorOfVLTree<T>::operator[]( const int& i )
 
 }
 
-template <typename T> inline T& SequentialIteratorOfVLTree<T>::Access( const uint& i ){ return i == m_itr.size() ? IteratorOfVLTree<T>::Access() : Access( m_itr[i] ); }
+template <typename T> inline T& SequentialIteratorOfVLTree<T>::Access( const uint& i ) { return i == m_itr.size() ? IteratorOfVLTree<T>::Access() : Access( m_itr[i] ); }
+template <typename T> inline const T& SequentialIteratorOfVLTree<T>::Access( const uint& i ) const { return i == m_itr.size() ? IteratorOfVLTree<T>::Access() : Access( m_itr[i] ); }
 template <typename T> inline T& SequentialIteratorOfVLTree<T>::Ref( const uint& i ){ return i == m_itr.size() ? IteratorOfVLTree<T>::operator*() : *( m_itr[i] ); }
 template <typename T> inline const T& SequentialIteratorOfVLTree<T>::Get( const uint& i ) const { return i == m_itr.size() ? IteratorOfVLTree<T>::operator*() : *( m_itr[i] ); }
 

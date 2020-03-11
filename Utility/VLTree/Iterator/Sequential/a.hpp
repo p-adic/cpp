@@ -21,6 +21,7 @@ public:
   void operator[]( const int& );
 
   inline T& Access( const uint& );
+  inline const T& Access( const uint& ) const;
   inline T& Ref( const uint& );
   inline const T& Get( const uint& ) const;
 
