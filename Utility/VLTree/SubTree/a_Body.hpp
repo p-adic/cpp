@@ -31,7 +31,7 @@ VLSubTree<T>::VLSubTree( EntryOfVLTree<T>& e ) : m_e( e ) , m_root( e ) , m_size
 
     while( p != p_rightmost ){
 
-      p = ( *p ).m_right_branch;
+      p = p->m_right_branch;
       m_size++;
 
     }
@@ -54,8 +54,8 @@ VLSubTree<T>& VLSubTree<T>::operator=( const VLSubTree<T>& a )
     
     for( uint n = 0 ; n < N ; n++ ){
 
-      push_RightMost( VLTree<T>( VLSubTree<T>( *p ) ) );
-      p = ( *p ).m_right_branch;
+      push_RightMost( VLSubTree<T>( *p ) );
+      p = p->m_right_branch;
 
     }
   
@@ -91,8 +91,8 @@ void VLSubTree<T>::push_RightMost( const Arg1& t0 , const Arg2&... t1 )
 
   } else {
 
-    ( *p ).m_left_branch = p_rightmost;
-    ( *p_rightmost ).m_right_branch = p;  
+    p->m_left_branch = p_rightmost;
+    p_rightmost->m_right_branch = p;  
 
   }
 
@@ -115,15 +115,6 @@ void VLSubTree<T>::push_RightMost( const VLSubTree<T>& t0 , const Args&... t1 )
 
 }
 
-template <typename T> template <typename... Args> inline void VLSubTree<T>::push_RightMost( const VLTree<T>& t0 , const Args&... t1 ){
-
-  push_RightMost( t0.m_root.m_t );
-  Concatenate( t0 );
-  push_RightMost( t1... );
-  return;
-
-}
-
 template <typename T> template <typename Arg>
 void VLSubTree<T>::push_LeftMost( const Arg& t )
 {
@@ -137,8 +128,8 @@ void VLSubTree<T>::push_LeftMost( const Arg& t )
 
   } else {
 
-    ( *p ).m_right_branch = p_leftmost;
-    ( *p_leftmost ).m_left_branch = p;
+    p->m_right_branch = p_leftmost;
+    p_leftmost->m_left_branch = p;
 
   }
   
@@ -171,10 +162,10 @@ void VLSubTree<T>::pop_RightMost()
 
   } else {
     
-    EntryOfVLTree<T>* const& p_rightmost_prev = ( *p_rightmost ).m_left_branch;
+    EntryOfVLTree<T>* const& p_rightmost_prev = p_rightmost->m_left_branch;
 
     m_root.m_rightmost_node = p_rightmost_prev;
-    ( *p_rightmost_prev ).m_right_branch = p_rightmost_prev;
+    p_rightmost_prev->m_right_branch = p_rightmost_prev;
 
   }
   
@@ -206,10 +197,10 @@ void VLSubTree<T>::pop_LeftMost()
 
   } else {
     
-    EntryOfVLTree<T>* const& p_leftmost_next = ( *p_leftmost ).m_right_branch;
+    EntryOfVLTree<T>* const& p_leftmost_next = p_leftmost->m_right_branch;
 
     m_root.m_leftmost_node = p_leftmost_next;
-    ( *p_leftmost_next ).m_left_branch = p_leftmost_next;
+    p_leftmost_next->m_left_branch = p_leftmost_next;
 
   }
   
@@ -241,9 +232,9 @@ void VLSubTree<T>::pop_Root()
 
     m_size++;
     
-    while( p != ( *p ).m_right_branch ){
+    while( p != p->m_right_branch ){
 
-      p = ( *p ).m_right_branch;
+      p = p->m_right_branch;
       m_size++;
 
     }
@@ -270,9 +261,9 @@ typename VLSubTree<T>::iterator VLSubTree<T>::LeftMostLeaf() noexcept
 
   EntryOfVLTree<T>* p = m_root.m_leftmost_node;
 
-  while( p != ( *p ).m_leftmost_node ){
+  while( p != p->m_leftmost_node ){
 
-    p = ( *p ).m_leftmost_node;
+    p = p->m_leftmost_node;
 
   }
 
@@ -286,9 +277,9 @@ typename VLSubTree<T>::const_iterator VLSubTree<T>::LeftMostLeaf() const noexcep
 
   EntryOfVLTree<T>* p = m_root.m_leftmost_node;
 
-  while( p != ( *p ).m_leftmost_node ){
+  while( p != p->m_leftmost_node ){
 
-    p = ( *p ).m_leftmost_node;
+    p = p->m_leftmost_node;
 
   }
 
@@ -302,9 +293,9 @@ typename VLSubTree<T>::iterator VLSubTree<T>::RightMostLeaf() noexcept
 
   EntryOfVLTree<T>* p = m_root.m_rightmost_node;
 
-  while( p != ( *p ).m_rightmost_node ){
+  while( p != p->m_rightmost_node ){
 
-    p = ( *p ).m_rightmost_node;
+    p = p->m_rightmost_node;
 
   }
 
@@ -318,9 +309,9 @@ typename VLSubTree<T>::const_iterator VLSubTree<T>::RightMostLeaf() const noexce
 
   EntryOfVLTree<T>* p = m_root.m_rightmost_node;
 
-  while( p != ( *p ).m_rightmost_node ){
+  while( p != p->m_rightmost_node ){
 
-    p = ( *p ).m_rightmost_node;
+    p = p->m_rightmost_node;
 
   }
 
@@ -343,11 +334,11 @@ void VLSubTree<T>::insert( const typename VLSubTree<T>::iterator& itr , const Ar
   }
   
   EntryOfVLTree<T>* const& p0 = itr.m_p;
-  EntryOfVLTree<T>* const& p1 = ( *p0 ).m_right_branch;
+  EntryOfVLTree<T>* const& p1 = p0->m_right_branch;
   auto p = new EntryOfVLTree<T>( t , p0 , p1 );
   
-  ( *p1 ).m_left_branch = p;
-  ( *p0 ).m_right_branch = p;
+  p1->m_left_branch = p;
+  p0->m_right_branch = p;
   
   m_size++;
   return;
@@ -365,8 +356,8 @@ typename VLSubTree<T>::iterator VLSubTree<T>::erase( typename VLSubTree<T>::iter
   }
 
   EntryOfVLTree<T>* const p = itr.m_p;
-  EntryOfVLTree<T>* const p0 = ( *p ).m_left_branch;
-  EntryOfVLTree<T>* const p1 = ( *p ).m_right_branch;
+  EntryOfVLTree<T>* const p0 = p->m_left_branch;
+  EntryOfVLTree<T>* const p1 = p->m_right_branch;
 
   if( ! itr.IsLeaf() ){
 
@@ -380,13 +371,13 @@ typename VLSubTree<T>::iterator VLSubTree<T>::erase( typename VLSubTree<T>::iter
     if( p != p1 ){
 
       itr++;
-      ( *p0 ).m_right_branch = p1;
-      ( *p1 ).m_left_branch = p0;
+      p0->m_right_branch = p1;
+      p1->m_left_branch = p0;
       
     } else {
 
       itr--;
-      ( *p0 ).m_right_branch = p0;
+      p0->m_right_branch = p0;
       m_root.m_rightmost_node = p0;
 
     }
@@ -396,7 +387,7 @@ typename VLSubTree<T>::iterator VLSubTree<T>::erase( typename VLSubTree<T>::iter
     if( p != p1 ){
 
       itr++;
-      ( *p1 ).m_left_branch = p1;
+      p1->m_left_branch = p1;
       m_root.m_leftmost_node = p1;
 
     } else {
@@ -429,7 +420,7 @@ VLSubTree<T> VLSubTree<T>::operator[]( const uint& i )
 
   for( uint n = 0 ; n < i ; n++ ){
 
-    p = ( *p ).m_right_branch;
+    p = p->m_right_branch;
 
   }
 
@@ -503,7 +494,7 @@ VLTree<T> VLSubTree<T>::GetBranchCopy( const uint& i ) const
 
     for( uint n = 0 ; n < i ; n++ ){
 
-      p = ( *p ).m_right_branch;
+      p = p->m_right_branch;
 
     }
 
@@ -515,7 +506,7 @@ VLTree<T> VLSubTree<T>::GetBranchCopy( const uint& i ) const
 
     for( uint n = m_size - 1 ; n > i ; n-- ){
 
-      p = ( *p ).m_left_branch;
+      p = p->m_left_branch;
 
     }
 
@@ -574,7 +565,7 @@ void VLSubTree<T>::Concatenate( const VLSubTree<T>& t )
   } else {
 
     VLSubTree<T> t_rightmost{ *p_rightmost };
-    t_rightmost.Concatenate( t );
+    t_rightmost = t;
 
   }
   
@@ -624,7 +615,7 @@ bool VLSubTree<T>::CheckContain( const iterator& itr ) const noexcept
 
     }
 
-    p1 = ( *p1 ).m_right_branch;
+    p1 = p1->m_right_branch;
     
   }
 
@@ -647,7 +638,7 @@ bool VLSubTree<T>::CheckContain( const const_iterator& itr ) const noexcept
 
     }
 
-    p1 = ( *p1 ).m_right_branch;
+    p1 = p1->m_right_branch;
     
   }
 
@@ -674,7 +665,7 @@ string VLSubTree<T>::Display() const
     
     s += VLSubTree<T>( *p ).Display();
     
-    p = ( *p ).m_right_branch;
+    p = p->m_right_branch;
 
   }
 

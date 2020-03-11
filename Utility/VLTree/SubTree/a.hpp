@@ -68,8 +68,6 @@ public:
 
   // 部分木のコピーを構築して挿入するため、自身への変更が部分木へは反映されない。
   template <typename... Args> void push_RightMost( const VLSubTree<T>& , const Args&... );
-  template <typename... Args> void push_RightMost( const VLTree<T>& , const Args&... );
-
   template <typename Arg> void push_LeftMost( const Arg& );
   
   void pop_RightMost();
