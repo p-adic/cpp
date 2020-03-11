@@ -95,6 +95,19 @@ T& Access( const char* const FILE , const int& LINE , const char* const FUNC , c
   return *p;
 
 }
+template <typename T , typename... Args>
+const T& Access( const char* const FILE , const int& LINE , const char* const FUNC , const string& VARIABLE_NAMES , const T* const & p , const Args&... ARGS )
+{
+
+  if( p == nullptr ){
+
+    ThrowNullAccess( FILE , LINE , FUNC , VARIABLE_NAMES , p , ARGS... );
+    
+  }
+
+  return *p;
+
+}
 
 template <typename T , typename... Args>
 T& Access( const char* const FILE , const int& LINE , const char* const FUNC , const string& VARIABLE_NAMES , const SmartPointer<T>& p , const Args&... ARGS )

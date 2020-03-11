@@ -1,23 +1,24 @@
-Error/IllegalAccess/a.o: Error/IllegalAccess/a.cpp \
- Error/IllegalAccess/../Header.hpp \
- Error/IllegalAccess/../../Utility/Header.hpp \
- Error/IllegalAccess/../../Utility/Header_Alias.hpp \
- Error/IllegalAccess/a_Body.hpp Error/IllegalAccess/a.hpp \
- Error/IllegalAccess/a_Macro.hpp Error/IllegalAccess/../a_Macro.hpp \
- Error/IllegalAccess/../Position/a_Macro.hpp \
- Error/IllegalAccess/../../Utility/GlobalVariable/a_Macro.hpp \
- Error/IllegalAccess/../Warning/a_Macro.hpp Error/IllegalAccess/../a.hpp \
- Error/IllegalAccess/../BreakPoint/a.hpp \
- Error/IllegalAccess/../BreakPoint/a_Macro.hpp \
- Error/IllegalAccess/../../Utility/SmartPointer/a.hpp \
- Error/IllegalAccess/../Position/a.hpp \
- Error/IllegalAccess/../Warning/a.hpp \
- Error/IllegalAccess/../../Utility/GlobalVariable/a.hpp \
- Error/IllegalAccess/../../Utility/GlobalVariable/a_Alias.hpp \
- C:/Users/user/Documents/Programming/Mathematics/Function/a.hpp \
+../../Error/IllegalAccess/a.o: ../../Error/IllegalAccess/a.cpp \
+ ../../Error/IllegalAccess/../Header.hpp \
+ ../../Error/IllegalAccess/../../Utility/Header.hpp \
+ ../../Error/IllegalAccess/../../Utility/Header_Alias.hpp \
+ ../../Error/IllegalAccess/a_Body.hpp ../../Error/IllegalAccess/a.hpp \
+ ../../Error/IllegalAccess/a_Macro.hpp \
+ ../../Error/IllegalAccess/../a_Macro.hpp \
+ ../../Error/IllegalAccess/../Position/a_Macro.hpp \
+ ../../Error/IllegalAccess/../../Utility/GlobalVariable/a_Macro.hpp \
+ C:/Users/user/Documents/Programming/Utility/Macro_Macro.hpp \
+ ../../Error/IllegalAccess/../Warning/a_Macro.hpp \
+ ../../Error/IllegalAccess/../a.hpp \
+ ../../Error/IllegalAccess/../BreakPoint/a.hpp \
+ ../../Error/IllegalAccess/../BreakPoint/a_Macro.hpp \
+ ../../Error/IllegalAccess/../../Utility/SmartPointer/a.hpp \
+ ../../Error/IllegalAccess/../Position/a.hpp \
+ ../../Error/IllegalAccess/../Warning/a.hpp \
+ ../../Error/IllegalAccess/../../Utility/GlobalVariable/a.hpp \
+ ../../Error/IllegalAccess/../../Utility/GlobalVariable/a_Alias.hpp \
  C:/Users/user/Documents/Programming/Mathematics/Function/a_Alias.hpp \
- Error/IllegalAccess/../../Utility/Macro.hpp \
- Error/IllegalAccess/../../Utility/Macro_Macro.hpp \
+ ../../Error/IllegalAccess/../../Utility/Macro.hpp \
  C:/Users/user/Documents/Programming/Utility/String/a.hpp \
  C:/Users/user/Documents/Programming/Utility/String/a_Macro.hpp \
  C:/Users/user/Documents/Programming/SFINAE/MemberFunction/a_Macro.hpp \
@@ -30,17 +31,17 @@ Error/IllegalAccess/a.o: Error/IllegalAccess/a.cpp \
  C:/Users/user/Documents/Programming/SFINAE/MetaFunction/IsReferenceOf/a.hpp \
  C:/Users/user/Documents/Programming/SFINAE/a_Alias.hpp \
  C:/Users/user/Documents/Programming/Utility/String/a_Alias.hpp \
- Error/IllegalAccess/../UnknownError/a_Body.hpp \
- Error/IllegalAccess/../UnknownError/a.hpp \
- Error/IllegalAccess/../UnknownError/a_Macro.hpp \
- Error/IllegalAccess/../UnknownError/../a_Body.hpp \
- Error/IllegalAccess/../UnknownError/../FaultInCoding/a.hpp \
- Error/IllegalAccess/../UnknownError/../FaultInCoding/a_Macro.hpp \
- Error/IllegalAccess/../UnknownError/../BreakPoint/a_Body.hpp \
+ ../../Error/IllegalAccess/../UnknownError/a_Body.hpp \
+ ../../Error/IllegalAccess/../UnknownError/a.hpp \
+ ../../Error/IllegalAccess/../UnknownError/a_Macro.hpp \
+ C:/Users/user/Documents/Programming/Error/a_Body.hpp \
+ C:/Users/user/Documents/Programming/Error/FaultInCoding/a.hpp \
+ C:/Users/user/Documents/Programming/Error/FaultInCoding/a_Macro.hpp \
+ C:/Users/user/Documents/Programming/Error/BreakPoint/a_Body.hpp \
  C:/Users/user/Documents/Programming/Error/IllegalImput/a_Body.hpp \
  C:/Users/user/Documents/Programming/Error/IllegalImput/a.hpp \
  C:/Users/user/Documents/Programming/Error/IllegalImput/a_Macro.hpp \
- Error/IllegalAccess/../UnknownError/../Position/a_Body.hpp \
+ C:/Users/user/Documents/Programming/Error/Position/a_Body.hpp \
  C:/Users/user/Documents/Programming/Utility/String/Normalised/a_Body.hpp \
  C:/Users/user/Documents/Programming/Utility/String/Normalised/a.hpp \
  C:/Users/user/Documents/Programming/SFINAE/NonMemberFunction/Constified/a.hpp \
@@ -70,7 +71,7 @@ Error/IllegalAccess/a.o: Error/IllegalAccess/a.cpp \
  C:/Users/user/Documents/Programming/Utility/VLArray/a.hpp \
  C:/Users/user/Documents/Programming/Utility/VLArray/Entry/a.hpp \
  C:/Users/user/Documents/Programming/Utility/VLArray/a_Alias.hpp \
- C:/Users/user/Documents/Programming/Utility/WrappedInt/a.hpp \
+ C:/Users/user/Documents/Programming/Utility/WrappedType/Int/a.hpp \
  C:/Users/user/Documents/Programming/Mathematics/SetTheory/Singleton/a.hpp \
  C:/Users/user/Documents/Programming/Mathematics/SetTheory/DirectProduct/a.hpp \
  C:/Users/user/Documents/Programming/Mathematics/SetTheory/DirectProduct/a_Alias.hpp \
@@ -83,51 +84,49 @@ Error/IllegalAccess/a.o: Error/IllegalAccess/a.cpp \
  C:/Users/user/Documents/Programming/Utility/WrappedType/a_Body.hpp \
  C:/Users/user/Documents/Programming/Utility/WrappedType/a.hpp \
  C:/Users/user/Documents/Programming/Mathematics/SetTheory/DirectProduct/a_Body.hpp \
- Error/IllegalAccess/../../Utility/SmartPointer/a_Body.hpp
+ ../../Error/IllegalAccess/../../Utility/SmartPointer/a_Body.hpp
 
-Error/IllegalAccess/../Header.hpp:
+../../Error/IllegalAccess/../Header.hpp:
 
-Error/IllegalAccess/../../Utility/Header.hpp:
+../../Error/IllegalAccess/../../Utility/Header.hpp:
 
-Error/IllegalAccess/../../Utility/Header_Alias.hpp:
+../../Error/IllegalAccess/../../Utility/Header_Alias.hpp:
 
-Error/IllegalAccess/a_Body.hpp:
+../../Error/IllegalAccess/a_Body.hpp:
 
-Error/IllegalAccess/a.hpp:
+../../Error/IllegalAccess/a.hpp:
 
-Error/IllegalAccess/a_Macro.hpp:
+../../Error/IllegalAccess/a_Macro.hpp:
 
-Error/IllegalAccess/../a_Macro.hpp:
+../../Error/IllegalAccess/../a_Macro.hpp:
 
-Error/IllegalAccess/../Position/a_Macro.hpp:
+../../Error/IllegalAccess/../Position/a_Macro.hpp:
 
-Error/IllegalAccess/../../Utility/GlobalVariable/a_Macro.hpp:
+../../Error/IllegalAccess/../../Utility/GlobalVariable/a_Macro.hpp:
 
-Error/IllegalAccess/../Warning/a_Macro.hpp:
+C:/Users/user/Documents/Programming/Utility/Macro_Macro.hpp:
 
-Error/IllegalAccess/../a.hpp:
+../../Error/IllegalAccess/../Warning/a_Macro.hpp:
 
-Error/IllegalAccess/../BreakPoint/a.hpp:
+../../Error/IllegalAccess/../a.hpp:
 
-Error/IllegalAccess/../BreakPoint/a_Macro.hpp:
+../../Error/IllegalAccess/../BreakPoint/a.hpp:
 
-Error/IllegalAccess/../../Utility/SmartPointer/a.hpp:
+../../Error/IllegalAccess/../BreakPoint/a_Macro.hpp:
 
-Error/IllegalAccess/../Position/a.hpp:
+../../Error/IllegalAccess/../../Utility/SmartPointer/a.hpp:
 
-Error/IllegalAccess/../Warning/a.hpp:
+../../Error/IllegalAccess/../Position/a.hpp:
 
-Error/IllegalAccess/../../Utility/GlobalVariable/a.hpp:
+../../Error/IllegalAccess/../Warning/a.hpp:
 
-Error/IllegalAccess/../../Utility/GlobalVariable/a_Alias.hpp:
+../../Error/IllegalAccess/../../Utility/GlobalVariable/a.hpp:
 
-C:/Users/user/Documents/Programming/Mathematics/Function/a.hpp:
+../../Error/IllegalAccess/../../Utility/GlobalVariable/a_Alias.hpp:
 
 C:/Users/user/Documents/Programming/Mathematics/Function/a_Alias.hpp:
 
-Error/IllegalAccess/../../Utility/Macro.hpp:
-
-Error/IllegalAccess/../../Utility/Macro_Macro.hpp:
+../../Error/IllegalAccess/../../Utility/Macro.hpp:
 
 C:/Users/user/Documents/Programming/Utility/String/a.hpp:
 
@@ -153,19 +152,19 @@ C:/Users/user/Documents/Programming/SFINAE/a_Alias.hpp:
 
 C:/Users/user/Documents/Programming/Utility/String/a_Alias.hpp:
 
-Error/IllegalAccess/../UnknownError/a_Body.hpp:
+../../Error/IllegalAccess/../UnknownError/a_Body.hpp:
 
-Error/IllegalAccess/../UnknownError/a.hpp:
+../../Error/IllegalAccess/../UnknownError/a.hpp:
 
-Error/IllegalAccess/../UnknownError/a_Macro.hpp:
+../../Error/IllegalAccess/../UnknownError/a_Macro.hpp:
 
-Error/IllegalAccess/../UnknownError/../a_Body.hpp:
+C:/Users/user/Documents/Programming/Error/a_Body.hpp:
 
-Error/IllegalAccess/../UnknownError/../FaultInCoding/a.hpp:
+C:/Users/user/Documents/Programming/Error/FaultInCoding/a.hpp:
 
-Error/IllegalAccess/../UnknownError/../FaultInCoding/a_Macro.hpp:
+C:/Users/user/Documents/Programming/Error/FaultInCoding/a_Macro.hpp:
 
-Error/IllegalAccess/../UnknownError/../BreakPoint/a_Body.hpp:
+C:/Users/user/Documents/Programming/Error/BreakPoint/a_Body.hpp:
 
 C:/Users/user/Documents/Programming/Error/IllegalImput/a_Body.hpp:
 
@@ -173,7 +172,7 @@ C:/Users/user/Documents/Programming/Error/IllegalImput/a.hpp:
 
 C:/Users/user/Documents/Programming/Error/IllegalImput/a_Macro.hpp:
 
-Error/IllegalAccess/../UnknownError/../Position/a_Body.hpp:
+C:/Users/user/Documents/Programming/Error/Position/a_Body.hpp:
 
 C:/Users/user/Documents/Programming/Utility/String/Normalised/a_Body.hpp:
 
@@ -233,7 +232,7 @@ C:/Users/user/Documents/Programming/Utility/VLArray/Entry/a.hpp:
 
 C:/Users/user/Documents/Programming/Utility/VLArray/a_Alias.hpp:
 
-C:/Users/user/Documents/Programming/Utility/WrappedInt/a.hpp:
+C:/Users/user/Documents/Programming/Utility/WrappedType/Int/a.hpp:
 
 C:/Users/user/Documents/Programming/Mathematics/SetTheory/Singleton/a.hpp:
 
@@ -259,4 +258,4 @@ C:/Users/user/Documents/Programming/Utility/WrappedType/a.hpp:
 
 C:/Users/user/Documents/Programming/Mathematics/SetTheory/DirectProduct/a_Body.hpp:
 
-Error/IllegalAccess/../../Utility/SmartPointer/a_Body.hpp:
+../../Error/IllegalAccess/../../Utility/SmartPointer/a_Body.hpp:
