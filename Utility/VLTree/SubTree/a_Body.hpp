@@ -15,9 +15,7 @@ template <typename T> template <typename Arg1 , typename... Arg2> inline VLSubTr
 
 template <typename T> template <typename Arg> inline VLSubTree<T>::VLSubTree( const WrappedType<Arg>& t ) : m_e( t.Get() ) , m_root( m_e ) , m_size( 0 ) {}
 
-template <typename T> inline VLSubTree<T>::VLSubTree( const VLSubTree<T>& a ) : VLSubTree( VLConstSubTree<T>( a ) ) {}
-
-template <typename T> inline VLSubTree<T>::VLSubTree( const VLConstSubTree<T>& a ) : m_e( a.m_e.m_t ) , m_root( m_e ) , m_size( 0 ) { *this = a; }
+template <typename T> inline VLSubTree<T>::VLSubTree( const VLSubTree<T>& a ) : m_e( a.m_e.m_t ) , m_root( m_e ) , m_size( 0 ) { *this = a; }
 
 template <typename T>
 VLSubTree<T>::VLSubTree( const ConstIteratorOfVLTree<T>& itr ) :

@@ -36,8 +36,8 @@ private:
 
   // 構築された木への変更がコピー元へは反映されない。
   // デストラクタがdelete演算子を呼ばないため、VLTree経由でしか呼び出してはいけない。
+  // 引数をVLSubConstTree<T>にしたものを定義して委譲するとループしてしまう。
   inline VLSubTree( const VLSubTree<T>& );
-  inline VLSubTree( const VLConstSubTree<T>& );
 
   // 構築された木への変更がコピー元へは反映されない。
   // VLConstSubTree経由でしか呼び出してはいけない。
