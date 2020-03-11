@@ -10,6 +10,8 @@
 template <typename T> inline IteratorOfVLTree<T>::IteratorOfVLTree() noexcept : m_p( nullptr ) {}
 template <typename T> inline IteratorOfVLTree<T>::IteratorOfVLTree( EntryOfVLTree<T>* const& p ) noexcept : m_p( p ) {}
 template <typename T> inline IteratorOfVLTree<T>::IteratorOfVLTree( const IteratorOfVLTree<T>& itr ) noexcept : m_p( itr.m_p ) {}
+
+template <typename T> inline T& IteratorOfVLTree<T>::Access() const { return ACCESS( m_p ).m_t; }
 template <typename T> inline T& IteratorOfVLTree<T>::operator*() const { return ( *m_p ).m_t; }
 template <typename T> inline T* IteratorOfVLTree<T>::operator->() const { return &( *( *this ) ); }
 

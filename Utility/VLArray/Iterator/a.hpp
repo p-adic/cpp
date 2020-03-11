@@ -21,6 +21,7 @@ public:
   inline IteratorOfVLArray( EntryOfVLArray<T>* const& ) noexcept;
   inline IteratorOfVLArray( const IteratorOfVLArray<T>& ) noexcept;
 
+  inline T& Access() const;
   inline T& operator*() const;
   inline T* operator->() const;
   IteratorOfVLArray<T>& operator=( const IteratorOfVLArray<T>& ) noexcept;
