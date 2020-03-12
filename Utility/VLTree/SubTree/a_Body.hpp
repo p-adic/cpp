@@ -69,7 +69,7 @@ VLSubTree<T>& VLSubTree<T>::operator=( const VLSubTree<T>& a )
   if( this != &a ){
     
     CutBranches();
-    SubStitute_Body( a );
+    LeafToTree( a );
   
   }
 
