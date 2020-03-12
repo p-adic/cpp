@@ -64,6 +64,9 @@ public:
 
   string Display() const;
 
+private:
+  void EmptyToArray( const VLArray<T>& a );
+
 };
 
 template <typename T> VLArray<T> to_VLArray( const uint& , const T& );
