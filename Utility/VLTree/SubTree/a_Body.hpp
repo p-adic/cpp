@@ -15,7 +15,7 @@ template <typename T> template <typename Arg1 , typename... Arg2> inline VLSubTr
 
 template <typename T> template <typename Arg> inline VLSubTree<T>::VLSubTree( const WrappedType<Arg>& t ) : m_e( t.Get() ) , m_root( m_e ) , m_size( 0 ) {}
 
-template <typename T> inline VLSubTree<T>::VLSubTree( const VLSubTree<T>& a ) : m_e( a.m_e.m_t ) , m_root( m_e ) , m_size( 0 ) { *this = a; }
+template <typename T> inline VLSubTree<T>::VLSubTree( const VLSubTree<T>& a ) : m_e( a.m_e.m_t ) , m_root( m_e ) , m_size( 0 ) { LeafToTree( a ); }
 
 template <typename T>
 VLSubTree<T>::VLSubTree( EntryOfVLTree<T>& e ) :
@@ -69,22 +69,38 @@ VLSubTree<T>& VLSubTree<T>::operator=( const VLSubTree<T>& a )
   if( this != &a ){
     
     CutBranches();
-
-    m_root.m_t = a.m_root.m_t;
-    EntryOfVLTree<T>* p = a.m_root.m_leftmost_node;
-    const uint& N = a.m_size;
-    
-    for( uint n = 0 ; n < N ; n++ ){
-
-      push_RightMost( VLTree<T>( *p , 0 ) );
-      p = p->m_right_branch;
-
-    }
+    SubStitute_Body( a );
   
   }
 
   return *this;
 
+}
+
+template <typename T>
+void VLSubTree<T>::LeafToTree( const VLSubTree<T>& a )
+{
+
+  
+  if( m_size != 0 ){
+
+    ERR_IMPUT( *this , a );
+    
+  }
+  
+  m_root.m_t = a.m_root.m_t;
+  EntryOfVLTree<T>* p = a.m_root.m_leftmost_node;
+  const uint& N = a.m_size;
+    
+  for( uint n = 0 ; n < N ; n++ ){
+
+    push_RightMost( VLTree<T>( *p , 0 ) );
+    p = p->m_right_branch;
+
+  }
+
+  return;
+  
 }
 
 template <typename T> inline const uint& VLSubTree<T>::size() const noexcept { return m_size; }
@@ -572,25 +588,24 @@ VLTree<T> VLSubTree<T>::GetBranchCopy( const typename VLSubTree<T>::const_iterat
 }
 
 template <typename T> 
-void VLSubTree<T>::Concatenate( const VLSubTree<T>& t )
+void VLSubTree<T>::Concatenate( const VLTree<T>& t )
 {
 
   EntryOfVLTree<T>* const p_rightmost = m_root.m_rightmost_node;
 
   if( p_rightmost->m_rightmost_node != p_rightmost ){
 
-    ERR_IMPUT( t );
+    ERR_IMPUT( *this , t );
 
   }
 
   if( &m_root == p_rightmost ){
     
-    *this = t;
+    LeafToTree( t );
 
   } else {
 
-    VLSubTree<T> t_rightmost{ *p_rightmost };
-    t_rightmost = t;
+    VLSubTree<T>( *p_rightmost ).LeafToTree( t );
 
   }
   
@@ -599,7 +614,7 @@ void VLSubTree<T>::Concatenate( const VLSubTree<T>& t )
 }
 
 template <typename T> 
-void VLSubTree<T>::Concatenate( const typename VLSubTree<T>::iterator& itr , const VLSubTree<T>& t )
+void VLSubTree<T>::Concatenate( const typename VLSubTree<T>::iterator& itr , const VLTree<T>& t )
 {
 
   if( ! itr.IsLeaf() ){
@@ -612,12 +627,11 @@ void VLSubTree<T>::Concatenate( const typename VLSubTree<T>::iterator& itr , con
 
   if( &m_root == p ){
 
-    *this = t;
+    LeafToTree( t );
 
   } else {
 
-    VLSubTree<T> t_current{ *p };
-    t_current = t;
+    VLSubTree<T>( *p ).LeafToTree( t );
 
   }
   

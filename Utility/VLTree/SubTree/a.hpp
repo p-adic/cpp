@@ -34,8 +34,13 @@ private:
 
   // 構築された木への変更がコピー元へは反映されない。
   // デストラクタがdelete演算子を呼ばないため、VLTree経由でしか呼び出してはいけない。
+  // Substriture_Bodyを経由するため、自身への変更が引数へは反映されない。
   // 引数をVLSubConstTree<T>にしたものを定義して委譲するとループしてしまう。
   inline VLSubTree( const VLSubTree<T>& );
+
+  // 部分木のコピーを構築してpush_RightMostNodeで挿入するため、自身への変更が引数へは反映されない。
+  // LeafToTreeとpush_RightMostとConcatenateの相互再帰。
+  void LeafToTree( const VLSubTree<T>& );
 
 public:
   // 構築された木への変更がコピー元へは反映される。
@@ -52,7 +57,9 @@ public:
 
   virtual ~VLSubTree() = default;
 
-  // 左辺への変更が右辺へは反映されない。
+  // Substriture_Bodyを経由するため、引数が自身と独立でさえあれば、自身への変更が引数へは反映されない。
+  // CutBranchesを呼び出すため、引数が自身と独立でない場合は、自身への変更が引数へ反映されうる上に、Segmentation Faultを引き起こす可能性がある。
+  // 引数をVLTree<T>にしたものを定義して呼び出すとループしてしまう。
   VLSubTree<T>& operator=( const VLSubTree<T>& );
   
   inline const uint& size() const noexcept;
@@ -67,6 +74,7 @@ public:
   inline VLTree<T> LeftMostSubTreeCopy() const;
   inline VLTree<T> RightMostSubTreeCopy() const;
   
+  // LeafToTreeとpush_RightMostとConcatenateの相互再帰。
   inline void push_RightMost() const noexcept;
   template <typename Arg1 , typename... Arg2> void push_RightMost( const Arg1& , const Arg2&... );
   template <typename... Args> void push_RightMost( const VLTree<T>& , const Args&... );
@@ -108,15 +116,13 @@ public:
   
   // 部分木のコピーを構築して返すため、部分木への変更が自身へは反映されない。
   VLTree<T> operator[]( const const_iterator& ) const;
-
-  // 部分木のコピーを構築して返すため、部分木への変更が自身へは反映されない。
   VLTree<T> GetBranchCopy( const uint& ) const;
   VLTree<T> GetBranchCopy( const iterator& ) const;
   VLTree<T> GetBranchCopy( const const_iterator& ) const;
   
-  // 部分木のコピーを構築して挿入するため、自身への変更が部分木へは反映されない。
-  void Concatenate( const VLSubTree<T>& );
-  void Concatenate( const iterator& , const VLSubTree<T>& );
+  // LeafToTreeとpush_RightMostとConcatenateの相互再帰。
+  void Concatenate( const VLTree<T>& );
+  void Concatenate( const iterator& , const VLTree<T>& );
 
   bool CheckContain( const iterator& ) const noexcept;
   bool CheckContain( const const_iterator& ) const noexcept;
