@@ -40,6 +40,7 @@ private:
 
   // 部分木のコピーを構築してpush_RightMostNodeで挿入するため、自身への変更が引数へは反映されない。
   // LeafToTreeとpush_RightMostとConcatenateの相互再帰。
+  // m_size == 0の時しか呼んではいけない。
   void LeafToTree( const VLSubTree<T>& );
 
 public:

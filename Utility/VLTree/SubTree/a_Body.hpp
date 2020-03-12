@@ -81,13 +81,6 @@ template <typename T>
 void VLSubTree<T>::LeafToTree( const VLSubTree<T>& a )
 {
 
-  
-  if( m_size != 0 ){
-
-    ERR_IMPUT( *this , a );
-    
-  }
-  
   m_root.m_t = a.m_root.m_t;
   EntryOfVLTree<T>* p = a.m_root.m_leftmost_node;
   const uint& N = a.m_size;
