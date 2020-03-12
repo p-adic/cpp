@@ -11,7 +11,7 @@
 
 template <typename T> inline VLArray<T>::VLArray() : m_e() , m_p_e( &m_e ) , m_size( 0 ) {}
 template <typename T> template <typename Arg1 , typename... Arg2> inline VLArray<T>::VLArray( const Arg1& t0 , const Arg2&... t1 ) : VLArray() { push_back( t0 , t1... ); }
-template <typename T> inline VLArray<T>::VLArray( const VLArray<T>& a ) : m_e( a.m_e.m_t , &m_e , &m_e ) , m_p_e( &m_e ) , m_size( 0 ) { *this = a; }
+template <typename T> inline VLArray<T>::VLArray( const VLArray<T>& a ) : m_e( a.m_e.m_t ) , m_p_e( &m_e ) , m_size( 0 ) { EmptyToArray( a ); }
 
 template <typename T> template <typename Arg> inline VLArray<T>::VLArray( const WrappedType<Arg>& t ) : m_e( t.Get() ) , m_p_e( &m_e ) , m_size( 0 ) {}
 
@@ -24,16 +24,7 @@ VLArray<T>& VLArray<T>::operator=( const VLArray<T>& a )
   if( this != &a ){
     
     clear();
-
-    const EntryOfVLArray<T>* p = a.m_p_e;
-    const uint& N = a.m_size;
-    
-    for( uint n = 0 ; n < N ; n++ ){
-
-      p = ( *p ).m_next;
-      push_back( ( *p ).m_t );
-
-    }
+    EmptyToArray( a );
   
   }
 
@@ -41,13 +32,31 @@ VLArray<T>& VLArray<T>::operator=( const VLArray<T>& a )
 
 }
 
+template <typename T>
+void VLArray<T>::EmptyToArray( const VLArray<T>& a )
+{
+
+  const EntryOfVLArray<T>* p = a.m_p_e;
+  const uint& N = a.m_size;
+    
+  for( uint n = 0 ; n < N ; n++ ){
+
+    p = p->m_next;
+    push_back( p->m_t );
+
+  }
+
+  return;
+
+}
+
 template <typename T> inline const uint& VLArray<T>::size() const noexcept { return m_size; }
 template <typename T> inline void VLArray<T>::clear(){ while( m_size > 0 ) pop_back(); }
 template <typename T> inline bool VLArray<T>::empty() const noexcept { return m_size == 0; }
-template <typename T> inline T& VLArray<T>::front() { return ( *( m_e.m_next ) ).m_t; }
-template <typename T> inline const T& VLArray<T>::front() const { return ( *( m_e.m_next ) ).m_t; }
-template <typename T> inline T& VLArray<T>::back() { return ( *( m_e.m_prev ) ).m_t; }
-template <typename T> inline const T& VLArray<T>::back() const { return ( *( m_e.m_prev ) ).m_t; }
+template <typename T> inline T& VLArray<T>::front() { return m_e.m_next->m_t; }
+template <typename T> inline const T& VLArray<T>::front() const { return m_e.m_next->m_t; }
+template <typename T> inline T& VLArray<T>::back() { return m_e.m_prev->m_t; }
+template <typename T> inline const T& VLArray<T>::back() const { return m_e.m_prev->m_t; }
 
 template <typename T> inline void VLArray<T>::push_back() const noexcept {}
 
@@ -59,7 +68,7 @@ void VLArray<T>::push_back( const Arg1& t0 , const Arg2&... t1 )
   auto p = new EntryOfVLArray<T>( t0 , p_e_prev , m_p_e );
     
   m_e.m_prev = p;
-  ( *p_e_prev ).m_next = p;
+  p_e_prev->m_next = p;
   
   m_size++;
   push_back( t1... );
@@ -74,7 +83,7 @@ void VLArray<T>::push_front( const Arg& t )
   EntryOfVLArray<T>* p_b = m_e.m_next;
   auto p = new EntryOfVLArray<T>( t , m_p_e , p_b );
     
-  ( *p_b ).m_prev = p;
+  p_b->m_prev = p;
   m_e.m_next = p;
   
   m_size++;
@@ -93,10 +102,10 @@ void VLArray<T>::pop_back()
   }
   
   EntryOfVLArray<T>* p_e_prev = m_e.m_prev;
-  EntryOfVLArray<T>* p_e_prev_prev = ( *p_e_prev ).m_prev;
+  EntryOfVLArray<T>* p_e_prev_prev = p_e_prev->m_prev;
 
   m_e.m_prev = p_e_prev_prev;
-  ( *p_e_prev_prev ).m_next = m_p_e;
+  p_e_prev_prev->m_next = m_p_e;
   
   delete p_e_prev;
   m_size--;
@@ -117,7 +126,7 @@ void VLArray<T>::pop_front()
   EntryOfVLArray<T>* p_b = m_e.m_next;
   EntryOfVLArray<T>* p_b_next = ( *p_b ).m_next;
 
-  ( *p_b_next ).m_prev = m_p_e;
+  p_b_next->m_prev = m_p_e;
   m_e.m_next = p_b_next;
   
   delete p_b;  
@@ -145,8 +154,8 @@ void VLArray<T>::insert( const typename VLArray<T>::iterator& itr , const Arg& t
   EntryOfVLArray<T>* p1 = ( *p0 ).m_next;
   auto p = new EntryOfVLArray<T>( t , p0 , p1 );
   
-  ( *p1 ).m_prev = p;
-  ( *p0 ).m_next = p;
+  p1->m_prev = p;
+  p0->m_next = p;
   
   m_size++;
   return;
@@ -163,11 +172,11 @@ typename VLArray<T>::iterator VLArray<T>::erase( typename VLArray<T>::iterator& 
   }
 
   EntryOfVLArray<T>* p = itr.m_p;
-  EntryOfVLArray<T>* p0 = ( *p ).m_prev;
-  EntryOfVLArray<T>* p1 = ( *p ).m_next;
+  EntryOfVLArray<T>* p0 = p->m_prev;
+  EntryOfVLArray<T>* p1 = p->m_next;
   
-  ( *p0 ).m_next = p1;
-  ( *p1 ).m_prev = p0;
+  p0->m_next = p1;
+  p1->m_prev = p0;
   itr++;
   
   delete p;
@@ -192,11 +201,11 @@ T& VLArray<T>::operator[]( const uint& i )
 
     for( uint n = 0 ; n < i ; n++ ){
 
-      p = ( *p ).m_next;
+      p = p->m_next;
 
     }
 
-    return ( *p ).m_t;
+    return p->m_t;
 
   }
 
@@ -204,11 +213,11 @@ T& VLArray<T>::operator[]( const uint& i )
 
   for( uint n = m_size - 1 ; n > i ; n-- ){
 
-    p = ( *p ).m_prev;
+    p = p->m_prev;
 
   }
 
-  return ( *p ).m_t;
+  return p->m_t;
 
 }
 
@@ -228,11 +237,11 @@ const T& VLArray<T>::operator[]( const uint& i ) const
 
     for( uint n = 0 ; n < i ; n++ ){
 
-      p = ( *p ).m_next;
+      p = p->m_next;
 
     }
 
-    return ( *p ).m_t;
+    return p->m_t;
 
   }
 
@@ -240,11 +249,11 @@ const T& VLArray<T>::operator[]( const uint& i ) const
 
   for( uint n = m_size - 1 ; n > i ; n-- ){
 
-    p = ( *p ).m_prev;
+    p = p->m_prev;
 
   }
 
-  return ( *p ).m_t;
+  return p->m_t;
 
 }
 
@@ -293,7 +302,7 @@ string VLArray<T>::Display() const
   
   for( uint n = 0 ; n < m_size ; n++ ){
 
-    p = ( *p ).m_next;
+    p = p->m_next;
     
     if( n > 0 ){
 
@@ -301,7 +310,7 @@ string VLArray<T>::Display() const
 
     }
     
-    s += to_string( ( *p ).m_t );
+    s += to_string( p->m_t );
 
   }
 
