@@ -75,5 +75,5 @@ private:
 };
 
 // マクロACCESS( itr )を使う。
-template <typename T> inline T& Access( const char* const , const int& , const char* const , const string& , SequentialIteratorOfVLTree<T>& , const uint& );
-template <typename T> inline const T& Access( const char* const , const int& , const char* const , const string& VARIABLE_NAMES , const SequentialConstIteratorOfVLTree<T>& , const uint& );
+template <typename T> inline T& Access( const char* const , const int& , const char* const , const string& , const SequentialIteratorOfVLTree<T>& , const uint& );
+template <typename T> inline const T& Access( const char* const , const int& , const char* const , const string& , const SequentialConstIteratorOfVLTree<T>& , const uint& );
