@@ -25,8 +25,8 @@ public:
   SequentialIteratorOfVLTree<T>& operator=( const SequentialIteratorOfVLTree<T>& );
   void operator[]( const int& );
 
-  inline T& Access_Body( const char* const , const int& , const char* const , const string& , const uint& );
-  inline T& Ref( const uint& );
+  inline T& Access_Body( const char* const , const int& , const char* const , const string& , const uint& ) const;
+  inline T& Ref( const uint& ) const;
   inline const T& Get( const uint& ) const;
 
   inline void pop_front();
