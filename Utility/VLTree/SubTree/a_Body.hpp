@@ -50,7 +50,7 @@ VLSubTree<T>::VLSubTree( const EntryOfVLTree<T>& e , const int& i ) :
 
   const EntryOfVLTree<T>* p = e.m_leftmost_node;
   const EntryOfVLTree<T>* const p_rightmost = e.m_rightmost_node;
-    
+
   while( p != p_rightmost ){
 
     push_RightMost( VLTree<T>( *p , i ) );
