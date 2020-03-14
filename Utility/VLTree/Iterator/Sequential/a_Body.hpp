@@ -106,7 +106,7 @@ void SequentialIteratorOfVLTree<T>::erase_back_Body( VLSubTree<T>& t , Sequentia
 
   if( L == 1 ){
 
-    ERR_IMPUT( t );
+    ERR_CODE;
 
   }
   
