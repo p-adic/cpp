@@ -251,12 +251,11 @@ void VLSubTree<T>::pop_Root()
     
   }
 
-  EntryOfVLTree<T>* p_root = &m_root;
-  m_root = *( m_root.m_rightmost_node );
+  EntryOfVLTree<T>* p_unique_node = m_root.m_leftmost_node;
+  m_root = *( m_root.m_leftmost_node );
+  delete p_unique_node;
   
-  delete p_root;
   m_size = 0;
-  
   EntryOfVLTree<T>* p = m_root.m_leftmost_node;
 
   if( p != &m_root ){

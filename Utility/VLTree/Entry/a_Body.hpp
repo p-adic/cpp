@@ -24,7 +24,7 @@ EntryOfVLTree<T>::EntryOfVLTree( const EntryOfVLTree<T>& e ) :
 
   }
   
-  if( e.m_rightmost_node != &e ){
+  if( e.m_leftmost_node != &e ){
 
     m_leftmost_node = e.m_leftmost_node;
     m_rightmost_node = e.m_rightmost_node;
@@ -58,7 +58,7 @@ template <typename T> EntryOfVLTree<T>& EntryOfVLTree<T>::operator=( const Entry
 
   }
   
-  if( e.m_rightmost_node == &e ){
+  if( e.m_leftmost_node == &e ){
 
     m_leftmost_node = this;
     m_rightmost_node = this;

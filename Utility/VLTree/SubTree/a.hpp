@@ -83,6 +83,9 @@ public:
   
   void pop_RightMost();
   void pop_LeftMost();
+
+  // m_size == 1（特にm_root.m_leftmost_node== m_root.m_rightmost_node）の時しか呼んではならない。
+  // deleteされるのは&m_rootでなくm_root.m_leftmost_nodeであるので、iteratorの処理に注意が必要。
   void pop_Root();
 
   using iterator = IteratorOfVLTree<T>;
