@@ -1,13 +1,14 @@
 // c:/Users/user/Documents/Programming/Error/BreakPoint/a_Macro.hpp
 
 #pragma once
+#include "../Position/a_Macro.hpp"
 
 #ifdef DEBUG
 
   #define COUNT_BODY( ... ) CountCall( __VA_ARGS__ ) 
   #define FLAG_BODY( ... ) CallFlagContainer( false , __VA_ARGS__  ) 
-  #define BREAK BreakPoint() 
-  #define BREAK_IF( CONDITION ) if( CONDITION ){ BreakPoint(); } 
+  #define BREAK BreakPoint( POSITION ) 
+  #define BREAK_IF( CONDITION ) if( CONDITION ){ BREAK; } 
  
 #endif
 
