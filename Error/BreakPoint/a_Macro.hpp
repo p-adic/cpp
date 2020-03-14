@@ -7,7 +7,7 @@
 
   #define COUNT_BODY( ... ) CountCall( __VA_ARGS__ ) 
   #define FLAG_BODY( ... ) CallFlagContainer( false , __VA_ARGS__  ) 
-  #define BREAK BreakPoint( POSITION ) 
+  #define BREAK BreakPoint() , POSITION  
   #define BREAK_IF( CONDITION ) if( CONDITION ){ BREAK; } 
  
 #endif

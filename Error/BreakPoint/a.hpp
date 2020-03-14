@@ -25,7 +25,7 @@ public:
   
 };
 
-template <typename... ARGS> inline void BreakPoint( const ARGS&... args ) noexcept;
+inline void BreakPoint() noexcept;
 
 void CountCall( const uint& i0 = 0 ) noexcept;
 template <typename... ARGS> void CountCall( const uint& i0 , const uint& i1 , const ARGS&... i2 ) noexcept;
