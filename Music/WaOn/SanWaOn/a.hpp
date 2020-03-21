@@ -1,7 +1,7 @@
 // c:/Users/user/Documents/Programming/Music/WaOn/SanWaOn/a.hpp
 
 #pragma once
-#include "../OnMei/a.hpp"
+#include "../../OnMei/a.hpp"
 
 class SanWaOn
 {

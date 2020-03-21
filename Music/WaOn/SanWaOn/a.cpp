@@ -1,6 +1,7 @@
 // c:/Users/user/Documents/Programming/Music/WaOn/SanWaOn/a.cpp
 
-#pragma once
+#include "../../Header.hpp"
+#include "a_Body.hpp"
 
 bool SanWaOn::IsValid() const noexcept
 {
