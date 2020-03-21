@@ -1,4 +1,4 @@
-// c:/Users/user/Documents/Programming/Music/WaOn/YonWaOn/a.hpp
+// c:/Users/user/Documents/Programming/Music/GoodWaOn/YonWaOn/a.hpp
 
 #pragma once
 #include "../../OnMei/a.hpp"
