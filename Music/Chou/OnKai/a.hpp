@@ -3,10 +3,8 @@
 #pragma once
 #include "a_Macro.hpp"
 
+#include "../KaiMei/a.hpp"
 #include "../../OnMei/a.hpp"
-#include "../../../Mathematics/Arithmetic/Mod/a.hpp"
-
-#include "a_Alias.hpp"
 
 class OnKai
 {
