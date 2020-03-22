@@ -11,13 +11,15 @@ private:
   OnMei m_N1;
   OnMei m_N2;
 
+  bool m_is_valid;
+  
 public:
   inline SanWaOn( const OnMei& N0 , const OnMei& N1 , const OnMei& N2 ) noexcept;
-
-  inline bool IsValid() const noexcept;
   
   inline string Display() const noexcept;
+
   const OnMei& GetOnMei( const uint& i ) const noexcept;
+  inline const bool& IsValid() const noexcept;
 
 };
 
