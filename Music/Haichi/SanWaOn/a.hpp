@@ -14,7 +14,7 @@ private:
 public:
   inline SanWaOn( const OnMei& N0 , const OnMei& N1 , const OnMei& N2 ) noexcept;
 
-  bool IsValid() const noexcept;
+  inline bool IsValid() const noexcept;
   
   inline string Display() const noexcept;
   const OnMei& GetOnMei( const uint& i ) const noexcept;

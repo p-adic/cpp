@@ -3,25 +3,6 @@
 #include "../../Header.hpp"
 #include "a_Body.hpp"
 
-bool SanWaOn::IsValid() const noexcept
-{
-
-  if( m_N0 == m_N1 ){
-
-    return false;
-
-  }
-
-  if( m_N1 == m_N2 ){
-
-    return false;
-
-  }
-
-  return m_N2 != m_N1;
-
-}
-
 const OnMei& SanWaOn::GetOnMei( const uint& i ) const noexcept
 {
 
