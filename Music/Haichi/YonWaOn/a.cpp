@@ -3,43 +3,6 @@
 #include "../../Header.hpp"
 #include "a_Body.hpp"
 
-bool YonWaOn::IsValid() const noexcept
-{
-
-  if( m_N0 == m_N1 ){
-
-    return false;
-
-  }
-
-  if( m_N1 == m_N2 ){
-
-    return false;
-
-  }
-
-  if( m_N2 == m_N3 ){
-
-    return false;
-
-  }
-
-  if( m_N3 == m_N0 ){
-
-    return false;
-
-  }
-
-  if( m_N0 == m_N2 ){
-
-    return false;
-
-  }
-
-  return m_N1 != m_N3;
-
-}
-
 const OnMei& YonWaOn::GetOnMei( const uint& i ) const noexcept
 {
 
