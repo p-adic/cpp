@@ -1,6 +1,7 @@
 // c:/Users/user/Documents/Programming/Music/Chou/KaiMei/a.hpp
 
 #pragma once
+#include "../../../Mathematics/Function/a.hpp"
 #include "../../../Mathematics/Arithmetic/Mod/a.hpp"
 
 class KaiMei :
@@ -27,3 +28,4 @@ private:
 
 };
 
+const KaiMei& operator+( const KaiMei& n1 , const int& n2 ) noexcept;
