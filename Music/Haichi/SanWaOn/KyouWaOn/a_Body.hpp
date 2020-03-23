@@ -8,7 +8,7 @@
 
 inline KyouWaOn::KyouWaOn( const Chou& N , const KaiMei& n ) noexcept : SanWaOn( N.OnMeiTable( n ) , N.OnMeiTable( n + 2 ) , N.OnMeiTable( n + 4 ) ) {}
 
-inline bool KyouWaOn::IsValid() const noexcept { return Dosuu( m_N0 , m_N2 ) == OnDo( Pitch( Si() , 0 ) , Pitch( Fa() , 0 ) ); }
+inline bool KyouWaOn::IsValid() const noexcept { return OnDo( Pitch( GetOnMei( 0 ) , 0 ) , Pitch( GetOnMei( 2 ) , 1 ) ) != OnDo( Pitch( Ti() , 0 ) , Pitch( Fa() , 1 ) ); }
 
 inline const OnMei& KyouWaOn::GetNeOn() const noexcept { return GetOnMei( 0 ); }
 inline const OnMei& KyouWaOn::GetDaiSanOn() const noexcept { return GetOnMei( 1 ); }
