@@ -8,12 +8,10 @@ class KyouWaOn :
   public SanWaOn
 {
 
-  bool m_is_valid;
-
 public:
   inline KyouWaOn( const Chou& N , const KaiMei& n ) noexcept;
 
-  inline const bool& IsValid() const noexcept;
+  inline bool IsValid() const noexcept;
   
   inline const OnMei& GetNeOn() const noexcept;
   inline const OnMei& GetDaiSanOn() const noexcept;

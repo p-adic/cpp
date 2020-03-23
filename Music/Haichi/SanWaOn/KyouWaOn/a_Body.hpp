@@ -6,9 +6,9 @@
 #include "../a_Body.hpp"
 #include "../../../Chou/a_Body.hpp"
 
-inline KyouWaOn::KyouWaOn( const Chou& N , const KaiMei& n ) noexcept : SanWaOn( N.OnMeiTable( n ) , N.OnMeiTable( n + 2 ) , N.OnMeiTable( n + 4 ) ) , m_is_valid( n != KaiMei::VII() ) {}
+inline KyouWaOn::KyouWaOn( const Chou& N , const KaiMei& n ) noexcept : SanWaOn( N.OnMeiTable( n ) , N.OnMeiTable( n + 2 ) , N.OnMeiTable( n + 4 ) ) {}
 
-inline const bool& KyouWaOn::IsValid() const noexcept { return m_is_valid; }
+inline bool KyouWaOn::IsValid() const noexcept { return Dosuu( m_N0 , m_N2 ) == OnDo( Pitch( Si() , 0 ) , Pitch( Fa() , 0 ) ); }
 
 inline const OnMei& KyouWaOn::GetNeOn() const noexcept { return GetOnMei( 0 ); }
 inline const OnMei& KyouWaOn::GetDaiSanOn() const noexcept { return GetOnMei( 1 ); }
