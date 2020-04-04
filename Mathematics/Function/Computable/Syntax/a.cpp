@@ -76,7 +76,6 @@ void SyntaxOfComputableFunction::InputDefinition( ofstream& ofs ) const
      CALL( e )
 
    )
-
   
   const string& function_name = *p_function_name;
   const string& return_type_name = *p_return_type_name;
@@ -206,7 +205,7 @@ void SyntaxOfComputableFunction::InputNonListLine( ofstream& ofs , const string&
 
        if( line_name == "exit" ){
 
-	 InputExitLine( ofs );
+	 InputExitLine( ofs , function_expression_name );
 	 return;
 
        }

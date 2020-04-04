@@ -33,7 +33,7 @@ protected:
   void InputIfLine( ofstream& ofs , const string& function_expression_name , VLTree<string>::const_iterator& itr_line , const uint& depth ) const;
   void InputPutLine( ofstream& ofs , VLTree<string>::const_iterator& itr_line , const uint& depth ) const;
   void InputPrintLine( ofstream& ofs , VLTree<string>::const_iterator& itr_line ) const;
-  inline void InputExitLine( ofstream& ofs ) const noexcept;
+  inline void InputExitLine( ofstream& ofs , const string& function_expression_name ) const noexcept;
   void InputReturnLine( ofstream& ofs ,const string& function_expression_name , VLTree<string>::const_iterator& itr_line , const uint& depth ) const;
   void InputIndent( ofstream& ofs , const uint depth ) const noexcept;
 

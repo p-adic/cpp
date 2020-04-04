@@ -17,7 +17,7 @@ inline const string& SyntaxOfComputableFunction::GetNodeString( const int& n ) c
 
 inline string SyntaxOfComputableFunction::Display() const noexcept { return m_syntax.Display(); }
 
-inline void SyntaxOfComputableFunction::InputExitLine( ofstream& ofs ) const noexcept { ofs << "この行を通る場合の処理は未定義である。" << endl; }
+inline void SyntaxOfComputableFunction::InputExitLine( ofstream& ofs , const string& function_expression_name ) const noexcept { ofs << "\\(" << function_expression_name << "\\)は未定義である。" << endl; }
 
 template <typename... Args>
 auto FunctionExpressionToString( const SyntaxOfComputableFunction& f , const Args&... args ) -> typename enable_if<conjunction<is_same<Args,string>...>::value,string>::type
