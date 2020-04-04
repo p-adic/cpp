@@ -92,7 +92,7 @@
 
 #define RBRACK to_string( "\\rbrack" ) 
 
-#define SPACE to_string( " to_string( " ) 
+#define SPACE to_string( " " ) 
 
 #define LBIG to_string( "\\left" ) 
 
