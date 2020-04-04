@@ -33,6 +33,7 @@
 #define LAND( ... ) LandSymbolApplication( __VA_ARGS__ ) 
 #define LOR( ... ) LorSymbolApplication( __VA_ARGS__ ) 
 #define TO( x , y ) ToSymbolApplication( x , y ) 
+#define OT( x , y ) TO( y , x ) 
 #define EQUIV( ... ) EquivSymbolApplication( __VA_ARGS__ ) 
 
 
@@ -62,17 +63,57 @@
   CHECK_VALID( TYPE );							\
 									\
   
-#define IMPORT( RET , FUNC , ... )				\
-								\
+#define IMP( RET , FUNC , ... )						\
+									\
   const auto FUNC = FUNCTION_SYMBOL_CONSTRUCTOR( RET , FUNC , __VA_ARGS__ ) \
  
     
-
-#define DATA( RET , FUNC , ... )				\
-								\
-  IMPORT( RET , FUNC , __VA_ARGS__ );				\
-  const auto& __THIS__ = FUNC					\
+#define DEF( RET , FUNC , ... )						\
+									\
+  auto FUNC = FUNCTION_SYMBOL_CONSTRUCTOR( RET , FUNC , __VA_ARGS__ );	\
+  auto& __THIS__ = FUNC							\
     
+
+#define SYMB __THIS__.GetNodeString( 2 ) 
+
+#define SUB to_string( "_" ) 
+
+#define SUP to_string( "^" ) 
+
+#define LPAREN to_string( "(" ) 
+
+#define RPAREN to_string( ")" ) 
+
+#define LBRACE to_string( "\\{" ) 
+
+#define RBRACE to_string( "\\}" ) 
+
+#define LBRACK to_string( "\\lbrack" ) 
+
+#define RBRACK to_string( "\\rbrack" ) 
+
+#define SPACE to_string( " to_string( " ) 
+
+#define LBIG to_string( "\\left" ) 
+
+#define MBIG to_string( "\\middle" ) 
+
+#define RBIG to_string( "\\right" ) 
+
+#define PERIOD to_string( "." ) 
+
+#define COMMA to_string( "," ) 
+
+#define COLON to_string( "\\colon" ) 
+
+#define SEMICOLON to_string( ";" ) 
+
+#define ATMARK to_string( "@" ) 
+
+#define SEP( ... )				\
+						\
+  __THIS__.SetSeparator( __VA_ARGS__ );		\
+
 
 // definition
 #define BODY( ... )						\
@@ -85,7 +126,7 @@
   IfLine( __VA_ARGS__ )				\
   
 
-#define FINISH					\
+#define EXIT					\
 						\
   LineOfDefinitionOfComputableFunction()	\
 

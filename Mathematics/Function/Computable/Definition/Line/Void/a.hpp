@@ -23,17 +23,22 @@ public:
   // PUT
   template <typename T1, typename T2> inline LineOfDefinitionOfComputableFunction( const VariableSymbol<T1>& x , const T2& t );
   
+  // PRINT
+  template <typename... ARGS> inline LineOfDefinitionOfComputableFunction( const ListExpressionOfComputableFunction<ARGS...>& args );
+
   // IF
   inline LineOfDefinitionOfComputableFunction( const int& dummy , const ConditionOfComputableFunction& condition , const LineOfDefinitionOfComputableFunction<void>& line );
   template <typename Ret1 , typename Ret2 , typename... Rets> inline LineOfDefinitionOfComputableFunction( const Dummy<Ret1,Ret2,Rets...>& dummy , const ConditionOfComputableFunction& condition , const Ret1& line1 , const Ret2& line2 , const Rets&... lines );
 
-  // FINISH
+  // EXIT
   inline LineOfDefinitionOfComputableFunction();
   
 };
 
 template <typename T1, typename T2> inline LineOfDefinitionOfComputableFunction<void> PUT( const VariableSymbol<T1>& x , const T2& t );
 
+template <typename... ARGS> inline LineOfDefinitionOfComputableFunction<void> PRINT( const ARGS&... args );
 
 DECLARATION_OF_GLOBAL_CONSTANT_STRING_FOR_SYMBOL( Put );
-DECLARATION_OF_GLOBAL_CONSTANT_STRING_FOR_SYMBOL( Finish );
+DECLARATION_OF_GLOBAL_CONSTANT_STRING_FOR_SYMBOL( Print );
+DECLARATION_OF_GLOBAL_CONSTANT_STRING_FOR_SYMBOL( Exit );

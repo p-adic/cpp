@@ -46,5 +46,8 @@ template <typename Ret> inline ConditionOfComputableFunction operator>( const Ex
 inline ConditionOfComputableFunction operator!( const ConditionOfComputableFunction& b );
 inline ConditionOfComputableFunction operator&&( const ConditionOfComputableFunction& b1 , const ConditionOfComputableFunction& b2 );
 inline ConditionOfComputableFunction operator||( const ConditionOfComputableFunction& b1 , const ConditionOfComputableFunction& b2 );
+inline ConditionOfComputableFunction operator>>( const ConditionOfComputableFunction& b1 , const ConditionOfComputableFunction& b2 );
+inline ConditionOfComputableFunction operator->*( const ConditionOfComputableFunction& b1 , const ConditionOfComputableFunction& b2 );
+inline ConditionOfComputableFunction operator<<( const ConditionOfComputableFunction& b1 , const ConditionOfComputableFunction& b2 );
 
 template <typename... Args, typename... VA> void RelationExpressionToSyntax( SyntaxOfComputableFunction& t , const RelationSymbol<Args...>& r , const ExpressionOfComputableFunction<VA>&... va );

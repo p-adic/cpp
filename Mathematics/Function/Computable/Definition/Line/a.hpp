@@ -20,7 +20,7 @@ public:
   using Dummy = typename enable_if<IsValidListOfLines<Ret,Rets...>::value,int>::type;
 
   
-public:
+public:  
   inline LineOfDefinitionOfComputableFunction( const LineOfDefinitionOfComputableFunction<void>& line );
   inline LineOfDefinitionOfComputableFunction( const LineOfDefinitionOfComputableFunction<Ret>& line ) = default;
   template <typename... Rets> inline LineOfDefinitionOfComputableFunction( const Dummy<Rets...>& dummy , const Rets&... lines );

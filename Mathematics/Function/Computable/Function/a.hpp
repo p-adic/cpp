@@ -19,7 +19,8 @@ public:
   inline FunctionSymbol( const string& f , const VariableSymbol<Args>&... args );
   FunctionSymbol( const string& f , const SeparatorOfComputableFunction& s , const VariableSymbol<Args>&... args );
 
-  template <typename... VA> auto SetSeparator( const VA&... va ) -> typename enable_if<conjunction<is_same<VA,string>...>::value,void>::type;
+  void SetSeparator( const SeparatorOfComputableFunction& s );
+  template <typename... VA> inline auto SetSeparator( const VA&... va ) -> typename enable_if<conjunction<is_same<VA,string>...>::value,void>::type;
 
   inline ExpressionOfComputableFunction<Ret> operator()( const ExpressionOfComputableFunction<Args>&... args ) const;
 

@@ -5,7 +5,7 @@
 
 #define DECLARATION_OF_RELATION_SYMBOL( REL )				\
 									\
-  template <typename Ret> const RelationSymbol<Ret,Ret>& CONNECT( REL , Symbol )() \
+  template <typename Ret> auto CONNECT( REL , Symbol )() -> typename enable_if<! is_same<Ret,bool>::value , const RelationSymbol<Ret,Ret>& >::type \
 									\
 
 #define DEFINITION_OF_RELATION_SYMBOL( REL , NAME )			\

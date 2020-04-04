@@ -17,15 +17,14 @@ inline const string& SyntaxOfComputableFunction::GetNodeString( const int& n ) c
 
 inline string SyntaxOfComputableFunction::Display() const noexcept { return m_syntax.Display(); }
 
-inline void SyntaxOfComputableFunction::InputFinishLine( ofstream& ofs ) const noexcept { ofs << "終了する。" << endl; }
-
+inline void SyntaxOfComputableFunction::InputExitLine( ofstream& ofs ) const noexcept { ofs << "この行を通る場合の処理は未定義である。" << endl; }
 
 template <typename... Args>
 auto FunctionExpressionToString( const SyntaxOfComputableFunction& f , const Args&... args ) -> typename enable_if<conjunction<is_same<Args,string>...>::value,string>::type
 {
 
   VLTree<string> t{ args... };
-  auto itr = t.LeftMostNode();
+  VLTree<string>::const_iterator itr = t.LeftMostNode();
 
   TRY_CATCH
     (

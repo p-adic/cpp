@@ -14,8 +14,8 @@ template <typename Ret, typename... Args>
 void DefinitionOfComputableFunction<Ret,Args...>::Display() const noexcept
 {
 
-  string filename = "test.txt";
-  ofstream ofs( filename , ios::app );
+  string filename = "a.txt";
+  ofstream ofs( filename , ios::trunc );
 
   cout << "定義文の木構造を出力します：" << endl;
   cout << Get().Display() << endl;

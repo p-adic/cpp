@@ -41,45 +41,45 @@ FunctionSymbol<Ret,Args...>::FunctionSymbol( const string& f , const SeparatorOf
 
 }
 
-template <typename Ret, typename... Args> template <typename... VA>
-auto FunctionSymbol<Ret,Args...>::SetSeparator( const VA&... va ) -> typename enable_if<conjunction<is_same<VA,string>...>::value,void>::type
+template <typename Ret, typename... Args>
+void FunctionSymbol<Ret,Args...>::SetSeparator( const SeparatorOfComputableFunction& s )
 {
 
-  SyntaxOfComputableFunction s{ SeparatorString() , va... };
+  if( sizeof...( Args ) + 1 != s.Get().size() ){
+
+    ERR_IMPUT( s );
+
+  }
 
   TRY_CATCH
     (
 
      {
-
-       if( sizeof...( Args ) + 1 != sizeof...( VA ) ){
-
-	 ERR_CODE;
-
-       }
        
        VLTree<string>& t = Ref();
   
        t.pop_RightMost();
        t.pop_RightMost();
 
-       auto itr = t.RightMostNode();
-       itr[1];
+       VLTree<string>::const_iterator itr = t.RightMostNode();
+       itr[4];
 
-       t.push_RightMost( s );
+       t.push_RightMost( s.Get() );
        t.push_RightMost( FunctionExpressionToString( *this , itr ) );
 
      } ,
 
      const ErrorType& e ,
 
-     CALL( e )
+     CALL_P( e , s )
 
      );
     
   return;
 
 }
+
+template <typename Ret, typename... Args> template <typename... VA> inline auto FunctionSymbol<Ret,Args...>::SetSeparator( const VA&... va ) -> typename enable_if<conjunction<is_same<VA,string>...>::value,void>::type { TRY_CATCH( SetSeparator( SeparatorOfComputableFunction( 0 , va... ) ) , const ErrorType& e , CALL_P( e , va... ) ); }
 
 template <typename Ret, typename... Args> inline ExpressionOfComputableFunction<Ret> FunctionSymbol<Ret,Args...>::operator()( const ExpressionOfComputableFunction<Args>&... args ) const { return ExpressionOfComputableFunction<Ret>( *this , args... ); }
 

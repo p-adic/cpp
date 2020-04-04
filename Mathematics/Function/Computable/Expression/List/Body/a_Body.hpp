@@ -41,7 +41,7 @@ ExpressionOfComputableFunction<void>::ExpressionOfComputableFunction( const Expr
 	 }
 
 	 auto itr_copy = itr;
-	 argument_name += SyntaxToSecondString( itr_copy );
+	 argument_name += SyntaxToString( itr_copy , 2 );
 	 argument_type_name += *itr_copy;
 	 itr++;
 	 i++;

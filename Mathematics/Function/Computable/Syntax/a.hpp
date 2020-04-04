@@ -32,18 +32,18 @@ protected:
   void InputNonListLine( ofstream& ofs , const string& function_expression_name , const string& line_name , VLTree<string>::const_iterator& itr_line , const uint& depth ) const;
   void InputIfLine( ofstream& ofs , const string& function_expression_name , VLTree<string>::const_iterator& itr_line , const uint& depth ) const;
   void InputPutLine( ofstream& ofs , VLTree<string>::const_iterator& itr_line , const uint& depth ) const;
+  void InputPrintLine( ofstream& ofs , VLTree<string>::const_iterator& itr_line ) const;
+  inline void InputExitLine( ofstream& ofs ) const noexcept;
   void InputReturnLine( ofstream& ofs ,const string& function_expression_name , VLTree<string>::const_iterator& itr_line , const uint& depth ) const;
-  inline void InputFinishLine( ofstream& ofs ) const noexcept;
   void InputIndent( ofstream& ofs , const uint depth ) const noexcept;
 
 };
 
-const string& SyntaxToFirstString( VLTree<string>::const_iterator& itr );
-const string& SyntaxToSecondString( VLTree<string>::const_iterator& itr );
-string ListSyntaxToSecondString( VLTree<VLTree<string>::const_iterator>& t );
+const string& SyntaxToString( VLTree<string>::const_iterator& itr , const int& n );
+string ListSyntaxToString( VLTree<VLTree<string>::const_iterator>& t , const int& n );
 
 template <typename... Args> auto FunctionExpressionToString( const SyntaxOfComputableFunction& f , const Args&... args ) -> typename enable_if<conjunction<is_same<Args,string>...>::value,string>::type;
 
-string FunctionExpressionToString( const SyntaxOfComputableFunction& f , VLTree<string>::iterator& itr );
+string FunctionExpressionToString( const SyntaxOfComputableFunction& f , VLTree<string>::const_iterator& itr );
 
 DECLARATION_OF_GLOBAL_CONSTANT_STRING_FOR_SYMBOL( List );
