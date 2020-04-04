@@ -128,7 +128,7 @@
 
 #define EXIT					\
 						\
-  LineOfDefinitionOfComputableFunction()	\
+  LineOfDefinitionOfComputableFunction<void>()	\
 
 
 #define RETURN( X )				\
