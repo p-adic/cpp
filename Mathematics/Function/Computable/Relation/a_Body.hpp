@@ -28,7 +28,7 @@ RelationSymbol<Args...>::RelationSymbol( const string& r , const SeparatorOfComp
   TRY_CATCH
     (
      
-     t.push_RightMost( FunctionExpressionToString( *this , args.GetNodeString( 2 )... ) ) ,
+     t.push_RightMost( FunctionExpressionToString( *this , VLTree<string>( args.GetNodeString( 2 )... ) ) ) ,
 
      const ErrorType& e ,
 
@@ -60,11 +60,12 @@ auto RelationSymbol<Args...>::SetSeparator( const VA&... va ) -> typename enable
        t.pop_RightMost();
        t.pop_RightMost();
 
-       auto itr = t.RightMostNode();
-       itr[1];
+       VLTree<string>::const_iterator itr_f = Get().LeftMostNode();
+       VLTree<string>::const_iterator itr_args = t.RightMostNode();
+       itr_args[1];
 
        t.push_RightMost( s );
-       t.push_RightMost( FunctionExpressionToString( *this , itr ) );
+       t.push_RightMost( FunctionExpressionToString( itr_f , itr_args ) );
 
      } ,
 

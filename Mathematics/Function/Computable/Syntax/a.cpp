@@ -19,8 +19,8 @@ void SyntaxOfComputableFunction::InputDefinition( ofstream& ofs ) const
   const string* p_return_type_name;
   const string* p_argument_name;
   const string* p_argument_type_name;
-  const string* p_line_name;
-  const string* p_function_expression_name;
+  const string* p_line_name = nullptr;
+  const string* p_function_expression_name = nullptr;
   
   TRY_CATCH
     (
@@ -46,17 +46,13 @@ void SyntaxOfComputableFunction::InputDefinition( ofstream& ofs ) const
      );
   
   itr_function_symbol++;
-
+  auto itr_function_expression = itr_function_symbol;
+       
   TRY_CATCH
     (
 
      {
 
-       auto itr_function_expression = itr_function_symbol;
-       itr_function_expression++;
-       itr_function_expression++;
-       itr_function_expression[1];
-       
        p_argument_name = &( SyntaxToString( itr_function_symbol , 2 ) );
 
        if( ! itr_function_symbol.IsValid() ){
@@ -67,7 +63,6 @@ void SyntaxOfComputableFunction::InputDefinition( ofstream& ofs ) const
 
        p_argument_type_name = &( *itr_function_symbol );
        p_line_name = &( SyntaxToString( itr_line , 1 ) );
-       p_function_expression_name = &( SyntaxToString( itr_function_expression , 1 ) );
        
      } ,
      
@@ -75,7 +70,31 @@ void SyntaxOfComputableFunction::InputDefinition( ofstream& ofs ) const
 
      CALL( e )
 
-   )
+     );
+  
+  itr_function_expression++;
+  itr_function_expression++;
+    
+  TRY_CATCH
+    (
+
+     {
+       
+       if( ! itr_function_expression.IsValid() ){
+
+	 ERR_CODE;
+
+       }
+
+       p_function_expression_name = &( *itr_function_expression );
+
+     } ,
+     
+     const ErrorType& e ,
+     
+     CALL( e )
+
+     );
   
   const string& function_name = *p_function_name;
   const string& return_type_name = *p_return_type_name;
@@ -290,7 +309,7 @@ void SyntaxOfComputableFunction::InputPutLine( ofstream& ofs , VLTree<string>::c
   TRY_CATCH
     (
 
-     p_expression_name = &( SyntaxToString( itr_line , 2 ) ) ,
+     p_expression_name = &( ExpressionToString( itr_line ) ) ,
      
      const ErrorType& e ,
 
@@ -306,9 +325,20 @@ void SyntaxOfComputableFunction::InputPutLine( ofstream& ofs , VLTree<string>::c
 void SyntaxOfComputableFunction::InputPrintLine( ofstream& ofs , VLTree<string>::const_iterator& itr_line ) const
 {
 
-  const string& variable_name = SyntaxToString( itr_line , 2 );
+  const string* p_variable_name;
+  
+  TRY_CATCH
+    (
 
-  ofs << "デバッグ時に\\(" << variable_name << "\\)の標準出力を行う。この操作は計算結果に影響を与えない。" << endl;
+     p_variable_name = &( SyntaxToString( itr_line , 2 ) ) ,
+     
+     const ErrorType& e ,
+
+     CALL( e )
+
+     );
+  
+  ofs << "デバッグ時に\\(" << *p_variable_name << "\\)の標準出力を行う。この操作は計算結果に影響を与えない。" << endl;
   return;
 
 }
@@ -316,9 +346,20 @@ void SyntaxOfComputableFunction::InputPrintLine( ofstream& ofs , VLTree<string>:
 void SyntaxOfComputableFunction::InputReturnLine( ofstream& ofs , const string& function_expression_name , VLTree<string>::const_iterator& itr_line , const uint& depth ) const
 {
 
-  const string& return_name = SyntaxToString( itr_line , 2 );
+  const string* p_return_name;
   
-  ofs << "\\(" << function_expression_name << " := " << return_name << "\\)と定める。" << endl;
+  TRY_CATCH
+    (
+
+     p_return_name = &( SyntaxToString( itr_line , 2 ) ) ,
+     
+     const ErrorType& e ,
+
+     CALL( e )
+
+     );
+
+  ofs << "\\(" << function_expression_name << " := " << *p_return_name << "\\)と定める。" << endl;
   return;
 
 }
@@ -401,12 +442,30 @@ string ListSyntaxToString( VLTree<VLTree<string>::const_iterator>& t , const int
 
 }
 
-string FunctionExpressionToString( const SyntaxOfComputableFunction& f , VLTree<string>::const_iterator& itr )
+string FunctionExpressionToString( const SyntaxOfComputableFunction& f , const VLTree<string>& args )
+{
+
+  VLTree<string>::const_iterator itr_f = f.Get().LeftMostNode();
+  VLTree<string>::const_iterator itr_args = args.LeftMostNode();
+
+  TRY_CATCH
+    (
+
+     return FunctionExpressionToString( itr_f , itr_args ) ,
+     const ErrorType& e ,
+     CALL_P( e , f , args )
+
+     );
+  
+  return "dummy";
+
+}
+
+
+string FunctionExpressionToString( VLTree<string>::const_iterator& itr_f , VLTree<string>::const_iterator& itr_args )
 {
 
   string s = "";
-
-  auto itr_f = f.Get().LeftMostNode();
 
   itr_f++;
   itr_f++;
@@ -414,37 +473,77 @@ string FunctionExpressionToString( const SyntaxOfComputableFunction& f , VLTree<
   itr_f++;
   itr_f[1];
 
-  while( itr.IsValid() ){
+  bool variadic = false;
 
+  while( itr_args.IsValid() ){
+
+    if( variadic ){
+
+      itr_f--;
+
+    }
+    
     if( ! itr_f.IsValid() ){
 
-      ERR_IMPUT( f , s , *itr );
+      ERR_IMPUT( s , *itr_args );
        
     }
 
-    auto itr_copy = itr;
-    itr_copy[2];
+    const string& s_current = *itr_f;
 
-    if( ! itr_copy.IsValid() ){
+    if( ! variadic && s_current == LdotsString() ){
 
-      ERR_IMPUT( f , s , *itr );
-       
+      itr_f++;
+
+      if( ! itr_f.IsValid() ){
+
+	ERR_IMPUT( s , *itr_args );
+
+      }
+
+      variadic = true;
+      s += *itr_f;
+
+    } else {
+
+      s += s_current;
+
     }
-
-    s += *itr_f;
-    s += *itr_copy;
-
+    
+    s += *itr_args;
+    
     itr_f++;
-    itr++;
+    itr_args++;
 
   }
 
-  s += *itr_f;
+  const string& s_current = *itr_f;
+  
+  if( ! variadic && s_current == LdotsString() ){
+
+    itr_f++;
+    itr_f++;
+      
+    if( ! itr_f.IsValid() ){
+
+      ERR_IMPUT( s );
+
+    }
+      
+    variadic = true;
+    s += *itr_f;
+
+  } else {
+
+    s += s_current;
+
+  }
+
   itr_f++;
 
   if( itr_f.IsValid() ){
 
-    ERR_IMPUT( f );
+    ERR_IMPUT( *itr_f , variadic );
        
   }
   
@@ -452,3 +551,20 @@ string FunctionExpressionToString( const SyntaxOfComputableFunction& f , VLTree<
   
 }
 
+const string& ExpressionToString( VLTree<string>::const_iterator& itr )
+{
+
+  itr[2];
+  
+  if( ! itr.IsValid() ){
+
+    ERR_IMPUT( itr );
+       
+  }
+
+  const string& s = *itr;
+
+  itr++;
+  return s;
+  
+}

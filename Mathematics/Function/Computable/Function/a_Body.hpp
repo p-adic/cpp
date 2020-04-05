@@ -30,11 +30,9 @@ FunctionSymbol<Ret,Args...>::FunctionSymbol( const string& f , const SeparatorOf
 
   TRY_CATCH
     (
-     
-     t.push_RightMost( FunctionExpressionToString( *this , args.GetNodeString( 2 )... ) ) ,
 
+     t.push_RightMost( FunctionExpressionToString( *this , VLTree<string>( args.GetNodeString( 2 )... ) ) ) ,
      const ErrorType& e ,
-
      CALL_P( e , t )
 
      );
@@ -61,11 +59,29 @@ void FunctionSymbol<Ret,Args...>::SetSeparator( const SeparatorOfComputableFunct
        t.pop_RightMost();
        t.pop_RightMost();
 
-       VLTree<string>::const_iterator itr = t.RightMostNode();
-       itr[4];
+       VLTree<string>::const_iterator itr_args = t.RightMostNode();
+       itr_args[4];
+
+       VLTree<string> t_sub{};
+
+       while( itr_args.IsValid() ){
+
+	 auto itr_args_copy = itr_args;
+	 itr_args_copy[2];
+
+	 if( ! itr_args_copy.IsValid() ){
+
+	   ERR_IMPUT( *itr_args );
+
+	 }
+	 
+	 t_sub.push_RightMost( *itr_args_copy );
+	 itr_args++;
+
+       }
 
        t.push_RightMost( s.Get() );
-       t.push_RightMost( FunctionExpressionToString( *this , itr ) );
+       t.push_RightMost( FunctionExpressionToString( *this , t_sub ) );
 
      } ,
 

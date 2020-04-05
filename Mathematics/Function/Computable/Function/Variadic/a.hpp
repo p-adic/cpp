@@ -13,6 +13,7 @@ class VariadicFunctionSymbol :
 
 public:
   inline VariadicFunctionSymbol( const string& f , const VariableSymbol<Args>&... args );
+  inline VariadicFunctionSymbol( const string& f , const SeparatorOfComputableFunction& s , const VariableSymbol<Args>&... args );
 
   template <typename... VA> inline ExpressionOfComputableFunction<Ret> operator()( const ExpressionOfComputableFunction<Args>&... args , const ListExpressionOfComputableFunction<VA...>& va ) const;
 
@@ -29,8 +30,5 @@ DECLARATION_OF_VARIADIC_LOGICAL_CONNECTIVE( Lor );
 DECLARATION_OF_VARIADIC_LOGICAL_CONNECTIVE_APPLICATION_ALL( Land );
 DECLARATION_OF_VARIADIC_LOGICAL_CONNECTIVE_APPLICATION_ALL( Lor );
 
-
-DECLARATION_OF_GLOBAL_CONSTANT_STRING_FOR_SYMBOL( Plus );
-DECLARATION_OF_GLOBAL_CONSTANT_STRING_FOR_SYMBOL( Times );
-DECLARATION_OF_GLOBAL_CONSTANT_STRING_FOR_SYMBOL( Land );
-DECLARATION_OF_GLOBAL_CONSTANT_STRING_FOR_SYMBOL( Lor );
+DECLARATION_OF_GLOBAL_CONSTANT_STRING_FOR_SYMBOL( Empty );
+DECLARATION_OF_GLOBAL_CONSTANT_STRING_FOR_SYMBOL( Space );

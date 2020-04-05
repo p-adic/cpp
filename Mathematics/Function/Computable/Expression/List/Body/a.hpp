@@ -14,10 +14,12 @@ class ExpressionOfComputableFunction<void> :
 
   friend VariableSymbol<void>;
   template <typename... VA> friend class ListExpressionOfComputableFunction;
+
+  using Dummy = int;
   
 private:
   // VariadicVariable
-  inline ExpressionOfComputableFunction();
+  inline ExpressionOfComputableFunction( const Dummy& i );
 
   // List
   template <typename... VA> ExpressionOfComputableFunction( const ExpressionOfComputableFunction<VA>&... va );

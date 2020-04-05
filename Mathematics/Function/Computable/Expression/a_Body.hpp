@@ -18,29 +18,20 @@ template <typename Ret> inline ExpressionOfComputableFunction<Ret>::ExpressionOf
 template <typename Ret> inline ExpressionOfComputableFunction<Ret>::ExpressionOfComputableFunction( const Ret& t ) : SyntaxOfComputableFunction( ExpressionString(), ConstantString() , to_string( t ) , GetName<Ret>() ) {}
 
 // function
-template <typename Ret> template <typename... Args> inline ExpressionOfComputableFunction<Ret>::ExpressionOfComputableFunction( const FunctionSymbol<Ret,Args...>& f , const ExpressionOfComputableFunction<Args>&... args ) : SyntaxOfComputableFunction( ExpressionString() , FunctionString() ) { FunctionExpressionToSyntax( *this , f , args... ); }
+template <typename Ret> template <typename... Args> inline ExpressionOfComputableFunction<Ret>::ExpressionOfComputableFunction( const FunctionSymbol<Ret,Args...>& f , const ExpressionOfComputableFunction<Args>&... args ) : SyntaxOfComputableFunction( ExpressionString() , FunctionString() ) { PushFunctionExpression( f , args... ); }
 
 // variadic function
-template <typename Ret> template <typename... Args, typename... VA> inline ExpressionOfComputableFunction<Ret>::ExpressionOfComputableFunction( const VariadicFunctionSymbol<Ret,Args...>& f , const ExpressionOfComputableFunction<Args>&... args , const ListExpressionOfComputableFunction<VA...>& va ) : SyntaxOfComputableFunction( ExpressionString() , FunctionString() ) { FunctionExpressionToSyntax( *this , f , args... , va ); }
+template <typename Ret> template <typename... Args, typename... VA> inline ExpressionOfComputableFunction<Ret>::ExpressionOfComputableFunction( const VariadicFunctionSymbol<Ret,Args...>& f , const ExpressionOfComputableFunction<Args>&... args , const ListExpressionOfComputableFunction<VA...>& va ) : SyntaxOfComputableFunction( ExpressionString() , FunctionString() ) { PushFunctionExpression( f , args... , va ); }
 
-template <typename Ret> inline ExpressionOfComputableFunction<Ret> operator+( const ExpressionOfComputableFunction<Ret>& e1 , const ExpressionOfComputableFunction<Ret>& e2 ){ return PlusSymbolApplication( e1 , e2 ); }
-template <typename Ret> inline ExpressionOfComputableFunction<Ret> operator-( const ExpressionOfComputableFunction<Ret>& e1 , const ExpressionOfComputableFunction<Ret>& e2 ){ return MinusSymbolApplication( e1 , e2 ); }
-template <typename Ret> inline ExpressionOfComputableFunction<Ret> operator*( const ExpressionOfComputableFunction<Ret>& e1 , const ExpressionOfComputableFunction<Ret>& e2 ){ return TimesSymbolApplication( e1 , e2 ); }
-template <typename Ret> inline ExpressionOfComputableFunction<Ret> operator/( const ExpressionOfComputableFunction<Ret>& e1 , const ExpressionOfComputableFunction<Ret>& e2 ){ return SlashSymbolApplication( e1 , e2 ); }
-template <typename Ret> inline ExpressionOfComputableFunction<Ret> operator%( const ExpressionOfComputableFunction<Ret>& e1 , const ExpressionOfComputableFunction<Ret>& e2 ){ return ModSymbolApplication( e1 , e2 ); }
 
-inline const ExpressionOfComputableFunction<int>& InftySymbol(){ static const ExpressionOfComputableFunction<int> n = ExpressionOfComputableFunction<int>(infty() ); return n; }
-
-template <typename Ret, typename... Args, typename... VA>
-void FunctionExpressionToSyntax( SyntaxOfComputableFunction& t , const FunctionSymbol<Ret,Args...>& f , const ExpressionOfComputableFunction<VA>&... va )
+template <typename Ret> template<typename... Args, typename... VA>
+inline void ExpressionOfComputableFunction<Ret>::PushFunctionExpression( const FunctionSymbol<Ret,Args...>& f , const ExpressionOfComputableFunction<VA>&... va )
 {
-
-  auto arg = ListExpressionOfComputableFunction( va... );
 
   TRY_CATCH
     (
      
-     t.Ref().push_RightMost( FunctionExpressionToString( f , va.GetNodeString( 2 )... ) , GetName<Ret>() , f.Get() , arg.Get() ) ,
+     Ref().push_RightMost( FunctionExpressionToString( f , ExpressionsToListSyntax( va.Get()... ) ) , GetName<Ret>() , f.Get() , va.Get()... ) ,
 
      const ErrorType& e ,
 
@@ -51,6 +42,15 @@ void FunctionExpressionToSyntax( SyntaxOfComputableFunction& t , const FunctionS
   return;
   
 }
+
+
+template <typename Ret> inline ExpressionOfComputableFunction<Ret> operator+( const ExpressionOfComputableFunction<Ret>& e1 , const ExpressionOfComputableFunction<Ret>& e2 ){ return PlusSymbolApplication( e1 , e2 ); }
+template <typename Ret> inline ExpressionOfComputableFunction<Ret> operator-( const ExpressionOfComputableFunction<Ret>& e1 , const ExpressionOfComputableFunction<Ret>& e2 ){ return MinusSymbolApplication( e1 , e2 ); }
+template <typename Ret> inline ExpressionOfComputableFunction<Ret> operator*( const ExpressionOfComputableFunction<Ret>& e1 , const ExpressionOfComputableFunction<Ret>& e2 ){ return TimesSymbolApplication( e1 , e2 ); }
+template <typename Ret> inline ExpressionOfComputableFunction<Ret> operator/( const ExpressionOfComputableFunction<Ret>& e1 , const ExpressionOfComputableFunction<Ret>& e2 ){ return SlashSymbolApplication( e1 , e2 ); }
+template <typename Ret> inline ExpressionOfComputableFunction<Ret> operator%( const ExpressionOfComputableFunction<Ret>& e1 , const ExpressionOfComputableFunction<Ret>& e2 ){ return ModSymbolApplication( e1 , e2 ); }
+
+inline const ExpressionOfComputableFunction<int>& InftySymbol(){ static const ExpressionOfComputableFunction<int> n = ExpressionOfComputableFunction<int>(infty() ); return n; }
 
 
 DEFINITION_OF_GLOBAL_CONSTANT_STRING_FOR_SYMBOL( Expression , expression );

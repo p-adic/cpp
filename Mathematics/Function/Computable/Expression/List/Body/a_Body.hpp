@@ -8,7 +8,7 @@
 #include "../../Variable/a_Body.hpp"
 #include "../../../Type/Valid/a_Body.hpp"
 
-inline ExpressionOfComputableFunction<void>::ExpressionOfComputableFunction() : SyntaxOfComputableFunction( ExpressionString() , VariableString() , LdotsString() , GetName<void>() ) {}
+inline ExpressionOfComputableFunction<void>::ExpressionOfComputableFunction( const Dummy& i ) : SyntaxOfComputableFunction( ExpressionString() , VariableString() , LdotsString() , GetName<void>() ) {}
 
 template <typename... VA>
 ExpressionOfComputableFunction<void>::ExpressionOfComputableFunction( const ExpressionOfComputableFunction<VA>&... va ) : SyntaxOfComputableFunction( ExpressionString() , ListString() , va.Get()... )
@@ -23,9 +23,15 @@ ExpressionOfComputableFunction<void>::ExpressionOfComputableFunction( const Expr
   const uint& size = t.size();
   uint i = 1;
   
-  string argument_name = "( ";
+  string argument_name = "";
   string argument_type_name = "";
 
+  if( size > 2 ){
+
+    argument_name = "( ";
+
+  }
+  
   TRY_CATCH
     (
 
@@ -56,7 +62,11 @@ ExpressionOfComputableFunction<void>::ExpressionOfComputableFunction( const Expr
 
      );
 
-  argument_name += " )";
+  if( size > 2 ){
+    
+    argument_name += " )";
+
+  }
 
   t.insert( itr_insert , argument_type_name );
   t.insert( itr_insert , argument_name );

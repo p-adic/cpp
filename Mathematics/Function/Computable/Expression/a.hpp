@@ -35,6 +35,10 @@ public:
 
   using type = Ret;
 
+private:
+  // ñÿÇÃâEí[Ç…ä÷êîfÇ∆à¯êîva...Ç…ÇÊÇÈï\åªÇí«â¡
+  template <typename... Args, typename... VA> inline void PushFunctionExpression( const FunctionSymbol<Ret,Args...>& f , const ExpressionOfComputableFunction<VA>&... va );
+
 };
 
 #include "a_Alias.hpp"
@@ -46,8 +50,6 @@ template <typename Ret> inline ExpressionOfComputableFunction<Ret> operator/( co
 template <typename Ret> inline ExpressionOfComputableFunction<Ret> operator%( const ExpressionOfComputableFunction<Ret>& e1 , const ExpressionOfComputableFunction<Ret>& e2 );
 
 inline const ExpressionOfComputableFunction<int>& InftySymbol();
-
-template <typename Ret, typename... Args, typename... VA> void FunctionExpressionToSyntax( SyntaxOfComputableFunction& t , const FunctionSymbol<Ret,Args...>& f , const ExpressionOfComputableFunction<VA>&... va );
 
 
 DECLARATION_OF_GLOBAL_CONSTANT_STRING_FOR_SYMBOL( Expression );

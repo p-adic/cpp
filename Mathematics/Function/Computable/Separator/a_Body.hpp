@@ -5,7 +5,7 @@
 
 #include "../Syntax/a_Body.hpp"
 
-SeparatorOfComputableFunction::SeparatorOfComputableFunction( const string& f , const uint& arity ) :
+SeparatorOfComputableFunction::SeparatorOfComputableFunction( const string& f , const uint& arity , const bool& variadic ) :
   SeparatorOfComputableFunction( 0 )
 {
 
@@ -19,7 +19,14 @@ SeparatorOfComputableFunction::SeparatorOfComputableFunction( const string& f , 
 
   }
 
-  if( arity == 0 ){
+  if( variadic ){
+
+    t.push_RightMost( LdotsSymbol().Get() );
+    t.push_RightMost( " , " );
+
+  }
+
+  if( arity == 0 && ! variadic ){
 
     t.push_RightMost( ")" );
 

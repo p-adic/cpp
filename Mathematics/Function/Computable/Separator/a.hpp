@@ -12,7 +12,7 @@ public:
   using Dummy = typename enable_if<conjunction<is_same<string,Args>...>::value,int>::type;
   
 public:
-  inline SeparatorOfComputableFunction( const string& f , const uint& arity );
+  inline SeparatorOfComputableFunction( const string& f , const uint& arity , const bool& variadic = false );
   template <typename... Args> inline SeparatorOfComputableFunction( const Dummy<Args...>& dummy , const Args&... args );
 
 };

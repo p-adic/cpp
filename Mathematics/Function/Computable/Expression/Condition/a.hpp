@@ -32,6 +32,13 @@ public:
 
   using type = bool;
 
+private:
+  // 木の右端に関数fと実引数va...による表現を追加
+  template <typename... Args, typename... VA> inline void PushFunctionExpression( const FunctionSymbol<bool,Args...>& f , const ExpressionOfComputableFunction<VA>&... va );
+  
+  // 木の右端に関係rと実引数va...による表現を追加
+  template <typename... Args, typename... VA> inline void PushRelationExpression( const RelationSymbol<Args...>& r , const ExpressionOfComputableFunction<VA>&... va );
+
 };
 
 
@@ -49,5 +56,3 @@ inline ConditionOfComputableFunction operator||( const ConditionOfComputableFunc
 inline ConditionOfComputableFunction operator>>( const ConditionOfComputableFunction& b1 , const ConditionOfComputableFunction& b2 );
 inline ConditionOfComputableFunction operator->*( const ConditionOfComputableFunction& b1 , const ConditionOfComputableFunction& b2 );
 inline ConditionOfComputableFunction operator<<( const ConditionOfComputableFunction& b1 , const ConditionOfComputableFunction& b2 );
-
-template <typename... Args, typename... VA> void RelationExpressionToSyntax( SyntaxOfComputableFunction& t , const RelationSymbol<Args...>& r , const ExpressionOfComputableFunction<VA>&... va );

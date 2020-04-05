@@ -6,6 +6,6 @@
 #include "../a_Body.hpp"
 #include "../../List/Body/a_Body.hpp"
 
-inline VariableSymbol<void>::VariableSymbol() : ExpressionOfComputableFunction<void>() {}
+inline VariableSymbol<void>::VariableSymbol() : ExpressionOfComputableFunction<void>( 0 ) {}
 
 inline const VariadicVariableSymbol& LdotsSymbol() { return VariadicVariableSymbol::LdotsSymbol(); }

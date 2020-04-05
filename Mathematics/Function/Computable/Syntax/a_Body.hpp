@@ -13,31 +13,65 @@ inline VLTree<string>& SyntaxOfComputableFunction::Ref() noexcept { return m_syn
 
 inline const string& SyntaxOfComputableFunction::GetRootString() const noexcept { return m_syntax.GetRoot(); }
 
-inline const string& SyntaxOfComputableFunction::GetNodeString( const int& n ) const { return *( m_syntax.Root()[n] );}
+inline const string& SyntaxOfComputableFunction::GetNodeString( const int& n ) const { return *( ( m_syntax.Root() )[n] );}
 
 inline string SyntaxOfComputableFunction::Display() const noexcept { return m_syntax.Display(); }
 
 inline void SyntaxOfComputableFunction::InputExitLine( ofstream& ofs , const string& function_expression_name ) const noexcept { ofs << "\\(" << function_expression_name << "\\)‚Í–¢’è‹`‚Å‚ ‚éB" << endl; }
 
+
 template <typename... Args>
-auto FunctionExpressionToString( const SyntaxOfComputableFunction& f , const Args&... args ) -> typename enable_if<conjunction<is_same<Args,string>...>::value,string>::type
+auto ExpressionsToListSyntax( const Args&... args ) -> typename enable_if<conjunction<is_same<Args,VLTree<string> >...>::value,VLTree<string> >::type
 {
 
-  VLTree<string> t{ args... };
-  VLTree<string>::const_iterator itr = t.LeftMostNode();
+  const VLTree<VLTree<string> > args_copy{ args... };
+  VLTree<string> t{};
+  const string& list = ListString();
 
-  TRY_CATCH
-    (
+  for( auto itr = args_copy.LeftMostNode() ; itr.IsValid() ; itr++ ){
 
-     return FunctionExpressionToString( f , itr ) ,
-     const ErrorType& e ,
-     CALL_P( e , f , args... )
+    auto itr_sub = itr->LeftMostNode();
 
-     );
+    if( *itr_sub == list ){
+
+      itr_sub++;
+      itr_sub++;
+      itr_sub++;
+      
+      while( itr_sub.IsValid() ){
+
+	auto itr_sub_copy = itr_sub;
+	itr_sub_copy[2];
+
+	if( ! itr_sub_copy.IsValid() ){
+
+	  ERR_IMPUT( t , *itr_sub );
+	  
+	}
+
+	t.push_RightMost( *itr_sub_copy );
+	itr_sub++;
+
+      }
+
+    } else {
+
+      itr_sub++;
+      
+      if( ! itr_sub.IsValid() ){
+
+	ERR_IMPUT( t );
+	  
+      }
+
+      t.push_RightMost( *itr_sub );
+
+    }    
+
+  }
+
+  return t;
   
-  return "dummy";
-
 }
-
 
 DEFINITION_OF_GLOBAL_CONSTANT_STRING_FOR_SYMBOL( List , list );

@@ -15,7 +15,7 @@ public:
 };
 
 
-DEFINITION_OF_IS_BASIC( void , \\emptyset );
+DEFINITION_OF_IS_BASIC( void , \\cdots );
 DEFINITION_OF_IS_BASIC( int , \\mathbb{Z} );
 DEFINITION_OF_IS_BASIC( bool , BOOLIAN_SET );
 DEFINITION_OF_IS_BASIC( string , \\textrm{String} );

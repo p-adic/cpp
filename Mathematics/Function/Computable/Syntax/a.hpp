@@ -42,8 +42,16 @@ protected:
 const string& SyntaxToString( VLTree<string>::const_iterator& itr , const int& n );
 string ListSyntaxToString( VLTree<VLTree<string>::const_iterator>& t , const int& n );
 
-template <typename... Args> auto FunctionExpressionToString( const SyntaxOfComputableFunction& f , const Args&... args ) -> typename enable_if<conjunction<is_same<Args,string>...>::value,string>::type;
+// 表現args...から表現の文字列のリストを構築
+template <typename... Args> auto ExpressionsToListSyntax( const Args&... args ) -> typename enable_if<conjunction<is_same<Args,VLTree<string> >...>::value,VLTree<string> >::type;
 
-string FunctionExpressionToString( const SyntaxOfComputableFunction& f , VLTree<string>::const_iterator& itr );
+// 関数fと引数の木argsから表現の文字列を構築
+string FunctionExpressionToString( const SyntaxOfComputableFunction& f , const VLTree<string>& args );
+
+// 関数のイテレータitr_fと実引数の文字列の木のイテレータitr_argsから表現の文字列を構築
+string FunctionExpressionToString( VLTree<string>::const_iterator& itr_f , VLTree<string>::const_iterator& itr_args );
+
+// 表現のイテレータitrから表現の文字列を参照
+const string& ExpressionToString( VLTree<string>::const_iterator& itr );
 
 DECLARATION_OF_GLOBAL_CONSTANT_STRING_FOR_SYMBOL( List );
