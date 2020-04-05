@@ -54,4 +54,13 @@ string FunctionExpressionToString( VLTree<string>::const_iterator& itr_f , VLTre
 // 表現のイテレータitrから表現の文字列を参照
 const string& ExpressionToString( VLTree<string>::const_iterator& itr );
 
+// 条件のイテレータitrから条件の文字列を構築
+string ConditionToString( VLTree<string>::const_iterator& itr );
+
+string NegationToString( VLTree<string>::const_iterator& itr );
+string ImplicationToString( VLTree<string>::const_iterator& itr );
+string EquivalenceToString( VLTree<string>::const_iterator& itr );
+string LogicalAndToString( VLTree<string>::const_iterator& itr );
+string LogicalOrToString( VLTree<string>::const_iterator& itr );
+
 DECLARATION_OF_GLOBAL_CONSTANT_STRING_FOR_SYMBOL( List );

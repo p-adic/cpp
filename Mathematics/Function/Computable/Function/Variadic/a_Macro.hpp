@@ -22,9 +22,9 @@
   inline auto CONNECT( FUNC , SymbolApplication )( const ExpressionOfComputableFunction< RET >& e1 , const ExpressionOfComputableFunction< RET >& e2 , const ExpressionOfComputableFunction< RET >& e3 , const Args&... args ) \
 									\
 
-#define DEFINITION_OF_VARIADIC_FUNCTION_SYMBOL_BODY( RET , FUNC , SEP )	\
+#define DEFINITION_OF_VARIADIC_FUNCTION_SYMBOL_BODY( RET , FUNC )	\
 									\
-  DECLARATION_OF_VARIADIC_FUNCTION_SYMBOL_BODY( RET , FUNC ){ static const VariadicFunctionSymbol< RET , RET > f( TO_STRING( FUNC ) , SeparatorOfComputableFunction( 0 , EmptyString() , SpaceString() + TO_STRING( SEP ) + SpaceString() , LdotsString() , SpaceString() + TO_STRING( SEP ) + SpaceString() , EmptyString() ) , VariableSymbol< RET >( "x" ) ); return f; } \
+  DECLARATION_OF_VARIADIC_FUNCTION_SYMBOL_BODY( RET , FUNC ){ static const VariadicFunctionSymbol< RET , RET > f( CONNECT( FUNC , String )() , SeparatorOfComputableFunction( 0 , EmptyString() , SpaceString() + CONNECT( FUNC , String )() + SpaceString() , LdotsString() , SpaceString() + CONNECT( FUNC , String )() + SpaceString() , EmptyString() ) , VariableSymbol< RET >( "x" ) ); return f; } \
 
 
 #define DEFINITION_OF_VARIADIC_FUNCTION_SYMBOL_APPLICATION_ONE_BODY( RET , FUNC ) \
@@ -161,9 +161,9 @@
   DECLARATION_OF_VARIADIC_FUNCTION_SYMBOL_APPLICATION_MORE( FUNC )	\
 
 
-#define DEFINITION_OF_VARIADIC_FUNCTION_SYMBOL( FUNC , SEP )		\
+#define DEFINITION_OF_VARIADIC_FUNCTION_SYMBOL( FUNC )			\
 									\
-  template <typename Ret> DEFINITION_OF_VARIADIC_FUNCTION_SYMBOL_BODY( Ret , FUNC , SEP ) \
+  template <typename Ret> DEFINITION_OF_VARIADIC_FUNCTION_SYMBOL_BODY( Ret , FUNC ) \
 									\
     
 #define DEFINITION_OF_VARIADIC_FUNCTION_SYMBOL_APPLICATION_ONE( FUNC )	\
@@ -208,10 +208,10 @@
   DECLARATION_OF_VARIADIC_LOGICAL_CONNECTIVE_APPLICATION_MORE( FUNC )	\
 
 
-#define DEFINITION_OF_VARIADIC_LOGICAL_CONNECTIVE( FUNC , SEP )		\
-									\
-  DEFINITION_OF_VARIADIC_FUNCTION_SYMBOL_BODY( bool , FUNC , SEP )	\
-									\
+#define DEFINITION_OF_VARIADIC_LOGICAL_CONNECTIVE( FUNC )	\
+								\
+  DEFINITION_OF_VARIADIC_FUNCTION_SYMBOL_BODY( bool , FUNC )	\
+								\
     
 #define DEFINITION_OF_VARIADIC_LOGICAL_CONNECTIVE_APPLICATION_ONE( FUNC ) \
 									\

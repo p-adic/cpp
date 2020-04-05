@@ -14,12 +14,12 @@
   inline ExpressionOfComputableFunction< RET > CONNECT( FUNC , SymbolApplication )( const ExpressionOfComputableFunction< RET >& e1 , const ExpressionOfComputableFunction< RET >& e2 ) \
 									\
 
-#define DEFINITION_OF_FUNCTION_SYMBOL_BODY( RET , FUNC , NAME )		\
+#define DEFINITION_OF_FUNCTION_SYMBOL_BODY( RET , FUNC )		\
 									\
   DECLARATION_OF_FUNCTION_SYMBOL_BODY( RET , FUNC )			\
   {									\
 									\
-    static const FunctionSymbol< RET , RET , RET > f( NAME , SeparatorOfComputableFunction( 0 , to_string( "" ) , " " + CONNECT( FUNC , String )() + " " , to_string( "" ) ) , VariableSymbol< RET >( "x" ) , VariableSymbol< RET >( "y" ) ); \
+    static const FunctionSymbol< RET , RET , RET > f( CONNECT( FUNC , String )() , SeparatorOfComputableFunction( 0 , EmptyString() , SpaceString() + CONNECT( FUNC , String )() + SpaceString() , EmptyString() ) , VariableSymbol< RET >( "x" ) , VariableSymbol< RET >( "y" ) ); \
     return f;								\
 									\
   }									\
@@ -40,9 +40,9 @@
 									\
   template <typename Ret> DECLARATION_OF_FUNCTION_SYMBOL_APPLICATION_BODY( Ret , FUNC ) \
     
-#define DEFINITION_OF_FUNCTION_SYMBOL( FUNC , NAME )			\
+#define DEFINITION_OF_FUNCTION_SYMBOL( FUNC )				\
 									\
-  template <typename Ret> DEFINITION_OF_FUNCTION_SYMBOL_BODY( Ret , FUNC , NAME ) \
+  template <typename Ret> DEFINITION_OF_FUNCTION_SYMBOL_BODY( Ret , FUNC ) \
 									\
     
 #define DEFINITION_OF_FUNCTION_SYMBOL_APPLICATION( FUNC )		\
@@ -59,10 +59,10 @@
 									\
   DECLARATION_OF_FUNCTION_SYMBOL_APPLICATION_BODY( bool , FUNC )	\
     
-#define DEFINITION_OF_LOGICAL_CONNECTIVE( FUNC , NAME  )	\
-								\
-  DEFINITION_OF_FUNCTION_SYMBOL_BODY( bool , FUNC , NAME )	\
-								\
+#define DEFINITION_OF_LOGICAL_CONNECTIVE( FUNC )	\
+							\
+  DEFINITION_OF_FUNCTION_SYMBOL_BODY( bool , FUNC )	\
+							\
     
 #define DEFINITION_OF_LOGICAL_CONNECTIVE_APPLICATION( FUNC )		\
 									\

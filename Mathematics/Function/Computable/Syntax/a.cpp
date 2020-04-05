@@ -260,18 +260,18 @@ void SyntaxOfComputableFunction::InputIfLine( ofstream& ofs , const string& func
 
      {
 	 
-       const string& condition_name = SyntaxToString( itr_condition , 2 );
+       const string& condition_name = ConditionToString( itr_condition );
        const string& line_name = SyntaxToString( itr_line , 1 );
 
        if( line_name == "list" ){
 
-	 ofs << "\\(" <<  condition_name << "\\)とする。" << endl;
+	 ofs << condition_name << "とする。" << endl;
 	 InputListLine( ofs , function_expression_name , itr_line , depth+1 );
 	 return;
       
        }
     
-       ofs << "もし\\(" << condition_name << "\\)ならば、";
+       ofs << "もし" << condition_name << "ならば、";
        InputNonListLine( ofs , function_expression_name , line_name , itr_line , depth );
 
      } ,
@@ -293,7 +293,7 @@ void SyntaxOfComputableFunction::InputPutLine( ofstream& ofs , VLTree<string>::c
   itr_line++;
 
   const string* p_variable_name;
-  const string* p_expression_name;
+  const string* p_variable_type_name;
   
   TRY_CATCH
     (
@@ -309,7 +309,7 @@ void SyntaxOfComputableFunction::InputPutLine( ofstream& ofs , VLTree<string>::c
   TRY_CATCH
     (
 
-     p_expression_name = &( ExpressionToString( itr_line ) ) ,
+     p_variable_type_name = &( *itr_variable ) ,
      
      const ErrorType& e ,
 
@@ -317,7 +317,30 @@ void SyntaxOfComputableFunction::InputPutLine( ofstream& ofs , VLTree<string>::c
 
      );
 
-  ofs << "\\(" << *p_variable_name << " := " << *p_expression_name << "\\)と置く。" << endl;
+  TRY_CATCH
+    (
+
+     {
+
+       if( *p_variable_type_name == GetName<bool>() ){
+
+	 ofs << "条件" << ConditionToString( itr_line ) << "を\\(" << *p_variable_name << "\\)と置く。" << endl;
+
+       } else {
+
+	 ofs << "\\(" << *p_variable_name << " := " << ExpressionToString( itr_line ) << " \\in " << *p_variable_type_name << "\\)と置く。" << endl;
+
+       }
+
+     } ,
+
+     const ErrorType& e ,
+
+     CALL_P( e , depth )
+
+     );
+
+
   return;
 
 }
@@ -461,7 +484,6 @@ string FunctionExpressionToString( const SyntaxOfComputableFunction& f , const V
 
 }
 
-
 string FunctionExpressionToString( VLTree<string>::const_iterator& itr_f , VLTree<string>::const_iterator& itr_args )
 {
 
@@ -556,15 +578,294 @@ const string& ExpressionToString( VLTree<string>::const_iterator& itr )
 
   itr[2];
   
-  if( ! itr.IsValid() ){
+  const string* p_e;
 
-    ERR_IMPUT( itr );
-       
-  }
+  TRY_CATCH
+    (
 
-  const string& s = *itr;
+     p_e = &( *itr ) ,
+     const ErrorType& e ,
+     CALL( e )
+
+     );
 
   itr++;
-  return s;
+  return *p_e;
   
 }
+
+string ConditionToString( VLTree<string>::const_iterator& itr )
+{
+
+  itr[1];
+
+  const string* p_type;
+
+  TRY_CATCH
+    (
+
+     p_type = &( *itr ) ,
+     const ErrorType& e ,
+     CALL( e )
+
+     );
+
+  itr++;
+
+  if( *p_type != FunctionString() ){
+
+    const string* p_b;
+
+    TRY_CATCH
+      (
+
+       p_b = &( *itr ) ,
+       const ErrorType& e ,
+       CALL( e )
+
+       );
+
+    itr++;
+    return "\\(" + *p_b + "\\)";
+
+  }
+  
+  itr++;
+  itr++;
+
+  auto itr_f = itr;
+  itr++;
+  itr[4];
+  itr_f[2];
+
+  const string* p_f;
+
+  TRY_CATCH
+    (
+
+     {
+       
+       p_f = &( *itr_f );
+       auto itr_copy = itr;
+       itr++;
+
+       if( *p_f == NegString() ){
+
+	 return NegationToString( itr_copy );
+    
+       }
+
+       if( *p_f == ToString() ){
+
+	 return ImplicationToString( itr_copy );
+
+       }
+       
+       if( *p_f == EquivString() ){
+
+	 return EquivalenceToString( itr_copy );
+
+       }
+       
+       if( *p_f == LandString() ){
+
+	 return LogicalAndToString( itr_copy );
+
+       }
+       
+       if( *p_f == LorString() ){
+
+	 return LogicalOrToString( itr_copy );
+
+       }
+       
+     } ,
+     
+     const ErrorType& e ,
+     
+     CALL( e )
+
+     );
+
+  ERR_IMPUT( *p_f );
+  
+  return "dummy";
+  
+}
+
+string NegationToString( VLTree<string>::const_iterator& itr )
+{
+
+  string b = "「";
+
+  TRY_CATCH
+    (
+
+     b += ConditionToString( itr ) + "でない」" ,
+     const ErrorType& e ,
+     CALL( e )
+
+     );
+
+  return b;
+
+}
+
+string ImplicationToString( VLTree<string>::const_iterator& itr )
+{
+
+  string b = "「";
+  auto itr_copy = itr;
+  itr++;
+
+  TRY_CATCH
+    (
+
+     b += ConditionToString( itr_copy ) ,
+     const ErrorType& e ,
+     CALL( e )
+
+     );
+
+  b += "ならば";
+    
+  TRY_CATCH
+    (
+
+     b += ConditionToString( itr ) ,
+     const ErrorType& e ,
+     CALL( e )
+
+     );
+
+  b += "」";
+  return b;
+
+}
+
+string EquivalenceToString( VLTree<string>::const_iterator& itr )
+{
+
+  string b = "「";;
+  auto itr_copy = itr;
+  itr++;
+
+  TRY_CATCH
+    (
+
+     b += ConditionToString( itr_copy ) ,
+     const ErrorType& e ,
+     CALL( e )
+
+     );
+
+  b += "と";
+    
+  TRY_CATCH
+    (
+
+     b += ConditionToString( itr ) ,
+     const ErrorType& e ,
+     CALL( e )
+
+     );
+
+  b += "が同値である」";
+  return b;
+
+}
+
+string LogicalAndToString( VLTree<string>::const_iterator& itr )
+{
+
+  string b;
+  auto itr_first_copy = itr;
+  itr++;
+
+  TRY_CATCH
+    (
+
+     b = ConditionToString( itr_first_copy ) ,
+     const ErrorType& e ,
+     CALL( e )
+
+     );
+
+  itr[4];
+
+  bool first = true;
+
+  while( itr.IsValid() ){
+
+    if( first ){
+
+      b = "「" + b;
+      first = false;
+
+    }
+
+    auto itr_copy = itr;
+    itr++;
+
+    b += "かつ";
+    b += ConditionToString( itr_copy );
+
+  }
+
+  if( ! first ){
+
+    b += "」";
+
+  }
+
+  return b;
+  
+}
+
+string LogicalOrToString( VLTree<string>::const_iterator& itr )
+{
+
+  string b;
+  auto itr_first_copy = itr;
+  itr++;
+
+  TRY_CATCH
+    (
+
+     b = ConditionToString( itr_first_copy ) ,
+     const ErrorType& e ,
+     CALL( e )
+
+     );
+
+  itr[4];
+
+  bool first = true;
+
+  while( itr.IsValid() ){
+
+    if( first ){
+
+      b = "「" + b;
+      first = false;
+
+    }
+
+    auto itr_copy = itr;
+    itr++;
+
+    b += "または";
+    b += ConditionToString( itr_copy );
+
+  }
+
+  if( ! first ){
+
+    b += "」";
+
+  }
+
+  return b;
+  
+}
+

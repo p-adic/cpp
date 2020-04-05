@@ -15,6 +15,6 @@ class FunctionSymbol_Guide :
 {
 
 public:
-  template <typename... Args> static inline FunctionSymbol<Ret,Args...> Get( const string& name , const VariableSymbol<Args>&... args );
+  template <typename... Args> static inline auto Get( const string& name , const VariableSymbol<Args>&... args ) -> typename enable_if<! is_same<Ret,bool>::value,FunctionSymbol<Ret,Args...> >::type;
 
 };

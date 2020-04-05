@@ -100,9 +100,9 @@ template <typename Ret, typename... Args> template <typename... VA> inline auto 
 template <typename Ret, typename... Args> inline ExpressionOfComputableFunction<Ret> FunctionSymbol<Ret,Args...>::operator()( const ExpressionOfComputableFunction<Args>&... args ) const { return ExpressionOfComputableFunction<Ret>( *this , args... ); }
 
 
-DEFINITION_OF_FUNCTION_SYMBOL( Minus , MinusString() );
-DEFINITION_OF_FUNCTION_SYMBOL( Slash , SlashString() );
-DEFINITION_OF_FUNCTION_SYMBOL( Mod , ModString() );
+DEFINITION_OF_FUNCTION_SYMBOL( Minus );
+DEFINITION_OF_FUNCTION_SYMBOL( Slash );
+DEFINITION_OF_FUNCTION_SYMBOL( Mod );
 
 DEFINITION_OF_FUNCTION_SYMBOL_APPLICATION( Minus );
 DEFINITION_OF_FUNCTION_SYMBOL_APPLICATION( Slash );
@@ -115,10 +115,11 @@ DEFINITION_OF_LOGICAL_CONNECTIVE_APPLICATION( Equiv );
 
 DEFINITION_OF_GLOBAL_CONSTANT_STRING_FOR_SYMBOL( Nest , nest );
 DEFINITION_OF_GLOBAL_CONSTANT_STRING_FOR_SYMBOL( Function , function );
-
 DEFINITION_OF_GLOBAL_CONSTANT_STRING_FOR_SYMBOL( Minus , - );
 DEFINITION_OF_GLOBAL_CONSTANT_STRING_FOR_SYMBOL( Slash , \\slash );
 DEFINITION_OF_GLOBAL_CONSTANT_STRING_FOR_SYMBOL( Mod , % );
 DEFINITION_OF_GLOBAL_CONSTANT_STRING_FOR_SYMBOL( Neg , \\neg );
 DEFINITION_OF_GLOBAL_CONSTANT_STRING_FOR_SYMBOL( To , \\rightarrow );
 DEFINITION_OF_GLOBAL_CONSTANT_STRING_FOR_SYMBOL( Equiv , \\equiv );
+DECLARATION_OF_GLOBAL_CONSTANT_STRING_FOR_SYMBOL( Empty ){ static const string s = ""; return s; }
+DECLARATION_OF_GLOBAL_CONSTANT_STRING_FOR_SYMBOL( Space ){ static const string s = " "; return s; }
