@@ -84,9 +84,9 @@
 
 #define RPAREN to_string( ")" ) 
 
-#define LBRACE to_string( "\\{" ) 
+#define LBRACE to_string( "\{" ) 
 
-#define RBRACE to_string( "\\}" ) 
+#define RBRACE to_string( "\}" ) 
 
 #define LBRACK to_string( "\\lbrack" ) 
 
