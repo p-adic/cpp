@@ -39,6 +39,3 @@ template <typename T1, typename T2> inline LineOfDefinitionOfComputableFunction<
 
 template <typename... ARGS> inline LineOfDefinitionOfComputableFunction<void> PRINT( const ARGS&... args );
 
-DECLARATION_OF_GLOBAL_CONSTANT_STRING_FOR_SYMBOL( Put );
-DECLARATION_OF_GLOBAL_CONSTANT_STRING_FOR_SYMBOL( Print );
-DECLARATION_OF_GLOBAL_CONSTANT_STRING_FOR_SYMBOL( Exit );

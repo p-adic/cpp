@@ -25,13 +25,19 @@ template <typename Ret> template <typename... Args, typename... VA> inline Expre
 
 
 template <typename Ret> template<typename... Args, typename... VA>
-inline void ExpressionOfComputableFunction<Ret>::PushFunctionExpression( const FunctionSymbol<Ret,Args...>& f , const ExpressionOfComputableFunction<VA>&... va )
+inline void ExpressionOfComputableFunction<Ret>::PushFunctionExpression( const FunctionSymbol<Ret,Args...>& f , const ExpressionOfComputableFunction<VA>&... va ) { PushFunctionExpression( f , va.Get()... ); }
+
+template <typename Ret> template<typename... Args, typename... VA>
+inline auto ExpressionOfComputableFunction<Ret>::PushFunctionExpression( const FunctionSymbol<Ret,Args...>& f , const VA&... va ) -> typename enable_if<conjunction<is_same<VLTree<string>,VA>...>::value,void>::type
 {
 
+  VLTree<string> t_va{};
+  t_va.push_RightMost( va... );
+  
   TRY_CATCH
     (
      
-     Ref().push_RightMost( FunctionExpressionToString( f , ExpressionsToListSyntax( va.Get()... ) ) , GetName<Ret>() , f.Get() , va.Get()... ) ,
+     Ref().push_RightMost( FunctionExpressionToString( f , t_va ) , GetName<Ret>() , f.Get() , va... ) ,
 
      const ErrorType& e ,
 
@@ -43,7 +49,6 @@ inline void ExpressionOfComputableFunction<Ret>::PushFunctionExpression( const F
   
 }
 
-
 template <typename Ret> inline ExpressionOfComputableFunction<Ret> operator+( const ExpressionOfComputableFunction<Ret>& e1 , const ExpressionOfComputableFunction<Ret>& e2 ){ return PlusSymbolApplication( e1 , e2 ); }
 template <typename Ret> inline ExpressionOfComputableFunction<Ret> operator-( const ExpressionOfComputableFunction<Ret>& e1 , const ExpressionOfComputableFunction<Ret>& e2 ){ return MinusSymbolApplication( e1 , e2 ); }
 template <typename Ret> inline ExpressionOfComputableFunction<Ret> operator*( const ExpressionOfComputableFunction<Ret>& e1 , const ExpressionOfComputableFunction<Ret>& e2 ){ return TimesSymbolApplication( e1 , e2 ); }
@@ -51,8 +56,3 @@ template <typename Ret> inline ExpressionOfComputableFunction<Ret> operator/( co
 template <typename Ret> inline ExpressionOfComputableFunction<Ret> operator%( const ExpressionOfComputableFunction<Ret>& e1 , const ExpressionOfComputableFunction<Ret>& e2 ){ return ModSymbolApplication( e1 , e2 ); }
 
 inline const ExpressionOfComputableFunction<int>& InftySymbol(){ static const ExpressionOfComputableFunction<int> n = ExpressionOfComputableFunction<int>(infty() ); return n; }
-
-
-DEFINITION_OF_GLOBAL_CONSTANT_STRING_FOR_SYMBOL( Expression , expression );
-DEFINITION_OF_GLOBAL_CONSTANT_STRING_FOR_SYMBOL( Variable , variable );
-DEFINITION_OF_GLOBAL_CONSTANT_STRING_FOR_SYMBOL( Constant , constant );

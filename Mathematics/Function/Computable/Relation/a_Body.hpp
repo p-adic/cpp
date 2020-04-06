@@ -23,49 +23,56 @@ RelationSymbol<Args...>::RelationSymbol( const string& r , const SeparatorOfComp
    )
 {
 
-  VLTree<string>& t = Ref();
-
+  VLTree<string> t_args{};
+  t_args.push_RightMost( args.Get()... );
+  
   TRY_CATCH
     (
      
-     t.push_RightMost( FunctionExpressionToString( *this , VLTree<string>( args.GetNodeString( 2 )... ) ) ) ,
+     Ref().push_RightMost( FunctionExpressionToString( *this , t_args ) ) ,
 
      const ErrorType& e ,
 
-     CALL_P( e , t )
+     CALL_P( e , r , s , args... , t_args )
 
      );
 
 }
 
-template <typename... Args> template <typename... VA>
-auto RelationSymbol<Args...>::SetSeparator( const VA&... va ) -> typename enable_if<conjunction<is_same<VA,string>...>::value,void>::type
+template <typename... Args>
+void RelationSymbol<Args...>::SetSeparator( const SeparatorOfComputableFunction& s )
 {
 
-  SyntaxOfComputableFunction s{ SeparatorString() , va... };
+  if( sizeof...( Args ) + 1 != s.Get().size() ){
+
+    ERR_IMPUT( s , sizeof...( Args ) + 1 , s.Get().size() );
+
+  }
 
   TRY_CATCH
     (
 
      {
-
-       if( sizeof...( Args ) + 1 != sizeof...( VA ) ){
-
-	 ERR_CODE;
-
-       }
        
        VLTree<string>& t = Ref();
   
        t.pop_RightMost();
        t.pop_RightMost();
 
-       VLTree<string>::const_iterator itr_f = Get().LeftMostNode();
        VLTree<string>::const_iterator itr_args = t.RightMostNode();
-       itr_args[1];
+       itr_args[4];
 
-       t.push_RightMost( s );
-       t.push_RightMost( FunctionExpressionToString( itr_f , itr_args ) );
+       VLTree<string> t_sub{};
+
+       while( itr_args.IsValid() ){
+
+	 t_sub.push_RightMost( VLTree<string>( itr_args , 0 ) );
+	 itr_args++;
+
+       }
+
+       t.push_RightMost( s.Get() );
+       t.push_RightMost( FunctionExpressionToString( *this , t_sub ) );
 
      } ,
 
@@ -95,13 +102,3 @@ DEFINITION_OF_RELATION_SYMBOL_APPLICATION( Leq );
 DEFINITION_OF_RELATION_SYMBOL_APPLICATION( Geq );
 DEFINITION_OF_RELATION_SYMBOL_APPLICATION( Lneq );
 DEFINITION_OF_RELATION_SYMBOL_APPLICATION( Gneq );
-
-
-DEFINITION_OF_GLOBAL_CONSTANT_STRING_FOR_SYMBOL( Relation , relation );
-
-DEFINITION_OF_GLOBAL_CONSTANT_STRING_FOR_SYMBOL( Eq , = );
-DEFINITION_OF_GLOBAL_CONSTANT_STRING_FOR_SYMBOL( Neq , \\neq );
-DEFINITION_OF_GLOBAL_CONSTANT_STRING_FOR_SYMBOL( Leq , \\leq );
-DEFINITION_OF_GLOBAL_CONSTANT_STRING_FOR_SYMBOL( Geq , \\geq );
-DEFINITION_OF_GLOBAL_CONSTANT_STRING_FOR_SYMBOL( Lneq , < );
-DEFINITION_OF_GLOBAL_CONSTANT_STRING_FOR_SYMBOL( Gneq , > );

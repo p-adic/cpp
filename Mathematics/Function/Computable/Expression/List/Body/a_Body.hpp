@@ -72,6 +72,3 @@ ExpressionOfComputableFunction<void>::ExpressionOfComputableFunction( const Expr
   t.insert( itr_insert , argument_name );
 
 }
-
-
-DEFINITION_OF_GLOBAL_CONSTANT_STRING_FOR_SYMBOL( Ldots , \\ldots );

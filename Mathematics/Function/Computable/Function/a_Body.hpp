@@ -26,14 +26,15 @@ FunctionSymbol<Ret,Args...>::FunctionSymbol( const string& f , const SeparatorOf
    )
 {
 
-  VLTree<string>& t = Ref();
+  VLTree<string> t_args{};
+  t_args.push_RightMost( args.Get()... );
 
   TRY_CATCH
     (
 
-     t.push_RightMost( FunctionExpressionToString( *this , VLTree<string>( args.GetNodeString( 2 )... ) ) ) ,
+     Ref().push_RightMost( FunctionExpressionToString( *this , t_args ) ) ,
      const ErrorType& e ,
-     CALL_P( e , t )
+     CALL_P( e , f , s , args... , t_args )
 
      );
 
@@ -45,7 +46,7 @@ void FunctionSymbol<Ret,Args...>::SetSeparator( const SeparatorOfComputableFunct
 
   if( sizeof...( Args ) + 1 != s.Get().size() ){
 
-    ERR_IMPUT( s );
+    ERR_IMPUT( s , sizeof...( Args ) + 1 , s.Get().size() );
 
   }
 
@@ -66,16 +67,7 @@ void FunctionSymbol<Ret,Args...>::SetSeparator( const SeparatorOfComputableFunct
 
        while( itr_args.IsValid() ){
 
-	 auto itr_args_copy = itr_args;
-	 itr_args_copy[2];
-
-	 if( ! itr_args_copy.IsValid() ){
-
-	   ERR_IMPUT( *itr_args );
-
-	 }
-	 
-	 t_sub.push_RightMost( *itr_args_copy );
+	 t_sub.push_RightMost( VLTree<string>( itr_args , 0 ) );
 	 itr_args++;
 
        }
@@ -111,15 +103,3 @@ DEFINITION_OF_FUNCTION_SYMBOL_APPLICATION( Mod );
 inline const FunctionSymbol<bool,bool>& NegSymbol() { static const FunctionSymbol<bool,bool> f( NegString() , VariableSymbol<bool>( "x" ) ); return f; }
 DEFINITION_OF_LOGICAL_CONNECTIVE_APPLICATION( To );
 DEFINITION_OF_LOGICAL_CONNECTIVE_APPLICATION( Equiv );
-
-
-DEFINITION_OF_GLOBAL_CONSTANT_STRING_FOR_SYMBOL( Nest , nest );
-DEFINITION_OF_GLOBAL_CONSTANT_STRING_FOR_SYMBOL( Function , function );
-DEFINITION_OF_GLOBAL_CONSTANT_STRING_FOR_SYMBOL( Minus , - );
-DEFINITION_OF_GLOBAL_CONSTANT_STRING_FOR_SYMBOL( Slash , \\slash );
-DEFINITION_OF_GLOBAL_CONSTANT_STRING_FOR_SYMBOL( Mod , % );
-DEFINITION_OF_GLOBAL_CONSTANT_STRING_FOR_SYMBOL( Neg , \\neg );
-DEFINITION_OF_GLOBAL_CONSTANT_STRING_FOR_SYMBOL( To , \\rightarrow );
-DEFINITION_OF_GLOBAL_CONSTANT_STRING_FOR_SYMBOL( Equiv , \\equiv );
-DECLARATION_OF_GLOBAL_CONSTANT_STRING_FOR_SYMBOL( Empty ){ static const string s = ""; return s; }
-DECLARATION_OF_GLOBAL_CONSTANT_STRING_FOR_SYMBOL( Space ){ static const string s = " "; return s; }

@@ -29,6 +29,3 @@ private:
   ExpressionOfComputableFunction& operator=( const ExpressionOfComputableFunction<void>& ) = default;
   
 };
-
-
-DECLARATION_OF_GLOBAL_CONSTANT_STRING_FOR_SYMBOL( Ldots );

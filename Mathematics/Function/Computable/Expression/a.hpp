@@ -39,6 +39,9 @@ private:
   // 木の右端に関数fと引数va...による表現を追加
   template <typename... Args, typename... VA> inline void PushFunctionExpression( const FunctionSymbol<Ret,Args...>& f , const ExpressionOfComputableFunction<VA>&... va );
 
+  // 木の右端に関数fと引数の木va...による表現を追加
+  template<typename... Args, typename... VA>
+  inline auto PushFunctionExpression( const FunctionSymbol<Ret,Args...>& f , const VA&... va ) -> typename enable_if<conjunction<is_same<VLTree<string>,VA>...>::value,void>::type;
 };
 
 #include "a_Alias.hpp"
@@ -50,8 +53,3 @@ template <typename Ret> inline ExpressionOfComputableFunction<Ret> operator/( co
 template <typename Ret> inline ExpressionOfComputableFunction<Ret> operator%( const ExpressionOfComputableFunction<Ret>& e1 , const ExpressionOfComputableFunction<Ret>& e2 );
 
 inline const ExpressionOfComputableFunction<int>& InftySymbol();
-
-
-DECLARATION_OF_GLOBAL_CONSTANT_STRING_FOR_SYMBOL( Expression );
-DECLARATION_OF_GLOBAL_CONSTANT_STRING_FOR_SYMBOL( Variable );
-DECLARATION_OF_GLOBAL_CONSTANT_STRING_FOR_SYMBOL( Constant );

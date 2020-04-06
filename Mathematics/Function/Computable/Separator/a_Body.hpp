@@ -39,5 +39,3 @@ SeparatorOfComputableFunction::SeparatorOfComputableFunction( const string& f , 
 }
 
 template <typename... Args > inline SeparatorOfComputableFunction::SeparatorOfComputableFunction( const Dummy<Args...>& dummy , const Args&... args ) : SyntaxOfComputableFunction( SeparatorString() , args... ) {}
-
-DEFINITION_OF_GLOBAL_CONSTANT_STRING_FOR_SYMBOL( Separator , separator );

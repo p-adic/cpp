@@ -13,10 +13,17 @@ public:
   using Dummy = typename enable_if<IsValidListOfLines<Ret,Rets...>::value,int>::type;
 
 public:
-  inline DefinitionOfComputableFunction( const int& dummy , const FunctionSymbol<Ret,Args...>& f , const LineOfDefinitionOfComputableFunction<Ret>& line );
-  template <typename... Rets> inline DefinitionOfComputableFunction( const Dummy<Rets...>& dummy , const FunctionSymbol<Ret,Args...>& f , const Rets&... lines );
+  // decltype—p 
+  inline DefinitionOfComputableFunction( const FunctionSymbol<Ret,Args...>& f );
+
+  template <typename... Rets> inline DefinitionOfComputableFunction( const Rets&... lines );
+  inline DefinitionOfComputableFunction( const int& dummy , const LineOfDefinitionOfComputableFunction<Ret>& line );
+  template <typename... Rets> inline DefinitionOfComputableFunction( const Dummy<Rets...>& dummy , const Rets&... lines );
 
   inline const string& Name() const;
-  void Display() const noexcept;
+  inline void Display( const FunctionSymbol<Ret,Args...>& f , const char* const & filename ) const noexcept;
+  void Display( const FunctionSymbol<Ret,Args...>& f , const string& filename = "a.txt" ) const noexcept;
 
 };
+
+DECLARATION_OF_GLOBAL_CONSTANT_STRING_FOR_SYMBOL( Definition );

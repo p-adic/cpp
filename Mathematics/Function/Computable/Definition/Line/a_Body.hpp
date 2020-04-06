@@ -21,8 +21,3 @@ template <typename... Rets> inline auto IfLine( const ConditionOfComputableFunct
 template <typename Ret> inline LineOfDefinitionOfComputableFunction<Ret>::LineOfDefinitionOfComputableFunction( const ExpressionOfComputableFunction<Ret>& ret ) : SyntaxOfComputableFunction( LineString() , ReturnString() , ret.Get() ) {}
 
 template <typename Ret> inline LineOfDefinitionOfComputableFunction<Ret> ReturnLine( const ExpressionOfComputableFunction<Ret>& ret ){ return LineOfDefinitionOfComputableFunction( ret ); }
-
-
-DEFINITION_OF_GLOBAL_CONSTANT_STRING_FOR_SYMBOL( Line , line );
-DEFINITION_OF_GLOBAL_CONSTANT_STRING_FOR_SYMBOL( If , if );
-DEFINITION_OF_GLOBAL_CONSTANT_STRING_FOR_SYMBOL( Return , return );

@@ -42,7 +42,3 @@ template <typename... Rets> inline auto IfLine( const ConditionOfComputableFunct
 
 template <typename Ret> inline LineOfDefinitionOfComputableFunction<Ret> ReturnLine( const ExpressionOfComputableFunction<Ret>& ret );
 
-
-DECLARATION_OF_GLOBAL_CONSTANT_STRING_FOR_SYMBOL( Line );
-DECLARATION_OF_GLOBAL_CONSTANT_STRING_FOR_SYMBOL( If );
-DECLARATION_OF_GLOBAL_CONSTANT_STRING_FOR_SYMBOL( Return );

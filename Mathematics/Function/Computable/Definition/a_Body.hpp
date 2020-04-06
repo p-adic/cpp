@@ -4,19 +4,27 @@
 #include "a.hpp"
 #include "Line/Void/a_Body.hpp"
 
-template <typename Ret, typename... Args> inline DefinitionOfComputableFunction<Ret,Args...>::DefinitionOfComputableFunction( const int& dummy , const FunctionSymbol<Ret,Args...>& f , const LineOfDefinitionOfComputableFunction<Ret>& line ) : SyntaxOfComputableFunction( "" , "definition" , f.Get() , line.Get() ) {}
+template <typename Ret, typename... Args> inline DefinitionOfComputableFunction<Ret,Args...>::DefinitionOfComputableFunction( const FunctionSymbol<Ret,Args...>& f ) : DefinitionOfComputableFunction( 0 ) {}
 
-template <typename Ret, typename... Args> template <typename... Rets> inline DefinitionOfComputableFunction<Ret,Args...>::DefinitionOfComputableFunction( const Dummy<Rets...>& dummy , const FunctionSymbol<Ret,Args...>& f , const Rets&... lines ) : DefinitionOfComputableFunction( dummy , f , LineOfDefinitionOfComputableFunction<Ret>( dummy , lines... ) ) {}
+template <typename Ret, typename... Args> template <typename... Rets> inline DefinitionOfComputableFunction<Ret,Args...>::DefinitionOfComputableFunction( const Rets&... lines ) : DefinitionOfComputableFunction( 0 , lines... ) {}
+
+template <typename Ret, typename... Args> inline DefinitionOfComputableFunction<Ret,Args...>::DefinitionOfComputableFunction( const int& dummy , const LineOfDefinitionOfComputableFunction<Ret>& line ) : SyntaxOfComputableFunction( EmptyString() , DefinitionString() , line.Get() ) {}
+
+template <typename Ret, typename... Args> template <typename... Rets> inline DefinitionOfComputableFunction<Ret,Args...>::DefinitionOfComputableFunction( const Dummy<Rets...>& dummy , const Rets&... lines ) : DefinitionOfComputableFunction( dummy , LineOfDefinitionOfComputableFunction<Ret>( dummy , lines... ) ) {}
 
 template <typename Ret, typename... Args> inline const string& DefinitionOfComputableFunction<Ret,Args...>::Name() const { return *( Get().LeftMostLeaf() ); }
 
+template <typename Ret, typename... Args> inline void DefinitionOfComputableFunction<Ret,Args...>::Display( const FunctionSymbol<Ret,Args...>& f , const char* const & filename ) const noexcept { Display( f , to_string( filename ) ); }
+
 template <typename Ret, typename... Args>
-void DefinitionOfComputableFunction<Ret,Args...>::Display() const noexcept
+void DefinitionOfComputableFunction<Ret,Args...>::Display( const FunctionSymbol<Ret,Args...>& f , const string& filename ) const noexcept
 {
 
-  string filename = "a.txt";
   ofstream ofs( filename , ios::trunc );
 
+  cout << "宣言文の木構造を出力します：" << endl;
+  cout << f.Display() << endl;
+  cout << endl;
   cout << "定義文の木構造を出力します：" << endl;
   cout << Get().Display() << endl;
   cout << endl;
@@ -33,7 +41,7 @@ void DefinitionOfComputableFunction<Ret,Args...>::Display() const noexcept
 
   try{
 
-    InputDefinition( ofs );
+    InputDefinition( ofs , f );
 
   }
   catch( const ErrorType& e ){
@@ -47,3 +55,5 @@ void DefinitionOfComputableFunction<Ret,Args...>::Display() const noexcept
   return;
 
 }
+
+DEFINITION_OF_GLOBAL_CONSTANT_STRING_FOR_SYMBOL( Definition , definition );

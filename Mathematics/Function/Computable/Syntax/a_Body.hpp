@@ -30,7 +30,7 @@ auto ExpressionsToListSyntax( const Args&... args ) -> typename enable_if<conjun
 
   for( auto itr = args_copy.LeftMostNode() ; itr.IsValid() ; itr++ ){
 
-    auto itr_sub = itr->LeftMostNode();
+    ConstIteratorOfVLTree<string> itr_sub = itr->LeftMostNode();
 
     if( *itr_sub == list ){
 
@@ -40,16 +40,10 @@ auto ExpressionsToListSyntax( const Args&... args ) -> typename enable_if<conjun
       
       while( itr_sub.IsValid() ){
 
-	auto itr_sub_copy = itr_sub;
+	ConstIteratorOfVLTree<string> itr_sub_copy = itr_sub;
 	itr_sub_copy[2];
 
-	if( ! itr_sub_copy.IsValid() ){
-
-	  ERR_IMPUT( t , *itr_sub );
-	  
-	}
-
-	t.push_RightMost( *itr_sub_copy );
+	t.push_RightMost( VLTree<string>( itr_sub_copy , 0 ) );
 	itr_sub++;
 
       }
@@ -64,7 +58,7 @@ auto ExpressionsToListSyntax( const Args&... args ) -> typename enable_if<conjun
 	  
       }
 
-      t.push_RightMost( *itr_sub );
+      t.push_RightMost( VLTree<string>( itr_sub , 0 ) );
 
     }    
 
@@ -74,4 +68,44 @@ auto ExpressionsToListSyntax( const Args&... args ) -> typename enable_if<conjun
   
 }
 
+DECLARATION_OF_GLOBAL_CONSTANT_STRING_FOR_SYMBOL( Empty ){ static const string s = ""; return s; }
+DECLARATION_OF_GLOBAL_CONSTANT_STRING_FOR_SYMBOL( Space ){ static const string s = " "; return s; }
+DEFINITION_OF_GLOBAL_CONSTANT_STRING_FOR_SYMBOL( Ldots , \\ldots );
+
+DEFINITION_OF_GLOBAL_CONSTANT_STRING_FOR_SYMBOL( Separator , separator );
+DEFINITION_OF_GLOBAL_CONSTANT_STRING_FOR_SYMBOL( Nest , nest );
 DEFINITION_OF_GLOBAL_CONSTANT_STRING_FOR_SYMBOL( List , list );
+
+DEFINITION_OF_GLOBAL_CONSTANT_STRING_FOR_SYMBOL( Expression , expression );
+DEFINITION_OF_GLOBAL_CONSTANT_STRING_FOR_SYMBOL( Variable , variable );
+DEFINITION_OF_GLOBAL_CONSTANT_STRING_FOR_SYMBOL( Constant , constant );
+DEFINITION_OF_GLOBAL_CONSTANT_STRING_FOR_SYMBOL( Function , function );
+DEFINITION_OF_GLOBAL_CONSTANT_STRING_FOR_SYMBOL( Relation , relation );
+
+DEFINITION_OF_GLOBAL_CONSTANT_STRING_FOR_SYMBOL( Minus , - );
+DEFINITION_OF_GLOBAL_CONSTANT_STRING_FOR_SYMBOL( Slash , \\slash );
+DEFINITION_OF_GLOBAL_CONSTANT_STRING_FOR_SYMBOL( Mod , % );
+DEFINITION_OF_GLOBAL_CONSTANT_STRING_FOR_SYMBOL( Neg , \\neg );
+DEFINITION_OF_GLOBAL_CONSTANT_STRING_FOR_SYMBOL( To , \\rightarrow );
+DEFINITION_OF_GLOBAL_CONSTANT_STRING_FOR_SYMBOL( Equiv , \\equiv );
+
+DEFINITION_OF_GLOBAL_CONSTANT_STRING_FOR_SYMBOL( Plus , + );
+DEFINITION_OF_GLOBAL_CONSTANT_STRING_FOR_SYMBOL( Times , \\times );
+DEFINITION_OF_GLOBAL_CONSTANT_STRING_FOR_SYMBOL( Land , \\land );
+DEFINITION_OF_GLOBAL_CONSTANT_STRING_FOR_SYMBOL( Lor , \\lor );
+
+DEFINITION_OF_GLOBAL_CONSTANT_STRING_FOR_SYMBOL( Eq , = );
+DEFINITION_OF_GLOBAL_CONSTANT_STRING_FOR_SYMBOL( Neq , \\neq );
+DEFINITION_OF_GLOBAL_CONSTANT_STRING_FOR_SYMBOL( Leq , \\leq );
+DEFINITION_OF_GLOBAL_CONSTANT_STRING_FOR_SYMBOL( Geq , \\geq );
+DEFINITION_OF_GLOBAL_CONSTANT_STRING_FOR_SYMBOL( Lneq , < );
+DEFINITION_OF_GLOBAL_CONSTANT_STRING_FOR_SYMBOL( Gneq , > );
+
+DEFINITION_OF_GLOBAL_CONSTANT_STRING_FOR_SYMBOL( Line , line );
+DEFINITION_OF_GLOBAL_CONSTANT_STRING_FOR_SYMBOL( If , if );
+DEFINITION_OF_GLOBAL_CONSTANT_STRING_FOR_SYMBOL( Put , put );
+DEFINITION_OF_GLOBAL_CONSTANT_STRING_FOR_SYMBOL( Print , print );
+DEFINITION_OF_GLOBAL_CONSTANT_STRING_FOR_SYMBOL( Exit , exit );
+DEFINITION_OF_GLOBAL_CONSTANT_STRING_FOR_SYMBOL( Return , return );
+
+

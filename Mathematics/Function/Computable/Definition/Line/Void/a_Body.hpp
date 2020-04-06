@@ -23,8 +23,3 @@ DEFINITION_OF_SUPPOSE_LINE( void );
 
 // EXIT
 inline LineOfDefinitionOfComputableFunction<void>::LineOfDefinitionOfComputableFunction() : SyntaxOfComputableFunction( LineString() , ExitString() ) {}
-
-
-DEFINITION_OF_GLOBAL_CONSTANT_STRING_FOR_SYMBOL( Put , put );
-DEFINITION_OF_GLOBAL_CONSTANT_STRING_FOR_SYMBOL( Print , print );
-DEFINITION_OF_GLOBAL_CONSTANT_STRING_FOR_SYMBOL( Exit , exit );

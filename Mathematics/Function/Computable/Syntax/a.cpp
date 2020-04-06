@@ -7,12 +7,11 @@
 #include "../../../../Error/FaultInCoding/a.hpp"
 
 
-void SyntaxOfComputableFunction::InputDefinition( ofstream& ofs ) const
+void SyntaxOfComputableFunction::InputDefinition( ofstream& ofs , const SyntaxOfComputableFunction& f ) const
 {
 
-  auto itr_function_symbol = m_syntax.LeftMostNode();
-  itr_function_symbol++;
-  auto itr_line = itr_function_symbol;
+  auto itr_function_symbol = f.m_syntax.LeftMostNode();
+  auto itr_line = m_syntax.LeftMostNode();
   itr_line++;
 
   const string* p_function_name;
@@ -201,35 +200,35 @@ void SyntaxOfComputableFunction::InputNonListLine( ofstream& ofs , const string&
 
      {
        
-       if( line_name == "if" ){
+       if( line_name == IfString() ){
 
 	 InputIfLine( ofs , function_expression_name , itr_line , depth );
 	 return;
 
        }
     
-       if( line_name == "put" ){
+       if( line_name == PutString() ){
 
 	 InputPutLine( ofs , itr_line , depth );
 	 return;
 
        }
 
-       if( line_name == "print" ){
+       if( line_name == PrintString() ){
 
 	 InputPrintLine( ofs , itr_line );
 	 return;
 
        }
 
-       if( line_name == "exit" ){
+       if( line_name == ExitString() ){
 
 	 InputExitLine( ofs , function_expression_name );
 	 return;
 
        }
 
-       if( line_name == "return" ){
+       if( line_name == ReturnString() ){
 
 	 InputReturnLine( ofs , function_expression_name , itr_line , depth );
 	 return;
@@ -263,7 +262,7 @@ void SyntaxOfComputableFunction::InputIfLine( ofstream& ofs , const string& func
        const string& condition_name = ConditionToString( itr_condition );
        const string& line_name = SyntaxToString( itr_line , 1 );
 
-       if( line_name == "list" ){
+       if( line_name == ListString() ){
 
 	 ofs << condition_name << "Ç∆Ç∑ÇÈÅB" << endl;
 	 InputListLine( ofs , function_expression_name , itr_line , depth+1 );
@@ -484,6 +483,9 @@ string FunctionExpressionToString( const SyntaxOfComputableFunction& f , const V
 
 }
 
+static bool IsPolishSeparator( const VLTree<string>::const_iterator& itr_sep );
+static bool IsNonPolishFunctionExpression( const VLTree<string>::const_iterator& itr_arg );
+
 string FunctionExpressionToString( VLTree<string>::const_iterator& itr_f , VLTree<string>::const_iterator& itr_args )
 {
 
@@ -496,7 +498,17 @@ string FunctionExpressionToString( VLTree<string>::const_iterator& itr_f , VLTre
   itr_f[1];
 
   bool variadic = false;
+  bool polish_f;
+  
+  TRY_CATCH
+    (
 
+     polish_f = IsPolishSeparator( itr_f ) ,
+     const ErrorType& e ,
+     CALL( e )
+
+     );
+    
   while( itr_args.IsValid() ){
 
     if( variadic ){
@@ -511,9 +523,9 @@ string FunctionExpressionToString( VLTree<string>::const_iterator& itr_f , VLTre
        
     }
 
-    const string& s_current = *itr_f;
+    const string& sep_current = *itr_f;
 
-    if( ! variadic && s_current == LdotsString() ){
+    if( ! variadic && sep_current == LdotsString() ){
 
       itr_f++;
 
@@ -528,20 +540,51 @@ string FunctionExpressionToString( VLTree<string>::const_iterator& itr_f , VLTre
 
     } else {
 
-      s += s_current;
+      s += sep_current;
+
+    }
+
+    bool ambiguous = ! polish_f;
+
+    if( ambiguous ){
+      
+      TRY_CATCH
+	(
+
+	 ambiguous = IsNonPolishFunctionExpression( itr_args ) ,
+	 const ErrorType& e ,
+	 CALL( e )
+
+	 );
+
+    }
+
+    string arg_current;
+
+    TRY_CATCH
+      (
+
+       arg_current = ExpressionToString( itr_args ) ,
+       const ErrorType& e ,
+       CALL( e )
+
+       );
+
+    if( ambiguous ){
+
+      arg_current = "( " + arg_current + " )";
 
     }
     
-    s += *itr_args;
+    s += arg_current;
     
     itr_f++;
-    itr_args++;
 
   }
 
-  const string& s_current = *itr_f;
+  const string& sep_current = *itr_f;
   
-  if( ! variadic && s_current == LdotsString() ){
+  if( ! variadic && sep_current == LdotsString() ){
 
     itr_f++;
     itr_f++;
@@ -557,7 +600,7 @@ string FunctionExpressionToString( VLTree<string>::const_iterator& itr_f , VLTre
 
   } else {
 
-    s += s_current;
+    s += sep_current;
 
   }
 
@@ -573,17 +616,78 @@ string FunctionExpressionToString( VLTree<string>::const_iterator& itr_f , VLTre
   
 }
 
+static bool IsPolishSeparator( const VLTree<string>::const_iterator& itr_sep )
+{
+
+  const string* p_sep;
+
+  TRY_CATCH
+    (
+
+     p_sep = &( *itr_sep ) ,
+     const ErrorType& e ,
+     CALL( e )
+
+     );
+
+  return *p_sep != EmptyString() && *p_sep != SpaceString();
+
+}
+
+static bool IsNonPolishFunctionExpression( const VLTree<string>::const_iterator& itr_arg )
+{
+
+  string s;
+
+  auto itr_sep = itr_arg;
+  itr_sep[1];
+
+  TRY_CATCH
+    (
+
+     s = *itr_sep ,
+     const ErrorType& e ,
+     CALL( e )
+
+     );
+
+  if( s == FunctionString() || s == RelationString() ){
+
+    itr_sep++;
+    itr_sep++;
+    itr_sep++;
+    itr_sep[5];
+    itr_sep[1];
+
+    TRY_CATCH
+      (
+
+       s = *itr_sep ,
+       const ErrorType& e ,
+       CALL( e )
+
+       );
+
+    return s == EmptyString() || s == SpaceString();
+
+  }
+
+  return false;
+
+}
+
 const string& ExpressionToString( VLTree<string>::const_iterator& itr )
 {
 
-  itr[2];
+  auto itr_copy = itr;
+  itr_copy[2];
   
   const string* p_e;
 
   TRY_CATCH
     (
 
-     p_e = &( *itr ) ,
+     p_e = &( *itr_copy ) ,
      const ErrorType& e ,
      CALL( e )
 
@@ -597,20 +701,22 @@ const string& ExpressionToString( VLTree<string>::const_iterator& itr )
 string ConditionToString( VLTree<string>::const_iterator& itr )
 {
 
-  itr[1];
+  auto itr_copy = itr;
+  itr++;
+  itr_copy[1];
 
   const string* p_type;
 
   TRY_CATCH
     (
 
-     p_type = &( *itr ) ,
+     p_type = &( *itr_copy ) ,
      const ErrorType& e ,
      CALL( e )
 
      );
 
-  itr++;
+  itr_copy++;
 
   if( *p_type != FunctionString() ){
 
@@ -619,23 +725,21 @@ string ConditionToString( VLTree<string>::const_iterator& itr )
     TRY_CATCH
       (
 
-       p_b = &( *itr ) ,
+       p_b = &( *itr_copy ) ,
        const ErrorType& e ,
        CALL( e )
 
        );
 
-    itr++;
     return "\\(" + *p_b + "\\)";
 
   }
   
-  itr++;
-  itr++;
+  itr_copy++;
+  itr_copy++;
 
-  auto itr_f = itr;
-  itr++;
-  itr[4];
+  auto itr_f = itr_copy;
+  itr_copy++;
   itr_f[2];
 
   const string* p_f;
@@ -646,8 +750,6 @@ string ConditionToString( VLTree<string>::const_iterator& itr )
      {
        
        p_f = &( *itr_f );
-       auto itr_copy = itr;
-       itr++;
 
        if( *p_f == NegString() ){
 
@@ -715,13 +817,11 @@ string ImplicationToString( VLTree<string>::const_iterator& itr )
 {
 
   string b = "Åu";
-  auto itr_copy = itr;
-  itr++;
 
   TRY_CATCH
     (
 
-     b += ConditionToString( itr_copy ) ,
+     b += ConditionToString( itr ) ,
      const ErrorType& e ,
      CALL( e )
 
@@ -747,13 +847,11 @@ string EquivalenceToString( VLTree<string>::const_iterator& itr )
 {
 
   string b = "Åu";;
-  auto itr_copy = itr;
-  itr++;
 
   TRY_CATCH
     (
 
-     b += ConditionToString( itr_copy ) ,
+     b += ConditionToString( itr ) ,
      const ErrorType& e ,
      CALL( e )
 
@@ -779,19 +877,15 @@ string LogicalAndToString( VLTree<string>::const_iterator& itr )
 {
 
   string b;
-  auto itr_first_copy = itr;
-  itr++;
 
   TRY_CATCH
     (
 
-     b = ConditionToString( itr_first_copy ) ,
+     b = ConditionToString( itr ) ,
      const ErrorType& e ,
      CALL( e )
 
      );
-
-  itr[4];
 
   bool first = true;
 
@@ -804,11 +898,8 @@ string LogicalAndToString( VLTree<string>::const_iterator& itr )
 
     }
 
-    auto itr_copy = itr;
-    itr++;
-
     b += "Ç©Ç¬";
-    b += ConditionToString( itr_copy );
+    b += ConditionToString( itr );
 
   }
 
@@ -826,19 +917,15 @@ string LogicalOrToString( VLTree<string>::const_iterator& itr )
 {
 
   string b;
-  auto itr_first_copy = itr;
-  itr++;
 
   TRY_CATCH
     (
 
-     b = ConditionToString( itr_first_copy ) ,
+     b = ConditionToString( itr ) ,
      const ErrorType& e ,
      CALL( e )
 
      );
-
-  itr[4];
 
   bool first = true;
 
@@ -851,11 +938,8 @@ string LogicalOrToString( VLTree<string>::const_iterator& itr )
 
     }
 
-    auto itr_copy = itr;
-    itr++;
-
     b += "Ç‹ÇΩÇÕ";
-    b += ConditionToString( itr_copy );
+    b += ConditionToString( itr );
 
   }
 

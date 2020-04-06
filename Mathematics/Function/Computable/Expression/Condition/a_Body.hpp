@@ -24,13 +24,19 @@ template <typename... Args> inline ExpressionOfComputableFunction<bool>::Express
 template <typename... Args, typename... VA> inline ExpressionOfComputableFunction<bool>::ExpressionOfComputableFunction( const VariadicRelationSymbol<Args...>& r , const ExpressionOfComputableFunction<Args>&... args , const ListExpressionOfComputableFunction<VA...>& va ) : SyntaxOfComputableFunction( ExpressionString() , RelationString()  ) { PushRelationExpression( r , args... , va ); }
 
 template <typename... Args, typename... VA>
-inline void ConditionOfComputableFunction::PushFunctionExpression( const FunctionSymbol<bool,Args...>& f , const ExpressionOfComputableFunction<VA>&... va )
+inline void ConditionOfComputableFunction::PushFunctionExpression( const FunctionSymbol<bool,Args...>& f , const ExpressionOfComputableFunction<VA>&... va ) { PushFunctionExpression( f , va.Get()... ); }
+
+template<typename... Args, typename... VA>
+auto ConditionOfComputableFunction::PushFunctionExpression( const FunctionSymbol<bool,Args...>& f , const VA&... va ) -> typename enable_if<conjunction<is_same<VLTree<string>,VA>...>::value,void>::type
 {
 
+  VLTree<string> t_va{};
+  t_va.push_RightMost( va... );
+  
   TRY_CATCH
     (
      
-     Ref().push_RightMost( FunctionExpressionToString( f , VLTree<string>( va.GetNodeString( 2 )... ) ) , GetName<bool>() , f.Get() , ListExpressionOfComputableFunction( va... ).Get() ) ,
+     Ref().push_RightMost( FunctionExpressionToString( f , t_va ) , GetName<bool>() , f.Get() , va... ) ,
 
      const ErrorType& e ,
 
@@ -39,17 +45,23 @@ inline void ConditionOfComputableFunction::PushFunctionExpression( const Functio
      );
 
   return;
-
+  
 }
 
 template <typename... Args, typename... VA>
-inline void ConditionOfComputableFunction::PushRelationExpression( const RelationSymbol<Args...>& r , const ExpressionOfComputableFunction<VA>&... va )
+inline void ConditionOfComputableFunction::PushRelationExpression( const RelationSymbol<Args...>& r , const ExpressionOfComputableFunction<VA>&... va ) { PushRelationExpression( r , va.Get()... ); }
+
+template<typename... Args, typename... VA>
+auto ConditionOfComputableFunction::PushRelationExpression( const RelationSymbol<Args...>& r , const VA&... va ) -> typename enable_if<conjunction<is_same<VLTree<string>,VA>...>::value,void>::type
 {
 
+  VLTree<string> t_va{};
+  t_va.push_RightMost( va... );
+  
   TRY_CATCH
     (
      
-     Ref().push_RightMost( FunctionExpressionToString( r , VLTree<string>( va.GetNodeString( 2 )... ) ) , GetName<bool>() , r.Get() , ListExpressionOfComputableFunction( va... ).Get() ) ,
+     Ref().push_RightMost( FunctionExpressionToString( r , t_va ) , GetName<bool>() , r.Get() , va... ) ,
 
      const ErrorType& e ,
 
@@ -58,7 +70,7 @@ inline void ConditionOfComputableFunction::PushRelationExpression( const Relatio
      );
 
   return;
-
+  
 }
 
 inline ConditionOfComputableFunction operator==( const ExpressionOfComputableFunction<bool>& e1 , const ExpressionOfComputableFunction<bool>& e2 ){ return EquivSymbolApplication( e1 , e2 ); }

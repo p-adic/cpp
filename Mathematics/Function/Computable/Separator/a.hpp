@@ -16,5 +16,3 @@ public:
   template <typename... Args> inline SeparatorOfComputableFunction( const Dummy<Args...>& dummy , const Args&... args );
 
 };
-
-DECLARATION_OF_GLOBAL_CONSTANT_STRING_FOR_SYMBOL( Separator );

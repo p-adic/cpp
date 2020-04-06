@@ -65,61 +65,46 @@
   
 #define IMP( RET , FUNC , ... )						\
 									\
-  const auto FUNC = FUNCTION_SYMBOL_CONSTRUCTOR( RET , FUNC , __VA_ARGS__ ) \
+  auto FUNC = FUNCTION_SYMBOL_CONSTRUCTOR( RET , FUNC , __VA_ARGS__ ) \
  
-    
-#define DEF( RET , FUNC , ... )						\
-									\
-  auto FUNC = FUNCTION_SYMBOL_CONSTRUCTOR( RET , FUNC , __VA_ARGS__ );	\
-  auto& __THIS__ = FUNC							\
-    
 
-#define SYMB __THIS__.GetNodeString( 2 ) 
-
+// separator
+#define SYMB( FUNC ) FUNC.GetNodeString( 2 ) 
 #define SUB to_string( "_" ) 
-
 #define SUP to_string( "^" ) 
-
 #define LPAREN to_string( "(" ) 
-
 #define RPAREN to_string( ")" ) 
-
 #define LBRACE to_string( "{" ) 
-
 #define RBRACE to_string( "}" ) 
-
 #define LBRACK to_string( "\\lbrack" ) 
-
 #define RBRACK to_string( "\\rbrack" ) 
-
 #define SPACE SpaceString() 
-
+#define VSPACE to_string( "\\ " ) 
 #define LBIG to_string( "\\left" ) 
-
 #define MBIG to_string( "\\middle" ) 
-
 #define RBIG to_string( "\\right" ) 
-
 #define PERIOD to_string( "." ) 
-
 #define COMMA to_string( "," ) 
-
 #define COLON to_string( "\\colon" ) 
-
-#define SEMICOLON to_string( ";" ) 
-
+#define SCOLON to_string( ";" ) 
 #define ATMARK to_string( "@" ) 
+#define LMAT( C ) to_string( "\\begin{array}{" ) + TO_STRING( C ) + to_string( "}" ) 
+#define RMAT to_string( "\\end{array}" ) 
+#define ET to_string( "&" ) 
+#define YY to_string( "\\\\" ) 
+#define LVEC LMAT( c ) 
+#define RVEC RMAT 
 
-#define SEP( ... )				\
+
+#define SEP( FUNC , ... )			\
 						\
-  __THIS__.SetSeparator( __VA_ARGS__ );		\
+  ( FUNC ).SetSeparator( __VA_ARGS__ );		\
 
 
 // definition
-#define BODY( ... )						\
-								\
-  const auto __DEFINITION__ = DefinitionOfComputableFunction( 0 , __THIS__ , __VA_ARGS__ ) \
-  
+#define DEF( FUNC )							\
+									\
+  const decltype( DefinitionOfComputableFunction( f ) ) CONNECT( __DEFINITION_OF__ , FUNC )
 
 #define IF( ... )				\
 						\
@@ -137,4 +122,4 @@
   
 
 // display
-#define DISPLAY __DEFINITION__.Display();
+#define DISPLAY( FUNC ) CONNECT( __DEFINITION_OF__ , FUNC ).Display( FUNC );
