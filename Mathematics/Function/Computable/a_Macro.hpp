@@ -86,6 +86,7 @@
 #define RANGLE to_string( "\\rangle" ) 
 #define VERT to_string( "\mid" ) 
 #define VVERT to_string( "\|" ) 
+#define FRAC to_string( "\\frac" ) 
 #define SPACE SpaceString() 
 #define VSPACE to_string( "\\ " ) 
 #define LBIG to_string( "\\left" ) 
@@ -100,6 +101,7 @@
 #define RMAT to_string( "\\end{array}" ) 
 #define ET to_string( "&" ) 
 #define YY to_string( "\\\\" ) 
+#define HLINE to_string( "\\hline" ) 
 #define LVEC LMAT( c ) 
 #define RVEC RMAT 
 
