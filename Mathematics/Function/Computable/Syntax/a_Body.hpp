@@ -70,6 +70,15 @@ auto ExpressionsToListSyntax( const Args&... args ) -> typename enable_if<conjun
 
 DECLARATION_OF_GLOBAL_CONSTANT_STRING_FOR_SYMBOL( Empty ){ static const string s = ""; return s; }
 DECLARATION_OF_GLOBAL_CONSTANT_STRING_FOR_SYMBOL( Space ){ static const string s = " "; return s; }
+DEFINITION_OF_GLOBAL_CONSTANT_STRING_FOR_SYMBOL( Sub , _ );
+DEFINITION_OF_GLOBAL_CONSTANT_STRING_FOR_SYMBOL( Sup , ^ );
+DECLARATION_OF_GLOBAL_CONSTANT_STRING_FOR_SYMBOL( Lparen ){ static const string s = "("; return s; }
+DECLARATION_OF_GLOBAL_CONSTANT_STRING_FOR_SYMBOL( Rparen ){ static const string s = ")"; return s; }
+DECLARATION_OF_GLOBAL_CONSTANT_STRING_FOR_SYMBOL( Lbrace ){ static const string s = "{"; return s; }
+DECLARATION_OF_GLOBAL_CONSTANT_STRING_FOR_SYMBOL( Rbrace ){ static const string s = "}"; return s; }
+DECLARATION_OF_GLOBAL_CONSTANT_STRING_FOR_SYMBOL( Lbrack ){ static const string s = "["; return s; }
+DECLARATION_OF_GLOBAL_CONSTANT_STRING_FOR_SYMBOL( Rbrack ){ static const string s = "]"; return s; }
+DECLARATION_OF_GLOBAL_CONSTANT_STRING_FOR_SYMBOL( Comma ){ static const string s = ","; return s; }
 DEFINITION_OF_GLOBAL_CONSTANT_STRING_FOR_SYMBOL( Ldots , \\ldots );
 
 DEFINITION_OF_GLOBAL_CONSTANT_STRING_FOR_SYMBOL( Separator , separator );
@@ -85,6 +94,7 @@ DEFINITION_OF_GLOBAL_CONSTANT_STRING_FOR_SYMBOL( Relation , relation );
 DEFINITION_OF_GLOBAL_CONSTANT_STRING_FOR_SYMBOL( Minus , - );
 DEFINITION_OF_GLOBAL_CONSTANT_STRING_FOR_SYMBOL( Slash , \\slash );
 DEFINITION_OF_GLOBAL_CONSTANT_STRING_FOR_SYMBOL( Mod , % );
+DEFINITION_OF_GLOBAL_CONSTANT_STRING_FOR_SYMBOL( Power , ^ );
 DEFINITION_OF_GLOBAL_CONSTANT_STRING_FOR_SYMBOL( Neg , \\neg );
 DEFINITION_OF_GLOBAL_CONSTANT_STRING_FOR_SYMBOL( To , \\rightarrow );
 DEFINITION_OF_GLOBAL_CONSTANT_STRING_FOR_SYMBOL( Equiv , \\equiv );

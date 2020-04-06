@@ -92,14 +92,21 @@ template <typename Ret, typename... Args> template <typename... VA> inline auto 
 template <typename Ret, typename... Args> inline ExpressionOfComputableFunction<Ret> FunctionSymbol<Ret,Args...>::operator()( const ExpressionOfComputableFunction<Args>&... args ) const { return ExpressionOfComputableFunction<Ret>( *this , args... ); }
 
 
-DEFINITION_OF_FUNCTION_SYMBOL( Minus );
-DEFINITION_OF_FUNCTION_SYMBOL( Slash );
-DEFINITION_OF_FUNCTION_SYMBOL( Mod );
+template <> DEFINITION_OF_FUNCTION_SYMBOL( int , Minus );
+template <> DEFINITION_OF_FUNCTION_SYMBOL( int , Slash );
+template <> DEFINITION_OF_FUNCTION_SYMBOL( int , Mod );
+template <> DEFINITION_OF_FUNCTION_SYMBOL( int , Power );
 
-DEFINITION_OF_FUNCTION_SYMBOL_APPLICATION( Minus );
-DEFINITION_OF_FUNCTION_SYMBOL_APPLICATION( Slash );
-DEFINITION_OF_FUNCTION_SYMBOL_APPLICATION( Mod );
+
+template <typename Ret> DEFINITION_OF_FUNCTION_SYMBOL_APPLICATION( Ret , Minus , Symbol<Ret> );
+template <typename Ret> DEFINITION_OF_FUNCTION_SYMBOL_APPLICATION( Ret , Slash , Symbol<Ret> );
+template <typename Ret> DEFINITION_OF_FUNCTION_SYMBOL_APPLICATION( Ret , Mod , Symbol<Ret> );
+template <typename Ret> DEFINITION_OF_FUNCTION_SYMBOL_APPLICATION( Ret , Power , Symbol<Ret> );
 
 inline const FunctionSymbol<bool,bool>& NegSymbol() { static const FunctionSymbol<bool,bool> f( NegString() , VariableSymbol<bool>( "x" ) ); return f; }
+
+DEFINITION_OF_LOGICAL_CONNECTIVE( To );
+DEFINITION_OF_LOGICAL_CONNECTIVE( Equiv );
+
 DEFINITION_OF_LOGICAL_CONNECTIVE_APPLICATION( To );
 DEFINITION_OF_LOGICAL_CONNECTIVE_APPLICATION( Equiv );

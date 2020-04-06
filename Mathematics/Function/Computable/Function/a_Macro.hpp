@@ -3,20 +3,20 @@
 #pragma once
 #include "../../../../Utility/Macro.hpp"
 
-#define DECLARATION_OF_FUNCTION_SYMBOL_BODY( RET , FUNC )		\
+#define DECLARATION_OF_FUNCTION_SYMBOL( RET , FUNC )			\
 									\
-  const FunctionSymbol< RET , RET , RET >& CONNECT( FUNC , Symbol )()	\
+  inline const FunctionSymbol< RET , RET , RET >& CONNECT( FUNC , Symbol )()	\
 									\
     
 
-#define DECLARATION_OF_FUNCTION_SYMBOL_APPLICATION_BODY( RET , FUNC )	\
+#define DECLARATION_OF_FUNCTION_SYMBOL_APPLICATION( RET , FUNC )	\
 									\
   inline ExpressionOfComputableFunction< RET > CONNECT( FUNC , SymbolApplication )( const ExpressionOfComputableFunction< RET >& e1 , const ExpressionOfComputableFunction< RET >& e2 ) \
 									\
 
-#define DEFINITION_OF_FUNCTION_SYMBOL_BODY( RET , FUNC )		\
+#define DEFINITION_OF_FUNCTION_SYMBOL( RET , FUNC )		\
 									\
-  DECLARATION_OF_FUNCTION_SYMBOL_BODY( RET , FUNC )			\
+  DECLARATION_OF_FUNCTION_SYMBOL( RET , FUNC )			\
   {									\
 									\
     static const FunctionSymbol< RET , RET , RET > f( CONNECT( FUNC , String )() , SeparatorOfComputableFunction( 0 , EmptyString() , SpaceString() + CONNECT( FUNC , String )() + SpaceString() , EmptyString() ) , VariableSymbol< RET >( "x" ) , VariableSymbol< RET >( "y" ) ); \
@@ -25,46 +25,26 @@
   }									\
 									\
   
-#define DEFINITION_OF_FUNCTION_SYMBOL_APPLICATION_BODY( RET , FUNC , SYMBOL ) \
+#define DEFINITION_OF_FUNCTION_SYMBOL_APPLICATION( RET , FUNC , SYMBOL ) \
 									\
-  DECLARATION_OF_FUNCTION_SYMBOL_APPLICATION_BODY( RET , FUNC ){ return CONNECT( FUNC , SYMBOL )()( e1 , e2 ); } \
+  DECLARATION_OF_FUNCTION_SYMBOL_APPLICATION( RET , FUNC ){ return CONNECT( FUNC , SYMBOL )()( e1 , e2 ); } \
 									\
-
-
-#define DECLARATION_OF_FUNCTION_SYMBOL( FUNC )				\
-									\
-  template <typename Ret> DECLARATION_OF_FUNCTION_SYMBOL_BODY( Ret , FUNC ) \
-									\
-    
-#define DECLARATION_OF_FUNCTION_SYMBOL_APPLICATION( FUNC )		\
-									\
-  template <typename Ret> DECLARATION_OF_FUNCTION_SYMBOL_APPLICATION_BODY( Ret , FUNC ) \
-    
-#define DEFINITION_OF_FUNCTION_SYMBOL( FUNC )				\
-									\
-  template <typename Ret> DEFINITION_OF_FUNCTION_SYMBOL_BODY( Ret , FUNC ) \
-									\
-    
-#define DEFINITION_OF_FUNCTION_SYMBOL_APPLICATION( FUNC )		\
-									\
-  template <typename Ret> DEFINITION_OF_FUNCTION_SYMBOL_APPLICATION_BODY( Ret , FUNC , Symbol<Ret> ) \
-    
 
 #define DECLARATION_OF_LOGICAL_CONNECTIVE( FUNC )	\
 							\
-  DECLARATION_OF_FUNCTION_SYMBOL_BODY( bool , FUNC )	\
+  DECLARATION_OF_FUNCTION_SYMBOL( bool , FUNC )	\
 							\
     
 #define DECLARATION_OF_LOGICAL_CONNECTIVE_APPLICATION( FUNC )		\
 									\
-  DECLARATION_OF_FUNCTION_SYMBOL_APPLICATION_BODY( bool , FUNC )	\
+  DECLARATION_OF_FUNCTION_SYMBOL_APPLICATION( bool , FUNC )	\
     
 #define DEFINITION_OF_LOGICAL_CONNECTIVE( FUNC )	\
 							\
-  DEFINITION_OF_FUNCTION_SYMBOL_BODY( bool , FUNC )	\
+  DEFINITION_OF_FUNCTION_SYMBOL( bool , FUNC )	\
 							\
     
 #define DEFINITION_OF_LOGICAL_CONNECTIVE_APPLICATION( FUNC )		\
 									\
-  DEFINITION_OF_FUNCTION_SYMBOL_APPLICATION_BODY( bool , FUNC , Symbol ) \
+  DEFINITION_OF_FUNCTION_SYMBOL_APPLICATION( bool , FUNC , Symbol ) \
     

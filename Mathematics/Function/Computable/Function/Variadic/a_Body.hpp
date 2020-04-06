@@ -14,6 +14,8 @@ template <typename Ret, typename... Args> template <typename... VA> inline Expre
 
 
 template <typename Ret> DEFINITION_OF_VARIADIC_FUNCTION_SYMBOL( Ret , Plus , Plus );
+template <> DEFINITION_OF_VARIADIC_FUNCTION_SYMBOL( string , Plus , Frown );
+
 template <typename Ret> DEFINITION_OF_VARIADIC_FUNCTION_SYMBOL( Ret , Times , Times );
 
 template <typename Ret> DEFINITION_OF_VARIADIC_FUNCTION_SYMBOL_APPLICATION_ONE( Ret , Plus );

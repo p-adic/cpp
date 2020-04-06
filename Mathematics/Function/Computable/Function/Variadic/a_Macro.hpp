@@ -24,7 +24,7 @@
 
 #define DEFINITION_OF_VARIADIC_FUNCTION_SYMBOL( RET , FUNC , OPERATOR )	\
 									\
-  DECLARATION_OF_VARIADIC_FUNCTION_SYMBOL( RET , FUNC ){ static const VariadicFunctionSymbol< RET , RET > f( CONNECT( OPERATOR , String )() , SeparatorOfComputableFunction( 0 , EmptyString() , SpaceString() + CONNECT( OPERATOR , String )() + SpaceString() , LdotsString() , SpaceString() + CONNECT( OPERATOR , String )() + SpaceString() , EmptyString() ) , VariableSymbol< RET >( "x" ) ); return f; } \
+  DECLARATION_OF_VARIADIC_FUNCTION_SYMBOL( RET , FUNC ){ static const VariadicFunctionSymbol< RET , RET > f( CONNECT( OPERATOR , String )() , SeparatorOfComputableFunction( 0 , EmptyString() , LdotsString() , SpaceString() + CONNECT( OPERATOR , String )() + SpaceString() , EmptyString() ) , VariableSymbol< RET >( "x" ) ); return f; } \
 
 
 #define DEFINITION_OF_VARIADIC_FUNCTION_SYMBOL_APPLICATION_ONE( RET , FUNC ) \

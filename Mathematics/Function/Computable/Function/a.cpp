@@ -40,7 +40,3 @@ ConditionOfComputableFunction NegSymbolApplication( const ConditionOfComputableF
   return NegSymbol()( b );
 
 }
-
-
-DEFINITION_OF_LOGICAL_CONNECTIVE( To );
-DEFINITION_OF_LOGICAL_CONNECTIVE( Equiv );
