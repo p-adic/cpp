@@ -59,14 +59,18 @@
 
 #define USE( TYPE , VARIABLE )						\
 									\
-  const VariableSymbol< TYPE > VARIABLE = VariableSymbol< TYPE >( TO_STRING( VARIABLE ) ); \
-  CHECK_VALID( TYPE );							\
+  VariableSymbol< TYPE > CONNECT( CONNECT( __SYMBOL_OF_ , VARIABLE ) , __ ) = VariableSymbol< TYPE >( TO_STRING( VARIABLE ) ); \
+  const VariableSymbol< TYPE >& VARIABLE = CONNECT( CONNECT( __SYMBOL_OF_ , VARIABLE ) , __ ); \
+  CHECK_VALID( TYPE )							\
 									\
   
 #define IMP( RET , FUNC , ... )						\
 									\
-  auto FUNC = FUNCTION_SYMBOL_CONSTRUCTOR( RET , FUNC , __VA_ARGS__ ) \
- 
+  auto CONNECT( CONNECT( __SYMBOL_OF_ , FUNC ) , __ ) = FUNCTION_SYMBOL_CONSTRUCTOR( RET , FUNC , __VA_ARGS__ ); \
+  const decltype( CONNECT( CONNECT( __SYMBOL_OF_ , FUNC ) , __ ) )& FUNC = CONNECT( CONNECT( __SYMBOL_OF_ , FUNC ) , __ ) \
+
+#define SET( OBJ , SYMB ) CONNECT( CONNECT( __SYMBOL_OF_ , OBJ ) , __ ).SetSymbol( TO_STRING( SYMB ) ) 
+
 
 // separator
 #define SYMB( FUNC ) FUNC.GetNodeString( 2 ) 
@@ -78,6 +82,10 @@
 #define RBRACE to_string( "}" ) 
 #define LBRACK to_string( "\\lbrack" ) 
 #define RBRACK to_string( "\\rbrack" ) 
+#define LANGLE to_string( "\\langle" ) 
+#define RANGLE to_string( "\\rangle" ) 
+#define VERT to_string( "\mid" ) 
+#define VVERT to_string( "\|" ) 
 #define SPACE SpaceString() 
 #define VSPACE to_string( "\\ " ) 
 #define LBIG to_string( "\\left" ) 
@@ -98,7 +106,7 @@
 
 #define SEP( FUNC , ... )			\
 						\
-  ( FUNC ).SetSeparator( __VA_ARGS__ );		\
+  CONNECT( CONNECT( __SYMBOL_OF_ , FUNC ) , __ ).SetSeparator( __VA_ARGS__ );		\
 
 
 // definition
@@ -122,4 +130,4 @@
   
 
 // display
-#define DISPLAY( FUNC ) CONNECT( __DEFINITION_OF__ , FUNC ).Display( FUNC );
+#define DISPLAY( FUNC , FILE ) CONNECT( __DEFINITION_OF__ , FUNC ).Display( FUNC , TO_STRING( FILE ) );
