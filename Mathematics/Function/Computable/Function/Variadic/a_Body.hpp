@@ -13,16 +13,14 @@ template <typename Ret, typename... Args> inline VariadicFunctionSymbol<Ret,Args
 template <typename Ret, typename... Args> template <typename... VA> inline ExpressionOfComputableFunction<Ret> VariadicFunctionSymbol<Ret,Args...>::operator()( const ExpressionOfComputableFunction<Args>&... args , const ListExpressionOfComputableFunction<VA...>& va ) const { return ExpressionOfComputableFunction<Ret>( *this , args... , va ); }
 
 
-DEFINITION_OF_VARIADIC_FUNCTION_SYMBOL( Plus );
-DEFINITION_OF_VARIADIC_FUNCTION_SYMBOL( Times );
+template <typename Ret> DEFINITION_OF_VARIADIC_FUNCTION_SYMBOL( Ret , Plus , Plus );
+template <typename Ret> DEFINITION_OF_VARIADIC_FUNCTION_SYMBOL( Ret , Times , Times );
 
-DEFINITION_OF_VARIADIC_FUNCTION_SYMBOL_APPLICATION_ONE( Plus );
-DEFINITION_OF_VARIADIC_FUNCTION_SYMBOL_APPLICATION_TWO( Plus , 0 , infty() );
-DEFINITION_OF_VARIADIC_FUNCTION_SYMBOL_APPLICATION_MORE( Plus );
+template <typename Ret> DEFINITION_OF_VARIADIC_FUNCTION_SYMBOL_APPLICATION_ONE( Ret , Plus );
+template <typename Ret, typename... Args> DEFINITION_OF_VARIADIC_FUNCTION_SYMBOL_APPLICATION_MORE( Ret , Plus );
 
-DEFINITION_OF_VARIADIC_FUNCTION_SYMBOL_APPLICATION_ONE( Times );
-DEFINITION_OF_VARIADIC_FUNCTION_SYMBOL_APPLICATION_TWO( Times , 1 , 0 );
-DEFINITION_OF_VARIADIC_FUNCTION_SYMBOL_APPLICATION_MORE( Times );
+template <typename Ret> DEFINITION_OF_VARIADIC_FUNCTION_SYMBOL_APPLICATION_ONE( Ret , Times );
+template <typename Ret, typename... Args> DEFINITION_OF_VARIADIC_FUNCTION_SYMBOL_APPLICATION_MORE( Ret , Times );
 
 
 DEFINITION_OF_VARIADIC_LOGICAL_CONNECTIVE( Land );

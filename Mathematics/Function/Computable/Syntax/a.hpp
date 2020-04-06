@@ -20,6 +20,8 @@ public:
   inline const string& GetRootString() const noexcept;
   inline const string& GetNodeString( const int& n ) const;
 
+  void SetSymbol( const string& symbol );
+
   inline string Display() const noexcept;
 
 protected:
@@ -85,6 +87,7 @@ DECLARATION_OF_GLOBAL_CONSTANT_STRING_FOR_SYMBOL( To );
 DECLARATION_OF_GLOBAL_CONSTANT_STRING_FOR_SYMBOL( Equiv );
 
 DECLARATION_OF_GLOBAL_CONSTANT_STRING_FOR_SYMBOL( Plus );
+DECLARATION_OF_GLOBAL_CONSTANT_STRING_FOR_SYMBOL( Frown );
 DECLARATION_OF_GLOBAL_CONSTANT_STRING_FOR_SYMBOL( Times );
 DECLARATION_OF_GLOBAL_CONSTANT_STRING_FOR_SYMBOL( Land );
 DECLARATION_OF_GLOBAL_CONSTANT_STRING_FOR_SYMBOL( Lor );

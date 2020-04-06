@@ -6,6 +6,15 @@
 #include "../Expression/a_Body.hpp"
 #include "../../../../Error/FaultInCoding/a.hpp"
 
+void SyntaxOfComputableFunction::SetSymbol( const string& symbol )
+{
+
+  auto itr = m_syntax.LeftMostNode();
+  itr++;
+  *itr = symbol;
+  return;
+
+}
 
 void SyntaxOfComputableFunction::InputDefinition( ofstream& ofs , const SyntaxOfComputableFunction& f ) const
 {
