@@ -92,11 +92,10 @@ template <typename Ret, typename... Args> template <typename... VA> inline auto 
 template <typename Ret, typename... Args> inline ExpressionOfComputableFunction<Ret> FunctionSymbol<Ret,Args...>::operator()( const ExpressionOfComputableFunction<Args>&... args ) const { return ExpressionOfComputableFunction<Ret>( *this , args... ); }
 
 
-template <> DEFINITION_OF_FUNCTION_SYMBOL( int , Minus );
-template <> DEFINITION_OF_FUNCTION_SYMBOL( int , Slash );
-template <> DEFINITION_OF_FUNCTION_SYMBOL( int , Mod );
-template <> DEFINITION_OF_FUNCTION_SYMBOL( int , Power );
-
+template <typename Ret> DEFINITION_OF_FUNCTION_SYMBOL( Ret , Minus );
+template <typename Ret> DEFINITION_OF_FUNCTION_SYMBOL( Ret , Slash );
+template <typename Ret> DEFINITION_OF_FUNCTION_SYMBOL( Ret , Mod );
+template <typename Ret> DEFINITION_OF_FUNCTION_SYMBOL( Ret , Power );
 
 template <typename Ret> DEFINITION_OF_FUNCTION_SYMBOL_APPLICATION( Ret , Minus , Symbol<Ret> );
 template <typename Ret> DEFINITION_OF_FUNCTION_SYMBOL_APPLICATION( Ret , Slash , Symbol<Ret> );
@@ -109,4 +108,5 @@ DEFINITION_OF_LOGICAL_CONNECTIVE( To );
 DEFINITION_OF_LOGICAL_CONNECTIVE( Equiv );
 
 DEFINITION_OF_LOGICAL_CONNECTIVE_APPLICATION( To );
+DECLARATION_OF_LOGICAL_CONNECTIVE_APPLICATION( Ot ){ return ToSymbolApplication( e2 , e1 ); }
 DEFINITION_OF_LOGICAL_CONNECTIVE_APPLICATION( Equiv );

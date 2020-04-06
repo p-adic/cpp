@@ -89,12 +89,12 @@ void RelationSymbol<Args...>::SetSeparator( const SeparatorOfComputableFunction&
 template <typename... Args> inline ConditionOfComputableFunction RelationSymbol<Args...>::operator()( const ExpressionOfComputableFunction<Args>&... args ) const { return ConditionOfComputableFunction( *this , args... ); }
 
 
-DEFINITION_OF_RELATION_SYMBOL( Eq , eq );
-DEFINITION_OF_RELATION_SYMBOL( Neq , neq );
-DEFINITION_OF_RELATION_SYMBOL( Leq , leq );
-DEFINITION_OF_RELATION_SYMBOL( Geq , geq );
-DEFINITION_OF_RELATION_SYMBOL( Lneq , lneq );
-DEFINITION_OF_RELATION_SYMBOL( Gneq , gneq );
+DEFINITION_OF_RELATION_SYMBOL( Eq );
+DEFINITION_OF_RELATION_SYMBOL( Neq );
+DEFINITION_OF_RELATION_SYMBOL( Leq );
+DEFINITION_OF_RELATION_SYMBOL( Geq );
+DEFINITION_OF_RELATION_SYMBOL( Lneq );
+DEFINITION_OF_RELATION_SYMBOL( Gneq );
 
 DEFINITION_OF_RELATION_SYMBOL_APPLICATION( Eq );
 DEFINITION_OF_RELATION_SYMBOL_APPLICATION( Neq );

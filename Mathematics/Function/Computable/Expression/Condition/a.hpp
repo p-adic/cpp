@@ -1,6 +1,8 @@
 // c:/Users/user/Documents/Programming/Mathematics/Function/Computable/Expression/Condition/a.hpp
 
 #pragma once
+#include "a_Macro.hpp"
+
 #include "../a.hpp"
 
 template <>
@@ -48,17 +50,17 @@ private:
 };
 
 
-template <typename Ret> inline ConditionOfComputableFunction operator==( const ExpressionOfComputableFunction<Ret>& e1 , const ExpressionOfComputableFunction<Ret>& e2 );
-template <typename Ret> inline ConditionOfComputableFunction operator!=( const ExpressionOfComputableFunction<Ret>& e1 , const ExpressionOfComputableFunction<Ret>& e2 );
-template <typename Ret> inline ConditionOfComputableFunction operator<=( const ExpressionOfComputableFunction<Ret>& e1 , const ExpressionOfComputableFunction<Ret>& e2 );
-template <typename Ret> inline ConditionOfComputableFunction operator>=( const ExpressionOfComputableFunction<Ret>& e1 , const ExpressionOfComputableFunction<Ret>& e2 );
-template <typename Ret> inline ConditionOfComputableFunction operator<( const ExpressionOfComputableFunction<Ret>& e1 , const ExpressionOfComputableFunction<Ret>& e2 );
-template <typename Ret> inline ConditionOfComputableFunction operator>( const ExpressionOfComputableFunction<Ret>& e1 , const ExpressionOfComputableFunction<Ret>& e2 );
+template <typename Ret> DECLARATION_OF_BASIC_RELATION( Ret , == );
+template <typename Ret> DECLARATION_OF_BASIC_RELATION( Ret , != );
+template <typename Ret> DECLARATION_OF_BASIC_RELATION( Ret , <= );
+template <typename Ret> DECLARATION_OF_BASIC_RELATION( Ret , >= );
+template <typename Ret> DECLARATION_OF_BASIC_RELATION( Ret , < );
+template <typename Ret> DECLARATION_OF_BASIC_RELATION( Ret , > );
 
 
 inline ConditionOfComputableFunction operator!( const ConditionOfComputableFunction& b );
-inline ConditionOfComputableFunction operator&&( const ConditionOfComputableFunction& b1 , const ConditionOfComputableFunction& b2 );
-inline ConditionOfComputableFunction operator||( const ConditionOfComputableFunction& b1 , const ConditionOfComputableFunction& b2 );
-inline ConditionOfComputableFunction operator>>( const ConditionOfComputableFunction& b1 , const ConditionOfComputableFunction& b2 );
-inline ConditionOfComputableFunction operator->*( const ConditionOfComputableFunction& b1 , const ConditionOfComputableFunction& b2 );
-inline ConditionOfComputableFunction operator<<( const ConditionOfComputableFunction& b1 , const ConditionOfComputableFunction& b2 );
+DECLARATION_OF_BASIC_RELATION( bool , && );
+DECLARATION_OF_BASIC_RELATION( bool , || );
+DECLARATION_OF_BASIC_RELATION( bool , >> );
+DECLARATION_OF_BASIC_RELATION( bool , ->* );
+DECLARATION_OF_BASIC_RELATION( bool , << );

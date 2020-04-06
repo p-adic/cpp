@@ -73,20 +73,32 @@ auto ConditionOfComputableFunction::PushRelationExpression( const RelationSymbol
   
 }
 
-inline ConditionOfComputableFunction operator==( const ExpressionOfComputableFunction<bool>& e1 , const ExpressionOfComputableFunction<bool>& e2 ){ return EquivSymbolApplication( e1 , e2 ); }
-inline ConditionOfComputableFunction operator!=( const ExpressionOfComputableFunction<bool>& e1 , const ExpressionOfComputableFunction<bool>& e2 ){ return NegSymbolApplication( EquivSymbolApplication( e1 , e2 ) ); }
 
-template <typename Ret> inline ConditionOfComputableFunction operator==( const ExpressionOfComputableFunction<Ret>& e1 , const ExpressionOfComputableFunction<Ret>& e2 ){ return EqSymbolApplication( e1 , e2 ); }
-template <typename Ret> inline ConditionOfComputableFunction operator!=( const ExpressionOfComputableFunction<Ret>& e1 , const ExpressionOfComputableFunction<Ret>& e2 ){ return NeqSymbolApplication( e1 , e2 ); }
-template <typename Ret> inline ConditionOfComputableFunction operator<=( const ExpressionOfComputableFunction<Ret>& e1 , const ExpressionOfComputableFunction<Ret>& e2 ){ return LeqSymbolApplication( e1 , e2 ); }
-template <typename Ret> inline ConditionOfComputableFunction operator>=( const ExpressionOfComputableFunction<Ret>& e1 , const ExpressionOfComputableFunction<Ret>& e2 ){ return GeqSymbolApplication( e1 , e2 ); }
-template <typename Ret> inline ConditionOfComputableFunction operator<( const ExpressionOfComputableFunction<Ret>& e1 , const ExpressionOfComputableFunction<Ret>& e2 ){ return LneqSymbolApplication( e1 , e2 ); }
-template <typename Ret> inline ConditionOfComputableFunction operator>( const ExpressionOfComputableFunction<Ret>& e1 , const ExpressionOfComputableFunction<Ret>& e2 ){ return GneqSymbolApplication( e1 , e2 ); }
+template <typename Ret> DEFINITION_OF_BASIC_RELATION( Ret , == , Eq );
+DEFINITION_OF_BASIC_RELATION( int , == , Eq );
+DEFINITION_OF_BASIC_RELATION( string , == , Eq );
+DEFINITION_OF_BASIC_RELATION( bool , == , Equiv );
 
+template <typename Ret> DEFINITION_OF_BASIC_RELATION( Ret , != , Neq );
+DEFINITION_OF_BASIC_RELATION( int , != , Neq );
+DEFINITION_OF_BASIC_RELATION( string , != , Neq );
+DECLARATION_OF_BASIC_RELATION( bool , != ){ return NegSymbolApplication( EquivSymbolApplication( e1 , e2 ) ); }
+
+template <typename Ret> DEFINITION_OF_BASIC_RELATION( Ret , <= , Leq );
+DEFINITION_OF_BASIC_RELATION( int , <= , Leq );
+
+template <typename Ret> DEFINITION_OF_BASIC_RELATION( Ret , >= , Geq );
+DEFINITION_OF_BASIC_RELATION( int , >= , Geq );
+
+template <typename Ret> DEFINITION_OF_BASIC_RELATION( Ret , < , Lneq );
+DEFINITION_OF_BASIC_RELATION( int , < , Lneq );
+
+template <typename Ret> DEFINITION_OF_BASIC_RELATION( Ret , > , Gneq );
+DEFINITION_OF_BASIC_RELATION( int , > , Gneq );
 
 inline ConditionOfComputableFunction operator!( const ConditionOfComputableFunction& b ){ return NegSymbolApplication( b ); }
-inline ConditionOfComputableFunction operator&&( const ConditionOfComputableFunction& b1 , const ConditionOfComputableFunction& b2 ){ return LandSymbolApplication( b1 , b2 ); }
-inline ConditionOfComputableFunction operator||( const ConditionOfComputableFunction& b1 , const ConditionOfComputableFunction& b2 ){ return LorSymbolApplication( b1 , b2 ); }
-inline ConditionOfComputableFunction operator>>( const ConditionOfComputableFunction& b1 , const ConditionOfComputableFunction& b2 ){ return ToSymbolApplication( b1 , b2 ); }
-inline ConditionOfComputableFunction operator->*( const ConditionOfComputableFunction& b1 , const ConditionOfComputableFunction& b2 ){ return ToSymbolApplication( b1 , b2 ); }
-inline ConditionOfComputableFunction operator<<( const ConditionOfComputableFunction& b1 , const ConditionOfComputableFunction& b2 ){ return ToSymbolApplication( b2 , b1 ); }
+DEFINITION_OF_BASIC_RELATION( bool , && , Land );
+DEFINITION_OF_BASIC_RELATION( bool , || , Lor );
+DEFINITION_OF_BASIC_RELATION( bool , >> , To );
+DEFINITION_OF_BASIC_RELATION( bool , ->* , To );
+DEFINITION_OF_BASIC_RELATION( bool , << , Ot );

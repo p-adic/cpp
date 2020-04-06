@@ -115,7 +115,7 @@
 // definition
 #define DEF( FUNC )							\
 									\
-  const decltype( DefinitionOfComputableFunction( f ) ) CONNECT( __DEFINITION_OF__ , FUNC )
+  const decltype( DefinitionOfComputableFunction( FUNC ) ) CONNECT( __DEFINITION_OF__ , FUNC )
 
 #define IF( ... )				\
 						\

@@ -1,6 +1,8 @@
 // c:/Users/user/Documents/Programming/Mathematics/Function/Computable/Expression/a.hpp
 
 #pragma once
+#include "a_Macro.hpp"
+
 #include "../Syntax/a.hpp"
 
 // #include "List/a.hpp"
@@ -46,11 +48,11 @@ private:
 
 #include "a_Alias.hpp"
 
-template <typename Ret> inline ExpressionOfComputableFunction<Ret> operator+( const ExpressionOfComputableFunction<Ret>& e1 , const ExpressionOfComputableFunction<Ret>& e2 );
-template <typename Ret> inline ExpressionOfComputableFunction<Ret> operator-( const ExpressionOfComputableFunction<Ret>& e1 , const ExpressionOfComputableFunction<Ret>& e2 );
-template <typename Ret> inline ExpressionOfComputableFunction<Ret> operator*( const ExpressionOfComputableFunction<Ret>& e1 , const ExpressionOfComputableFunction<Ret>& e2 );
-template <typename Ret> inline ExpressionOfComputableFunction<Ret> operator/( const ExpressionOfComputableFunction<Ret>& e1 , const ExpressionOfComputableFunction<Ret>& e2 );
-template <typename Ret> inline ExpressionOfComputableFunction<Ret> operator%( const ExpressionOfComputableFunction<Ret>& e1 , const ExpressionOfComputableFunction<Ret>& e2 );
-template <typename Ret> inline ExpressionOfComputableFunction<Ret> operator^( const ExpressionOfComputableFunction<Ret>& e1 , const ExpressionOfComputableFunction<Ret>& e2 );
+template <typename Ret> DECLARATION_OF_BASIC_FUNCTION( Ret , + );
+template <typename Ret> DECLARATION_OF_BASIC_FUNCTION( Ret , - );
+template <typename Ret> DECLARATION_OF_BASIC_FUNCTION( Ret , * );
+template <typename Ret> DECLARATION_OF_BASIC_FUNCTION( Ret , / );
+template <typename Ret> DECLARATION_OF_BASIC_FUNCTION( Ret , % );
+template <typename Ret> DECLARATION_OF_BASIC_FUNCTION( Ret , ^ );
 
 inline const ExpressionOfComputableFunction<int>& InftySymbol();

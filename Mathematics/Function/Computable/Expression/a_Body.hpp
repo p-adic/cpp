@@ -7,6 +7,8 @@
 #include "../Relation/Variadic/a.hpp"
 
 #include "List/a_Body.hpp"
+#include "../Function/Variadic/a_Body.hpp"
+#include "../Relation/Variadic/a_Body.hpp"
 #include "../Syntax/a_Body.hpp"
 #include "../Type/Valid/a_Body.hpp"
 
@@ -49,11 +51,26 @@ inline auto ExpressionOfComputableFunction<Ret>::PushFunctionExpression( const F
   
 }
 
-template <typename Ret> inline ExpressionOfComputableFunction<Ret> operator+( const ExpressionOfComputableFunction<Ret>& e1 , const ExpressionOfComputableFunction<Ret>& e2 ){ return PlusSymbolApplication( e1 , e2 ); }
-template <typename Ret> inline ExpressionOfComputableFunction<Ret> operator-( const ExpressionOfComputableFunction<Ret>& e1 , const ExpressionOfComputableFunction<Ret>& e2 ){ return MinusSymbolApplication( e1 , e2 ); }
-template <typename Ret> inline ExpressionOfComputableFunction<Ret> operator*( const ExpressionOfComputableFunction<Ret>& e1 , const ExpressionOfComputableFunction<Ret>& e2 ){ return TimesSymbolApplication( e1 , e2 ); }
-template <typename Ret> inline ExpressionOfComputableFunction<Ret> operator/( const ExpressionOfComputableFunction<Ret>& e1 , const ExpressionOfComputableFunction<Ret>& e2 ){ return SlashSymbolApplication( e1 , e2 ); }
-template <typename Ret> inline ExpressionOfComputableFunction<Ret> operator%( const ExpressionOfComputableFunction<Ret>& e1 , const ExpressionOfComputableFunction<Ret>& e2 ){ return ModSymbolApplication( e1 , e2 ); }
-template <typename Ret> inline ExpressionOfComputableFunction<Ret> operator^( const ExpressionOfComputableFunction<Ret>& e1 , const ExpressionOfComputableFunction<Ret>& e2 ){ return PowerSymbolApplication( e1 , e2 ); }
+template <typename Ret> DEFINITION_OF_BASIC_FUNCTION( Ret , + , Plus );
+DEFINITION_OF_BASIC_FUNCTION( int , + , Plus );
+DEFINITION_OF_BASIC_FUNCTION( string , + , Plus );
+DEFINITION_OF_BASIC_FUNCTION( bool , + , Plus );
+
+template <typename Ret> DEFINITION_OF_BASIC_FUNCTION( Ret , - , Minus );
+DEFINITION_OF_BASIC_FUNCTION( int , - , Minus );
+DEFINITION_OF_BASIC_FUNCTION( bool , - , Minus );
+
+template <typename Ret> DEFINITION_OF_BASIC_FUNCTION( Ret , * , Times );
+DEFINITION_OF_BASIC_FUNCTION( int , * , Times );
+DEFINITION_OF_BASIC_FUNCTION( bool , * , Times );
+
+template <typename Ret> DEFINITION_OF_BASIC_FUNCTION( Ret , / , Slash );
+DEFINITION_OF_BASIC_FUNCTION( int , / , Slash );
+
+template <typename Ret> DEFINITION_OF_BASIC_FUNCTION( Ret , % , Mod );
+DEFINITION_OF_BASIC_FUNCTION( int , % , Mod );
+
+template <typename Ret> DEFINITION_OF_BASIC_FUNCTION( Ret , ^ , Power );
+DEFINITION_OF_BASIC_FUNCTION( int , ^ , Power );
 
 inline const ExpressionOfComputableFunction<int>& InftySymbol(){ static const ExpressionOfComputableFunction<int> n = ExpressionOfComputableFunction<int>(infty() ); return n; }
