@@ -87,15 +87,17 @@ IteratorOfVLTree<T>& IteratorOfVLTree<T>::operator[]( const int& n )
 
     }
 
-  }
-
-  if( n < 0 ){
+  } else {
+    
+    if( n < 0 ){
       
-    m_p = ACCESS( m_p ).m_rightmost_node;
+      m_p = ACCESS( m_p ).m_rightmost_node;
 
-    for( int i = -1 ; n < i ; i-- ){
+      for( int i = -1 ; n < i ; i-- ){
 
-      m_p = ACCESS( m_p ).m_left_branch;
+	m_p = ACCESS( m_p ).m_left_branch;
+
+      }
 
     }
 
