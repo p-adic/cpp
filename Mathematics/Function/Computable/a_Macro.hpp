@@ -70,10 +70,14 @@
   auto CONNECT( CONNECT( __SYMBOL_OF_ , FUNC ) , __ ) = FUNCTION_SYMBOL_CONSTRUCTOR( RET , FUNC , __VA_ARGS__ ); \
   const decltype( CONNECT( CONNECT( __SYMBOL_OF_ , FUNC ) , __ ) )& FUNC = CONNECT( CONNECT( __SYMBOL_OF_ , FUNC ) , __ ) \
 
+
+// symbol setting
 #define SET( OBJ , SYMB ) CONNECT( CONNECT( __SYMBOL_OF_ , OBJ ) , __ ).SetSymbol( TO_STRING( SYMB ) ) 
 
+#define PLAINISE( OBJ ) CONNECT( CONNECT( __SYMBOL_OF_ , OBJ ) , __ ).PlainiseSymbol() 
 
-// separator
+
+// separator setting
 #define SYMB( FUNC ) FUNC.GetNodeString( 2 ) 
 #define SPACE SpaceString() 
 #define VSPACE to_string( "\\ " ) 
