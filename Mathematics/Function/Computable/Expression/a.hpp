@@ -10,30 +10,31 @@
 // #include "../Relation/Variadic/a.hpp"
 
 template <typename Ret, typename... Args> class FunctionSymbol;
-template <typename Ret, typename... Args> class VariadicFunctionSymbol;
+template <typename Ret, typename VArg, typename... Args> class VariadicFunctionSymbol;
 template <typename... Args> class RelationSymbol;
-template <typename... Args> class VariadicRelationSymbol;
+template <typename VArg, typename... Args> class VariadicRelationSymbol;
 template <typename... Args> class ListExpressionOfComputableFunction;
 
 template <typename Ret>
 class ExpressionOfComputableFunction :
   public SyntaxOfComputableFunction
 {
-
+  
 protected:
   // variable
   inline ExpressionOfComputableFunction( const int& dummy , const string& x );
 
 public:
   // constant
-  template <typename T> inline ExpressionOfComputableFunction( const T& t ) = delete;
   inline ExpressionOfComputableFunction( const Ret& t );
 
   // function
   template <typename... Args> inline ExpressionOfComputableFunction( const FunctionSymbol<Ret,Args...>& f , const ExpressionOfComputableFunction<Args>&... args );
 
   // variadic function
-  template <typename... Args, typename... VA> inline ExpressionOfComputableFunction( const VariadicFunctionSymbol<Ret,Args...>& f , const ExpressionOfComputableFunction<Args>&... args , const ListExpressionOfComputableFunction<VA...>& va );
+  // template <typename... Args, typename... VA> inline ExpressionOfComputableFunction( const VariadicFunctionSymbol<Ret,Args...>& f , const ExpressionOfComputableFunction<Args>&... args , const ListExpressionOfComputableFunction<VA...>& va );
+  
+  template <typename... Args, typename... VA> inline ExpressionOfComputableFunction( const VariadicFunctionSymbol<Ret,Args...>& f , const ExpressionOfComputableFunction<VA>&... va );
 
   using type = Ret;
 
@@ -42,7 +43,7 @@ private:
   template <typename... Args, typename... VA> inline void PushFunctionExpression( const FunctionSymbol<Ret,Args...>& f , const ExpressionOfComputableFunction<VA>&... va );
 
   // ñÿÇÃâEí[Ç…ä÷êîfÇ∆à¯êîÇÃñÿva...Ç…ÇÊÇÈï\åªÇí«â¡
-  template<typename... Args, typename... VA>
+  template <typename... Args, typename... VA>
   inline auto PushFunctionExpression( const FunctionSymbol<Ret,Args...>& f , const VA&... va ) -> typename enable_if<conjunction<is_same<VLTree<string>,VA>...>::value,void>::type;
 };
 

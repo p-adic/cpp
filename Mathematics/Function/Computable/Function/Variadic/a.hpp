@@ -3,19 +3,23 @@
 #pragma once
 #include "a_Macro.hpp"
 
+#include "Guide/a.hpp"
 #include "../a.hpp"
 #include "../../Expression/List/a.hpp"
 
-template <typename Ret, typename... Args>
+
+template <typename Ret, typename VArg, typename... Args>
 class VariadicFunctionSymbol :
   public FunctionSymbol<Ret,Args...,void>
 {
-
+  
 public:
   inline VariadicFunctionSymbol( const string& f , const VariableSymbol<Args>&... args );
   inline VariadicFunctionSymbol( const string& f , const SeparatorOfComputableFunction& s , const VariableSymbol<Args>&... args );
 
-  template <typename... VA> inline ExpressionOfComputableFunction<Ret> operator()( const ExpressionOfComputableFunction<Args>&... args , const ListExpressionOfComputableFunction<VA...>& va ) const;
+  template <typename... VA> inline auto operator()( const ExpressionOfComputableFunction<VA>&... va ) const -> typename enable_if<IsValidVariadicArguments<VArg,WrappedTypes<Args...>,WrappedTypes<VA...> >::value,ExpressionOfComputableFunction<Ret> >::type;
+
+  template <typename... VA> inline auto operator()( const ExpressionOfComputableFunction<Args>&... args , const VA&... va ) const -> typename enable_if<! conjunction<is_same<ExpressionOfComputableFunction<VArg>,VA>...>::value,ExpressionOfComputableFunction<Ret> >::type;
 
 };
 

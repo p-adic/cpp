@@ -4,7 +4,7 @@
 
 #define DECLARATION_OF_VARIADIC_FUNCTION_SYMBOL( RET , FUNC )	\
 									\
-  inline const VariadicFunctionSymbol< RET , RET >& CONNECT( FUNC , Symbol )() \
+  inline const VariadicFunctionSymbol< RET , RET , RET >& CONNECT( FUNC , Symbol )() \
 									\
     
 #define DECLARATION_OF_VARIADIC_FUNCTION_SYMBOL_APPLICATION_ONE( RET , FUNC ) \
@@ -24,7 +24,7 @@
 
 #define DEFINITION_OF_VARIADIC_FUNCTION_SYMBOL( RET , FUNC , OPERATOR )	\
 									\
-  DECLARATION_OF_VARIADIC_FUNCTION_SYMBOL( RET , FUNC ){ static const VariadicFunctionSymbol< RET , RET > f( CONNECT( OPERATOR , String )() , SeparatorOfComputableFunction( 0 , EmptyString() , LdotsString() , SpaceString() + CONNECT( OPERATOR , String )() + SpaceString() , EmptyString() ) , VariableSymbol< RET >( "x" ) ); return f; } \
+  DECLARATION_OF_VARIADIC_FUNCTION_SYMBOL( RET , FUNC ){ static const VariadicFunctionSymbol< RET , RET , RET > f( CONNECT( OPERATOR , String )() , SeparatorOfComputableFunction( 0 , EmptyString() , LdotsString() , SpaceString() + CONNECT( OPERATOR , String )() + SpaceString() , EmptyString() ) , VariableSymbol< RET >( "x" ) ); return f; } \
 
 
 #define DEFINITION_OF_VARIADIC_FUNCTION_SYMBOL_APPLICATION_ONE( RET , FUNC ) \
@@ -122,7 +122,7 @@
 									\
     }									\
 									\
-    return CONNECT( FUNC , SYMBOL )()( e1 , ListExpressionOfComputableFunction( e2 ) ); \
+    return CONNECT( FUNC , SYMBOL )()( e1 , e2 );			\
 									\
   }									\
 									\

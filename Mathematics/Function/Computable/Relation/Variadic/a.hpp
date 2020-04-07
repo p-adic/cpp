@@ -4,7 +4,9 @@
 #include "../a.hpp"
 #include "../../Expression/List/a.hpp"
 
-template <typename... Args>
+#include "../../Function/Variadic/Guide/a.hpp"
+
+template <typename VArg, typename... Args>
 class VariadicRelationSymbol :
   public RelationSymbol<Args...,void>
 {
@@ -13,6 +15,8 @@ public:
   inline VariadicRelationSymbol( const string& r , const VariableSymbol<Args>&... args );
   inline VariadicRelationSymbol( const string& r , const SeparatorOfComputableFunction& s , const VariableSymbol<Args>&... args );
 
-  template <typename... VA> inline ConditionOfComputableFunction operator()( const ExpressionOfComputableFunction<Args>&... args , const ListExpressionOfComputableFunction<VA...>& va ) const;
+  template <typename... VA> inline auto operator()( const ExpressionOfComputableFunction<VA>&... va ) const -> typename enable_if<IsValidVariadicArguments<VArg,WrappedTypes<Args...>,WrappedTypes<VA...> >::value,ConditionOfComputableFunction>::type;
 
+  template <typename... VA> inline auto operator()( const ExpressionOfComputableFunction<Args>&... args , const VA&... va ) const -> typename enable_if<! conjunction<is_same<ExpressionOfComputableFunction<VArg>,VA>...>::value,ConditionOfComputableFunction>::type;
+  
 };

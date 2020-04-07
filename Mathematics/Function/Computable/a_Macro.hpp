@@ -72,9 +72,11 @@
 
 
 // symbol setting
-#define SET( OBJ , SYMB ) CONNECT( CONNECT( __SYMBOL_OF_ , OBJ ) , __ ).SetSymbol( TO_STRING( SYMB ) ) 
+#define STR( SYMB ) TO_STRING( SYMB ) 
 
-#define PLAIN( SYMB ) Plainise( TO_STRING( SYMB ) ) 
+#define SET( OBJ , SYMB ) CONNECT( CONNECT( __SYMBOL_OF_ , OBJ ) , __ ).SetSymbol( STR( SYMB ) ) 
+
+#define PLAIN( SYMB ) Plainise( STR( SYMB ) ) 
 
 #define ROMANISE( OBJ ) CONNECT( CONNECT( __SYMBOL_OF_ , OBJ ) , __ ).RomaniseSymbol() 
 

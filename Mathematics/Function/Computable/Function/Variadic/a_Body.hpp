@@ -6,11 +6,13 @@
 #include "../a_Body.hpp"
 #include "../../Expression/List/a_Body.hpp"
 
-template <typename Ret, typename... Args> inline VariadicFunctionSymbol<Ret,Args...>::VariadicFunctionSymbol( const string& f , const VariableSymbol<Args>&... args ) : VariadicFunctionSymbol( f , SeparatorOfComputableFunction( f , sizeof...( Args ) , true ) , args... ) {}
+template <typename Ret, typename VArg, typename... Args> inline VariadicFunctionSymbol<Ret,VArg,Args...>::VariadicFunctionSymbol( const string& f , const VariableSymbol<Args>&... args ) : VariadicFunctionSymbol( f , SeparatorOfComputableFunction( f , sizeof...( Args ) , true ) , args... ) {}
 
-template <typename Ret, typename... Args> inline VariadicFunctionSymbol<Ret,Args...>::VariadicFunctionSymbol( const string& f , const SeparatorOfComputableFunction& s , const VariableSymbol<Args>&... args ) : FunctionSymbol<Ret,Args...,void>( f , s , args... , LdotsSymbol() ) {}
+template <typename Ret, typename VArg, typename... Args> inline VariadicFunctionSymbol<Ret,VArg,Args...>::VariadicFunctionSymbol( const string& f , const SeparatorOfComputableFunction& s , const VariableSymbol<Args>&... args ) : FunctionSymbol<Ret,Args...,void>( f , s , args... , LdotsSymbol() ) {}
 
-template <typename Ret, typename... Args> template <typename... VA> inline ExpressionOfComputableFunction<Ret> VariadicFunctionSymbol<Ret,Args...>::operator()( const ExpressionOfComputableFunction<Args>&... args , const ListExpressionOfComputableFunction<VA...>& va ) const { return ExpressionOfComputableFunction<Ret>( *this , args... , va ); }
+template <typename Ret, typename VArg, typename... Args> template <typename... VA> inline auto VariadicFunctionSymbol<Ret,VArg,Args...>::operator()( const ExpressionOfComputableFunction<VA>&... va ) const -> typename enable_if<IsValidVariadicArguments<VArg,WrappedTypes<Args...>,WrappedTypes<VA...> >::value,ExpressionOfComputableFunction<Ret> >::type { return ExpressionOfComputableFunction<Ret>( *this , va... ); }
+
+template <typename Ret, typename VArg, typename... Args> template <typename... VA> inline auto VariadicFunctionSymbol<Ret,VArg,Args...>::operator()( const ExpressionOfComputableFunction<Args>&... args , const VA&... va ) const -> typename enable_if<! conjunction<is_same<ExpressionOfComputableFunction<VArg>,VA>...>::value,ExpressionOfComputableFunction<Ret> >::type { return operator()( args... , ExpressionOfComputableFunction<VArg>( va )... ); }
 
 
 template <typename Ret> DEFINITION_OF_VARIADIC_FUNCTION_SYMBOL( Ret , Plus , Plus );

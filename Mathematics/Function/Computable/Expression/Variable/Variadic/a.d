@@ -109,6 +109,8 @@ Mathematics/Function/Computable/Expression/Variable/Variadic/a.o: \
  Mathematics/Function/Computable/Expression/Variable/Variadic/../../List/a.hpp \
  C:/Users/user/Documents/Programming/Mathematics/Function/Computable/Function/Variadic/a.hpp \
  C:/Users/user/Documents/Programming/Mathematics/Function/Computable/Function/Variadic/a_Macro.hpp \
+ C:/Users/user/Documents/Programming/Mathematics/Function/Computable/Function/Variadic/Guide/a.hpp \
+ C:/Users/user/Documents/Programming/SFINAE/MetaFunction/IsIncludedBy/a.hpp \
  C:/Users/user/Documents/Programming/Mathematics/Function/Computable/Function/a.hpp \
  C:/Users/user/Documents/Programming/Mathematics/Function/Computable/Function/a_Macro.hpp \
  C:/Users/user/Documents/Programming/Mathematics/Function/Computable/Expression/Condition/a.hpp \
@@ -355,6 +357,10 @@ Mathematics/Function/Computable/Expression/Variable/Variadic/../../List/a.hpp:
 C:/Users/user/Documents/Programming/Mathematics/Function/Computable/Function/Variadic/a.hpp:
 
 C:/Users/user/Documents/Programming/Mathematics/Function/Computable/Function/Variadic/a_Macro.hpp:
+
+C:/Users/user/Documents/Programming/Mathematics/Function/Computable/Function/Variadic/Guide/a.hpp:
+
+C:/Users/user/Documents/Programming/SFINAE/MetaFunction/IsIncludedBy/a.hpp:
 
 C:/Users/user/Documents/Programming/Mathematics/Function/Computable/Function/a.hpp:
 
