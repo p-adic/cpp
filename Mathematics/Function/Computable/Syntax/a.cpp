@@ -6,6 +6,7 @@
 #include "../Expression/a_Body.hpp"
 #include "../../../../Error/FaultInCoding/a.hpp"
 
+
 void SyntaxOfComputableFunction::SetSymbol( const string& symbol )
 {
 
@@ -15,6 +16,17 @@ void SyntaxOfComputableFunction::SetSymbol( const string& symbol )
   return;
 
 }
+
+void SyntaxOfComputableFunction::PlainiseSymbol()
+{
+
+  auto itr = m_syntax.LeftMostNode();
+  itr++;
+  *itr = Plainise( *itr );
+  return;
+
+}
+
 
 void SyntaxOfComputableFunction::InputDefinition( ofstream& ofs , const SyntaxOfComputableFunction& f ) const
 {

@@ -21,6 +21,7 @@ public:
   inline const string& GetNodeString( const int& n ) const;
 
   void SetSymbol( const string& symbol );
+  void PlainiseSymbol();
 
   inline string Display() const noexcept;
 
@@ -64,6 +65,9 @@ string ImplicationToString( VLTree<string>::const_iterator& itr );
 string EquivalenceToString( VLTree<string>::const_iterator& itr );
 string LogicalAndToString( VLTree<string>::const_iterator& itr );
 string LogicalOrToString( VLTree<string>::const_iterator& itr );
+
+
+inline string Plainise( const string& s ) noexcept;
 
 DECLARATION_OF_GLOBAL_CONSTANT_STRING_FOR_SYMBOL( Empty );
 DECLARATION_OF_GLOBAL_CONSTANT_STRING_FOR_SYMBOL( Space );

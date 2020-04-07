@@ -68,6 +68,8 @@ auto ExpressionsToListSyntax( const Args&... args ) -> typename enable_if<conjun
   
 }
 
+inline string Plainise( const string& s ) noexcept { return "\\textrm{" + s + "}"; }
+
 DECLARATION_OF_GLOBAL_CONSTANT_STRING_FOR_SYMBOL( Empty ){ static const string s = ""; return s; }
 DECLARATION_OF_GLOBAL_CONSTANT_STRING_FOR_SYMBOL( Space ){ static const string s = " "; return s; }
 DEFINITION_OF_GLOBAL_CONSTANT_STRING_FOR_SYMBOL( Sub , _ );
