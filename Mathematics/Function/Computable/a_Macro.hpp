@@ -74,7 +74,9 @@
 // symbol setting
 #define SET( OBJ , SYMB ) CONNECT( CONNECT( __SYMBOL_OF_ , OBJ ) , __ ).SetSymbol( TO_STRING( SYMB ) ) 
 
-#define PLAINISE( OBJ ) CONNECT( CONNECT( __SYMBOL_OF_ , OBJ ) , __ ).PlainiseSymbol() 
+#define PLAIN( SYMB ) Plainise( TO_STRING( SYMB ) ) 
+
+#define ROMANISE( OBJ ) CONNECT( CONNECT( __SYMBOL_OF_ , OBJ ) , __ ).RomaniseSymbol() 
 
 
 // separator setting

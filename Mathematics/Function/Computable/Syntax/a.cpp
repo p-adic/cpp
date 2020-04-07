@@ -17,7 +17,7 @@ void SyntaxOfComputableFunction::SetSymbol( const string& symbol )
 
 }
 
-void SyntaxOfComputableFunction::PlainiseSymbol()
+void SyntaxOfComputableFunction::RomaniseSymbol()
 {
 
   auto itr = m_syntax.LeftMostNode();

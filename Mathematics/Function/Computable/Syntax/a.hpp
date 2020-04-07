@@ -21,7 +21,7 @@ public:
   inline const string& GetNodeString( const int& n ) const;
 
   void SetSymbol( const string& symbol );
-  void PlainiseSymbol();
+  void RomaniseSymbol();
 
   inline string Display() const noexcept;
 
