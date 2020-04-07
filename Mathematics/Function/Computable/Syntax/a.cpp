@@ -124,7 +124,7 @@ void SyntaxOfComputableFunction::InputDefinition( ofstream& ofs , const SyntaxOf
   const string& function_expression_name = *p_function_expression_name;
 
   
-  ofs << "ŒvŽZ‰Â”\ŠÖ”" << endl;
+  ofs << "ŒvŽZ‰Â”\•”•ªŠÖ”" << endl;
   ofs << "\\begin{eqnarray*}" << endl;
   ofs << function_name << " \\colon " << argument_type_name << " & \\to & " << return_type_name << " \\\\" << endl;
   ofs << argument_name << " & \\mapsto & " << function_expression_name << endl;
