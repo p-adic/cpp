@@ -1147,20 +1147,32 @@ string LogicalAndToString( VLTree<string>::const_iterator& itr , const string& l
 
     while( itr.IsValid() ){
 
+      const string b_current = ConditionToString( itr , language , style );
+
       if( first ){
 
 	b = "( " + b;
 	first = false;
 
-      }
+	if( itr.IsValid() ){
 
-      b += ", ";
+	  b += " ";
 
-      const string b_current = ConditionToString( itr , language , style );
+	} else {
 
-      if( ! itr.IsValid() ){
+	  b += ", ";
 
-	b += "and ";
+	}
+	
+      } else {
+
+	b += ", ";
+
+	if( ! itr.IsValid() ){
+
+	  b += "and ";
+
+	}
 
       }
 
@@ -1173,9 +1185,9 @@ string LogicalAndToString( VLTree<string>::const_iterator& itr , const string& l
       b += " )";
 
     }
-
+    
     return b;
-      
+
   }
 
   ERR_IMPUT( b , language , style );
@@ -1229,20 +1241,32 @@ string LogicalOrToString( VLTree<string>::const_iterator& itr , const string& la
 
     while( itr.IsValid() ){
 
+      const string b_current = ConditionToString( itr , language , style );
+
       if( first ){
 
 	b = "( " + b;
 	first = false;
 
-      }
+	if( itr.IsValid() ){
 
-      b += ", ";
+	  b += " ";
 
-      const string b_current = ConditionToString( itr , language , style );
+	} else {
 
-      if( ! itr.IsValid() ){
+	  b += ", ";
 
-	b += "or ";
+	}
+	
+      } else {
+
+	b += ", ";
+
+	if( ! itr.IsValid() ){
+
+	  b += "or ";
+
+	}
 
       }
 
