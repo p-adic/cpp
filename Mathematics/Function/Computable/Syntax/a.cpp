@@ -469,7 +469,7 @@ void SyntaxOfComputableFunction::InputPutConditionLine( ofstream& ofs , VLTree<s
 
   if( language == EnglishString() && style == FandomString() ){
 
-    ofs << "I abbreviate the condition " << ConditionToString( itr_line , language , style ) << " to \\(" << variable_name << "\\)." << endl;
+    ofs << "Abbreviate the condition " << ConditionToString( itr_line , language , style ) << " to \\(" << variable_name << "\\)." << endl;
     return;
       
 
@@ -492,7 +492,7 @@ void SyntaxOfComputableFunction::InputPutNonConditionLine( ofstream& ofs , VLTre
 
   if( language == EnglishString() && style == FandomString() ){
 
-    ofs << "I put \\(" << variable_name << " := " << ExpressionToString( itr_line ) << " \\in " << variable_type_name << "\\)." << endl;
+    ofs << "Put \\(" << variable_name << " := " << ExpressionToString( itr_line ) << " \\in " << variable_type_name << "\\)." << endl;
     return;
       
   }
@@ -521,14 +521,14 @@ void SyntaxOfComputableFunction::InputPrintLine( ofstream& ofs , VLTree<string>:
   
   if( language == JapaneseString() && style == FandomString() ){
 
-    ofs << "デバッグ時に\\(" << *p_variable_name << "\\)の標準出力を行う。この操作は計算結果に影響を与えない。" << endl;
+    ofs << "\\(" << *p_variable_name << "\\)の標準出力を行う。この操作は計算結果に影響を与えない。" << endl;
     return;
 
   }
 
   if( language == EnglishString() && style == FandomString() ){
 
-    ofs << "When I debug this code, I stdout \\(" << *p_variable_name << "\\). This line does not effect the result of the computation." << endl;
+    ofs << "Stdout \\(" << *p_variable_name << "\\). This line does not effect the result of the computation." << endl;
     return;
       
   }
@@ -585,7 +585,7 @@ void SyntaxOfComputableFunction::InputReturnLine( ofstream& ofs , const string& 
 
   if( language == EnglishString() && style == FandomString() ){
 
-    ofs << "I set \\(" << function_expression_name << " := " << *p_return_name << "\\)." << endl;
+    ofs << "Set \\(" << function_expression_name << " := " << *p_return_name << "\\)." << endl;
     return;
       
   }
