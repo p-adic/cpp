@@ -1317,11 +1317,11 @@ string LogicalAndToString( VLTree<string>::const_iterator& itr , string& languag
 	   if( first ){
 
 	     first = false;
+	     second = true;
 
 	     if( complicated && itr.IsValid() ){
 
 	       PutParenthesis( b_current );
-	       second = true;
 
 	     }
 
@@ -1446,11 +1446,11 @@ string LogicalOrToString( VLTree<string>::const_iterator& itr , string& language
 	   if( first ){
 
 	     first = false;
+	     second = true;
 
 	     if( complicated && itr.IsValid() ){
 
 	       PutParenthesis( b_current );
-	       second = true;
 
 	     }
 
