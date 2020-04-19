@@ -115,6 +115,8 @@ void SyntaxOfComputableFunction::InputDefinition( ofstream& ofs , const SyntaxOf
      CALL( e )
 
      );
+
+  string language_copy = language;
   
   TRY_CATCH
     (
@@ -122,7 +124,7 @@ void SyntaxOfComputableFunction::InputDefinition( ofstream& ofs , const SyntaxOf
      {
        
        InputDeclaration( ofs , *p_function_name , *p_argument_type_name , *p_argument_name , *p_return_type_name , *p_function_expression_name , language , style );
-       InputLine( ofs , *p_function_expression_name , *p_line_name , itr_line , 0 , language , style );
+       InputLine( ofs , *p_function_expression_name , *p_line_name , itr_line , 0 , language_copy , style );
 
      },
      
@@ -168,7 +170,7 @@ void SyntaxOfComputableFunction::InputDeclaration( ofstream& ofs , const string&
 
 }
 
-void SyntaxOfComputableFunction::InputLine( ofstream& ofs , const string& function_expression_name , const string& line_name , VLTree<string>::const_iterator& itr_line , const uint& depth , const string& language , const string& style ) const
+void SyntaxOfComputableFunction::InputLine( ofstream& ofs , const string& function_expression_name , const string& line_name , VLTree<string>::const_iterator& itr_line , const uint& depth , string& language , const string& style ) const
 {
 
   if( line_name == ListString() ){
@@ -205,7 +207,7 @@ void SyntaxOfComputableFunction::InputLine( ofstream& ofs , const string& functi
   
 }
 
-void SyntaxOfComputableFunction::InputListLine( ofstream& ofs , const string& function_expression_name , VLTree<string>::const_iterator& itr_line , const uint& depth , const string& language , const string& style ) const
+void SyntaxOfComputableFunction::InputListLine( ofstream& ofs , const string& function_expression_name , VLTree<string>::const_iterator& itr_line , const uint& depth , string& language , const string& style ) const
 {
 
   TRY_CATCH
@@ -235,7 +237,7 @@ void SyntaxOfComputableFunction::InputListLine( ofstream& ofs , const string& fu
 
 }
 
-void SyntaxOfComputableFunction::InputNonListLine( ofstream& ofs , const string& function_expression_name , const string& line_name , VLTree<string>::const_iterator& itr_line , const uint& depth , const string& language , const string& style ) const
+void SyntaxOfComputableFunction::InputNonListLine( ofstream& ofs , const string& function_expression_name , const string& line_name , VLTree<string>::const_iterator& itr_line , const uint& depth , string& language , const string& style ) const
 {
 
   TRY_CATCH
@@ -291,7 +293,7 @@ void SyntaxOfComputableFunction::InputNonListLine( ofstream& ofs , const string&
 
 }
 
-void SyntaxOfComputableFunction::InputIndent( ofstream& ofs , const uint depth , const string& language , const string& style ) const noexcept
+void SyntaxOfComputableFunction::InputIndent( ofstream& ofs , const uint depth , string& language , const string& style ) const noexcept
 {
 
   if( style == FandomString() ){
@@ -316,7 +318,7 @@ void SyntaxOfComputableFunction::InputIndent( ofstream& ofs , const uint depth ,
 
 }
 
-void SyntaxOfComputableFunction::InputIfLine( ofstream& ofs , const string& function_expression_name , VLTree<string>::const_iterator& itr_line , const uint& depth , const string& language , const string& style ) const
+void SyntaxOfComputableFunction::InputIfLine( ofstream& ofs , const string& function_expression_name , VLTree<string>::const_iterator& itr_line , const uint& depth , string& language , const string& style ) const
 {
 
   auto itr_condition = itr_line;
@@ -326,8 +328,9 @@ void SyntaxOfComputableFunction::InputIfLine( ofstream& ofs , const string& func
     (
 
      {
-	 
-       const string& condition_name = ConditionToString( itr_condition , language , style );
+
+       bool complicated = false;
+       const string& condition_name = ConditionToString( itr_condition , complicated , language , style );
        const string& line_name = SyntaxToString( itr_line , 1 );
 
        if( line_name == ListString() ){
@@ -354,7 +357,7 @@ void SyntaxOfComputableFunction::InputIfLine( ofstream& ofs , const string& func
 
 }
 
-void SyntaxOfComputableFunction::InputIfListLine( ofstream& ofs , const string& function_expression_name , const string& condition_name , VLTree<string>::const_iterator& itr_line , const uint& depth , const string& language , const string& style ) const
+void SyntaxOfComputableFunction::InputIfListLine( ofstream& ofs , const string& function_expression_name , const string& condition_name , VLTree<string>::const_iterator& itr_line , const uint& depth , string& language , const string& style ) const
 {
 
   if( language == JapaneseString() ){
@@ -368,15 +371,23 @@ void SyntaxOfComputableFunction::InputIfListLine( ofstream& ofs , const string& 
 
     ofs << "Suppose that " << condition_name << "." << endl;
     return;
-	     
+    
   }
   
+  if( language == englishString() ){
+
+    ofs << "suppose that " << condition_name << "." << endl;
+    language = EnglishString();
+    return;
+    
+  }
+
   ERR_IMPUT( language );
   return;
 
 }
 
-void SyntaxOfComputableFunction::InputIfNonListLine( ofstream& ofs , const string& function_expression_name , const string& condition_name ,  VLTree<string>::const_iterator& itr_line , const uint& depth , const string& language , const string& style ) const
+void SyntaxOfComputableFunction::InputIfNonListLine( ofstream& ofs , const string& function_expression_name , const string& condition_name ,  VLTree<string>::const_iterator& itr_line , const uint& depth , string& language , const string& style ) const
 {
 
   if( language == JapaneseString() ){
@@ -389,6 +400,14 @@ void SyntaxOfComputableFunction::InputIfNonListLine( ofstream& ofs , const strin
   if( language == EnglishString() ){
 
     ofs << "If " << condition_name << ", then ";
+    language = englishString();
+    return;
+      
+  }
+    
+  if( language == englishString() ){
+
+    ofs << "if " << condition_name << ", then ";
     return;
       
   }
@@ -398,7 +417,7 @@ void SyntaxOfComputableFunction::InputIfNonListLine( ofstream& ofs , const strin
 
 }
 
-void SyntaxOfComputableFunction::InputPutLine( ofstream& ofs , VLTree<string>::const_iterator& itr_line , const uint& depth , const string& language , const string& style ) const
+void SyntaxOfComputableFunction::InputPutLine( ofstream& ofs , VLTree<string>::const_iterator& itr_line , const uint& depth , string& language , const string& style ) const
 {
 
   auto itr_variable = itr_line;
@@ -457,19 +476,55 @@ void SyntaxOfComputableFunction::InputPutLine( ofstream& ofs , VLTree<string>::c
 
 }
 
-void SyntaxOfComputableFunction::InputPutConditionLine( ofstream& ofs , VLTree<string>::const_iterator& itr_line , const string& variable_name , const string& language , const string& style ) const
+void SyntaxOfComputableFunction::InputPutConditionLine( ofstream& ofs , VLTree<string>::const_iterator& itr_line , const string& variable_name , string& language , const string& style ) const
 {
 
   if( language == JapaneseString() && style == FandomString() ){
 
-    ofs << "条件" << ConditionToString( itr_line , language , style ) << "を\\(" << variable_name << "\\)と置く。" << endl;
+    bool complicated = false;
+    string b = ConditionToString( itr_line , complicated , language , style );
+    
+    if( complicated ){
+
+      PutKagi( b );
+
+    }
+    
+    ofs << "条件" << b << "を\\(" << variable_name << "\\)と置く。" << endl;
     return;
 
   }
 
   if( language == EnglishString() && style == FandomString() ){
 
-    ofs << "Abbreviate the condition " << ConditionToString( itr_line , language , style ) << " to \\(" << variable_name << "\\)." << endl;
+    bool complicated = false;
+    string b = ConditionToString( itr_line , complicated , language , style );
+
+    if( complicated ){
+
+      PutParenthesis( b );
+
+    }
+    
+    ofs << "Abbreviate the condition " << b << " to \\(" << variable_name << "\\)." << endl;
+    return;
+      
+
+  }
+
+  if( language == englishString() && style == FandomString() ){
+
+    bool complicated = false;
+    string b = ConditionToString( itr_line , complicated , language , style );
+
+    if( complicated ){
+
+      PutParenthesis( b );
+
+    }
+    
+    ofs << "abbreviate the condition " << b << " to \\(" << variable_name << "\\)." << endl;
+    language = EnglishString();
     return;
       
 
@@ -480,7 +535,7 @@ void SyntaxOfComputableFunction::InputPutConditionLine( ofstream& ofs , VLTree<s
   
 }
 
-void SyntaxOfComputableFunction::InputPutNonConditionLine( ofstream& ofs , VLTree<string>::const_iterator& itr_line , const string& variable_name , const string& variable_type_name , const string& language , const string& style ) const
+void SyntaxOfComputableFunction::InputPutNonConditionLine( ofstream& ofs , VLTree<string>::const_iterator& itr_line , const string& variable_name , const string& variable_type_name , string& language , const string& style ) const
 {
 
   if( language == JapaneseString() && style == FandomString() ){
@@ -497,13 +552,21 @@ void SyntaxOfComputableFunction::InputPutNonConditionLine( ofstream& ofs , VLTre
       
   }
 
+  if( language == englishString() && style == FandomString() ){
+
+    ofs << "put \\(" << variable_name << " := " << ExpressionToString( itr_line ) << " \\in " << variable_type_name << "\\)." << endl;
+    language = EnglishString();
+    return;
+      
+  }
+
   ERR_IMPUT( language , style );
   return;
   
 }
 
 
-void SyntaxOfComputableFunction::InputPrintLine( ofstream& ofs , VLTree<string>::const_iterator& itr_line , const string& language , const string& style ) const
+void SyntaxOfComputableFunction::InputPrintLine( ofstream& ofs , VLTree<string>::const_iterator& itr_line , string& language , const string& style ) const
 {
 
   const string* p_variable_name;
@@ -533,12 +596,20 @@ void SyntaxOfComputableFunction::InputPrintLine( ofstream& ofs , VLTree<string>:
       
   }
 
+  if( language == englishString() && style == FandomString() ){
+
+    ofs << "stdout \\(" << *p_variable_name << "\\). This line does not effect the result of the computation." << endl;
+    language = EnglishString();
+    return;
+      
+  }
+
   ERR_IMPUT( language , style );
   return;
 
 }
 
-void SyntaxOfComputableFunction::InputExitLine( ofstream& ofs , const string& function_expression_name , const string& language , const string& style ) const
+void SyntaxOfComputableFunction::InputExitLine( ofstream& ofs , const string& function_expression_name , string& language , const string& style ) const
 {
 
   if( language == JapaneseString() && style == FandomString() ){
@@ -555,12 +626,20 @@ void SyntaxOfComputableFunction::InputExitLine( ofstream& ofs , const string& fu
 
   }
 
+  if( language == englishString() && style == FandomString() ){
+    
+    ofs << "\\(" << function_expression_name << "\\) is undefined." << endl;
+    language = EnglishString();
+    return;
+
+  }
+
   ERR_IMPUT( language , style );
   return;
 
 }
 
-void SyntaxOfComputableFunction::InputReturnLine( ofstream& ofs , const string& function_expression_name , VLTree<string>::const_iterator& itr_line , const uint& depth , const string& language , const string& style ) const
+void SyntaxOfComputableFunction::InputReturnLine( ofstream& ofs , const string& function_expression_name , VLTree<string>::const_iterator& itr_line , const uint& depth , string& language , const string& style ) const
 {
 
   const string* p_return_name;
@@ -586,6 +665,14 @@ void SyntaxOfComputableFunction::InputReturnLine( ofstream& ofs , const string& 
   if( language == EnglishString() && style == FandomString() ){
 
     ofs << "Set \\(" << function_expression_name << " := " << *p_return_name << "\\)." << endl;
+    return;
+      
+  }
+
+  if( language == englishString() && style == FandomString() ){
+
+    ofs << "set \\(" << function_expression_name << " := " << *p_return_name << "\\)." << endl;
+    language = EnglishString();
     return;
       
   }
@@ -889,7 +976,7 @@ const string& ExpressionToString( VLTree<string>::const_iterator& itr )
   
 }
 
-string ConditionToString( VLTree<string>::const_iterator& itr , const string& language , const string& style )
+string ConditionToString( VLTree<string>::const_iterator& itr , bool& complicated , string& language , const string& style )
 {
 
   auto itr_copy = itr;
@@ -925,6 +1012,8 @@ string ConditionToString( VLTree<string>::const_iterator& itr , const string& la
     return "\\(" + *p_b + "\\)";
 
   }
+
+  complicated = true;
   
   itr_copy++;
   itr_copy++;
@@ -986,15 +1075,16 @@ string ConditionToString( VLTree<string>::const_iterator& itr , const string& la
   
 }
 
-string NegationToString( VLTree<string>::const_iterator& itr , const string& language , const string& style )
+string NegationToString( VLTree<string>::const_iterator& itr , string& language , const string& style )
 {
 
   string b;
-
+  bool complicated = false;
+  
   TRY_CATCH
     (
 
-     b = ConditionToString( itr , language , style ),
+     b = ConditionToString( itr , complicated , language , style ),
      const ErrorType& e ,
      CALL( e )
 
@@ -1003,13 +1093,25 @@ string NegationToString( VLTree<string>::const_iterator& itr , const string& lan
   
   if( language == JapaneseString() && style == FandomString() ){
 
-    return "「" + b + "でない」";
+    if( complicated ){
+
+      PutKagi( b );
+
+    }
+    
+    return b + "でない";
 
   }
 
   if( language == EnglishString() && style == FandomString() ){
 
-    return "( " + b + " does not hold )";
+    if( complicated ){
+
+      PutParenthesis( b );
+
+    }
+
+    return b + " does not hold";
       
   }
 
@@ -1018,16 +1120,18 @@ string NegationToString( VLTree<string>::const_iterator& itr , const string& lan
   
 }
 
-string ImplicationToString( VLTree<string>::const_iterator& itr , const string& language , const string& style )
+string ImplicationToString( VLTree<string>::const_iterator& itr , string& language , const string& style )
 {
 
   string b0;
   string b1;
+  bool complicated0 = false;
+  bool complicated1 = false;
 
   TRY_CATCH
     (
 
-     b0 = ConditionToString( itr , language , style ) ,
+     b0 = ConditionToString( itr , complicated0 , language , style ) ,
      const ErrorType& e ,
      CALL( e )
 
@@ -1036,7 +1140,7 @@ string ImplicationToString( VLTree<string>::const_iterator& itr , const string& 
   TRY_CATCH
     (
 
-     b1 = ConditionToString( itr , language , style ) ,
+     b1 = ConditionToString( itr , complicated1 , language , style ) ,
      const ErrorType& e ,
      CALL( e )
 
@@ -1045,13 +1149,37 @@ string ImplicationToString( VLTree<string>::const_iterator& itr , const string& 
 
   if( language == JapaneseString() && style == FandomString() ){
 
-    return "「" + b0 + "ならば" + b1 + "」";
+    if( complicated0 ){
+
+      PutKagi( b0 );
+
+    }
+
+    if( complicated1 ){
+
+      PutKagi( b1 );
+
+    }
+
+    return b0 + "ならば" + b1;
 
   }
 
   if( language == EnglishString() && style == FandomString() ){
 
-    return "( " + b0 + " implies " + b1 + " )";
+    if( complicated0 ){
+
+      PutParenthesis( b0 );
+
+    }
+
+    if( complicated1 ){
+
+      PutParenthesis( b1 );
+
+    }
+
+    return b0 + " implies " + b1;
       
   }
 
@@ -1060,16 +1188,18 @@ string ImplicationToString( VLTree<string>::const_iterator& itr , const string& 
 
 }
 
-string EquivalenceToString( VLTree<string>::const_iterator& itr , const string& language , const string& style )
+string EquivalenceToString( VLTree<string>::const_iterator& itr , string& language , const string& style )
 {
 
   string b0;
   string b1;
+  bool complicated0 = false;
+  bool complicated1 = false;
 
   TRY_CATCH
     (
 
-     b0 = ConditionToString( itr , language , style ) ,
+     b0 = ConditionToString( itr , complicated0 , language , style ) ,
      const ErrorType& e ,
      CALL( e )
 
@@ -1078,7 +1208,7 @@ string EquivalenceToString( VLTree<string>::const_iterator& itr , const string& 
   TRY_CATCH
     (
 
-     b1 = ConditionToString( itr , language , style ) ,
+     b1 = ConditionToString( itr , complicated1 , language , style ) ,
      const ErrorType& e ,
      CALL( e )
 
@@ -1086,13 +1216,37 @@ string EquivalenceToString( VLTree<string>::const_iterator& itr , const string& 
 
   if( language == JapaneseString() && style == FandomString() ){
 
-    return "「" + b0 + "と" + b1 + "が同値である」";
+    if( complicated0 ){
+
+      PutKagi( b0 );
+
+    }
+
+    if( complicated1 ){
+
+      PutKagi( b1 );
+
+    }
+
+    return b0 + "と" + b1 + "が同値である";
 
   }
 
   if( language == EnglishString() && style == FandomString() ){
 
-    return "( " + b0 + " is equivalent to " + b1 + " )";
+    if( complicated0 ){
+
+      PutParenthesis( b0 );
+
+    }
+
+    if( complicated1 ){
+
+      PutParenthesis( b1 );
+
+    }
+
+    return b0 + " is equivalent to " + b1;
       
   }
 
@@ -1101,188 +1255,257 @@ string EquivalenceToString( VLTree<string>::const_iterator& itr , const string& 
 
 }
 
-string LogicalAndToString( VLTree<string>::const_iterator& itr , const string& language , const string& style )
+string LogicalAndToString( VLTree<string>::const_iterator& itr , string& language , const string& style )
 {
 
-  string b;
+  string b = "";
 
   TRY_CATCH
     (
 
-     b = ConditionToString( itr , language , style ) ,
+     {
+       
+       if( language == JapaneseString() && style == FandomString() ){
+
+	 bool first = true;
+	 
+	 while( itr.IsValid() ){
+
+	   bool complicated = false;
+	   string b_current = ConditionToString( itr , complicated , language , style );
+	   
+	   if( first ){
+
+	     first = false;
+
+	     if( complicated && itr.IsValid() ){
+
+	       PutKagi( b_current );
+
+	     }
+
+	   } else {
+
+	     if( complicated ){
+
+	       PutKagi( b_current );
+
+	     }
+
+	     b += "かつ";
+
+	   }
+
+	   b += b_current;
+
+	 }
+
+	 return b;
+	   
+       }
+
+       if( language == EnglishString() && style == FandomString() ){
+
+	 bool first = true;
+	 bool second = false;
+	 
+	 while( itr.IsValid() ){
+
+	   bool complicated = false;
+	   string b_current = ConditionToString( itr , complicated , language , style );
+	   
+	   if( first ){
+
+	     first = false;
+
+	     if( complicated && itr.IsValid() ){
+
+	       PutParenthesis( b_current );
+	       second = true;
+
+	     }
+
+	   } else {
+	     
+	     if( complicated ){
+
+	       PutParenthesis( b_current );
+
+	     }
+
+	     if( itr.IsValid() ){
+
+	       b += ", ";
+
+	       if( second ){
+
+		 second = false;
+
+	       }
+
+	     } else {
+
+	       if( second ){
+
+		 b += " ";
+		 second = false;
+
+	       } else {
+
+		 b += ", ";
+
+	       }
+
+	       b += "and ";
+
+	     }
+
+	   }
+
+	   b += b_current;
+
+	 }
+
+	 return b;
+
+       }
+
+     } ,
+
      const ErrorType& e ,
+     
      CALL( e )
 
      );
 
-  bool first = true;
-
-  if( language == JapaneseString() && style == FandomString() ){
-
-    while( itr.IsValid() ){
-
-      if( first ){
-
-	b = "「" + b;
-	first = false;
-
-      }
-
-      b += "かつ";
-      b += ConditionToString( itr , language , style );
-
-    }
-
-    if( ! first ){
-
-      b += "」";
-
-    }
-
-    return b;
-
-  }
-
-  if( language == EnglishString() && style == FandomString() ){
-
-    while( itr.IsValid() ){
-
-      const string b_current = ConditionToString( itr , language , style );
-
-      if( first ){
-
-	b = "( " + b;
-	first = false;
-
-	if( itr.IsValid() ){
-
-	  b += ", ";
-
-	} else {
-
-	  b += " and ";
-
-	}
-	
-      } else {
-
-	b += ", ";
-
-	if( ! itr.IsValid() ){
-
-	  b += "and ";
-
-	}
-
-      }
-
-      b += b_current;
-
-    }
-
-    if( ! first ){
-
-      b += " )";
-
-    }
-    
-    return b;
-
-  }
 
   ERR_IMPUT( b , language , style );
   return "dummy";
   
 }
 
-string LogicalOrToString( VLTree<string>::const_iterator& itr , const string& language , const string& style )
+string LogicalOrToString( VLTree<string>::const_iterator& itr , string& language , const string& style )
 {
 
-  string b;
+  string b = "";
 
   TRY_CATCH
     (
 
-     b = ConditionToString( itr , language , style ) ,
+     {
+       
+       if( language == JapaneseString() && style == FandomString() ){
+
+	 bool first = true;
+	 
+	 while( itr.IsValid() ){
+
+	   bool complicated = false;
+	   string b_current = ConditionToString( itr , complicated , language , style );
+	   
+	   if( first ){
+
+	     first = false;
+
+	     if( complicated && itr.IsValid() ){
+
+	       PutKagi( b_current );
+
+	     }
+
+	   } else {
+
+	     if( complicated ){
+
+	       PutKagi( b_current );
+
+	     }
+
+	     b += "または";
+
+	   }
+
+	   b += b_current;
+
+	 }
+
+	 return b;
+	   
+       }
+
+       if( language == EnglishString() && style == FandomString() ){
+
+	 bool first = true;
+	 bool second = false;
+	 
+	 while( itr.IsValid() ){
+
+	   bool complicated = false;
+	   string b_current = ConditionToString( itr , complicated , language , style );
+	   
+	   if( first ){
+
+	     first = false;
+
+	     if( complicated && itr.IsValid() ){
+
+	       PutParenthesis( b_current );
+	       second = true;
+
+	     }
+
+	   } else {
+	     
+	     if( complicated ){
+
+	       PutParenthesis( b_current );
+
+	     }
+
+	     if( itr.IsValid() ){
+
+	       b += ", ";
+
+	       if( second ){
+
+		 second = false;
+
+	       }
+
+	     } else {
+
+	       if( second ){
+
+		 b += " ";
+		 second = false;
+
+	       } else {
+
+		 b += ", ";
+
+	       }
+
+	       b += "or ";
+
+	     }
+
+	   }
+
+	   b += b_current;
+
+	 }
+
+	 return b;
+
+       }
+
+     } ,
+
      const ErrorType& e ,
+     
      CALL( e )
 
      );
-
-  bool first = true;
-
-  if( language == JapaneseString() && style == FandomString() ){
-
-    while( itr.IsValid() ){
-
-      if( first ){
-
-	b = "「" + b;
-	first = false;
-
-      }
-
-      b += "または";
-      b += ConditionToString( itr , language , style );
-
-    }
-
-    if( ! first ){
-
-      b += "」";
-
-    }
-
-    return b;
-
-  }
-
-  if( language == EnglishString() && style == FandomString() ){
-
-    while( itr.IsValid() ){
-
-      const string b_current = ConditionToString( itr , language , style );
-
-      if( first ){
-
-	b = "( " + b;
-	first = false;
-
-	if( itr.IsValid() ){
-
-	  b += ", ";
-
-	} else {
-
-	  b += " or ";
-
-	}
-	
-      } else {
-
-	b += ", ";
-
-	if( ! itr.IsValid() ){
-
-	  b += "or ";
-
-	}
-
-      }
-
-      b += b_current;
-
-    }
-
-    if( ! first ){
-
-      b += " )";
-
-    }
-
-    return b;
-      
-  }
 
   ERR_IMPUT( b , language , style );
   return "dummy";

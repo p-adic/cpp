@@ -65,6 +65,9 @@ auto ExpressionsToListSyntax( const Args&... args ) -> typename enable_if<conjun
   
 }
 
+inline void PutKagi( string& s ) noexcept { s = "u" + s + "v"; }
+inline void PutParenthesis( string& s ) noexcept { s = "( " + s + " )"; }
+
 inline string Plainise( const string& s ) noexcept { return "\\textrm{" + s + "}"; }
 
 DECLARATION_OF_GLOBAL_CONSTANT_STRING_FOR_SYMBOL( Empty ){ static const string s = ""; return s; }
@@ -120,5 +123,8 @@ DEFINITION_OF_GLOBAL_CONSTANT_STRING_FOR_SYMBOL( Return , return );
 
 DEFINITION_OF_GLOBAL_CONSTANT_STRING_FOR_SYMBOL( Japanese , Japanese );
 DEFINITION_OF_GLOBAL_CONSTANT_STRING_FOR_SYMBOL( English , English );
+DEFINITION_OF_GLOBAL_CONSTANT_STRING_FOR_SYMBOL( english , english );
+
 DEFINITION_OF_GLOBAL_CONSTANT_STRING_FOR_SYMBOL( Fandom , Fandom );
+DEFINITION_OF_GLOBAL_CONSTANT_STRING_FOR_SYMBOL( Jekyll , Jekyll );
 

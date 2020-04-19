@@ -31,29 +31,29 @@ protected:
   void InputDeclaration( ofstream& ofs , const string& function_name , const string& argument_type_name , const string& argument_name , const string& return_type_name , const string& function_expression_name , const string& language , const string& style ) const;
 
   // line
-  void InputLine( ofstream& ofs , const string& function_expression_name , const string& line_name , VLTree<string>::const_iterator& itr_line , const uint& depth , const string& language , const string& style ) const;
-  void InputListLine( ofstream& ofs , const string& function_expression_name , VLTree<string>::const_iterator& itr_line , const uint& depth , const string& language , const string& style ) const;
-  void InputNonListLine( ofstream& ofs , const string& function_expression_name , const string& line_name , VLTree<string>::const_iterator& itr_line , const uint& depth , const string& language , const string& style ) const;
-  void InputIndent( ofstream& ofs , const uint depth , const string& language , const string& style ) const noexcept;
+  void InputLine( ofstream& ofs , const string& function_expression_name , const string& line_name , VLTree<string>::const_iterator& itr_line , const uint& depth , string& language , const string& style ) const;
+  void InputListLine( ofstream& ofs , const string& function_expression_name , VLTree<string>::const_iterator& itr_line , const uint& depth , string& language , const string& style ) const;
+  void InputNonListLine( ofstream& ofs , const string& function_expression_name , const string& line_name , VLTree<string>::const_iterator& itr_line , const uint& depth , string& language , const string& style ) const;
+  void InputIndent( ofstream& ofs , const uint depth , string& language , const string& style ) const noexcept;
 
   // If
-  void InputIfLine( ofstream& ofs , const string& function_expression_name , VLTree<string>::const_iterator& itr_line , const uint& depth , const string& language , const string& style ) const;
-  void InputIfListLine( ofstream& ofs , const string& function_expression_name , const string& condition_name , VLTree<string>::const_iterator& itr_line , const uint& depth , const string& language , const string& style ) const;
-  void InputIfNonListLine( ofstream& ofs , const string& function_expression_name , const string& condition_name , VLTree<string>::const_iterator& itr_line , const uint& depth , const string& language , const string& style ) const;
+  void InputIfLine( ofstream& ofs , const string& function_expression_name , VLTree<string>::const_iterator& itr_line , const uint& depth , string& language , const string& style ) const;
+  void InputIfListLine( ofstream& ofs , const string& function_expression_name , const string& condition_name , VLTree<string>::const_iterator& itr_line , const uint& depth , string& language , const string& style ) const;
+  void InputIfNonListLine( ofstream& ofs , const string& function_expression_name , const string& condition_name , VLTree<string>::const_iterator& itr_line , const uint& depth , string& language , const string& style ) const;
 
   // Put
-  void InputPutLine( ofstream& ofs , VLTree<string>::const_iterator& itr_line , const uint& depth , const string& language , const string& style ) const;
-  void InputPutConditionLine( ofstream& ofs , VLTree<string>::const_iterator& itr_line , const string& variable_name , const string& language , const string& style ) const;
-  void InputPutNonConditionLine( ofstream& ofs , VLTree<string>::const_iterator& itr_line , const string& variable_name , const string& variable_type_name , const string& language , const string& style ) const;
+  void InputPutLine( ofstream& ofs , VLTree<string>::const_iterator& itr_line , const uint& depth , string& language , const string& style ) const;
+  void InputPutConditionLine( ofstream& ofs , VLTree<string>::const_iterator& itr_line , const string& variable_name , string& language , const string& style ) const;
+  void InputPutNonConditionLine( ofstream& ofs , VLTree<string>::const_iterator& itr_line , const string& variable_name , const string& variable_type_name , string& language , const string& style ) const;
 
 // Print
-  void InputPrintLine( ofstream& ofs , VLTree<string>::const_iterator& itr_line , const string& language , const string& style ) const;
+  void InputPrintLine( ofstream& ofs , VLTree<string>::const_iterator& itr_line , string& language , const string& style ) const;
 
   //Exit
-  void InputExitLine( ofstream& ofs , const string& function_expression_name , const string& language , const string& style ) const;
+  void InputExitLine( ofstream& ofs , const string& function_expression_name , string& language , const string& style ) const;
 
   // Return
-  void InputReturnLine( ofstream& ofs ,const string& function_expression_name , VLTree<string>::const_iterator& itr_line , const uint& depth , const string& language , const string& style ) const;
+  void InputReturnLine( ofstream& ofs ,const string& function_expression_name , VLTree<string>::const_iterator& itr_line , const uint& depth , string& language , const string& style ) const;
 
 };
 
@@ -73,14 +73,16 @@ string FunctionExpressionToString( VLTree<string>::const_iterator& itr_f , VLTre
 const string& ExpressionToString( VLTree<string>::const_iterator& itr );
 
 // 条件のイテレータitrから条件の文字列を構築
-string ConditionToString( VLTree<string>::const_iterator& itr , const string& language , const string& style );
+string ConditionToString( VLTree<string>::const_iterator& itr , bool& complicated , string& language , const string& style );
 
-string NegationToString( VLTree<string>::const_iterator& itr , const string& language , const string& style );
-string ImplicationToString( VLTree<string>::const_iterator& itr , const string& language , const string& style );
-string EquivalenceToString( VLTree<string>::const_iterator& itr , const string& language , const string& style );
-string LogicalAndToString( VLTree<string>::const_iterator& itr , const string& language , const string& style );
-string LogicalOrToString( VLTree<string>::const_iterator& itr , const string& language , const string& style );
+string NegationToString( VLTree<string>::const_iterator& itr , string& language , const string& style );
+string ImplicationToString( VLTree<string>::const_iterator& itr , string& language , const string& style );
+string EquivalenceToString( VLTree<string>::const_iterator& itr , string& language , const string& style );
+string LogicalAndToString( VLTree<string>::const_iterator& itr , string& language , const string& style );
+string LogicalOrToString( VLTree<string>::const_iterator& itr , string& language , const string& style );
 
+inline void PutKagi( string& s ) noexcept;
+inline void PutParenthesis( string& s ) noexcept;
 
 inline string Plainise( const string& s ) noexcept;
 
@@ -135,4 +137,7 @@ DECLARATION_OF_GLOBAL_CONSTANT_STRING_FOR_SYMBOL( Return );
 
 DECLARATION_OF_GLOBAL_CONSTANT_STRING_FOR_SYMBOL( Japanese );
 DECLARATION_OF_GLOBAL_CONSTANT_STRING_FOR_SYMBOL( English );
+DECLARATION_OF_GLOBAL_CONSTANT_STRING_FOR_SYMBOL( english );
+
 DECLARATION_OF_GLOBAL_CONSTANT_STRING_FOR_SYMBOL( Fandom );
+DECLARATION_OF_GLOBAL_CONSTANT_STRING_FOR_SYMBOL( Jekyll );
