@@ -141,7 +141,7 @@
   
 
 // display
-#define JAPANESE JapanString() 
+#define JAPANESE JapaneseString() 
 #define ENGLISH EnglishString() 
 #define FANDOM FandomString() 
 #define DISPLAY( FUNC , LANGUAGE , STYLE , FILE ) CONNECT( __DEFINITION_OF__ , FUNC ).Display( FUNC , LANGUAGE , STYLE , TO_STRING( FILE ) );
