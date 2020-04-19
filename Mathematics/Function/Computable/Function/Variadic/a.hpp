@@ -25,6 +25,8 @@ public:
 
 
 template <typename Ret> DECLARATION_OF_VARIADIC_FUNCTION_SYMBOL( Ret , Plus );
+DECLARATION_OF_VARIADIC_FUNCTION_SYMBOL( string , Plus );
+
 template <typename Ret> DECLARATION_OF_VARIADIC_FUNCTION_SYMBOL( Ret , Times );
 
 template <typename Ret> DECLARATION_OF_VARIADIC_FUNCTION_SYMBOL_APPLICATION_ONE( Ret , Plus );
