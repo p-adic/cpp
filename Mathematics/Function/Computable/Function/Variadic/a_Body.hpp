@@ -16,7 +16,7 @@ template <typename Ret, typename VArg, typename... Args> template <typename... V
 
 
 template <typename Ret> DEFINITION_OF_VARIADIC_FUNCTION_SYMBOL( Ret , Plus , Plus );
-DEFINITION_OF_VARIADIC_FUNCTION_SYMBOL( string , Plus , Frown );
+template <> DEFINITION_OF_VARIADIC_FUNCTION_SYMBOL( string , Plus , Frown );
 
 template <typename Ret> DEFINITION_OF_VARIADIC_FUNCTION_SYMBOL( Ret , Times , Times );
 
