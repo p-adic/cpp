@@ -1156,11 +1156,11 @@ string LogicalAndToString( VLTree<string>::const_iterator& itr , const string& l
 
 	if( itr.IsValid() ){
 
-	  b += " ";
+	  b += ", ";
 
 	} else {
 
-	  b += ", ";
+	  b += " and ";
 
 	}
 	
@@ -1250,11 +1250,11 @@ string LogicalOrToString( VLTree<string>::const_iterator& itr , const string& la
 
 	if( itr.IsValid() ){
 
-	  b += " ";
+	  b += ", ";
 
 	} else {
 
-	  b += ", ";
+	  b += " or ";
 
 	}
 	
