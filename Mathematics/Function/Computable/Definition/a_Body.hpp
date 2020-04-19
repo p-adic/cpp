@@ -17,41 +17,83 @@ template <typename Ret, typename... Args> inline const string& DefinitionOfCompu
 template <typename Ret, typename... Args> inline void DefinitionOfComputableFunction<Ret,Args...>::Display( const FunctionSymbol<Ret,Args...>& f , const char* const & filename ) const noexcept { Display( f , to_string( filename ) ); }
 
 template <typename Ret, typename... Args>
-void DefinitionOfComputableFunction<Ret,Args...>::Display( const FunctionSymbol<Ret,Args...>& f , const string& filename ) const noexcept
+void DefinitionOfComputableFunction<Ret,Args...>::Display( const FunctionSymbol<Ret,Args...>& f , const string& language , const string& style , const string& filename ) const noexcept
 {
 
   ofstream ofs( filename , ios::trunc );
 
-  cout << "宣言文の木構造を出力します：" << endl;
-  cout << f.Display() << endl;
-  cout << endl;
-  cout << "定義文の木構造を出力します：" << endl;
-  cout << Get().Display() << endl;
-  cout << endl;
-  cout << "定義文の日本語訳を" << filename << "に書き込みます：" << endl;
-  cout << "…" << endl;
+  if( language == JapaneseString() ){
+
+    cout << "宣言文の木構造を出力します：" << endl;
+    cout << f.Display() << endl;
+    cout << endl;
+    cout << "定義文の木構造を出力します：" << endl;
+    cout << Get().Display() << endl;
+    cout << endl;
+    cout << "定義文の日本語訳を" << filename << "に書き込みます：" << endl;
+    cout << "…" << endl;
   
-  if( !ofs ){
-    cout << "ファイルが開けませんでした。" << endl;
-    cin.get();
+    if( !ofs ){
+      cout << "ファイルが開けませんでした。" << endl;
+      cin.get();
+      return;
+    }
+
+    cout << "……" << endl;
+
+    try{
+
+      InputDefinition( ofs , f , language , style );
+
+    }
+    catch( const ErrorType& e ){
+
+      IGNORED_ERR( e );
+
+    }
+  
+    cout << "………" << endl;
+    cout << "書き込みが終了しました。" << endl;
     return;
-  }
-
-  cout << "……" << endl;
-
-  try{
-
-    InputDefinition( ofs , f );
 
   }
-  catch( const ErrorType& e ){
 
-    IGNORED_ERR( e );
+  if( language == EnglishString() ){
 
-  }
+    cout << "Display the tree structure of the declaration:" << endl;
+    cout << f.Display() << endl;
+    cout << endl;
+    cout << "Display the tree structure fof the definition:" << endl;
+    cout << Get().Display() << endl;
+    cout << endl;
+    cout << "Writing an English translation of the definition to " << filename << ":" << endl;
+    cout << "…" << endl;
   
-  cout << "………" << endl;
-  cout << "書き込みが終了しました。" << endl;
+    if( !ofs ){
+      cout << "Error: Cannot open the file." << endl;
+      cin.get();
+      return;
+    }
+
+    cout << "……" << endl;
+
+    try{
+
+      InputDefinition( ofs , f , language , style );
+
+    }
+    catch( const ErrorType& e ){
+
+      IGNORED_ERR( e );
+
+    }
+  
+    cout << "………" << endl;
+    cout << "Finished writing." << endl;
+    return;
+
+  }
+
   return;
 
 }

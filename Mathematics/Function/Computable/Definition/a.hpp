@@ -22,7 +22,7 @@ public:
 
   inline const string& Name() const;
   inline void Display( const FunctionSymbol<Ret,Args...>& f , const char* const & filename ) const noexcept;
-  void Display( const FunctionSymbol<Ret,Args...>& f , const string& filename = "a.txt" ) const noexcept;
+  void Display( const FunctionSymbol<Ret,Args...>& f , const string& language , const string& style , const string& filename = "a.txt" ) const noexcept;
 
 };
 

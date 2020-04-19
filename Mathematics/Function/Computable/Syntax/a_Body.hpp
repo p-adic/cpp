@@ -17,9 +17,6 @@ inline const string& SyntaxOfComputableFunction::GetNodeString( const int& n ) c
 
 inline string SyntaxOfComputableFunction::Display() const noexcept { return m_syntax.Display(); }
 
-inline void SyntaxOfComputableFunction::InputExitLine( ofstream& ofs , const string& function_expression_name ) const noexcept { ofs << "\\(" << function_expression_name << "\\)‚Í–¢’è‹`‚Å‚ ‚éB" << endl; }
-
-
 template <typename... Args>
 auto ExpressionsToListSyntax( const Args&... args ) -> typename enable_if<conjunction<is_same<Args,VLTree<string> >...>::value,VLTree<string> >::type
 {
@@ -121,4 +118,7 @@ DEFINITION_OF_GLOBAL_CONSTANT_STRING_FOR_SYMBOL( Print , print );
 DEFINITION_OF_GLOBAL_CONSTANT_STRING_FOR_SYMBOL( Exit , exit );
 DEFINITION_OF_GLOBAL_CONSTANT_STRING_FOR_SYMBOL( Return , return );
 
+DEFINITION_OF_GLOBAL_CONSTANT_STRING_FOR_SYMBOL( Japanese , Japanese );
+DEFINITION_OF_GLOBAL_CONSTANT_STRING_FOR_SYMBOL( English , English );
+DEFINITION_OF_GLOBAL_CONSTANT_STRING_FOR_SYMBOL( Fandom , Fandom );
 
