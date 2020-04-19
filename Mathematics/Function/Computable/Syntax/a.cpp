@@ -388,7 +388,7 @@ void SyntaxOfComputableFunction::InputIfNonListLine( ofstream& ofs , const strin
 
   if( language == EnglishString() ){
 
-    ofs << "If " << condition_name << ", then " << endl;
+    ofs << "If " << condition_name << ", then ";
     return;
       
   }
