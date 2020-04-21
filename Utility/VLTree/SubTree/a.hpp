@@ -53,8 +53,8 @@ public:
   // 構築された木への変更がコピー元へは反映されない。
   // デストラクタがdelete演算子を呼ばないため、VLTree経由でしか呼び出してはいけない。
   // intはダミー引数。
-  inline VLSubTree( const EntryOfVLTree<T>& , const int& );
-  inline VLSubTree( const ConstIteratorOfVLTree<T>& , const int& );
+  inline VLSubTree( const int& , const EntryOfVLTree<T>& );
+  inline VLSubTree( const int& , const ConstIteratorOfVLTree<T>& );
 
   virtual ~VLSubTree() = default;
 

@@ -44,7 +44,7 @@ VLSubTree<T>::VLSubTree( EntryOfVLTree<T>& e ) :
 template <typename T> inline VLSubTree<T>::VLSubTree( const IteratorOfVLTree<T>& itr ) : VLSubTree( *( itr.m_p ) ) {}
 
 template <typename T>
-VLSubTree<T>::VLSubTree( const EntryOfVLTree<T>& e , const int& i ) :
+VLSubTree<T>::VLSubTree( const int& dummy , const EntryOfVLTree<T>& e ) :
   m_e( e.m_t ) , m_root( m_e ) , m_size( 0 )
 {
 
@@ -54,7 +54,7 @@ VLSubTree<T>::VLSubTree( const EntryOfVLTree<T>& e , const int& i ) :
 
   while( b ){
 
-    push_RightMost( VLTree<T>( *p , i ) );
+    push_RightMost( VLTree<T>( dummy , *p ) );
     b = ( p != p_rightmost );
     p = p->m_right_branch;
 
@@ -62,7 +62,7 @@ VLSubTree<T>::VLSubTree( const EntryOfVLTree<T>& e , const int& i ) :
 
 }
 
-template <typename T> inline VLSubTree<T>::VLSubTree( const ConstIteratorOfVLTree<T>& itr , const int& i ) : VLSubTree( *( itr.m_p ) , i ) {}
+template <typename T> inline VLSubTree<T>::VLSubTree( const int& dummy , const ConstIteratorOfVLTree<T>& itr ) : VLSubTree( dummy , *( itr.m_p ) ) {}
 
 template <typename T>
 VLSubTree<T>& VLSubTree<T>::operator=( const VLSubTree<T>& a )
@@ -89,7 +89,7 @@ void VLSubTree<T>::LeafToTree( const VLSubTree<T>& a )
     
   for( uint n = 0 ; n < N ; n++ ){
 
-    push_RightMost( VLTree<T>( *p , 0 ) );
+    push_RightMost( VLTree<T>( 0 , *p ) );
     p = p->m_right_branch;
 
   }
@@ -105,9 +105,9 @@ template <typename T> inline bool VLSubTree<T>::IsLeaf() const noexcept { return
 template <typename T> inline VLSubTree<T> VLSubTree<T>::LeftMostSubTree() { return VLSubTree( *( m_root.m_leftmost_node ) ); }
 template <typename T> inline VLSubTree<T> VLSubTree<T>::RightMostSubTree() { return VLSubTree( *( m_root.m_rightmost_node ) ); }
 
-template <typename T> inline VLTree<T> VLSubTree<T>::LeftMostSubTreeCopy() const { return VLTree<T>( *( m_root.m_leftmost_node ) , 0 ); }
+template <typename T> inline VLTree<T> VLSubTree<T>::LeftMostSubTreeCopy() const { return VLTree<T>( 0 , *( m_root.m_leftmost_node ) ); }
 
-template <typename T> inline VLTree<T> VLSubTree<T>::RightMostSubTreeCopy() const { return VLTree<T>( *( m_root.m_rightmost_node ) , 0 ); }
+template <typename T> inline VLTree<T> VLSubTree<T>::RightMostSubTreeCopy() const { return VLTree<T>( 0 , *( m_root.m_rightmost_node ) ); }
 
 template <typename T> inline void VLSubTree<T>::push_RightMost() const noexcept {}
 
@@ -513,7 +513,7 @@ VLTree<T> VLSubTree<T>::operator[]( const typename VLSubTree<T>::const_iterator&
 
   }
 
-  return VLTree<T>( itr.m_p , 0 );
+  return VLTree<T>( 0 , itr.m_p );
 
 }
 
@@ -537,7 +537,7 @@ VLTree<T> VLSubTree<T>::GetBranchCopy( const uint& i ) const
 
     }
 
-    return VLTree<T>( *p , 0 );
+    return VLTree<T>( 0 , *p );
 
   }
 
@@ -549,7 +549,7 @@ VLTree<T> VLSubTree<T>::GetBranchCopy( const uint& i ) const
 
   }
 
-  return VLTree<T>( *p , 0 );
+  return VLTree<T>( 0 , *p );
 
 }
 
@@ -563,7 +563,7 @@ VLTree<T> VLSubTree<T>::GetBranchCopy( const typename VLSubTree<T>::iterator& it
 
   }
 
-  return VLTree<T>( *( itr.m_p ) , 0 );
+  return VLTree<T>( 0 , *( itr.m_p ) );
 
 }
 
@@ -577,7 +577,7 @@ VLTree<T> VLSubTree<T>::GetBranchCopy( const typename VLSubTree<T>::const_iterat
 
   }
 
-  return VLTree<T>( *( itr.m_p ) , 0 );
+  return VLTree<T>( 0 , *( itr.m_p ) );
 
 }
 
@@ -696,7 +696,7 @@ string VLSubTree<T>::Display() const
 
     }
     
-    s += VLTree<T>( *p , 0 ).Display();
+    s += VLTree<T>( 0 , *p ).Display();
     
     p = p->m_right_branch;
 
