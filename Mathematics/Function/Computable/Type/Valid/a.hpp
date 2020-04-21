@@ -13,6 +13,3 @@ public:
   static constexpr const bool value = is_base_of<TypeOfComputableFunction,T>::value || IsBasicType<T>::value;
 
 };
-
-template <typename T> inline auto GetName() -> typename enable_if<is_base_of<TypeOfComputableFunction,T>::value,const string&>::type;
-template <typename T> inline auto GetName() -> typename enable_if<IsBasicType<T>::value,const string&>::type;

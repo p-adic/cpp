@@ -24,7 +24,30 @@
 
 #define DEFINITION_OF_VARIADIC_FUNCTION_SYMBOL( RET , FUNC , OPERATOR )	\
 									\
-  DECLARATION_OF_VARIADIC_FUNCTION_SYMBOL( RET , FUNC ){ static const VariadicFunctionSymbol< RET , RET , RET > f( CONNECT( OPERATOR , String )() , SeparatorOfComputableFunction( 0 , EmptyString() , LdotsString() , SpaceString() + CONNECT( OPERATOR , String )() + SpaceString() , EmptyString() ) , VariableSymbol< RET >( "x" ) ); return f; } \
+  DECLARATION_OF_VARIADIC_FUNCTION_SYMBOL( RET , FUNC )			\
+  {									\
+    static const VariadicFunctionSymbol< typename BaseTypeOf< RET >::type , typename BaseTypeOf< RET >::type , typename BaseTypeOf< RET >::type > f \
+     (									\
+									\
+      CONNECT( OPERATOR , String )() ,					\
+      SeparatorOfComputableFunction					\
+      (									\
+									\
+       0 ,								\
+       EmptyString() ,							\
+       LdotsString() ,							\
+       SpaceString() + CONNECT( OPERATOR , String )() + SpaceString() , \
+       EmptyString()							\
+									\
+       ) ,								\
+      GetTypeName< RET >() ,						\
+      VariableSymbol<typename BaseTypeOf< RET >::type>( "x" , GetTypeName< RET >() ) \
+									\
+      );								\
+									\
+   return f;								\
+									\
+  }									\
 
 
 #define DEFINITION_OF_VARIADIC_FUNCTION_SYMBOL_APPLICATION_ONE( RET , FUNC ) \

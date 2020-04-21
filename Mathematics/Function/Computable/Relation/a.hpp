@@ -11,8 +11,8 @@ class RelationSymbol :
 {
 
 public:
-  inline RelationSymbol( const string& r , const VariableSymbol<Args>&... args );
-  RelationSymbol( const string& r , const SeparatorOfComputableFunction& s , const VariableSymbol<Args>&... args );
+  inline RelationSymbol( const string& r , const TypeNameOfComputableFunction& type_name , const VariableSymbol<Args>&... args );
+  RelationSymbol( const string& r , const SeparatorOfComputableFunction& s , const TypeNameOfComputableFunction& type_name , const VariableSymbol<Args>&... args );
 
   void SetSeparator( const SeparatorOfComputableFunction& s );
 

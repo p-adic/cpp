@@ -13,7 +13,24 @@
   DECLARATION_OF_RELATION_SYMBOL( REL )					\
   {									\
 									\
-    static const RelationSymbol<Ret,Ret> r( CONNECT( REL , String )() , SeparatorOfComputableFunction( 0 , EmptyString() , SpaceString() + CONNECT( REL , String )() + SpaceString() , EmptyString() ) , VariableSymbol<Ret>( "x" ) , VariableSymbol<Ret>( "y" ) ); \
+    static const RelationSymbol<typename BaseTypeOf<Ret>::type,typename BaseTypeOf<Ret>::type> r \
+    {									\
+									\
+      CONNECT( REL , String )() ,					\
+	SeparatorOfComputableFunction					\
+	(								\
+									\
+	 0 ,								\
+	 EmptyString() ,						\
+	 SpaceString() + CONNECT( REL , String )() + SpaceString() ,	\
+	 EmptyString()							\
+									\
+									) , \
+	GetTypeName<bool>() ,						\
+	VariableSymbol<typename BaseTypeOf<Ret>::type>( "x" , GetTypeName<Ret>() ) , \
+	VariableSymbol<typename BaseTypeOf<Ret>::type>( "y" , GetTypeName<Ret>() ) , \
+	};								\
+									\
     return r;								\
 									\
   }									\

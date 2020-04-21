@@ -12,7 +12,7 @@ class ExpressionOfComputableFunction<bool> :
 
 protected:
   // variable
-  inline ExpressionOfComputableFunction( const int& dummy , const string& x );
+  inline ExpressionOfComputableFunction( const int& dummy , const string& x , const TypeNameOfComputableFunction& type_name );
 
 public:
   // constant
@@ -22,16 +22,12 @@ public:
   template <typename... Args> inline ExpressionOfComputableFunction( const FunctionSymbol<bool,Args...>& f , const ExpressionOfComputableFunction<Args>&... args );
 
   // variadic function
-  // template <typename... Args, typename... VA> inline ExpressionOfComputableFunction( const VariadicFunctionSymbol<bool,Args...>& f , const ExpressionOfComputableFunction<Args>&... args , const ListExpressionOfComputableFunction<VA...>& va );
-
   template <typename... Args, typename... VA> inline ExpressionOfComputableFunction( const VariadicFunctionSymbol<bool,Args...>& f , const ExpressionOfComputableFunction<VA>&... va );
   
   // relaion
   template <typename... Args> inline ExpressionOfComputableFunction( const RelationSymbol<Args...>& r , const ExpressionOfComputableFunction<Args>&... args );
 
   // variadic relation
-  // template <typename... Args, typename... VA> inline ExpressionOfComputableFunction( const VariadicRelationSymbol<Args...>& r , const ExpressionOfComputableFunction<Args>&... args , const ListExpressionOfComputableFunction<VA...>& va );
-
   template <typename... Args, typename... VA> inline ExpressionOfComputableFunction( const VariadicRelationSymbol<bool,Args...>& r , const ExpressionOfComputableFunction<VA>&... va );
 
   

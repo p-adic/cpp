@@ -7,19 +7,20 @@
 #include "../Expression/Condition/a_Body.hpp"
 #include "../Expression/Variable/Variadic/a_Body.hpp"
 #include "../Separator/a_Body.hpp"
+#include "../Type/Base/a_Body.hpp"
 #include "../Type/Basic/a_Body.hpp"
 
-template <typename Ret, typename... Args> inline FunctionSymbol<Ret,Args...>::FunctionSymbol( const string& f , const VariableSymbol<Args>&... args ) : FunctionSymbol( f , SeparatorOfComputableFunction( f , sizeof...( Args ) ) , args... ) {}
+template <typename Ret, typename... Args> inline FunctionSymbol<Ret,Args...>::FunctionSymbol( const string& f , const TypeNameOfComputableFunction& type_name , const VariableSymbol<Args>&... args ) : FunctionSymbol( f , SeparatorOfComputableFunction( f , sizeof...( Args ) ) , type_name , args... ) {}
 
 template <typename Ret, typename... Args>
-FunctionSymbol<Ret,Args...>::FunctionSymbol( const string& f , const SeparatorOfComputableFunction& s , const VariableSymbol<Args>&... args ) :
+FunctionSymbol<Ret,Args...>::FunctionSymbol( const string& f , const SeparatorOfComputableFunction& s , const TypeNameOfComputableFunction& type_name , const VariableSymbol<Args>&... args ) :
   SyntaxOfComputableFunction
   (
 
    NestString() ,
    FunctionString() ,
    f ,
-   GetName<Ret>() ,
+   type_name.Get() ,
    ListExpressionOfComputableFunction( args... ).Get() ,
    s.Get()
    
@@ -67,7 +68,7 @@ void FunctionSymbol<Ret,Args...>::SetSeparator( const SeparatorOfComputableFunct
 
        while( itr_args.IsValid() ){
 
-	 t_sub.push_RightMost( VLTree<string>( itr_args , 0 ) );
+	 t_sub.push_RightMost( VLTree<string>( 0 , itr_args ) );
 	 itr_args++;
 
        }
@@ -102,7 +103,7 @@ template <typename Ret> DEFINITION_OF_FUNCTION_SYMBOL_APPLICATION( Ret , Slash ,
 template <typename Ret> DEFINITION_OF_FUNCTION_SYMBOL_APPLICATION( Ret , Mod , Symbol<Ret> );
 template <typename Ret> DEFINITION_OF_FUNCTION_SYMBOL_APPLICATION( Ret , Power , Symbol<Ret> );
 
-inline const FunctionSymbol<bool,bool>& NegSymbol() { static const FunctionSymbol<bool,bool> f( NegString() , VariableSymbol<bool>( "x" ) ); return f; }
+inline const FunctionSymbol<bool,bool>& NegSymbol() { static const FunctionSymbol<bool,bool> f( NegString() , GetTypeName<bool>() , VariableSymbol<bool>( "x" ) ); return f; }
 
 DEFINITION_OF_LOGICAL_CONNECTIVE( To );
 DEFINITION_OF_LOGICAL_CONNECTIVE( Equiv );

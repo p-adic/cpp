@@ -5,7 +5,7 @@
 
 #define DECLARATION_OF_FUNCTION_SYMBOL( RET , FUNC )			\
 									\
-  inline const FunctionSymbol< RET , RET , RET >& CONNECT( FUNC , Symbol )()	\
+  inline const FunctionSymbol< RET , RET , RET >& CONNECT( FUNC , Symbol )() \
 									\
     
 
@@ -14,12 +14,30 @@
   inline ExpressionOfComputableFunction< RET > CONNECT( FUNC , SymbolApplication )( const ExpressionOfComputableFunction< RET >& e1 , const ExpressionOfComputableFunction< RET >& e2 ) \
 									\
 
-#define DEFINITION_OF_FUNCTION_SYMBOL( RET , FUNC )		\
+#define DEFINITION_OF_FUNCTION_SYMBOL( RET , FUNC )			\
 									\
-  DECLARATION_OF_FUNCTION_SYMBOL( RET , FUNC )			\
+  DECLARATION_OF_FUNCTION_SYMBOL( RET , FUNC )				\
   {									\
 									\
-    static const FunctionSymbol< RET , RET , RET > f( CONNECT( FUNC , String )() , SeparatorOfComputableFunction( 0 , EmptyString() , SpaceString() + CONNECT( FUNC , String )() + SpaceString() , EmptyString() ) , VariableSymbol< RET >( "x" ) , VariableSymbol< RET >( "y" ) ); \
+    static const FunctionSymbol< typename BaseTypeOf< RET >::type , typename BaseTypeOf< RET >::type , typename BaseTypeOf< RET >::type > f			\
+    {									\
+									\
+      CONNECT( FUNC , String )() ,					\
+	SeparatorOfComputableFunction					\
+	(								\
+									\
+	 0 ,								\
+	 EmptyString() ,						\
+	 SpaceString() + CONNECT( FUNC , String )() + SpaceString() ,	\
+	 EmptyString()							\
+									\
+									) , \
+	GetTypeName< RET >() ,						\
+	VariableSymbol<typename BaseTypeOf< RET >::type>( "x" , GetTypeName< RET >() ) , \
+	VariableSymbol<typename BaseTypeOf< RET >::type>( "y" , GetTypeName< RET >() ) \
+									\
+	};								\
+									\
     return f;								\
 									\
   }									\

@@ -11,10 +11,8 @@
 									\
   public:								\
     static constexpr const bool value = true;				\
-    static inline const string& Name() noexcept { static const string name = TO_STRING( NAME ); return name; }; \
+    static inline const string& GetName() noexcept { static const string name = TO_STRING( NAME ); return name; }; \
 									\
   };									\
 									\
 
-
-#define BOOLIAN_SET \\{0,1\\}

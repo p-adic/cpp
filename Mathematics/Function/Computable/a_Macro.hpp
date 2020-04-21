@@ -16,7 +16,7 @@
   TRY_CATCH								\
   (									\
 									\
-   FunctionSymbol_Guide< RET >::Get( TO_STRING( NAME ) , __VA_ARGS__ ) , \
+   FunctionSymbol_Guide<BaseTypeOf< RET >::type>::Get( TO_STRING( NAME ) , GetTypeName< RET >() , __VA_ARGS__ ) , \
    const ErrorType& e ,							\
    CALL( e )								\
 									\
@@ -48,27 +48,27 @@
 
 
 // decraration
-#define CHECK_VALID( TYPE )			\
+#define CHECK_VALID( TYPE_NAME )		\
 						\
-  if( ! IsValidType< TYPE >::value ){		\
+  if( ! IsValidType< TYPE_NAME >::value ){	\
 						\
-    MISMATCH( TYPE );				\
+    MISMATCH( TYPE_NAME );			\
 						\
   }						\
 
 
 
-#define USE( TYPE , VARIABLE )						\
+#define USE( TYPE_NAME , VARIABLE )					\
 									\
-  VariableSymbol< TYPE > CONNECT( CONNECT( __SYMBOL_OF_ , VARIABLE ) , __ ) = VariableSymbol< TYPE >( TO_STRING( VARIABLE ) ); \
-  const VariableSymbol< TYPE >& VARIABLE = CONNECT( CONNECT( __SYMBOL_OF_ , VARIABLE ) , __ ); \
-  CHECK_VALID( TYPE )							\
+  static VariableSymbol<BaseTypeOf< TYPE_NAME >::type> CONNECT( CONNECT( __SYMBOL_OF_ , VARIABLE ) , __ ) = VariableSymbol<BaseTypeOf< TYPE_NAME >::type>( TO_STRING( VARIABLE ) , GetTypeName< TYPE_NAME >() ); \
+  static const VariableSymbol<BaseTypeOf< TYPE_NAME >::type>& VARIABLE = CONNECT( CONNECT( __SYMBOL_OF_ , VARIABLE ) , __ ); \
+  CHECK_VALID( TYPE_NAME )						\
 									\
   
 #define IMP( RET , FUNC , ... )						\
 									\
-  auto CONNECT( CONNECT( __SYMBOL_OF_ , FUNC ) , __ ) = FUNCTION_SYMBOL_CONSTRUCTOR( RET , FUNC , __VA_ARGS__ ); \
-  const decltype( CONNECT( CONNECT( __SYMBOL_OF_ , FUNC ) , __ ) )& FUNC = CONNECT( CONNECT( __SYMBOL_OF_ , FUNC ) , __ ) \
+  static auto CONNECT( CONNECT( __SYMBOL_OF_ , FUNC ) , __ ) = FUNCTION_SYMBOL_CONSTRUCTOR( RET , FUNC , __VA_ARGS__ ); \
+  static const decltype( CONNECT( CONNECT( __SYMBOL_OF_ , FUNC ) , __ ) )& FUNC = CONNECT( CONNECT( __SYMBOL_OF_ , FUNC ) , __ ) \
 
 
 // symbol setting
@@ -115,9 +115,9 @@
 #define RVEC RMAT 
 
 
-#define SEP( FUNC , ... )			\
-						\
-  CONNECT( CONNECT( __SYMBOL_OF_ , FUNC ) , __ ).SetSeparator( __VA_ARGS__ );		\
+#define SEP( FUNC , ... )						\
+									\
+  CONNECT( CONNECT( __SYMBOL_OF_ , FUNC ) , __ ).SetSeparator( __VA_ARGS__ ); \
 
 
 // definition

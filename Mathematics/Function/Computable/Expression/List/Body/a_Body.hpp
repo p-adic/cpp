@@ -8,7 +8,7 @@
 #include "../../Variable/a_Body.hpp"
 #include "../../../Type/Valid/a_Body.hpp"
 
-inline ExpressionOfComputableFunction<void>::ExpressionOfComputableFunction( const Dummy& i ) : SyntaxOfComputableFunction( ExpressionString() , VariableString() , LdotsString() , GetName<void>() ) {}
+inline ExpressionOfComputableFunction<void>::ExpressionOfComputableFunction( const Dummy& i ) : SyntaxOfComputableFunction( ExpressionString() , VariableString() , LdotsString() , GetSyntax<void>().Get() ) {}
 
 template <typename... VA>
 ExpressionOfComputableFunction<void>::ExpressionOfComputableFunction( const ExpressionOfComputableFunction<VA>&... va ) : SyntaxOfComputableFunction( ExpressionString() , ListString() , va.Get()... )
@@ -48,7 +48,7 @@ ExpressionOfComputableFunction<void>::ExpressionOfComputableFunction( const Expr
 
 	 auto itr_copy = itr;
 	 argument_name += SyntaxToString( itr_copy , 2 );
-	 argument_type_name += *itr_copy;
+	 argument_type_name += SyntaxToString( itr_copy , 2 );
 	 itr++;
 	 i++;
 

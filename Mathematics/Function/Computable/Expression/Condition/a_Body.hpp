@@ -6,25 +6,21 @@
 #include "../../Function/Variadic/a_Body.hpp"
 
 // variable
-inline ExpressionOfComputableFunction<bool>::ExpressionOfComputableFunction( const int& dummy , const string& x ) : SyntaxOfComputableFunction( ExpressionString() , VariableString() , x , GetName<bool>() ) {}
+inline ExpressionOfComputableFunction<bool>::ExpressionOfComputableFunction( const int& dummy , const string& x , const TypeNameOfComputableFunction& type_name ) : SyntaxOfComputableFunction( ExpressionString() , VariableString() , x , type_name.Get() ) {}
 
 // constant
-inline ExpressionOfComputableFunction<bool>::ExpressionOfComputableFunction( const bool& t ) : SyntaxOfComputableFunction( ExpressionString() , ConstantString() , to_string( t ) , GetName<bool>() ) {}
+inline ExpressionOfComputableFunction<bool>::ExpressionOfComputableFunction( const bool& t ) : SyntaxOfComputableFunction( ExpressionString() , ConstantString() , to_string( t ) , GetSyntax<bool>().Get() ) {}
 
 // function
 template <typename... Args> inline ExpressionOfComputableFunction<bool>::ExpressionOfComputableFunction( const FunctionSymbol<bool,Args...>& f , const ExpressionOfComputableFunction<Args>&... args ) : SyntaxOfComputableFunction( ExpressionString() , FunctionString() ) { PushFunctionExpression( f , args... ); }
 
 // variadic function
-// template <typename... Args, typename... VA> inline ExpressionOfComputableFunction<bool>::ExpressionOfComputableFunction( const VariadicFunctionSymbol<bool,Args...>& f , const ExpressionOfComputableFunction<Args>&... args , const ListExpressionOfComputableFunction<VA...>& va ) : SyntaxOfComputableFunction( ExpressionString() , FunctionString() ) { PushFunctionExpression( f , args... , va ); }
-
 template <typename... Args, typename... VA> inline ExpressionOfComputableFunction<bool>::ExpressionOfComputableFunction( const VariadicFunctionSymbol<bool,Args...>& f , const ExpressionOfComputableFunction<VA>&... va ) : SyntaxOfComputableFunction( ExpressionString() , FunctionString() ) { PushFunctionExpression( f , va... ); }
 
 // relation
 template <typename... Args> inline ExpressionOfComputableFunction<bool>::ExpressionOfComputableFunction( const RelationSymbol<Args...>& r , const ExpressionOfComputableFunction<Args>&... args ) : SyntaxOfComputableFunction( ExpressionString() , RelationString()  ) { PushRelationExpression( r , args... ); }
 
 // variadic relation
-// template <typename... Args, typename... VA> inline ExpressionOfComputableFunction<bool>::ExpressionOfComputableFunction( const VariadicRelationSymbol<Args...>& r , const ExpressionOfComputableFunction<Args>&... args , const ListExpressionOfComputableFunction<VA...>& va ) : SyntaxOfComputableFunction( ExpressionString() , RelationString()  ) { PushRelationExpression( r , args... , va ); }
-
 template <typename... Args, typename... VA> inline ExpressionOfComputableFunction<bool>::ExpressionOfComputableFunction( const VariadicRelationSymbol<bool,Args...>& r , const ExpressionOfComputableFunction<VA>&... va ) : SyntaxOfComputableFunction( ExpressionString() , RelationString() ) { PushFunctionExpression( r , va... ); }
 
 
@@ -37,11 +33,16 @@ auto ConditionOfComputableFunction::PushFunctionExpression( const FunctionSymbol
 
   VLTree<string> t_va{};
   t_va.push_RightMost( va... );
+
+  const VLTree<string>& func = f.Get();
+  ConstIteratorOfVLTree<string> itr = func.LeftMostNode();
+  itr++;
+  itr++;
   
   TRY_CATCH
     (
      
-     Ref().push_RightMost( FunctionExpressionToString( f , t_va ) , GetName<bool>() , f.Get() , va... ) ,
+     Ref().push_RightMost( FunctionExpressionToString( f , t_va ) , VLTree<string>( 0 , itr ) , func , va... ) ,
 
      const ErrorType& e ,
 
@@ -62,11 +63,16 @@ auto ConditionOfComputableFunction::PushRelationExpression( const RelationSymbol
 
   VLTree<string> t_va{};
   t_va.push_RightMost( va... );
+
+  const VLTree<string>& rel = r.Get();
+  ConstIteratorOfVLTree<string> itr = rel.LeftMostNode();
+  itr++;
+  itr++;
   
   TRY_CATCH
     (
      
-     Ref().push_RightMost( FunctionExpressionToString( r , t_va ) , GetName<bool>() , r.Get() , va... ) ,
+     Ref().push_RightMost( FunctionExpressionToString( r , t_va ) , VLTree<string>( 0 , itr ) , rel , va... ) ,
 
      const ErrorType& e ,
 

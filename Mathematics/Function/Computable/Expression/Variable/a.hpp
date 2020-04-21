@@ -10,6 +10,7 @@ class VariableSymbol :
 
 public:
   inline VariableSymbol( const string& x );
+  inline VariableSymbol( const string& x , const TypeNameOfComputableFunction& type_name );
 
 };
 

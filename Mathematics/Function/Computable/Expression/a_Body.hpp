@@ -2,29 +2,30 @@
 
 #pragma once
 #include "a.hpp"
+
 #include "List/a.hpp"
 #include "../Function/Variadic/a.hpp"
 #include "../Relation/Variadic/a.hpp"
+#include "../Type/TypeName/a.hpp"
+
+#include "../Syntax/a_Body.hpp"
 
 #include "List/a_Body.hpp"
 #include "../Function/Variadic/a_Body.hpp"
 #include "../Relation/Variadic/a_Body.hpp"
-#include "../Syntax/a_Body.hpp"
-#include "../Type/Valid/a_Body.hpp"
+#include "../Type/TypeName/a_Body.hpp"
 
 
 // variable
-template <typename Ret> inline ExpressionOfComputableFunction<Ret>::ExpressionOfComputableFunction( const int& dummy , const string& x ) : SyntaxOfComputableFunction( ExpressionString() , VariableString() , x , GetName<Ret>() ) {}
+template <typename Ret> inline ExpressionOfComputableFunction<Ret>::ExpressionOfComputableFunction( const int& dummy , const string& x , const TypeNameOfComputableFunction& type_name ) : SyntaxOfComputableFunction( ExpressionString() , VariableString() , x , type_name.Get() ) {}
 
 // constant
-template <typename Ret> inline ExpressionOfComputableFunction<Ret>::ExpressionOfComputableFunction( const Ret& t ) : SyntaxOfComputableFunction( ExpressionString(), ConstantString() , to_string( t ) , GetName<Ret>() ) {}
+template <typename Ret> inline ExpressionOfComputableFunction<Ret>::ExpressionOfComputableFunction( const Ret& t ) : SyntaxOfComputableFunction( ExpressionString(), ConstantString() , to_string( t ) , GetSyntax<Ret>().Get() ) {}
 
 // function
 template <typename Ret> template <typename... Args> inline ExpressionOfComputableFunction<Ret>::ExpressionOfComputableFunction( const FunctionSymbol<Ret,Args...>& f , const ExpressionOfComputableFunction<Args>&... args ) : SyntaxOfComputableFunction( ExpressionString() , FunctionString() ) { PushFunctionExpression( f , args... ); }
 
 // variadic function
-// template <typename Ret> template <typename... Args, typename... VA> inline ExpressionOfComputableFunction<Ret>::ExpressionOfComputableFunction( const VariadicFunctionSymbol<Ret,Args...>& f , const ExpressionOfComputableFunction<Args>&... args , const ListExpressionOfComputableFunction<VA...>& va ) : SyntaxOfComputableFunction( ExpressionString() , FunctionString() ) { PushFunctionExpression( f , args... , va ); }
-
 template <typename Ret> template <typename... Args, typename... VA> inline ExpressionOfComputableFunction<Ret>::ExpressionOfComputableFunction( const VariadicFunctionSymbol<Ret,Args...>& f , const ExpressionOfComputableFunction<VA>&... va ) : SyntaxOfComputableFunction( ExpressionString() , FunctionString() ) { PushFunctionExpression( f , va... ); }
 
 
@@ -37,11 +38,16 @@ inline auto ExpressionOfComputableFunction<Ret>::PushFunctionExpression( const F
 
   VLTree<string> t_va{};
   t_va.push_RightMost( va... );
+
+  const VLTree<string>& func = f.Get();
+  ConstIteratorOfVLTree<string> itr = func.LeftMostNode();
+  itr++;
+  itr++;
   
   TRY_CATCH
     (
      
-     Ref().push_RightMost( FunctionExpressionToString( f , t_va ) , GetName<Ret>() , f.Get() , va... ) ,
+     Ref().push_RightMost( FunctionExpressionToString( f , t_va ) , VLTree<string>( 0 , itr ) , func , va... ) ,
 
      const ErrorType& e ,
 
@@ -75,4 +81,4 @@ DEFINITION_OF_BASIC_FUNCTION( int , % , Mod );
 template <typename Ret> DEFINITION_OF_BASIC_FUNCTION( Ret , ^ , Power );
 DEFINITION_OF_BASIC_FUNCTION( int , ^ , Power );
 
-inline const ExpressionOfComputableFunction<int>& InftySymbol(){ static const ExpressionOfComputableFunction<int> n = ExpressionOfComputableFunction<int>(infty() ); return n; }
+inline const ExpressionOfComputableFunction<int>& InftySymbol(){ static const ExpressionOfComputableFunction<int> n = ExpressionOfComputableFunction<int>( infty() ); return n; }

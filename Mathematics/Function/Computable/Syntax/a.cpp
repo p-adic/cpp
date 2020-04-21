@@ -55,7 +55,9 @@ void SyntaxOfComputableFunction::InputDefinition( ofstream& ofs , const SyntaxOf
 
        }
 
-       p_return_type_name = &( *itr_function_symbol );
+       auto itr_return_type_name = itr_function_symbol;
+       itr_return_type_name[2];
+       p_return_type_name = &( *itr_return_type_name );
 
      } ,
      
@@ -440,6 +442,7 @@ void SyntaxOfComputableFunction::InputPutLine( ofstream& ofs , VLTree<string>::c
   TRY_CATCH
     (
 
+     itr_variable[2];
      p_variable_type_name = &( *itr_variable ) ,
      
      const ErrorType& e ,

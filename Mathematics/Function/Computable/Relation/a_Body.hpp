@@ -6,17 +6,17 @@
 #include "../Function/a_Body.hpp"
 #include "../Syntax/a_Body.hpp"
 
-template <typename... Args> inline RelationSymbol<Args...>::RelationSymbol( const string& r , const VariableSymbol<Args>&... args ) : RelationSymbol( r , SeparatorOfComputableFunction( r , sizeof...( Args ) ) , args... ) {}
+template <typename... Args> inline RelationSymbol<Args...>::RelationSymbol( const string& r , const TypeNameOfComputableFunction& type_name , const VariableSymbol<Args>&... args ) : RelationSymbol( r , SeparatorOfComputableFunction( r , sizeof...( Args ) ) , type_name , args... ) {}
 
 template <typename... Args>
-RelationSymbol<Args...>::RelationSymbol( const string& r , const SeparatorOfComputableFunction& s , const VariableSymbol<Args>&... args ) :
+RelationSymbol<Args...>::RelationSymbol( const string& r , const SeparatorOfComputableFunction& s , const TypeNameOfComputableFunction& type_name , const VariableSymbol<Args>&... args ) :
   SyntaxOfComputableFunction
   (
 
    NestString() ,
    RelationString() ,
    r ,
-   GetName<bool>() ,
+   type_name.Get() ,
    ListExpressionOfComputableFunction( args... ).Get() ,
    s.Get()
    

@@ -7,6 +7,7 @@
 #include "../Expression/Condition/a.hpp"
 #include "../Expression/Variable/Variadic/a.hpp"
 #include "../Separator/a.hpp"
+#include "../Type/Base/a.hpp"
 #include "../Type/Basic/a.hpp"
 
 
@@ -16,8 +17,8 @@ class FunctionSymbol :
 {
 
 public:
-  inline FunctionSymbol( const string& f , const VariableSymbol<Args>&... args );
-  FunctionSymbol( const string& f , const SeparatorOfComputableFunction& s , const VariableSymbol<Args>&... args );
+  inline FunctionSymbol( const string& f , const TypeNameOfComputableFunction& type_name , const VariableSymbol<Args>&... args );
+  FunctionSymbol( const string& f , const SeparatorOfComputableFunction& s , const TypeNameOfComputableFunction& type_name , const VariableSymbol<Args>&... args );
 
   void SetSeparator( const SeparatorOfComputableFunction& s );
   template <typename... VA> inline auto SetSeparator( const VA&... va ) -> typename enable_if<conjunction<is_same<VA,string>...>::value,void>::type;

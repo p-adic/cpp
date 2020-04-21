@@ -8,6 +8,7 @@
 // マクロIMPORTとDATAに用いる。
 
 template <typename Ret, typename... Args> class FunctionSymbol;
+template <typename... Args> class RelationSymbol;
 
 template <typename Ret>
 class FunctionSymbol_Guide :
@@ -15,6 +16,16 @@ class FunctionSymbol_Guide :
 {
 
 public:
-  template <typename... Args> static inline auto Get( const string& name , const VariableSymbol<Args>&... args ) -> typename enable_if<! is_same<Ret,bool>::value,FunctionSymbol<Ret,Args...> >::type;
+  template <typename... Args> static inline auto Get( const string& name , const TypeNameOfComputableFunction& type_name , const VariableSymbol<Args>&... args ) -> typename enable_if<! is_same<Ret,bool>::value,FunctionSymbol<Ret,Args...> >::type;
+
+};
+
+template <>
+class FunctionSymbol_Guide<bool> :
+  public EmptySet
+{
+
+public:
+  template <typename... Args> static inline RelationSymbol<Args...> Get( const string& name , const TypeNameOfComputableFunction& type_name , const VariableSymbol<Args>&... args );
 
 };

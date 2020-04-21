@@ -8,7 +8,9 @@
 // #include "List/a.hpp"
 // #include "../Function/Variadic/a.hpp"
 // #include "../Relation/Variadic/a.hpp"
+// #include "../Type/TypeName/a.hpp"
 
+class TypeNameOfComputableFunction;
 template <typename Ret, typename... Args> class FunctionSymbol;
 template <typename Ret, typename VArg, typename... Args> class VariadicFunctionSymbol;
 template <typename... Args> class RelationSymbol;
@@ -22,7 +24,7 @@ class ExpressionOfComputableFunction :
   
 protected:
   // variable
-  inline ExpressionOfComputableFunction( const int& dummy , const string& x );
+  inline ExpressionOfComputableFunction( const int& dummy , const string& x , const TypeNameOfComputableFunction& type_name );
 
 public:
   // constant
@@ -45,6 +47,7 @@ private:
   // ñÿÇÃâEí[Ç…ä÷êîfÇ∆à¯êîÇÃñÿva...Ç…ÇÊÇÈï\åªÇí«â¡
   template <typename... Args, typename... VA>
   inline auto PushFunctionExpression( const FunctionSymbol<Ret,Args...>& f , const VA&... va ) -> typename enable_if<conjunction<is_same<VLTree<string>,VA>...>::value,void>::type;
+  
 };
 
 #include "a_Alias.hpp"

@@ -2,19 +2,8 @@
 
 #pragma once
 #include "../Expression/Condition/a.hpp"
+#include "../../../SetTheory/EmptySet/a.hpp"
 
-class TypeOfComputableFunction
-{
-
-private:
-  ConditionOfComputableFunction m_cond;
-  
-public:
-  inline TypeOfComputableFunction( const ConditionOfComputableFunction& cond );
-
-  static inline const string& Name() noexcept;
-
-  inline void SetCondition( const ConditionOfComputableFunction& cond ) noexcept;
-  inline const ConditionOfComputableFunction& GetCondition() const noexcept;
-
-};
+class TypeOfComputableFunction :
+  public EmptySet
+{};
