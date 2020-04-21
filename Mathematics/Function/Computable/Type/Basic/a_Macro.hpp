@@ -16,3 +16,5 @@
   };									\
 									\
 
+// マクロ中のコンマをラップするために使う
+#define BOOLIAN_SET_FOR_BASIC_TYPE \\{0,1\\}
