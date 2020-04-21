@@ -2,7 +2,7 @@
 
 #pragma once
 
-#define TYPE( TYPE_NAME , VARIABLE , REL )				\
+#define SPEC( TYPE_NAME , VARIABLE , REL )				\
 									\
   class TYPE_NAME :							\
     public TypeOfComputableFunction					\
