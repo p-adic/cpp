@@ -4,14 +4,20 @@
 #include "a_Body.hpp"
 
 
-void TypeOfComputableFunction::WriteOn( const int& dummy , const string& language , const string& style , const string& filename , const ios_base::openmode& open_mode ) const noexcept
+void TypeOfComputableFunction::WriteOn( const TypeOfComputableFunction& dummy , const string& language , const string& style , const string& filename , const ios_base::openmode& open_mode ) const noexcept
 {
 
+  if( &dummy != this ){
+
+    ERR_CODE;
+
+  }
+  
   ofstream ofs( filename , open_mode );
 
   if( language == JapaneseString() ){
 
-    cout << "定義文の日本語訳を" << filename << "に書き込みます：" << endl;
+    cout << m_type_name << " の定義文の日本語訳を" << filename << "に書き込みます：" << endl;
     cout << "…" << endl;
   
     if( !ofs ){
@@ -33,6 +39,8 @@ void TypeOfComputableFunction::WriteOn( const int& dummy , const string& languag
 
     }
   
+    ofs << endl;
+
     cout << "………" << endl;
     cout << "書き込みが終了しました。" << endl;
     return;
@@ -63,8 +71,11 @@ void TypeOfComputableFunction::WriteOn( const int& dummy , const string& languag
 
     }
   
+    ofs << endl;
+
     cout << "………" << endl;
     cout << "Finished writing." << endl;
+
     return;
 
   }

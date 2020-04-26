@@ -75,16 +75,15 @@
 									\
   };									\
 									\
-  static const TypeOfComputableFunction& CONNECT( __DEFINITION_OF__ , TYPE_NAME ) = TYPE_NAME ::GetType(); \
-  static constexpr const int CONNECT( __SYMBOL_OF_ , TYPE_NAME ) = 0;		\
+  static const TypeOfComputableFunction& CONNECT( CONNECT( __DEFINITION_OF__ , TYPE_NAME ) , __ ) = TYPE_NAME ::GetType(); \
+  static const TypeOfComputableFunction& CONNECT( CONNECT( __SYMBOL_OF_ , TYPE_NAME ) , __ ) = CONNECT( CONNECT( __DEFINITION_OF__ , TYPE_NAME ) , __ ); \
 									\
-  class CONNECT( DUMMY_CLASS_TO_USE_ , CONNECT( __SYMBOL_OF_ , TYPE_NAME ) ) : \
+  class CONNECT( DUMMY_CLASS_TO_USE_ , CONNECT( CONNECT( __SYMBOL_OF_ , TYPE_NAME ) , __ ) ) : \
     public EmptySet							\
   {									\
 									\
   private:								\
-    const TypeOfComputableFunction& m_dummy_type = CONNECT( __DEFINITION_OF__ , TYPE_NAME ); \
-    const int& m_dummy_int = CONNECT( __SYMBOL_OF_ , TYPE_NAME );	\
+    const TypeOfComputableFunction& m_dummy = CONNECT( CONNECT( __SYMBOL_OF_ , TYPE_NAME ) , __ ); \
 									\
   };									\
 									\

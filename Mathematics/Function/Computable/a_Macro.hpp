@@ -71,17 +71,17 @@
 #define IMP( RET , FUNC , ... )						\
 									\
   static auto CONNECT( CONNECT( __SYMBOL_OF_ , FUNC ) , __ ) = FUNCTION_SYMBOL_CONSTRUCTOR( RET , FUNC , __VA_ARGS__ ); \
-  static const decltype( CONNECT( CONNECT( __SYMBOL_OF_ , FUNC ) , __ ) )& FUNC = CONNECT( CONNECT( __SYMBOL_OF_ , FUNC ) , __ ) \
+  static const decltype( CONNECT( CONNECT( __SYMBOL_OF_, FUNC ) , __ ) )& FUNC = CONNECT( CONNECT( __SYMBOL_OF_ , FUNC ) , __ ) \
 
 
 // symbol setting
 #define STR( SYMB ) TO_STRING( SYMB ) 
 
-#define SET( OBJ , SYMB ) CONNECT( CONNECT( __SYMBOL_OF_ , OBJ ) , __ ).SetSymbol( STR( SYMB ) ) 
+#define SET( OBJ , SYMB ) CONNECT( CONNECT( __SYMBOL_OF_, OBJ ) , __ ).SetSymbol( STR( SYMB ) ) 
 
 #define PLAIN( SYMB ) Plainise( STR( SYMB ) ) 
 
-#define ROMANISE( OBJ ) CONNECT( CONNECT( __SYMBOL_OF_ , OBJ ) , __ ).RomaniseSymbol() 
+#define ROMANISE( OBJ ) CONNECT( CONNECT( __SYMBOL_OF_, OBJ ) , __ ).RomaniseSymbol() 
 
 
 // separator setting
@@ -120,13 +120,13 @@
 
 #define SEP( FUNC , ... )						\
 									\
-  CONNECT( CONNECT( __SYMBOL_OF_ , FUNC ) , __ ).SetSeparator( __VA_ARGS__ ); \
+  CONNECT( CONNECT( __SYMBOL_OF_, FUNC ) , __ ).SetSeparator( __VA_ARGS__ ); \
 
 
 // definition
 #define DEF( FUNC )							\
 									\
-  const decltype( DefinitionOfComputableFunction( FUNC ) ) CONNECT( __DEFINITION_OF__ , FUNC )
+  const decltype( DefinitionOfComputableFunction( FUNC ) ) CONNECT( CONNECT( __DEFINITION_OF__ , FUNC ) , __ ) 
 
 #define IF( ... )				\
 						\
@@ -146,8 +146,8 @@
 // display
 #define DISPLAY( OBJECT )						\
   									\
-  cout << TO_STRING( OBJECT ) << "の木構造を出力します：" << endl;	\
-  cout << ( OBJECT ).Display() << endl;					\
+  cout << TO_STRING( OBJECT ) << " の木構造を出力します：" << endl;	\
+  cout << CONNECT( CONNECT( __SYMBOL_OF_, OBJECT ) , __ ).Display() << endl; \
   cout << endl;								\
 
 
@@ -158,12 +158,12 @@
 #define APP ios::app 
 #define TRUNC ios::trunc 
 
-#define __DEFINITION_OF_int BasicType<int>() 
-#define __DEFINITION_OF_string BasicType<string>() 
-#define __DEFINITION_OF_bool BasicType<bool>() 
+#define __DEFINITION_OF__int BasicType<int>() 
+#define __DEFINITION_OF__string BasicType<string>() 
+#define __DEFINITION_OF__bool BasicType<bool>() 
 
-#define __SYMBOL_OF_int 0 
-#define __SYMBOL_OF_string 0 
-#define __SYMBOL_OF_bool 0 
+#define __SYMBOL_OF_int __DEFINITION_OF__int 
+#define __SYMBOL_OF_string __DEFINITION_OF__string 
+#define __SYMBOL_OF_bool __DEFINITION_OF__bool 
 
-#define WRITE( FUNC , LANGUAGE , STYLE , FILE , OPEN_MODE ) CONNECT( __DEFINITION_OF__ , FUNC ).WriteOn( CONNECT( CONNECT( __SYMBOL_OF_ , FUNC ) , __ ) , LANGUAGE , STYLE , TO_STRING( FILE ) , OPEN_MODE );
+#define WRITE( FUNC , LANGUAGE , STYLE , FILE , OPEN_MODE ) CONNECT( CONNECT( __DEFINITION_OF__ , FUNC ) , __ ).WriteOn( CONNECT( CONNECT( __SYMBOL_OF_, FUNC ) , __ ) , LANGUAGE , STYLE , TO_STRING( FILE ) , OPEN_MODE );

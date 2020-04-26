@@ -35,10 +35,10 @@ void DefinitionOfComputableFunction<Ret,Args...>::WriteOn( const FunctionSymbol<
   
   if( language == JapaneseString() ){
 
-    cout << "\\(" << *p_function_name << "\\)の定義文の木構造を出力します：" << endl;
+    cout <<  *p_function_name << " の定義文の木構造を出力します：" << endl;
     cout << Get().Display() << endl;
     cout << endl;
-    cout << "\\(" << *p_function_name << "\\)の定義文の日本語訳を" << filename << "に書き込みます：" << endl;
+    cout << *p_function_name << " の定義文の日本語訳を " << filename << " に書き込みます：" << endl;
     cout << "…" << endl;
   
     if( !ofs ){
@@ -60,6 +60,8 @@ void DefinitionOfComputableFunction<Ret,Args...>::WriteOn( const FunctionSymbol<
 
     }
   
+    ofs << endl;
+
     cout << "………" << endl;
     cout << "書き込みが終了しました。" << endl;
     return;
@@ -68,10 +70,10 @@ void DefinitionOfComputableFunction<Ret,Args...>::WriteOn( const FunctionSymbol<
 
   if( language == EnglishString() ){
 
-    cout << "Display the tree structure of the definition of \\(" << *p_function_name << "\\):" << endl;
+    cout << "Display the tree structure of the definition of " << *p_function_name << ":" << endl;
     cout << Get().Display() << endl;
     cout << endl;
-    cout << "Writing an English translation of the definition of \\(" << *p_function_name << "\\) to " << filename << ":" << endl;
+    cout << "Writing an English translation of the definition of " << *p_function_name << " on " << filename << ":" << endl;
     cout << "…" << endl;
   
     if( !ofs ){
@@ -93,6 +95,8 @@ void DefinitionOfComputableFunction<Ret,Args...>::WriteOn( const FunctionSymbol<
 
     }
   
+    ofs << endl;
+
     cout << "………" << endl;
     cout << "Finished writing." << endl;
     return;
