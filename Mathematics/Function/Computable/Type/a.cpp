@@ -89,14 +89,14 @@ void TypeOfComputableFunction::InputDefinition( ofstream& ofs , const string& la
 
   if( language == JapaneseString() && style == FandomString() ){
 
-    ofs << "再帰的集合" << m_type_name << "を" << m_definition << "と定める。" << endl;
+    ofs << "再帰的集合\\(" << m_type_name << "\\)を\\(" << m_definition << "\\)と定める。" << endl;
     return;
 
   }
 
   if( language == EnglishString() && style == FandomString() ){
 
-    ofs << "I define a recursive set " << m_type_name << " as " << m_definition << "." << endl;
+    ofs << "I define a recursive set \\(" << m_type_name << "\\) as \\(" << m_definition << "\\)." << endl;
     return;
 
   }
