@@ -2,10 +2,7 @@
 
 #pragma once
 #include "../a.hpp"
-
-template <typename... Types>
-class WrappedTypes
-{};
+#include "../../../Utility/WrappedType/a.hpp"
 
 template <typename... Types1>
 class IsIncludedBy_Body :
