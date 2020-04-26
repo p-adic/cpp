@@ -349,6 +349,9 @@ typename VLSubTree<T>::const_iterator VLSubTree<T>::RightMostLeaf() const noexce
 template <typename T> inline typename VLSubTree<T>::iterator VLSubTree<T>::Root() noexcept { return IteratorOfVLTree<T>( &m_root ); }
 template <typename T> inline typename VLSubTree<T>::const_iterator VLSubTree<T>::Root() const noexcept { return ConstIteratorOfVLTree<T>( &m_root ); }
 
+template <typename T> template <typename... Args> inline typename VLSubTree<T>::iterator VLSubTree<T>::GetIterator( const Args&... args ) { return Root().Shift( args... ); }
+template <typename T> template <typename... Args> inline typename VLSubTree<T>::const_iterator VLSubTree<T>::GetIterator( const Args&... args ) const { return Root().Shift( args... ); }
+
 
 template <typename T> template <typename Arg>
 void VLSubTree<T>::insert( const typename VLSubTree<T>::iterator& itr , const Arg& t )
@@ -437,20 +440,7 @@ template <typename T> inline const T& VLSubTree<T>::GetRoot() const noexcept { r
 
 template <typename T> inline void VLSubTree<T>::SetRoot( const T& t ){ m_root.m_t = t; }
 
-template <typename T>
-void VLSubTree<T>::SetNode( const typename VLSubTree<T>::iterator& itr , const T& t )
-{
-
-  if( ! CheckContain( itr ) ){
-
-    ERR_IMPUT( itr , t );
-    
-  }
-
-  *itr = t;
-  return;
-  
-}
+template <typename T> template <typename... Args> inline const T& VLSubTree<T>::GetNode( const Args&... args ) const { return ACCESS( GetIterator( args... ) ); }
 
 
 template <typename T>

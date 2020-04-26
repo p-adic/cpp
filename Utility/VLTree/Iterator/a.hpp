@@ -38,6 +38,8 @@ public:
 
   // 引数が0の時は何もしない。正の時はm_leftmost_nodeに進んでインクリメント、負の時はm_rightmost_nodeに進んでディクリメント。
   IteratorOfVLTree<T>& operator[]( const int& );
+  IteratorOfVLTree<T>& Shift() noexcept;
+  template <typename... Args> IteratorOfVLTree<T>& Shift( const int& , const Args&... );
   
   inline bool IsLeaf() const noexcept;
   inline bool IsLeftMost() const noexcept;
@@ -79,6 +81,8 @@ public:
 
   // 引数が0の時は何もしない。正の時はm_leftmost_nodeに進んでインクリメント、負の時はm_rightmost_nodeに進んでディクリメント。
   ConstIteratorOfVLTree<T>& operator[]( const int& );
+  ConstIteratorOfVLTree<T>& Shift() noexcept;
+  template <typename... Args> ConstIteratorOfVLTree<T>& Shift( const int& , const Args&... );
 
   inline bool IsLeaf() const noexcept;
   inline bool IsLeftMost() const noexcept;

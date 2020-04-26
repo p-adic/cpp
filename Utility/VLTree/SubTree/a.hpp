@@ -102,6 +102,8 @@ public:
   const_iterator RightMostLeaf() const noexcept;
   inline iterator Root() noexcept;
   inline const_iterator Root() const noexcept;
+  template <typename... Args> inline iterator GetIterator( const Args&... );
+  template <typename... Args> inline const_iterator GetIterator( const Args&... ) const;
 
   // iteratorの右に新たなLeafを構築する。
   template <typename Arg> void insert( const iterator& , const Arg& );
@@ -112,7 +114,7 @@ public:
   // RootやNodeのラベルに直接読み書きを行う。
   inline const T& GetRoot() const noexcept;
   inline void SetRoot( const T& );
-  void SetNode( const iterator& , const T& );
+  template <typename... Args> inline const T& GetNode( const Args&... ) const;
 
   // 部分木を構築して返すため、部分木への変更が自身へも反映される。
   VLSubTree<T> operator[]( const uint& );

@@ -3,6 +3,8 @@
 #pragma once
 #include "a.hpp"
 
+#include "Entry/a_Body.hpp"
+#include "Iterator/Sequential/a_Body.hpp"
 #include "SubTree/a_Body.hpp"
 
 template <typename T> template <typename... Args> inline VLTree<T>::VLTree( const Args&... t ) : VLSubTree<T>( t... ) {}

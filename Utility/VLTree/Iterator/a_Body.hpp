@@ -107,6 +107,9 @@ IteratorOfVLTree<T>& IteratorOfVLTree<T>::operator[]( const int& n )
 
 }
 
+template <typename T> IteratorOfVLTree<T>& IteratorOfVLTree<T>::Shift() noexcept { return *this; }
+template <typename T> template <typename... Args> IteratorOfVLTree<T>& IteratorOfVLTree<T>::Shift( const int& n , const Args&... args ) { operator[]( n ); return Shift( args... ); }
+
 template <typename T> inline bool IteratorOfVLTree<T>::IsLeaf() const noexcept { return ( m_p == nullptr ) ? false : ( m_p == ( *m_p ).m_leftmost_node ); }
 template <typename T> inline bool IteratorOfVLTree<T>::IsLeftMost() const noexcept { return ( m_p == nullptr ) ? false : ( m_p == ( *m_p ).m_left_branch ); }
 template <typename T> inline bool IteratorOfVLTree<T>::IsRightMost() const noexcept { return ( m_p == nullptr ) ? false : ( m_p == ( *m_p ).m_right_branch ); }
@@ -220,6 +223,9 @@ ConstIteratorOfVLTree<T>& ConstIteratorOfVLTree<T>::operator[]( const int& n )
 
 }
 
+template <typename T> ConstIteratorOfVLTree<T>& ConstIteratorOfVLTree<T>::Shift() noexcept { return *this; }
+template <typename T> template <typename... Args> ConstIteratorOfVLTree<T>& ConstIteratorOfVLTree<T>::Shift( const int& n , const Args&... args ) { operator[]( n ); return Shift( args... ); }
+
 template <typename T> inline bool ConstIteratorOfVLTree<T>::IsLeaf() const noexcept { return ( m_p == nullptr ) ? false : ( m_p == ( *m_p ).m_leftmost_mode ); }
 template <typename T> inline bool ConstIteratorOfVLTree<T>::IsLeftMost() const noexcept { return ( m_p == nullptr ) ? false : ( m_p == ( *m_p ).m_left_branch ); }
 template <typename T> inline bool ConstIteratorOfVLTree<T>::IsRightMost() const noexcept { return ( m_p == nullptr ) ? false : ( m_p == ( *m_p ).m_right_branch ); }
@@ -243,5 +249,5 @@ template <typename T> inline bool operator==( const ConstIteratorOfVLTree<T>& it
 template <typename T> inline bool operator!=( const ConstIteratorOfVLTree<T>& itr0 , const ConstIteratorOfVLTree<T>& itr1 ) noexcept { return !( itr0 == itr1 );}
 
 
-template <typename T> inline T& Access( const char* const FILE , const int& LINE , const char* const FUNC , const string& VARIABLE_NAMES , const IteratorOfVLTree<T>& itr ) { return itr.Access_Body( FILE , LINE , FUNC ); }
-template <typename T> inline const T& Access( const char* const FILE , const int& LINE , const char* const FUNC , const string& VARIABLE_NAMES , const IteratorOfVLTree<T>& itr ) { return itr.Access_Body( FILE , LINE , FUNC ); }
+template <typename T> inline T& Access( const char* const FILE , const int& LINE , const char* const FUNC , const string& VARIABLE_NAMES , const IteratorOfVLTree<T>& itr ) { return itr.Access_Body( FILE , LINE , FUNC , VARIABLE_NAMES ); }
+template <typename T> inline const T& Access( const char* const FILE , const int& LINE , const char* const FUNC , const string& VARIABLE_NAMES , const ConstIteratorOfVLTree<T>& itr ) { return itr.Access_Body( FILE , LINE , FUNC , VARIABLE_NAMES ); }
