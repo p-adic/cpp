@@ -7,7 +7,7 @@
 
 
 // variable
-#define LDOTS LdotsSymbol() 
+#define LDOTS( V ) LdotsSymbol< V >()  
 
 
 // function
@@ -37,10 +37,10 @@
 #define OT( x , y ) TO( y , x ) 
 #define EQUIV( ... ) EquivSymbolApplication( __VA_ARGS__ ) 
 
-#define LENGTH( s ) LengthSymbol()( s ) 
-#define ENTRY( s , n ) EntryAccessSymbol()( s , n ) 
-#define INISEG( s , n ) InitialSgmentSymbol()( s , n ) 
-#define FINSEG( s , n ) InitialSgmentSymbol()( s , n ) 
+#define LENGTH LengthSymbol() 
+#define ENTRY EntryAccessSymbol() 
+#define INISEG InitialSgmentSymbol() 
+#define FINSEG InitialSgmentSymbol() 
 
 
 // relation
@@ -51,7 +51,7 @@
 #define LNEQ( x , y ) LneqSymbolApplication( x , y ) 
 #define GNEQ( x , y ) GneqSymbolApplication( x , y ) 
 
-#define NONNEG( n ) NonNegativeSymbol()( x ) 
+#define NONNEG NonNegativeSymbol() 
 
 
 // decraration

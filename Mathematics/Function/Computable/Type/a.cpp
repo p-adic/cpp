@@ -3,6 +3,7 @@
 #include "../Header.hpp"
 #include "a_Body.hpp"
 
+#include "../Syntax/a_Body.hpp"
 
 void TypeOfComputableFunction::WriteOn( const TypeOfComputableFunction& dummy , const string& language , const string& style , const string& filename , const ios_base::openmode& open_mode ) const noexcept
 {

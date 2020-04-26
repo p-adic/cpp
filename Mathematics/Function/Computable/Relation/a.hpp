@@ -3,7 +3,12 @@
 #pragma once
 #include "a_Macro.hpp"
 
-#include "../Function/a.hpp"
+#include "../Separator/a.hpp"
+#include "../Type/Base/a.hpp"
+#include "../Type/SubType/a.hpp"
+
+// #include "../Expression/Condition/a.hpp"
+// #include "../Expression/Variable/Variadic/a.hpp"
 
 template <typename... Args>
 class RelationSymbol :

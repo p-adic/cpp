@@ -3,9 +3,8 @@
 #pragma once
 #include "a.hpp"
 
-#include "../a_Body.hpp"
-#include "../../List/Body/a_Body.hpp"
+#include "Body/a_Body.hpp"
 
-inline VariableSymbol<void>::VariableSymbol() : ExpressionOfComputableFunction<void>( 0 ) {}
+template <typename VArg> inline VariadicVariableSymbol<VArg>::VariadicVariableSymbol() : VariableSymbol<void>( WrappedTypes<VArg>() ) {}
 
-inline const VariadicVariableSymbol& LdotsSymbol() { return VariadicVariableSymbol::LdotsSymbol(); }
+template <typename VArg> inline const VariadicVariableSymbol<VArg>& LdotsSymbol() { static const VariadicVariableSymbol<VArg> v{}; return v; }

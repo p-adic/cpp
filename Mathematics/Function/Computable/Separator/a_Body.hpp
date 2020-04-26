@@ -21,7 +21,7 @@ SeparatorOfComputableFunction::SeparatorOfComputableFunction( const string& f , 
 
   if( variadic ){
 
-    t.push_RightMost( LdotsSymbol().Get() );
+    t.push_RightMost( LdotsSymbol<void>().Get() );
     t.push_RightMost( " , " );
 
   }

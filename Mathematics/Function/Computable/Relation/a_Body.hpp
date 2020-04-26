@@ -3,7 +3,16 @@
 #pragma once
 #include "a.hpp"
 
-#include "../Function/a_Body.hpp"
+#include "../Expression/Condition/a.hpp"
+#include "../Expression/Variable/Variadic/a.hpp"
+
+#include "../Separator/a_Body.hpp"
+#include "../Type/Base/a_Body.hpp"
+#include "../Type/SubType/a_Body.hpp"
+
+#include "../Expression/Condition/a_Body.hpp"
+#include "../Expression/Variable/Variadic/a_Body.hpp"
+
 #include "../Syntax/a_Body.hpp"
 
 template <typename... Args> inline RelationSymbol<Args...>::RelationSymbol( const string& r , const TypeNameOfComputableFunction& type_name , const VariableSymbol<Args>&... args ) : RelationSymbol( r , SeparatorOfComputableFunction( r , sizeof...( Args ) ) , type_name , args... ) {}

@@ -1,10 +1,14 @@
 // c:/Users/user/Documents/Programming/Mathematics/Function/Computable/Expression/List/Body/a.hpp
 
 #pragma once
-#include "../../Variable/a.hpp"
+#include "../../../../../../Utility/WrappedType/a.hpp"
+
+#include "../../a.hpp"
 
 // #include "../a.hpp"
+// #include "../../Variable/a.hpp"
 
+template <typename Ret> class VariableSymbol;
 template <typename... VA> class ListExpressionOfComputableFunction;
 
 template <>
@@ -15,11 +19,9 @@ class ExpressionOfComputableFunction<void> :
   friend VariableSymbol<void>;
   template <typename... VA> friend class ListExpressionOfComputableFunction;
 
-  using Dummy = int;
-  
 private:
   // VariadicVariable
-  inline ExpressionOfComputableFunction( const Dummy& i );
+  template <typename VArg> inline ExpressionOfComputableFunction( const WrappedTypes<VArg>& );
 
   // List
   template <typename... VA> ExpressionOfComputableFunction( const ExpressionOfComputableFunction<VA>&... va );

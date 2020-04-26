@@ -3,12 +3,15 @@
 #pragma once
 #include "a.hpp"
 #include "../a.hpp"
+#include "../../Variable/a.hpp"
+#include "../../a.hpp"
 
 #include "../a_Body.hpp"
 #include "../../Variable/a_Body.hpp"
+#include "../../a_Body.hpp"
 #include "../../../Type/Valid/a_Body.hpp"
 
-inline ExpressionOfComputableFunction<void>::ExpressionOfComputableFunction( const Dummy& i ) : SyntaxOfComputableFunction( ExpressionString() , VariableString() , LdotsString() , GetSyntax<void>().Get() ) {}
+template <typename VArg> inline ExpressionOfComputableFunction<void>::ExpressionOfComputableFunction( const WrappedTypes<VArg>& ) : SyntaxOfComputableFunction( ExpressionString() , VariableString() , LdotsString() , GetSyntax<VArg>().Get() ) {}
 
 template <typename... VA>
 ExpressionOfComputableFunction<void>::ExpressionOfComputableFunction( const ExpressionOfComputableFunction<VA>&... va ) : SyntaxOfComputableFunction( ExpressionString() , ListString() , va.Get()... )

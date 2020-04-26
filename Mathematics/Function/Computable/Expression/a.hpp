@@ -33,9 +33,7 @@ public:
   // function
   template <typename... Args> inline ExpressionOfComputableFunction( const FunctionSymbol<Ret,Args...>& f , const ExpressionOfComputableFunction<Args>&... args );
 
-  // variadic function
-  // template <typename... Args, typename... VA> inline ExpressionOfComputableFunction( const VariadicFunctionSymbol<Ret,Args...>& f , const ExpressionOfComputableFunction<Args>&... args , const ListExpressionOfComputableFunction<VA...>& va );
-  
+  // variadic function  
   template <typename... Args, typename... VA> inline ExpressionOfComputableFunction( const VariadicFunctionSymbol<Ret,Args...>& f , const ExpressionOfComputableFunction<VA>&... va );
 
   using type = Ret;

@@ -4,6 +4,7 @@
 #include "a_Macro.hpp"
 
 #include "../a.hpp"
+#include "../../Syntax/a.hpp"
 #include "../../../../SetTheory/EmptySet/a.hpp"
 
 template <typename T>

@@ -1,24 +1,21 @@
 // c:/Users/user/Documents/Programming/Mathematics/Function/Computable/Expression/Variable/Variadic/Body/a.hpp
 
 #pragma once
-// #include "../a.hpp"
 #include "../../a.hpp"
 
-template <typename T> class VariableSymbol;
+template <typename VArg> class VariadicVariableSymbol;
 
 template <>
-class ExpressionOfComputableFunction<void> :
-  public SyntaxOfComputableFunction
+class VariableSymbol<void> :
+  public ExpressionOfComputableFunction<void>
 {
 
-  friend VariableSymbol<void>;
+  template <typename VArg> friend class VariadicVariableSymbol;
 
 private:
-  inline ExpressionOfComputableFunction();
-  ExpressionOfComputableFunction( const ExpressionOfComputableFunction<void>& ) = default;
-  ~ExpressionOfComputableFunction() = default;
-  ExpressionOfComputableFunction& operator=( const ExpressionOfComputableFunction<void>& ) = default;
-  
-};
+  template <typename VArg> inline VariableSymbol( const WrappedTypes<VArg>& v );
+  VariableSymbol( const VariableSymbol<void>& ) = default;
+  ~VariableSymbol() = default;
+  VariableSymbol<void>& operator=( const VariableSymbol<void>& ) = default;
 
-#include "../a.hpp"
+};

@@ -4,12 +4,14 @@
 
 #include "a_Macro.hpp"
 
-#include "../Expression/Condition/a.hpp"
-#include "../Expression/Variable/Variadic/a.hpp"
 #include "../Separator/a.hpp"
 #include "../Type/Base/a.hpp"
 #include "../Type/SubType/a.hpp"
 
+// #include "../Expression/Condition/a.hpp"
+// #include "../Expression/Variable/Variadic/a.hpp"
+
+template <typename Arg> class VariableSymbol;
 
 template <typename Ret, typename... Args>
 class FunctionSymbol :
@@ -28,7 +30,6 @@ public:
 };
 
 #include "a_Alias.hpp"
-
 
 template <typename Ret> DECLARATION_OF_FUNCTION_SYMBOL( Ret , Minus );
 template <typename Ret> DECLARATION_OF_FUNCTION_SYMBOL( Ret , Slash );

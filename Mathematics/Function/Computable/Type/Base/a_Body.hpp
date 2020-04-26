@@ -4,6 +4,7 @@
 #include "a.hpp"
 
 #include "../a_Body.hpp"
+#include "../../Syntax/a_Body.hpp"
 
 inline const int& infty() noexcept { static const int N = 2147483647; return N; }
 

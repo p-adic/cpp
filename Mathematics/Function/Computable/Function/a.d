@@ -92,23 +92,14 @@ Mathematics/Function/Computable/Function/a.o: \
  Mathematics/Function/Computable/Function/a_Body.hpp \
  Mathematics/Function/Computable/Function/a.hpp \
  Mathematics/Function/Computable/Function/a_Macro.hpp \
- Mathematics/Function/Computable/Function/../Expression/Condition/a.hpp \
- Mathematics/Function/Computable/Function/../Expression/Condition/a_Macro.hpp \
- Mathematics/Function/Computable/Function/../Expression/Condition/../a.hpp \
- Mathematics/Function/Computable/Function/../Expression/Condition/../a_Macro.hpp \
- C:/Users/user/Documents/Programming/Mathematics/Function/Computable/Syntax/a.hpp \
- C:/Users/user/Documents/Programming/Mathematics/Function/Computable/Syntax/a_Macro.hpp \
+ Mathematics/Function/Computable/Function/../Separator/a.hpp \
+ Mathematics/Function/Computable/Function/../Separator/../Syntax/a.hpp \
+ Mathematics/Function/Computable/Function/../Separator/../Syntax/a_Macro.hpp \
  C:/Users/user/Documents/Programming/Utility/VLTree/a.hpp \
  C:/Users/user/Documents/Programming/Utility/VLTree/Entry/a.hpp \
  C:/Users/user/Documents/Programming/Utility/VLTree/Iterator/Sequential/a.hpp \
  C:/Users/user/Documents/Programming/Utility/VLTree/Iterator/a.hpp \
  C:/Users/user/Documents/Programming/Utility/VLTree/SubTree/a.hpp \
- Mathematics/Function/Computable/Function/../Expression/Condition/../a_Alias.hpp \
- Mathematics/Function/Computable/Function/../Expression/Variable/Variadic/a.hpp \
- Mathematics/Function/Computable/Function/../Expression/Variable/Variadic/../a.hpp \
- Mathematics/Function/Computable/Function/../Expression/Variable/Variadic/../a_Alias.hpp \
- Mathematics/Function/Computable/Function/../Expression/Variable/Variadic/../../List/Body/a.hpp \
- Mathematics/Function/Computable/Function/../Separator/a.hpp \
  Mathematics/Function/Computable/Function/../Type/Base/a.hpp \
  Mathematics/Function/Computable/Function/../Type/Base/a_Macro.hpp \
  Mathematics/Function/Computable/Function/../Type/Base/../a.hpp \
@@ -117,7 +108,16 @@ Mathematics/Function/Computable/Function/a.o: \
  Mathematics/Function/Computable/Function/../Type/SubType/../TypeName/a.hpp \
  Mathematics/Function/Computable/Function/../Type/SubType/../TypeName/../Valid/a.hpp \
  Mathematics/Function/Computable/Function/../Type/SubType/../TypeName/../Valid/a_Macro.hpp \
+ Mathematics/Function/Computable/Function/../Type/SubType/../../Expression/Variable/a.hpp \
+ C:/Users/user/Documents/Programming/Mathematics/Function/Computable/Expression/List/Body/a.hpp \
+ C:/Users/user/Documents/Programming/Mathematics/Function/Computable/Expression/a.hpp \
+ C:/Users/user/Documents/Programming/Mathematics/Function/Computable/Expression/a_Macro.hpp \
+ C:/Users/user/Documents/Programming/Mathematics/Function/Computable/Expression/a_Alias.hpp \
+ Mathematics/Function/Computable/Function/../Type/SubType/../../Expression/Condition/a.hpp \
+ Mathematics/Function/Computable/Function/../Type/SubType/../../Expression/Condition/a_Macro.hpp \
  Mathematics/Function/Computable/Function/a_Alias.hpp \
+ Mathematics/Function/Computable/Function/../Expression/Variable/Variadic/a.hpp \
+ Mathematics/Function/Computable/Function/../Expression/Variable/Variadic/Body/a.hpp \
  Mathematics/Function/Computable/Function/../Expression/Condition/a_Body.hpp \
  Mathematics/Function/Computable/Function/../Expression/Condition/../a_Body.hpp \
  Mathematics/Function/Computable/Function/../Expression/Condition/../List/a.hpp \
@@ -143,11 +143,12 @@ Mathematics/Function/Computable/Function/a.o: \
  C:/Users/user/Documents/Programming/Mathematics/Function/Computable/Function/Variadic/a_Body.hpp \
  C:/Users/user/Documents/Programming/Mathematics/Function/Computable/Relation/Variadic/a_Body.hpp \
  C:/Users/user/Documents/Programming/Mathematics/Function/Computable/Relation/a_Body.hpp \
+ C:/Users/user/Documents/Programming/Mathematics/Function/Computable/Separator/a_Body.hpp \
+ C:/Users/user/Documents/Programming/Mathematics/Function/Computable/Type/Base/a_Body.hpp \
+ C:/Users/user/Documents/Programming/Mathematics/Function/Computable/Type/SubType/a_Body.hpp \
  C:/Users/user/Documents/Programming/Mathematics/Function/Computable/Type/TypeName/a_Body.hpp \
- Mathematics/Function/Computable/Function/../Expression/Variable/Variadic/a_Body.hpp \
- Mathematics/Function/Computable/Function/../Separator/a_Body.hpp \
- Mathematics/Function/Computable/Function/../Type/Base/a_Body.hpp \
- Mathematics/Function/Computable/Function/../Type/SubType/a_Body.hpp
+ C:/Users/user/Documents/Programming/Mathematics/Function/Computable/Expression/Variable/Variadic/a_Body.hpp \
+ C:/Users/user/Documents/Programming/Mathematics/Function/Computable/Expression/Variable/Variadic/Body/a_Body.hpp
 
 Mathematics/Function/Computable/Function/../Header.hpp:
 
@@ -333,17 +334,11 @@ Mathematics/Function/Computable/Function/a.hpp:
 
 Mathematics/Function/Computable/Function/a_Macro.hpp:
 
-Mathematics/Function/Computable/Function/../Expression/Condition/a.hpp:
+Mathematics/Function/Computable/Function/../Separator/a.hpp:
 
-Mathematics/Function/Computable/Function/../Expression/Condition/a_Macro.hpp:
+Mathematics/Function/Computable/Function/../Separator/../Syntax/a.hpp:
 
-Mathematics/Function/Computable/Function/../Expression/Condition/../a.hpp:
-
-Mathematics/Function/Computable/Function/../Expression/Condition/../a_Macro.hpp:
-
-C:/Users/user/Documents/Programming/Mathematics/Function/Computable/Syntax/a.hpp:
-
-C:/Users/user/Documents/Programming/Mathematics/Function/Computable/Syntax/a_Macro.hpp:
+Mathematics/Function/Computable/Function/../Separator/../Syntax/a_Macro.hpp:
 
 C:/Users/user/Documents/Programming/Utility/VLTree/a.hpp:
 
@@ -354,18 +349,6 @@ C:/Users/user/Documents/Programming/Utility/VLTree/Iterator/Sequential/a.hpp:
 C:/Users/user/Documents/Programming/Utility/VLTree/Iterator/a.hpp:
 
 C:/Users/user/Documents/Programming/Utility/VLTree/SubTree/a.hpp:
-
-Mathematics/Function/Computable/Function/../Expression/Condition/../a_Alias.hpp:
-
-Mathematics/Function/Computable/Function/../Expression/Variable/Variadic/a.hpp:
-
-Mathematics/Function/Computable/Function/../Expression/Variable/Variadic/../a.hpp:
-
-Mathematics/Function/Computable/Function/../Expression/Variable/Variadic/../a_Alias.hpp:
-
-Mathematics/Function/Computable/Function/../Expression/Variable/Variadic/../../List/Body/a.hpp:
-
-Mathematics/Function/Computable/Function/../Separator/a.hpp:
 
 Mathematics/Function/Computable/Function/../Type/Base/a.hpp:
 
@@ -383,7 +366,25 @@ Mathematics/Function/Computable/Function/../Type/SubType/../TypeName/../Valid/a.
 
 Mathematics/Function/Computable/Function/../Type/SubType/../TypeName/../Valid/a_Macro.hpp:
 
+Mathematics/Function/Computable/Function/../Type/SubType/../../Expression/Variable/a.hpp:
+
+C:/Users/user/Documents/Programming/Mathematics/Function/Computable/Expression/List/Body/a.hpp:
+
+C:/Users/user/Documents/Programming/Mathematics/Function/Computable/Expression/a.hpp:
+
+C:/Users/user/Documents/Programming/Mathematics/Function/Computable/Expression/a_Macro.hpp:
+
+C:/Users/user/Documents/Programming/Mathematics/Function/Computable/Expression/a_Alias.hpp:
+
+Mathematics/Function/Computable/Function/../Type/SubType/../../Expression/Condition/a.hpp:
+
+Mathematics/Function/Computable/Function/../Type/SubType/../../Expression/Condition/a_Macro.hpp:
+
 Mathematics/Function/Computable/Function/a_Alias.hpp:
+
+Mathematics/Function/Computable/Function/../Expression/Variable/Variadic/a.hpp:
+
+Mathematics/Function/Computable/Function/../Expression/Variable/Variadic/Body/a.hpp:
 
 Mathematics/Function/Computable/Function/../Expression/Condition/a_Body.hpp:
 
@@ -435,12 +436,14 @@ C:/Users/user/Documents/Programming/Mathematics/Function/Computable/Relation/Var
 
 C:/Users/user/Documents/Programming/Mathematics/Function/Computable/Relation/a_Body.hpp:
 
+C:/Users/user/Documents/Programming/Mathematics/Function/Computable/Separator/a_Body.hpp:
+
+C:/Users/user/Documents/Programming/Mathematics/Function/Computable/Type/Base/a_Body.hpp:
+
+C:/Users/user/Documents/Programming/Mathematics/Function/Computable/Type/SubType/a_Body.hpp:
+
 C:/Users/user/Documents/Programming/Mathematics/Function/Computable/Type/TypeName/a_Body.hpp:
 
-Mathematics/Function/Computable/Function/../Expression/Variable/Variadic/a_Body.hpp:
+C:/Users/user/Documents/Programming/Mathematics/Function/Computable/Expression/Variable/Variadic/a_Body.hpp:
 
-Mathematics/Function/Computable/Function/../Separator/a_Body.hpp:
-
-Mathematics/Function/Computable/Function/../Type/Base/a_Body.hpp:
-
-Mathematics/Function/Computable/Function/../Type/SubType/a_Body.hpp:
+C:/Users/user/Documents/Programming/Mathematics/Function/Computable/Expression/Variable/Variadic/Body/a_Body.hpp:

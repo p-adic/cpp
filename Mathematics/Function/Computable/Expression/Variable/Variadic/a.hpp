@@ -2,24 +2,18 @@
 
 #pragma once
 #include "../a.hpp"
-#include "../../List/Body/a.hpp"
+#include "Body/a.hpp"
 
-template <>
-class VariableSymbol<void> :
-  public ExpressionOfComputableFunction<void>
+
+template <typename VArg>
+class VariadicVariableSymbol :
+  public VariableSymbol<void>
 {
 
-private:
-  inline VariableSymbol();
-  VariableSymbol( const VariableSymbol<void>& ) = default;
-  ~VariableSymbol() = default;
-  VariableSymbol<void>& operator=( const VariableSymbol<void>& ) = default;
-
 public:
-  
-  static const VariadicVariableSymbol& LdotsSymbol();
+  inline VariadicVariableSymbol();
 
 };
 
+template <typename VArg> inline const VariadicVariableSymbol<VArg>& LdotsSymbol();
 
-inline const VariadicVariableSymbol& LdotsSymbol();

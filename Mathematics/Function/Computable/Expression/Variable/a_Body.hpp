@@ -2,7 +2,9 @@
 
 #pragma once
 #include "a.hpp"
-#include "../a_Body.hpp"
+
+#include "../List/Body/a_Body.hpp"
+
 
 template <typename T> inline VariableSymbol<T>::VariableSymbol( const string& x ) : VariableSymbol( x , GetTypeName<T>() ) {}
 
