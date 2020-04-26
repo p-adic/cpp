@@ -34,15 +34,10 @@ auto ConditionOfComputableFunction::PushFunctionExpression( const FunctionSymbol
   VLTree<string> t_va{};
   t_va.push_RightMost( va... );
 
-  const VLTree<string>& func = f.Get();
-  ConstIteratorOfVLTree<string> itr = func.LeftMostNode();
-  itr++;
-  itr++;
-  
   TRY_CATCH
     (
      
-     Ref().push_RightMost( FunctionExpressionToString( f , t_va ) , VLTree<string>( 0 , itr ) , func , va... ) ,
+     Ref().push_RightMost( FunctionExpressionToString( f , t_va ) , f.GetSubTree( 2 ) , f.Get() , va... ) ,
 
      const ErrorType& e ,
 
@@ -64,15 +59,10 @@ auto ConditionOfComputableFunction::PushRelationExpression( const RelationSymbol
   VLTree<string> t_va{};
   t_va.push_RightMost( va... );
 
-  const VLTree<string>& rel = r.Get();
-  ConstIteratorOfVLTree<string> itr = rel.LeftMostNode();
-  itr++;
-  itr++;
-  
   TRY_CATCH
     (
      
-     Ref().push_RightMost( FunctionExpressionToString( r , t_va ) , VLTree<string>( 0 , itr ) , rel , va... ) ,
+     Ref().push_RightMost( FunctionExpressionToString( r , t_va ) , r.GetSubTree( 2 ) , r.Get() , va... ) ,
 
      const ErrorType& e ,
 

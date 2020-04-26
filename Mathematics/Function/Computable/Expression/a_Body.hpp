@@ -38,16 +38,11 @@ inline auto ExpressionOfComputableFunction<Ret>::PushFunctionExpression( const F
 
   VLTree<string> t_va{};
   t_va.push_RightMost( va... );
-
-  const VLTree<string>& func = f.Get();
-  ConstIteratorOfVLTree<string> itr = func.LeftMostNode();
-  itr++;
-  itr++;
   
   TRY_CATCH
     (
      
-     Ref().push_RightMost( FunctionExpressionToString( f , t_va ) , VLTree<string>( 0 , itr ) , func , va... ) ,
+     Ref().push_RightMost( FunctionExpressionToString( f , t_va ) , f.GetSubTree( 2 ) , f.Get() , va... ) ,
 
      const ErrorType& e ,
 

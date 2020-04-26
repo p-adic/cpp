@@ -17,7 +17,7 @@ void TypeOfComputableFunction::WriteOn( const TypeOfComputableFunction& dummy , 
 
   if( language == JapaneseString() ){
 
-    cout << m_type_name << " の定義文の日本語訳を" << filename << "に書き込みます：" << endl;
+    cout << " " << m_type_name << " の定義文の日本語訳を" << filename << "に書き込みます：" << endl;
     cout << "…" << endl;
   
     if( !ofs ){

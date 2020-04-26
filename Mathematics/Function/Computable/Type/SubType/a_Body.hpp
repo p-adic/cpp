@@ -3,7 +3,9 @@
 #pragma once
 #include "a.hpp"
 
-#include "../a_Body.hpp"
+#include "../TypeName/a_Body.hpp"
+#include "../../Expression/Variable/a_Body.hpp"
 #include "../../Relation/a_Body.hpp"
+
 
 SPEC( nat , VariableSymbol<int>( "n" ) , NonNegativeSymbol() );

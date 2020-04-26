@@ -35,10 +35,10 @@ void DefinitionOfComputableFunction<Ret,Args...>::WriteOn( const FunctionSymbol<
   
   if( language == JapaneseString() ){
 
-    cout <<  *p_function_name << " の定義文の木構造を出力します：" << endl;
+    cout << " " << *p_function_name << " の定義文の木構造を出力します：" << endl;
     cout << Get().Display() << endl;
     cout << endl;
-    cout << *p_function_name << " の定義文の日本語訳を " << filename << " に書き込みます：" << endl;
+    cout << " " << *p_function_name << " の定義文の日本語訳を " << filename << " に書き込みます：" << endl;
     cout << "…" << endl;
   
     if( !ofs ){

@@ -14,10 +14,10 @@ public:
 };
 
 
-template <typename T> inline auto GetName() -> typename enable_if<is_base_of<TypeOfComputableFunction,T>::value,const string&>::type;
 template <typename T> inline auto GetName() -> typename enable_if<IsBasicType<T>::value,const string&>::type;
+template <typename T> inline auto GetName() -> typename enable_if<! IsBasicType<T>::value && is_base_of<TypeOfComputableFunction,T>::value,const string&>::type;
 
-template <typename T> inline auto GetSyntax() -> typename enable_if<is_base_of<TypeOfComputableFunction,T>::value,const SyntaxOfComputableFunction&>::type;
 template <typename T> inline auto GetSyntax() -> typename enable_if<IsBasicType<T>::value,const SyntaxOfComputableFunction&>::type;
+template <typename T> inline auto GetSyntax() -> typename enable_if<! IsBasicType<T>::value && is_base_of<TypeOfComputableFunction,T>::value,const SyntaxOfComputableFunction&>::type;
 
 template <typename T> inline const TypeNameOfComputableFunction& GetTypeName();

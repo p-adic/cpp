@@ -4,6 +4,7 @@
 
 #define SPEC( TYPE_NAME , VARIABLE , REL )				\
 									\
+									\
   class TYPE_NAME :							\
     public TypeOfComputableFunction ,					\
     public EmptySet							\
@@ -25,6 +26,7 @@
 	  SubTypeString() ,						\
 	  TO_STRING( TYPE_NAME ) ,					\
 	  ( VARIABLE ).Get() ,						\
+	  ( VARIABLE ).GetSubTree( 2 ) ,				\
 	  GetRelation().Get()						\
 									\
 	  };								\
@@ -56,16 +58,15 @@
       {									\
 									\
 	TO_STRING( TYPE_NAME ) ,					\
-	  LbraceString() +						\
-	  VspaceString() +						\
-	  GetVariable().GetNodeString( 2 ) +				\
-	  InString() +							\
-	  SpaceString() +						\
-	  VertString() +						\
-	  SpaceString() +						\
-	  GetRelation()( GetVariable() ).GetNodeString( 2 ) +		\
-	  VspaceString() +						\
-	  RbraceString()						\
+	  EscapeString() + LbraceString() + SpaceString() +		\
+	  EscapeString() + SpaceString() +				\
+	  GetVariable().GetNodeString( 2 ) + SpaceString() +		\
+	  InString() + SpaceString() +					\
+	  ( GetVariable() ).GetNodeString( 3 , 2 ) + SpaceString() +	\
+	  VertString() + SpaceString() +				\
+	  GetRelation()( GetVariable() ).GetNodeString( 2 ) + SpaceString() + \
+	  EscapeString() + SpaceString() +				\
+	  EscapeString() + RbraceString()				\
 									\
 	  };								\
 									\

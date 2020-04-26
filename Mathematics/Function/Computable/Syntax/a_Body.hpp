@@ -11,9 +11,11 @@ inline const VLTree<string>& SyntaxOfComputableFunction::Get() const noexcept { 
 
 inline VLTree<string>& SyntaxOfComputableFunction::Ref() noexcept { return m_syntax; }
 
-inline const string& SyntaxOfComputableFunction::GetRootString() const noexcept { return m_syntax.GetRoot(); }
 
-inline const string& SyntaxOfComputableFunction::GetNodeString( const int& n ) const { return *( ( m_syntax.Root() )[n] );}
+template <typename... Args> inline const string& SyntaxOfComputableFunction::GetNodeString( const Args&... args ) const { return m_syntax.GetNode( args... );}
+
+template <typename... Args> inline VLTree<string> SyntaxOfComputableFunction::GetSubTree( const Args&... args ) const { return VLTree<string>( 0 , m_syntax.GetIterator( args... ) ); }
+
 
 inline string SyntaxOfComputableFunction::Display() const noexcept { return m_syntax.Display(); }
 
@@ -71,8 +73,8 @@ inline void PutParenthesis( string& s ) noexcept { s = "( " + s + " )"; }
 inline string Plainise( const string& s ) noexcept { return "\\textrm{" + s + "}"; }
 
 DECLARATION_OF_GLOBAL_CONSTANT_STRING_FOR_SYMBOL( Empty ){ static const string s = ""; return s; }
+DECLARATION_OF_GLOBAL_CONSTANT_STRING_FOR_SYMBOL( Escape ){ static const string s = "\\"; return s; }
 DECLARATION_OF_GLOBAL_CONSTANT_STRING_FOR_SYMBOL( Space ){ static const string s = " "; return s; }
-DECLARATION_OF_GLOBAL_CONSTANT_STRING_FOR_SYMBOL( Vspace ){ static const string s = "\\ "; return s; }
 DEFINITION_OF_GLOBAL_CONSTANT_STRING_FOR_SYMBOL( Sub , _ );
 DEFINITION_OF_GLOBAL_CONSTANT_STRING_FOR_SYMBOL( Sup , ^ );
 DECLARATION_OF_GLOBAL_CONSTANT_STRING_FOR_SYMBOL( Lparen ){ static const string s = "("; return s; }

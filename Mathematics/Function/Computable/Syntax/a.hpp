@@ -18,7 +18,8 @@ public:
   inline const VLTree<string>& Get() const noexcept;
   inline VLTree<string>& Ref() noexcept;
   inline const string& GetRootString() const noexcept;
-  inline const string& GetNodeString( const int& n ) const;
+  template <typename... Args> inline const string& GetNodeString( const Args&... args ) const;
+  template <typename... Args> inline VLTree<string> GetSubTree( const Args&... args ) const;
 
   void SetSymbol( const string& symbol );
   void RomaniseSymbol();
@@ -57,6 +58,7 @@ protected:
 
 };
 
+
 const string& SyntaxToString( VLTree<string>::const_iterator& itr , const int& n );
 string ListSyntaxToString( VLTree<VLTree<string>::const_iterator>& t , const int& n );
 
@@ -87,8 +89,8 @@ inline void PutParenthesis( string& s ) noexcept;
 inline string Plainise( const string& s ) noexcept;
 
 DECLARATION_OF_GLOBAL_CONSTANT_STRING_FOR_SYMBOL( Empty );
+DECLARATION_OF_GLOBAL_CONSTANT_STRING_FOR_SYMBOL( Escape );
 DECLARATION_OF_GLOBAL_CONSTANT_STRING_FOR_SYMBOL( Space );
-DECLARATION_OF_GLOBAL_CONSTANT_STRING_FOR_SYMBOL( Vspace );
 DECLARATION_OF_GLOBAL_CONSTANT_STRING_FOR_SYMBOL( Sub );
 DECLARATION_OF_GLOBAL_CONSTANT_STRING_FOR_SYMBOL( Sup );
 DECLARATION_OF_GLOBAL_CONSTANT_STRING_FOR_SYMBOL( Lparen );
