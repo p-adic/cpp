@@ -37,6 +37,11 @@
 #define OT( x , y ) TO( y , x ) 
 #define EQUIV( ... ) EquivSymbolApplication( __VA_ARGS__ ) 
 
+#define LENGTH( s ) LengthSymbol()( s ) 
+#define ENTRY( s , n ) EntryAccessSymbol()( s , n ) 
+#define INISEG( s , n ) InitialSgmentSymbol()( s , n ) 
+#define FINSEG( s , n ) InitialSgmentSymbol()( s , n ) 
+
 
 // relation
 #define EQ( x , y ) EqSymbolApplication( x , y ) 
@@ -45,6 +50,8 @@
 #define GEQ( x , y ) GeqSymbolApplication( x , y ) 
 #define LNEQ( x , y ) LneqSymbolApplication( x , y ) 
 #define GNEQ( x , y ) GneqSymbolApplication( x , y ) 
+
+#define NONNEG( n ) NonNegativeSymbol()( x ) 
 
 
 // decraration

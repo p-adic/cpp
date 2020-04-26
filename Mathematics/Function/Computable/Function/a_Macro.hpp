@@ -5,7 +5,7 @@
 
 #define DECLARATION_OF_FUNCTION_SYMBOL( RET , FUNC )			\
 									\
-  inline const FunctionSymbol< RET , RET , RET >& CONNECT( FUNC , Symbol )() \
+  inline const PrettyFunction< RET , RET , RET >& CONNECT( FUNC , Symbol )() \
 									\
     
 
@@ -19,7 +19,7 @@
   DECLARATION_OF_FUNCTION_SYMBOL( RET , FUNC )				\
   {									\
 									\
-    static const FunctionSymbol< typename BaseTypeOf< RET >::type , typename BaseTypeOf< RET >::type , typename BaseTypeOf< RET >::type > f			\
+    static const PrettyFunction< typename BaseTypeOf< RET >::type , typename BaseTypeOf< RET >::type , typename BaseTypeOf< RET >::type > f			\
     {									\
 									\
       CONNECT( FUNC , String )() ,					\

@@ -103,30 +103,3 @@ template <typename Ret> DEFINITION_OF_TWO_ARY_RELATION_SYMBOL_APPLICATION( Ret ,
 template <typename Ret> DEFINITION_OF_TWO_ARY_RELATION_SYMBOL_APPLICATION( Ret , Lneq , Symbol<Ret> );
 template <typename Ret> DEFINITION_OF_TWO_ARY_RELATION_SYMBOL_APPLICATION( Ret , Gneq , Symbol<Ret> );
 
-
-DECLARATION_OF_ONE_ARY_RELATION_SYMBOL( int , NonNegative )
-{
-
-  static const RelationSymbol<int> r
-  {
-
-    "\\geq 0" ,
-      SeparatorOfComputableFunction
-      (
-
-       0 ,
-       EmptyString() ,
-       SpaceString() + "\\geq 0" + SpaceString()
-
-       ) ,
-      GetTypeName<bool>() ,
-      VariableSymbol<int>( "n" )
-
-      };
-
-  return r;
-
-}
-
-DEFINITION_OF_ONE_ARY_RELATION_SYMBOL_APPLICATION( int , NonNegative , Symbol );
-

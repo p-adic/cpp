@@ -3,26 +3,10 @@
 #pragma once
 #include "../../../../Utility/Macro.hpp"
 
-// 1-ary
-#define DECLARATION_OF_ONE_ARY_RELATION_SYMBOL( RET , REL )		\
-									\
-  inline auto CONNECT( REL , Symbol )() -> typename enable_if<! is_same< RET , bool >::value , const RelationSymbol<typename BaseTypeOf< RET >::type>& >::type \
-									\
-
-#define DECLARATION_OF_ONE_ARY_RELATION_SYMBOL_APPLICATION( RET , REL )	\
-									\
-  inline ConditionOfComputableFunction CONNECT( REL , SymbolApplication )( const ExpressionOfComputableFunction< RET >& e ) \
-									\
-
-#define DEFINITION_OF_ONE_ARY_RELATION_SYMBOL_APPLICATION( RET , REL , SYMBOL )	\
-									\
-  DECLARATION_OF_ONE_ARY_RELATION_SYMBOL_APPLICATION( RET , REL ){ return CONNECT( REL , SYMBOL )()( e ); } \
-  
-
 // 2-ary
 #define DECLARATION_OF_TWO_ARY_RELATION_SYMBOL( RET , REL )		\
 									\
-  inline auto CONNECT( REL , Symbol )() -> typename enable_if<! is_same< RET , bool >::value , const RelationSymbol<typename BaseTypeOf< RET >::type,typename BaseTypeOf< RET >::type>& >::type \
+  inline auto CONNECT( REL , Symbol )() -> typename enable_if<! is_same< RET , bool >::value , const PrettyRelation<typename BaseTypeOf< RET >::type,typename BaseTypeOf< RET >::type>& >::type \
 									\
 
 #define DEFINITION_OF_TWO_ARY_RELATION_SYMBOL( RET , REL )		\
@@ -30,7 +14,7 @@
   DECLARATION_OF_TWO_ARY_RELATION_SYMBOL( RET , REL )			\
   {									\
 									\
-    static const RelationSymbol<typename BaseTypeOf< RET >::type,typename BaseTypeOf< RET >::type> r \
+    static const PrettyRelation<typename BaseTypeOf< RET >::type,typename BaseTypeOf< RET >::type> r \
     {									\
 									\
       CONNECT( REL , String )() ,					\

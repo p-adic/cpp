@@ -6,5 +6,3 @@
 #include "../TypeName/a.hpp"
 #include "../../Expression/Variable/a.hpp"
 #include "../../../../SetTheory/EmptySet/a.hpp"
-
-class nat;

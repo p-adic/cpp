@@ -8,7 +8,6 @@
 #include "../Expression/Variable/Variadic/a.hpp"
 #include "../Separator/a.hpp"
 #include "../Type/Base/a.hpp"
-#include "../Type/Basic/a.hpp"
 #include "../Type/SubType/a.hpp"
 
 
@@ -27,6 +26,8 @@ public:
   inline ExpressionOfComputableFunction<Ret> operator()( const ExpressionOfComputableFunction<Args>&... args ) const;
 
 };
+
+#include "a_Alias.hpp"
 
 
 template <typename Ret> DECLARATION_OF_FUNCTION_SYMBOL( Ret , Minus );
@@ -48,7 +49,4 @@ ConditionOfComputableFunction NegSymbolApplication( const ConditionOfComputableF
 DECLARATION_OF_LOGICAL_CONNECTIVE_APPLICATION( To );
 DECLARATION_OF_LOGICAL_CONNECTIVE_APPLICATION( Ot );
 DECLARATION_OF_LOGICAL_CONNECTIVE_APPLICATION( Equiv );
-
-inline const FunctionSymbol<string,string,int>& EntryAccessSymbol();
-
 

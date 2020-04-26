@@ -3,5 +3,4 @@
 #pragma once
 #include "a.hpp"
 
-#include "../Basic/a_Body.hpp"
 #include "../a_Body.hpp"

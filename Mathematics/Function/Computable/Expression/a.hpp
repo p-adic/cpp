@@ -52,11 +52,11 @@ private:
 
 #include "a_Alias.hpp"
 
-template <typename Ret> DECLARATION_OF_BASIC_FUNCTION( Ret , + );
-template <typename Ret> DECLARATION_OF_BASIC_FUNCTION( Ret , - );
-template <typename Ret> DECLARATION_OF_BASIC_FUNCTION( Ret , * );
-template <typename Ret> DECLARATION_OF_BASIC_FUNCTION( Ret , / );
-template <typename Ret> DECLARATION_OF_BASIC_FUNCTION( Ret , % );
-template <typename Ret> DECLARATION_OF_BASIC_FUNCTION( Ret , ^ );
+template <typename Ret> DECLARATION_OF_TWO_ARY_BASIC_FUNCTION( Ret , + );
+template <typename Ret> DECLARATION_OF_TWO_ARY_BASIC_FUNCTION( Ret , - );
+template <typename Ret> DECLARATION_OF_TWO_ARY_BASIC_FUNCTION( Ret , * );
+template <typename Ret> DECLARATION_OF_TWO_ARY_BASIC_FUNCTION( Ret , / );
+template <typename Ret> DECLARATION_OF_TWO_ARY_BASIC_FUNCTION( Ret , % );
+template <typename Ret> DECLARATION_OF_TWO_ARY_BASIC_FUNCTION( Ret , ^ );
 
 inline const ExpressionOfComputableFunction<int>& InftySymbol();

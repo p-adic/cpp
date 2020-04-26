@@ -119,15 +119,16 @@ Mathematics/Function/Computable/Type/a.o: \
  C:/Users/user/Documents/Programming/Mathematics/Function/Computable/Separator/a.hpp \
  C:/Users/user/Documents/Programming/Mathematics/Function/Computable/Type/Base/a.hpp \
  C:/Users/user/Documents/Programming/Mathematics/Function/Computable/Type/Base/a_Macro.hpp \
- C:/Users/user/Documents/Programming/Mathematics/Function/Computable/Type/Valid/a.hpp \
- C:/Users/user/Documents/Programming/Mathematics/Function/Computable/Type/Basic/a.hpp \
- C:/Users/user/Documents/Programming/Mathematics/Function/Computable/Type/Basic/a_Macro.hpp \
  C:/Users/user/Documents/Programming/Mathematics/Function/Computable/Type/SubType/a.hpp \
  C:/Users/user/Documents/Programming/Mathematics/Function/Computable/Type/SubType/a_Macro.hpp \
  C:/Users/user/Documents/Programming/Mathematics/Function/Computable/Type/TypeName/a.hpp \
+ C:/Users/user/Documents/Programming/Mathematics/Function/Computable/Type/Valid/a.hpp \
+ C:/Users/user/Documents/Programming/Mathematics/Function/Computable/Type/Valid/a_Macro.hpp \
+ C:/Users/user/Documents/Programming/Mathematics/Function/Computable/Function/a_Alias.hpp \
  Mathematics/Function/Computable/Type/../Expression/Condition/../../Relation/Variadic/a.hpp \
  C:/Users/user/Documents/Programming/Mathematics/Function/Computable/Relation/a.hpp \
  C:/Users/user/Documents/Programming/Mathematics/Function/Computable/Relation/a_Macro.hpp \
+ C:/Users/user/Documents/Programming/Mathematics/Function/Computable/Relation/a_Alias.hpp \
  Mathematics/Function/Computable/Type/../Expression/Condition/../../Syntax/a_Body.hpp \
  C:/Users/user/Documents/Programming/Utility/VLTree/a_Body.hpp \
  C:/Users/user/Documents/Programming/Utility/VLTree/Entry/a_Body.hpp \
@@ -138,7 +139,6 @@ Mathematics/Function/Computable/Type/a.o: \
  Mathematics/Function/Computable/Type/../Expression/Condition/../List/Body/a_Body.hpp \
  C:/Users/user/Documents/Programming/Mathematics/Function/Computable/Expression/Variable/a_Body.hpp \
  C:/Users/user/Documents/Programming/Mathematics/Function/Computable/Type/Valid/a_Body.hpp \
- C:/Users/user/Documents/Programming/Mathematics/Function/Computable/Type/Basic/a_Body.hpp \
  Mathematics/Function/Computable/Type/../Expression/Condition/../../Function/Variadic/a_Body.hpp \
  C:/Users/user/Documents/Programming/Mathematics/Function/Computable/Function/a_Body.hpp \
  C:/Users/user/Documents/Programming/Mathematics/Function/Computable/Expression/Variable/Variadic/a_Body.hpp \
@@ -387,23 +387,25 @@ C:/Users/user/Documents/Programming/Mathematics/Function/Computable/Type/Base/a.
 
 C:/Users/user/Documents/Programming/Mathematics/Function/Computable/Type/Base/a_Macro.hpp:
 
-C:/Users/user/Documents/Programming/Mathematics/Function/Computable/Type/Valid/a.hpp:
-
-C:/Users/user/Documents/Programming/Mathematics/Function/Computable/Type/Basic/a.hpp:
-
-C:/Users/user/Documents/Programming/Mathematics/Function/Computable/Type/Basic/a_Macro.hpp:
-
 C:/Users/user/Documents/Programming/Mathematics/Function/Computable/Type/SubType/a.hpp:
 
 C:/Users/user/Documents/Programming/Mathematics/Function/Computable/Type/SubType/a_Macro.hpp:
 
 C:/Users/user/Documents/Programming/Mathematics/Function/Computable/Type/TypeName/a.hpp:
 
+C:/Users/user/Documents/Programming/Mathematics/Function/Computable/Type/Valid/a.hpp:
+
+C:/Users/user/Documents/Programming/Mathematics/Function/Computable/Type/Valid/a_Macro.hpp:
+
+C:/Users/user/Documents/Programming/Mathematics/Function/Computable/Function/a_Alias.hpp:
+
 Mathematics/Function/Computable/Type/../Expression/Condition/../../Relation/Variadic/a.hpp:
 
 C:/Users/user/Documents/Programming/Mathematics/Function/Computable/Relation/a.hpp:
 
 C:/Users/user/Documents/Programming/Mathematics/Function/Computable/Relation/a_Macro.hpp:
+
+C:/Users/user/Documents/Programming/Mathematics/Function/Computable/Relation/a_Alias.hpp:
 
 Mathematics/Function/Computable/Type/../Expression/Condition/../../Syntax/a_Body.hpp:
 
@@ -424,8 +426,6 @@ Mathematics/Function/Computable/Type/../Expression/Condition/../List/Body/a_Body
 C:/Users/user/Documents/Programming/Mathematics/Function/Computable/Expression/Variable/a_Body.hpp:
 
 C:/Users/user/Documents/Programming/Mathematics/Function/Computable/Type/Valid/a_Body.hpp:
-
-C:/Users/user/Documents/Programming/Mathematics/Function/Computable/Type/Basic/a_Body.hpp:
 
 Mathematics/Function/Computable/Type/../Expression/Condition/../../Function/Variadic/a_Body.hpp:
 

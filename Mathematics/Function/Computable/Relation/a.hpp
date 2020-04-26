@@ -20,6 +20,8 @@ public:
 
 };
 
+#include "a_Alias.hpp"
+
 template <typename Ret> DECLARATION_OF_TWO_ARY_RELATION_SYMBOL( Ret , Eq );
 template <typename Ret> DECLARATION_OF_TWO_ARY_RELATION_SYMBOL( Ret , Neq );
 template <typename Ret> DECLARATION_OF_TWO_ARY_RELATION_SYMBOL( Ret , Leq );
@@ -33,6 +35,3 @@ template <typename Ret> DECLARATION_OF_TWO_ARY_RELATION_SYMBOL_APPLICATION( Ret 
 template <typename Ret> DECLARATION_OF_TWO_ARY_RELATION_SYMBOL_APPLICATION( Ret , Geq );
 template <typename Ret> DECLARATION_OF_TWO_ARY_RELATION_SYMBOL_APPLICATION( Ret , Lneq );
 template <typename Ret> DECLARATION_OF_TWO_ARY_RELATION_SYMBOL_APPLICATION( Ret , Gneq );
-
-DECLARATION_OF_ONE_ARY_RELATION_SYMBOL( int , NonNegative );
-DECLARATION_OF_ONE_ARY_RELATION_SYMBOL_APPLICATION( int , NonNegative );
