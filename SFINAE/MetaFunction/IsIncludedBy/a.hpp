@@ -4,8 +4,7 @@
 #include "../a.hpp"
 
 template <typename... Types>
-class WrappedTypes :
-  public EmptySet
+class WrappedTypes
 {};
 
 template <typename... Types1>
