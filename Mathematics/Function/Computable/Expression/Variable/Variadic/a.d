@@ -122,6 +122,8 @@ Mathematics/Function/Computable/Expression/Variable/Variadic/a.o: \
  C:/Users/user/Documents/Programming/Mathematics/Function/Computable/Type/Basic/a.hpp \
  C:/Users/user/Documents/Programming/Mathematics/Function/Computable/Type/Basic/a_Macro.hpp \
  C:/Users/user/Documents/Programming/Mathematics/Function/Computable/Type/a.hpp \
+ C:/Users/user/Documents/Programming/Mathematics/Function/Computable/Type/SubType/a.hpp \
+ C:/Users/user/Documents/Programming/Mathematics/Function/Computable/Type/SubType/a_Macro.hpp \
  C:/Users/user/Documents/Programming/Mathematics/Function/Computable/Relation/Variadic/a.hpp \
  C:/Users/user/Documents/Programming/Mathematics/Function/Computable/Relation/a.hpp \
  C:/Users/user/Documents/Programming/Mathematics/Function/Computable/Relation/a_Macro.hpp \
@@ -141,8 +143,9 @@ Mathematics/Function/Computable/Expression/Variable/Variadic/a.o: \
  C:/Users/user/Documents/Programming/Mathematics/Function/Computable/Function/a_Body.hpp \
  C:/Users/user/Documents/Programming/Mathematics/Function/Computable/Separator/a_Body.hpp \
  C:/Users/user/Documents/Programming/Mathematics/Function/Computable/Type/Base/a_Body.hpp \
- C:/Users/user/Documents/Programming/Mathematics/Function/Computable/Relation/Variadic/a_Body.hpp \
+ C:/Users/user/Documents/Programming/Mathematics/Function/Computable/Type/SubType/a_Body.hpp \
  C:/Users/user/Documents/Programming/Mathematics/Function/Computable/Relation/a_Body.hpp \
+ C:/Users/user/Documents/Programming/Mathematics/Function/Computable/Relation/Variadic/a_Body.hpp \
  C:/Users/user/Documents/Programming/Mathematics/Function/Computable/Type/TypeName/a_Body.hpp
 
 C:/Users/user/Documents/Programming/Mathematics/Function/Computable/Header.hpp:
@@ -389,6 +392,10 @@ C:/Users/user/Documents/Programming/Mathematics/Function/Computable/Type/Basic/a
 
 C:/Users/user/Documents/Programming/Mathematics/Function/Computable/Type/a.hpp:
 
+C:/Users/user/Documents/Programming/Mathematics/Function/Computable/Type/SubType/a.hpp:
+
+C:/Users/user/Documents/Programming/Mathematics/Function/Computable/Type/SubType/a_Macro.hpp:
+
 C:/Users/user/Documents/Programming/Mathematics/Function/Computable/Relation/Variadic/a.hpp:
 
 C:/Users/user/Documents/Programming/Mathematics/Function/Computable/Relation/a.hpp:
@@ -427,8 +434,10 @@ C:/Users/user/Documents/Programming/Mathematics/Function/Computable/Separator/a_
 
 C:/Users/user/Documents/Programming/Mathematics/Function/Computable/Type/Base/a_Body.hpp:
 
-C:/Users/user/Documents/Programming/Mathematics/Function/Computable/Relation/Variadic/a_Body.hpp:
+C:/Users/user/Documents/Programming/Mathematics/Function/Computable/Type/SubType/a_Body.hpp:
 
 C:/Users/user/Documents/Programming/Mathematics/Function/Computable/Relation/a_Body.hpp:
+
+C:/Users/user/Documents/Programming/Mathematics/Function/Computable/Relation/Variadic/a_Body.hpp:
 
 C:/Users/user/Documents/Programming/Mathematics/Function/Computable/Type/TypeName/a_Body.hpp:

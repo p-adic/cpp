@@ -9,18 +9,19 @@
 #include "../Separator/a_Body.hpp"
 #include "../Type/Base/a_Body.hpp"
 #include "../Type/Basic/a_Body.hpp"
+#include "../Type/SubType/a_Body.hpp"
 
-template <typename Ret, typename... Args> inline FunctionSymbol<Ret,Args...>::FunctionSymbol( const string& f , const TypeNameOfComputableFunction& type_name , const VariableSymbol<Args>&... args ) : FunctionSymbol( f , SeparatorOfComputableFunction( f , sizeof...( Args ) ) , type_name , args... ) {}
+template <typename Ret, typename... Args> inline FunctionSymbol<Ret,Args...>::FunctionSymbol( const string& f , const TypeNameOfComputableFunction& return_type_name , const VariableSymbol<Args>&... args ) : FunctionSymbol( f , SeparatorOfComputableFunction( f , sizeof...( Args ) ) , return_type_name , args... ) {}
 
 template <typename Ret, typename... Args>
-FunctionSymbol<Ret,Args...>::FunctionSymbol( const string& f , const SeparatorOfComputableFunction& s , const TypeNameOfComputableFunction& type_name , const VariableSymbol<Args>&... args ) :
+FunctionSymbol<Ret,Args...>::FunctionSymbol( const string& f , const SeparatorOfComputableFunction& s , const TypeNameOfComputableFunction& return_type_name , const VariableSymbol<Args>&... args ) :
   SyntaxOfComputableFunction
   (
 
    NestString() ,
    FunctionString() ,
    f ,
-   type_name.Get() ,
+   return_type_name.Get() ,
    ListExpressionOfComputableFunction( args... ).Get() ,
    s.Get()
    
@@ -111,3 +112,30 @@ DEFINITION_OF_LOGICAL_CONNECTIVE( Equiv );
 DEFINITION_OF_LOGICAL_CONNECTIVE_APPLICATION( To );
 DECLARATION_OF_LOGICAL_CONNECTIVE_APPLICATION( Ot ){ return ToSymbolApplication( e2 , e1 ); }
 DEFINITION_OF_LOGICAL_CONNECTIVE_APPLICATION( Equiv );
+
+
+inline const FunctionSymbol<string,string,int>& EntryAccessSymbol()
+{
+
+  static const FunctionSymbol<string,string,int> f
+    (
+
+     LbrackString() + RbrackString() ,
+     SeparatorOfComputableFunction
+     (
+
+      0 ,
+      EmptyString() ,
+      LbrackString() ,
+      RbrackString()
+
+      ) ,
+     GetTypeName<string>() ,
+     VariableSymbol<string>( "s" ) ,
+     VariableSymbol<int>( "n" , GetTypeName<nat>() )
+
+     );
+
+  return f;
+
+}

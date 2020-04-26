@@ -14,23 +14,31 @@ template <typename Ret, typename... Args> template <typename... Rets> inline Def
 
 template <typename Ret, typename... Args> inline const string& DefinitionOfComputableFunction<Ret,Args...>::Name() const { return *( Get().LeftMostLeaf() ); }
 
-template <typename Ret, typename... Args> inline void DefinitionOfComputableFunction<Ret,Args...>::Display( const FunctionSymbol<Ret,Args...>& f , const char* const & filename ) const noexcept { Display( f , to_string( filename ) ); }
-
 template <typename Ret, typename... Args>
-void DefinitionOfComputableFunction<Ret,Args...>::Display( const FunctionSymbol<Ret,Args...>& f , const string& language , const string& style , const string& filename ) const noexcept
+void DefinitionOfComputableFunction<Ret,Args...>::WriteOn( const FunctionSymbol<Ret,Args...>& f , const string& language , const string& style , const string& filename , const ios_base::openmode& open_mode ) const noexcept
 {
 
-  ofstream ofs( filename , ios::trunc );
+  ofstream ofs( filename , open_mode );
+  const string* p_function_name;
+  auto itr_f = f.Get().LeftMostNode();
 
+  try{
+
+       p_function_name = &( SyntaxToString( itr_f , 2 ) );
+       
+  }
+  catch( const ErrorType& e ){
+
+    IGNORED_ERR( e );
+
+  }
+  
   if( language == JapaneseString() ){
 
-    cout << "宣言文の木構造を出力します：" << endl;
-    cout << f.Display() << endl;
-    cout << endl;
-    cout << "定義文の木構造を出力します：" << endl;
+    cout << "\\(" << *p_function_name << "\\)の定義文の木構造を出力します：" << endl;
     cout << Get().Display() << endl;
     cout << endl;
-    cout << "定義文の日本語訳を" << filename << "に書き込みます：" << endl;
+    cout << "\\(" << *p_function_name << "\\)の定義文の日本語訳を" << filename << "に書き込みます：" << endl;
     cout << "…" << endl;
   
     if( !ofs ){
@@ -43,7 +51,7 @@ void DefinitionOfComputableFunction<Ret,Args...>::Display( const FunctionSymbol<
 
     try{
 
-      InputDefinition( ofs , f , language , style );
+      InputDefinition( ofs , *p_function_name , itr_f , language , style );
 
     }
     catch( const ErrorType& e ){
@@ -60,13 +68,10 @@ void DefinitionOfComputableFunction<Ret,Args...>::Display( const FunctionSymbol<
 
   if( language == EnglishString() ){
 
-    cout << "Display the tree structure of the declaration:" << endl;
-    cout << f.Display() << endl;
-    cout << endl;
-    cout << "Display the tree structure fof the definition:" << endl;
+    cout << "Display the tree structure of the definition of \\(" << *p_function_name << "\\):" << endl;
     cout << Get().Display() << endl;
     cout << endl;
-    cout << "Writing an English translation of the definition to " << filename << ":" << endl;
+    cout << "Writing an English translation of the definition of \\(" << *p_function_name << "\\) to " << filename << ":" << endl;
     cout << "…" << endl;
   
     if( !ofs ){
@@ -79,7 +84,7 @@ void DefinitionOfComputableFunction<Ret,Args...>::Display( const FunctionSymbol<
 
     try{
 
-      InputDefinition( ofs , f , language , style );
+      InputDefinition( ofs , *p_function_name , itr_f , language , style );
 
     }
     catch( const ErrorType& e ){

@@ -3,17 +3,34 @@
 #pragma once
 #include "../../../../Utility/Macro.hpp"
 
-#define DECLARATION_OF_RELATION_SYMBOL( REL )				\
+// 1-ary
+#define DECLARATION_OF_ONE_ARY_RELATION_SYMBOL( RET , REL )		\
 									\
-  template <typename Ret> auto CONNECT( REL , Symbol )() -> typename enable_if<! is_same<Ret,bool>::value , const RelationSymbol<Ret,Ret>& >::type \
+  inline auto CONNECT( REL , Symbol )() -> typename enable_if<! is_same< RET , bool >::value , const RelationSymbol<typename BaseTypeOf< RET >::type>& >::type \
 									\
 
-#define DEFINITION_OF_RELATION_SYMBOL( REL )				\
+#define DECLARATION_OF_ONE_ARY_RELATION_SYMBOL_APPLICATION( RET , REL )	\
 									\
-  DECLARATION_OF_RELATION_SYMBOL( REL )					\
+  inline ConditionOfComputableFunction CONNECT( REL , SymbolApplication )( const ExpressionOfComputableFunction< RET >& e ) \
+									\
+
+#define DEFINITION_OF_ONE_ARY_RELATION_SYMBOL_APPLICATION( RET , REL , SYMBOL )	\
+									\
+  DECLARATION_OF_ONE_ARY_RELATION_SYMBOL_APPLICATION( RET , REL ){ return CONNECT( REL , SYMBOL )()( e ); } \
+  
+
+// 2-ary
+#define DECLARATION_OF_TWO_ARY_RELATION_SYMBOL( RET , REL )		\
+									\
+  inline auto CONNECT( REL , Symbol )() -> typename enable_if<! is_same< RET , bool >::value , const RelationSymbol<typename BaseTypeOf< RET >::type,typename BaseTypeOf< RET >::type>& >::type \
+									\
+
+#define DEFINITION_OF_TWO_ARY_RELATION_SYMBOL( RET , REL )		\
+									\
+  DECLARATION_OF_TWO_ARY_RELATION_SYMBOL( RET , REL )			\
   {									\
 									\
-    static const RelationSymbol<typename BaseTypeOf<Ret>::type,typename BaseTypeOf<Ret>::type> r \
+    static const RelationSymbol<typename BaseTypeOf< RET >::type,typename BaseTypeOf< RET >::type> r \
     {									\
 									\
       CONNECT( REL , String )() ,					\
@@ -27,21 +44,23 @@
 									\
 									) , \
 	GetTypeName<bool>() ,						\
-	VariableSymbol<typename BaseTypeOf<Ret>::type>( "x" , GetTypeName<Ret>() ) , \
-	VariableSymbol<typename BaseTypeOf<Ret>::type>( "y" , GetTypeName<Ret>() ) , \
+	VariableSymbol<typename BaseTypeOf< RET >::type>( "x" , GetTypeName< RET >() ) , \
+	VariableSymbol<typename BaseTypeOf< RET >::type>( "y" , GetTypeName< RET >() ) \
+									\
 	};								\
 									\
     return r;								\
 									\
   }									\
 									\
-  
-#define DECLARATION_OF_RELATION_SYMBOL_APPLICATION( REL )		\
+
+
+#define DECLARATION_OF_TWO_ARY_RELATION_SYMBOL_APPLICATION( RET , REL )	\
 									\
-  template <typename Ret> inline ConditionOfComputableFunction CONNECT( REL , SymbolApplication )( const ExpressionOfComputableFunction<Ret>& e1 , const ExpressionOfComputableFunction<Ret>& e2 ) \
+  inline ConditionOfComputableFunction CONNECT( REL , SymbolApplication )( const ExpressionOfComputableFunction< RET >& e1 , const ExpressionOfComputableFunction< RET >& e2 ) \
 									\
 
-#define DEFINITION_OF_RELATION_SYMBOL_APPLICATION( REL )		\
+#define DEFINITION_OF_TWO_ARY_RELATION_SYMBOL_APPLICATION( RET , REL , SYMBOL )	\
 									\
-  DECLARATION_OF_RELATION_SYMBOL_APPLICATION( REL ){ return CONNECT( REL , Symbol )<Ret>()( e1 , e2 ); } \
+  DECLARATION_OF_TWO_ARY_RELATION_SYMBOL_APPLICATION( RET , REL ){ return CONNECT( REL , SYMBOL )()( e1 , e2 ); } \
   

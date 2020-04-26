@@ -114,7 +114,9 @@ Mathematics/Function/Computable/Function/a.o: \
  Mathematics/Function/Computable/Function/../Type/Base/../Valid/a.hpp \
  Mathematics/Function/Computable/Function/../Type/Base/../Valid/../Basic/a.hpp \
  Mathematics/Function/Computable/Function/../Type/Base/../Valid/../Basic/a_Macro.hpp \
- Mathematics/Function/Computable/Function/../Type/Base/../Valid/../a.hpp \
+ C:/Users/user/Documents/Programming/Mathematics/Function/Computable/Type/a.hpp \
+ Mathematics/Function/Computable/Function/../Type/SubType/a.hpp \
+ Mathematics/Function/Computable/Function/../Type/SubType/a_Macro.hpp \
  Mathematics/Function/Computable/Function/../Expression/Condition/a_Body.hpp \
  Mathematics/Function/Computable/Function/../Expression/Condition/../a_Body.hpp \
  Mathematics/Function/Computable/Function/../Expression/Condition/../List/a.hpp \
@@ -143,7 +145,8 @@ Mathematics/Function/Computable/Function/a.o: \
  C:/Users/user/Documents/Programming/Mathematics/Function/Computable/Type/TypeName/a_Body.hpp \
  Mathematics/Function/Computable/Function/../Expression/Variable/Variadic/a_Body.hpp \
  Mathematics/Function/Computable/Function/../Separator/a_Body.hpp \
- Mathematics/Function/Computable/Function/../Type/Base/a_Body.hpp
+ Mathematics/Function/Computable/Function/../Type/Base/a_Body.hpp \
+ Mathematics/Function/Computable/Function/../Type/SubType/a_Body.hpp
 
 Mathematics/Function/Computable/Function/../Header.hpp:
 
@@ -373,7 +376,11 @@ Mathematics/Function/Computable/Function/../Type/Base/../Valid/../Basic/a.hpp:
 
 Mathematics/Function/Computable/Function/../Type/Base/../Valid/../Basic/a_Macro.hpp:
 
-Mathematics/Function/Computable/Function/../Type/Base/../Valid/../a.hpp:
+C:/Users/user/Documents/Programming/Mathematics/Function/Computable/Type/a.hpp:
+
+Mathematics/Function/Computable/Function/../Type/SubType/a.hpp:
+
+Mathematics/Function/Computable/Function/../Type/SubType/a_Macro.hpp:
 
 Mathematics/Function/Computable/Function/../Expression/Condition/a_Body.hpp:
 
@@ -432,3 +439,5 @@ Mathematics/Function/Computable/Function/../Expression/Variable/Variadic/a_Body.
 Mathematics/Function/Computable/Function/../Separator/a_Body.hpp:
 
 Mathematics/Function/Computable/Function/../Type/Base/a_Body.hpp:
+
+Mathematics/Function/Computable/Function/../Type/SubType/a_Body.hpp:

@@ -2,6 +2,7 @@
 
 #pragma once
 #include "a_Macro.hpp"
+#include "../a.hpp"
 #include "../../../../SetTheory/EmptySet/a.hpp"
 
 template <typename T>
@@ -15,9 +16,11 @@ public:
 };
 
 
-DEFINITION_OF_IS_BASIC( void , \\cdots );
-DEFINITION_OF_IS_BASIC( int , \\mathbb{Z} );
-DEFINITION_OF_IS_BASIC( bool , BOOLIAN_SET_FOR_BASIC_TYPE );
-DEFINITION_OF_IS_BASIC( string , \\textrm{String} );
+DEFINITION_OF_IS_BASIC( void , Cdots );
+DEFINITION_OF_IS_BASIC( int , Int );
+DEFINITION_OF_IS_BASIC( bool , Bool );
+DEFINITION_OF_IS_BASIC( string , String );
 
 inline const int& infty() noexcept;
+
+template <typename T> inline const TypeOfComputableFunction& BasicType();

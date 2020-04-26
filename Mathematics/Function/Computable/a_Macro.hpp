@@ -61,10 +61,13 @@
 #define USE( TYPE_NAME , VARIABLE )					\
 									\
   static VariableSymbol<BaseTypeOf< TYPE_NAME >::type> CONNECT( CONNECT( __SYMBOL_OF_ , VARIABLE ) , __ ) = VariableSymbol<BaseTypeOf< TYPE_NAME >::type>( TO_STRING( VARIABLE ) , GetTypeName< TYPE_NAME >() ); \
+									\
   static const VariableSymbol<BaseTypeOf< TYPE_NAME >::type>& VARIABLE = CONNECT( CONNECT( __SYMBOL_OF_ , VARIABLE ) , __ ); \
+									\
   CHECK_VALID( TYPE_NAME )						\
 									\
-  
+
+
 #define IMP( RET , FUNC , ... )						\
 									\
   static auto CONNECT( CONNECT( __SYMBOL_OF_ , FUNC ) , __ ) = FUNCTION_SYMBOL_CONSTRUCTOR( RET , FUNC , __VA_ARGS__ ); \
@@ -84,7 +87,7 @@
 // separator setting
 #define SYMB( FUNC ) FUNC.GetNodeString( 2 ) 
 #define SPACE SpaceString() 
-#define VSPACE to_string( "\\ " ) 
+#define VSPACE VspaceString() 
 #define SUB SubString()
 #define SUP SupString() 
 #define LPAREN LparenString() 
@@ -93,19 +96,19 @@
 #define RBRACE RbraceString() 
 #define LBRACK LbrackString() 
 #define RBRACK RbrackString() 
-#define LANGLE to_string( "\\langle" ) 
-#define RANGLE to_string( "\\rangle" ) 
-#define VERT to_string( "\mid" ) 
-#define VVERT to_string( "\|" ) 
-#define FRAC to_string( "\\frac" ) 
-#define LBIG to_string( "\\left" ) 
-#define MBIG to_string( "\\middle" ) 
-#define RBIG to_string( "\\right" ) 
-#define PERIOD to_string( "." ) 
+#define LANGLE LangleString() 
+#define RANGLE RangleString() 
+#define VERT VertString() 
+#define VVERT VvertString() 
+#define FRAC FracString() 
+#define LBIG LbigString() 
+#define MBIG MbigString() 
+#define RBIG RbigString() 
+#define PERIOD PeriodString() 
 #define COMMA CommaString() 
-#define COLON to_string( "\\colon" ) 
-#define SCOLON to_string( ";" ) 
-#define ATMARK to_string( "@" ) 
+#define COLON ColonString() 
+#define SCOLON ScolonString() 
+#define ATMARK AtmarkString() 
 #define LMAT( C ) to_string( "\\begin{array}{" ) + TO_STRING( C ) + to_string( "}" ) 
 #define RMAT to_string( "\\end{array}" ) 
 #define ET to_string( "&" ) 
@@ -141,7 +144,26 @@
   
 
 // display
+#define DISPLAY( OBJECT )						\
+  									\
+  cout << TO_STRING( OBJECT ) << "‚Ì–Ø\‘¢‚ðo—Í‚µ‚Ü‚·F" << endl;	\
+  cout << ( OBJECT ).Display() << endl;					\
+  cout << endl;								\
+
+
+// write
 #define JAPANESE JapaneseString() 
 #define ENGLISH EnglishString() 
 #define FANDOM FandomString() 
-#define DISPLAY( FUNC , LANGUAGE , STYLE , FILE ) CONNECT( __DEFINITION_OF__ , FUNC ).Display( FUNC , LANGUAGE , STYLE , TO_STRING( FILE ) );
+#define APP ios::app 
+#define TRUNC ios::trunc 
+
+#define __DEFINITION_OF_int BasicType<int>() 
+#define __DEFINITION_OF_string BasicType<string>() 
+#define __DEFINITION_OF_bool BasicType<bool>() 
+
+#define __SYMBOL_OF_int 0 
+#define __SYMBOL_OF_string 0 
+#define __SYMBOL_OF_bool 0 
+
+#define WRITE( FUNC , LANGUAGE , STYLE , FILE , OPEN_MODE ) CONNECT( __DEFINITION_OF__ , FUNC ).WriteOn( CONNECT( CONNECT( __SYMBOL_OF_ , FUNC ) , __ ) , LANGUAGE , STYLE , TO_STRING( FILE ) , OPEN_MODE );

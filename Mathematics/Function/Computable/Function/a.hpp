@@ -9,6 +9,7 @@
 #include "../Separator/a.hpp"
 #include "../Type/Base/a.hpp"
 #include "../Type/Basic/a.hpp"
+#include "../Type/SubType/a.hpp"
 
 
 template <typename Ret, typename... Args>
@@ -17,8 +18,8 @@ class FunctionSymbol :
 {
 
 public:
-  inline FunctionSymbol( const string& f , const TypeNameOfComputableFunction& type_name , const VariableSymbol<Args>&... args );
-  FunctionSymbol( const string& f , const SeparatorOfComputableFunction& s , const TypeNameOfComputableFunction& type_name , const VariableSymbol<Args>&... args );
+  inline FunctionSymbol( const string& f , const TypeNameOfComputableFunction& return_type_name , const VariableSymbol<Args>&... args );
+  FunctionSymbol( const string& f , const SeparatorOfComputableFunction& s , const TypeNameOfComputableFunction& return_type_name , const VariableSymbol<Args>&... args );
 
   void SetSeparator( const SeparatorOfComputableFunction& s );
   template <typename... VA> inline auto SetSeparator( const VA&... va ) -> typename enable_if<conjunction<is_same<VA,string>...>::value,void>::type;
@@ -47,3 +48,7 @@ ConditionOfComputableFunction NegSymbolApplication( const ConditionOfComputableF
 DECLARATION_OF_LOGICAL_CONNECTIVE_APPLICATION( To );
 DECLARATION_OF_LOGICAL_CONNECTIVE_APPLICATION( Ot );
 DECLARATION_OF_LOGICAL_CONNECTIVE_APPLICATION( Equiv );
+
+inline const FunctionSymbol<string,string,int>& EntryAccessSymbol();
+
+

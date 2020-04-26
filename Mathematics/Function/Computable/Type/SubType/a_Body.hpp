@@ -4,3 +4,6 @@
 #include "a.hpp"
 
 #include "../a_Body.hpp"
+#include "../../Relation/a_Body.hpp"
+
+SPEC( nat , VariableSymbol<int>( "n" ) , NonNegativeSymbol() );

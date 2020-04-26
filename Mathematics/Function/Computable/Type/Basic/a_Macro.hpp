@@ -11,10 +11,13 @@
 									\
   public:								\
     static constexpr const bool value = true;				\
-    static inline const string& GetName() noexcept { static const string name = TO_STRING( NAME ); return name; }; \
+    static inline const string& GetName() noexcept { return CONNECT( NAME , String )(); }; \
 									\
   };									\
 									\
 
-// マクロ中のコンマをラップするために使う
-#define BOOLIAN_SET_FOR_BASIC_TYPE \\{0,1\\}
+#define DEFINITION_OF_BASIC_TYPE( TYPE_NAME , DEFINITION )		\
+									\
+  template <> inline const TypeOfComputableFunction& BasicType< TYPE_NAME >() { static const TypeOfComputableFunction basic_type{ TO_STRING( TYPE_NAME ) , DEFINITION }; return basic_type; } \
+									\
+

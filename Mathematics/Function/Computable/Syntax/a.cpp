@@ -28,14 +28,12 @@ void SyntaxOfComputableFunction::RomaniseSymbol()
 }
 
 
-void SyntaxOfComputableFunction::InputDefinition( ofstream& ofs , const SyntaxOfComputableFunction& f , const string& language , const string& style ) const
+void SyntaxOfComputableFunction::InputDefinition( ofstream& ofs , const string& function_name , ConstIteratorOfVLTree<string>& itr_f , const string& language , const string& style ) const
 {
 
-  auto itr_function_symbol = f.m_syntax.LeftMostNode();
   auto itr_line = m_syntax.LeftMostNode();
   itr_line++;
 
-  const string* p_function_name;
   const string* p_return_type_name;
   const string* p_argument_name;
   const string* p_argument_type_name;
@@ -47,15 +45,13 @@ void SyntaxOfComputableFunction::InputDefinition( ofstream& ofs , const SyntaxOf
 
      {
      
-       p_function_name = &( SyntaxToString( itr_function_symbol , 2 ) );
-
-       if( ! itr_function_symbol.IsValid() ){
+       if( ! itr_f.IsValid() ){
 
 	 ERR_CODE;
 
        }
 
-       auto itr_return_type_name = itr_function_symbol;
+       auto itr_return_type_name = itr_f;
        itr_return_type_name[2];
        p_return_type_name = &( *itr_return_type_name );
 
@@ -67,23 +63,23 @@ void SyntaxOfComputableFunction::InputDefinition( ofstream& ofs , const SyntaxOf
 
      );
   
-  itr_function_symbol++;
-  auto itr_function_expression = itr_function_symbol;
+  itr_f++;
+  auto itr_function_expression = itr_f;
        
   TRY_CATCH
     (
 
      {
 
-       p_argument_name = &( SyntaxToString( itr_function_symbol , 2 ) );
+       p_argument_name = &( SyntaxToString( itr_f , 2 ) );
 
-       if( ! itr_function_symbol.IsValid() ){
+       if( ! itr_f.IsValid() ){
 
 	 ERR_CODE;
 
        }
 
-       p_argument_type_name = &( *itr_function_symbol );
+       p_argument_type_name = &( *itr_f );
        p_line_name = &( SyntaxToString( itr_line , 1 ) );
        
      } ,
@@ -125,7 +121,7 @@ void SyntaxOfComputableFunction::InputDefinition( ofstream& ofs , const SyntaxOf
 
      {
        
-       InputDeclaration( ofs , *p_function_name , *p_argument_type_name , *p_argument_name , *p_return_type_name , *p_function_expression_name , language , style );
+       InputDeclaration( ofs , function_name , *p_argument_type_name , *p_argument_name , *p_return_type_name , *p_function_expression_name , language , style );
        InputLine( ofs , *p_function_expression_name , *p_line_name , itr_line , 0 , language_copy , style );
 
      },

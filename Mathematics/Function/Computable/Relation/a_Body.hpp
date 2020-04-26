@@ -89,16 +89,44 @@ void RelationSymbol<Args...>::SetSeparator( const SeparatorOfComputableFunction&
 template <typename... Args> inline ConditionOfComputableFunction RelationSymbol<Args...>::operator()( const ExpressionOfComputableFunction<Args>&... args ) const { return ConditionOfComputableFunction( *this , args... ); }
 
 
-DEFINITION_OF_RELATION_SYMBOL( Eq );
-DEFINITION_OF_RELATION_SYMBOL( Neq );
-DEFINITION_OF_RELATION_SYMBOL( Leq );
-DEFINITION_OF_RELATION_SYMBOL( Geq );
-DEFINITION_OF_RELATION_SYMBOL( Lneq );
-DEFINITION_OF_RELATION_SYMBOL( Gneq );
+template <typename Ret> DEFINITION_OF_TWO_ARY_RELATION_SYMBOL( Ret , Eq );
+template <typename Ret> DEFINITION_OF_TWO_ARY_RELATION_SYMBOL( Ret , Neq );
+template <typename Ret> DEFINITION_OF_TWO_ARY_RELATION_SYMBOL( Ret , Leq );
+template <typename Ret> DEFINITION_OF_TWO_ARY_RELATION_SYMBOL( Ret , Geq );
+template <typename Ret> DEFINITION_OF_TWO_ARY_RELATION_SYMBOL( Ret , Lneq );
+template <typename Ret> DEFINITION_OF_TWO_ARY_RELATION_SYMBOL( Ret , Gneq );
 
-DEFINITION_OF_RELATION_SYMBOL_APPLICATION( Eq );
-DEFINITION_OF_RELATION_SYMBOL_APPLICATION( Neq );
-DEFINITION_OF_RELATION_SYMBOL_APPLICATION( Leq );
-DEFINITION_OF_RELATION_SYMBOL_APPLICATION( Geq );
-DEFINITION_OF_RELATION_SYMBOL_APPLICATION( Lneq );
-DEFINITION_OF_RELATION_SYMBOL_APPLICATION( Gneq );
+template <typename Ret> DEFINITION_OF_TWO_ARY_RELATION_SYMBOL_APPLICATION( Ret , Eq , Symbol<Ret> );
+template <typename Ret> DEFINITION_OF_TWO_ARY_RELATION_SYMBOL_APPLICATION( Ret , Neq , Symbol<Ret> );
+template <typename Ret> DEFINITION_OF_TWO_ARY_RELATION_SYMBOL_APPLICATION( Ret , Leq , Symbol<Ret> );
+template <typename Ret> DEFINITION_OF_TWO_ARY_RELATION_SYMBOL_APPLICATION( Ret , Geq , Symbol<Ret> );
+template <typename Ret> DEFINITION_OF_TWO_ARY_RELATION_SYMBOL_APPLICATION( Ret , Lneq , Symbol<Ret> );
+template <typename Ret> DEFINITION_OF_TWO_ARY_RELATION_SYMBOL_APPLICATION( Ret , Gneq , Symbol<Ret> );
+
+
+DECLARATION_OF_ONE_ARY_RELATION_SYMBOL( int , NonNegative )
+{
+
+  static const RelationSymbol<int> r
+  {
+
+    "\\geq 0" ,
+      SeparatorOfComputableFunction
+      (
+
+       0 ,
+       EmptyString() ,
+       SpaceString() + "\\geq 0" + SpaceString()
+
+       ) ,
+      GetTypeName<bool>() ,
+      VariableSymbol<int>( "n" )
+
+      };
+
+  return r;
+
+}
+
+DEFINITION_OF_ONE_ARY_RELATION_SYMBOL_APPLICATION( int , NonNegative , Symbol );
+
