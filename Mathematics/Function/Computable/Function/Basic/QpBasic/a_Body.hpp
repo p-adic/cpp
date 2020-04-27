@@ -3,7 +3,7 @@
 #pragma once
 #include "a.hpp"
 
-#include "../../../Syntax/Basic/a_Body.hpp"
+#include "../../Variadic/a_Body.hpp"
 
 // –îˆó•\‹L
 inline const PrettyFunction<nat,nat,nat,nat>& ArrowSymbol() noexcept
@@ -18,7 +18,7 @@ inline const PrettyFunction<nat,nat,nat,nat>& ArrowSymbol() noexcept
 
        0 ,
        EmptyString() ,
-       SpaceString() + ArrowString() + SupString() + LbraceString() ,
+       SpaceString() + "\\uparrow" + SupString() + LbraceString() ,
        RbraceString() + SpaceString() ,
        EmptyString()
 
