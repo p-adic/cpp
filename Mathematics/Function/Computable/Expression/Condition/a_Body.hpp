@@ -9,7 +9,7 @@
 inline ExpressionOfComputableFunction<bool>::ExpressionOfComputableFunction( const int& dummy , const string& x , const TypeNameOfComputableFunction& type_name ) : SyntaxOfComputableFunction( ExpressionString() , VariableString() , x , type_name.Get() ) {}
 
 // constant
-inline ExpressionOfComputableFunction<bool>::ExpressionOfComputableFunction( const bool& t ) : SyntaxOfComputableFunction( ExpressionString() , ConstantString() , to_string( t ) , GetSyntax<bool>().Get() ) {}
+inline ExpressionOfComputableFunction<bool>::ExpressionOfComputableFunction( const bool& t ) : SyntaxOfComputableFunction( ExpressionString() , ConstantString() , to_string( t ) , GetTypeSyntax<bool>().Get() ) {}
 
 // function
 template <typename... Args> inline ExpressionOfComputableFunction<bool>::ExpressionOfComputableFunction( const FunctionSymbol<bool,Args...>& f , const ExpressionOfComputableFunction<Args>&... args ) : SyntaxOfComputableFunction( ExpressionString() , FunctionString() ) { PushFunctionExpression( f , args... ); }

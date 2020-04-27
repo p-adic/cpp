@@ -452,7 +452,7 @@ void SyntaxOfComputableFunction::InputPutLine( ofstream& ofs , VLTree<string>::c
 
      {
 
-       if( *p_variable_type_name == GetName<bool>() ){
+       if( *p_variable_type_name == GetTypeString<bool>() ){
 
 	 InputPutConditionLine( ofs , itr_line , *p_variable_name , language , style );
 

@@ -23,7 +23,7 @@ inline const FunctionSymbol<int,int,int,int>& ArrowSymbol() noexcept
        EmptyString()
 
        ) ,
-      GetSyntax<int>() ,
+      GetTypeSyntax<int>() ,
       VariableSymbol<int>( "a" ) ,
       VariableSymbol<int>( "c" ) ,
       VariableSymbol<int>( "b" )
@@ -56,7 +56,7 @@ inline const VariadicFunctionSymbol<int,int,int>& ChainSymbol() noexcept
        EmptyString()
 
        ) ,
-      GetSyntax<int>() ,
+      GetTypeSyntax<int>() ,
       VariableSymbol<int>( "a" )
 
       };
@@ -87,7 +87,7 @@ inline const VariadicFunctionSymbol<string,int,string>& NPrimitiveSymbol_Body_1(
        RbrackString()
 
        ) ,
-      GetSyntax<int>() ,
+      GetTypeSyntax<int>() ,
       VariableSymbol<string>( "version" )
 
       };
@@ -112,7 +112,7 @@ inline const FunctionSymbol<int,string,int>& NPrimitiveSymbol_Body_2() noexcept
        RparenString()
 
        ) ,
-      GetSyntax<int>() ,
+      GetTypeSyntax<int>() ,
       VariableSymbol<string>( "NvA" ) ,
       VariableSymbol<int>( "a" )
 

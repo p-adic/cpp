@@ -42,6 +42,8 @@
 #define INISEG InitialSgmentSymbol() 
 #define FINSEG InitialSgmentSymbol() 
 
+#define PROJ ProjectionSymbol 
+
 
 // relation
 #define EQ( x , y ) EqSymbolApplication( x , y ) 

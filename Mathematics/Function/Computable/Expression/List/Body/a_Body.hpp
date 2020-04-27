@@ -11,7 +11,7 @@
 #include "../../a_Body.hpp"
 #include "../../../Type/Valid/a_Body.hpp"
 
-template <typename VArg> inline ExpressionOfComputableFunction<void>::ExpressionOfComputableFunction( const WrappedTypes<VArg>& ) : SyntaxOfComputableFunction( ExpressionString() , VariableString() , LdotsString() , GetSyntax<VArg>().Get() ) {}
+template <typename VArg> inline ExpressionOfComputableFunction<void>::ExpressionOfComputableFunction( const WrappedTypes<VArg>& ) : SyntaxOfComputableFunction( ExpressionString() , VariableString() , LdotsString() , GetTypeSyntax<VArg>().Get() ) {}
 
 template <typename... VA>
 ExpressionOfComputableFunction<void>::ExpressionOfComputableFunction( const ExpressionOfComputableFunction<VA>&... va ) : SyntaxOfComputableFunction( ExpressionString() , ListString() , va.Get()... )
