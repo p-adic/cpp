@@ -23,6 +23,8 @@ public:
 
 };
 
+#include "a_Alias.hpp"
+
 template <typename Ret> DECLARATION_OF_VARIADIC_FUNCTION_SYMBOL( Ret , Plus );
 template <> DECLARATION_OF_VARIADIC_FUNCTION_SYMBOL( string , Plus );
 

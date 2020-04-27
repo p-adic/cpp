@@ -4,6 +4,7 @@
 #include "a_Macro.hpp"
 
 #include "../Syntax/a.hpp"
+#include "../Type/Base/a.hpp"
 
 // #include "List/a.hpp"
 // #include "../Function/Variadic/a.hpp"

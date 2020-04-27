@@ -3,3 +3,6 @@
 #pragma once
 
 using ConditionOfComputableFunction = ExpressionOfComputableFunction<bool>;
+
+template <typename Ret>
+using PrettyExpression = ExpressionOfComputableFunction<typename BaseTypeOf<Ret>::type>;

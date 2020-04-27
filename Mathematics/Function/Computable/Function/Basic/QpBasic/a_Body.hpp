@@ -6,10 +6,10 @@
 #include "../../../Syntax/Basic/a_Body.hpp"
 
 // 矢印表記
-inline const FunctionSymbol<int,int,int,int>& ArrowSymbol() noexcept
+inline const PrettyFunction<nat,nat,nat,nat>& ArrowSymbol() noexcept
 {
 
-  static const FunctionSymbol<int,int,int,int> f
+  static const PrettyFunction<nat,nat,nat,nat> f
   {
 
     ArrowString() ,
@@ -23,10 +23,10 @@ inline const FunctionSymbol<int,int,int,int>& ArrowSymbol() noexcept
        EmptyString()
 
        ) ,
-      GetTypeSyntax<int>() ,
-      VariableSymbol<int>( "a" ) ,
-      VariableSymbol<int>( "c" ) ,
-      VariableSymbol<int>( "b" )
+      GetTypeSyntax<nat>() ,
+      PrettyVariable<nat>( "a" ) ,
+      PrettyVariable<nat>( "c" ) ,
+      PrettyVariable<nat>( "b" )
 
       };
 
@@ -34,7 +34,7 @@ inline const FunctionSymbol<int,int,int,int>& ArrowSymbol() noexcept
 
 }
 
-inline ExpressionOfComputableFunction<int> Arrow( const ExpressionOfComputableFunction<int>& a , const ExpressionOfComputableFunction<int>& b , const ExpressionOfComputableFunction<int>& c ) noexcept { return ArrowSymbol()( a , c , b ); }
+inline PrettyExpression<nat> Arrow( const PrettyExpression<nat>& a , const PrettyExpression<nat>& b , const PrettyExpression<nat>& c ) noexcept { return ArrowSymbol()( a , c , b ); }
 
 
 // チェーン表記
@@ -56,8 +56,8 @@ inline const VariadicFunctionSymbol<int,int,int>& ChainSymbol() noexcept
        EmptyString()
 
        ) ,
-      GetTypeSyntax<int>() ,
-      VariableSymbol<int>( "a" )
+      GetTypeSyntax<nat>() ,
+      PrettyVariable<nat>( "a" )
 
       };
   
@@ -65,7 +65,7 @@ inline const VariadicFunctionSymbol<int,int,int>& ChainSymbol() noexcept
 
 }
 
-template <typename... Args> inline ExpressionOfComputableFunction<int> Chain( const ExpressionOfComputableFunction<int>& a , const Args&... args ) noexcept { return ChainSymbol()( a , args... ); }
+template <typename... Args> inline PrettyExpression<nat> Chain( const PrettyExpression<nat>& a , const Args&... args ) noexcept { return ChainSymbol()( a , args... ); }
 
 
 // N原始
@@ -87,7 +87,7 @@ inline const VariadicFunctionSymbol<string,int,string>& NPrimitiveSymbol_Body_1(
        RbrackString()
 
        ) ,
-      GetTypeSyntax<int>() ,
+      GetTypeSyntax<nat>() ,
       VariableSymbol<string>( "version" )
 
       };
@@ -112,13 +112,13 @@ inline const FunctionSymbol<int,string,int>& NPrimitiveSymbol_Body_2() noexcept
        RparenString()
 
        ) ,
-      GetTypeSyntax<int>() ,
+      GetTypeSyntax<nat>() ,
       VariableSymbol<string>( "NvA" ) ,
-      VariableSymbol<int>( "a" )
+      PrettyVariable<nat>( "a" )
 
       };
   return f;
 
 }
 
-template <typename... Args> inline ExpressionOfComputableFunction<int> N( const ExpressionOfComputableFunction<string>& version , const ExpressionOfComputableFunction<int>& a , const Args&... args ) noexcept { return NPrimitiveSymbol_Body_2()( NPrimitiveSymbol_Body_1()( version , args... ) , a ); }
+template <typename... Args> inline PrettyExpression<nat> N( const ExpressionOfComputableFunction<string>& version , const PrettyExpression<nat>& a , const Args&... args ) noexcept { return NPrimitiveSymbol_Body_2()( NPrimitiveSymbol_Body_1()( version , args... ) , a ); }

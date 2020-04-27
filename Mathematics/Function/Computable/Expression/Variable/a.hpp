@@ -13,3 +13,5 @@ public:
   inline VariableSymbol( const string& x , const TypeNameOfComputableFunction& type_name );
 
 };
+
+#include "a_Alias.hpp"

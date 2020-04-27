@@ -13,6 +13,7 @@
 #include "List/a_Body.hpp"
 #include "../Function/Variadic/a_Body.hpp"
 #include "../Relation/Variadic/a_Body.hpp"
+#include "../Type/Base/a_Body.hpp"
 #include "../Type/TypeName/a_Body.hpp"
 
 

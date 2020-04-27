@@ -31,6 +31,12 @@ public:
 };
 
 
+template <>
+class DirectProductTypeOfComputableFunction<> :
+  public EmptySet
+{};
+
+
 inline string GetName_Body_ForDirectProduct( const WrappedTypes<>& ) noexcept;
 
 template <typename Arg> inline string GetName_ForDirectProduct( const WrappedTypes<Arg>& ) noexcept;

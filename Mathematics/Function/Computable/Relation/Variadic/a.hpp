@@ -20,3 +20,6 @@ public:
   template <typename... VA> inline auto operator()( const ExpressionOfComputableFunction<Args>&... args , const VA&... va ) const -> typename enable_if<! conjunction<is_same<ExpressionOfComputableFunction<VArg>,VA>...>::value,ConditionOfComputableFunction>::type;
   
 };
+
+#include "a_Alias.hpp"
+
