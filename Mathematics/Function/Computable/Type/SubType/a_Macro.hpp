@@ -10,7 +10,7 @@
   {									\
 									\
   public:								\
-    using type = decay_t<decltype( VARIABLE )>::type;			\
+    using base_type = decay_t<decltype( VARIABLE )>::type;			\
 									\
   public:								\
     inline TYPE_NAME () noexcept :					\
@@ -54,18 +54,18 @@
     };									\
 									\
   private:								\
-    static inline const VariableSymbol<type>& GetVariable() noexcept	\
+    static inline const VariableSymbol<base_type>& GetVariable() noexcept	\
     {									\
 									\
-      static const VariableSymbol<type> CONNECT( VARIABLE_FOR_ , TYPE_NANE ){ VARIABLE }; \
+      static const VariableSymbol<base_type> CONNECT( VARIABLE_FOR_ , TYPE_NANE ){ VARIABLE }; \
       return CONNECT( VARIABLE_FOR_ , TYPE_NANE );			\
 									\
     };									\
 									\
-    static inline const RelationSymbol<type>& GetRelation() noexcept	\
+    static inline const RelationSymbol<base_type>& GetRelation() noexcept	\
     {									\
 									\
-      static const RelationSymbol<type> CONNECT( RELATION_FOR , TYPE_NANE ){ REL }; \
+      static const RelationSymbol<base_type> CONNECT( RELATION_FOR , TYPE_NANE ){ REL }; \
       return CONNECT( RELATION_FOR , TYPE_NANE );			\
 									\
     };									\

@@ -3,7 +3,7 @@
 #pragma once
 #include "a_Macro.hpp"
 
-#include "../TypeName/a.hpp"
+#include "../Guide/TypeName/a.hpp"
 #include "../../Expression/Variable/a.hpp"
 #include "../../Expression/Condition/a.hpp"
 #include "../../../../SetTheory/EmptySet/a.hpp"

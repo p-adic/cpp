@@ -8,7 +8,7 @@
 #include "../../../../SetTheory/DirectProduct/a_Body.hpp"
 #include "../../../../../Utility/WrappedType/Int/a_Body.hpp"
 
-#include "../TypeName/a_Body.hpp"
+#include "../Guide/TypeName/a_Body.hpp"
 
 template <typename... Args> inline DirectProductTypeOfComputableFunction<Args...>::DirectProductTypeOfComputableFunction() noexcept : TypeOfComputableFunction( GetName() , GetName() ) {}
 

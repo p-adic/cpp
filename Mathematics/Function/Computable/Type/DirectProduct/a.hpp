@@ -15,6 +15,8 @@ class DirectProductTypeOfComputableFunction :
 {
 
 public:
+  using base_type = DirectProductTypeOfComputableFunction<Args...>;
+
   template <uint i>
   using type = decltype( Projection<i,Args...>( declval<DirectProduct<Args...> >() ) );
 
