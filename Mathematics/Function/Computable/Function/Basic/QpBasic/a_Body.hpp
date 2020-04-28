@@ -12,7 +12,7 @@ inline const PrettyFunction<nat,nat,nat,nat>& ArrowSymbol() noexcept
   static const PrettyFunction<nat,nat,nat,nat> f
   {
 
-    ArrowString() ,
+    "\\uparrow" ,
       SeparatorOfComputableFunction
       (
 

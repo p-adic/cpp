@@ -6,15 +6,15 @@
 #include "List/a.hpp"
 #include "../Function/Variadic/a.hpp"
 #include "../Relation/Variadic/a.hpp"
-#include "../Type/TypeName/a.hpp"
+#include "../Type/Guide/TypeName/a.hpp"
 
 #include "../Syntax/a_Body.hpp"
 
 #include "List/a_Body.hpp"
 #include "../Function/Variadic/a_Body.hpp"
 #include "../Relation/Variadic/a_Body.hpp"
-#include "../Type/Base/a_Body.hpp"
-#include "../Type/TypeName/a_Body.hpp"
+#include "../Type/Guide/Base/a_Body.hpp"
+#include "../Type/Guide/TypeName/a_Body.hpp"
 
 
 // variable

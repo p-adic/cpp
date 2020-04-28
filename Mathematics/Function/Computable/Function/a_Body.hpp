@@ -10,7 +10,7 @@
 #include "../Expression/Condition/a_Body.hpp"
 #include "../Expression/Variable/Variadic/a_Body.hpp"
 #include "../Separator/a_Body.hpp"
-#include "../Type/Base/a_Body.hpp"
+#include "../Type/Guide/Base/a_Body.hpp"
 #include "../Type/SubType/a_Body.hpp"
 
 template <typename Ret, typename... Args> inline FunctionSymbol<Ret,Args...>::FunctionSymbol( const string& f , const TypeNameOfComputableFunction& return_type_name , const VariableSymbol<Args>&... args ) : FunctionSymbol( f , SeparatorOfComputableFunction( f , sizeof...( Args ) ) , return_type_name , args... ) {}

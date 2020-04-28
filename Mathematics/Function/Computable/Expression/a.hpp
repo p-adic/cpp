@@ -4,12 +4,12 @@
 #include "a_Macro.hpp"
 
 #include "../Syntax/a.hpp"
-#include "../Type/Base/a.hpp"
+#include "../Type/Guide/Base/a.hpp"
 
 // #include "List/a.hpp"
 // #include "../Function/Variadic/a.hpp"
 // #include "../Relation/Variadic/a.hpp"
-// #include "../Type/TypeName/a.hpp"
+// #include "../Type/Guide/TypeName/a.hpp"
 
 class TypeNameOfComputableFunction;
 template <typename Ret, typename... Args> class FunctionSymbol;

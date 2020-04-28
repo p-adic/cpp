@@ -9,7 +9,7 @@
 #include "../a_Body.hpp"
 #include "../../Variable/a_Body.hpp"
 #include "../../a_Body.hpp"
-#include "../../../Type/Valid/a_Body.hpp"
+#include "../../../Type/Guide/Valid/a_Body.hpp"
 
 template <typename VArg> inline ExpressionOfComputableFunction<void>::ExpressionOfComputableFunction( const WrappedTypes<VArg>& ) : SyntaxOfComputableFunction( ExpressionString() , VariableString() , LdotsString() , GetTypeSyntax<VArg>().Get() ) {}
 
