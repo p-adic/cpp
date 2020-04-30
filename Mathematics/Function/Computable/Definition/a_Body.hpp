@@ -4,8 +4,6 @@
 #include "a.hpp"
 #include "Line/Void/a_Body.hpp"
 
-template <typename Ret, typename... Args> inline DefinitionOfComputableFunction<Ret,Args...>::DefinitionOfComputableFunction( const FunctionSymbol<Ret,Args...>& f ) : DefinitionOfComputableFunction( 0 ) {}
-
 template <typename Ret, typename... Args> template <typename... Rets> inline DefinitionOfComputableFunction<Ret,Args...>::DefinitionOfComputableFunction( const Rets&... lines ) : DefinitionOfComputableFunction( 0 , lines... ) {}
 
 template <typename Ret, typename... Args> inline DefinitionOfComputableFunction<Ret,Args...>::DefinitionOfComputableFunction( const int& dummy , const LineOfDefinitionOfComputableFunction<Ret>& line ) : SyntaxOfComputableFunction( EmptyString() , DefinitionString() , line.Get() ) {}
@@ -15,7 +13,7 @@ template <typename Ret, typename... Args> template <typename... Rets> inline Def
 template <typename Ret, typename... Args> inline const string& DefinitionOfComputableFunction<Ret,Args...>::Name() const { return *( Get().LeftMostLeaf() ); }
 
 template <typename Ret, typename... Args>
-void DefinitionOfComputableFunction<Ret,Args...>::WriteOn( const FunctionSymbol<Ret,Args...>& f , const string& language , const string& style , const string& filename , const ios_base::openmode& open_mode ) const noexcept
+void DefinitionOfComputableFunction<Ret,Args...>::WriteOn( const OperatorSymbol<Ret,Args...>& f , const string& language , const string& style , const string& filename , const ios_base::openmode& open_mode ) const noexcept
 {
 
   ofstream ofs( filename , open_mode );
@@ -51,7 +49,7 @@ void DefinitionOfComputableFunction<Ret,Args...>::WriteOn( const FunctionSymbol<
 
     try{
 
-      InputDefinition( ofs , *p_function_name , itr_f , language , style );
+      InputDefinition( ofs , f.GetTotality().Get() , *p_function_name , itr_f , language , style );
 
     }
     catch( const ErrorType& e ){
@@ -86,7 +84,7 @@ void DefinitionOfComputableFunction<Ret,Args...>::WriteOn( const FunctionSymbol<
 
     try{
 
-      InputDefinition( ofs , *p_function_name , itr_f , language , style );
+      InputDefinition( ofs , f.GetTotality().Get() , *p_function_name , itr_f , language , style );
 
     }
     catch( const ErrorType& e ){
