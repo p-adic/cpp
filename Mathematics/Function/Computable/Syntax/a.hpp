@@ -31,7 +31,8 @@ public:
 
 protected:
   // definition
-  void InputDefinition( ofstream& ofs , const string& function_name , ConstIteratorOfVLTree<string>& itr_f , const string& language , const string& style ) const;
+  void InputDefinition( ofstream& ofs , const string& totality , const string& function_name , ConstIteratorOfVLTree<string>& itr_f , const string& language , const string& style ) const;
+  void InputTotality( ofstream& ofs , const string& totality , const string& language , const string& style ) const;
   void InputDeclaration( ofstream& ofs , const string& function_name , const string& argument_type_name , const string& argument_name , const string& return_type_name , const string& function_expression_name , const string& language , const string& style ) const;
 
   // line
@@ -181,6 +182,12 @@ DECLARATION_OF_GLOBAL_CONSTANT_STRING_FOR_SYMBOL( Put );
 DECLARATION_OF_GLOBAL_CONSTANT_STRING_FOR_SYMBOL( Print );
 DECLARATION_OF_GLOBAL_CONSTANT_STRING_FOR_SYMBOL( Exit );
 DECLARATION_OF_GLOBAL_CONSTANT_STRING_FOR_SYMBOL( Return );
+
+// definition
+DECLARATION_OF_GLOBAL_CONSTANT_STRING_FOR_SYMBOL( Recursive );
+DECLARATION_OF_GLOBAL_CONSTANT_STRING_FOR_SYMBOL( Partial );
+DECLARATION_OF_GLOBAL_CONSTANT_STRING_FOR_SYMBOL( Total );
+DECLARATION_OF_GLOBAL_CONSTANT_STRING_FOR_SYMBOL( Primitive );
 
 // write
 DECLARATION_OF_GLOBAL_CONSTANT_STRING_FOR_SYMBOL( Japanese );

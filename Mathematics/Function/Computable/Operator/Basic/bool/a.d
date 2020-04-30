@@ -105,6 +105,7 @@ Mathematics/Function/Computable/Operator/Basic/bool/a.o: \
  C:/Users/user/Documents/Programming/Utility/VLTree/Iterator/Sequential/a.hpp \
  C:/Users/user/Documents/Programming/Utility/VLTree/Iterator/a.hpp \
  C:/Users/user/Documents/Programming/Utility/VLTree/SubTree/a.hpp \
+ C:/Users/user/Documents/Programming/Mathematics/Function/Computable/Operator/Totality/a.hpp \
  C:/Users/user/Documents/Programming/Mathematics/Function/Computable/Type/Guide/Base/a.hpp \
  C:/Users/user/Documents/Programming/Mathematics/Function/Computable/Type/Guide/Base/a_Macro.hpp \
  C:/Users/user/Documents/Programming/Mathematics/Function/Computable/Type/a.hpp \
@@ -150,6 +151,7 @@ Mathematics/Function/Computable/Operator/Basic/bool/a.o: \
  C:/Users/user/Documents/Programming/Utility/VLTree/Iterator/Sequential/a_Body.hpp \
  C:/Users/user/Documents/Programming/Utility/VLTree/Iterator/a_Body.hpp \
  C:/Users/user/Documents/Programming/Utility/VLTree/SubTree/a_Body.hpp \
+ C:/Users/user/Documents/Programming/Mathematics/Function/Computable/Operator/Totality/a_Body.hpp \
  C:/Users/user/Documents/Programming/Mathematics/Function/Computable/Type/Guide/Base/a_Body.hpp \
  C:/Users/user/Documents/Programming/Mathematics/Function/Computable/Type/Guide/Valid/a_Body.hpp \
  C:/Users/user/Documents/Programming/Mathematics/Function/Computable/Type/Guide/Primitive/a_Body.hpp \
@@ -381,6 +383,8 @@ C:/Users/user/Documents/Programming/Utility/VLTree/Iterator/a.hpp:
 
 C:/Users/user/Documents/Programming/Utility/VLTree/SubTree/a.hpp:
 
+C:/Users/user/Documents/Programming/Mathematics/Function/Computable/Operator/Totality/a.hpp:
+
 C:/Users/user/Documents/Programming/Mathematics/Function/Computable/Type/Guide/Base/a.hpp:
 
 C:/Users/user/Documents/Programming/Mathematics/Function/Computable/Type/Guide/Base/a_Macro.hpp:
@@ -470,6 +474,8 @@ C:/Users/user/Documents/Programming/Utility/VLTree/Iterator/Sequential/a_Body.hp
 C:/Users/user/Documents/Programming/Utility/VLTree/Iterator/a_Body.hpp:
 
 C:/Users/user/Documents/Programming/Utility/VLTree/SubTree/a_Body.hpp:
+
+C:/Users/user/Documents/Programming/Mathematics/Function/Computable/Operator/Totality/a_Body.hpp:
 
 C:/Users/user/Documents/Programming/Mathematics/Function/Computable/Type/Guide/Base/a_Body.hpp:
 

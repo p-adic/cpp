@@ -7,6 +7,7 @@
 #include "../../Expression/Variable/Variadic/a.hpp"
 
 #include "../Separator/a_Body.hpp"
+#include "../Totality/a_Body.hpp"
 #include "../../Type/Guide/Base/a_Body.hpp"
 #include "../../Type/SubType/a_Body.hpp"
 #include "../../Expression/Primitive/bool/a_Body.hpp"
@@ -14,10 +15,10 @@
 
 #include "../../Syntax/a_Body.hpp"
 
-template <typename... Args> inline RelationSymbol<Args...>::RelationSymbol( const string& r , const TypeNameOfComputableFunction& type_name , const VariableSymbol<Args>&... args ) : RelationSymbol( r , SeparatorOfComputableFunction( r , sizeof...( Args ) ) , type_name , args... ) {}
+template <typename... Args> inline RelationSymbol<Args...>::RelationSymbol( const TotalityOfComputableFunction& totality , const string& r , const TypeNameOfComputableFunction& type_name , const VariableSymbol<Args>&... args ) : RelationSymbol( totality , r , SeparatorOfComputableFunction( r , sizeof...( Args ) ) , type_name , args... ) {}
 
 template <typename... Args>
-RelationSymbol<Args...>::RelationSymbol( const string& r , const SeparatorOfComputableFunction& s , const TypeNameOfComputableFunction& type_name , const VariableSymbol<Args>&... args ) :
+RelationSymbol<Args...>::RelationSymbol( const TotalityOfComputableFunction& totality , const string& r , const SeparatorOfComputableFunction& s , const TypeNameOfComputableFunction& type_name , const VariableSymbol<Args>&... args ) :
   SyntaxOfComputableFunction
   (
 
@@ -28,7 +29,8 @@ RelationSymbol<Args...>::RelationSymbol( const string& r , const SeparatorOfComp
    ListExpressionOfComputableFunction( args... ).Get() ,
    s.Get()
    
-   )
+   ) ,
+  m_totality( totality )
 {
 
   VLTree<string> t_args{};
@@ -46,6 +48,8 @@ RelationSymbol<Args...>::RelationSymbol( const string& r , const SeparatorOfComp
      );
 
 }
+
+template <typename... Args> template <typename... Ts> inline RelationSymbol<Args...>::RelationSymbol( const string& r , const Ts&... ts ) : RelationSymbol( Recursiveness() , r , ts... ) {}
 
 template <typename... Args>
 void RelationSymbol<Args...>::SetSeparator( const SeparatorOfComputableFunction& s )
@@ -93,6 +97,11 @@ void RelationSymbol<Args...>::SetSeparator( const SeparatorOfComputableFunction&
   return;
 
 }
+
+template <typename... Args> inline const TotalityOfComputableFunction& RelationSymbol<Args...>::GetTotality() const noexcept { return m_totality; }
+
+template <typename... Args> inline void RelationSymbol<Args...>::SetTotality( const TotalityOfComputableFunction& totality ) noexcept { m_totality = totality; }
+
 
 template <typename... Args> inline ConditionOfComputableFunction RelationSymbol<Args...>::operator()( const ExpressionOfComputableFunction<Args>&... args ) const { return ConditionOfComputableFunction( *this , args... ); }
 

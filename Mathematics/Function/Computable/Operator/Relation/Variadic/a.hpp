@@ -12,8 +12,9 @@ class VariadicRelationSymbol :
 {
 
 public:
-  inline VariadicRelationSymbol( const string& r , const TypeNameOfComputableFunction& type_name , const VariableSymbol<Args>&... args );
-  inline VariadicRelationSymbol( const string& r , const SeparatorOfComputableFunction& s , const TypeNameOfComputableFunction& type_name , const VariableSymbol<Args>&... args );
+  inline VariadicRelationSymbol( const TotalityOfComputableFunction& totality , const string& r , const TypeNameOfComputableFunction& type_name , const VariableSymbol<Args>&... args );
+  inline VariadicRelationSymbol( const TotalityOfComputableFunction& totality , const string& r , const SeparatorOfComputableFunction& s , const TypeNameOfComputableFunction& type_name , const VariableSymbol<Args>&... args );
+  template <typename... Ts> inline VariadicRelationSymbol( const string& r , const Ts&... ts  );
 
   template <typename... VA> inline auto operator()( const ExpressionOfComputableFunction<VA>&... va ) const -> typename enable_if<IsValidVariadicArguments<VArg,WrappedTypes<Args...>,WrappedTypes<VA...> >::value,ConditionOfComputableFunction>::type;
 

@@ -4,6 +4,7 @@
 #include "a_Macro.hpp"
 
 #include "../Separator/a.hpp"
+#include "../Totality/a.hpp"
 #include "../../Type/Guide/Base/a.hpp"
 #include "../../Type/SubType/a.hpp"
 
@@ -18,11 +19,18 @@ class FunctionSymbol :
 {
 
 public:
-  inline FunctionSymbol( const string& f , const TypeNameOfComputableFunction& return_type_name , const VariableSymbol<Args>&... args );
-  FunctionSymbol( const string& f , const SeparatorOfComputableFunction& s , const TypeNameOfComputableFunction& return_type_name , const VariableSymbol<Args>&... args );
+  TotalityOfComputableFunction m_totality;
+
+public:
+  inline FunctionSymbol( const TotalityOfComputableFunction& totality , const string& f , const TypeNameOfComputableFunction& return_type_name , const VariableSymbol<Args>&... args );
+  FunctionSymbol( const TotalityOfComputableFunction& totality , const string& f , const SeparatorOfComputableFunction& s , const TypeNameOfComputableFunction& return_type_name , const VariableSymbol<Args>&... args );
+  template <typename... Ts> inline FunctionSymbol( const string& f , const Ts&... ts );
 
   void SetSeparator( const SeparatorOfComputableFunction& s );
   template <typename... VA> inline auto SetSeparator( const VA&... va ) -> typename enable_if<conjunction<is_same<VA,string>...>::value,void>::type;
+
+  inline const TotalityOfComputableFunction& GetTotality() const noexcept;
+  inline void SetTotality( const TotalityOfComputableFunction& totality ) noexcept;
 
   inline ExpressionOfComputableFunction<Ret> operator()( const ExpressionOfComputableFunction<Args>&... args ) const;
 

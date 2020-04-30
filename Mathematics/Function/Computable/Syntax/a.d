@@ -127,6 +127,7 @@ Mathematics/Function/Computable/Syntax/a.o: \
  C:/Users/user/Documents/Programming/Mathematics/Function/Computable/Operator/Function/a.hpp \
  C:/Users/user/Documents/Programming/Mathematics/Function/Computable/Operator/Function/a_Macro.hpp \
  C:/Users/user/Documents/Programming/Mathematics/Function/Computable/Operator/Separator/a.hpp \
+ C:/Users/user/Documents/Programming/Mathematics/Function/Computable/Operator/Totality/a.hpp \
  C:/Users/user/Documents/Programming/Mathematics/Function/Computable/Type/SubType/a.hpp \
  C:/Users/user/Documents/Programming/Mathematics/Function/Computable/Type/SubType/a_Macro.hpp \
  C:/Users/user/Documents/Programming/Mathematics/Function/Computable/Type/Guide/TypeName/a.hpp \
@@ -152,6 +153,7 @@ Mathematics/Function/Computable/Syntax/a.o: \
  C:/Users/user/Documents/Programming/Mathematics/Function/Computable/Expression/Variable/Variadic/a.hpp \
  C:/Users/user/Documents/Programming/Mathematics/Function/Computable/Expression/Variable/Variadic/Body/a.hpp \
  C:/Users/user/Documents/Programming/Mathematics/Function/Computable/Operator/Separator/a_Body.hpp \
+ C:/Users/user/Documents/Programming/Mathematics/Function/Computable/Operator/Totality/a_Body.hpp \
  C:/Users/user/Documents/Programming/Mathematics/Function/Computable/Type/Guide/Base/a_Body.hpp \
  C:/Users/user/Documents/Programming/Mathematics/Function/Computable/Type/SubType/a_Body.hpp \
  C:/Users/user/Documents/Programming/Mathematics/Function/Computable/Type/Guide/TypeName/a_Body.hpp \
@@ -418,6 +420,8 @@ C:/Users/user/Documents/Programming/Mathematics/Function/Computable/Operator/Fun
 
 C:/Users/user/Documents/Programming/Mathematics/Function/Computable/Operator/Separator/a.hpp:
 
+C:/Users/user/Documents/Programming/Mathematics/Function/Computable/Operator/Totality/a.hpp:
+
 C:/Users/user/Documents/Programming/Mathematics/Function/Computable/Type/SubType/a.hpp:
 
 C:/Users/user/Documents/Programming/Mathematics/Function/Computable/Type/SubType/a_Macro.hpp:
@@ -467,6 +471,8 @@ C:/Users/user/Documents/Programming/Mathematics/Function/Computable/Expression/V
 C:/Users/user/Documents/Programming/Mathematics/Function/Computable/Expression/Variable/Variadic/Body/a.hpp:
 
 C:/Users/user/Documents/Programming/Mathematics/Function/Computable/Operator/Separator/a_Body.hpp:
+
+C:/Users/user/Documents/Programming/Mathematics/Function/Computable/Operator/Totality/a_Body.hpp:
 
 C:/Users/user/Documents/Programming/Mathematics/Function/Computable/Type/Guide/Base/a_Body.hpp:
 

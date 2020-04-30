@@ -14,9 +14,10 @@ class VariadicFunctionSymbol :
 {
   
 public:
-  inline VariadicFunctionSymbol( const string& f , const TypeNameOfComputableFunction& type_name , const VariableSymbol<Args>&... args );
-  inline VariadicFunctionSymbol( const string& f , const SeparatorOfComputableFunction& s , const TypeNameOfComputableFunction& type_name , const VariableSymbol<Args>&... args );
-
+  inline VariadicFunctionSymbol( const TotalityOfComputableFunction& totality , const string& f , const TypeNameOfComputableFunction& type_name , const VariableSymbol<Args>&... args );
+  inline VariadicFunctionSymbol( const TotalityOfComputableFunction& totality , const string& f , const SeparatorOfComputableFunction& s , const TypeNameOfComputableFunction& type_name , const VariableSymbol<Args>&... args );
+  template <typename... Ts> inline VariadicFunctionSymbol( const string& f , const Ts&... ts );
+  
   template <typename... VA> inline auto operator()( const ExpressionOfComputableFunction<VA>&... va ) const -> typename enable_if<IsValidVariadicArguments<VArg,WrappedTypes<Args...>,WrappedTypes<VA...> >::value,ExpressionOfComputableFunction<Ret> >::type;
 
   template <typename... VA> inline auto operator()( const ExpressionOfComputableFunction<Args>&... args , const VA&... va ) const -> typename enable_if<! conjunction<is_same<ExpressionOfComputableFunction<VArg>,VA>...>::value,ExpressionOfComputableFunction<Ret> >::type;

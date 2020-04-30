@@ -4,6 +4,7 @@
 #include "a_Macro.hpp"
 
 #include "../Separator/a.hpp"
+#include "../Totality/a.hpp"
 #include "../../Type/Guide/Base/a.hpp"
 #include "../../Type/SubType/a.hpp"
 
@@ -16,10 +17,17 @@ class RelationSymbol :
 {
 
 public:
-  inline RelationSymbol( const string& r , const TypeNameOfComputableFunction& type_name , const VariableSymbol<Args>&... args );
-  RelationSymbol( const string& r , const SeparatorOfComputableFunction& s , const TypeNameOfComputableFunction& type_name , const VariableSymbol<Args>&... args );
+  TotalityOfComputableFunction m_totality;
 
+public:
+  inline RelationSymbol( const TotalityOfComputableFunction& totality , const string& r , const TypeNameOfComputableFunction& type_name , const VariableSymbol<Args>&... args );
+  RelationSymbol( const TotalityOfComputableFunction& totality , const string& r , const SeparatorOfComputableFunction& s , const TypeNameOfComputableFunction& type_name , const VariableSymbol<Args>&... args );
+  template <typename... Ts> inline RelationSymbol( const string& r , const Ts&... ts );
+  
   void SetSeparator( const SeparatorOfComputableFunction& s );
+
+  inline const TotalityOfComputableFunction& GetTotality() const noexcept;
+  inline void SetTotality( const TotalityOfComputableFunction& totality ) noexcept;
 
   inline ConditionOfComputableFunction operator()( const ExpressionOfComputableFunction<Args>&... args ) const;
 

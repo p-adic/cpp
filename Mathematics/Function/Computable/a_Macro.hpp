@@ -135,13 +135,21 @@
 
 #define SEP( FUNC , ... )						\
 									\
-  CONNECT( CONNECT( __SYMBOL_OF_, FUNC ) , __ ).SetSeparator( __VA_ARGS__ ); \
+  CONNECT( CONNECT( __SYMBOL_OF_, FUNC ) , __ ).SetSeparator( __VA_ARGS__ ) 
+
+
+// computability setting
+#define PARTIAL PartialString() 
+#define TOTAL TotalString() 
+#define PRIMITIVE PrimitiveString() 
+
+#define COMP( FUNC , COMPUTABILITY ) CONNECT( CONNECT( __SYMBOL_OF_, FUNC ) , __ ).SetTotality( COMPUTABILITY ) 
 
 
 // definition
 #define DEF( FUNC )							\
 									\
-  const decltype( DefinitionOfComputableFunction( FUNC ) ) CONNECT( CONNECT( __DEFINITION_OF__ , FUNC ) , __ ) 
+  const DefinitionOfOperator<remove_const<remove_reference<decltype( FUNC )>::type>::type> CONNECT( CONNECT( __DEFINITION_OF__ , FUNC ) , __ ) 
 
 #define IF( ... )				\
 						\

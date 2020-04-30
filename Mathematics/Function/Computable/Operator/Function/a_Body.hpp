@@ -7,15 +7,16 @@
 #include "../../Expression/Variable/Variadic/a.hpp"
 
 #include "../Separator/a_Body.hpp"
+#include "../Totality/a_Body.hpp"
 #include "../../Type/Guide/Base/a_Body.hpp"
 #include "../../Type/SubType/a_Body.hpp"
 #include "../../Expression/Primitive/bool/a_Body.hpp"
 #include "../../Expression/Variable/Variadic/a_Body.hpp"
 
-template <typename Ret, typename... Args> inline FunctionSymbol<Ret,Args...>::FunctionSymbol( const string& f , const TypeNameOfComputableFunction& return_type_name , const VariableSymbol<Args>&... args ) : FunctionSymbol( f , SeparatorOfComputableFunction( f , sizeof...( Args ) ) , return_type_name , args... ) {}
+template <typename Ret, typename... Args> inline FunctionSymbol<Ret,Args...>::FunctionSymbol( const TotalityOfComputableFunction& totality , const string& f , const TypeNameOfComputableFunction& return_type_name , const VariableSymbol<Args>&... args ) : FunctionSymbol( totality , f , SeparatorOfComputableFunction( f , sizeof...( Args ) ) , return_type_name , args... ) {}
 
 template <typename Ret, typename... Args>
-FunctionSymbol<Ret,Args...>::FunctionSymbol( const string& f , const SeparatorOfComputableFunction& s , const TypeNameOfComputableFunction& return_type_name , const VariableSymbol<Args>&... args ) :
+FunctionSymbol<Ret,Args...>::FunctionSymbol( const TotalityOfComputableFunction& totality , const string& f , const SeparatorOfComputableFunction& s , const TypeNameOfComputableFunction& return_type_name , const VariableSymbol<Args>&... args ) :
   SyntaxOfComputableFunction
   (
 
@@ -26,7 +27,8 @@ FunctionSymbol<Ret,Args...>::FunctionSymbol( const string& f , const SeparatorOf
    ListExpressionOfComputableFunction( args... ).Get() ,
    s.Get()
    
-   )
+   ) ,
+  m_totality( totality )
 {
 
   VLTree<string> t_args{};
@@ -42,6 +44,9 @@ FunctionSymbol<Ret,Args...>::FunctionSymbol( const string& f , const SeparatorOf
      );
 
 }
+
+template <typename Ret, typename... Args> template <typename... Ts> inline FunctionSymbol<Ret,Args...>::FunctionSymbol( const string& f , const Ts&... ts ) : FunctionSymbol( Recursiveness() , f , ts... ) {}
+
 
 template <typename Ret, typename... Args>
 void FunctionSymbol<Ret,Args...>::SetSeparator( const SeparatorOfComputableFunction& s )
@@ -91,6 +96,11 @@ void FunctionSymbol<Ret,Args...>::SetSeparator( const SeparatorOfComputableFunct
 }
 
 template <typename Ret, typename... Args> template <typename... VA> inline auto FunctionSymbol<Ret,Args...>::SetSeparator( const VA&... va ) -> typename enable_if<conjunction<is_same<VA,string>...>::value,void>::type { TRY_CATCH( SetSeparator( SeparatorOfComputableFunction( 0 , va... ) ) , const ErrorType& e , CALL_P( e , va... ) ); }
+
+template <typename Ret, typename... Args> inline const TotalityOfComputableFunction& FunctionSymbol<Ret,Args...>::GetTotality() const noexcept { return m_totality; }
+
+template <typename Ret, typename... Args> inline void FunctionSymbol<Ret,Args...>::SetTotality( const TotalityOfComputableFunction& totality ) noexcept { m_totality = totality; }
+
 
 template <typename Ret, typename... Args> inline ExpressionOfComputableFunction<Ret> FunctionSymbol<Ret,Args...>::operator()( const ExpressionOfComputableFunction<Args>&... args ) const { return ExpressionOfComputableFunction<Ret>( *this , args... ); }
 

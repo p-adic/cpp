@@ -28,7 +28,7 @@ void SyntaxOfComputableFunction::RomaniseSymbol()
 }
 
 
-void SyntaxOfComputableFunction::InputDefinition( ofstream& ofs , const string& function_name , ConstIteratorOfVLTree<string>& itr_f , const string& language , const string& style ) const
+void SyntaxOfComputableFunction::InputDefinition( ofstream& ofs , const string& totality , const string& function_name , ConstIteratorOfVLTree<string>& itr_f , const string& language , const string& style ) const
 {
 
   auto itr_line = m_syntax.LeftMostNode();
@@ -114,6 +114,15 @@ void SyntaxOfComputableFunction::InputDefinition( ofstream& ofs , const string& 
 
      );
 
+  TRY_CATCH
+    (
+
+     InputTotality( ofs , totality , language , style ) ,
+     const ErrorType& e ,
+     CALL( e )
+
+     );
+    
   string language_copy = language;
   
   TRY_CATCH
@@ -136,12 +145,58 @@ void SyntaxOfComputableFunction::InputDefinition( ofstream& ofs , const string& 
   
 }
 
+void SyntaxOfComputableFunction::InputTotality( ofstream& ofs , const string& totality , const string& language , const string& style ) const
+{
+
+  if( language == JapaneseString() && style == FandomString() ){
+
+    if( totality == RecursiveString() ){
+
+      ofs << "計算可能関数" << endl;
+      return;
+
+    }
+
+    if( totality == PartialString() ){
+
+      ofs << "計算可能部分関数" << endl;
+      return;
+
+    }
+
+    if( totality == TotalString() ){
+
+      ofs << "計算可能全域関数" << endl;
+      return;
+
+    }
+
+    if( totality == PrimitiveString() ){
+
+      ofs << "原始再帰的関数" << endl;
+      return;
+
+    }
+
+  }
+
+  if( language == EnglishString() && style == FandomString() ){
+
+    ofs << "I define a " << totality << " function" << endl;
+    return;
+
+  }
+
+  ERR_IMPUT( totality ,  language , style );
+  return;
+
+}
+
 void SyntaxOfComputableFunction::InputDeclaration( ofstream& ofs , const string& function_name , const string& argument_type_name , const string& argument_name , const string& return_type_name , const string& function_expression_name , const string& language , const string& style ) const
 {
 
   if( language == JapaneseString() && style == FandomString() ){
 
-    ofs << "計算可能部分関数" << endl;
     ofs << "\\begin{eqnarray*}" << endl;
     ofs << function_name << " \\colon " << argument_type_name << " & \\to & " << return_type_name << " \\\\" << endl;
     ofs << argument_name << " & \\mapsto & " << function_expression_name << endl;
@@ -153,7 +208,6 @@ void SyntaxOfComputableFunction::InputDeclaration( ofstream& ofs , const string&
   
   if( language == EnglishString() && style == FandomString() ){
 
-    ofs << "I define a partial computable function" << endl;
     ofs << "\\begin{eqnarray*}" << endl;
     ofs << function_name << " \\colon " << argument_type_name << " & \\to & " << return_type_name << " \\\\" << endl;
     ofs << argument_name << " & \\mapsto & " << function_expression_name << endl;
