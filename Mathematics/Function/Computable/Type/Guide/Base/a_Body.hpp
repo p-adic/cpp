@@ -22,7 +22,7 @@ DEFINITION_OF_BASE_TYPE
 
  string ,
  StringString() ,
- EscapeString() + LbraceString() + SpaceString() + LdquoteString() + DquoteString() + CommaString() + SpaceString() + LdquoteString() + Plainise( "a" ) + DquoteString() + CommaString() + SpaceString() + LdquoteString() + Plainise( "b" ) + DquoteString() + CommaString() + SpaceString() + LdquoteString() + Plainise( "c" ) + DquoteString() + SpaceString() + LdotsString() + CommaString() + SpaceString() + LdquoteString() + Plainise( "aa" ) + DquoteString() + CommaString() + SpaceString() + LdquoteString() + Plainise( "ab" ) + DquoteString() + CommaString() + SpaceString() + LdquoteString() + Plainise( "ac" ) + DquoteString() + CommaString() + SpaceString() + LdotsString() + SpaceString() + EscapeString() + RbraceString()
+ EscapeString() + LbraceString() + SpaceString() + CommaString() + SpaceString() + Plainise( "a" ) + CommaString() + SpaceString() + Plainise( "b" ) + CommaString() + SpaceString() + Plainise( "c" ) + SpaceString() + LdotsString() + CommaString() + SpaceString() + Plainise( "aa" ) + CommaString() + SpaceString() + Plainise( "ab" ) + CommaString() + SpaceString() + Plainise( "ac" ) + CommaString() + SpaceString() + LdotsString() + SpaceString() + EscapeString() + RbraceString()
 
  );
 
