@@ -2,7 +2,7 @@
 
 #pragma once
 
-#define DEFINITION_OF_BASE_TYPE( TYPE_NAME , DEFINITION )		\
+#define DEFINITION_OF_BASE_TYPE( TYPE_NAME , SYMB , DEFINITION )	\
 									\
-  template <> inline const TypeOfComputableFunction& BaseType< TYPE_NAME >() { static const TypeOfComputableFunction base_type{ Plainise( TO_STRING( TYPE_NAME ) ) , DEFINITION }; return base_type; } \
+  template <> inline const TypeOfComputableFunction& BaseType< TYPE_NAME >() { static const TypeOfComputableFunction base_type{ SYMB , DEFINITION }; return base_type; } \
 

@@ -106,6 +106,11 @@ DECLARATION_OF_GLOBAL_CONSTANT_STRING_FOR_SYMBOL( Period ){ static const string 
 DECLARATION_OF_GLOBAL_CONSTANT_STRING_FOR_SYMBOL( Comma ){ static const string s = ","; return s; }
 DEFINITION_OF_GLOBAL_CONSTANT_STRING_FOR_SYMBOL( Colon , \\colon );
 DECLARATION_OF_GLOBAL_CONSTANT_STRING_FOR_SYMBOL( Scolon ){ static const string s = ";"; return s; }
+DECLARATION_OF_GLOBAL_CONSTANT_STRING_FOR_SYMBOL( Lquote ){ static const string s = "`"; return s; }
+DECLARATION_OF_GLOBAL_CONSTANT_STRING_FOR_SYMBOL( Rquote ){ static const string s = "\'"; return s; }
+DECLARATION_OF_GLOBAL_CONSTANT_STRING_FOR_SYMBOL( Dquote ){ static const string s = "\""; return s; };
+DECLARATION_OF_GLOBAL_CONSTANT_STRING_FOR_SYMBOL( Ldquote ){ static const string s = "``"; return s; };
+DECLARATION_OF_GLOBAL_CONSTANT_STRING_FOR_SYMBOL( Rdquote ){ static const string s = "\'\'"; return s; };
 DEFINITION_OF_GLOBAL_CONSTANT_STRING_FOR_SYMBOL( Atmark , @ );
 DEFINITION_OF_GLOBAL_CONSTANT_STRING_FOR_SYMBOL( Ast , \\ast );
 
