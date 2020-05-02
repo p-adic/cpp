@@ -23,4 +23,7 @@ template <typename... Args, typename... VA> inline DEFINITION_OF_PUSH_FUNCTION_E
 template <typename... Args, typename... VA> inline DEFINITION_OF_PUSH_FUNCTION_EXPRESSION_FOR_EXPRESSION_BODY( int );
 
 
+inline DEFINITION_OF_SET_SYMBOL_FOR_EXPRESSION( int );
+
+
 inline const int& infty() noexcept { static const int N = 2147483647; return N; }

@@ -28,6 +28,8 @@ public:
   // variadic relation
   template <typename... Args, typename... VA> inline DECLARATION_OF_EXPRESSION_FOR_VARIADIC_RELATION_SYMBOL;
   
+  inline DECLARATION_OF_SET_SYMBOL_FOR_EXPRESSION;
+
   using type = bool;
 
 private:

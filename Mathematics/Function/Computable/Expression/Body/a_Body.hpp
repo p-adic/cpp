@@ -31,3 +31,5 @@ template <typename Ret> template <typename... Args, typename... VA> inline DEFIN
 template <typename Ret> template <typename... Args, typename... VA> inline DEFINITION_OF_PUSH_FUNCTION_EXPRESSION_FOR_EXPRESSION_BODY( Ret ); 
 
 
+template <typename Ret> inline DEFINITION_OF_SET_SYMBOL_FOR_EXPRESSION( Ret );
+

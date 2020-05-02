@@ -31,3 +31,6 @@ template <typename... Args, typename... VA> inline DEFINITION_OF_PUSH_FUNCTION_E
 template <typename... Args, typename... VA> inline DEFINITION_OF_PUSH_RELATION_EXPRESSION_FOR_EXPRESSION;
 
 template<typename... Args, typename... VA> inline DEFINITION_OF_PUSH_RELATION_EXPRESSION_FOR_EXPRESSION_BODY;
+
+
+inline DEFINITION_OF_SET_SYMBOL_FOR_EXPRESSION( bool );

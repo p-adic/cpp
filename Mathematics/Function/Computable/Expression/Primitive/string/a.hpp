@@ -24,6 +24,8 @@ public:
   // variadic function  
   template <typename... Args, typename... VA> inline DECLARATION_OF_EXPRESSION_FOR_VARIADIC_FUNCTION_SYMBOL( string );
 
+  inline DECLARATION_OF_SET_SYMBOL_FOR_EXPRESSION;
+
   using type = string;
 
 private:

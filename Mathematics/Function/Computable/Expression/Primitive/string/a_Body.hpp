@@ -24,3 +24,5 @@ template <typename... Args, typename... VA> inline DEFINITION_OF_PUSH_FUNCTION_E
 template <typename... Args, typename... VA> inline DEFINITION_OF_PUSH_FUNCTION_EXPRESSION_FOR_EXPRESSION_BODY( string );
 
 
+inline DEFINITION_OF_SET_SYMBOL_FOR_EXPRESSION( string );
+
