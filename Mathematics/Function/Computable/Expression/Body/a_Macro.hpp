@@ -42,7 +42,7 @@
 
 #define DEFINITION_OF_EXPRESSION_FOR_VARIABLE_SYMBOL( RET ) ExpressionOfComputableFunction< RET >:: DECLARATION_OF_EXPRESSION_FOR_VARIABLE_SYMBOL : SyntaxOfComputableFunction( ExpressionString() , VariableString() , x , type_name.Get() ) {} 
 
-#define DEFINITION_OF_EXPRESSION_FOR_CONSTANT_SYMBOL( RET , ARG ) ExpressionOfComputableFunction< RET >:: DECLARATION_OF_EXPRESSION_FOR_CONSTANT_SYMBOL( ARG ) : SyntaxOfComputableFunction( ExpressionString(), ConstantString() , to_string( t ) , GetTypeSyntax< RET >().Get() ) {} 
+#define DEFINITION_OF_EXPRESSION_FOR_CONSTANT_SYMBOL( RET , ARG , SYMB ) ExpressionOfComputableFunction< RET >:: DECLARATION_OF_EXPRESSION_FOR_CONSTANT_SYMBOL( ARG ) : SyntaxOfComputableFunction( ExpressionString(), ConstantString() , SYMB , GetTypeSyntax< RET >().Get() ) {} 
 
 #define DEFINITION_OF_EXPRESSION_FOR_FUNCTION_SYMBOL( RET ) ExpressionOfComputableFunction< RET >:: DECLARATION_OF_EXPRESSION_FOR_FUNCTION_SYMBOL( RET ) : SyntaxOfComputableFunction( ExpressionString() , FunctionString() ) { PushFunctionExpression( f , args... ); } 
 
