@@ -9,7 +9,7 @@
 inline DEFINITION_OF_EXPRESSION_FOR_VARIABLE_SYMBOL( int );
 
 // constant
-inline DEFINITION_OF_EXPRESSION_FOR_CONSTANT_SYMBOL( int , int );
+inline DEFINITION_OF_EXPRESSION_FOR_CONSTANT_SYMBOL( int , int , to_string( t ) );
 
 // function
 template <typename... Args> inline DEFINITION_OF_EXPRESSION_FOR_FUNCTION_SYMBOL( int );

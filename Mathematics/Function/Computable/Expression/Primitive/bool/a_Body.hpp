@@ -9,7 +9,7 @@
 inline DEFINITION_OF_EXPRESSION_FOR_VARIABLE_SYMBOL( bool );
 
 // constant
-inline DEFINITION_OF_EXPRESSION_FOR_CONSTANT_SYMBOL( bool , bool );
+inline DEFINITION_OF_EXPRESSION_FOR_CONSTANT_SYMBOL( bool , bool , BoolToString( t ) );
 
 // function
 template <typename... Args> inline DEFINITION_OF_EXPRESSION_FOR_FUNCTION_SYMBOL( bool );
@@ -34,3 +34,5 @@ template<typename... Args, typename... VA> inline DEFINITION_OF_PUSH_RELATION_EX
 
 
 inline DEFINITION_OF_SET_SYMBOL_FOR_EXPRESSION( bool );
+
+inline const string& BoolToString( const bool& b ) noexcept{ return b ? TrueString() : FalseString(); }

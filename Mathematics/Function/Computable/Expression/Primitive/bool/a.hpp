@@ -48,3 +48,5 @@ private:
 };
 
 #include "a_Alias.hpp"
+
+inline const string& BoolToString( const bool& b ) noexcept;
