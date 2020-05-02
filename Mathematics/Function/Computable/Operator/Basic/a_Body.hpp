@@ -40,3 +40,113 @@ DEFINITION_OF_TWO_ARY_BASIC_FUNCTION( int , ^ , Power );
 
 
 inline const ExpressionOfComputableFunction<int>& InftySymbol(){ static const ExpressionOfComputableFunction<int> n = ExpressionOfComputableFunction<int>( infty() ); return n; }
+
+
+template <typename Ret> inline FunctionSymbol<Ret,Ret> operator^( const FunctionSymbol<Ret,Ret>& f , const PrettyExpression<nat>& n )
+{
+
+  return FunctionSymbol<Ret,Ret>
+    (
+
+     f.GetNodeString( 2 ) + SupString() + LbraceString() + n.GetNodeString( 2 ) + RbraceString() ,
+     GetTypeName<Ret>() ,
+     VariableSymbol<Ret>( f.GetNodeString( 4 , 2 , 2 ) )
+
+     );
+
+}
+
+inline RelationSymbol<bool> operator^( const RelationSymbol<bool>& r , const PrettyExpression<nat>& n )
+{
+
+  return RelationSymbol<bool>
+    (
+
+     r.GetNodeString( 2 ) + SupString() + LbraceString() + n.GetNodeString( 2 ) + RbraceString() ,
+     GetTypeName<bool>() ,
+     VariableSymbol<bool>( r.GetNodeString( 4 , 2 , 2 ) )
+
+     );
+
+}
+
+
+template <typename Ret, typename Arg1, typename Arg2> inline FunctionSymbol<Ret,Arg2> CurryingSymbol( const FunctionSymbol<Ret,Arg1,Arg2>& f , const ExpressionOfComputableFunction<Arg1>& x , const string& style )
+{
+
+  if( style == EmptyString() ) {
+    
+    return FunctionSymbol<Ret,Arg2>
+      (
+
+       f.GetNodeString( 2 ) + x.GetNodeString( 2 ) ,
+       GetTypeName<Ret>() ,
+       VariableSymbol<Arg2>( f.GetNodeString( 4 , 3 , 2 ) )
+
+       );
+
+  }
+
+  if( style == SubString() ) {
+    
+    return FunctionSymbol<Ret,Arg2>
+      (
+
+       f.GetNodeString( 2 ) + SubString() + LbraceString() + x.GetNodeString( 2 ) + RbraceString() ,
+       GetTypeName<Ret>() ,
+       VariableSymbol<Arg2>( f.GetNodeString( 4 , 3 , 2 ) )
+
+       );
+
+  }
+
+  return FunctionSymbol<Ret,Arg2>
+    (
+
+     style + LparenString() + f.GetNodeString( 2 ) + CommaString() + x.GetNodeString( 2 ) + RparenString() ,
+     GetTypeName<Ret>() ,
+     VariableSymbol<Arg2>( f.GetNodeString( 4 , 3 , 2 ) )
+
+     );
+ 
+}
+
+template <typename Arg1, typename Arg2> inline RelationSymbol<Arg2> CurryingSymbol( const RelationSymbol<Arg1,Arg2>& r , const ExpressionOfComputableFunction<Arg1>& x , const string& style )
+{
+
+  if( style == EmptyString() ) {
+    
+    return RelationSymbol<Arg2>
+      (
+
+       r.GetNodeString( 2 ) + x.GetNodeString( 2 ) ,
+       GetTypeName<bool>() ,
+       VariableSymbol<Arg2>( r.GetNodeString( 4 , 3 , 2 ) )
+
+       );
+
+  }
+
+  if( style == SubString() ) {
+    
+    return RelationSymbol<Arg2>
+      (
+
+       r.GetNodeString( 2 ) + SubString() + LbraceString() + x.GetNodeString( 2 ) + RbraceString() ,
+       GetTypeName<bool>() ,
+       VariableSymbol<Arg2>( r.GetNodeString( 4 , 3 , 2 ) )
+
+       );
+
+  }
+
+  return RelationSymbol<Arg2>
+    (
+
+     style + LparenString() + r.GetNodeString( 2 ) + CommaString() + x.GetNodeString( 2 ) + RparenString() ,
+     GetTypeName<bool>() ,
+     VariableSymbol<Arg2>( r.GetNodeString( 4 , 3 , 2 ) )
+
+     );
+ 
+}

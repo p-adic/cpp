@@ -48,6 +48,11 @@ FunctionSymbol<Ret,Args...>::FunctionSymbol( const TotalityOfComputableFunction&
 template <typename Ret, typename... Args> template <typename... Ts> inline FunctionSymbol<Ret,Args...>::FunctionSymbol( const string& f , const Ts&... ts ) : FunctionSymbol( Recursiveness() , f , ts... ) {}
 
 
+template <typename Ret, typename... Args> inline void FunctionSymbol<Ret,Args...>::Set( const string& dummy , const string& f ) { SetSymbol( f ); }
+template <typename Ret, typename... Args> template <typename... VA> inline auto FunctionSymbol<Ret,Args...>::Set( const SeparatorOfComputableFunction& dummy1 , const int& dummy2 , const VA&... va ) -> typename enable_if<conjunction<is_same<VA,string>...>::value,void>::type { SetSeparator( SeparatorOfComputableFunction( dummy2 , va... ) ); }
+template <typename Ret, typename... Args> inline void FunctionSymbol<Ret,Args...>::Set( const TotalityOfComputableFunction& dummy , const TotalityOfComputableFunction& totality ) noexcept { SetTotality( totality ); }
+  
+
 template <typename Ret, typename... Args>
 void FunctionSymbol<Ret,Args...>::SetSeparator( const SeparatorOfComputableFunction& s )
 {

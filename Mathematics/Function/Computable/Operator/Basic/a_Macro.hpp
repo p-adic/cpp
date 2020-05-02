@@ -12,3 +12,4 @@
 									\
   DECLARATION_OF_TWO_ARY_BASIC_FUNCTION( RET , OPERATOR ){ return CONNECT( SYMB , SymbolApplication )( e1 , e2 ); } \
   
+

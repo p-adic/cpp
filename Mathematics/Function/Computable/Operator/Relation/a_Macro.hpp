@@ -45,7 +45,7 @@
   inline ConditionOfComputableFunction CONNECT( REL , SymbolApplication )( const ExpressionOfComputableFunction< RET >& e1 , const ExpressionOfComputableFunction< RET >& e2 ) \
 									\
 
-#define DEFINITION_OF_TWO_ARY_RELATION_SYMBOL_APPLICATION( RET , REL , SYMBOL )	\
+#define DEFINITION_OF_TWO_ARY_RELATION_SYMBOL_APPLICATION( RET , REL , SYMB )	\
 									\
-  DECLARATION_OF_TWO_ARY_RELATION_SYMBOL_APPLICATION( RET , REL ){ return CONNECT( REL , SYMBOL )()( e1 , e2 ); } \
+  DECLARATION_OF_TWO_ARY_RELATION_SYMBOL_APPLICATION( RET , REL ){ return CONNECT( REL , SYMB )()( e1 , e2 ); } \
   

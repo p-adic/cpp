@@ -26,6 +26,10 @@ public:
   FunctionSymbol( const TotalityOfComputableFunction& totality , const string& f , const SeparatorOfComputableFunction& s , const TypeNameOfComputableFunction& return_type_name , const VariableSymbol<Args>&... args );
   template <typename... Ts> inline FunctionSymbol( const string& f , const Ts&... ts );
 
+  inline void Set( const string& dummy , const string& f );
+  template <typename... VA> inline auto Set( const SeparatorOfComputableFunction& dummy1 , const int& dummy2 , const VA&... va ) -> typename enable_if<conjunction<is_same<VA,string>...>::value,void>::type;
+  inline void Set( const TotalityOfComputableFunction& dummy , const TotalityOfComputableFunction& totality ) noexcept;
+  
   void SetSeparator( const SeparatorOfComputableFunction& s );
   template <typename... VA> inline auto SetSeparator( const VA&... va ) -> typename enable_if<conjunction<is_same<VA,string>...>::value,void>::type;
 

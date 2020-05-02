@@ -72,6 +72,8 @@ auto ExpressionsToListSyntax( const Args&... args ) -> typename enable_if<conjun
   
 }
 
+template <typename... Args> inline auto FunctionExpressionToString( const SyntaxOfComputableFunction& f , const Args&... args ) -> typename enable_if<conjunction<is_same<SyntaxOfComputableFunction,Args>...>::value,string>::type { return FunctionExpressionToString( f , VLTree<string>( args.Get()... ) ); }
+
 inline void PutKagi( string& s ) noexcept { s = "u" + s + "v"; }
 inline void PutParenthesis( string& s ) noexcept { s = "( " + s + " )"; }
 
@@ -159,6 +161,9 @@ DEFINITION_OF_GLOBAL_CONSTANT_STRING_FOR_SYMBOL( Gneq , > );
 
 DEFINITION_OF_GLOBAL_CONSTANT_STRING_FOR_SYMBOL( In , \\in );
 DEFINITION_OF_GLOBAL_CONSTANT_STRING_FOR_SYMBOL( NonNegative , \\geq 0 );
+
+//mata function
+DEFINITION_OF_GLOBAL_CONSTANT_STRING_FOR_SYMBOL( Curry , \\textrm{Curry}  );
 
 // line
 DEFINITION_OF_GLOBAL_CONSTANT_STRING_FOR_SYMBOL( Line , line );

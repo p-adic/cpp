@@ -59,7 +59,9 @@
 
 
 // meta function
-#define ARRAYISE ArrayiseSymbol 
+#define ARRAYISE( FUNC ) ArrayiseSymbol( FUNC ) 
+
+#define CURRY( FUNC , ... ) CurryingSymbol( FUNC , __VA_ARGS__ ) 
 
 
 // decraration
@@ -92,7 +94,9 @@
 // symbol setting
 #define STR( SYMB ) TO_STRING( SYMB ) 
 
-#define SET( OBJ , SYMB ) CONNECT( CONNECT( __SYMBOL_OF_, OBJ ) , __ ).SetSymbol( STR( SYMB ) ) 
+#define SYMBOL EmptyString() 
+
+#define SET( OBJ , ... ) CONNECT( CONNECT( __SYMBOL_OF_, OBJ ) , __ ).Set( __VA_ARGS__ ) 
 
 #define PLAIN( SYMB ) Plainise( STR( SYMB ) ) 
 
@@ -100,7 +104,7 @@
 
 
 // separator setting
-#define SYMB( FUNC ) FUNC.GetNodeString( 2 ) 
+#define SYMBOLISE( FUNC ) FUNC.GetNodeString( 2 ) 
 #define SPACE SpaceString() 
 #define VSPACE VspaceString() 
 #define SUB SubString()
@@ -132,18 +136,15 @@
 #define LVEC LMAT( c ) 
 #define RVEC RMAT 
 
+#define SEPARATOR SeparatorOfComputableFunction( 0 ) , 0 
 
-#define SEP( FUNC , ... )						\
-									\
-  CONNECT( CONNECT( __SYMBOL_OF_, FUNC ) , __ ).SetSeparator( __VA_ARGS__ ) 
-
-
+  
 // computability setting
 #define PARTIAL PartialString() 
 #define TOTAL TotalString() 
 #define PRIMITIVE PrimitiveString() 
 
-#define COMP( FUNC , COMPUTABILITY ) CONNECT( CONNECT( __SYMBOL_OF_, FUNC ) , __ ).SetTotality( COMPUTABILITY ) 
+#define TOTALITY Recursiveness() 
 
 
 // definition

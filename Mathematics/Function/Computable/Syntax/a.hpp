@@ -69,6 +69,9 @@ string ListSyntaxToString( VLTree<VLTree<string>::const_iterator>& t , const int
 // 表現args...から表現の文字列のリストを構築
 template <typename... Args> auto ExpressionsToListSyntax( const Args&... args ) -> typename enable_if<conjunction<is_same<Args,VLTree<string> >...>::value,VLTree<string> >::type;
 
+// 関数fと引数argsから表現の文字列を構築
+template <typename... Args> inline auto FunctionExpressionToString( const SyntaxOfComputableFunction& f , const Args&... args ) -> typename enable_if<conjunction<is_same<SyntaxOfComputableFunction,Args>...>::value,string>::type;
+
 // 関数fと引数の木argsから表現の文字列を構築
 string FunctionExpressionToString( const SyntaxOfComputableFunction& f , const VLTree<string>& args );
 
@@ -174,6 +177,9 @@ DECLARATION_OF_GLOBAL_CONSTANT_STRING_FOR_SYMBOL( Gneq );
 
 DECLARATION_OF_GLOBAL_CONSTANT_STRING_FOR_SYMBOL( In );
 DECLARATION_OF_GLOBAL_CONSTANT_STRING_FOR_SYMBOL( NonNegative );
+
+//mata function
+DECLARATION_OF_GLOBAL_CONSTANT_STRING_FOR_SYMBOL( Curry );
 
 // line
 DECLARATION_OF_GLOBAL_CONSTANT_STRING_FOR_SYMBOL( Line );
