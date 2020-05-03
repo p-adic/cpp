@@ -47,7 +47,9 @@
     SeparatorOfComputableFunction separator_copy = r_copy.GetSeparator(); \
     VLTree<string>& t_sep = separator_copy.Ref();			\
     auto itr_sep = t_sep.LeftMostNode();				\
-    *itr_sep = quantifier + *itr_sep;					\
+    const string symb = *itr_sep;					\
+    t_sep.erase( itr_sep );						\
+    *itr_sep = quantifier + symb + x_copy + *itr_sep;			\
 									\
     r_copy.SetSymbol( quantifier + r_copy.GetNodeString( 2 ) );		\
     r_copy.SetSeparator( separator_copy );				\
