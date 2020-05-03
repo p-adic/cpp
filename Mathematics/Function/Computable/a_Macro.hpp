@@ -63,6 +63,7 @@
 
 #define CURRY( FUNC , ... ) CurryingSymbol( FUNC , __VA_ARGS__ ) 
 
+#define EXISTS( VAR , REL ) ExistenceSymbol( VAR , FUNC ) 
 
 // decraration
 #define CHECK_VALID( TYPE_NAME )		\
