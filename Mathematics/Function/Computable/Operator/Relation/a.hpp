@@ -23,6 +23,7 @@ public:
   inline RelationSymbol( const TotalityOfComputableFunction& totality , const string& r , const TypeNameOfComputableFunction& type_name , const VariableSymbol<Args>&... args );
   RelationSymbol( const TotalityOfComputableFunction& totality , const string& r , const SeparatorOfComputableFunction& s , const TypeNameOfComputableFunction& type_name , const VariableSymbol<Args>&... args );
   template <typename... Ts> inline RelationSymbol( const string& r , const Ts&... ts );
+  inline RelationSymbol( const RelationSymbol<Args...>& r );
 
   inline void Set( const string& dummy , const string& f );
   template <typename... VA> inline auto Set( const SeparatorOfComputableFunction& dummy1 , const int& dummy2 , const VA&... va ) -> typename enable_if<conjunction<is_same<VA,string>...>::value,void>::type;

@@ -51,6 +51,8 @@ RelationSymbol<Args...>::RelationSymbol( const TotalityOfComputableFunction& tot
 
 template <typename... Args> template <typename... Ts> inline RelationSymbol<Args...>::RelationSymbol( const string& r , const Ts&... ts ) : RelationSymbol( Recursiveness() , r , ts... ) {}
 
+template <typename... Args> inline RelationSymbol<Args...>::RelationSymbol( const RelationSymbol<Args...>& r ) : SyntaxOfComputableFunction( r ) , m_totality( r.m_totality ) {}
+
 
 template <typename... Args> inline void RelationSymbol<Args...>::Set( const string& dummy , const string& f ) { SetSymbol( f ); }
 template <typename... Args> template <typename... VA> inline auto RelationSymbol<Args...>::Set( const SeparatorOfComputableFunction& dummy1 , const int& dummy2 , const VA&... va ) -> typename enable_if<conjunction<is_same<VA,string>...>::value,void>::type { SetSeparator( SeparatorOfComputableFunction( dummy2 , va... ) ); }
