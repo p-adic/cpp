@@ -32,3 +32,7 @@ template <typename Ret, typename Arg1, typename Arg2> FunctionSymbol<Ret,Arg2> C
 
 template <typename Arg1, typename Arg2> RelationSymbol<Arg2> CurryingSymbol( const RelationSymbol<Arg1,Arg2>& r , const ExpressionOfComputableFunction<Arg1>& x ,  const string& style = CurryString() );
 
+template <typename Ret, typename... Args> PrettyRelation<Ret,Args...> ExistenceSymbol( const VariableSymbol<Ret>& n , const RelationSymbol<Ret,Args...>& r );
+
+template <typename... Args> DECLARATION_OF_BOUNDED_EXISTENCE( nat );
+template <typename... Args> DECLARATION_OF_BOUNDED_EXISTENCE( string );

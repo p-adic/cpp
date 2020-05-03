@@ -150,3 +150,6 @@ template <typename Arg1, typename Arg2> inline RelationSymbol<Arg2> CurryingSymb
      );
  
 }
+
+template <typename... Args> DEFINITION_OF_BOUNDED_EXISTENCE( nat );
+template <typename... Args> DEFINITION_OF_BOUNDED_EXISTENCE( string );
