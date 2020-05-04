@@ -45,6 +45,7 @@
 #define PROJ( i , a ) ProjectionSymbolApplication< i >( a ) 
 
 #define TUPLE( ... ) TupleSymbolApplication( __VA_ARGS__ ) 
+#define NESTIFY( ... ) NestifySymbolApplication( __VA_ARGS__ ) 
 
 
 // relation
@@ -185,6 +186,7 @@
 // write
 #define JAPANESE JapaneseString() 
 #define ENGLISH EnglishString() 
+#define CHINESE ChineseString() 
 #define FANDOM FandomString() 
 #define APP ios::app 
 #define TRUNC ios::trunc 
