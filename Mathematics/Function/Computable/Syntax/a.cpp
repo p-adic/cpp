@@ -190,7 +190,7 @@ void SyntaxOfComputableFunction::InputTotality( ofstream& ofs , const string& to
 
   if( language == ChineseString() && style == FandomString() ){
 
-    ofs << "‰ä—p’è‹`ˆêŒÂ";
+    ofs << "‰ä’è‹`ˆêŒÂ";
     
     if( totality == RecursiveString() ){
 
