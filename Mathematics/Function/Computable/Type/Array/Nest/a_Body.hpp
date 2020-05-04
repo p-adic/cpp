@@ -3,7 +3,7 @@
 #pragma once
 #include "a.hpp"
 
-#include "a_Body.hpp"
+#include "../a_Body.hpp"
 
 
 template <typename Ret> inline NestedArrayTypeOfComputableFunction<Ret>::NestedArrayTypeOfComputableFunction() noexcept : TypeOfComputableFunction( GetName() , GetName() ) {}
