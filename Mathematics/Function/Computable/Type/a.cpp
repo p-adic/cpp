@@ -50,7 +50,7 @@ void TypeOfComputableFunction::WriteOn( const TypeOfComputableFunction& dummy , 
 
   if( language == EnglishString() ){
 
-    cout << "Writing an English translation of the definition to " << filename << ":" << endl;
+    cout << "Writing an English translation of the definition of \\(" << m_type_name << "\\) on " << filename << ":" << endl;
     cout << "…" << endl;
   
     if( !ofs ){
@@ -81,6 +81,40 @@ void TypeOfComputableFunction::WriteOn( const TypeOfComputableFunction& dummy , 
 
   }
 
+  if( language == ChineseString() ){
+
+    cout << "在" << filename << "上寫" << m_type_name << "的定義的中文翻譯:" << endl;
+    cout << "…" << endl;
+  
+    if( !ofs ){
+      cout << "錯誤：無法打開文件。" << endl;
+      cin.get();
+      return;
+    }
+
+    cout << "……" << endl;
+
+    try{
+
+      InputDefinition( ofs , language , style );
+
+    }
+    catch( const ErrorType& e ){
+
+      IGNORED_ERR( e );
+
+    }
+  
+    ofs << endl;
+
+    cout << "………" << endl;
+    cout << "寫完了。" << endl;
+
+    return;
+
+  }
+
+  ERR_IMPUT( language );
   return;
 
 }
@@ -102,7 +136,14 @@ void TypeOfComputableFunction::InputDefinition( ofstream& ofs , const string& la
 
   }
 
-  ERR_IMPUT( style );
+  if( language == ChineseString() && style == FandomString() ){
+
+    ofs << "我將遞歸集合\\(" << m_type_name << "\\)定義為\\(" << m_definition << "\\)。" << endl;
+    return;
+
+  }
+
+  ERR_IMPUT( lnguage , style );
   return;
 
 }
