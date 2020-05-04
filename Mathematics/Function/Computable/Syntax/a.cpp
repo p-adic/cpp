@@ -695,7 +695,7 @@ void SyntaxOfComputableFunction::InputPutNonConditionLine( ofstream& ofs , VLTre
       
   }
 
-  if( language == JapaneseString() && style == FandomString() ){
+  if( language == ChineseString() && style == FandomString() ){
 
     ofs << "—ß\\(" << variable_name << " := " << ExpressionToString( itr_e ) << " \\in " << variable_type_name << "\\)B" << endl;
     return;
