@@ -21,7 +21,7 @@ inline const PrettyRelation<int>& NonNegativeSymbol()
 
        0 ,
        EmptyString() ,
-       SpaceString() + "\\geq 0" + SpaceString()
+       SpaceString() + "\\geq 0"
 
        ) ,
       GetTypeName<bool>() ,
