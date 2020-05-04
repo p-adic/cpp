@@ -188,6 +188,40 @@ void SyntaxOfComputableFunction::InputTotality( ofstream& ofs , const string& to
 
   }
 
+  if( language == ChineseString() && style == FandomString() ){
+
+    ofs << "我用定義一個";
+    
+    if( totality == RecursiveString() ){
+
+      ofs << "可計算函數" << endl;
+      return;
+
+    }
+
+    if( totality == PartialString() ){
+
+      ofs << "可計算偏函數" << endl;
+      return;
+
+    }
+
+    if( totality == TotalString() ){
+
+      ofs << "可計算全函數" << endl;
+      return;
+
+    }
+
+    if( totality == PrimitiveString() ){
+
+      ofs << "原始遞歸函數" << endl;
+      return;
+
+    }
+
+  }
+
   ERR_IMPUT( totality ,  language , style );
   return;
 
@@ -196,29 +230,41 @@ void SyntaxOfComputableFunction::InputTotality( ofstream& ofs , const string& to
 void SyntaxOfComputableFunction::InputDeclaration( ofstream& ofs , const string& function_name , const string& argument_type_name , const string& argument_name , const string& return_type_name , const string& function_expression_name , const string& language , const string& style ) const
 {
 
-  if( language == JapaneseString() && style == FandomString() ){
+  if( style == FandomString() ){
 
     ofs << "\\begin{eqnarray*}" << endl;
     ofs << function_name << " \\colon " << argument_type_name << " & \\to & " << return_type_name << " \\\\" << endl;
     ofs << argument_name << " & \\mapsto & " << function_expression_name << endl;
     ofs << "\\end{eqnarray*}" << endl;
+
+  } else {
+
+    ERR_IMPUT( style );
+
+  }
+
+  if( language == JapaneseString() ){
+
     ofs << "を以下のように再帰的に定める：" << endl;
     return;
 
   }
   
-  if( language == EnglishString() && style == FandomString() ){
+  if( language == EnglishString() ){
 
-    ofs << "\\begin{eqnarray*}" << endl;
-    ofs << function_name << " \\colon " << argument_type_name << " & \\to & " << return_type_name << " \\\\" << endl;
-    ofs << argument_name << " & \\mapsto & " << function_expression_name << endl;
-    ofs << "\\end{eqnarray*}" << endl;
     ofs << "in the following recursive way:" << endl;
     return;
 
   }
 
-  ERR_IMPUT( language , style );
+  if( language == ChineseString() ){
+
+    ofs << "用遞歸方法如下:" << endl;
+    return;
+
+  }
+
+  ERR_IMPUT( language );
   return;
 
 }
@@ -441,7 +487,14 @@ void SyntaxOfComputableFunction::InputIfListLine( ofstream& ofs , const string& 
     return;
     
   }
+  
+  if( language == ChineseString() ){
 
+    ofs << "設想" << condition_name << "成立。" << endl;
+    return;
+    
+  }
+  
   ERR_IMPUT( language );
   return;
 
@@ -468,6 +521,13 @@ void SyntaxOfComputableFunction::InputIfNonListLine( ofstream& ofs , const strin
   if( language == englishString() ){
 
     ofs << "if " << condition_name << ", then ";
+    return;
+      
+  }
+
+  if( language == ChineseString() ){
+
+    ofs << "如果" << condition_name << ", 則";
     return;
       
   }
@@ -569,7 +629,6 @@ void SyntaxOfComputableFunction::InputPutConditionLine( ofstream& ofs , VLTree<s
     
     ofs << "Abbreviate the condition " << b << " to \\(" << variable_name << "\\)." << endl;
     return;
-      
 
   }
 
@@ -587,7 +646,22 @@ void SyntaxOfComputableFunction::InputPutConditionLine( ofstream& ofs , VLTree<s
     ofs << "abbreviate the condition " << b << " to \\(" << variable_name << "\\)." << endl;
     language = EnglishString();
     return;
-      
+
+  }
+
+  if( language == ChineseString() && style == FandomString() ){
+
+    bool complicated = false;
+    string b = ConditionToString( itr_cond , complicated , language , style );
+    
+    if( complicated ){
+
+      PutKagi( b );
+
+    }
+    
+    ofs << "令" << b << "為條件\\(" << variable_name << "\\)。" << endl;
+    return;
 
   }
 
@@ -619,6 +693,13 @@ void SyntaxOfComputableFunction::InputPutNonConditionLine( ofstream& ofs , VLTre
     language = EnglishString();
     return;
       
+  }
+
+  if( language == JapaneseString() && style == FandomString() ){
+
+    ofs << "令\\(" << variable_name << " := " << ExpressionToString( itr_e ) << " \\in " << variable_type_name << "\\)。" << endl;
+    return;
+
   }
 
   ERR_IMPUT( language , style );
@@ -806,6 +887,13 @@ void SyntaxOfComputableFunction::InputUniqueExistenceNaturalNumberLine( ofstream
       
   }
 
+  if( language == ChineseString() && style == FandomString() ){
+
+    ofs << "定義\\(" << variable_name << "\\)是小於或等於\\(" << bound << "\\)且滿足條件" << condition << "的唯一\\(" << local_variable << " \\in " << variable_type_name << "\\)。" << endl;
+    return;
+
+  }
+
   ERR_IMPUT( language , style );
   return;
   
@@ -833,6 +921,13 @@ void SyntaxOfComputableFunction::InputUniqueExistenceStringLine( ofstream& ofs ,
     ofs << "denote by \\(" << variable_name << "\\) the unique substring \\(" << local_variable << " \\in " << variable_type_name << "\\) of \\(" << bound << "\\) satisfying " << condition << "." << endl;
     return;
       
+  }
+
+  if( language == ChineseString() && style == FandomString() ){
+
+    ofs << "定義\\(" << variable_name << "\\)是滿足條件" << condition << "的\\(" << bound << "\\)的唯一子串\\(" << local_variable << " \\in " << variable_type_name << "\\)。" << endl;
+    return;
+
   }
 
   ERR_IMPUT( language , style );
@@ -896,6 +991,14 @@ void SyntaxOfComputableFunction::InputMinimumLine( ofstream& ofs , VLTree<string
     language = EnglishString();
     return;
       
+  }
+
+
+  if( language == ChineseString() && style == FandomString() ){
+
+    ofs << "定義\\(" << variable_name << "\\)是滿足條件" << condition << "的最小的\\(" << *p_local_variable << " \\in " << variable_type_name << "\\)。" << endl;
+    return;
+
   }
 
   ERR_IMPUT( language , style );
@@ -966,6 +1069,13 @@ void SyntaxOfComputableFunction::InputMaximumLine( ofstream& ofs , VLTree<string
     language = EnglishString();
     return;
       
+  }
+
+  if( language == ChineseString() && style == FandomString() ){
+
+    ofs << "定義\\(" << variable_name << "\\)是小於或等於\\(" << *p_bound << "\\)且滿足條件" << condition << "的最大的\\(" << *p_local_variable << " \\in " << variable_type_name << "\\)。" << endl;
+    return;
+
   }
 
   ERR_IMPUT( language , style );
@@ -1083,6 +1193,13 @@ void SyntaxOfComputableFunction::InputReturnLine( ofstream& ofs , const string& 
     language = EnglishString();
     return;
       
+  }
+
+  if( language == JapaneseString() && style == FandomString() ){
+
+    ofs << "定義\\(" << function_expression_name << " := " << *p_return_name << "\\)。" << endl;
+    return;
+
   }
 
   ERR_IMPUT( language , style );
@@ -1500,7 +1617,7 @@ string NegationToString( VLTree<string>::const_iterator& itr , string& language 
      );
 
   
-  if( language == JapaneseString() && style == FandomString() ){
+  if( language == JapaneseString() ){
 
     if( complicated ){
 
@@ -1512,7 +1629,7 @@ string NegationToString( VLTree<string>::const_iterator& itr , string& language 
 
   }
 
-  if( language == EnglishString() && style == FandomString() ){
+  if( language == EnglishString() ){
 
     if( complicated ){
 
@@ -1521,6 +1638,19 @@ string NegationToString( VLTree<string>::const_iterator& itr , string& language 
     }
 
     return b + " does not hold";
+      
+  }
+
+
+  if( language == ChineseString() ){
+
+    if( complicated ){
+
+      PutKagi( b );
+
+    }
+
+    return b + "不成立";
       
   }
 
@@ -1556,7 +1686,7 @@ string ImplicationToString( VLTree<string>::const_iterator& itr , string& langua
      );
 
 
-  if( language == JapaneseString() && style == FandomString() ){
+  if( language == JapaneseString() ){
 
     if( complicated0 ){
 
@@ -1574,7 +1704,7 @@ string ImplicationToString( VLTree<string>::const_iterator& itr , string& langua
 
   }
 
-  if( language == EnglishString() && style == FandomString() ){
+  if( language == EnglishString() ){
 
     if( complicated0 ){
 
@@ -1592,7 +1722,26 @@ string ImplicationToString( VLTree<string>::const_iterator& itr , string& langua
       
   }
 
-  ERR_IMPUT( b0 , b1 , language , style );
+
+  if( language == ChineseString() ){
+
+    if( complicated0 ){
+
+      PutKagi( b0 );
+
+    }
+
+    if( complicated1 ){
+
+      PutKagi( b1 );
+
+    }
+
+    return "若" + b0 + "則" + b1;
+
+  }
+
+  ERR_IMPUT( b0 , b1 , language );
   return "dummy";
 
 }
@@ -1623,7 +1772,7 @@ string EquivalenceToString( VLTree<string>::const_iterator& itr , string& langua
 
      );
 
-  if( language == JapaneseString() && style == FandomString() ){
+  if( language == JapaneseString() ){
 
     if( complicated0 ){
 
@@ -1641,7 +1790,7 @@ string EquivalenceToString( VLTree<string>::const_iterator& itr , string& langua
 
   }
 
-  if( language == EnglishString() && style == FandomString() ){
+  if( language == EnglishString() ){
 
     if( complicated0 ){
 
@@ -1659,6 +1808,24 @@ string EquivalenceToString( VLTree<string>::const_iterator& itr , string& langua
       
   }
 
+  if( language == ChineseString() ){
+
+    if( complicated0 ){
+
+      PutKagi( b0 );
+
+    }
+
+    if( complicated1 ){
+
+      PutKagi( b1 );
+
+    }
+
+    return b0 + "和" + b1 + "彼此等价";
+
+  }
+
   ERR_IMPUT( b0 , b1 , language , style );
   return "dummy";
 
@@ -1674,7 +1841,7 @@ string LogicalAndToString( VLTree<string>::const_iterator& itr , string& languag
 
      {
        
-       if( language == JapaneseString() && style == FandomString() ){
+       if( language == JapaneseString() ){
 
 	 bool first = true;
 	 
@@ -1713,7 +1880,7 @@ string LogicalAndToString( VLTree<string>::const_iterator& itr , string& languag
 	   
        }
 
-       if( language == EnglishString() && style == FandomString() ){
+       if( language == EnglishString() ){
 
 	 bool first = true;
 	 bool second = false;
@@ -1766,6 +1933,53 @@ string LogicalAndToString( VLTree<string>::const_iterator& itr , string& languag
 	       }
 
 	       b += "and ";
+
+	     }
+
+	   }
+
+	   b += b_current;
+
+	 }
+
+	 return b;
+
+       }
+
+       if( language == ChineseString() ){
+
+	 bool first = true;
+	 
+	 while( itr.IsValid() ){
+
+	   bool complicated = false;
+	   string b_current = ConditionToString( itr , complicated , language , style );
+	   
+	   if( first ){
+
+	     first = false;
+
+	     if( complicated && itr.IsValid() ){
+
+	       PutParenthesis( b_current );
+
+	     }
+
+	   } else {
+	     
+	     if( complicated ){
+
+	       PutParenthesis( b_current );
+
+	     }
+
+	     if( itr.IsValid() ){
+
+	       b += ", ";
+
+	     } else {
+
+	       b += "和";
 
 	     }
 
@@ -1908,6 +2122,53 @@ string LogicalOrToString( VLTree<string>::const_iterator& itr , string& language
 
        }
 
+       if( language == ChineseString() ){
+
+	 bool first = true;
+	 
+	 while( itr.IsValid() ){
+
+	   bool complicated = false;
+	   string b_current = ConditionToString( itr , complicated , language , style );
+	   
+	   if( first ){
+
+	     first = false;
+
+	     if( complicated && itr.IsValid() ){
+
+	       PutParenthesis( b_current );
+
+	     }
+
+	   } else {
+	     
+	     if( complicated ){
+
+	       PutParenthesis( b_current );
+
+	     }
+
+	     if( itr.IsValid() ){
+
+	       b += ", ";
+
+	     } else {
+
+	       b += "或";
+
+	     }
+
+	   }
+
+	   b += b_current;
+
+	 }
+
+	 return b;
+
+       }
+       
      } ,
 
      const ErrorType& e ,
