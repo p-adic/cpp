@@ -60,7 +60,7 @@
 
 
 // meta function
-#define ARRAYISE( FUNC ) ArrayiseSymbol( FUNC ) 
+#define ARRAYISE( FUNC , VAR ) ArrayiseSymbol( FUNC , VAR ) 
 #define CURRY( FUNC , ... ) CurryingSymbol( FUNC , __VA_ARGS__ ) 
 #define EXISTS( VAR , REL ) ExistenceSymbol( VAR , FUNC ) 
 #define UEXISTS( VAR , REL ) UniqueExistenceSymbol( VAR , FUNC ) 
