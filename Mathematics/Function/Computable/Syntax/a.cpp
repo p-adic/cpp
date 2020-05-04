@@ -1116,8 +1116,15 @@ void SyntaxOfComputableFunction::InputPrintLine( ofstream& ofs , VLTree<string>:
 
   if( language == englishString() && style == FandomString() ){
 
-    ofs << "stdout \\(" << *p_variable_name << "\\). This line does not effect the result of the computation." << endl;
+    ofs << "stdout \\(" << *p_variable_name << "\\). This line does not affect the result of the computation." << endl;
     language = EnglishString();
+    return;
+      
+  }
+
+  if( language == ChineseString() && style == FandomString() ){
+
+    ofs << "標準輸出\\(" << *p_variable_name << "\\)。這行不影響計算結果。" << endl;
     return;
       
   }
@@ -1148,6 +1155,13 @@ void SyntaxOfComputableFunction::InputExitLine( ofstream& ofs , const string& fu
     
     ofs << "\\(" << function_expression_name << "\\) is undefined." << endl;
     language = EnglishString();
+    return;
+
+  }
+
+  if( language == ChineseString() && style == FandomString() ){
+    
+    ofs << "\\(" << function_expression_name << "\\)未定義。" << endl;
     return;
 
   }
