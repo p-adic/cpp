@@ -1195,7 +1195,7 @@ void SyntaxOfComputableFunction::InputReturnLine( ofstream& ofs , const string& 
       
   }
 
-  if( language == JapaneseString() && style == FandomString() ){
+  if( language == ChineseString() && style == FandomString() ){
 
     ofs << "’è‹`\\(" << function_expression_name << " := " << *p_return_name << "\\)B" << endl;
     return;
