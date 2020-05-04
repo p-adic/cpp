@@ -151,5 +151,62 @@ template <typename Arg1, typename Arg2> inline RelationSymbol<Arg2> CurryingSymb
  
 }
 
-template <typename... Args> DEFINITION_OF_BOUNDED_EXISTENCE( nat );
-template <typename... Args> DEFINITION_OF_BOUNDED_EXISTENCE( string );
+
+template <typename... Args> inline DEFINITION_OF_BOUNDED_EXISTENCE( Exist , Exist , nat );
+template <typename... Args> inline DEFINITION_OF_BOUNDED_EXISTENCE( UniqueExist , UExist , nat );
+template <typename... Args> inline DEFINITION_OF_BOUNDED_EXISTENCE( Exist , Exist , string );
+template <typename... Args> inline DEFINITION_OF_BOUNDED_EXISTENCE( UniqueExist , UExist , string );
+
+inline PrettyFunction<nat,nat,bool> MinimumSymbol( const PrettyVariable<nat>& n , const ExpressionOfComputableFunction<bool>& b )
+{
+
+  return PrettyFunction<nat,nat,bool>
+    (
+
+     MinString() ,
+     SeparatorOfComputableFunction
+     (
+
+      0 ,
+      MinString() + SpaceString() +
+      EscapeString() + LbraceString() + SpaceString() + EscapeString() + SpaceString() ,
+      SpaceString() + InString() + SpaceString() +
+      GetTypeString<nat>() + SpaceString() +
+      VertString() + SpaceString() ,
+      SpaceString() + EscapeString() + SpaceString() + EscapeString() + RbraceString()
+
+      ) ,
+     GetTypeName<nat>() ,
+     n ,
+     VariableSymbol<bool>( b.GetNodeString( 2 ) )
+
+     );
+
+}
+
+inline PrettyFunction<nat,nat,nat,bool> BoundedMaximumSymbol( const PrettyVariable<nat>& n , const PrettyExpression<nat>& bound , const ExpressionOfComputableFunction<bool>& b )
+{
+
+  return PrettyFunction<nat,nat,nat,bool>
+    (
+
+     MaxString() ,
+     SeparatorOfComputableFunction
+     (
+
+      0 ,
+      MaxString() + SpaceString() +
+      EscapeString() + LbraceString() + SpaceString() + EscapeString() + SpaceString() ,
+      SpaceString() + LeqString() + SpaceString() ,
+      SpaceString() + VertString() + SpaceString() ,
+      SpaceString() + EscapeString() + SpaceString() + EscapeString() + RbraceString()
+
+      ) ,
+     GetTypeName<nat>() ,
+     n ,
+     PrettyVariable<nat>( bound.GetNodeString( 2 ) , GetTypeName<nat>() ) ,
+     VariableSymbol<bool>( b.GetNodeString( 2 ) )
+
+     );
+
+}

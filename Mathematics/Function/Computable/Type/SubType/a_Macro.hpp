@@ -2,6 +2,19 @@
 
 #pragma once
 
+#define SUBSET( VARIABLE , RELATION )					\
+									\
+  EscapeString() + LbraceString() + SpaceString() +			\
+  EscapeString() + SpaceString() +					\
+  ( VARIABLE ).GetNodeString( 2 ) + SpaceString() +			\
+  InString() + SpaceString() +						\
+  ( VARIABLE ).GetNodeString( 3 , 2 ) + SpaceString() +			\
+  VertString() + SpaceString() +					\
+  ( RELATION ( VARIABLE ) ).GetNodeString( 2 ) + SpaceString() +	\
+  EscapeString() + SpaceString() +					\
+  EscapeString() + RbraceString()					\
+
+
 #define SPEC_BODY( CLASS_NAME , TYPE_NAME , VARIABLE , REL )		\
 									\
 									\
@@ -18,16 +31,7 @@
       (									\
 									\
        TO_STRING( TYPE_NAME ) ,						\
-									\
-       EscapeString() + LbraceString() + SpaceString() +		\
-       EscapeString() + SpaceString() +					\
-       GetVariable().GetNodeString( 2 ) + SpaceString() +		\
-       InString() + SpaceString() +					\
-       ( GetVariable() ).GetNodeString( 3 , 2 ) + SpaceString() +	\
-       VertString() + SpaceString() +					\
-       GetRelation()( GetVariable() ).GetNodeString( 2 ) + SpaceString() + \
-       EscapeString() + SpaceString() +					\
-       EscapeString() + RbraceString()					\
+       SUBSET( GetVariable() , GetRelation() )				\
 									\
 									) \
     {};									\
@@ -54,7 +58,7 @@
     };									\
 									\
   private:								\
-    static inline const VariableSymbol<base_type>& GetVariable() noexcept	\
+    static inline const VariableSymbol<base_type>& GetVariable() noexcept \
     {									\
 									\
       static const VariableSymbol<base_type> CONNECT( VARIABLE_FOR_ , TYPE_NANE ){ VARIABLE }; \
@@ -62,7 +66,7 @@
 									\
     };									\
 									\
-    static inline const RelationSymbol<base_type>& GetRelation() noexcept	\
+    static inline const RelationSymbol<base_type>& GetRelation() noexcept \
     {									\
 									\
       static const RelationSymbol<base_type> CONNECT( RELATION_FOR , TYPE_NANE ){ REL }; \

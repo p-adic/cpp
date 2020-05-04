@@ -60,10 +60,10 @@
 
 // meta function
 #define ARRAYISE( FUNC ) ArrayiseSymbol( FUNC ) 
-
 #define CURRY( FUNC , ... ) CurryingSymbol( FUNC , __VA_ARGS__ ) 
-
 #define EXISTS( VAR , REL ) ExistenceSymbol( VAR , FUNC ) 
+#define UEXISTS( VAR , REL ) UniqueExistenceSymbol( VAR , FUNC ) 
+
 
 // decraration
 #define CHECK_VALID( TYPE_NAME )		\
@@ -157,6 +157,12 @@
 						\
   IfLine( __VA_ARGS__ )				\
   
+#define UNIQUE_BODY( CHAR , VAR , BOUND , COND ) CHAR , WrappedType<remove_const<remove_reference<decltype( VAR )>::type>::type>( VAR ) , WrappedType<remove_const<remove_reference<decltype( BOUND )>::type>::type>( BOUND ) , WrappedType<ConditionOfComputableFunction>( COND ) 
+
+#define UNIQUE( VAR , BOUND , COND ) UNIQUE_BODY( UExistString() , VAR , BOUND , COND ) 
+#define MIN( VAR , COND ) UNIQUE_BODY( MinString() , VAR , BOUND , COND ) 
+#define MAX( VAR , BOUND , COND ) UNIQUE_BODY( MaxString() , VAR , BOUND , COND ) 
+
 
 #define EXIT					\
 						\

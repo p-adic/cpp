@@ -3,6 +3,7 @@
 #include "../Header.hpp"
 #include "a_Body.hpp"
 
+#include "../Type/Basic/a_Body.hpp"
 #include "../Expression/a_Body.hpp"
 #include "../../../../Error/FaultInCoding/a.hpp"
 
@@ -310,6 +311,13 @@ void SyntaxOfComputableFunction::InputNonListLine( ofstream& ofs , const string&
 	 return;
 
        }
+       
+       if( line_name == CharacteriseString() ){
+
+	 InputCharacterisationLine( ofs , itr_line , depth , language , style );
+	 return;
+
+       }
 
        if( line_name == PrintString() ){
 
@@ -529,13 +537,13 @@ void SyntaxOfComputableFunction::InputPutLine( ofstream& ofs , VLTree<string>::c
 
 }
 
-void SyntaxOfComputableFunction::InputPutConditionLine( ofstream& ofs , VLTree<string>::const_iterator& itr_line , const string& variable_name , string& language , const string& style ) const
+void SyntaxOfComputableFunction::InputPutConditionLine( ofstream& ofs , VLTree<string>::const_iterator& itr_cond , const string& variable_name , string& language , const string& style ) const
 {
 
   if( language == JapaneseString() && style == FandomString() ){
 
     bool complicated = false;
-    string b = ConditionToString( itr_line , complicated , language , style );
+    string b = ConditionToString( itr_cond , complicated , language , style );
     
     if( complicated ){
 
@@ -551,7 +559,7 @@ void SyntaxOfComputableFunction::InputPutConditionLine( ofstream& ofs , VLTree<s
   if( language == EnglishString() && style == FandomString() ){
 
     bool complicated = false;
-    string b = ConditionToString( itr_line , complicated , language , style );
+    string b = ConditionToString( itr_cond , complicated , language , style );
 
     if( complicated ){
 
@@ -568,7 +576,7 @@ void SyntaxOfComputableFunction::InputPutConditionLine( ofstream& ofs , VLTree<s
   if( language == englishString() && style == FandomString() ){
 
     bool complicated = false;
-    string b = ConditionToString( itr_line , complicated , language , style );
+    string b = ConditionToString( itr_cond , complicated , language , style );
 
     if( complicated ){
 
@@ -588,26 +596,26 @@ void SyntaxOfComputableFunction::InputPutConditionLine( ofstream& ofs , VLTree<s
   
 }
 
-void SyntaxOfComputableFunction::InputPutNonConditionLine( ofstream& ofs , VLTree<string>::const_iterator& itr_line , const string& variable_name , const string& variable_type_name , string& language , const string& style ) const
+void SyntaxOfComputableFunction::InputPutNonConditionLine( ofstream& ofs , VLTree<string>::const_iterator& itr_e , const string& variable_name , const string& variable_type_name , string& language , const string& style ) const
 {
 
   if( language == JapaneseString() && style == FandomString() ){
 
-    ofs << "\\(" << variable_name << " := " << ExpressionToString( itr_line ) << " \\in " << variable_type_name << "\\)と置く。" << endl;
+    ofs << "\\(" << variable_name << " := " << ExpressionToString( itr_e ) << " \\in " << variable_type_name << "\\)と置く。" << endl;
     return;
 
   }
 
   if( language == EnglishString() && style == FandomString() ){
 
-    ofs << "Put \\(" << variable_name << " := " << ExpressionToString( itr_line ) << " \\in " << variable_type_name << "\\)." << endl;
+    ofs << "Put \\(" << variable_name << " := " << ExpressionToString( itr_e ) << " \\in " << variable_type_name << "\\)." << endl;
     return;
       
   }
 
   if( language == englishString() && style == FandomString() ){
 
-    ofs << "put \\(" << variable_name << " := " << ExpressionToString( itr_line ) << " \\in " << variable_type_name << "\\)." << endl;
+    ofs << "put \\(" << variable_name << " := " << ExpressionToString( itr_e ) << " \\in " << variable_type_name << "\\)." << endl;
     language = EnglishString();
     return;
       
@@ -616,6 +624,353 @@ void SyntaxOfComputableFunction::InputPutNonConditionLine( ofstream& ofs , VLTre
   ERR_IMPUT( language , style );
   return;
   
+}
+
+void SyntaxOfComputableFunction::InputCharacterisationLine( ofstream& ofs , VLTree<string>::const_iterator& itr_line , const uint& depth , string& language , const string& style ) const
+{
+
+  auto itr_variable = itr_line;
+  itr_line++;
+
+  const string* p_variable_name;
+  const string* p_variable_type_name;
+  const string* p_characterisation;
+  
+  TRY_CATCH
+    (
+
+     p_variable_name = &( SyntaxToString( itr_variable , 2 ) ) ,
+     
+     const ErrorType& e ,
+
+     CALL_P( e , depth )
+
+     );
+
+  TRY_CATCH
+    (
+
+     itr_variable[2];
+     p_variable_type_name = &( *itr_variable ) ,
+     
+     const ErrorType& e ,
+
+     CALL_P( e , depth )
+
+     );
+
+  TRY_CATCH
+    (
+
+     p_characterisation = &( *itr_line ) ,
+     
+     const ErrorType& e ,
+
+     CALL_P( e , depth )
+
+     );
+
+  const string& characterisation = *p_characterisation;
+  
+  TRY_CATCH
+    (
+
+     {
+
+       if( characterisation == UExistString() ){
+
+	 InputUniqueExistenceLine( ofs , itr_line , *p_variable_name , *p_variable_type_name , language , style );
+	 return;
+	 
+       }
+
+       if( characterisation == MinString() ){
+
+	 InputMinimumLine( ofs , itr_line , *p_variable_name , *p_variable_type_name , language , style );
+	 return;
+	 
+       }
+
+       if( characterisation == MaxString() ){
+
+	 InputMaximumLine( ofs , itr_line , *p_variable_name , *p_variable_type_name , language , style );
+	 return;
+	 
+       }
+       
+     } ,
+
+     const ErrorType& e ,
+
+     CALL_P( e , depth )
+
+     );
+
+
+  ERR_IMPUT( characterisation );
+  return;
+
+}
+
+void SyntaxOfComputableFunction::InputUniqueExistenceLine( ofstream& ofs , VLTree<string>::const_iterator& itr_line , const string& variable_name , const string& variable_type_name , string& language , const string& style ) const
+{
+
+  const string* p_local_variable;
+  const string* p_bound;
+  string condition;
+  bool complicated = false;
+
+  itr_line++;
+  
+  TRY_CATCH
+    (
+
+     p_local_variable = &( ExpressionToString( itr_line ) ) ,
+     const ErrorType& e ,
+     CALL( e )
+
+     );
+
+  TRY_CATCH
+    (
+
+     p_bound = &( ExpressionToString( itr_line ) ) ,
+     const ErrorType& e ,
+     CALL( e )
+     
+     );
+
+  TRY_CATCH
+    (
+
+     condition = ConditionToString( itr_line , complicated , language , style ) ,
+     const ErrorType& e ,
+     CALL( e )
+
+     );
+
+  TRY_CATCH
+    (
+     
+     {
+       
+       if( variable_type_name == GetTypeString<nat>() ){
+
+	 InputUniqueExistenceNaturalNumberLine( ofs , *p_local_variable , *p_bound , condition , variable_name , variable_type_name , language , style );
+	 return;
+
+       }
+
+       if ( variable_type_name == GetTypeString<string>() ){
+
+	 InputUniqueExistenceStringLine( ofs , *p_local_variable , *p_bound , condition , variable_name , variable_type_name , language , style );
+	 return;
+
+       }
+
+     } ,
+
+     const ErrorType& e ,
+
+     CALL( e )
+
+     );
+
+  ERR_IMPUT( variable_type_name );
+  return;
+  
+}
+
+void SyntaxOfComputableFunction::InputUniqueExistenceNaturalNumberLine( ofstream& ofs , const string& local_variable , const string& bound , const string& condition , const string& variable_name , const string& variable_type_name , string& language , const string& style ) const
+{
+  
+  if( language == JapaneseString() && style == FandomString() ){
+
+    ofs << condition << "を満たす\\(" << bound << "\\)以下の一意な\\(" << local_variable << " \\in " << variable_type_name << "\\)を\\(" << variable_name << "\\)と置く。" << endl;
+    return;
+
+  }
+
+  if( language == EnglishString() && style == FandomString() ){
+
+    ofs << "Denote by \\(" << variable_name << "\\) the unique \\(" << local_variable << " \\in " << variable_type_name << "\\) greater than or equal to \\(" << bound << "\\) satisfying " << condition << "." << endl;
+    return;
+    
+  }
+
+  if( language == englishString() && style == FandomString() ){
+
+    ofs << "denote by \\(" << variable_name << "\\) the unique \\(" << local_variable << " \\in " << variable_type_name << "\\) greater than or equal to \\(" << bound << "\\) satisfying " << condition << "." << endl;
+    language = EnglishString();
+    return;
+      
+  }
+
+  ERR_IMPUT( language , style );
+  return;
+  
+}
+
+void SyntaxOfComputableFunction::InputUniqueExistenceStringLine( ofstream& ofs , const string& local_variable , const string& bound , const string& condition , const string& variable_name , const string& variable_type_name , string& language , const string& style ) const
+{
+
+  if( language == JapaneseString() && style == FandomString() ){
+
+    ofs << condition << "を満たす\\(" << bound << "\\)の一意な部分文字列\\(" << local_variable << " \\in " << variable_type_name << "\\)を\\(" << variable_name << "\\)と置く。" << endl;
+    return;
+
+  }
+
+  if( language == EnglishString() && style == FandomString() ){
+
+    ofs << "Denote by \\(" << variable_name << "\\) the unique substring \\(" << local_variable << " \\in " << variable_type_name << "\\) of \\(" << bound << "\\) satisfying " << condition << "." << endl;
+    return;
+      
+  }
+
+  if( language == englishString() && style == FandomString() ){
+
+    ofs << "denote by \\(" << variable_name << "\\) the unique substring \\(" << local_variable << " \\in " << variable_type_name << "\\) of \\(" << bound << "\\) satisfying " << condition << "." << endl;
+    return;
+      
+  }
+
+  ERR_IMPUT( language , style );
+  return;
+  
+}
+
+void SyntaxOfComputableFunction::InputMinimumLine( ofstream& ofs , VLTree<string>::const_iterator& itr_line , const string& variable_name , const string& variable_type_name , string& language , const string& style ) const
+{
+
+  if( variable_type_name != GetTypeString<nat>() ){
+
+    ERR_IMPUT( variable_type_name );
+
+  }
+
+  const string* p_local_variable;
+  string condition;
+  bool complicated = false;
+
+  itr_line++;
+
+  TRY_CATCH
+    (
+
+     p_local_variable = &( ExpressionToString( itr_line ) ) ,
+     const ErrorType& e ,
+     CALL( e )
+
+     );
+
+  itr_line++;
+
+  TRY_CATCH
+    (
+
+     condition = ConditionToString( itr_line , complicated , language , style ) ,
+     const ErrorType& e ,
+     CALL( e )
+
+     );
+
+  
+  if( language == JapaneseString() && style == FandomString() ){
+
+    ofs << condition << "を満たす最小の\\(" << *p_local_variable << " \\in " << variable_type_name << "\\)を\\(" << variable_name << "\\)と置く。" << endl;
+    return;
+
+  }
+
+  if( language == EnglishString() && style == FandomString() ){
+
+    ofs << "Denote by \\(" << variable_name << "\\) the smallest \\(" << *p_local_variable << " \\in " << variable_type_name << "\\) satisfying " << condition << "." << endl;
+    return;
+    
+  }
+
+  if( language == englishString() && style == FandomString() ){
+
+    ofs << "denote by \\(" << variable_name << "\\) the smallest \\(" << *p_local_variable << " \\in " << variable_type_name << "\\) satisfying " << condition << "." << endl;
+    language = EnglishString();
+    return;
+      
+  }
+
+  ERR_IMPUT( language , style );
+  return;
+
+}
+
+void SyntaxOfComputableFunction::InputMaximumLine( ofstream& ofs , VLTree<string>::const_iterator& itr_line , const string& variable_name , const string& variable_type_name , string& language , const string& style ) const
+{
+
+  if( variable_type_name != GetTypeString<nat>() ){
+
+    ERR_IMPUT( variable_type_name );
+
+  }
+
+  const string* p_local_variable;
+  const string* p_bound;
+  string condition;
+  bool complicated = false;
+
+  itr_line++;
+
+  TRY_CATCH
+    (
+
+     p_local_variable = &( ExpressionToString( itr_line ) ) ,
+     const ErrorType& e ,
+     CALL( e )
+
+     );
+
+  TRY_CATCH
+    (
+
+     p_local_variable = &( ExpressionToString( itr_line ) ) ,
+     const ErrorType& e ,
+     CALL( e )
+
+     );
+
+  TRY_CATCH
+    (
+
+     condition = ConditionToString( itr_line , complicated , language , style ) ,
+     const ErrorType& e ,
+     CALL( e )
+
+     );
+  
+  if( language == JapaneseString() && style == FandomString() ){
+
+    ofs << condition << "を満たす\\(" << *p_bound << "\\)以下の最大の\\(" << *p_local_variable << " \\in " << variable_type_name << "\\)を\\(" << variable_name << "\\)と置く。" << endl;
+    return;
+
+  }
+
+  if( language == EnglishString() && style == FandomString() ){
+
+    ofs << "Denote by \\(" << variable_name << "\\) the greatest \\(" << *p_local_variable << " \\in " << variable_type_name << "\\) greater than or equal to \\(" << *p_bound << "\\) satisfying " << condition << "." << endl;
+    return;
+    
+  }
+
+  if( language == englishString() && style == FandomString() ){
+
+    ofs << "denote by \\(" << variable_name << "\\) the greatest \\(" << *p_local_variable << " \\in " << variable_type_name << "\\) greater than or equal to \\(" << *p_bound << "\\) satisfying " << condition << "." << endl;
+    language = EnglishString();
+    return;
+      
+  }
+
+  ERR_IMPUT( language , style );
+  return;
+
 }
 
 

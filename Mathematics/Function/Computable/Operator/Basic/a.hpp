@@ -32,7 +32,13 @@ template <typename Ret, typename Arg1, typename Arg2> FunctionSymbol<Ret,Arg2> C
 
 template <typename Arg1, typename Arg2> RelationSymbol<Arg2> CurryingSymbol( const RelationSymbol<Arg1,Arg2>& r , const ExpressionOfComputableFunction<Arg1>& x ,  const string& style = CurryString() );
 
-template <typename Ret, typename... Args> PrettyRelation<Ret,Args...> ExistenceSymbol( const VariableSymbol<Ret>& n , const RelationSymbol<Ret,Args...>& r );
+template <typename... Args> inline DECLARATION_OF_BOUNDED_EXISTENCE( Exist , nat );
+template <typename... Args> inline DECLARATION_OF_BOUNDED_EXISTENCE( UniqueExist , nat );
+template <typename... Args> inline DECLARATION_OF_BOUNDED_EXISTENCE( Exist ,string );
+template <typename... Args> inline DECLARATION_OF_BOUNDED_EXISTENCE( UniqueExist ,string );
 
-template <typename... Args> DECLARATION_OF_BOUNDED_EXISTENCE( nat );
-template <typename... Args> DECLARATION_OF_BOUNDED_EXISTENCE( string );
+// これらは許容される関数ではないが、実装のためにあえて採用している。
+inline PrettyFunction<nat,nat,bool> MinimumSymbol( const PrettyVariable<nat>& n , const ExpressionOfComputableFunction<bool>& b );
+inline PrettyFunction<nat,nat,nat,bool> BoundedMaximumSymbol( const PrettyVariable<nat>& n , const PrettyExpression<nat>& bound , const ExpressionOfComputableFunction<bool>& b );
+inline DECLARATION_OF_BOUNDED_UNIQUE_EXISTENCE( nat );
+inline DECLARATION_OF_BOUNDED_UNIQUE_EXISTENCE( string );

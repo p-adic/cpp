@@ -13,13 +13,13 @@
   DECLARATION_OF_TWO_ARY_BASIC_FUNCTION( RET , OPERATOR ){ return CONNECT( SYMB , SymbolApplication )( e1 , e2 ); } \
   
 
-#define DECLARATION_OF_BOUNDED_EXISTENCE( RET )				\
+#define DECLARATION_OF_BOUNDED_EXISTENCE( QUANT , RET )			\
 									\
-  PrettyRelation< RET ,Args...> ExistenceSymbol( const PrettyVariable< RET >& n , const RelationSymbol<BaseTypeOf< RET >::type,Args...>& r ) \
+  PrettyRelation< RET ,Args...> CONNECT( QUANT , Symbol )( const PrettyVariable< RET >& n , const RelationSymbol<BaseTypeOf< RET >::type,Args...>& r ) \
     
-#define DEFINITION_OF_BOUNDED_EXISTENCE( RET )				\
+#define DEFINITION_OF_BOUNDED_EXISTENCE( QUANT , Q , RET )		\
 									\
-  DECLARATION_OF_BOUNDED_EXISTENCE( RET )				\
+  DECLARATION_OF_BOUNDED_EXISTENCE( QUANT , RET )			\
   {									\
 									\
     PrettyRelation< RET ,Args...> r_copy{ r };				\
@@ -37,7 +37,7 @@
     const string quantifier						\
     {									\
 									\
-      "\\exists" + SpaceString() +					\
+      CONNECT( Q , String )() + SpaceString() +			\
 	x_copy + SpaceString() +					\
 	LeqString() + SpaceString() +					\
 	n_copy + CommaString() + SpaceString()				\
@@ -59,4 +59,3 @@
 									\
   }									\
   
-

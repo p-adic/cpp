@@ -48,10 +48,20 @@ protected:
 
   // Put
   void InputPutLine( ofstream& ofs , VLTree<string>::const_iterator& itr_line , const uint& depth , string& language , const string& style ) const;
-  void InputPutConditionLine( ofstream& ofs , VLTree<string>::const_iterator& itr_line , const string& variable_name , string& language , const string& style ) const;
-  void InputPutNonConditionLine( ofstream& ofs , VLTree<string>::const_iterator& itr_line , const string& variable_name , const string& variable_type_name , string& language , const string& style ) const;
+  void InputPutConditionLine( ofstream& ofs , VLTree<string>::const_iterator& itr_cond , const string& variable_name , string& language , const string& style ) const;
+  void InputPutNonConditionLine( ofstream& ofs , VLTree<string>::const_iterator& itr_e , const string& variable_name , const string& variable_type_name , string& language , const string& style ) const;
 
-// Print
+  // Characterisation
+  void InputCharacterisationLine( ofstream& ofs , VLTree<string>::const_iterator& itr_line , const uint& depth , string& language , const string& style ) const;
+
+  void InputUniqueExistenceLine( ofstream& ofs , VLTree<string>::const_iterator& itr_line , const string& variable_name , const string& variable_type_name , string& language , const string& style ) const;
+  void InputUniqueExistenceNaturalNumberLine( ofstream& ofs , const string& local_variable , const string& bound , const string& condition , const string& variable_name , const string& variable_type_name , string& language , const string& style ) const;
+  void InputUniqueExistenceStringLine( ofstream& ofs , const string& local_variable , const string& bound , const string& condition , const string& variable_name , const string& variable_type_name , string& language , const string& style ) const;
+
+  void InputMinimumLine( ofstream& ofs , VLTree<string>::const_iterator& itr_line , const string& variable_name , const string& variable_type_name , string& language , const string& style ) const;
+  void InputMaximumLine( ofstream& ofs , VLTree<string>::const_iterator& itr_line , const string& variable_name , const string& variable_type_name , string& language , const string& style ) const;
+  
+  // Print
   void InputPrintLine( ofstream& ofs , VLTree<string>::const_iterator& itr_line , string& language , const string& style ) const;
 
   //Exit
@@ -187,11 +197,16 @@ DECLARATION_OF_GLOBAL_CONSTANT_STRING_FOR_SYMBOL( NonNegative );
 
 //mata function
 DECLARATION_OF_GLOBAL_CONSTANT_STRING_FOR_SYMBOL( Curry );
+DECLARATION_OF_GLOBAL_CONSTANT_STRING_FOR_SYMBOL( Exist );
+DECLARATION_OF_GLOBAL_CONSTANT_STRING_FOR_SYMBOL( UExist );
+DECLARATION_OF_GLOBAL_CONSTANT_STRING_FOR_SYMBOL( Min );
+DECLARATION_OF_GLOBAL_CONSTANT_STRING_FOR_SYMBOL( Max );
 
 // line
 DECLARATION_OF_GLOBAL_CONSTANT_STRING_FOR_SYMBOL( Line );
 DECLARATION_OF_GLOBAL_CONSTANT_STRING_FOR_SYMBOL( If );
 DECLARATION_OF_GLOBAL_CONSTANT_STRING_FOR_SYMBOL( Put );
+DECLARATION_OF_GLOBAL_CONSTANT_STRING_FOR_SYMBOL( Characterise );
 DECLARATION_OF_GLOBAL_CONSTANT_STRING_FOR_SYMBOL( Print );
 DECLARATION_OF_GLOBAL_CONSTANT_STRING_FOR_SYMBOL( Exit );
 DECLARATION_OF_GLOBAL_CONSTANT_STRING_FOR_SYMBOL( Return );
