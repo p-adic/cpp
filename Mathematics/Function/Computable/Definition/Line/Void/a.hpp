@@ -2,6 +2,7 @@
 
 #pragma once
 #include "../a.hpp"
+#include "../../../../../../Utility/WrappedType/a.hpp"
 
 template <>
 class LineOfDefinitionOfComputableFunction<void> :
@@ -22,6 +23,7 @@ public:
 
   // PUT
   template <typename T1, typename T2> inline LineOfDefinitionOfComputableFunction( const VariableSymbol<T1>& x , const T2& t );
+  template <typename T1, typename T2> inline LineOfDefinitionOfComputableFunction( const VariableSymbol<T1>& x , const string& characterisation , const VariableSymbol<T2>& n , const VariableSymbol<T2>& bound , const ConditionOfComputableFunction& b );
   
   // PRINT
   template <typename... ARGS> inline LineOfDefinitionOfComputableFunction( const ListExpressionOfComputableFunction<ARGS...>& args );
@@ -36,6 +38,7 @@ public:
 };
 
 template <typename T1, typename T2> inline LineOfDefinitionOfComputableFunction<void> PUT( const VariableSymbol<T1>& x , const T2& t );
+template <typename T1, typename T2> inline LineOfDefinitionOfComputableFunction<void> PUT( const VariableSymbol<T1>& x , const string& characterisation , const WrappedType<VariableSymbol<T2> >& n , const WrappedType<VariableSymbol<T2> >& bound , const WrappedType<ConditionOfComputableFunction>& b );
 
 template <typename... ARGS> inline LineOfDefinitionOfComputableFunction<void> PRINT( const ARGS&... args );
 
