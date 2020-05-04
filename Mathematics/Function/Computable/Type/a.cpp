@@ -143,7 +143,7 @@ void TypeOfComputableFunction::InputDefinition( ofstream& ofs , const string& la
 
   }
 
-  ERR_IMPUT( lnguage , style );
+  ERR_IMPUT( language , style );
   return;
 
 }
