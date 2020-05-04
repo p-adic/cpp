@@ -1983,7 +1983,7 @@ string LogicalAndToString( VLTree<string>::const_iterator& itr , string& languag
 	     
 	     if( complicated ){
 
-	       PutParenthesis( b_current );
+	       PutKagi( b_current );
 
 	     }
 
@@ -2159,7 +2159,7 @@ string LogicalOrToString( VLTree<string>::const_iterator& itr , string& language
 	     
 	     if( complicated ){
 
-	       PutParenthesis( b_current );
+	       PutKagi( b_current );
 
 	     }
 
