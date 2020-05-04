@@ -101,6 +101,44 @@ void DefinitionOfComputableFunction<Ret,Args...>::WriteOn( const OperatorSymbol<
 
   }
 
+
+  if( language == EnglishString() ){
+
+    cout << "顯示" << *p_function_name << "的定義的樹状結構:" << endl;
+    cout << Get().Display() << endl;
+    cout << endl;
+    
+    cout << "在" << filename << "上寫" << *p_function_name << "的定義的中文翻譯:" << endl;
+    cout << "…" << endl;
+  
+    if( !ofs ){
+      cout << "錯誤：無法打開文件。" << endl;
+      cin.get();
+      return;
+    }
+
+    cout << "……" << endl;
+
+    try{
+
+      InputDefinition( ofs , f.GetTotality().Get() , *p_function_name , itr_f , language , style );
+
+    }
+    catch( const ErrorType& e ){
+
+      IGNORED_ERR( e );
+
+    }
+  
+    ofs << endl;
+
+    cout << "………" << endl;
+    cout << "寫完了。" << endl;
+    return;
+
+  }
+
+  ERR_IMPUT( language );
   return;
 
 }
