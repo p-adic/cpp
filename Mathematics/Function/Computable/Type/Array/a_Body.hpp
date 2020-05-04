@@ -36,7 +36,7 @@ template <typename Ret, typename... Args> inline DEFINITION_OF_VARIADIC_FUNCTION
 template <typename Ret> inline const FunctionSymbol<nat,ArrayTypeOfComputableFunction<Ret> >& LengthSymbol()
 {
 
-  static const FunctionSymbol<nat,ArrayTypeOfComputableFunction<Ret>> f
+  static const FunctionSymbol<nat,ArrayTypeOfComputableFunction<Ret> > f
     {
 
     "Lng" ,
@@ -62,7 +62,7 @@ template <typename Ret> inline PrettyExpression<nat> LengthSymbolApplication( co
 template <typename Ret> inline const PrettyOperator<Ret,ArrayTypeOfComputableFunction<Ret>,nat>& EntryAccessSymbol()
 {
 
-  static const PrettyOperator<ArrayTypeOfComputableFunction<Ret>,Ret> f
+  static const PrettyOperator<Ret,ArrayTypeOfComputableFunction<Ret>,nat> f
   {
 
      LbrackString() + RbrackString() ,
@@ -104,7 +104,7 @@ template <typename Ret> inline const FunctionSymbol<ArrayTypeOfComputableFunctio
 
       ) ,
      GetTypeName<ArrayTypeOfComputableFunction<Ret> >() ,
-     VariableSymbol<ArrayTypeOfComputableFunction<Ret>>( "a" ) ,
+     VariableSymbol<ArrayTypeOfComputableFunction<Ret> >( "a" ) ,
      VariableSymbol<int>( "n" , GetTypeName<nat>() )
 
        };
@@ -132,8 +132,8 @@ template <typename Ret> inline const FunctionSymbol<ArrayTypeOfComputableFunctio
       RparenString()
 
       ) ,
-     GetTypeName<ArrayTypeOfComputableFunction<Ret>>() ,
-     VariableSymbol<ArrayTypeOfComputableFunction<Ret>>( "a" ) ,
+     GetTypeName<ArrayTypeOfComputableFunction<Ret> >() ,
+     VariableSymbol<ArrayTypeOfComputableFunction<Ret> >( "a" ) ,
      VariableSymbol<int>( "n" , GetTypeName<nat>() )
 
        };
