@@ -102,7 +102,7 @@ void DefinitionOfComputableFunction<Ret,Args...>::WriteOn( const OperatorSymbol<
   }
 
 
-  if( language == EnglishString() ){
+  if( language == ChineseString() ){
 
     cout << "顯示" << *p_function_name << "的定義的樹状結構:" << endl;
     cout << Get().Display() << endl;
