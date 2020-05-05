@@ -18,16 +18,16 @@ void TypeOfComputableFunction::WriteOn( const TypeOfComputableFunction& dummy , 
 
   if( language == JapaneseString() ){
 
-    cout << " " << m_type_name << " ‚Ì’è‹`•¶‚Ì“ú–{Œê–ó‚ð" << filename << "‚É‘‚«ž‚Ý‚Ü‚·F" << endl;
-    cout << "c" << endl;
+    cout << " " << m_type_name << " ¤ÎÄêµÁÊ¸¤ÎÆüËÜ¸ìÌõ¤ò" << filename << "¤Ë½ñ¤­¹þ¤ß¤Þ¤¹¡§" << endl;
+    cout << "¡Ä" << endl;
   
     if( !ofs ){
-      cout << "ƒtƒ@ƒCƒ‹‚ªŠJ‚¯‚Ü‚¹‚ñ‚Å‚µ‚½B" << endl;
+      cout << "¥Õ¥¡¥¤¥ë¤¬³«¤±¤Þ¤»¤ó¤Ç¤·¤¿¡£" << endl;
       cin.get();
       return;
     }
 
-    cout << "cc" << endl;
+    cout << "¡Ä¡Ä" << endl;
 
     try{
 
@@ -42,8 +42,8 @@ void TypeOfComputableFunction::WriteOn( const TypeOfComputableFunction& dummy , 
   
     ofs << endl;
 
-    cout << "ccc" << endl;
-    cout << "‘‚«ž‚Ý‚ªI—¹‚µ‚Ü‚µ‚½B" << endl;
+    cout << "¡Ä¡Ä¡Ä" << endl;
+    cout << "½ñ¤­¹þ¤ß¤¬½ªÎ»¤·¤Þ¤·¤¿¡£" << endl;
     return;
 
   }
@@ -51,7 +51,7 @@ void TypeOfComputableFunction::WriteOn( const TypeOfComputableFunction& dummy , 
   if( language == EnglishString() ){
 
     cout << "Writing an English translation of the definition of \\(" << m_type_name << "\\) on " << filename << ":" << endl;
-    cout << "c" << endl;
+    cout << "¡Ä" << endl;
   
     if( !ofs ){
       cout << "Error: Cannot open the file." << endl;
@@ -59,7 +59,7 @@ void TypeOfComputableFunction::WriteOn( const TypeOfComputableFunction& dummy , 
       return;
     }
 
-    cout << "cc" << endl;
+    cout << "¡Ä¡Ä" << endl;
 
     try{
 
@@ -74,7 +74,7 @@ void TypeOfComputableFunction::WriteOn( const TypeOfComputableFunction& dummy , 
   
     ofs << endl;
 
-    cout << "ccc" << endl;
+    cout << "¡Ä¡Ä¡Ä" << endl;
     cout << "Finished writing." << endl;
 
     return;
@@ -83,16 +83,16 @@ void TypeOfComputableFunction::WriteOn( const TypeOfComputableFunction& dummy , 
 
   if( language == ChineseString() ){
 
-    cout << "Ý" << filename << "ã›" << m_type_name << "“I’è‹`“I’†•¶–|æ¡:" << endl;
-    cout << "c" << endl;
+    cout << "ºß" << filename << "¾åÕí" << m_type_name << "ÅªÄêµÁÅªÃæÊ¸ËÝì£:" << endl;
+    cout << "¡Ä" << endl;
   
     if( !ofs ){
-      cout << "öŒëF–³–@‘ÅŠJ•¶ŒB" << endl;
+      cout << "ºø¸í¡§ÌµË¡ÂÇ³«Ê¸·ï¡£" << endl;
       cin.get();
       return;
     }
 
-    cout << "cc" << endl;
+    cout << "¡Ä¡Ä" << endl;
 
     try{
 
@@ -107,8 +107,41 @@ void TypeOfComputableFunction::WriteOn( const TypeOfComputableFunction& dummy , 
   
     ofs << endl;
 
-    cout << "ccc" << endl;
-    cout << "›Š®—¹B" << endl;
+    cout << "¡Ä¡Ä¡Ä" << endl;
+    cout << "Õí´°Î»¡£" << endl;
+
+    return;
+
+  }
+
+  if( language == FrenchString() ){
+
+    cout << "ª±crire une traduction en anglais de la d«±finition de \\(" << m_type_name << "\\) sur " << filename << ":" << endl;
+    cout << "¡Ä" << endl;
+  
+    if( !ofs ){
+      cout << "Erreur: impossible d'ouvrir le fichier." << endl;
+      cin.get();
+      return;
+    }
+
+    cout << "¡Ä¡Ä" << endl;
+
+    try{
+
+      InputDefinition( ofs , language , style );
+
+    }
+    catch( const ErrorType& e ){
+
+      IGNORED_ERR( e );
+
+    }
+  
+    ofs << endl;
+
+    cout << "¡Ä¡Ä¡Ä" << endl;
+    cout << "ª±criture termin«±e." << endl;
 
     return;
 
@@ -124,7 +157,7 @@ void TypeOfComputableFunction::InputDefinition( ofstream& ofs , const string& la
 
   if( language == JapaneseString() && style == FandomString() ){
 
-    ofs << "Ä‹A“IW‡\\(" << m_type_name << "\\)‚ð\\(" << m_definition << "\\)‚Æ’è‚ß‚éB" << endl;
+    ofs << "ºÆµ¢Åª½¸¹ç\\(" << m_type_name << "\\)¤ò\\(" << m_definition << "\\)¤ÈÄê¤á¤ë¡£" << endl;
     return;
 
   }
@@ -138,7 +171,14 @@ void TypeOfComputableFunction::InputDefinition( ofstream& ofs , const string& la
 
   if( language == ChineseString() && style == FandomString() ){
 
-    ofs << "‰ä›’ç¨ŸdW‡\\(" << m_type_name << "\\)’è‹`ˆ×\\(" << m_definition << "\\)B" << endl;
+    ofs << "²æÕòîªÝÅ½¸¹ç\\(" << m_type_name << "\\)ÄêµÁ°Ù\\(" << m_definition << "\\)¡£" << endl;
+    return;
+
+  }
+
+  if( language == FrenchString() && style == FandomString() ){
+
+    ofs << "Je d«±finis un ensemble r«±cursif \\(" << m_type_name << "\\) comme \\(" << m_definition << "\\)." << endl;
     return;
 
   }
