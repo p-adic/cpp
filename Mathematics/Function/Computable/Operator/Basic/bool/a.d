@@ -4,23 +4,8 @@ Mathematics/Function/Computable/Operator/Basic/bool/a.o: \
  C:/Users/user/Documents/Programming/Mathematics/Header.hpp \
  C:/Users/user/Documents/Programming/Utility/Header.hpp \
  C:/Users/user/Documents/Programming/Utility/Header_Alias.hpp \
- C:/Users/user/Documents/Programming/Error/Debug/a_Macro.hpp \
- C:/Users/user/Documents/Programming/Error/a_Body.hpp \
- C:/Users/user/Documents/Programming/Error/a.hpp \
- C:/Users/user/Documents/Programming/Error/a_Macro.hpp \
- C:/Users/user/Documents/Programming/Error/Position/a_Macro.hpp \
- C:/Users/user/Documents/Programming/Utility/GlobalVariable/a_Macro.hpp \
- C:/Users/user/Documents/Programming/Utility/Macro_Macro.hpp \
- C:/Users/user/Documents/Programming/Error/Warning/a_Macro.hpp \
- C:/Users/user/Documents/Programming/Error/BreakPoint/a.hpp \
- C:/Users/user/Documents/Programming/Error/BreakPoint/a_Macro.hpp \
- C:/Users/user/Documents/Programming/Utility/SmartPointer/a.hpp \
- C:/Users/user/Documents/Programming/Error/Position/a.hpp \
- C:/Users/user/Documents/Programming/Error/Warning/a.hpp \
- C:/Users/user/Documents/Programming/Utility/GlobalVariable/a.hpp \
- C:/Users/user/Documents/Programming/Utility/GlobalVariable/a_Alias.hpp \
- C:/Users/user/Documents/Programming/Mathematics/Function/a_Alias.hpp \
  C:/Users/user/Documents/Programming/Utility/Macro.hpp \
+ C:/Users/user/Documents/Programming/Utility/Macro_Macro.hpp \
  C:/Users/user/Documents/Programming/Utility/String/a.hpp \
  C:/Users/user/Documents/Programming/Utility/String/a_Macro.hpp \
  C:/Users/user/Documents/Programming/SFINAE/MemberFunction/a_Macro.hpp \
@@ -33,6 +18,24 @@ Mathematics/Function/Computable/Operator/Basic/bool/a.o: \
  C:/Users/user/Documents/Programming/SFINAE/MetaFunction/IsReferenceOf/a.hpp \
  C:/Users/user/Documents/Programming/SFINAE/a_Alias.hpp \
  C:/Users/user/Documents/Programming/Utility/String/a_Alias.hpp \
+ C:/Users/user/Documents/Programming/Utility/String/a_Body.hpp \
+ C:/Users/user/Documents/Programming/Error/IgnoredError/a_Body.hpp \
+ C:/Users/user/Documents/Programming/Error/IgnoredError/a.hpp \
+ C:/Users/user/Documents/Programming/Error/IgnoredError/a_Macro.hpp \
+ C:/Users/user/Documents/Programming/Error/a_Macro.hpp \
+ C:/Users/user/Documents/Programming/Error/Position/a_Macro.hpp \
+ C:/Users/user/Documents/Programming/Utility/GlobalVariable/a_Macro.hpp \
+ C:/Users/user/Documents/Programming/Error/Warning/a_Macro.hpp \
+ C:/Users/user/Documents/Programming/Error/a.hpp \
+ C:/Users/user/Documents/Programming/Error/BreakPoint/a.hpp \
+ C:/Users/user/Documents/Programming/Error/BreakPoint/a_Macro.hpp \
+ C:/Users/user/Documents/Programming/Utility/SmartPointer/a.hpp \
+ C:/Users/user/Documents/Programming/Error/Position/a.hpp \
+ C:/Users/user/Documents/Programming/Error/Warning/a.hpp \
+ C:/Users/user/Documents/Programming/Utility/GlobalVariable/a.hpp \
+ C:/Users/user/Documents/Programming/Utility/GlobalVariable/a_Alias.hpp \
+ C:/Users/user/Documents/Programming/Mathematics/Function/a_Alias.hpp \
+ C:/Users/user/Documents/Programming/Error/a_Body.hpp \
  C:/Users/user/Documents/Programming/Error/FaultInCoding/a.hpp \
  C:/Users/user/Documents/Programming/Error/FaultInCoding/a_Macro.hpp \
  C:/Users/user/Documents/Programming/Error/BreakPoint/a_Body.hpp \
@@ -52,22 +55,17 @@ Mathematics/Function/Computable/Operator/Basic/bool/a.o: \
  C:/Users/user/Documents/Programming/SFINAE/NonMemberFunction/ToValue/a.hpp \
  C:/Users/user/Documents/Programming/SFINAE/NonMemberFunction/ToValue/a_Macro.hpp \
  C:/Users/user/Documents/Programming/Utility/String/Normalised/a_Alias.hpp \
- C:/Users/user/Documents/Programming/Utility/String/a_Body.hpp \
- C:/Users/user/Documents/Programming/Error/IgnoredError/a_Body.hpp \
- C:/Users/user/Documents/Programming/Error/IgnoredError/a.hpp \
- C:/Users/user/Documents/Programming/Error/IgnoredError/a_Macro.hpp \
- C:/Users/user/Documents/Programming/Error/UnknownError/a_Body.hpp \
- C:/Users/user/Documents/Programming/Error/UnknownError/a.hpp \
- C:/Users/user/Documents/Programming/Error/UnknownError/a_Macro.hpp \
- C:/Users/user/Documents/Programming/SFINAE/MemberFunction/a_Body.hpp \
+ C:/Users/user/Documents/Programming/SFINAE/MetaFunction/IsList/a.hpp \
+ C:/Users/user/Documents/Programming/SFINAE/NonMemberFunction/Constified/a_Body.hpp \
+ C:/Users/user/Documents/Programming/SFINAE/NonMemberFunction/a_Body.hpp \
  C:/Users/user/Documents/Programming/SFINAE/a_Body.hpp \
  C:/Users/user/Documents/Programming/Error/IllegalAccess/a_Body.hpp \
  C:/Users/user/Documents/Programming/Error/IllegalAccess/a.hpp \
  C:/Users/user/Documents/Programming/Error/IllegalAccess/a_Macro.hpp \
+ C:/Users/user/Documents/Programming/Error/UnknownError/a_Body.hpp \
+ C:/Users/user/Documents/Programming/Error/UnknownError/a.hpp \
+ C:/Users/user/Documents/Programming/Error/UnknownError/a_Macro.hpp \
  C:/Users/user/Documents/Programming/Utility/SmartPointer/a_Body.hpp \
- C:/Users/user/Documents/Programming/SFINAE/MetaFunction/IsList/a.hpp \
- C:/Users/user/Documents/Programming/SFINAE/NonMemberFunction/Constified/a_Body.hpp \
- C:/Users/user/Documents/Programming/SFINAE/NonMemberFunction/a_Body.hpp \
  C:/Users/user/Documents/Programming/SFINAE/MemberFunction/Constructor/a_Body.hpp \
  C:/Users/user/Documents/Programming/SFINAE/NonMemberFunction/ToValue/a_Body.hpp \
  C:/Users/user/Documents/Programming/Utility/GlobalVariable/a_Body.hpp \
@@ -89,6 +87,8 @@ Mathematics/Function/Computable/Operator/Basic/bool/a.o: \
  C:/Users/user/Documents/Programming/Utility/WrappedType/a_Body.hpp \
  C:/Users/user/Documents/Programming/Utility/WrappedType/a.hpp \
  C:/Users/user/Documents/Programming/Mathematics/SetTheory/DirectProduct/a_Body.hpp \
+ C:/Users/user/Documents/Programming/SFINAE/MemberFunction/a_Body.hpp \
+ C:/Users/user/Documents/Programming/Error/Debug/a_Macro.hpp \
  Mathematics/Function/Computable/Operator/Basic/bool/a_Body.hpp \
  Mathematics/Function/Computable/Operator/Basic/bool/a.hpp \
  Mathematics/Function/Computable/Operator/Basic/bool/a_Macro.hpp \
@@ -181,39 +181,9 @@ C:/Users/user/Documents/Programming/Utility/Header.hpp:
 
 C:/Users/user/Documents/Programming/Utility/Header_Alias.hpp:
 
-C:/Users/user/Documents/Programming/Error/Debug/a_Macro.hpp:
-
-C:/Users/user/Documents/Programming/Error/a_Body.hpp:
-
-C:/Users/user/Documents/Programming/Error/a.hpp:
-
-C:/Users/user/Documents/Programming/Error/a_Macro.hpp:
-
-C:/Users/user/Documents/Programming/Error/Position/a_Macro.hpp:
-
-C:/Users/user/Documents/Programming/Utility/GlobalVariable/a_Macro.hpp:
+C:/Users/user/Documents/Programming/Utility/Macro.hpp:
 
 C:/Users/user/Documents/Programming/Utility/Macro_Macro.hpp:
-
-C:/Users/user/Documents/Programming/Error/Warning/a_Macro.hpp:
-
-C:/Users/user/Documents/Programming/Error/BreakPoint/a.hpp:
-
-C:/Users/user/Documents/Programming/Error/BreakPoint/a_Macro.hpp:
-
-C:/Users/user/Documents/Programming/Utility/SmartPointer/a.hpp:
-
-C:/Users/user/Documents/Programming/Error/Position/a.hpp:
-
-C:/Users/user/Documents/Programming/Error/Warning/a.hpp:
-
-C:/Users/user/Documents/Programming/Utility/GlobalVariable/a.hpp:
-
-C:/Users/user/Documents/Programming/Utility/GlobalVariable/a_Alias.hpp:
-
-C:/Users/user/Documents/Programming/Mathematics/Function/a_Alias.hpp:
-
-C:/Users/user/Documents/Programming/Utility/Macro.hpp:
 
 C:/Users/user/Documents/Programming/Utility/String/a.hpp:
 
@@ -238,6 +208,42 @@ C:/Users/user/Documents/Programming/SFINAE/MetaFunction/IsReferenceOf/a.hpp:
 C:/Users/user/Documents/Programming/SFINAE/a_Alias.hpp:
 
 C:/Users/user/Documents/Programming/Utility/String/a_Alias.hpp:
+
+C:/Users/user/Documents/Programming/Utility/String/a_Body.hpp:
+
+C:/Users/user/Documents/Programming/Error/IgnoredError/a_Body.hpp:
+
+C:/Users/user/Documents/Programming/Error/IgnoredError/a.hpp:
+
+C:/Users/user/Documents/Programming/Error/IgnoredError/a_Macro.hpp:
+
+C:/Users/user/Documents/Programming/Error/a_Macro.hpp:
+
+C:/Users/user/Documents/Programming/Error/Position/a_Macro.hpp:
+
+C:/Users/user/Documents/Programming/Utility/GlobalVariable/a_Macro.hpp:
+
+C:/Users/user/Documents/Programming/Error/Warning/a_Macro.hpp:
+
+C:/Users/user/Documents/Programming/Error/a.hpp:
+
+C:/Users/user/Documents/Programming/Error/BreakPoint/a.hpp:
+
+C:/Users/user/Documents/Programming/Error/BreakPoint/a_Macro.hpp:
+
+C:/Users/user/Documents/Programming/Utility/SmartPointer/a.hpp:
+
+C:/Users/user/Documents/Programming/Error/Position/a.hpp:
+
+C:/Users/user/Documents/Programming/Error/Warning/a.hpp:
+
+C:/Users/user/Documents/Programming/Utility/GlobalVariable/a.hpp:
+
+C:/Users/user/Documents/Programming/Utility/GlobalVariable/a_Alias.hpp:
+
+C:/Users/user/Documents/Programming/Mathematics/Function/a_Alias.hpp:
+
+C:/Users/user/Documents/Programming/Error/a_Body.hpp:
 
 C:/Users/user/Documents/Programming/Error/FaultInCoding/a.hpp:
 
@@ -277,21 +283,11 @@ C:/Users/user/Documents/Programming/SFINAE/NonMemberFunction/ToValue/a_Macro.hpp
 
 C:/Users/user/Documents/Programming/Utility/String/Normalised/a_Alias.hpp:
 
-C:/Users/user/Documents/Programming/Utility/String/a_Body.hpp:
+C:/Users/user/Documents/Programming/SFINAE/MetaFunction/IsList/a.hpp:
 
-C:/Users/user/Documents/Programming/Error/IgnoredError/a_Body.hpp:
+C:/Users/user/Documents/Programming/SFINAE/NonMemberFunction/Constified/a_Body.hpp:
 
-C:/Users/user/Documents/Programming/Error/IgnoredError/a.hpp:
-
-C:/Users/user/Documents/Programming/Error/IgnoredError/a_Macro.hpp:
-
-C:/Users/user/Documents/Programming/Error/UnknownError/a_Body.hpp:
-
-C:/Users/user/Documents/Programming/Error/UnknownError/a.hpp:
-
-C:/Users/user/Documents/Programming/Error/UnknownError/a_Macro.hpp:
-
-C:/Users/user/Documents/Programming/SFINAE/MemberFunction/a_Body.hpp:
+C:/Users/user/Documents/Programming/SFINAE/NonMemberFunction/a_Body.hpp:
 
 C:/Users/user/Documents/Programming/SFINAE/a_Body.hpp:
 
@@ -301,13 +297,13 @@ C:/Users/user/Documents/Programming/Error/IllegalAccess/a.hpp:
 
 C:/Users/user/Documents/Programming/Error/IllegalAccess/a_Macro.hpp:
 
+C:/Users/user/Documents/Programming/Error/UnknownError/a_Body.hpp:
+
+C:/Users/user/Documents/Programming/Error/UnknownError/a.hpp:
+
+C:/Users/user/Documents/Programming/Error/UnknownError/a_Macro.hpp:
+
 C:/Users/user/Documents/Programming/Utility/SmartPointer/a_Body.hpp:
-
-C:/Users/user/Documents/Programming/SFINAE/MetaFunction/IsList/a.hpp:
-
-C:/Users/user/Documents/Programming/SFINAE/NonMemberFunction/Constified/a_Body.hpp:
-
-C:/Users/user/Documents/Programming/SFINAE/NonMemberFunction/a_Body.hpp:
 
 C:/Users/user/Documents/Programming/SFINAE/MemberFunction/Constructor/a_Body.hpp:
 
@@ -350,6 +346,10 @@ C:/Users/user/Documents/Programming/Utility/WrappedType/a_Body.hpp:
 C:/Users/user/Documents/Programming/Utility/WrappedType/a.hpp:
 
 C:/Users/user/Documents/Programming/Mathematics/SetTheory/DirectProduct/a_Body.hpp:
+
+C:/Users/user/Documents/Programming/SFINAE/MemberFunction/a_Body.hpp:
+
+C:/Users/user/Documents/Programming/Error/Debug/a_Macro.hpp:
 
 Mathematics/Function/Computable/Operator/Basic/bool/a_Body.hpp:
 

@@ -176,10 +176,9 @@
   
 
 // display
-#define DISPLAY( OBJECT )						\
+#define DISPLAY( OBJECT , LANGUAGE )					\
   									\
-  cout << TO_STRING( OBJECT ) << " ‚Ì–Ø\‘¢‚ðo—Í‚µ‚Ü‚·F" << endl;	\
-  cout << CONNECT( CONNECT( __SYMBOL_OF_, OBJECT ) , __ ).Display() << endl; \
+  cout << CONNECT( CONNECT( __SYMBOL_OF_, OBJECT ) , __ ).Display( TO_STRING( OBJECT ) , LANGUAGE ) << endl; \
   cout << endl;								\
 
 
@@ -187,7 +186,10 @@
 #define JAPANESE JapaneseString() 
 #define ENGLISH EnglishString() 
 #define CHINESE ChineseString() 
+#define FRENCH FrenchString() 
+
 #define FANDOM FandomString() 
+
 #define APP ios::app 
 #define TRUNC ios::trunc 
 

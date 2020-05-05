@@ -282,7 +282,7 @@ void SyntaxOfComputableFunction::InputTotality( ofstream& ofs , const string& to
       return;
 
     }
-
+    
     if( totality == PrimitiveString() ){
 
       ofs << "r\\'ecursive primitive" << endl;
