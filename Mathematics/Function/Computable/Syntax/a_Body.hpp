@@ -22,8 +22,6 @@ template <typename... Args> inline const string& SyntaxOfComputableFunction::Get
 template <typename... Args> inline VLTree<string> SyntaxOfComputableFunction::GetSubTree( const Args&... args ) const { return VLTree<string>( 0 , m_syntax.GetIterator( args... ) ); }
 
 
-inline string SyntaxOfComputableFunction::Display() const noexcept { return m_syntax.Display(); }
-
 template <typename... Args>
 auto ExpressionsToListSyntax( const Args&... args ) -> typename enable_if<conjunction<is_same<Args,VLTree<string> >...>::value,VLTree<string> >::type
 {
@@ -140,7 +138,7 @@ DEFINITION_OF_GLOBAL_CONSTANT_STRING_FOR_SYMBOL( Nest , nest );
 DEFINITION_OF_GLOBAL_CONSTANT_STRING_FOR_SYMBOL( List , list );
 
 // expression
-DEFINITION_OF_GLOBAL_CONSTANT_STRING_FOR_SYMBOL( True , \\Top );
+DEFINITION_OF_GLOBAL_CONSTANT_STRING_FOR_SYMBOL( True , \\top );
 DEFINITION_OF_GLOBAL_CONSTANT_STRING_FOR_SYMBOL( False , \\perp );
 
 // function
@@ -198,6 +196,8 @@ DEFINITION_OF_GLOBAL_CONSTANT_STRING_FOR_SYMBOL( Japanese , Japanese );
 DEFINITION_OF_GLOBAL_CONSTANT_STRING_FOR_SYMBOL( English , English );
 DEFINITION_OF_GLOBAL_CONSTANT_STRING_FOR_SYMBOL( english , english );
 DEFINITION_OF_GLOBAL_CONSTANT_STRING_FOR_SYMBOL( Chinese , Chinese );
+DEFINITION_OF_GLOBAL_CONSTANT_STRING_FOR_SYMBOL( French , French );
+DEFINITION_OF_GLOBAL_CONSTANT_STRING_FOR_SYMBOL( french , french );
 
 DEFINITION_OF_GLOBAL_CONSTANT_STRING_FOR_SYMBOL( Fandom , Fandom );
 DEFINITION_OF_GLOBAL_CONSTANT_STRING_FOR_SYMBOL( Jekyll , Jekyll );

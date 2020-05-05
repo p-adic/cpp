@@ -27,7 +27,7 @@ public:
   void SetSymbol( const string& symbol );
   void RomaniseSymbol();
 
-  inline string Display() const noexcept;
+  string Display( const string& name , const string& language ) const noexcept;
 
 protected:
   // definition
@@ -222,6 +222,8 @@ DECLARATION_OF_GLOBAL_CONSTANT_STRING_FOR_SYMBOL( Japanese );
 DECLARATION_OF_GLOBAL_CONSTANT_STRING_FOR_SYMBOL( English );
 DECLARATION_OF_GLOBAL_CONSTANT_STRING_FOR_SYMBOL( english );
 DECLARATION_OF_GLOBAL_CONSTANT_STRING_FOR_SYMBOL( Chinese );
+DECLARATION_OF_GLOBAL_CONSTANT_STRING_FOR_SYMBOL( French );
+DECLARATION_OF_GLOBAL_CONSTANT_STRING_FOR_SYMBOL( french );
 
 DECLARATION_OF_GLOBAL_CONSTANT_STRING_FOR_SYMBOL( Fandom );
 DECLARATION_OF_GLOBAL_CONSTANT_STRING_FOR_SYMBOL( Jekyll );
