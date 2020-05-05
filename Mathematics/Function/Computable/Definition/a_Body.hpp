@@ -33,19 +33,19 @@ void DefinitionOfComputableFunction<Ret,Args...>::WriteOn( const OperatorSymbol<
   
   if( language == JapaneseString() ){
 
-    cout << " " << *p_function_name << " ‚Ì’è‹`•¶‚Ì–Ø\‘¢‚ðo—Í‚µ‚Ü‚·F" << endl;
+    cout << " " << *p_function_name << " ¤ÎÄêµÁÊ¸¤ÎÌÚ¹½Â¤¤ò½ÐÎÏ¤·¤Þ¤¹¡§" << endl;
     cout << Get().Display() << endl;
     cout << endl;
-    cout << " " << *p_function_name << " ‚Ì’è‹`•¶‚Ì“ú–{Œê–ó‚ð " << filename << " ‚É‘‚«ž‚Ý‚Ü‚·F" << endl;
-    cout << "c" << endl;
+    cout << " " << *p_function_name << " ¤ÎÄêµÁÊ¸¤ÎÆüËÜ¸ìÌõ¤ò " << filename << " ¤Ë½ñ¤­¹þ¤ß¤Þ¤¹¡§" << endl;
+    cout << "¡Ä" << endl;
   
     if( !ofs ){
-      cout << "ƒtƒ@ƒCƒ‹‚ªŠJ‚¯‚Ü‚¹‚ñ‚Å‚µ‚½B" << endl;
+      cout << "¥Õ¥¡¥¤¥ë¤¬³«¤±¤Þ¤»¤ó¤Ç¤·¤¿¡£" << endl;
       cin.get();
       return;
     }
 
-    cout << "cc" << endl;
+    cout << "¡Ä¡Ä" << endl;
 
     try{
 
@@ -60,8 +60,8 @@ void DefinitionOfComputableFunction<Ret,Args...>::WriteOn( const OperatorSymbol<
   
     ofs << endl;
 
-    cout << "ccc" << endl;
-    cout << "‘‚«ž‚Ý‚ªI—¹‚µ‚Ü‚µ‚½B" << endl;
+    cout << "¡Ä¡Ä¡Ä" << endl;
+    cout << "½ñ¤­¹þ¤ß¤¬½ªÎ»¤·¤Þ¤·¤¿¡£" << endl;
     return;
 
   }
@@ -72,7 +72,7 @@ void DefinitionOfComputableFunction<Ret,Args...>::WriteOn( const OperatorSymbol<
     cout << Get().Display() << endl;
     cout << endl;
     cout << "Writing an English translation of the definition of " << *p_function_name << " on " << filename << ":" << endl;
-    cout << "c" << endl;
+    cout << "¡Ä" << endl;
   
     if( !ofs ){
       cout << "Error: Cannot open the file." << endl;
@@ -80,7 +80,7 @@ void DefinitionOfComputableFunction<Ret,Args...>::WriteOn( const OperatorSymbol<
       return;
     }
 
-    cout << "cc" << endl;
+    cout << "¡Ä¡Ä" << endl;
 
     try{
 
@@ -95,29 +95,28 @@ void DefinitionOfComputableFunction<Ret,Args...>::WriteOn( const OperatorSymbol<
   
     ofs << endl;
 
-    cout << "ccc" << endl;
+    cout << "¡Ä¡Ä¡Ä" << endl;
     cout << "Finished writing." << endl;
     return;
 
   }
 
-
   if( language == ChineseString() ){
 
-    cout << "èûŽ¦" << *p_function_name << "“I’è‹`“IŽ÷óŒ‹\:" << endl;
+    cout << "ðý¼¨" << *p_function_name << "ÅªÄêµÁÅª¼ù¾õ·ë¹½:" << endl;
     cout << Get().Display() << endl;
     cout << endl;
     
-    cout << "Ý" << filename << "ã›" << *p_function_name << "“I’è‹`“I’†•¶–|æ¡:" << endl;
-    cout << "c" << endl;
+    cout << "ºß" << filename << "¾åÕí" << *p_function_name << "ÅªÄêµÁÅªÃæÊ¸ËÝì£:" << endl;
+    cout << "¡Ä" << endl;
   
     if( !ofs ){
-      cout << "öŒëF–³–@‘ÅŠJ•¶ŒB" << endl;
+      cout << "ºø¸í¡§ÌµË¡ÂÇ³«Ê¸·ï¡£" << endl;
       cin.get();
       return;
     }
 
-    cout << "cc" << endl;
+    cout << "¡Ä¡Ä" << endl;
 
     try{
 
@@ -132,8 +131,43 @@ void DefinitionOfComputableFunction<Ret,Args...>::WriteOn( const OperatorSymbol<
   
     ofs << endl;
 
-    cout << "ccc" << endl;
-    cout << "›Š®—¹B" << endl;
+    cout << "¡Ä¡Ä¡Ä" << endl;
+    cout << "Õí´°Î»¡£" << endl;
+    return;
+
+  }
+
+  if( language == FrenchString() ){
+
+    cout << "Affichez l'arborescence de la d«±finition de " << *p_function_name << ":" << endl;
+    cout << Get().Display() << endl;
+    cout << endl;
+    cout << "ª±crire une traduction en anglais de la d«±finition de " << *p_function_name << " sur " << filename << ":" << endl;
+    cout << "¡Ä" << endl;
+  
+    if( !ofs ){
+      cout << "Erreur: impossible d'ouvrir le fichier." << endl;
+      cin.get();
+      return;
+    }
+
+    cout << "¡Ä¡Ä" << endl;
+
+    try{
+
+      InputDefinition( ofs , f.GetTotality().Get() , *p_function_name , itr_f , language , style );
+
+    }
+    catch( const ErrorType& e ){
+
+      IGNORED_ERR( e );
+
+    }
+  
+    ofs << endl;
+
+    cout << "¡Ä¡Ä¡Ä" << endl;
+    cout << "ª±criture termin«±e." << endl;
     return;
 
   }
