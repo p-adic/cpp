@@ -33,32 +33,28 @@ string SyntaxOfComputableFunction::Display( const string& name , const string& l
 
   if( language == JapaneseString() ){
 
-    const string s = " " + name + " §ŒÃ⁄πΩ¬§§ÚΩ–Œœ§∑§ﬁ§π°ß";
-    cout << s << endl;
+    cout << " " + name + " ÇÃñÿç\ë¢ÇèoóÕÇµÇ‹Ç∑ÅF" << endl;
     return m_syntax.Display();
 
   }
 
   if( language == EnglishString() ){
 
-    const string s = "Displaying the tree structure of " + name + " :";
-    cout << s << endl;
+    cout << "Displaying the tree structure of " + name + " :" << endl;
     return m_syntax.Display();
 
   }
 
   if( language == ChineseString() ){
 
-    const string s = "˝º® " + name + " ≈™º˘æı∑ÎπΩ°ß";
-    cout << s << endl;
+    cout << "Ë˚é¶ " + name + " ìIé˜èÛåãç\ÅF" << endl;
     return m_syntax.Display();
 
   }
 
   if( language == FrenchString() ){
 
-    const string s = u8"Affichage de la structure arborescente de " + name + u8" :";
-    cout << s << endl;
+    cout << "Affichage de la structure arborescente de " + name + " :" << endl;
     return m_syntax.Display();
 
   }
@@ -192,28 +188,28 @@ void SyntaxOfComputableFunction::InputTotality( ofstream& ofs , const string& to
 
     if( totality == RecursiveString() ){
 
-      ofs << "∑◊ªª≤ƒ«Ω¥ÿøÙ" << endl;
+      ofs << "åvéZâ¬î\ä÷êî" << endl;
       return;
 
     }
 
     if( totality == PartialString() ){
 
-      ofs << "∑◊ªª≤ƒ«Ω…Ù ¨¥ÿøÙ" << endl;
+      ofs << "åvéZâ¬î\ïîï™ä÷êî" << endl;
       return;
 
     }
 
     if( totality == TotalString() ){
 
-      ofs << "∑◊ªª≤ƒ«Ω¡¥∞Ë¥ÿøÙ" << endl;
+      ofs << "åvéZâ¬î\ëSàÊä÷êî" << endl;
       return;
 
     }
 
     if( totality == PrimitiveString() ){
 
-      ofs << "∏∂ªœ∫∆µ¢≈™¥ÿøÙ" << endl;
+      ofs << "å¥énçƒãAìIä÷êî" << endl;
       return;
 
     }
@@ -229,32 +225,32 @@ void SyntaxOfComputableFunction::InputTotality( ofstream& ofs , const string& to
 
   if( language == ChineseString() ){
 
-    ofs << "≤ÊƒÍµ¡∞Ï∏ƒ";
+    ofs << "â‰íËã`àÍå¬";
     
     if( totality == RecursiveString() ){
 
-      ofs << "≤ƒ∑◊ªª»°⁄À" << endl;
+      ofs << "â¬åvéZîüù…" << endl;
       return;
 
     }
 
     if( totality == PartialString() ){
 
-      ofs << "≤ƒ∑◊ªª –»°⁄À" << endl;
+      ofs << "â¬åvéZïŒîüù…" << endl;
       return;
 
     }
 
     if( totality == TotalString() ){
 
-      ofs << "≤ƒ∑◊ªª¡¥»°⁄À" << endl;
+      ofs << "â¬åvéZëSîüù…" << endl;
       return;
 
     }
 
     if( totality == PrimitiveString() ){
 
-      ofs << "∏∂ªœÓ™›≈»°⁄À" << endl;
+      ofs << "å¥énÁ®üdîüù…" << endl;
       return;
 
     }
@@ -264,32 +260,32 @@ void SyntaxOfComputableFunction::InputTotality( ofstream& ofs , const string& to
 
   if( language == FrenchString() ){
 
-    ofs << u8"Je dè´±finis une fonction";
+    ofs << "Je d\\'efinis une fonction ";
     
     if( totality == RecursiveString() ){
 
-      ofs << u8"rè´±cursive" << endl;
+      ofs << "r\\'ecursive" << endl;
       return;
 
     }
 
     if( totality == PartialString() ){
 
-      ofs << u8"partielle rè´±cursive" << endl;
+      ofs << "partielle r\\'ecursive" << endl;
       return;
 
     }
 
     if( totality == TotalString() ){
 
-      ofs << u8"totale rè´±cursive" << endl;
+      ofs << "totale r\\'ecursive" << endl;
       return;
 
     }
 
     if( totality == PrimitiveString() ){
 
-      ofs << u8"rè´±cursive primitive" << endl;
+      ofs << "r\\'ecursive primitive" << endl;
       return;
 
     }
@@ -319,7 +315,7 @@ void SyntaxOfComputableFunction::InputDeclaration( ofstream& ofs , const string&
 
   if( language == JapaneseString() ){
 
-    ofs << "§Ú∞ ≤º§Œ§Ë§¶§À∫∆µ¢≈™§ÀƒÍ§·§Î°ß" << endl;
+    ofs << "Çà»â∫ÇÃÇÊÇ§Ç…çƒãAìIÇ…íËÇﬂÇÈÅF" << endl;
     return;
 
   }
@@ -333,7 +329,7 @@ void SyntaxOfComputableFunction::InputDeclaration( ofstream& ofs , const string&
 
   if( language == ChineseString() ){
 
-    ofs << "Õ—Ó™›≈ ˝À°«°≤º:" << endl;
+    ofs << "ópÁ®üdï˚ñ@î@â∫:" << endl;
     return;
 
   }
@@ -341,7 +337,7 @@ void SyntaxOfComputableFunction::InputDeclaration( ofstream& ofs , const string&
 
   if( language == FrenchString() ){
 
-    ofs << u8"de la maniè´≤re rè´±cursive suivante:" << endl;
+    ofs << "de la mani\\`ere r\\'ecursive suivante:" << endl;
     return;
 
   }
@@ -518,7 +514,14 @@ void SyntaxOfComputableFunction::InputIfLine( ofstream& ofs , const string& func
      {
 
        bool complicated = false;
-       const string& condition_name = ConditionToString( itr_condition , complicated , language , style );
+       string condition_name = ConditionToString( itr_condition , complicated , language , style );
+
+       if( complicated ){
+
+	 PutWrap( condition_name , language );
+    
+       }
+       
        const string& line_name = SyntaxToString( itr_line , 1 );
 
        if( line_name == ListString() ){
@@ -549,8 +552,8 @@ void SyntaxOfComputableFunction::InputIfListLine( ofstream& ofs , const string& 
 {
 
   if( language == JapaneseString() ){
-
-    ofs << condition_name << "§»§π§Î°£" << endl;
+    
+    ofs << condition_name << "Ç∆Ç∑ÇÈÅB" << endl;
     return;
       
   }
@@ -572,21 +575,21 @@ void SyntaxOfComputableFunction::InputIfListLine( ofstream& ofs , const string& 
   
   if( language == ChineseString() ){
 
-    ofs << "¿ﬂ¡€" << condition_name << "¿ÆŒ©°£" << endl;
+    ofs << "ê›ëz" << condition_name << "ê¨óßÅB" << endl;
     return;
     
   }
   
   if( language == FrenchString() ){
 
-    ofs << u8"Supposons que " << condition_name << u8"." << endl;
+    ofs << "Supposons que " << condition_name << "." << endl;
     return;
     
   }
   
   if( language == frenchString() ){
 
-    ofs << u8"supposons que " << condition_name << u8"." << endl;
+    ofs << "supposons que " << condition_name << "." << endl;
     language = FrenchString();
     return;
     
@@ -597,12 +600,12 @@ void SyntaxOfComputableFunction::InputIfListLine( ofstream& ofs , const string& 
 
 }
 
-void SyntaxOfComputableFunction::InputIfNonListLine( ofstream& ofs , const string& function_expression_name , const string& condition_name ,  VLTree<string>::const_iterator& itr_line , const uint& depth , string& language , const string& style ) const
+void SyntaxOfComputableFunction::InputIfNonListLine( ofstream& ofs , const string& function_expression_name , const string& condition_name , VLTree<string>::const_iterator& itr_line , const uint& depth , string& language , const string& style ) const
 {
 
   if( language == JapaneseString() ){
 
-    ofs << "§‚§∑" << condition_name << "§ §È§–°¢";
+    ofs << "Ç‡Çµ" << condition_name << "Ç»ÇÁÇŒÅA";
     return;
     
   }
@@ -624,14 +627,14 @@ void SyntaxOfComputableFunction::InputIfNonListLine( ofstream& ofs , const strin
 
   if( language == ChineseString() ){
 
-    ofs << "«°≤Ã" << condition_name << ", ¬ß";
+    ofs << "î@â " << condition_name << ", ë•";
     return;
       
   }
     
   if( language == FrenchString() ){
 
-    ofs << u8"Si " << condition_name << u8", alos ";
+    ofs << "Si " << condition_name << ", alos ";
     language = frenchString();
     return;
       
@@ -639,7 +642,7 @@ void SyntaxOfComputableFunction::InputIfNonListLine( ofstream& ofs , const strin
     
   if( language == frenchString() ){
 
-    ofs << u8"si " << condition_name << u8", then ";
+    ofs << "si " << condition_name << ", alos ";
     return;
       
   }
@@ -712,33 +715,24 @@ void SyntaxOfComputableFunction::InputPutLine( ofstream& ofs , VLTree<string>::c
 void SyntaxOfComputableFunction::InputPutConditionLine( ofstream& ofs , VLTree<string>::const_iterator& itr_cond , const string& variable_name , string& language , const string& style ) const
 {
 
+  bool complicated = false;
+  string b = ConditionToString( itr_cond , complicated , language , style );
+
+  if( complicated ){
+
+    PutWrap( b , language );
+    
+  }
+
   if( language == JapaneseString() && style == FandomString() ){
-
-    bool complicated = false;
-    string b = ConditionToString( itr_cond , complicated , language , style );
     
-    if( complicated ){
-
-      PutKagi( b );
-
-    }
-    
-    ofs << "æÚ∑Ô" << b << "§Ú\\(" << variable_name << "\\)§»√÷§Ø°£" << endl;
+    ofs << "èåè" << b << "Ç\\(" << variable_name << "\\)Ç∆íuÇ≠ÅB" << endl;
     return;
 
   }
 
   if( language == EnglishString() && style == FandomString() ){
 
-    bool complicated = false;
-    string b = ConditionToString( itr_cond , complicated , language , style );
-
-    if( complicated ){
-
-      PutParenthesis( b );
-
-    }
-    
     ofs << "Abbreviate the condition " << b << " to \\(" << variable_name << "\\)." << endl;
     return;
 
@@ -746,15 +740,6 @@ void SyntaxOfComputableFunction::InputPutConditionLine( ofstream& ofs , VLTree<s
 
   if( language == englishString() && style == FandomString() ){
 
-    bool complicated = false;
-    string b = ConditionToString( itr_cond , complicated , language , style );
-
-    if( complicated ){
-
-      PutParenthesis( b );
-
-    }
-    
     ofs << "abbreviate the condition " << b << " to \\(" << variable_name << "\\)." << endl;
     language = EnglishString();
     return;
@@ -763,48 +748,21 @@ void SyntaxOfComputableFunction::InputPutConditionLine( ofstream& ofs , VLTree<s
 
   if( language == ChineseString() && style == FandomString() ){
 
-    bool complicated = false;
-    string b = ConditionToString( itr_cond , complicated , language , style );
-    
-    if( complicated ){
-
-      PutKagi( b );
-
-    }
-    
-    ofs << "Œ·" << b << "∞Ÿ€Í∑Ô\\(" << variable_name << "\\)°£" << endl;
+    ofs << "óﬂ" << b << "à◊ûäåè\\(" << variable_name << "\\)ÅB" << endl;
     return;
 
   }
 
   if( language == FrenchString() && style == FandomString() ){
 
-    bool complicated = false;
-    string b = ConditionToString( itr_cond , complicated , language , style );
-
-    if( complicated ){
-
-      PutParenthesis( b );
-
-    }
-    
-    ofs << u8"Abrè´±ger la condition " << b << u8" è´¢ \\(" << variable_name << u8"\\)." << endl;
+    ofs << "Abr\\'eger la condition " << b << " \\`a \\(" << variable_name << "\\)." << endl;
     return;
 
   }
 
   if( language == frenchString() && style == FandomString() ){
 
-    bool complicated = false;
-    string b = ConditionToString( itr_cond , complicated , language , style );
-
-    if( complicated ){
-
-      PutParenthesis( b );
-
-    }
-    
-    ofs << u8"abrè´±ger la condition " << b << u8" è´¢ \\(" << variable_name << u8"\\)." << endl;
+    ofs << "abr\\'eger la condition " << b << " \\`a \\(" << variable_name << "\\)." << endl;
     language = FrenchString();
     return;
 
@@ -820,7 +778,7 @@ void SyntaxOfComputableFunction::InputPutNonConditionLine( ofstream& ofs , VLTre
 
   if( language == JapaneseString() && style == FandomString() ){
 
-    ofs << "\\(" << variable_name << " := " << ExpressionToString( itr_e ) << " \\in " << variable_type_name << "\\)§»√÷§Ø°£" << endl;
+    ofs << "\\(" << variable_name << " := " << ExpressionToString( itr_e ) << " \\in " << variable_type_name << "\\)Ç∆íuÇ≠ÅB" << endl;
     return;
 
   }
@@ -842,21 +800,21 @@ void SyntaxOfComputableFunction::InputPutNonConditionLine( ofstream& ofs , VLTre
 
   if( language == ChineseString() && style == FandomString() ){
 
-    ofs << "Œ·\\(" << variable_name << " := " << ExpressionToString( itr_e ) << " \\in " << variable_type_name << "\\)°£" << endl;
+    ofs << "óﬂ\\(" << variable_name << " := " << ExpressionToString( itr_e ) << " \\in " << variable_type_name << "\\)ÅB" << endl;
     return;
 
   }
 
   if( language == FrenchString() && style == FandomString() ){
 
-    ofs << u8"Pose \\(" << variable_name << u8" := " << ExpressionToString( itr_e ) << u8" \\in " << variable_type_name << u8"\\)." << endl;
+    ofs << "Pose \\(" << variable_name << " := " << ExpressionToString( itr_e ) << " \\in " << variable_type_name << "\\)." << endl;
     return;
       
   }
 
   if( language == frenchString() && style == FandomString() ){
 
-    ofs << u8"pose \\(" << variable_name << u8" := " << ExpressionToString( itr_e ) << u8" \\in " << variable_type_name << u8"\\)." << endl;
+    ofs << "pose \\(" << variable_name << " := " << ExpressionToString( itr_e ) << " \\in " << variable_type_name << "\\)." << endl;
     language = FrenchString();
     return;
       
@@ -1027,7 +985,7 @@ void SyntaxOfComputableFunction::InputUniqueExistenceNaturalNumberLine( ofstream
   
   if( language == JapaneseString() && style == FandomString() ){
 
-    ofs << condition << "§ÚÀ˛§ø§π\\(" << bound << "\\)∞ ≤º§Œ∞Ï∞’§ \\(" << local_variable << " \\in " << variable_type_name << "\\)§Ú\\(" << variable_name << "\\)§»√÷§Ø°£" << endl;
+    ofs << condition << "ÇñûÇΩÇ∑\\(" << bound << "\\)à»â∫ÇÃàÍà”Ç»\\(" << local_variable << " \\in " << variable_type_name << "\\)Ç\\(" << variable_name << "\\)Ç∆íuÇ≠ÅB" << endl;
     return;
 
   }
@@ -1049,21 +1007,21 @@ void SyntaxOfComputableFunction::InputUniqueExistenceNaturalNumberLine( ofstream
 
   if( language == ChineseString() && style == FandomString() ){
 
-    ofs << "ƒÍµ¡\\(" << variable_name << "\\)¿ßæÆ±˜∞ø≈˘±˜\\(" << bound << "\\)≥Óﬁ‡¬≠€Í∑Ô" << condition << "≈™Õ£∞Ï\\(" << local_variable << " \\in " << variable_type_name << "\\)°£" << endl;
+    ofs << "íËã`\\(" << variable_name << "\\)ê•è¨âóàΩìôâó\\(" << bound << "\\)äéüﬁë´ûäåè" << condition << "ìIóBàÍ\\(" << local_variable << " \\in " << variable_type_name << "\\)ÅB" << endl;
     return;
 
   }
 
   if( language == FrenchString() && style == FandomString() ){
 
-    ofs << u8"Notons \\(" << variable_name << u8"\\) l'unique \\(" << local_variable << u8" \\in " << variable_type_name << u8"\\) supè´±rieur ou è´±gal è´¢ \\(" << bound << u8"\\) satisfaisant " << condition << u8"." << endl;
+    ofs << "Notons \\(" << variable_name << "\\) l'unique \\(" << local_variable << " \\in " << variable_type_name << "\\) sup\\'erieur ou \\'egal \\`a \\(" << bound << "\\) satisfaisant " << condition << "." << endl;
     return;
     
   }
 
   if( language == frenchString() && style == FandomString() ){
 
-    ofs << u8"notons \\(" << variable_name << u8"\\) l'unique \\(" << local_variable << u8" \\in " << variable_type_name << u8"\\) supè´±rieur ou è´±gal è´¢ \\(" << bound << u8"\\) satisfaisant " << condition << u8"." << endl;
+    ofs << "notons \\(" << variable_name << "\\) l'unique \\(" << local_variable << " \\in " << variable_type_name << "\\) sup\\'erieur ou \\'egal \\`a \\(" << bound << "\\) satisfaisant " << condition << "." << endl;
     language = FrenchString();
     return;
       
@@ -1079,7 +1037,7 @@ void SyntaxOfComputableFunction::InputUniqueExistenceStringLine( ofstream& ofs ,
 
   if( language == JapaneseString() && style == FandomString() ){
 
-    ofs << condition << "§ÚÀ˛§ø§π\\(" << bound << "\\)§Œ∞Ï∞’§ …Ù ¨ ∏ª˙ŒÛ\\(" << local_variable << " \\in " << variable_type_name << "\\)§Ú\\(" << variable_name << "\\)§»√÷§Ø°£" << endl;
+    ofs << condition << "ÇñûÇΩÇ∑\\(" << bound << "\\)ÇÃàÍà”Ç»ïîï™ï∂éöóÒ\\(" << local_variable << " \\in " << variable_type_name << "\\)Ç\\(" << variable_name << "\\)Ç∆íuÇ≠ÅB" << endl;
     return;
 
   }
@@ -1100,21 +1058,21 @@ void SyntaxOfComputableFunction::InputUniqueExistenceStringLine( ofstream& ofs ,
 
   if( language == ChineseString() && style == FandomString() ){
 
-    ofs << "ƒÍµ¡\\(" << variable_name << "\\)¿ßﬁ‡¬≠€Í∑Ô" << condition << "≈™\\(" << bound << "\\)≈™Õ£∞Ïª“∂˙\\(" << local_variable << " \\in " << variable_type_name << "\\)°£" << endl;
+    ofs << "íËã`\\(" << variable_name << "\\)ê•üﬁë´ûäåè" << condition << "ìI\\(" << bound << "\\)ìIóBàÍéqã¯\\(" << local_variable << " \\in " << variable_type_name << "\\)ÅB" << endl;
     return;
 
   }
 
   if( language == FrenchString() && style == FandomString() ){
 
-    ofs << u8"Notons \\(" << variable_name << u8"\\) la sous-chaè´¬ne unique \\(" << local_variable << u8" \\in " << variable_type_name << u8"\\) supè´±rieur ou è´±gal è´¢ \\(" << bound << u8"\\) satisfaisant " << condition << u8"." << endl;
+    ofs << "Notons \\(" << variable_name << "\\) la sous-cha\\^ine unique \\(" << local_variable << " \\in " << variable_type_name << "\\) sup\\'erieur ou \\'egal \\`a \\(" << bound << "\\) satisfaisant " << condition << "." << endl;
     return;
     
   }
 
   if( language == frenchString() && style == FandomString() ){
 
-    ofs << u8"notons \\(" << variable_name << u8"\\) la sous-chaè´¬ne unique \\(" << local_variable << u8" \\in " << variable_type_name << u8"\\) supè´±rieur ou è´±gal è´¢ \\(" << bound << u8"\\) satisfaisant " << condition << u8"." << endl;
+    ofs << "notons \\(" << variable_name << "\\) la sous-cha\\^ine unique \\(" << local_variable << " \\in " << variable_type_name << "\\) sup\\'erieur ou \\'egal \\`a \\(" << bound << "\\) satisfaisant " << condition << "." << endl;
     language = FrenchString();
     return;
       
@@ -1163,7 +1121,7 @@ void SyntaxOfComputableFunction::InputMinimumLine( ofstream& ofs , VLTree<string
   
   if( language == JapaneseString() && style == FandomString() ){
 
-    ofs << condition << "§ÚÀ˛§ø§π∫«æÆ§Œ\\(" << *p_local_variable << " \\in " << variable_type_name << "\\)§Ú\\(" << variable_name << "\\)§»√÷§Ø°£" << endl;
+    ofs << condition << "ÇñûÇΩÇ∑ç≈è¨ÇÃ\\(" << *p_local_variable << " \\in " << variable_type_name << "\\)Ç\\(" << variable_name << "\\)Ç∆íuÇ≠ÅB" << endl;
     return;
 
   }
@@ -1185,21 +1143,21 @@ void SyntaxOfComputableFunction::InputMinimumLine( ofstream& ofs , VLTree<string
 
   if( language == ChineseString() && style == FandomString() ){
 
-    ofs << "ƒÍµ¡\\(" << variable_name << "\\)¿ßﬁ‡¬≠€Í∑Ô" << condition << "≈™∫«æÆ≈™\\(" << *p_local_variable << " \\in " << variable_type_name << "\\)°£" << endl;
+    ofs << "íËã`\\(" << variable_name << "\\)ê•üﬁë´ûäåè" << condition << "ìIç≈è¨ìI\\(" << *p_local_variable << " \\in " << variable_type_name << "\\)ÅB" << endl;
     return;
 
   }
 
   if( language == FrenchString() && style == FandomString() ){
 
-    ofs << u8"Notons \\(" << variable_name << u8"\\) le moins \\(" << *p_local_variable << u8" \\in " << variable_type_name << u8"\\) satisfaisant " << condition << u8"." << endl;
+    ofs << "Notons \\(" << variable_name << "\\) le moins \\(" << *p_local_variable << " \\in " << variable_type_name << "\\) satisfaisant " << condition << "." << endl;
     return;
     
   }
 
   if( language == frenchString() && style == FandomString() ){
 
-    ofs << u8"notons \\(" << variable_name << u8"\\) le moins \\(" << *p_local_variable << u8" \\in " << variable_type_name << u8"\\) satisfaisant " << condition << u8"." << endl;
+    ofs << "notons \\(" << variable_name << "\\) le moins \\(" << *p_local_variable << " \\in " << variable_type_name << "\\) satisfaisant " << condition << "." << endl;
     language = FrenchString();
     return;
       
@@ -1255,7 +1213,7 @@ void SyntaxOfComputableFunction::InputMaximumLine( ofstream& ofs , VLTree<string
   
   if( language == JapaneseString() && style == FandomString() ){
 
-    ofs << condition << "§ÚÀ˛§ø§π\\(" << *p_bound << "\\)∞ ≤º§Œ∫«¬Á§Œ\\(" << *p_local_variable << " \\in " << variable_type_name << "\\)§Ú\\(" << variable_name << "\\)§»√÷§Ø°£" << endl;
+    ofs << condition << "ÇñûÇΩÇ∑\\(" << *p_bound << "\\)à»â∫ÇÃç≈ëÂÇÃ\\(" << *p_local_variable << " \\in " << variable_type_name << "\\)Ç\\(" << variable_name << "\\)Ç∆íuÇ≠ÅB" << endl;
     return;
 
   }
@@ -1277,21 +1235,21 @@ void SyntaxOfComputableFunction::InputMaximumLine( ofstream& ofs , VLTree<string
 
   if( language == ChineseString() && style == FandomString() ){
 
-    ofs << "ƒÍµ¡\\(" << variable_name << "\\)¿ßæÆ±˜∞ø≈˘±˜\\(" << *p_bound << "\\)≥Óﬁ‡¬≠€Í∑Ô" << condition << "≈™∫«¬Á≈™\\(" << *p_local_variable << " \\in " << variable_type_name << "\\)°£" << endl;
+    ofs << "íËã`\\(" << variable_name << "\\)ê•è¨âóàΩìôâó\\(" << *p_bound << "\\)äéüﬁë´ûäåè" << condition << "ìIç≈ëÂìI\\(" << *p_local_variable << " \\in " << variable_type_name << "\\)ÅB" << endl;
     return;
 
   }
 
   if( language == FrenchString() && style == FandomString() ){
 
-    ofs << u8"Notons \\(" << variable_name << u8"\\) le plus grand \\(" << *p_local_variable << u8" \\in " << variable_type_name << u8"\\) infè´±rieur ou è´±gal è´¢ \\(" << *p_bound << u8"\\) satisfaisant " << condition << u8"." << endl;
+    ofs << "Notons \\(" << variable_name << "\\) le plus grand \\(" << *p_local_variable << " \\in " << variable_type_name << "\\) inf\\'erieur ou \\'egal \\`a \\(" << *p_bound << "\\) satisfaisant " << condition << "." << endl;
     return;
     
   }
 
   if( language == frenchString() && style == FandomString() ){
 
-    ofs << u8"notons \\(" << variable_name << u8"\\) le plus grand \\(" << *p_local_variable << u8" \\in " << variable_type_name << u8"\\) infè´±rieur ou è´±gal è´¢ \\(" << *p_bound << u8"\\) satisfaisant " << condition << u8"." << endl;
+    ofs << "notons \\(" << variable_name << "\\) le plus grand \\(" << *p_local_variable << " \\in " << variable_type_name << "\\) inf\\'erieur ou \\'egal \\`a \\(" << *p_bound << "\\) satisfaisant " << condition << "." << endl;
     language = FrenchString();
     return;
       
@@ -1321,7 +1279,7 @@ void SyntaxOfComputableFunction::InputPrintLine( ofstream& ofs , VLTree<string>:
   
   if( language == JapaneseString() && style == FandomString() ){
 
-    ofs << "\\(" << *p_variable_name << "\\)§Œ…∏Ω‡Ω–Œœ§Úπ‘§¶°£§≥§Œ¡‡∫Ó§œ∑◊ªª∑Î≤Ã§À±∆∂¡§ÚÕø§®§ §§°£" << endl;
+    ofs << "\\(" << *p_variable_name << "\\)ÇÃïWèÄèoóÕÇçsÇ§ÅBÇ±ÇÃëÄçÏÇÕåvéZåãâ Ç…âeãøÇó^Ç¶Ç»Ç¢ÅB" << endl;
     return;
 
   }
@@ -1343,21 +1301,21 @@ void SyntaxOfComputableFunction::InputPrintLine( ofstream& ofs , VLTree<string>:
 
   if( language == ChineseString() && style == FandomString() ){
 
-    ofs << "…∏Ω‡Õ¢Ω–\\(" << *p_variable_name << "\\)°£«Áπ‘…‘±∆∂¡∑◊ªª∑Î≤Ã°£" << endl;
+    ofs << "ïWèÄóAèo\\(" << *p_variable_name << "\\)ÅBîáçsïsâeãøåvéZåãâ ÅB" << endl;
     return;
       
   }
 
   if( language == FrenchString() && style == FandomString() ){
 
-    ofs << u8"Stdout \\(" << *p_variable_name << u8"\\). Cette ligne n'affecte pas le rè´±sultat du calcul." << endl;
+    ofs << "Stdout \\(" << *p_variable_name << "\\). Cette ligne n'affecte pas le r\\'esultat du calcul." << endl;
     return;
       
   }
 
   if( language == frenchString() && style == FandomString() ){
 
-    ofs << u8"stdout \\(" << *p_variable_name << u8"\\). Cette ligne n'affecte pas le rè´±sultat du calcul." << endl;
+    ofs << "stdout \\(" << *p_variable_name << "\\). Cette ligne n'affecte pas le r\\'esultat du calcul." << endl;
     language = FrenchString();
     return;
       
@@ -1373,7 +1331,7 @@ void SyntaxOfComputableFunction::InputExitLine( ofstream& ofs , const string& fu
 
   if( language == JapaneseString() && style == FandomString() ){
     
-    ofs << "\\(" << function_expression_name << "\\)§œÃ§ƒÍµ¡§«§¢§Î°£" << endl;
+    ofs << "\\(" << function_expression_name << "\\)ÇÕñ¢íËã`Ç≈Ç†ÇÈÅB" << endl;
     return;
 
   }
@@ -1395,21 +1353,21 @@ void SyntaxOfComputableFunction::InputExitLine( ofstream& ofs , const string& fu
 
   if( language == ChineseString() && style == FandomString() ){
     
-    ofs << "\\(" << function_expression_name << "\\)Ã§ƒÍµ¡°£" << endl;
+    ofs << "\\(" << function_expression_name << "\\)ñ¢íËã`ÅB" << endl;
     return;
 
   }
 
   if( language == FrenchString() && style == FandomString() ){
     
-    ofs << u8"\\(" << function_expression_name << u8"\\) n'est pas dè´±fini." << endl;
+    ofs << "\\(" << function_expression_name << "\\) n'est pas d\\'efini." << endl;
     return;
 
   }
 
   if( language == frenchString() && style == FandomString() ){
     
-    ofs << u8"\\(" << function_expression_name << u8"\\) n'est pas dè´±fini." << endl;
+    ofs << "\\(" << function_expression_name << "\\) n'est pas d\\'efini." << endl;
     language = FrenchString();
     return;
 
@@ -1438,7 +1396,7 @@ void SyntaxOfComputableFunction::InputReturnLine( ofstream& ofs , const string& 
 
   if( language == JapaneseString() && style == FandomString() ){
 
-    ofs << "\\(" << function_expression_name << " := " << *p_return_name << "\\)§»ƒÍ§·§Î°£" << endl;
+    ofs << "\\(" << function_expression_name << " := " << *p_return_name << "\\)Ç∆íËÇﬂÇÈÅB" << endl;
     return;
 
   }
@@ -1460,21 +1418,21 @@ void SyntaxOfComputableFunction::InputReturnLine( ofstream& ofs , const string& 
 
   if( language == ChineseString() && style == FandomString() ){
 
-    ofs << "ƒÍµ¡\\(" << function_expression_name << " := " << *p_return_name << "\\)°£" << endl;
+    ofs << "íËã`\\(" << function_expression_name << " := " << *p_return_name << "\\)ÅB" << endl;
     return;
 
   }
 
   if( language == FrenchString() && style == FandomString() ){
 
-    ofs << u8"Dè´±finissez \\(" << function_expression_name << u8" := " << *p_return_name << u8"\\)." << endl;
+    ofs << "D\\'efinissez \\(" << function_expression_name << " := " << *p_return_name << "\\)." << endl;
     return;
       
   }
 
   if( language == frenchString() && style == FandomString() ){
 
-    ofs << u8"dè´±finissez \\(" << function_expression_name << u8" := " << *p_return_name << u8"\\)." << endl;
+    ofs << "d\\'efinissez \\(" << function_expression_name << " := " << *p_return_name << "\\)." << endl;
     language = FrenchString();
     return;
       
@@ -1894,26 +1852,19 @@ string NegationToString( VLTree<string>::const_iterator& itr , string& language 
 
      );
 
+  if( complicated ){
+
+    PutWrap( b , language );
+    
+  }
   
   if( language == JapaneseString() ){
 
-    if( complicated ){
-
-      PutKagi( b );
-
-    }
-    
-    return b + "§«§ §§";
+    return b + "Ç≈Ç»Ç¢";
 
   }
 
   if( language == EnglishString() ){
-
-    if( complicated ){
-
-      PutParenthesis( b );
-
-    }
 
     return b + " does not hold";
       
@@ -1921,25 +1872,13 @@ string NegationToString( VLTree<string>::const_iterator& itr , string& language 
 
   if( language == ChineseString() ){
 
-    if( complicated ){
-
-      PutKagi( b );
-
-    }
-
-    return b + "…‘¿ÆŒ©";
+    return b + "ïsê¨óß";
       
   }
 
   if( language == FrenchString() ){
 
-    if( complicated ){
-
-      PutParenthesis( b );
-
-    }
-
-    return b + u8" ne tient pas";
+    return b + " ne tient pas";
       
   }
 
@@ -1974,38 +1913,25 @@ string ImplicationToString( VLTree<string>::const_iterator& itr , string& langua
 
      );
 
+  if( complicated0 ){
+
+    PutWrap( b0 , language );
+    
+  }
+
+  if( complicated1 ){
+
+    PutWrap( b1 , language );
+    
+  }
 
   if( language == JapaneseString() ){
 
-    if( complicated0 ){
-
-      PutKagi( b0 );
-
-    }
-
-    if( complicated1 ){
-
-      PutKagi( b1 );
-
-    }
-
-    return b0 + "§ §È§–" + b1;
+    return b0 + "Ç»ÇÁÇŒ" + b1;
 
   }
 
   if( language == EnglishString() ){
-
-    if( complicated0 ){
-
-      PutParenthesis( b0 );
-
-    }
-
-    if( complicated1 ){
-
-      PutParenthesis( b1 );
-
-    }
 
     return b0 + " implies " + b1;
       
@@ -2014,37 +1940,13 @@ string ImplicationToString( VLTree<string>::const_iterator& itr , string& langua
 
   if( language == ChineseString() ){
 
-    if( complicated0 ){
-
-      PutKagi( b0 );
-
-    }
-
-    if( complicated1 ){
-
-      PutKagi( b1 );
-
-    }
-
-    return "º„" + b0 + "¬ß" + b1;
+    return "é·" + b0 + "ë•" + b1;
 
   }
 
   if( language == FrenchString() ){
 
-    if( complicated0 ){
-
-      PutParenthesis( b0 );
-
-    }
-
-    if( complicated1 ){
-
-      PutParenthesis( b1 );
-
-    }
-
-    return u8"si" + b0 + u8" alors " + b1;
+    return "si " + b0 + " alors " + b1;
       
   }
 
@@ -2079,37 +1981,25 @@ string EquivalenceToString( VLTree<string>::const_iterator& itr , string& langua
 
      );
 
+  if( complicated0 ){
+
+    PutWrap( b0 , language );
+    
+  }
+
+  if( complicated1 ){
+
+    PutWrap( b1 , language );
+    
+  }
+
   if( language == JapaneseString() ){
 
-    if( complicated0 ){
-
-      PutKagi( b0 );
-
-    }
-
-    if( complicated1 ){
-
-      PutKagi( b1 );
-
-    }
-
-    return b0 + "§»" + b1 + "§¨∆±√Õ§«§¢§Î";
+    return b0 + "Ç∆" + b1 + "Ç™ìØílÇ≈Ç†ÇÈ";
 
   }
 
   if( language == EnglishString() ){
-
-    if( complicated0 ){
-
-      PutParenthesis( b0 );
-
-    }
-
-    if( complicated1 ){
-
-      PutParenthesis( b1 );
-
-    }
 
     return b0 + " is equivalent to " + b1;
       
@@ -2117,37 +2007,13 @@ string EquivalenceToString( VLTree<string>::const_iterator& itr , string& langua
 
   if( language == ChineseString() ){
 
-    if( complicated0 ){
-
-      PutKagi( b0 );
-
-    }
-
-    if( complicated1 ){
-
-      PutKagi( b1 );
-
-    }
-
-    return b0 + "œ¬" + b1 + "»‡∫°≈˘–√";
+    return b0 + "òa" + b1 + "îﬁçüìôò¡";
 
   }
 
   if( language == FrenchString() ){
 
-    if( complicated0 ){
-
-      PutParenthesis( b0 );
-
-    }
-
-    if( complicated1 ){
-
-      PutParenthesis( b1 );
-
-    }
-
-    return b0 + u8" est è´±quivalent è´¢ " + b1;
+    return b0 + " est \\'equivalent \\`a " + b1;
       
   }
 
@@ -2181,7 +2047,7 @@ string LogicalAndToString( VLTree<string>::const_iterator& itr , string& languag
 
 	     if( complicated && itr.IsValid() ){
 
-	       PutKagi( b_current );
+	       PutWrap( b_current , language );
 
 	     }
 
@@ -2189,11 +2055,11 @@ string LogicalAndToString( VLTree<string>::const_iterator& itr , string& languag
 
 	     if( complicated ){
 
-	       PutKagi( b_current );
+	       PutWrap( b_current , language );
 
 	     }
 
-	     b += "§´§ƒ";
+	     b += "Ç©Ç¬";
 
 	   }
 
@@ -2222,7 +2088,7 @@ string LogicalAndToString( VLTree<string>::const_iterator& itr , string& languag
 
 	     if( complicated && itr.IsValid() ){
 
-	       PutParenthesis( b_current );
+	       PutWrap( b_current , language );
 
 	     }
 
@@ -2230,7 +2096,7 @@ string LogicalAndToString( VLTree<string>::const_iterator& itr , string& languag
 	     
 	     if( complicated ){
 
-	       PutParenthesis( b_current );
+	       PutWrap( b_current , language );
 
 	     }
 
@@ -2286,7 +2152,7 @@ string LogicalAndToString( VLTree<string>::const_iterator& itr , string& languag
 
 	     if( complicated && itr.IsValid() ){
 
-	       PutKagi( b_current );
+	       PutWrap( b_current , language );
 
 	     }
 
@@ -2294,7 +2160,7 @@ string LogicalAndToString( VLTree<string>::const_iterator& itr , string& languag
 	     
 	     if( complicated ){
 
-	       PutKagi( b_current );
+	       PutWrap( b_current , language );
 
 	     }
 
@@ -2304,7 +2170,7 @@ string LogicalAndToString( VLTree<string>::const_iterator& itr , string& languag
 
 	     } else {
 
-	       b += "œ¬";
+	       b += "òa";
 
 	     }
 
@@ -2333,7 +2199,7 @@ string LogicalAndToString( VLTree<string>::const_iterator& itr , string& languag
 
 	     if( complicated && itr.IsValid() ){
 
-	       PutParenthesis( b_current );
+	       PutWrap( b_current , language );
 
 	     }
 
@@ -2341,17 +2207,17 @@ string LogicalAndToString( VLTree<string>::const_iterator& itr , string& languag
 	     
 	     if( complicated ){
 
-	       PutParenthesis( b_current );
+	       PutWrap( b_current , language );
 
 	     }
 
 	     if( itr.IsValid() ){
 
-	       b += u8", ";
+	       b += ", ";
 
 	     } else {
 
-	       b += u8" et ";
+	       b += " et ";
 
 	     }
 
@@ -2404,7 +2270,7 @@ string LogicalOrToString( VLTree<string>::const_iterator& itr , string& language
 
 	     if( complicated && itr.IsValid() ){
 
-	       PutKagi( b_current );
+	       PutWrap( b_current , language );
 
 	     }
 
@@ -2412,11 +2278,11 @@ string LogicalOrToString( VLTree<string>::const_iterator& itr , string& language
 
 	     if( complicated ){
 
-	       PutKagi( b_current );
+	       PutWrap( b_current , language );
 
 	     }
 
-	     b += "§ﬁ§ø§œ";
+	     b += "Ç‹ÇΩÇÕ";
 
 	   }
 
@@ -2445,7 +2311,7 @@ string LogicalOrToString( VLTree<string>::const_iterator& itr , string& language
 
 	     if( complicated && itr.IsValid() ){
 
-	       PutParenthesis( b_current );
+	       PutWrap( b_current , language );
 
 	     }
 
@@ -2453,7 +2319,7 @@ string LogicalOrToString( VLTree<string>::const_iterator& itr , string& language
 	     
 	     if( complicated ){
 
-	       PutParenthesis( b_current );
+	       PutWrap( b_current , language );
 
 	     }
 
@@ -2509,7 +2375,7 @@ string LogicalOrToString( VLTree<string>::const_iterator& itr , string& language
 
 	     if( complicated && itr.IsValid() ){
 
-	       PutKagi( b_current );
+	       PutWrap( b_current , language );
 
 	     }
 
@@ -2517,7 +2383,7 @@ string LogicalOrToString( VLTree<string>::const_iterator& itr , string& language
 	     
 	     if( complicated ){
 
-	       PutKagi( b_current );
+	       PutWrap( b_current , language );
 
 	     }
 
@@ -2527,7 +2393,7 @@ string LogicalOrToString( VLTree<string>::const_iterator& itr , string& language
 
 	     } else {
 
-	       b += "∞ø";
+	       b += "àΩ";
 
 	     }
 
@@ -2556,7 +2422,7 @@ string LogicalOrToString( VLTree<string>::const_iterator& itr , string& language
 
 	     if( complicated && itr.IsValid() ){
 
-	       PutParenthesis( b_current );
+	       PutWrap( b_current , language );
 
 	     }
 
@@ -2564,17 +2430,17 @@ string LogicalOrToString( VLTree<string>::const_iterator& itr , string& language
 	     
 	     if( complicated ){
 
-	       PutParenthesis( b_current );
+	       PutWrap( b_current , language );
 
 	     }
 
 	     if( itr.IsValid() ){
 
-	       b += u8", ";
+	       b += ", ";
 
 	     } else {
 
-	       b += u8" ou ";
+	       b += " ou ";
 
 	     }
 
@@ -2601,3 +2467,52 @@ string LogicalOrToString( VLTree<string>::const_iterator& itr , string& language
   
 }
 
+void PutWrap( string& s , const string& language ) noexcept
+{
+
+  if( language == JapaneseString() ){
+
+    PutKagi( s );
+    return;
+
+  }
+
+  if( language == EnglishString() ){
+
+    PutParenthesis( s );
+    return;
+
+  }
+
+  if( language == englishString() ){
+
+    PutParenthesis( s );
+    return;
+
+  }
+
+  if( language == ChineseString() ){
+
+    PutKagi( s );
+    return;
+
+  }
+
+  if( language == FrenchString() ){
+
+    PutParenthesis( s );
+    return;
+
+  }
+
+  if( language == frenchString() ){
+
+    PutParenthesis( s );
+    return;
+
+  }
+
+  ERR_IMPUT( s , language );
+  return;
+  
+}

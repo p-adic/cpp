@@ -100,6 +100,7 @@ string EquivalenceToString( VLTree<string>::const_iterator& itr , string& langua
 string LogicalAndToString( VLTree<string>::const_iterator& itr , string& language , const string& style );
 string LogicalOrToString( VLTree<string>::const_iterator& itr , string& language , const string& style );
 
+void PutWrap( string& s , const string& language ) noexcept;
 inline void PutKagi( string& s ) noexcept;
 inline void PutParenthesis( string& s ) noexcept;
 
