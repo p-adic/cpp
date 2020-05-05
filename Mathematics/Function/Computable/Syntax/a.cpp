@@ -631,7 +631,7 @@ void SyntaxOfComputableFunction::InputIfNonListLine( ofstream& ofs , const strin
     
   if( language == FrenchString() ){
 
-    ofs << u8"Si" << condition_name << u8", alos ";
+    ofs << u8"Si " << condition_name << u8", alos ";
     language = frenchString();
     return;
       
