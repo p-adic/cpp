@@ -2351,7 +2351,7 @@ string LogicalAndToString( VLTree<string>::const_iterator& itr , string& languag
 
 	     } else {
 
-	       b += u8"et ";
+	       b += u8" et ";
 
 	     }
 
@@ -2574,7 +2574,7 @@ string LogicalOrToString( VLTree<string>::const_iterator& itr , string& language
 
 	     } else {
 
-	       b += u8"ou ";
+	       b += u8" ou ";
 
 	     }
 
