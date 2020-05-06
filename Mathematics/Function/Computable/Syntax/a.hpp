@@ -2,7 +2,6 @@
 
 #pragma once
 #include "a_Macro.hpp"
-
 #include "../../../../Utility/VLTree/a.hpp"
 #include <fstream>
 
@@ -27,54 +26,14 @@ public:
   void SetSymbol( const string& symbol );
   void RomaniseSymbol();
 
-  string Display( const string& name , const string& language ) const noexcept;
+  inline string Display( const string& name , const string& language ) const noexcept;
 
 protected:
-  // definition
+
   void InputDefinition( ofstream& ofs , const string& totality , const string& function_name , ConstIteratorOfVLTree<string>& itr_f , const string& language , const string& style ) const;
-  void InputTotality( ofstream& ofs , const string& totality , const string& language , const string& style ) const;
-  void InputDeclaration( ofstream& ofs , const string& function_name , const string& argument_type_name , const string& argument_name , const string& return_type_name , const string& function_expression_name , const string& language , const string& style ) const;
-
-  // line
-  void InputLine( ofstream& ofs , const string& function_expression_name , const string& line_name , VLTree<string>::const_iterator& itr_line , const uint& depth , string& language , const string& style ) const;
-  void InputListLine( ofstream& ofs , const string& function_expression_name , VLTree<string>::const_iterator& itr_line , const uint& depth , string& language , const string& style ) const;
-  void InputNonListLine( ofstream& ofs , const string& function_expression_name , const string& line_name , VLTree<string>::const_iterator& itr_line , const uint& depth , string& language , const string& style ) const;
-  void InputIndent( ofstream& ofs , const uint depth , string& language , const string& style ) const noexcept;
-
-  // If
-  void InputIfLine( ofstream& ofs , const string& function_expression_name , VLTree<string>::const_iterator& itr_line , const uint& depth , string& language , const string& style ) const;
-  void InputIfListLine( ofstream& ofs , const string& function_expression_name , const string& condition_name , VLTree<string>::const_iterator& itr_line , const uint& depth , string& language , const string& style ) const;
-  void InputIfNonListLine( ofstream& ofs , const string& function_expression_name , const string& condition_name , VLTree<string>::const_iterator& itr_line , const uint& depth , string& language , const string& style ) const;
-
-  // Put
-  void InputPutLine( ofstream& ofs , VLTree<string>::const_iterator& itr_line , const uint& depth , string& language , const string& style ) const;
-  void InputPutConditionLine( ofstream& ofs , VLTree<string>::const_iterator& itr_cond , const string& variable_name , string& language , const string& style ) const;
-  void InputPutNonConditionLine( ofstream& ofs , VLTree<string>::const_iterator& itr_e , const string& variable_name , const string& variable_type_name , string& language , const string& style ) const;
-
-  // Characterisation
-  void InputCharacterisationLine( ofstream& ofs , VLTree<string>::const_iterator& itr_line , const uint& depth , string& language , const string& style ) const;
-
-  void InputUniqueExistenceLine( ofstream& ofs , VLTree<string>::const_iterator& itr_line , const string& variable_name , const string& variable_type_name , string& language , const string& style ) const;
-  void InputUniqueExistenceNaturalNumberLine( ofstream& ofs , const string& local_variable , const string& bound , const string& condition , const string& variable_name , const string& variable_type_name , string& language , const string& style ) const;
-  void InputUniqueExistenceStringLine( ofstream& ofs , const string& local_variable , const string& bound , const string& condition , const string& variable_name , const string& variable_type_name , string& language , const string& style ) const;
-
-  void InputMinimumLine( ofstream& ofs , VLTree<string>::const_iterator& itr_line , const string& variable_name , const string& variable_type_name , string& language , const string& style ) const;
-  void InputMaximumLine( ofstream& ofs , VLTree<string>::const_iterator& itr_line , const string& variable_name , const string& variable_type_name , string& language , const string& style ) const;
-  
-  // Print
-  void InputPrintLine( ofstream& ofs , VLTree<string>::const_iterator& itr_line , string& language , const string& style ) const;
-
-  //Exit
-  void InputExitLine( ofstream& ofs , const string& function_expression_name , string& language , const string& style ) const;
-
-  // Return
-  void InputReturnLine( ofstream& ofs ,const string& function_expression_name , VLTree<string>::const_iterator& itr_line , const uint& depth , string& language , const string& style ) const;
 
 };
 
-
-const string& SyntaxToString( VLTree<string>::const_iterator& itr , const int& n );
-string ListSyntaxToString( VLTree<VLTree<string>::const_iterator>& t , const int& n );
 
 // 表現args...から表現の文字列のリストを構築
 template <typename... Args> auto ExpressionsToListSyntax( const Args&... args ) -> typename enable_if<conjunction<is_same<Args,VLTree<string> >...>::value,VLTree<string> >::type;
@@ -90,19 +49,6 @@ string FunctionExpressionToString( VLTree<string>::const_iterator& itr_f , VLTre
 
 // 表現のイテレータitrから表現の文字列を参照
 const string& ExpressionToString( VLTree<string>::const_iterator& itr );
-
-// 条件のイテレータitrから条件の文字列を構築
-string ConditionToString( VLTree<string>::const_iterator& itr , bool& complicated , string& language , const string& style );
-
-string NegationToString( VLTree<string>::const_iterator& itr , string& language , const string& style );
-string ImplicationToString( VLTree<string>::const_iterator& itr , string& language , const string& style );
-string EquivalenceToString( VLTree<string>::const_iterator& itr , string& language , const string& style );
-string LogicalAndToString( VLTree<string>::const_iterator& itr , string& language , const string& style );
-string LogicalOrToString( VLTree<string>::const_iterator& itr , string& language , const string& style );
-
-void PutWrap( string& s , const string& language ) noexcept;
-inline void PutKagi( string& s ) noexcept;
-inline void PutParenthesis( string& s ) noexcept;
 
 inline string Plainise( const string& s ) noexcept;
 
@@ -225,6 +171,8 @@ DECLARATION_OF_GLOBAL_CONSTANT_STRING_FOR_SYMBOL( english );
 DECLARATION_OF_GLOBAL_CONSTANT_STRING_FOR_SYMBOL( Chinese );
 DECLARATION_OF_GLOBAL_CONSTANT_STRING_FOR_SYMBOL( French );
 DECLARATION_OF_GLOBAL_CONSTANT_STRING_FOR_SYMBOL( french );
+DECLARATION_OF_GLOBAL_CONSTANT_STRING_FOR_SYMBOL( German );
+DECLARATION_OF_GLOBAL_CONSTANT_STRING_FOR_SYMBOL( german );
 
 DECLARATION_OF_GLOBAL_CONSTANT_STRING_FOR_SYMBOL( Fandom );
 DECLARATION_OF_GLOBAL_CONSTANT_STRING_FOR_SYMBOL( Jekyll );

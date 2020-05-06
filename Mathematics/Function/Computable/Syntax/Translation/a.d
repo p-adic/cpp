@@ -1,7 +1,7 @@
-Mathematics/Function/Computable/Syntax/a.o: \
- Mathematics/Function/Computable/Syntax/a.cpp \
- Mathematics/Function/Computable/Syntax/../Header.hpp \
- Mathematics/Function/Computable/Syntax/../../../Header.hpp \
+Mathematics/Function/Computable/Syntax/Translation/a.o: \
+ Mathematics/Function/Computable/Syntax/Translation/a.cpp \
+ Mathematics/Function/Computable/Syntax/Translation/../../Header.hpp \
+ C:/Users/user/Documents/Programming/Mathematics/Header.hpp \
  C:/Users/user/Documents/Programming/Utility/Header.hpp \
  C:/Users/user/Documents/Programming/Utility/Header_Alias.hpp \
  C:/Users/user/Documents/Programming/Utility/Macro.hpp \
@@ -89,36 +89,40 @@ Mathematics/Function/Computable/Syntax/a.o: \
  C:/Users/user/Documents/Programming/Mathematics/SetTheory/DirectProduct/a_Body.hpp \
  C:/Users/user/Documents/Programming/SFINAE/MemberFunction/a_Body.hpp \
  C:/Users/user/Documents/Programming/Error/Debug/a_Macro.hpp \
- Mathematics/Function/Computable/Syntax/a_Body.hpp \
- Mathematics/Function/Computable/Syntax/a.hpp \
- Mathematics/Function/Computable/Syntax/a_Macro.hpp \
+ Mathematics/Function/Computable/Syntax/Translation/a_Body.hpp \
+ Mathematics/Function/Computable/Syntax/Translation/a.hpp \
  C:/Users/user/Documents/Programming/Utility/VLTree/a.hpp \
  C:/Users/user/Documents/Programming/Utility/VLTree/Entry/a.hpp \
  C:/Users/user/Documents/Programming/Utility/VLTree/Iterator/Sequential/a.hpp \
  C:/Users/user/Documents/Programming/Utility/VLTree/Iterator/a.hpp \
  C:/Users/user/Documents/Programming/Utility/VLTree/SubTree/a.hpp \
- Mathematics/Function/Computable/Syntax/Translation/a_Body.hpp \
- Mathematics/Function/Computable/Syntax/Translation/a.hpp \
+ Mathematics/Function/Computable/Syntax/Translation/../a_Body.hpp \
+ Mathematics/Function/Computable/Syntax/Translation/../a.hpp \
+ Mathematics/Function/Computable/Syntax/Translation/../a_Macro.hpp \
  C:/Users/user/Documents/Programming/Utility/VLTree/a_Body.hpp \
  C:/Users/user/Documents/Programming/Utility/VLTree/Entry/a_Body.hpp \
  C:/Users/user/Documents/Programming/Utility/VLTree/Iterator/Sequential/a_Body.hpp \
  C:/Users/user/Documents/Programming/Utility/VLTree/Iterator/a_Body.hpp \
  C:/Users/user/Documents/Programming/Utility/VLTree/SubTree/a_Body.hpp \
- Mathematics/Function/Computable/Syntax/../Type/Basic/a_Body.hpp \
- Mathematics/Function/Computable/Syntax/../Type/Basic/a.hpp \
- Mathematics/Function/Computable/Syntax/../Type/Basic/../Guide/a.hpp \
- Mathematics/Function/Computable/Syntax/../Type/Basic/../Guide/Base/a.hpp \
- Mathematics/Function/Computable/Syntax/../Type/Basic/../Guide/Base/a_Macro.hpp \
- Mathematics/Function/Computable/Syntax/../Type/Basic/../Guide/Base/../../a.hpp \
- Mathematics/Function/Computable/Syntax/../Type/Basic/../Guide/Base/../Valid/a.hpp \
- Mathematics/Function/Computable/Syntax/../Type/Basic/../Guide/Base/../Valid/../Primitive/a.hpp \
- Mathematics/Function/Computable/Syntax/../Type/Basic/../Guide/Base/../Valid/../Primitive/a_Macro.hpp \
- Mathematics/Function/Computable/Syntax/../Type/Basic/../Guide/Base/a_Alias.hpp \
- Mathematics/Function/Computable/Syntax/../Type/Basic/../Guide/TypeName/a.hpp \
- Mathematics/Function/Computable/Syntax/../Type/Basic/../Array/Nest/a.hpp \
- Mathematics/Function/Computable/Syntax/../Type/Basic/../Array/Nest/../a.hpp \
- Mathematics/Function/Computable/Syntax/../Type/Basic/../Array/Nest/../a_Macro.hpp \
- Mathematics/Function/Computable/Syntax/../Type/Basic/../Array/Nest/../../Basic/nat/a.hpp \
+ Mathematics/Function/Computable/Syntax/Translation/../../Type/Guide/TypeName/a_Body.hpp \
+ Mathematics/Function/Computable/Syntax/Translation/../../Type/Guide/TypeName/a.hpp \
+ C:/Users/user/Documents/Programming/Mathematics/Function/Computable/Type/Guide/Valid/a.hpp \
+ C:/Users/user/Documents/Programming/Mathematics/Function/Computable/Type/Guide/Primitive/a.hpp \
+ C:/Users/user/Documents/Programming/Mathematics/Function/Computable/Type/Guide/Primitive/a_Macro.hpp \
+ C:/Users/user/Documents/Programming/Mathematics/Function/Computable/Type/a.hpp \
+ C:/Users/user/Documents/Programming/Mathematics/Function/Computable/Type/Guide/Valid/a_Body.hpp \
+ C:/Users/user/Documents/Programming/Mathematics/Function/Computable/Type/Guide/Primitive/a_Body.hpp \
+ C:/Users/user/Documents/Programming/Mathematics/Function/Computable/Type/a_Body.hpp \
+ Mathematics/Function/Computable/Syntax/Translation/../../Type/Basic/a_Body.hpp \
+ Mathematics/Function/Computable/Syntax/Translation/../../Type/Basic/a.hpp \
+ Mathematics/Function/Computable/Syntax/Translation/../../Type/Basic/../Guide/a.hpp \
+ Mathematics/Function/Computable/Syntax/Translation/../../Type/Basic/../Guide/Base/a.hpp \
+ Mathematics/Function/Computable/Syntax/Translation/../../Type/Basic/../Guide/Base/a_Macro.hpp \
+ Mathematics/Function/Computable/Syntax/Translation/../../Type/Basic/../Guide/Base/a_Alias.hpp \
+ Mathematics/Function/Computable/Syntax/Translation/../../Type/Basic/../Array/Nest/a.hpp \
+ C:/Users/user/Documents/Programming/Mathematics/Function/Computable/Type/Array/a.hpp \
+ C:/Users/user/Documents/Programming/Mathematics/Function/Computable/Type/Array/a_Macro.hpp \
+ C:/Users/user/Documents/Programming/Mathematics/Function/Computable/Type/Basic/nat/a.hpp \
  C:/Users/user/Documents/Programming/Mathematics/Function/Computable/Type/SubType/a.hpp \
  C:/Users/user/Documents/Programming/Mathematics/Function/Computable/Type/SubType/a_Macro.hpp \
  C:/Users/user/Documents/Programming/Mathematics/Function/Computable/Expression/Primitive/bool/a.hpp \
@@ -152,17 +156,13 @@ Mathematics/Function/Computable/Syntax/a.o: \
  C:/Users/user/Documents/Programming/Mathematics/Function/Computable/Operator/Relation/a_Alias.hpp \
  C:/Users/user/Documents/Programming/Mathematics/Function/Computable/Operator/Relation/Variadic/a_Alias.hpp \
  C:/Users/user/Documents/Programming/Mathematics/Function/Computable/Operator/a_Alias.hpp \
- Mathematics/Function/Computable/Syntax/../Type/Basic/../DirectProduct/a.hpp \
- Mathematics/Function/Computable/Syntax/../Type/Basic/../DirectProduct/a_Macro.hpp \
- Mathematics/Function/Computable/Syntax/../Type/Basic/../Guide/a_Body.hpp \
- Mathematics/Function/Computable/Syntax/../Type/Basic/../Guide/Base/a_Body.hpp \
- Mathematics/Function/Computable/Syntax/../Type/Basic/../Guide/Base/../Valid/a_Body.hpp \
- Mathematics/Function/Computable/Syntax/../Type/Basic/../Guide/Base/../Valid/../Primitive/a_Body.hpp \
- C:/Users/user/Documents/Programming/Mathematics/Function/Computable/Type/a_Body.hpp \
- Mathematics/Function/Computable/Syntax/../Type/Basic/../Guide/TypeName/a_Body.hpp \
- Mathematics/Function/Computable/Syntax/../Type/Basic/../Array/Nest/a_Body.hpp \
- Mathematics/Function/Computable/Syntax/../Type/Basic/../Array/Nest/../a_Body.hpp \
- Mathematics/Function/Computable/Syntax/../Type/Basic/../Array/Nest/../../Basic/nat/a_Body.hpp \
+ Mathematics/Function/Computable/Syntax/Translation/../../Type/Basic/../DirectProduct/a.hpp \
+ Mathematics/Function/Computable/Syntax/Translation/../../Type/Basic/../DirectProduct/a_Macro.hpp \
+ Mathematics/Function/Computable/Syntax/Translation/../../Type/Basic/../Guide/a_Body.hpp \
+ Mathematics/Function/Computable/Syntax/Translation/../../Type/Basic/../Guide/Base/a_Body.hpp \
+ Mathematics/Function/Computable/Syntax/Translation/../../Type/Basic/../Array/Nest/a_Body.hpp \
+ C:/Users/user/Documents/Programming/Mathematics/Function/Computable/Type/Array/a_Body.hpp \
+ C:/Users/user/Documents/Programming/Mathematics/Function/Computable/Type/Basic/nat/a_Body.hpp \
  C:/Users/user/Documents/Programming/Mathematics/Function/Computable/Type/SubType/a_Body.hpp \
  C:/Users/user/Documents/Programming/Mathematics/Function/Computable/Expression/Primitive/bool/a_Body.hpp \
  C:/Users/user/Documents/Programming/Mathematics/Function/Computable/Expression/Body/a_Body.hpp \
@@ -186,13 +186,13 @@ Mathematics/Function/Computable/Syntax/a.o: \
  C:/Users/user/Documents/Programming/Mathematics/Function/Computable/Operator/Basic/int/a_Body.hpp \
  C:/Users/user/Documents/Programming/Mathematics/Function/Computable/Operator/a_Body.hpp \
  C:/Users/user/Documents/Programming/Mathematics/Function/Computable/Operator/Guide/a_Body.hpp \
- Mathematics/Function/Computable/Syntax/../Type/Basic/../DirectProduct/a_Body.hpp \
+ Mathematics/Function/Computable/Syntax/Translation/../../Type/Basic/../DirectProduct/a_Body.hpp \
  C:/Users/user/Documents/Programming/Utility/WrappedType/Int/a_Body.hpp \
  C:/Users/user/Documents/Programming/Mathematics/SetTheory/Singleton/a_Body.hpp
 
-Mathematics/Function/Computable/Syntax/../Header.hpp:
+Mathematics/Function/Computable/Syntax/Translation/../../Header.hpp:
 
-Mathematics/Function/Computable/Syntax/../../../Header.hpp:
+C:/Users/user/Documents/Programming/Mathematics/Header.hpp:
 
 C:/Users/user/Documents/Programming/Utility/Header.hpp:
 
@@ -368,11 +368,9 @@ C:/Users/user/Documents/Programming/SFINAE/MemberFunction/a_Body.hpp:
 
 C:/Users/user/Documents/Programming/Error/Debug/a_Macro.hpp:
 
-Mathematics/Function/Computable/Syntax/a_Body.hpp:
+Mathematics/Function/Computable/Syntax/Translation/a_Body.hpp:
 
-Mathematics/Function/Computable/Syntax/a.hpp:
-
-Mathematics/Function/Computable/Syntax/a_Macro.hpp:
+Mathematics/Function/Computable/Syntax/Translation/a.hpp:
 
 C:/Users/user/Documents/Programming/Utility/VLTree/a.hpp:
 
@@ -384,9 +382,11 @@ C:/Users/user/Documents/Programming/Utility/VLTree/Iterator/a.hpp:
 
 C:/Users/user/Documents/Programming/Utility/VLTree/SubTree/a.hpp:
 
-Mathematics/Function/Computable/Syntax/Translation/a_Body.hpp:
+Mathematics/Function/Computable/Syntax/Translation/../a_Body.hpp:
 
-Mathematics/Function/Computable/Syntax/Translation/a.hpp:
+Mathematics/Function/Computable/Syntax/Translation/../a.hpp:
+
+Mathematics/Function/Computable/Syntax/Translation/../a_Macro.hpp:
 
 C:/Users/user/Documents/Programming/Utility/VLTree/a_Body.hpp:
 
@@ -398,35 +398,43 @@ C:/Users/user/Documents/Programming/Utility/VLTree/Iterator/a_Body.hpp:
 
 C:/Users/user/Documents/Programming/Utility/VLTree/SubTree/a_Body.hpp:
 
-Mathematics/Function/Computable/Syntax/../Type/Basic/a_Body.hpp:
+Mathematics/Function/Computable/Syntax/Translation/../../Type/Guide/TypeName/a_Body.hpp:
 
-Mathematics/Function/Computable/Syntax/../Type/Basic/a.hpp:
+Mathematics/Function/Computable/Syntax/Translation/../../Type/Guide/TypeName/a.hpp:
 
-Mathematics/Function/Computable/Syntax/../Type/Basic/../Guide/a.hpp:
+C:/Users/user/Documents/Programming/Mathematics/Function/Computable/Type/Guide/Valid/a.hpp:
 
-Mathematics/Function/Computable/Syntax/../Type/Basic/../Guide/Base/a.hpp:
+C:/Users/user/Documents/Programming/Mathematics/Function/Computable/Type/Guide/Primitive/a.hpp:
 
-Mathematics/Function/Computable/Syntax/../Type/Basic/../Guide/Base/a_Macro.hpp:
+C:/Users/user/Documents/Programming/Mathematics/Function/Computable/Type/Guide/Primitive/a_Macro.hpp:
 
-Mathematics/Function/Computable/Syntax/../Type/Basic/../Guide/Base/../../a.hpp:
+C:/Users/user/Documents/Programming/Mathematics/Function/Computable/Type/a.hpp:
 
-Mathematics/Function/Computable/Syntax/../Type/Basic/../Guide/Base/../Valid/a.hpp:
+C:/Users/user/Documents/Programming/Mathematics/Function/Computable/Type/Guide/Valid/a_Body.hpp:
 
-Mathematics/Function/Computable/Syntax/../Type/Basic/../Guide/Base/../Valid/../Primitive/a.hpp:
+C:/Users/user/Documents/Programming/Mathematics/Function/Computable/Type/Guide/Primitive/a_Body.hpp:
 
-Mathematics/Function/Computable/Syntax/../Type/Basic/../Guide/Base/../Valid/../Primitive/a_Macro.hpp:
+C:/Users/user/Documents/Programming/Mathematics/Function/Computable/Type/a_Body.hpp:
 
-Mathematics/Function/Computable/Syntax/../Type/Basic/../Guide/Base/a_Alias.hpp:
+Mathematics/Function/Computable/Syntax/Translation/../../Type/Basic/a_Body.hpp:
 
-Mathematics/Function/Computable/Syntax/../Type/Basic/../Guide/TypeName/a.hpp:
+Mathematics/Function/Computable/Syntax/Translation/../../Type/Basic/a.hpp:
 
-Mathematics/Function/Computable/Syntax/../Type/Basic/../Array/Nest/a.hpp:
+Mathematics/Function/Computable/Syntax/Translation/../../Type/Basic/../Guide/a.hpp:
 
-Mathematics/Function/Computable/Syntax/../Type/Basic/../Array/Nest/../a.hpp:
+Mathematics/Function/Computable/Syntax/Translation/../../Type/Basic/../Guide/Base/a.hpp:
 
-Mathematics/Function/Computable/Syntax/../Type/Basic/../Array/Nest/../a_Macro.hpp:
+Mathematics/Function/Computable/Syntax/Translation/../../Type/Basic/../Guide/Base/a_Macro.hpp:
 
-Mathematics/Function/Computable/Syntax/../Type/Basic/../Array/Nest/../../Basic/nat/a.hpp:
+Mathematics/Function/Computable/Syntax/Translation/../../Type/Basic/../Guide/Base/a_Alias.hpp:
+
+Mathematics/Function/Computable/Syntax/Translation/../../Type/Basic/../Array/Nest/a.hpp:
+
+C:/Users/user/Documents/Programming/Mathematics/Function/Computable/Type/Array/a.hpp:
+
+C:/Users/user/Documents/Programming/Mathematics/Function/Computable/Type/Array/a_Macro.hpp:
+
+C:/Users/user/Documents/Programming/Mathematics/Function/Computable/Type/Basic/nat/a.hpp:
 
 C:/Users/user/Documents/Programming/Mathematics/Function/Computable/Type/SubType/a.hpp:
 
@@ -494,27 +502,19 @@ C:/Users/user/Documents/Programming/Mathematics/Function/Computable/Operator/Rel
 
 C:/Users/user/Documents/Programming/Mathematics/Function/Computable/Operator/a_Alias.hpp:
 
-Mathematics/Function/Computable/Syntax/../Type/Basic/../DirectProduct/a.hpp:
+Mathematics/Function/Computable/Syntax/Translation/../../Type/Basic/../DirectProduct/a.hpp:
 
-Mathematics/Function/Computable/Syntax/../Type/Basic/../DirectProduct/a_Macro.hpp:
+Mathematics/Function/Computable/Syntax/Translation/../../Type/Basic/../DirectProduct/a_Macro.hpp:
 
-Mathematics/Function/Computable/Syntax/../Type/Basic/../Guide/a_Body.hpp:
+Mathematics/Function/Computable/Syntax/Translation/../../Type/Basic/../Guide/a_Body.hpp:
 
-Mathematics/Function/Computable/Syntax/../Type/Basic/../Guide/Base/a_Body.hpp:
+Mathematics/Function/Computable/Syntax/Translation/../../Type/Basic/../Guide/Base/a_Body.hpp:
 
-Mathematics/Function/Computable/Syntax/../Type/Basic/../Guide/Base/../Valid/a_Body.hpp:
+Mathematics/Function/Computable/Syntax/Translation/../../Type/Basic/../Array/Nest/a_Body.hpp:
 
-Mathematics/Function/Computable/Syntax/../Type/Basic/../Guide/Base/../Valid/../Primitive/a_Body.hpp:
+C:/Users/user/Documents/Programming/Mathematics/Function/Computable/Type/Array/a_Body.hpp:
 
-C:/Users/user/Documents/Programming/Mathematics/Function/Computable/Type/a_Body.hpp:
-
-Mathematics/Function/Computable/Syntax/../Type/Basic/../Guide/TypeName/a_Body.hpp:
-
-Mathematics/Function/Computable/Syntax/../Type/Basic/../Array/Nest/a_Body.hpp:
-
-Mathematics/Function/Computable/Syntax/../Type/Basic/../Array/Nest/../a_Body.hpp:
-
-Mathematics/Function/Computable/Syntax/../Type/Basic/../Array/Nest/../../Basic/nat/a_Body.hpp:
+C:/Users/user/Documents/Programming/Mathematics/Function/Computable/Type/Basic/nat/a_Body.hpp:
 
 C:/Users/user/Documents/Programming/Mathematics/Function/Computable/Type/SubType/a_Body.hpp:
 
@@ -562,7 +562,7 @@ C:/Users/user/Documents/Programming/Mathematics/Function/Computable/Operator/a_B
 
 C:/Users/user/Documents/Programming/Mathematics/Function/Computable/Operator/Guide/a_Body.hpp:
 
-Mathematics/Function/Computable/Syntax/../Type/Basic/../DirectProduct/a_Body.hpp:
+Mathematics/Function/Computable/Syntax/Translation/../../Type/Basic/../DirectProduct/a_Body.hpp:
 
 C:/Users/user/Documents/Programming/Utility/WrappedType/Int/a_Body.hpp:
 

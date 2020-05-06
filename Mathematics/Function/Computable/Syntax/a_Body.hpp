@@ -3,6 +3,8 @@
 #pragma once
 
 #include "a.hpp"
+
+#include "Translation/a_Body.hpp"
 #include "../../../../Utility/VLTree/a_Body.hpp"
 
 template <typename... ARGS> SyntaxOfComputableFunction::SyntaxOfComputableFunction( const string& role , const ARGS&... args ) : m_syntax( args... ) { m_syntax.SetRoot( role ); }
@@ -20,6 +22,9 @@ inline VLTree<string>& SyntaxOfComputableFunction::Ref() noexcept { return m_syn
 template <typename... Args> inline const string& SyntaxOfComputableFunction::GetNodeString( const Args&... args ) const { return m_syntax.GetNode( args... );}
 
 template <typename... Args> inline VLTree<string> SyntaxOfComputableFunction::GetSubTree( const Args&... args ) const { return VLTree<string>( 0 , m_syntax.GetIterator( args... ) ); }
+
+
+inline string SyntaxOfComputableFunction::Display( const string& name , const string& language ) const noexcept { TRY_CATCH( DisplayTreeStructure( name , language ) , const ErrorType& e , IGNORED_ERROR( e ) ); return m_syntax.Display(); }
 
 
 template <typename... Args>
@@ -71,9 +76,6 @@ auto ExpressionsToListSyntax( const Args&... args ) -> typename enable_if<conjun
 }
 
 template <typename... Args> inline auto FunctionExpressionToString( const SyntaxOfComputableFunction& f , const Args&... args ) -> typename enable_if<conjunction<is_same<SyntaxOfComputableFunction,Args>...>::value,string>::type { return FunctionExpressionToString( f , VLTree<string>( args.Get()... ) ); }
-
-inline void PutKagi( string& s ) noexcept { s = "Åu" + s + "Åv"; }
-inline void PutParenthesis( string& s ) noexcept { s = "( " + s + " )"; }
 
 inline string Plainise( const string& s ) noexcept { return "\\textrm{" + s + "}"; }
 
@@ -198,6 +200,8 @@ DEFINITION_OF_GLOBAL_CONSTANT_STRING_FOR_SYMBOL( english , english );
 DEFINITION_OF_GLOBAL_CONSTANT_STRING_FOR_SYMBOL( Chinese , Chinese );
 DEFINITION_OF_GLOBAL_CONSTANT_STRING_FOR_SYMBOL( French , French );
 DEFINITION_OF_GLOBAL_CONSTANT_STRING_FOR_SYMBOL( french , french );
+DEFINITION_OF_GLOBAL_CONSTANT_STRING_FOR_SYMBOL( German , German );
+DEFINITION_OF_GLOBAL_CONSTANT_STRING_FOR_SYMBOL( german , german );
 
 DEFINITION_OF_GLOBAL_CONSTANT_STRING_FOR_SYMBOL( Fandom , Fandom );
 DEFINITION_OF_GLOBAL_CONSTANT_STRING_FOR_SYMBOL( Jekyll , Jekyll );

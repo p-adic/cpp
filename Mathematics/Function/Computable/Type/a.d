@@ -91,14 +91,16 @@ Mathematics/Function/Computable/Type/a.o: \
  C:/Users/user/Documents/Programming/Error/Debug/a_Macro.hpp \
  Mathematics/Function/Computable/Type/a_Body.hpp \
  Mathematics/Function/Computable/Type/a.hpp \
- Mathematics/Function/Computable/Type/../Syntax/a_Body.hpp \
- Mathematics/Function/Computable/Type/../Syntax/a.hpp \
- Mathematics/Function/Computable/Type/../Syntax/a_Macro.hpp \
+ Mathematics/Function/Computable/Type/../Syntax/Translation/a_Body.hpp \
+ Mathematics/Function/Computable/Type/../Syntax/Translation/a.hpp \
  C:/Users/user/Documents/Programming/Utility/VLTree/a.hpp \
  C:/Users/user/Documents/Programming/Utility/VLTree/Entry/a.hpp \
  C:/Users/user/Documents/Programming/Utility/VLTree/Iterator/Sequential/a.hpp \
  C:/Users/user/Documents/Programming/Utility/VLTree/Iterator/a.hpp \
  C:/Users/user/Documents/Programming/Utility/VLTree/SubTree/a.hpp \
+ Mathematics/Function/Computable/Type/../Syntax/Translation/../a_Body.hpp \
+ Mathematics/Function/Computable/Type/../Syntax/Translation/../a.hpp \
+ Mathematics/Function/Computable/Type/../Syntax/Translation/../a_Macro.hpp \
  C:/Users/user/Documents/Programming/Utility/VLTree/a_Body.hpp \
  C:/Users/user/Documents/Programming/Utility/VLTree/Entry/a_Body.hpp \
  C:/Users/user/Documents/Programming/Utility/VLTree/Iterator/Sequential/a_Body.hpp \
@@ -287,11 +289,9 @@ Mathematics/Function/Computable/Type/a_Body.hpp:
 
 Mathematics/Function/Computable/Type/a.hpp:
 
-Mathematics/Function/Computable/Type/../Syntax/a_Body.hpp:
+Mathematics/Function/Computable/Type/../Syntax/Translation/a_Body.hpp:
 
-Mathematics/Function/Computable/Type/../Syntax/a.hpp:
-
-Mathematics/Function/Computable/Type/../Syntax/a_Macro.hpp:
+Mathematics/Function/Computable/Type/../Syntax/Translation/a.hpp:
 
 C:/Users/user/Documents/Programming/Utility/VLTree/a.hpp:
 
@@ -302,6 +302,12 @@ C:/Users/user/Documents/Programming/Utility/VLTree/Iterator/Sequential/a.hpp:
 C:/Users/user/Documents/Programming/Utility/VLTree/Iterator/a.hpp:
 
 C:/Users/user/Documents/Programming/Utility/VLTree/SubTree/a.hpp:
+
+Mathematics/Function/Computable/Type/../Syntax/Translation/../a_Body.hpp:
+
+Mathematics/Function/Computable/Type/../Syntax/Translation/../a.hpp:
+
+Mathematics/Function/Computable/Type/../Syntax/Translation/../a_Macro.hpp:
 
 C:/Users/user/Documents/Programming/Utility/VLTree/a_Body.hpp:
 
