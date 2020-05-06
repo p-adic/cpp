@@ -187,6 +187,7 @@
 #define ENGLISH EnglishString() 
 #define CHINESE ChineseString() 
 #define FRENCH FrenchString() 
+#define GERMAN GermanString() 
 
 #define FANDOM FandomString() 
 
