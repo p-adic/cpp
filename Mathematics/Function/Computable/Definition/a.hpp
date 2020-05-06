@@ -18,7 +18,7 @@ public:
   template <typename... Rets> inline DefinitionOfComputableFunction( const Dummy<Rets...>& dummy , const Rets&... lines );
 
   inline const string& Name() const;
-  void WriteOn( const OperatorSymbol<Ret,Args...>& f , const string& language , const string& style , const string& filename , const ios_base::openmode& open_mode ) const noexcept;
+  void WriteTo( const OperatorSymbol<Ret,Args...>& f , const string& language , const string& style , const string& filename , const ios_base::openmode& open_mode ) const noexcept;
 
 };
 

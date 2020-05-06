@@ -146,6 +146,8 @@ Mathematics/Function/Computable/Operator/Basic/bool/a.o: \
  C:/Users/user/Documents/Programming/Mathematics/Function/Computable/Expression/Variable/Variadic/Body/a.hpp \
  C:/Users/user/Documents/Programming/Mathematics/Function/Computable/Operator/Separator/a_Body.hpp \
  C:/Users/user/Documents/Programming/Mathematics/Function/Computable/Syntax/a_Body.hpp \
+ C:/Users/user/Documents/Programming/Mathematics/Function/Computable/Syntax/Translation/a_Body.hpp \
+ C:/Users/user/Documents/Programming/Mathematics/Function/Computable/Syntax/Translation/a.hpp \
  C:/Users/user/Documents/Programming/Utility/VLTree/a_Body.hpp \
  C:/Users/user/Documents/Programming/Utility/VLTree/Entry/a_Body.hpp \
  C:/Users/user/Documents/Programming/Utility/VLTree/Iterator/Sequential/a_Body.hpp \
@@ -464,6 +466,10 @@ C:/Users/user/Documents/Programming/Mathematics/Function/Computable/Expression/V
 C:/Users/user/Documents/Programming/Mathematics/Function/Computable/Operator/Separator/a_Body.hpp:
 
 C:/Users/user/Documents/Programming/Mathematics/Function/Computable/Syntax/a_Body.hpp:
+
+C:/Users/user/Documents/Programming/Mathematics/Function/Computable/Syntax/Translation/a_Body.hpp:
+
+C:/Users/user/Documents/Programming/Mathematics/Function/Computable/Syntax/Translation/a.hpp:
 
 C:/Users/user/Documents/Programming/Utility/VLTree/a_Body.hpp:
 
