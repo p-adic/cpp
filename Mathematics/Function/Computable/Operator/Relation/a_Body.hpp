@@ -86,7 +86,7 @@ void RelationSymbol<Args...>::SetSeparator( const SeparatorOfComputableFunction&
 
        while( itr_args.IsValid() ){
 
-	 t_sub.push_RightMost( VLTree<string>( itr_args , 0 ) );
+	 t_sub.push_RightMost( VLTree<string>( 0 , itr_args ) );
 	 itr_args++;
 
        }
