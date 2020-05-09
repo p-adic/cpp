@@ -111,6 +111,7 @@
 
 // separator setting
 #define SYMBOLISE( FUNC ) FUNC.GetNodeString( 2 ) 
+#define EMPTY EmptyString() 
 #define SPACE SpaceString() 
 #define VSPACE VspaceString() 
 #define SUB SubString()
