@@ -1,6 +1,8 @@
 // c:/Users/user/Documents/Programming/Mathematics/Function/Computable/Type/Array/Nest/a.hpp
 
 #pragma once
+#include "a_Macro.hpp"
+
 #include "../a.hpp"
 
 template <typename Ret>
