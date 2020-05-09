@@ -49,9 +49,9 @@ inline const PrettyFunction<string,string,nat>& EntryAccessSymbol()
      (
 
       0 ,
-      EmptyString() ,
-      LbrackString() ,
-      RbrackString()
+      LparenString() ,
+      RparenString() + SubString() + LbraceString() ,
+      RbraceString()
 
       ) ,
      GetTypeName<string>() ,
