@@ -47,7 +47,11 @@ template <typename Ret> inline ExpressionOfComputableFunction<NestedArrayTypeOfC
 template <typename Ret> inline const PrettyFunction<Ret,NestedArrayTypeOfComputableFunction<Ret> >& RemoveNestedArraySymbol();
 template <typename Ret> inline ExpressionOfComputableFunction<Ret> RemoveNestedArraySymbolApplication( const ExpressionOfComputableFunction<NestedArrayTypeOfComputableFunction<Ret> >& a );
 
-template <typename Ret> inline const PrettyFunction<NestedArrayTypeOfComputableFunction<Ret>,ArrayTypeOfComputableFunction<Ret> >& ToNestedArraySymbol();
+template <typename Ret> inline const PrettyRelation<NestedArrayTypeOfComputableFunction<Ret> >& RemovableNestedArraySymbol();
+template <typename Ret> inline ConditionOfComputableFunction RemovableNestedArraySymbolApplication( const ExpressionOfComputableFunction<NestedArrayTypeOfComputableFunction<Ret> >& a );
+
+
+template <typename Ret> inline const PrettyFunction<NestedArrayTypeOfComputableFunction<Ret>,ArrayTypeOfComputableFunction<Ret> >& NestifySymbol();
 template <typename Ret> inline ExpressionOfComputableFunction<NestedArrayTypeOfComputableFunction<Ret> > NestifySymbolApplication( const ExpressionOfComputableFunction<ArrayTypeOfComputableFunction<Ret> >& a );
 
 template <typename Ret> inline const PrettyFunction<NestedArrayTypeOfComputableFunction<Ret>,NestedArrayTypeOfComputableFunction<Ret> >& NestedWrapSymbol();
