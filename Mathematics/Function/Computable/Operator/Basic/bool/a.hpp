@@ -6,6 +6,7 @@
 #include "../../a.hpp"
 
 
+
 inline const FunctionSymbol<bool,bool>& NegSymbol();
 inline DECLARATION_OF_LOGICAL_CONNECTIVE( To );
 inline DECLARATION_OF_LOGICAL_CONNECTIVE( Equiv );
@@ -25,6 +26,8 @@ template <typename... Args> inline DECLARATION_OF_VARIADIC_LOGICAL_CONNECTIVE_AP
 inline DECLARATION_OF_VARIADIC_LOGICAL_CONNECTIVE_APPLICATION_ONE( Lor );
 template <typename... Args> inline DECLARATION_OF_VARIADIC_LOGICAL_CONNECTIVE_APPLICATION_MORE( Lor );
 
+inline DECLARATION_OF_TWO_ARY_BASIC_FUNCTION( bool , + );
+inline DECLARATION_OF_TWO_ARY_BASIC_FUNCTION( bool , * );
 
 template <typename Ret> inline DECLARATION_OF_BASIC_RELATION( Ret , == );
 template <typename Ret> inline DECLARATION_OF_BASIC_RELATION( Ret , != );

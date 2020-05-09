@@ -93,6 +93,7 @@ Mathematics/Function/Computable/Operator/Basic/bool/a.o: \
  Mathematics/Function/Computable/Operator/Basic/bool/a.hpp \
  Mathematics/Function/Computable/Operator/Basic/bool/a_Macro.hpp \
  Mathematics/Function/Computable/Operator/Basic/bool/../../a.hpp \
+ Mathematics/Function/Computable/Operator/Basic/bool/../../a_Macro.hpp \
  Mathematics/Function/Computable/Operator/Basic/bool/../../Function/Variadic/a.hpp \
  Mathematics/Function/Computable/Operator/Basic/bool/../../Function/Variadic/a_Macro.hpp \
  Mathematics/Function/Computable/Operator/Basic/bool/../../Function/Variadic/../a.hpp \
@@ -360,6 +361,8 @@ Mathematics/Function/Computable/Operator/Basic/bool/a.hpp:
 Mathematics/Function/Computable/Operator/Basic/bool/a_Macro.hpp:
 
 Mathematics/Function/Computable/Operator/Basic/bool/../../a.hpp:
+
+Mathematics/Function/Computable/Operator/Basic/bool/../../a_Macro.hpp:
 
 Mathematics/Function/Computable/Operator/Basic/bool/../../Function/Variadic/a.hpp:
 

@@ -9,6 +9,15 @@
 template <> inline DEFINITION_OF_VARIADIC_FUNCTION_SYMBOL( int , Plus , Plus );
 template <> inline DEFINITION_OF_VARIADIC_FUNCTION_SYMBOL( int , Times , Times );
 
+
+inline DEFINITION_OF_TWO_ARY_BASIC_FUNCTION( int , + , Plus );
+inline DEFINITION_OF_TWO_ARY_BASIC_FUNCTION( int , - , Minus );
+inline DEFINITION_OF_TWO_ARY_BASIC_FUNCTION( int , * , Times );
+inline DEFINITION_OF_TWO_ARY_BASIC_FUNCTION( int , / , Slash );
+inline DEFINITION_OF_TWO_ARY_BASIC_FUNCTION( int , % , Mod );
+inline DEFINITION_OF_TWO_ARY_BASIC_FUNCTION( int , ^ , Power );
+
+
 inline const PrettyRelation<int>& NonNegativeSymbol()
 {
 

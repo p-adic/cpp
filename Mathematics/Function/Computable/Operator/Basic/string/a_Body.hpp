@@ -9,6 +9,9 @@
 
 template <> inline DEFINITION_OF_VARIADIC_FUNCTION_SYMBOL( string , Plus , Frown );
 
+
+inline DEFINITION_OF_TWO_ARY_BASIC_FUNCTION( string , + , Plus );
+
 inline const PrettyFunction<nat,string>& LengthSymbol()
 {
 

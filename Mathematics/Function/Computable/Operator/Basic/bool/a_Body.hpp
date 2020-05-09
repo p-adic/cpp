@@ -28,6 +28,10 @@ inline DEFINITION_OF_VARIADIC_LOGICAL_CONNECTIVE_APPLICATION_ONE( Lor );
 template <typename... Args> inline DEFINITION_OF_VARIADIC_LOGICAL_CONNECTIVE_APPLICATION_MORE( Lor );
 
 
+inline DEFINITION_OF_TWO_ARY_BASIC_FUNCTION( bool , + , Plus );
+inline DEFINITION_OF_TWO_ARY_BASIC_FUNCTION( bool , * , Times );
+
+
 template <typename Ret> inline DEFINITION_OF_BASIC_RELATION( Ret , == , Eq );
 inline DEFINITION_OF_BASIC_RELATION( int , == , Eq );
 inline DEFINITION_OF_BASIC_RELATION( string , == , Eq );

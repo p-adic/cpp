@@ -7,6 +7,8 @@
 
 template <> inline DECLARATION_OF_VARIADIC_FUNCTION_SYMBOL( string , Plus );
 
+inline DECLARATION_OF_TWO_ARY_BASIC_FUNCTION( string , + );
+
 
 inline const PrettyFunction<nat,string>& LengthSymbol();
 inline PrettyExpression<nat> LengthSymbolApplication( const ExpressionOfComputableFunction<string>& s );
