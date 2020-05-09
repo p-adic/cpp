@@ -2,10 +2,6 @@
 
 #pragma once
 
-// constant
-#define INFTY InftySymbol() 
-
-
 // variable
 #define LDOTS( V ) LdotsSymbol< V >()  
 
@@ -45,8 +41,13 @@
 #define PROJ( i , a ) ProjectionSymbolApplication< i >( a ) 
 
 #define WRAP( x ) WrapSymbolApplication( x ) 
+#define NWRAP( a ) NestedWrapSymbolApplication( a ) 
+#define NESTIFY( a ) NestifySymbolApplication( a ) 
+
 #define TUPLE( ... ) TupleSymbolApplication( __VA_ARGS__ ) 
-#define NESTIFY( ... ) NestifySymbolApplication( __VA_ARGS__ ) 
+
+#define ENNEST( x ) ToTrivialNestedArraySymbolApplication( x ) 
+#define DENEST( a ) RemoveNestedArraySymbolApplication( a ) 
 
 
 // relation
