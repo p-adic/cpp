@@ -26,6 +26,8 @@ template <typename Ret> inline DECLARATION_OF_VARIADIC_FUNCTION_SYMBOL( NestedAr
 template <typename Ret> inline DECLARATION_OF_VARIADIC_FUNCTION_SYMBOL_APPLICATION_ONE( NestedArrayTypeOfComputableFunction<Ret> , NestedConcatenate );
 template <typename Ret, typename... Args> inline DECLARATION_OF_VARIADIC_FUNCTION_SYMBOL_APPLICATION_MORE( NestedArrayTypeOfComputableFunction<Ret> , NestedConcatenate );
 
+template <typename Ret> inline DECLARATION_OF_TWO_ARY_BASIC_FUNCTION( NestedArrayTypeOfComputableFunction<Ret> , + );
+
 
 template <typename Ret> inline const PrettyFunction<nat,NestedArrayTypeOfComputableFunction<Ret> >& NestedLengthSymbol();
 template <typename Ret> inline PrettyExpression<nat> NestedLengthSymbolApplication( const ExpressionOfComputableFunction<NestedArrayTypeOfComputableFunction<Ret> >& a );

@@ -32,6 +32,9 @@ template <typename Ret> inline DEFINITION_OF_VARIADIC_FUNCTION_SYMBOL( ArrayType
 template <typename Ret> inline DEFINITION_OF_VARIADIC_FUNCTION_SYMBOL_APPLICATION_ONE( ArrayTypeOfComputableFunction<Ret> , Concatenate );
 template <typename Ret, typename... Args> inline DEFINITION_OF_VARIADIC_FUNCTION_SYMBOL_APPLICATION_MORE( ArrayTypeOfComputableFunction<Ret> , Concatenate , Symbol<Ret> );
 
+template <typename Ret> inline DEFINITION_OF_TWO_ARY_BASIC_FUNCTION( ArrayTypeOfComputableFunction<Ret> , + , Concatenate );
+
+
 
 template <typename Ret> inline const FunctionSymbol<nat,ArrayTypeOfComputableFunction<Ret> >& LengthSymbol()
 {

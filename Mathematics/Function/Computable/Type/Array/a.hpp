@@ -28,6 +28,8 @@ template <typename Ret> inline DECLARATION_OF_VARIADIC_FUNCTION_SYMBOL( ArrayTyp
 template <typename Ret> inline DECLARATION_OF_VARIADIC_FUNCTION_SYMBOL_APPLICATION_ONE( ArrayTypeOfComputableFunction<Ret> , Concatenate );
 template <typename Ret, typename... Args> inline DECLARATION_OF_VARIADIC_FUNCTION_SYMBOL_APPLICATION_MORE( ArrayTypeOfComputableFunction<Ret> , Concatenate );
 
+template <typename Ret> inline DECLARATION_OF_TWO_ARY_BASIC_FUNCTION( ArrayTypeOfComputableFunction<Ret> , + );
+
 
 template <typename Ret> inline const PrettyFunction<nat,ArrayTypeOfComputableFunction<Ret> >& LengthSymbol();
 template <typename Ret> inline PrettyExpression<nat> LengthSymbolApplication( const ExpressionOfComputableFunction<ArrayTypeOfComputableFunction<Ret> >& a );
