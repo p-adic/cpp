@@ -33,6 +33,7 @@
 #define OT( x , y ) TO( y , x ) 
 #define EQUIV( ... ) EquivSymbolApplication( __VA_ARGS__ ) 
 
+#define STRINGISE( n ) StringiseSymbol()( a ) 
 #define LENGTH( a ) LengthSymbolApplication( a ) 
 #define ENTRY( a , n ) EntryAccessSymbolApplication( a , n ) 
 #define INISEG( a , n ) InitialSgmentSymbolApplication( a , n ) 
