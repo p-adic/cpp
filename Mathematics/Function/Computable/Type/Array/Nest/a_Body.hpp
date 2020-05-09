@@ -171,7 +171,7 @@ template <typename Ret> inline const PrettyFunction<NestedArrayTypeOfComputableF
 template <typename Ret> inline const PrettyFunction<NestedArrayTypeOfComputableFunction<Ret>,NestedArrayTypeOfComputableFunction<Ret> >& NestedWrapSymbol()
 {
 
-  static const FunctionSymbol<NestedArrayTypeOfComputableFunction<Ret>,NestedArrayTypeOfComputableFunction<Ret>,nat> f
+  static const FunctionSymbol<NestedArrayTypeOfComputableFunction<Ret>,NestedArrayTypeOfComputableFunction<Ret> > f
   {
 
      "NestedWrap" ,
