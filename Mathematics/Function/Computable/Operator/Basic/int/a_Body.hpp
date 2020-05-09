@@ -20,7 +20,7 @@ inline DEFINITION_OF_TWO_ARY_BASIC_FUNCTION( int , ^ , Power );
 inline const FunctionSymbol<string,int>& StringiseSymbol()
 {
 
-  static const FunctionSymbol<string,int> r
+  static const FunctionSymbol<string,int> f
   {
 
     "stringise" ,
