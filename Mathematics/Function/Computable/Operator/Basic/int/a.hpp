@@ -11,5 +11,7 @@ inline DECLARATION_OF_TWO_ARY_BASIC_FUNCTION( int , / );
 inline DECLARATION_OF_TWO_ARY_BASIC_FUNCTION( int , % );
 inline DECLARATION_OF_TWO_ARY_BASIC_FUNCTION( int , ^ );
 
+inline const FunctionSymbol<string,int>& StringiseSymbol();
+
 inline const RelationSymbol<int>& NonNegativeSymbol();
 

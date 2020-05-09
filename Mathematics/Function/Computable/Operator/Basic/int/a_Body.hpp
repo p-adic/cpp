@@ -17,6 +17,29 @@ inline DEFINITION_OF_TWO_ARY_BASIC_FUNCTION( int , / , Slash );
 inline DEFINITION_OF_TWO_ARY_BASIC_FUNCTION( int , % , Mod );
 inline DEFINITION_OF_TWO_ARY_BASIC_FUNCTION( int , ^ , Power );
 
+inline const FunctionSymbol<string,int>& StringiseSymbol()
+{
+
+  static const FunctionSymbol<string,int> r
+  {
+
+    "stringise" ,
+      SeparatorOfComputableFunction
+      (
+
+       0 ,
+       EmptyString() ,
+       EmptyString()
+
+       ) ,
+      GetTypeName<string>() ,
+      VariableSymbol<int>( "n" )
+
+      };
+
+  return f;
+
+}
 
 inline const PrettyRelation<int>& NonNegativeSymbol()
 {
