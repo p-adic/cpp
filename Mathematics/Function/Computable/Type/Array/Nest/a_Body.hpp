@@ -72,9 +72,9 @@ template <typename Ret> inline const PrettyOperator<NestedArrayTypeOfComputableF
      (
 
       0 ,
-      EmptyString() ,
-      LbrackString() ,
-      RbrackString()
+      LparenString() ,
+      RparenString() + SubString() + LbraceString() ,
+      RbraceString()
 
       ) ,
      GetTypeName<NestedArrayTypeOfComputableFunction<Ret> >() ,

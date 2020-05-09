@@ -73,9 +73,9 @@ template <typename Ret> inline const PrettyOperator<Ret,ArrayTypeOfComputableFun
      (
 
       0 ,
-      EmptyString() ,
-      LbrackString() ,
-      RbrackString()
+      LparenString() ,
+      RparenString() + SubString() + LbraceString() ,
+      RbraceString()
 
       ) ,
      GetTypeName<Ret>() ,
