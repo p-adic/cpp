@@ -127,7 +127,7 @@ DEFINITION_OF_GLOBAL_CONSTANT_STRING_FOR_SYMBOL( NestedArray ,nested array );
 
 DEFINITION_OF_GLOBAL_CONSTANT_STRING_FOR_SYMBOL( Int , \\mathbb{Z} );
 DEFINITION_OF_GLOBAL_CONSTANT_STRING_FOR_SYMBOL( String , \\textrm{String} );
-DECLARATION_OF_GLOBAL_CONSTANT_STRING_FOR_SYMBOL( Bool ){ static const string s = "\\{0,1\\}"; return s; }
+DECLARATION_OF_GLOBAL_CONSTANT_STRING_FOR_SYMBOL( Bool ){ static const string s = "\\{ \\perp, \\top \\}"; return s; }
 
 // valid string
 DEFINITION_OF_GLOBAL_CONSTANT_STRING_FOR_SYMBOL( Expression , expression );
