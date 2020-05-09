@@ -48,6 +48,7 @@
 
 #define ENNEST( x ) ToTrivialNestedArraySymbolApplication( x ) 
 #define DENEST( a ) RemoveNestedArraySymbolApplication( a ) 
+#define DENESTABLE( a ) RemovableNestedArraySymbolApplication( a ) 
 
 
 // relation
