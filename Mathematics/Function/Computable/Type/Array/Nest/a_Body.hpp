@@ -144,13 +144,13 @@ template <typename Ret> inline const PrettyFunction<NestedArrayTypeOfComputableF
 
 template <typename Ret> inline ExpressionOfComputableFunction<NestedArrayTypeOfComputableFunction<Ret> > FinalSegmentSymbolApplication( const ExpressionOfComputableFunction<NestedArrayTypeOfComputableFunction<Ret> >& a , PrettyExpression<nat> n ) { return NestedFinalSegmentSymbol<Ret>()( a , n ); }
 
-template <typename Ret> inline const PrettyFunction<NestedArrayTypeOfComputableFunction<Ret>,ArrayTypeOfComputableFunction<Ret> >& NestifySymbol()
+template <typename Ret> inline const PrettyFunction<NestedArrayTypeOfComputableFunction<Ret>,ArrayTypeOfComputableFunction<Ret> >& ToNestedArraySymbol()
 {
 
   static const FunctionSymbol<NestedArrayTypeOfComputableFunction<Ret>,NestedArrayTypeOfComputableFunction<Ret>,nat> f
   {
 
-     "Identity" ,
+     "ToNestedArray" ,
      SeparatorOfComputableFunction
      (
 
@@ -168,4 +168,30 @@ template <typename Ret> inline const PrettyFunction<NestedArrayTypeOfComputableF
 
 }
 
-template <typename Ret> inline ExpressionOfComputableFunction<NestedArrayTypeOfComputableFunction<Ret> > NestifySymbolApplication( const ExpressionOfComputableFunction<ArrayTypeOfComputableFunction<Ret> >& a );
+template <typename Ret> inline const PrettyFunction<NestedArrayTypeOfComputableFunction<Ret>,NestedArrayTypeOfComputableFunction<Ret> >& NestedWrapSymbol()
+{
+
+  static const FunctionSymbol<NestedArrayTypeOfComputableFunction<Ret>,NestedArrayTypeOfComputableFunction<Ret>,nat> f
+  {
+
+     "NestedWrap" ,
+     SeparatorOfComputableFunction
+     (
+
+      0 ,
+      LparenString() ,
+      RparenString()
+
+      ) ,
+     GetTypeName<NestedArrayTypeOfComputableFunction<Ret> >() ,
+     VariableSymbol<NestedArrayTypeOfComputableFunction<Ret> >( "a" )
+
+       };
+
+  return f;
+
+}
+
+template <typename Ret> inline ExpressionOfComputableFunction<NestedArrayTypeOfComputableFunction<Ret> > NestifySymbolApplication( const ExpressionOfComputableFunction<ArrayTypeOfComputableFunction<Ret> >& a ) { return ToNestedArraySymbol<Ret>()( a ); }
+
+template <typename Ret> inline ExpressionOfComputableFunction<NestedArrayTypeOfComputableFunction<Ret> > NestifySymbolApplication( const ExpressionOfComputableFunction<NestedArrayTypeOfComputableFunction<Ret> >& a ) { return NestedWrapSymbol<Ret>()( a ); }

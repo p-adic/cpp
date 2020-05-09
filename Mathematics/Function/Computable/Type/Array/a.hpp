@@ -41,6 +41,10 @@ template <typename Ret> inline ExpressionOfComputableFunction<ArrayTypeOfComputa
 template <typename Ret> inline const PrettyFunction<ArrayTypeOfComputableFunction<Ret>,ArrayTypeOfComputableFunction<Ret>,nat>& FinalSegmentSymbol();
 template <typename Ret> inline ExpressionOfComputableFunction<ArrayTypeOfComputableFunction<Ret> > FinalSegmentSymbolApplication( const ExpressionOfComputableFunction<ArrayTypeOfComputableFunction<Ret> >& a , PrettyExpression<nat> n );
 
+template <typename Ret> inline const PrettyFunction<ArrayTypeOfComputableFunction<Ret>,Ret>& WrapSymbol();
+template <typename Ret> inline ExpressionOfComputableFunction<ArrayTypeOfComputableFunction<Ret> > WrapSymbolApplication( const ExpressionOfComputableFunction<Ret>& x );
+
+
 template <typename Ret> inline PrettyFunction<ArrayTypeOfComputableFunction<Ret>,nat> ArrayiseSymbol( const FunctionSymbol<Ret,int>& f , const PrettyVariable<nat>& n );
 
 inline PrettyFunction<ArrayTypeOfComputableFunction<bool>,nat> ArrayiseSymbol( const RelationSymbol<int>& r , const PrettyVariable<nat>& n );
