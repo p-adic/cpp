@@ -276,4 +276,4 @@ template <typename Ret> inline const PrettyFunction<NestedArrayTypeOfComputableF
 
 }
 
-template <typename Ret> inline ExpressionOfComputableFunction<NestedArrayTypeOfComputableFunction<Ret> > NestedWrapApplication( const ExpressionOfComputableFunction<NestedArrayTypeOfComputableFunction<Ret> >& a ) { return NestedWrapSymbol<Ret>()( a ); }
+template <typename Ret> inline ExpressionOfComputableFunction<NestedArrayTypeOfComputableFunction<Ret> > NestedWrapSymbolApplication( const ExpressionOfComputableFunction<NestedArrayTypeOfComputableFunction<Ret> >& a ) { return NestedWrapSymbol<Ret>()( a ); }
