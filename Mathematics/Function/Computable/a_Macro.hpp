@@ -44,6 +44,7 @@
 
 #define PROJ( i , a ) ProjectionSymbolApplication< i >( a ) 
 
+#define WRAP( x ) WrapSymbolApplication( x ) 
 #define TUPLE( ... ) TupleSymbolApplication( __VA_ARGS__ ) 
 #define NESTIFY( ... ) NestifySymbolApplication( __VA_ARGS__ ) 
 
