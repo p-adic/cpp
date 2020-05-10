@@ -8,10 +8,11 @@
 
 #define SUGAR( CONST , x )						\
 									\
-  static auto CONNECT( CONNECT( __SYMBOL_OF_ , CONST ) , __ ) = PrettyVariable<EXPRESSION_TYPE( x )>( TO_STRING( CONST ) ); \
+  static ExpressionOfComputableFunction<EXPRESSION_TYPE( x )> CONNECT( CONNECT( __SYMBOL_OF_ , CONST ) , __ ) = x; \
+  CONNECT( CONNECT( __SYMBOL_OF_ , CONST ) , __ ).SetSymbol( TO_STRING( CONST ) ); \
   static auto CONNECT( CONNECT( __DEFINITION_OF_ , CONST ) , __ ) = EXPRESSION( x ); \
 									\
-  static const auto& CONST = CONNECT( CONNECT( __DEFINITION_OF_ , CONST ) , __ ); \
+  static const auto& CONST = CONNECT( CONNECT( __SYMBOL_OF_ , CONST ) , __ ); \
 									\
 									\
 
@@ -126,8 +127,8 @@
 // separator setting
 #define SYMBOLISE( FUNC ) FUNC.GetNodeString( 2 ) 
 #define EMPTY EmptyString() 
+#define ESCAPE EscapeString() 
 #define SPACE SpaceString() 
-#define VSPACE VspaceString() 
 #define SUB SubString()
 #define SUP SupString() 
 #define LPAREN LparenString() 
