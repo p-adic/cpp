@@ -56,4 +56,3 @@ void DefinitionOfComputableFunction<Ret,Args...>::WriteTo( const OperatorSymbol<
 
 }
 
-DEFINITION_OF_GLOBAL_CONSTANT_STRING_FOR_SYMBOL( Definition , definition );

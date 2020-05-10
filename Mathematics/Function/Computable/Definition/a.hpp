@@ -21,5 +21,3 @@ public:
   void WriteTo( const OperatorSymbol<Ret,Args...>& f , const string& language , const string& style , const string& filename , const ios_base::openmode& open_mode ) const noexcept;
 
 };
-
-DECLARATION_OF_GLOBAL_CONSTANT_STRING_FOR_SYMBOL( Definition );
