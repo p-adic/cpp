@@ -2,5 +2,10 @@
 
 #pragma once
 
-#define ARRAY( RET ) ArrayTypeOfComputableFunction< RET > 
+#define ARRAY( TYPE_NAME , RET )				\
+								\
+  using TYPE_NAME = ArrayTypeOfComputableFunction< RET >;	\
+  DEFINITION_OF_DUMMY_CLASS( TYPE_NAME );			\
+								\
+
 

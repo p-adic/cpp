@@ -2,6 +2,9 @@
 
 #pragma once
 
-#define NEST( RET ) NestedArrayTypeOfComputableFunction< RET > 
-
+#define NEST( TYPE_NAME , RET )					\
+								\
+  using TYPE_NAME = NestedArrayTypeOfComputableFunction< RET >;	\
+  DEFINITION_OF_DUMMY_CLASS( TYPE_NAME );			\
+								\
 
