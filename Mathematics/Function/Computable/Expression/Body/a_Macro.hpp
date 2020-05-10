@@ -85,3 +85,58 @@
 
 #define DEFINITION_OF_SET_SYMBOL_FOR_EXPRESSION( RET ) void ExpressionOfComputableFunction< RET >:: SIGNATURE_OF_SET_SYMBOL_FOR_EXPRESSION { SetSymbol( f ); }
 
+#define SIGNATURE_OF_WRITE_TO_FOR_EXPRESSION( RET ) WriteTo( const ExpressionOfComputableFunction< RET >& c , const string& language , const string& style , const string& filename , const ios_base::openmode& open_mode ) const noexcept 
+
+#define DECLARATION_OF_WRITE_TO_FOR_EXPRESSION( RET ) void SIGNATURE_OF_WRITE_TO_FOR_EXPRESSION( RET ) 
+
+#define DEFINITION_OF_WRITE_TO_FOR_EXPRESSION( RET )			\
+  									\
+  void ExpressionOfComputableFunction< RET >:: SIGNATURE_OF_WRITE_TO_FOR_EXPRESSION( RET ) \
+  {									\
+									\
+    ofstream ofs( filename , open_mode );				\
+									\
+    try{								\
+									\
+      string expression_name1 = c.GetNodeString( 2 );			\
+      string expression_name2 = GetNodeString( 2 );			\
+									\
+      DisplayTreeStructureOfDefinition( expression_name1 , language );	\
+      cout << Get().Display() << endl;					\
+      cout << endl;							\
+      DisplayWritingTranslationOfDefinition( expression_name1 , filename , language ); \
+      cout << "…" << endl;						\
+									\
+      if( !ofs ){							\
+									\
+	DisplayFileOpenError( language );				\
+	cin.get();							\
+	return;								\
+									\
+      }									\
+									\
+      cout << "……" << endl;						\
+									\
+      PutMathJax( expression_name1 , style );				\
+      PutMathJax( expression_name2 , style );				\
+      ofs << expression_name1;						\
+      InputInlineWay( ofs , expression_name2 , language , style );	\
+									\
+    }									\
+    catch( const ErrorType& e ){					\
+									\
+      IGNORED_ERR( e );							\
+									\
+    }									\
+									\
+    ofs << endl;							\
+									\
+    cout << "………" << endl;						\
+    DisplayFinishedWriting( language );					\
+    return;								\
+									\
+  }									\
+									\
+
+
+

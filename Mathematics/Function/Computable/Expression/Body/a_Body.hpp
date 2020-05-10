@@ -33,3 +33,4 @@ template <typename Ret> template <typename... Args, typename... VA> inline DEFIN
 
 template <typename Ret> inline DEFINITION_OF_SET_SYMBOL_FOR_EXPRESSION( Ret );
 
+template <typename Ret> DEFINITION_OF_WRITE_TO_FOR_EXPRESSION( Ret );

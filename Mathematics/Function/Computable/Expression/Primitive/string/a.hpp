@@ -26,6 +26,8 @@ public:
 
   inline DECLARATION_OF_SET_SYMBOL_FOR_EXPRESSION;
 
+  DECLARATION_OF_WRITE_TO_FOR_EXPRESSION( string );
+
   using type = string;
 
 private:

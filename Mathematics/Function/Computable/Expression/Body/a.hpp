@@ -11,6 +11,7 @@
 // #include "../../Operator/Relation/Variadic/a.hpp"
 // #include "../../Type/Guide/TypeName/a.hpp"
 
+
 class TypeNameOfComputableFunction;
 template <typename Ret, typename... Args> class FunctionSymbol;
 template <typename Ret, typename VArg, typename... Args> class VariadicFunctionSymbol;
@@ -38,6 +39,9 @@ public:
   
   using type = Ret;
 
+  DECLARATION_OF_WRITE_TO_FOR_EXPRESSION( Ret );
+  
+
 private:
   // ñÿÇÃâEí[Ç…ä÷êîfÇ∆à¯êîva...Ç…ÇÊÇÈï\åªÇí«â¡
   template <typename... Args, typename... VA> inline DECLARATION_OF_PUSH_FUNCTION_EXPRESSION_FOR_EXPRESSION( Ret );
@@ -46,3 +50,5 @@ private:
   template <typename... Args, typename... VA> inline DECLARATION_OF_PUSH_FUNCTION_EXPRESSION_FOR_EXPRESSION_BODY( Ret );
   
 };
+
+
