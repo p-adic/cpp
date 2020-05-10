@@ -4,7 +4,7 @@
 
 #define DECLARATION_OF_EXPRESSION_FOR_VARIABLE_SYMBOL ExpressionOfComputableFunction( const int& dummy , const string& x , const TypeNameOfComputableFunction& type_name ) 
 
-#define DECLARATION_OF_EXPRESSION_FOR_CONSTANT_SYMBOL( ARG ) ExpressionOfComputableFunction( const ARG & t )  
+#define DECLARATION_OF_EXPRESSION_FOR_CONSTANT_SYMBOL( ARG ) ExpressionOfComputableFunction( const ARG & t ) 
 
 #define DECLARATION_OF_EXPRESSION_FOR_FUNCTION_SYMBOL( RET ) ExpressionOfComputableFunction( const FunctionSymbol< RET ,Args...>& f , const ExpressionOfComputableFunction<Args>&... args ) 
 
