@@ -110,12 +110,15 @@ Mathematics/Function/Computable/Syntax/Translation/a.o: \
  C:/Users/user/Documents/Programming/Mathematics/Function/Computable/Type/Guide/Primitive/a.hpp \
  C:/Users/user/Documents/Programming/Mathematics/Function/Computable/Type/Guide/Primitive/a_Macro.hpp \
  C:/Users/user/Documents/Programming/Mathematics/Function/Computable/Type/a.hpp \
+ C:/Users/user/Documents/Programming/Mathematics/Function/Computable/Type/a_Macro.hpp \
  C:/Users/user/Documents/Programming/Mathematics/Function/Computable/Type/Guide/Valid/a_Body.hpp \
  C:/Users/user/Documents/Programming/Mathematics/Function/Computable/Type/Guide/Primitive/a_Body.hpp \
  C:/Users/user/Documents/Programming/Mathematics/Function/Computable/Type/a_Body.hpp \
  Mathematics/Function/Computable/Syntax/Translation/../../Type/Basic/a_Body.hpp \
  Mathematics/Function/Computable/Syntax/Translation/../../Type/Basic/a.hpp \
  Mathematics/Function/Computable/Syntax/Translation/../../Type/Basic/../Guide/a.hpp \
+ Mathematics/Function/Computable/Syntax/Translation/../../Type/Basic/../Guide/Array/Nest/a.hpp \
+ Mathematics/Function/Computable/Syntax/Translation/../../Type/Basic/../Guide/Array/a.hpp \
  Mathematics/Function/Computable/Syntax/Translation/../../Type/Basic/../Guide/Base/a.hpp \
  Mathematics/Function/Computable/Syntax/Translation/../../Type/Basic/../Guide/Base/a_Macro.hpp \
  Mathematics/Function/Computable/Syntax/Translation/../../Type/Basic/../Guide/Base/a_Alias.hpp \
@@ -415,6 +418,8 @@ C:/Users/user/Documents/Programming/Mathematics/Function/Computable/Type/Guide/P
 
 C:/Users/user/Documents/Programming/Mathematics/Function/Computable/Type/a.hpp:
 
+C:/Users/user/Documents/Programming/Mathematics/Function/Computable/Type/a_Macro.hpp:
+
 C:/Users/user/Documents/Programming/Mathematics/Function/Computable/Type/Guide/Valid/a_Body.hpp:
 
 C:/Users/user/Documents/Programming/Mathematics/Function/Computable/Type/Guide/Primitive/a_Body.hpp:
@@ -426,6 +431,10 @@ Mathematics/Function/Computable/Syntax/Translation/../../Type/Basic/a_Body.hpp:
 Mathematics/Function/Computable/Syntax/Translation/../../Type/Basic/a.hpp:
 
 Mathematics/Function/Computable/Syntax/Translation/../../Type/Basic/../Guide/a.hpp:
+
+Mathematics/Function/Computable/Syntax/Translation/../../Type/Basic/../Guide/Array/Nest/a.hpp:
+
+Mathematics/Function/Computable/Syntax/Translation/../../Type/Basic/../Guide/Array/a.hpp:
 
 Mathematics/Function/Computable/Syntax/Translation/../../Type/Basic/../Guide/Base/a.hpp:
 

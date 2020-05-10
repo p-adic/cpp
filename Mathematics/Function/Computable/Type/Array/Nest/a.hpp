@@ -21,6 +21,7 @@ public:
   
 };
 
+template <typename Ret> inline string GetNestedArrayTypeString();
 
 template <typename Ret> inline DECLARATION_OF_VARIADIC_FUNCTION_SYMBOL( NestedArrayTypeOfComputableFunction<Ret> , NestedConcatenate );
 template <typename Ret> inline DECLARATION_OF_VARIADIC_FUNCTION_SYMBOL_APPLICATION_ONE( NestedArrayTypeOfComputableFunction<Ret> , NestedConcatenate );

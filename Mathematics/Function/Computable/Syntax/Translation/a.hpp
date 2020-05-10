@@ -4,19 +4,32 @@
 #include "../../../../../Utility/VLTree/a.hpp"
 #include <fstream>
 
+// filex
 void DisplayTreeStructureOfDefinition( const string& function_name , const string& language );
 void DisplayWritingTranslationOfDefinition( const string& function_name , const string& filename , const string& language );
 void DisplayFileOpenError( const string& language );
 void DisplayFinishedWriting( const string& language );
 
+// type
 void InputDefinitionOfRecursiveSet( ofstream& ofs , const string& type_name , const string& definition , const string& language , const string& style );
+void SetDefinitionOfRecursiveSet( string& type_name , string& definition , const string& language , const string& style );
+void InputSignatureOfRecursiveSet( ofstream& ofs , const string& type_name , const string& language , const string& style );
+void InputInlineWay( ofstream& ofs , const string& definition , const string& language , const string& style );
 
+void InputDefinitionOfArraySet( ofstream& ofs , const string& type_name , const string& description , const string& language , const string& style );
+void SetDefinitionOfArraySet( string& type_name , string& description , const string& language , const string& style );
+
+void InputDefinitionOfNestedArraySet( ofstream& ofs , const string& type_name , const string& description , const string& language , const string& style );
+void SetDefinitionOfNestedArraySet( string& type_name , const string& description , string& form11 , string& form12 ,  string& form21 , string& form23 , string& form22 , const string& language , const string& style );
+void InputRecursiveWay( ofstream& ofs , const string& language , const string& style );
+void InputIndent( ofstream& ofs , const uint depth , const string& language , const string& style );
+void InputFirstRuleOfNestedArraySet( ofstream& ofs , const string& form11 , const string& form12 , const string& language , const string& style );
+void InputSecondRuleOfNestedArraySet( ofstream& ofs , const string& form21 , const string& form22 , const string& form23 , const string& language , const string& style );
+
+// function
 void DisplayTreeStructure( const string& name , const string& language );
 void InputTotality( ofstream& ofs , const string& totality , const string& language , const string& style );
-void InputFunctionSignature( ofstream& ofs , const string& function_name , const string& argument_type_name , const string& argument_name , const string& return_type_name , const string& function_expression_name , const string& language , const string& style );
-void InputRecursiveWay( ofstream& ofs , const string& language , const string& style );
-
-void InputIndent( ofstream& ofs , const uint depth , string& language , const string& style );
+void InputSignatureOfFunction( ofstream& ofs , const string& function_name , const string& argument_type_name , const string& argument_name , const string& return_type_name , const string& function_expression_name , const string& language , const string& style );
 
 // line
 void InputLine( ofstream& ofs , const string& function_expression_name , const string& line_name , VLTree<string>::const_iterator& itr_line , const uint& depth , string& language , const string& style );
@@ -80,6 +93,9 @@ inline string LogicalOrToString( VLTree<string>::const_iterator& itr , string& l
 void AddCommaForLogicalConnective( string& b , const string& connective ,  bool& second , const VLTree<string>::const_iterator& itr , string& language , const string& style );
 string LogicalConnectiveSymbolToString( const string& connective , string& language , const string& style );
 
+
+void PutMathJax( string& s , const string& style );
+inline void PutFandomMathJax( string& s ) noexcept;
 
 void PutWrap( string& s , const string& language );
 inline void PutKagi( string& s ) noexcept;

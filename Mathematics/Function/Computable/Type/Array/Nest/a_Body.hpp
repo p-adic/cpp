@@ -6,7 +6,7 @@
 #include "../a_Body.hpp"
 
 
-template <typename Ret> inline NestedArrayTypeOfComputableFunction<Ret>::NestedArrayTypeOfComputableFunction() noexcept : TypeOfComputableFunction( GetName() , GetName() ) {}
+template <typename Ret> inline NestedArrayTypeOfComputableFunction<Ret>::NestedArrayTypeOfComputableFunction() noexcept : TypeOfComputableFunction( GetName() , NestedArrayString() , GetTypeString<Ret>() ) {}
 
 template <typename Ret> inline const string& NestedArrayTypeOfComputableFunction<Ret>::GetName() noexcept { return GetSyntax().GetNodeString( 2 ); }
 
@@ -18,7 +18,7 @@ template <typename Ret> inline const SyntaxOfComputableFunction& NestedArrayType
 
     TypeString() ,
       NestedArrayString() ,
-      GetTypeString<Ret>() + SupString() + LbraceString() + "< \\omega^{\\omega}" + RbraceString() ,
+      GetNestedArrayTypeString<Ret>() ,
       GetTypeSyntax<Ret>().Get()
 
       };
@@ -26,6 +26,8 @@ template <typename Ret> inline const SyntaxOfComputableFunction& NestedArrayType
   return t;
   
 }
+
+template <typename Ret> inline string GetNestedArrayTypeString() { return GetArrayTypeString_Body<Ret>() + SupString() + LbraceString() + OmegaString() + SupString() + LbraceString() + OmegaString() + RbraceString() + RbraceString(); }
 
 template <typename Ret> inline DEFINITION_OF_VARIADIC_FUNCTION_SYMBOL( NestedArrayTypeOfComputableFunction<Ret> , NestedConcatenate , Frown );
 template <typename Ret> inline DEFINITION_OF_VARIADIC_FUNCTION_SYMBOL_APPLICATION_ONE( NestedArrayTypeOfComputableFunction<Ret> , NestedConcatenate );

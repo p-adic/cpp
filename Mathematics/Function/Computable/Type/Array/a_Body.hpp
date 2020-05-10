@@ -3,10 +3,13 @@
 #pragma once
 #include "a.hpp"
 
+#include "../Guide/Array/Nest/a.hpp"
+#include "../Guide/Array/a.hpp"
+
 #include "../Basic/nat/a_Body.hpp"
 #include "../../Operator/a_Body.hpp"
 
-template <typename Ret> inline ArrayTypeOfComputableFunction<Ret>::ArrayTypeOfComputableFunction() noexcept : TypeOfComputableFunction( GetName() , GetName() ) {}
+template <typename Ret> inline ArrayTypeOfComputableFunction<Ret>::ArrayTypeOfComputableFunction() noexcept : TypeOfComputableFunction( GetName() , ArrayString() , GetTypeString<Ret>() ) {}
 
 template <typename Ret> inline const string& ArrayTypeOfComputableFunction<Ret>::GetName() noexcept { return GetSyntax().GetNodeString( 2 ); }
 
@@ -18,7 +21,7 @@ template <typename Ret> inline const SyntaxOfComputableFunction& ArrayTypeOfComp
 
     TypeString() ,
       ArrayString() ,
-      GetTypeString<Ret>() + SupString() + LbraceString() + "< \\omega" + RbraceString() ,
+      GetArrayTypeString<Ret>() ,
       GetTypeSyntax<Ret>().Get()
 
       };
@@ -27,6 +30,23 @@ template <typename Ret> inline const SyntaxOfComputableFunction& ArrayTypeOfComp
   
 }
 
+template <typename Ret> inline string GetArrayTypeString() { return GetArrayTypeString_Body<Ret>() + SupString() + LbraceString() + OmegaString() + RbraceString(); }
+
+template <typename Ret>
+string GetArrayTypeString_Body()
+{
+
+  const string& type_string = GetTypeString<Ret>();
+
+  if( IsArrayType<Ret>::value || IsNestedArrayType<Ret>::value ){
+
+    return LparenString() + type_string + RparenString();
+
+  }
+  
+  return type_string;
+
+}
 
 template <typename Ret> inline DEFINITION_OF_VARIADIC_FUNCTION_SYMBOL( ArrayTypeOfComputableFunction<Ret> , Concatenate , Frown );
 template <typename Ret> inline DEFINITION_OF_VARIADIC_FUNCTION_SYMBOL_APPLICATION_ONE( ArrayTypeOfComputableFunction<Ret> , Concatenate );

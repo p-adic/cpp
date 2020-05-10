@@ -120,12 +120,25 @@ void SyntaxOfComputableFunction::InputDefinition( ofstream& ofs , const string& 
      {
        
        InputTotality( ofs , totality , language , style );
-       InputFunctionSignature( ofs , function_name , *p_argument_type_name , *p_argument_name , *p_return_type_name , *p_function_expression_name , language , style );
-       InputRecursiveWay( ofs , language , style );
-       
-       string language_copy = language;
-       InputLine( ofs , *p_function_expression_name , *p_line_name , itr_line , 0 , language_copy , style );
+       InputSignatureOfFunction( ofs , function_name , *p_argument_type_name , *p_argument_name , *p_return_type_name , *p_function_expression_name , language , style );
 
+       const string line_name =  *p_line_name;
+
+       if( line_name == ReturnString() ){
+
+	 string form = *p_function_expression_name + " := " + SyntaxToString( itr_line , 2 );
+	 PutMathJax( form , style );
+	 InputInlineWay( ofs , form , language , style );
+
+       } else {
+
+	 string language_copy = language;
+
+	 InputRecursiveWay( ofs , language , style );
+	 InputLine( ofs , *p_function_expression_name , line_name , itr_line , 0 , language_copy , style );
+
+       }
+       
      },
      
      const ErrorType& e ,

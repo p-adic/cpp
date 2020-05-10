@@ -18,5 +18,7 @@ inline string LogicalAndToString( VLTree<string>::const_iterator& itr , string& 
 inline string LogicalOrToString( VLTree<string>::const_iterator& itr , string& language , const string& style ) { return LogicalConnectiveToString( itr , LorString() , language , style ); }
 
 
+inline void PutFandomMathJax( string& s ) noexcept { s = "\\(" + s + "\\)"; }
+
 inline void PutKagi( string& s ) noexcept { s = "Åu" + s + "Åv"; }
 inline void PutParenthesis( string& s ) noexcept { s = "( " + s + " )"; }

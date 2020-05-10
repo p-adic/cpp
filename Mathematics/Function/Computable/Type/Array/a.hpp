@@ -23,6 +23,8 @@ public:
   
 };
 
+template <typename Ret> inline string GetArrayTypeString();
+template <typename Ret> string GetArrayTypeString_Body();
 
 template <typename Ret> inline DECLARATION_OF_VARIADIC_FUNCTION_SYMBOL( ArrayTypeOfComputableFunction<Ret> , Concatenate );
 template <typename Ret> inline DECLARATION_OF_VARIADIC_FUNCTION_SYMBOL_APPLICATION_ONE( ArrayTypeOfComputableFunction<Ret> , Concatenate );

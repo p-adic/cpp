@@ -47,3 +47,35 @@ void TypeOfComputableFunction::WriteTo( const TypeOfComputableFunction& dummy , 
   return;
 
 }
+
+
+void TypeOfComputableFunction::InputDefinition( ofstream& ofs , const string& language , const string& style ) const noexcept
+{
+
+  try{
+
+    if( m_construction == ArrayString() ){
+
+      InputDefinitionOfArraySet( ofs , m_type_name , m_description , language , style );
+      return;
+
+    }
+  
+    if( m_construction == NestedArrayString() ){
+
+      InputDefinitionOfNestedArraySet( ofs , m_type_name , m_description , language , style );
+      return;
+
+    }
+
+    InputDefinitionOfRecursiveSet( ofs , m_type_name , m_description , language , style );
+    return;
+
+  }
+  catch( const ErrorType& e ){
+
+    IGNORED_ERR( e );
+
+  };
+
+}
