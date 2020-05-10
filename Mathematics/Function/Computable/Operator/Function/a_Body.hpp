@@ -52,7 +52,9 @@ template <typename Ret, typename... Args> inline FunctionSymbol<Ret,Args...>::Fu
 template <typename Ret, typename... Args> inline void FunctionSymbol<Ret,Args...>::Set( const string& dummy , const string& f ) { SetSymbol( f ); }
 template <typename Ret, typename... Args> template <typename... VA> inline auto FunctionSymbol<Ret,Args...>::Set( const SeparatorOfComputableFunction& dummy1 , const int& dummy2 , const VA&... va ) -> typename enable_if<conjunction<is_same<VA,string>...>::value,void>::type { SetSeparator( SeparatorOfComputableFunction( dummy2 , va... ) ); }
 template <typename Ret, typename... Args> inline void FunctionSymbol<Ret,Args...>::Set( const TotalityOfComputableFunction& dummy , const TotalityOfComputableFunction& totality ) noexcept { SetTotality( totality ); }
-  
+
+
+template <typename Ret, typename... Args> inline void FunctionSymbol<Ret,Args...>::SetSymbol( const string& f ) { SyntaxOfComputableFunction::SetSymbol( f ); SetSeparator( SeparatorOfComputableFunction( GetNodeString( 2 ) , sizeof...( Args ) ) ); }
 
 template <typename Ret, typename... Args> inline void FunctionSymbol<Ret,Args...>::RomaniseSymbol() { SyntaxOfComputableFunction::RomaniseSymbol(); SetSeparator( SeparatorOfComputableFunction( GetNodeString( 2 ) , sizeof...( Args ) ) ); }
 
