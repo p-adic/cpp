@@ -3,7 +3,18 @@
 #pragma once
 
 // expression
-#define EXPRESSION( x ) ExpressionOfComputableFunction<ExpressionTypeOf<remove_const<remove_reference< decltype( x ) >::type>::type>::type>( x ) 
+#define EXPRESSION_TYPE( x ) ExpressionTypeOf<remove_const<remove_reference< decltype( x ) >::type>::type>::type 
+#define EXPRESSION( x ) PrettyExpression<EXPRESSION_TYPE( x )>( x ) 
+
+#define SUGAR( CONST , x )						\
+									\
+  static auto CONNECT( CONNECT( __SYMBOL_OF_ , CONST ) , __ ) = PrettyVariable<EXPRESSION_TYPE( x )>( TO_STRING( CONST ) ); \
+  static auto CONNECT( CONNECT( __DEFINITION_OF_ , CONST ) , __ ) = EXPRESSION( x ); \
+									\
+  static const auto& CONST = CONNECT( CONNECT( __DEFINITION_OF_ , CONST ) , __ ); \
+									\
+									\
+
 
 // variable
 #define LDOTS( V ) LdotsSymbol< V >()  
@@ -160,7 +171,7 @@
 // definition
 #define DEF( FUNC )							\
 									\
-  const DefinitionOfOperator<remove_const<remove_reference<decltype( FUNC )>::type>::type> CONNECT( CONNECT( __DEFINITION_OF__ , FUNC ) , __ ) 
+  const DefinitionOfOperator<remove_const<remove_reference<decltype( FUNC )>::type>::type> CONNECT( CONNECT( __DEFINITION_OF_ , FUNC ) , __ ) 
 
 #define IF( ... )				\
 						\
@@ -202,12 +213,12 @@
 #define APP ios::app 
 #define TRUNC ios::trunc 
 
-#define __DEFINITION_OF__int__ BaseType<int>() 
-#define __DEFINITION_OF__string__ BaseType<string>() 
-#define __DEFINITION_OF__bool__ BaseType<bool>() 
+#define __DEFINITION_OF_int__ BaseType<int>() 
+#define __DEFINITION_OF_string__ BaseType<string>() 
+#define __DEFINITION_OF_bool__ BaseType<bool>() 
 
 #define __SYMBOL_OF_int__ __DEFINITION_OF__int__ 
 #define __SYMBOL_OF_string__ __DEFINITION_OF__string__ 
 #define __SYMBOL_OF_bool__ __DEFINITION_OF__bool__ 
 
-#define WRITE( FUNC , LANGUAGE , STYLE , FILE , OPEN_MODE ) CONNECT( CONNECT( __DEFINITION_OF__ , FUNC ) , __ ).WriteTo( CONNECT( CONNECT( __SYMBOL_OF_, FUNC ) , __ ) , LANGUAGE , STYLE , TO_STRING( FILE ) , OPEN_MODE );
+#define WRITE( FUNC , LANGUAGE , STYLE , FILE , OPEN_MODE ) CONNECT( CONNECT( __DEFINITION_OF_ , FUNC ) , __ ).WriteTo( CONNECT( CONNECT( __SYMBOL_OF_, FUNC ) , __ ) , LANGUAGE , STYLE , TO_STRING( FILE ) , OPEN_MODE );
