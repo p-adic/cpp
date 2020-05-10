@@ -30,6 +30,8 @@ public:
   inline void Set( const TotalityOfComputableFunction& dummy , const TotalityOfComputableFunction& totality ) noexcept;
 
   
+  inline void RomaniseSymbol();
+  
   void SetSeparator( const SeparatorOfComputableFunction& s );
 
   inline const TotalityOfComputableFunction& GetTotality() const noexcept;

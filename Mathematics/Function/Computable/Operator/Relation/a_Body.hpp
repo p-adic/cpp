@@ -57,7 +57,9 @@ template <typename... Args> inline RelationSymbol<Args...>::RelationSymbol( cons
 template <typename... Args> inline void RelationSymbol<Args...>::Set( const string& dummy , const string& f ) { SetSymbol( f ); }
 template <typename... Args> template <typename... VA> inline auto RelationSymbol<Args...>::Set( const SeparatorOfComputableFunction& dummy1 , const int& dummy2 , const VA&... va ) -> typename enable_if<conjunction<is_same<VA,string>...>::value,void>::type { SetSeparator( SeparatorOfComputableFunction( dummy2 , va... ) ); }
 template <typename... Args> inline void RelationSymbol<Args...>::Set( const TotalityOfComputableFunction& dummy , const TotalityOfComputableFunction& totality ) noexcept { SetTotality( totality ); }
-  
+
+
+template <typename... Args> inline void RelationSymbol<Args...>::RomaniseSymbol() { SyntaxOfComputableFunction::RomaniseSymbol(); SetSeparator( SeparatorOfComputableFunction( GetNodeString( 2 ) , sizeof...( Args ) ) ); }
 
 template <typename... Args>
 void RelationSymbol<Args...>::SetSeparator( const SeparatorOfComputableFunction& s )
