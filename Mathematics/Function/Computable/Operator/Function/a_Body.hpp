@@ -54,6 +54,8 @@ template <typename Ret, typename... Args> template <typename... VA> inline auto 
 template <typename Ret, typename... Args> inline void FunctionSymbol<Ret,Args...>::Set( const TotalityOfComputableFunction& dummy , const TotalityOfComputableFunction& totality ) noexcept { SetTotality( totality ); }
   
 
+template <typename Ret, typename... Args> inline void FunctionSymbol<Ret,Args...>::RomaniseSymbol() { SyntaxOfComputableFunction::RomaniseSymbol(); SetSeparator( SeparatorOfComputableFunction( GetNodeString( 2 ) , sizeof...( Args ) ) ); }
+
 template <typename Ret, typename... Args>
 void FunctionSymbol<Ret,Args...>::SetSeparator( const SeparatorOfComputableFunction& s )
 {

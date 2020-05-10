@@ -32,6 +32,8 @@ public:
   template <typename... VA> inline auto Set( const SeparatorOfComputableFunction& dummy1 , const int& dummy2 , const VA&... va ) -> typename enable_if<conjunction<is_same<VA,string>...>::value,void>::type;
   inline void Set( const TotalityOfComputableFunction& dummy , const TotalityOfComputableFunction& totality ) noexcept;
   
+  inline void RomaniseSymbol();
+
   void SetSeparator( const SeparatorOfComputableFunction& s );
   template <typename... VA> inline auto SetSeparator( const VA&... va ) -> typename enable_if<conjunction<is_same<VA,string>...>::value,void>::type;
 
