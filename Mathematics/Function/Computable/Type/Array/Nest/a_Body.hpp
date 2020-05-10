@@ -87,7 +87,8 @@ template <typename Ret> inline const PrettyOperator<NestedArrayTypeOfComputableF
 
 }
 
-template <typename Ret> inline ExpressionOfComputableFunction<NestedArrayTypeOfComputableFunction<Ret> > EntryAccessSymbolApplication( const ExpressionOfComputableFunction<NestedArrayTypeOfComputableFunction<Ret> >& a , const PrettyExpression<nat>& n ) { return NestedEntryAccessSymbol<Ret>()( a , n ); }
+template <typename Ret> inline ExpressionOfComputableFunction<NestedArrayTypeOfComputableFunction<Ret> > NestedEntryAccessSymbolApplication( const ExpressionOfComputableFunction<NestedArrayTypeOfComputableFunction<Ret> >& a , const PrettyExpression<nat>& n ) { return NestedEntryAccessSymbol<Ret>()( a , n ); }
+template <typename Ret> inline ExpressionOfComputableFunction<NestedArrayTypeOfComputableFunction<Ret> > EntryAccessSymbolApplication( const ExpressionOfComputableFunction<NestedArrayTypeOfComputableFunction<Ret> >& a , const PrettyExpression<nat>& n ) { return NestedEntryAccessSymbolApplication<Ret>( a , n ); }
 
 template <typename Ret> inline const PrettyFunction<NestedArrayTypeOfComputableFunction<Ret>,NestedArrayTypeOfComputableFunction<Ret>,nat>& NestedInitialSegmentSymbol()
 {

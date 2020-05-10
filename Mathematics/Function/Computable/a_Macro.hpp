@@ -2,6 +2,9 @@
 
 #pragma once
 
+// expression
+#define EXPRESSION( x ) ExpressionOfComputableFunction<ExpressionTypeOf<remove_const<remove_reference< decltype( x ) >::type>::type>::type>( x ) 
+
 // variable
 #define LDOTS( V ) LdotsSymbol< V >()  
 
@@ -26,30 +29,30 @@
 #define MOD( x , y ) ModSymbolApplication( x , y ) 
 #define POWER( x , y ) PowerSymbolApplication( x , y ) 
 
-#define NEG( x ) NegSymbolApplication( x ) 
+#define NEG( x ) NegSymbolApplication( EXPRESSION( x ) ) 
 #define LAND( ... ) LandSymbolApplication( __VA_ARGS__ ) 
 #define LOR( ... ) LorSymbolApplication( __VA_ARGS__ ) 
 #define TO( x , y ) ToSymbolApplication( x , y ) 
 #define OT( x , y ) TO( y , x ) 
 #define EQUIV( ... ) EquivSymbolApplication( __VA_ARGS__ ) 
 
-#define STRINGISE( n ) StringiseSymbol()( a ) 
-#define LENGTH( a ) LengthSymbolApplication( a ) 
+#define STRINGISE( n ) StringiseSymbol()( EXPRESSION( n ) ) 
+#define LENGTH( a ) LengthSymbolApplication( EXPRESSION( a ) ) 
 #define ENTRY( a , n ) EntryAccessSymbolApplication( a , n ) 
 #define INISEG( a , n ) InitialSgmentSymbolApplication( a , n ) 
 #define FINSEG( a , n ) FinalSgmentSymbolApplication( a , n ) 
 
 #define PROJ( i , a ) ProjectionSymbolApplication< i >( a ) 
 
-#define WRAP( x ) WrapSymbolApplication( x ) 
-#define NWRAP( a ) NestedWrapSymbolApplication( a ) 
-#define NESTIFY( a ) NestifySymbolApplication( a ) 
+#define WRAP( x ) WrapSymbolApplication( EXPRESSION( x ) ) 
+#define NWRAP( a ) NestedWrapSymbolApplication( EXPRESSION( a ) ) 
+#define NESTIFY( a ) NestifySymbolApplication( EXPRESSION( a ) ) 
 
 #define TUPLE( ... ) TupleSymbolApplication( __VA_ARGS__ ) 
 
-#define ENNEST( x ) ToTrivialNestedArraySymbolApplication( x ) 
-#define DENEST( a ) RemoveNestedArraySymbolApplication( a ) 
-#define DENESTABLE( a ) RemovableNestedArraySymbolApplication( a ) 
+#define ENNEST( x ) ToTrivialNestedArraySymbolApplication( EXPRESSION( x ) ) 
+#define DENEST( a ) RemoveNestedArraySymbolApplication( EXPRESSION( a ) ) 
+#define DENESTABLE( a ) RemovableNestedArraySymbolApplication( EXPRESSION( a ) ) 
 
 
 // relation
@@ -60,7 +63,7 @@
 #define LNEQ( x , y ) LneqSymbolApplication( x , y ) 
 #define GNEQ( x , y ) GneqSymbolApplication( x , y ) 
 
-#define NONNEG NonNegativeSymbol() 
+#define NONNEG( n ) NonNegativeSymbol()( EXPRESSION( n ) ) 
 
 
 // meta function
@@ -177,7 +180,7 @@
 
 #define RETURN( X )				\
 						\
-  ReturnLine( X )				\
+  ReturnLine( EXPRESSION( X ) )			\
   
 
 // display

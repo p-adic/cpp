@@ -33,9 +33,9 @@ class VariadicOperatorSymbol_Body :
 {
 
 public:
-  template <typename Ret, typename VArg, typename... Args> auto GetType( const WrappedTypes<Ret,VArg,Args...>()& ) -> typename enable_if<! is_same<Ret,bool>::value,VariadicFunctionSymbol<Ret,VArg,Args...> >::type;
+  template <typename Ret, typename VArg, typename... Args> static auto GetType( const WrappedTypes<Ret,VArg,Args...>()& ) -> typename enable_if<! is_same<Ret,bool>::value,VariadicFunctionSymbol<Ret,VArg,Args...> >::type;
 
-  template <typename Ret, typename VArg, typename... Args> auto GetType( const WrappedTypes<Ret,VArg,Args...>()& ) -> typename enable_if<is_same<Ret,bool>::value,VariadicRelationSymbol<VArg,Args...> >::type;
+  template <typename Ret, typename VArg, typename... Args> static auto GetType( const WrappedTypes<Ret,VArg,Args...>()& ) -> typename enable_if<is_same<Ret,bool>::value,VariadicRelationSymbol<VArg,Args...> >::type;
 
 };
 
@@ -48,9 +48,9 @@ class PrettyOperator_Body :
 {
 
 public:
-  template <typename Ret, typename... Args> auto GetType( const WrappedTypes<Ret,Args...>& ) -> typename enable_if<! is_same<typename BaseTypeOf<Ret>::type,bool>::value,PrettyFunction<Ret,Args...> >::type;
+  template <typename Ret, typename... Args> static auto GetType( const WrappedTypes<Ret,Args...>& ) -> typename enable_if<! is_same<typename BaseTypeOf<Ret>::type,bool>::value,PrettyFunction<Ret,Args...> >::type;
 
-  template <typename Ret, typename... Args> auto GetType( const WrappedTypes<Ret,Args...>& ) -> typename enable_if<is_same<typename BaseTypeOf<Ret>::type,bool>::value,PrettyRelation<Args...> >::type;
+  template <typename Ret, typename... Args> static auto GetType( const WrappedTypes<Ret,Args...>& ) -> typename enable_if<is_same<typename BaseTypeOf<Ret>::type,bool>::value,PrettyRelation<Args...> >::type;
 
 };
 
@@ -63,9 +63,9 @@ class PrettyVariadicOperator_Body :
 {
 
 public:
-  template <typename Ret, typename VArg, typename... Args> auto GetType( const WrappedTypes<Ret,VArg,Args...>& ) -> typename enable_if<! is_same<typename BaseTypeOf<Ret>::type,bool>::value,PrettyVariadicFunction<Ret,VArg,Args...> >::type;
+  template <typename Ret, typename VArg, typename... Args> static auto GetType( const WrappedTypes<Ret,VArg,Args...>& ) -> typename enable_if<! is_same<typename BaseTypeOf<Ret>::type,bool>::value,PrettyVariadicFunction<Ret,VArg,Args...> >::type;
 
-  template <typename Ret, typename VArg, typename... Args> auto GetType( const WrappedTypes<Ret,VArg,Args...>& ) -> typename enable_if<is_same<typename BaseTypeOf<Ret>::type,bool>::value,PrettyVariadicRelation<VArg,Args...> >::type;
+  template <typename Ret, typename VArg, typename... Args> static auto GetType( const WrappedTypes<Ret,VArg,Args...>& ) -> typename enable_if<is_same<typename BaseTypeOf<Ret>::type,bool>::value,PrettyVariadicRelation<VArg,Args...> >::type;
 
 };
 

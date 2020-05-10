@@ -184,7 +184,7 @@ void InputDefinitionOfRecursiveSet( ofstream& ofs , const string& type_name , co
 
     if( style == FandomString() ){
 
-      ofs << "再帰的集合\\(" << type_name << "\\)を\\(" << definition << "\\)と定める。" << endl;
+      ofs << "集合\\(" << type_name << "\\)を\\(" << definition << "\\)と定める。" << endl;
       return;
 
     }
@@ -195,7 +195,7 @@ void InputDefinitionOfRecursiveSet( ofstream& ofs , const string& type_name , co
 
     if( style == FandomString() ){
 
-      ofs << "I define a recursive set \\(" << type_name << "\\) as \\(" << definition << "\\)." << endl;
+      ofs << "I define a set \\(" << type_name << "\\) as \\(" << definition << "\\)." << endl;
       return;
 
     }
@@ -208,7 +208,7 @@ void InputDefinitionOfRecursiveSet( ofstream& ofs , const string& type_name , co
 
     if( style == FandomString() ){
 
-      ofs << "我將遞歸集合\\(" << type_name << "\\)定義為\\(" << definition << "\\)。" << endl;
+      ofs << "我將集合\\(" << type_name << "\\)定義為\\(" << definition << "\\)。" << endl;
       return;
 
     }
@@ -221,7 +221,7 @@ void InputDefinitionOfRecursiveSet( ofstream& ofs , const string& type_name , co
 
     if( style == FandomString() ){
 
-      ofs << "Je d\\'efinis un ensemble r\\'ecursif \\(" << type_name << "\\) comme \\(" << definition << "\\)." << endl;
+      ofs << "Je d\\'efinis un ensemble \\(" << type_name << "\\) comme \\(" << definition << "\\)." << endl;
       return;
 
     }
@@ -234,7 +234,7 @@ void InputDefinitionOfRecursiveSet( ofstream& ofs , const string& type_name , co
 
     if( style == FandomString() ){
 
-      cout << "Ich definiere eine rekursive Menge \\(" << type_name << "\\) als \\(" << definition << "\\)." << endl;
+      ofs << "Ich definiere eine Menge \\(" << type_name << "\\) als \\(" << definition << "\\)." << endl;
       return;
 
     }
@@ -2373,7 +2373,6 @@ string ConditionToString( VLTree<string>::const_iterator& itr , bool& complicate
      );
 
   ERR_IMPUT( *p_f );
-  
   return "dummy";
   
 }
@@ -2395,7 +2394,7 @@ string NegationToString( VLTree<string>::const_iterator& itr , string& language 
     
        }
 
-       NegationToString_Body( b , language , style );
+       return NegationToString_Body( b , language , style );
 
      } ,
      
@@ -2405,6 +2404,7 @@ string NegationToString( VLTree<string>::const_iterator& itr , string& language 
 
      );
 
+  ERR_CODE;
   return "dummy";
   
 }
@@ -2495,6 +2495,7 @@ string ImplicationToString( VLTree<string>::const_iterator& itr , string& langua
 
      );
 
+  ERR_CODE;
   return "dummy";
 
 }
@@ -2586,6 +2587,7 @@ string EquivalenceToString( VLTree<string>::const_iterator& itr , string& langua
 
      );
 
+  ERR_CODE;
   return "dummy";
 
 }
