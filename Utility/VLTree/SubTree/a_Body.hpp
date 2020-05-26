@@ -697,3 +697,49 @@ string VLSubTree<T>::Display() const
   return s;
 
 }
+
+
+template <typename T>
+bool operator==( const VLTree<T>& t1 , const VLTree<T>& t2 )
+{
+
+  if( t1.GetRoot() != t2.GetRoot() ){
+
+    return false;
+
+  }
+  
+  if( t1.IsLeaf() ){
+
+    return t2.IsLeaf();
+
+  }
+
+  if( t2.IsLeaf() ){
+
+    return false;
+
+  }
+
+  auto itr1 = t1.LeftMostNode();
+  auto itr2 = t2.LeftMostNode();
+
+  while( itr1.IsValid() && itr2.IsValid() ){
+
+    if( t1.GetBranchCopy( *itr1 ) != t2.GetBranchCopy( *itr2 ) ){
+
+      return false;
+
+    }
+
+    itr1++;
+    itr2++;
+
+  }
+
+  return !( itr1.IsValid() || itr2.IsValid() );
+
+
+}
+
+template <typename T> inline bool operator!=( const VLTree<T>& t1 , const VLTree<T>& t2 ) { return !( t1 == t2 ); }

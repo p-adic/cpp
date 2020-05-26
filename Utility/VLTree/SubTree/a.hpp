@@ -135,3 +135,6 @@ public:
   string Display() const;
   
 };
+
+template <typename T> bool operator==( const VLTree<T>& , const VLTree<T>& );
+template <typename T> inline bool operator!=( const VLTree<T>& , const VLTree<T>& );
