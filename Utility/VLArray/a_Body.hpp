@@ -320,6 +320,36 @@ string VLArray<T>::Display() const
 
 }
 
+
+template <typename T>
+bool operator==( const VLArray<T>& a1 , const VLArray<T>& a2 )
+{
+
+  auto itr1 = a1.begin();
+  auto end1 = a1.end();
+  auto itr2 = a2.begin();
+  auto end2 = a2.end();
+
+  while( itr1 != end1 && itr2 != end2 ){
+
+    if( *itr1 != *itr2 ){
+
+      return false;
+
+    }
+
+    itr1++;
+    itr2++;
+
+  }
+
+  return ( itr1 == end1 ) && ( itr2 == end2 );
+
+}
+
+template <typename T> inline bool operator!=( const VLArray<T>& a1 , const VLArray<T>& a2 ) { return !( a1 == a2 ); }
+
+
 template <typename T> VLArray<T> to_VLArray( const uint& N , const T& t )
 {
 

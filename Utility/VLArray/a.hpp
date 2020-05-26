@@ -69,6 +69,10 @@ private:
 
 };
 
+
+template <typename T> bool operator==( const VLArray<T>& , const VLArray<T>& );
+template <typename T> inline bool operator!=( const VLArray<T>& , const VLArray<T>& );
+
 template <typename T> VLArray<T> to_VLArray( const uint& , const T& );
 template <typename T> inline VLMatrix<1,T> to_VLMatrix( const uint& , const T& );
 template <typename T> inline VLMatrix<2,T> to_VLMatrix( const uint& , const uint& , const T& );
