@@ -51,8 +51,8 @@
 #define STRINGISE( n ) StringiseSymbol()( EXPRESSION( n ) ) 
 #define LENGTH( a ) LengthSymbolApplication( EXPRESSION( a ) ) 
 #define ENTRY( a , n ) EntryAccessSymbolApplication( a , n ) 
-#define INISEG( a , n ) InitialSgmentSymbolApplication( a , n ) 
-#define FINSEG( a , n ) FinalSgmentSymbolApplication( a , n ) 
+#define INISEG( a , n ) InitialSegmentSymbolApplication( a , n ) 
+#define FINSEG( a , n ) FinalSegmentSymbolApplication( a , n ) 
 
 #define PROJ( i , a ) ProjectionSymbolApplication< i >( a ) 
 
@@ -177,13 +177,17 @@
 #define IF( ... )				\
 						\
   IfLine( __VA_ARGS__ )				\
-  
+
+
+#define PUT( ... ) PutLineOfComputableFunction( __VA_ARGS__ ) 
+
 #define UNIQUE_BODY( CHAR , VAR , BOUND , COND ) CHAR , WrappedType<remove_const<remove_reference<decltype( VAR )>::type>::type>( VAR ) , WrappedType<remove_const<remove_reference<decltype( BOUND )>::type>::type>( BOUND ) , WrappedType<ConditionOfComputableFunction>( COND ) 
 
 #define UNIQUE( VAR , BOUND , COND ) UNIQUE_BODY( UExistString() , VAR , BOUND , COND ) 
 #define MIN( VAR , COND ) UNIQUE_BODY( MinString() , VAR , BOUND , COND ) 
 #define MAX( VAR , BOUND , COND ) UNIQUE_BODY( MaxString() , VAR , BOUND , COND ) 
 
+#define PRINT( ... ) PrintLineOfComputableFunction( __VA_ARGS__ ) 
 
 #define EXIT					\
 						\

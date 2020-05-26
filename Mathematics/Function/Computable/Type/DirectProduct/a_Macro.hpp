@@ -2,5 +2,5 @@
 
 #pragma once
 
-#define PROD( TYPE_NAME , ... ) using TYPE_NAME = DirectProductTypeOfComputableFunction< __VA_ARGS__ > 
+#define PROD( TYPE_NAME , TYPE1 , ... ) using TYPE_NAME = DirectProductTypeOfComputableFunction< TYPE1 , __VA_ARGS__ > 
 
