@@ -37,8 +37,8 @@ public:
   
 };
 
-template <typename T1, typename T2> inline LineOfDefinitionOfComputableFunction<void> PUT( const VariableSymbol<T1>& x , const T2& t );
-template <typename T1, typename T2> inline LineOfDefinitionOfComputableFunction<void> PUT( const VariableSymbol<T1>& x , const string& characterisation , const WrappedType<VariableSymbol<T2> >& n , const WrappedType<VariableSymbol<T2> >& bound , const WrappedType<ConditionOfComputableFunction>& b );
+template <typename T1, typename T2> inline LineOfDefinitionOfComputableFunction<void> PutLineOfComputableFunction( const VariableSymbol<T1>& x , const T2& t );
+template <typename T1, typename T2> inline LineOfDefinitionOfComputableFunction<void> PutLineOfComputableFunction( const VariableSymbol<T1>& x , const string& characterisation , const WrappedType<VariableSymbol<T2> >& n , const WrappedType<VariableSymbol<T2> >& bound , const WrappedType<ConditionOfComputableFunction>& b );
 
-template <typename... ARGS> inline LineOfDefinitionOfComputableFunction<void> PRINT( const ARGS&... args );
+template <typename... ARGS> inline LineOfDefinitionOfComputableFunction<void> PrintLineOfComputableFunction( const ARGS&... args );
 
