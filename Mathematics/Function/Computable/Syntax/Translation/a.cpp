@@ -1028,14 +1028,14 @@ void InputIfNonListLine( ofstream& ofs , const string& function_expression_name 
   if( language == FrenchString() ){
 
     language = frenchString();
-    ofs << "Si " << condition_name << ", alos ";
+    ofs << "Si " << condition_name << ", alors ";
     return;
       
   }
     
   if( language == frenchString() ){
 
-    ofs << "si " << condition_name << ", alos ";
+    ofs << "si " << condition_name << ", alors ";
     return;
       
   }
@@ -2616,13 +2616,13 @@ string NegationToString_Body( const string& b , string& language , const string&
 
   if( language == FrenchString() ){
 
-    return b + " ne tient pas";
+    return b + " n'est pas vrai";
       
   }
 
   if( language == GermanString() ){
 
-    return b + " gilt nicht";
+    return b + " stimmen nicht";
       
   }
 
@@ -2702,19 +2702,19 @@ string ImplicationToString_Body( const string& b0 , const string& b1 , string& l
 
   if( language == ChineseString() ){
 
-    return "Žá" + b0 + "‘¥" + b1;
+    return b0 + "å]Ÿ¼" + b1;
 
   }
 
   if( language == FrenchString() ){
 
-    return "si " + b0 + " alors " + b1;
+    return b0 + " implique " + b1;
       
   }
 
   if( language == GermanString() ){
 
-    return "wenn " + b0 + " dann " + b1;
+    return b0 + " impliziert " + b1;
       
   }
 
