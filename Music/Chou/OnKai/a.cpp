@@ -26,4 +26,5 @@ const PitchClass& OnKai::PitchClassTable( const KaiMei& num ) const noexcept
 }
 
 DEFINITION_OF_GLOBAL_CONST_ON_KAI( ChouOnKai , 0 , 2 , 4 , 5 , 7 , 9 , 11 );
-DEFINITION_OF_GLOBAL_CONST_ON_KAI( WaseiTekiTanOnKai , 0 , 2 , 3 , 5 , 7 , 8 , 11 );
+DEFINITION_OF_GLOBAL_CONST_ON_KAI( WaSeiTekiTanOnKai , 0 , 2 , 3 , 5 , 7 , 8 , 11 );
+DEFINITION_OF_GLOBAL_CONST_ON_KAI( ShiZenTanOnKai , 0 , 2 , 3 , 5 , 7 , 8 , 10 );
