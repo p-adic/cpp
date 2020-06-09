@@ -6,7 +6,7 @@
 #include "../../WaOn/SanWaOn/KyouWaOn/a.hpp"
 
 class HaichiOfKyoWaOn :
-  public KyoWaOn , public Haichi
+  public KyouWaOn , public Haichi
 {
 
 private:

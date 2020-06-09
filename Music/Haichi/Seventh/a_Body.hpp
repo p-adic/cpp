@@ -22,8 +22,8 @@ inline HaichiOfSeventh::HaichiOfSeventh( const Chou& N , const KaiMei& n , const
 inline const OnMei& HaichiOfSeventh::GetOnMei( const uint& i ) const noexcept
 {
 
-  const ConstMemberFunctionPointerType<const OnMei&,Haichi> table[4] = { GetNeOn , GetDaiSanOn , GetDaiGoOn , GetDaiNanaOn };
-  return ( this->( * ( table[ i % 4 ] ) ) )();
+  const ConstMemberFunctionPointerType<const OnMei&,Seventh> table[4] = { GetNeOn , GetDaiSanOn , GetDaiGoOn , GetDaiNanaOn };
+  return ( this->*( table[ i % 4 ] ) )();
   
 }
 

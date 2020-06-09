@@ -38,7 +38,7 @@ uint Haichi::GetNumberOfOnMei() const noexcept
 
 }
 
-bool Haichi::CheckValidKaiMei( const Chou& N , const KaiMei& n ) const noexcept
+bool Haichi::CheckValidKaiMei( const Chou& N , const KaiMei& n ) noexcept
 {
 
   if( N == ChouOnKai() ){

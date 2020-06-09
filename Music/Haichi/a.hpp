@@ -3,7 +3,7 @@
 #pragma once
 #include "a_Macro.hpp"
 
-#include "../OnMei/OnMei/Pitch/a.hpp"
+#include "../OnMei/Pitch/a.hpp"
 #include "../Chou/a.hpp"
 
 class Haichi
@@ -20,16 +20,16 @@ public:
 
   inline bool IsNaturallyOrdered() const noexcept;
   uint GetNumberOfOnMei() const noexcept;
-  static bool CheckValidKaiMei( const Chou& N , const KaiMei& n ) const noexcept;
-  static inline bool CheckHasDoubleDaiSanOn( const uint& bas_num , const uint& ten_num , const uint& alt_num , const uint& sop_num ) const noexcept;
-  static inline bool CheckHasDaiGoOn( const uint& bas_num , const uint& ten_num , const uint& alt_num , const uint& sop_num ) const noexcept;
+  static bool CheckValidKaiMei( const Chou& N , const KaiMei& n ) noexcept;
+  static inline bool CheckHasDoubleDaiSanOn( const uint& bas_num , const uint& ten_num , const uint& alt_num , const uint& sop_num ) noexcept;
+  static inline bool CheckHasDaiGoOn( const uint& bas_num , const uint& ten_num , const uint& alt_num , const uint& sop_num ) noexcept;
 
   inline string Display() const noexcept;
 
   inline const Pitch& GetPitch( const int& i ) const noexcept;
 
 private:
-  static inline bool CheckOrderedWithInRange( const NoteNumber& bas , const NoteNumber& ten , const NoteNumber& alt , const NoteNumber& sop ) noexcept;
+  static inline bool CheckOrderedWithinRange( const NoteNumber& bas , const NoteNumber& ten , const NoteNumber& alt , const NoteNumber& sop ) noexcept;
 
   static inline bool CheckOrdered( const NoteNumber& bas , const NoteNumber& ten , const NoteNumber& alt , const NoteNumber& sop ) noexcept;
   
@@ -41,7 +41,7 @@ private:
   static inline bool CheckWithinBasRange( const NoteNumber& bas ) noexcept;
 
   static inline const NoteNumber& NoteNumberOfDo6() noexcept;
-  static inline const NoteNumber& NoteNumberOfSi3() noexcept;
+  static inline const NoteNumber& NoteNumberOfTi3() noexcept;
 
   static inline const NoteNumber& NoteNumberOfFa5() noexcept;
   static inline const NoteNumber& NoteNumberOfFa3() noexcept;
@@ -53,7 +53,7 @@ private:
   static inline const NoteNumber& NoteNumberOfMi2() noexcept;
 
 
-  inline bool Haichi::HasNaturalOnDo() const noexcept;
+  inline bool HasNaturalOnDo() const noexcept;
 
 };
 
