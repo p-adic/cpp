@@ -3,10 +3,8 @@
 #pragma once
 #include "a_Macro.hpp"
 
-#include "SanWaOn/KyouWaOn/a.hpp"
-#include "YonWaOn/Seventh/a.hpp"
-
-#include "a_Alias.hpp"
+#include "../OnMei/OnMei/Pitch/a.hpp"
+#include "../Chou/a.hpp"
 
 class Haichi
 {
@@ -16,24 +14,25 @@ private:
   Pitch m_alt;
   Pitch m_ten;
   Pitch m_bas;
-
-  Chou m_N;
-  KaiMei m_n;
   
 public:
   inline Haichi( const OnMei& bas_onmei , const Octave& bas_octave , const OnMei& ten_onmei , const Octave& ten_octave , const OnMei& alt_onmei , const Octave& alt_octave , const OnMei& sop_onmei , const Octave& sop_octave ) noexcept;
 
-  inline bool IsOrderedWithInRange() const noexcept;
-  inline uint GetNumberOfOnMei() const noexcept;
-  bool HasValidKaiMei() const noexcept;
+  inline bool IsNaturallyOrdered() const noexcept;
+  uint GetNumberOfOnMei() const noexcept;
+  static bool CheckValidKaiMei( const Chou& N , const KaiMei& n ) const noexcept;
+  static inline bool CheckHasDoubleDaiSanOn( const uint& bas_num , const uint& ten_num , const uint& alt_num , const uint& sop_num ) const noexcept;
+  static inline bool CheckHasDaiGoOn( const uint& bas_num , const uint& ten_num , const uint& alt_num , const uint& sop_num ) const noexcept;
 
   inline string Display() const noexcept;
 
   inline const Pitch& GetPitch( const int& i ) const noexcept;
 
-protected:
+private:
   static inline bool CheckOrderedWithInRange( const NoteNumber& bas , const NoteNumber& ten , const NoteNumber& alt , const NoteNumber& sop ) noexcept;
+
   static inline bool CheckOrdered( const NoteNumber& bas , const NoteNumber& ten , const NoteNumber& alt , const NoteNumber& sop ) noexcept;
+  
   
   static inline bool CheckWithinRange( const NoteNumber& bas , const NoteNumber& ten , const NoteNumber& alt , const NoteNumber& sop ) noexcept;
   static inline bool CheckWithinSopRange( const NoteNumber& sop ) noexcept;
@@ -53,27 +52,10 @@ protected:
   static inline const NoteNumber& NoteNumberOfFa4() noexcept;
   static inline const NoteNumber& NoteNumberOfMi2() noexcept;
 
-};
 
-
-
-
-class HaichiOfKyoWaOn :
-  public KyoWaOn , public Haichi
-{
-
-private:
-  bool m_valid;
-  uint m_goodness;
-
-public:
-  inline HaichiOfKyoWaOn( const Chou& N , const KaiMei& n , const uint& bas_num , const uint& bas_octave , const uint& ten_num , const uint& ten_octave , const uint& alt_num , const uint& alt_octave , const uint& sop_num , const uint& sop_octave ) noexcept;
-
-  void SetValidity( const Chou& N , const KaiMei& n , const uint& bas_num , const uint& bas_octave , const uint& ten_num , const uint& ten_octave , const uint& alt_num , const uint& alt_octave , const uint& sop_num , const uint& sop_octave ) noexcept;
-
-  inline const OnMei& GetOnMei( const uint& i ) const noexcept;
+  inline bool Haichi::HasNaturalOnDo() const noexcept;
 
 };
 
-inline bool operator==( const Haichi& C1 , const Haichi& C2 ) noexcept;
+bool operator==( const Haichi& C1 , const Haichi& C2 ) noexcept;
 inline bool operator!=( const Haichi& C1 , const Haichi& C2 ) noexcept;
