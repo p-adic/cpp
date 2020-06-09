@@ -1,17 +1,22 @@
-Music/Haichi/a.o: Music/Haichi/a.cpp Music/Haichi/../Header.hpp \
- Music/Haichi/../../Utility/Header.hpp \
- Music/Haichi/../../Utility/Header_Alias.hpp Music/Haichi/a_Body.hpp \
- Music/Haichi/a.hpp Music/Haichi/a_Macro.hpp \
- Music/Haichi/../../Utility/Macro_Macro.hpp \
- Music/Haichi/../OnMei/Pitch/a.hpp Music/Haichi/../OnMei/Pitch/../a.hpp \
- Music/Haichi/../OnMei/Pitch/../KanOn/a.hpp \
- Music/Haichi/../OnMei/Pitch/../KanOn/a_Macro.hpp \
+Music/Haichi/KyouWaOn/a.o: Music/Haichi/KyouWaOn/a.cpp \
+ Music/Haichi/KyouWaOn/../../Header.hpp \
+ Music/Haichi/KyouWaOn/../../../Utility/Header.hpp \
+ Music/Haichi/KyouWaOn/../../../Utility/Header_Alias.hpp \
+ Music/Haichi/KyouWaOn/a_Body.hpp Music/Haichi/KyouWaOn/a.hpp \
+ Music/Haichi/KyouWaOn/../a.hpp Music/Haichi/KyouWaOn/../a_Macro.hpp \
+ Music/Haichi/KyouWaOn/../../../Utility/Macro_Macro.hpp \
+ Music/Haichi/KyouWaOn/../../OnMei/Pitch/a.hpp \
+ Music/Haichi/KyouWaOn/../../OnMei/Pitch/../a.hpp \
+ Music/Haichi/KyouWaOn/../../OnMei/Pitch/../KanOn/a.hpp \
+ Music/Haichi/KyouWaOn/../../OnMei/Pitch/../KanOn/a_Macro.hpp \
  C:/Users/user/Documents/Programming/Mathematics/Arithmetic/Mod/a.hpp \
- Music/Haichi/../OnMei/Pitch/../HenKaKiGou/a.hpp \
- Music/Haichi/../OnMei/Pitch/../a_Alias.hpp \
- Music/Haichi/../OnMei/Pitch/a_Alias.hpp Music/Haichi/../Chou/a.hpp \
- Music/Haichi/../Chou/OnKai/a.hpp Music/Haichi/../Chou/OnKai/a_Macro.hpp \
- Music/Haichi/../Chou/OnKai/../../../Utility/Macro.hpp \
+ Music/Haichi/KyouWaOn/../../OnMei/Pitch/../HenKaKiGou/a.hpp \
+ Music/Haichi/KyouWaOn/../../OnMei/Pitch/../a_Alias.hpp \
+ Music/Haichi/KyouWaOn/../../OnMei/Pitch/a_Alias.hpp \
+ Music/Haichi/KyouWaOn/../../Chou/a.hpp \
+ Music/Haichi/KyouWaOn/../../Chou/OnKai/a.hpp \
+ Music/Haichi/KyouWaOn/../../Chou/OnKai/a_Macro.hpp \
+ C:/Users/user/Documents/Programming/Utility/Macro.hpp \
  C:/Users/user/Documents/Programming/Utility/String/a.hpp \
  C:/Users/user/Documents/Programming/Utility/String/a_Macro.hpp \
  C:/Users/user/Documents/Programming/SFINAE/MemberFunction/a_Macro.hpp \
@@ -24,12 +29,15 @@ Music/Haichi/a.o: Music/Haichi/a.cpp Music/Haichi/../Header.hpp \
  C:/Users/user/Documents/Programming/SFINAE/MetaFunction/IsReferenceOf/a.hpp \
  C:/Users/user/Documents/Programming/SFINAE/a_Alias.hpp \
  C:/Users/user/Documents/Programming/Utility/String/a_Alias.hpp \
- Music/Haichi/../Chou/OnKai/../KaiMei/a.hpp \
+ Music/Haichi/KyouWaOn/../../Chou/OnKai/../KaiMei/a.hpp \
  C:/Users/user/Documents/Programming/Mathematics/Function/a.hpp \
  C:/Users/user/Documents/Programming/Mathematics/Function/a_Alias.hpp \
- Music/Haichi/../OnMei/Pitch/a_Body.hpp \
- Music/Haichi/../OnMei/Pitch/../a_Body.hpp \
- Music/Haichi/../OnMei/Pitch/../KanOn/a_Body.hpp \
+ Music/Haichi/KyouWaOn/../../WaOn/SanWaOn/KyouWaOn/a.hpp \
+ Music/Haichi/KyouWaOn/../../WaOn/SanWaOn/KyouWaOn/../a.hpp \
+ Music/Haichi/KyouWaOn/../a_Body.hpp \
+ Music/Haichi/KyouWaOn/../../OnMei/Pitch/a_Body.hpp \
+ Music/Haichi/KyouWaOn/../../OnMei/Pitch/../a_Body.hpp \
+ Music/Haichi/KyouWaOn/../../OnMei/Pitch/../KanOn/a_Body.hpp \
  C:/Users/user/Documents/Programming/Mathematics/Arithmetic/Mod/a_Body.hpp \
  C:/Users/user/Documents/Programming/Utility/String/a_Body.hpp \
  C:/Users/user/Documents/Programming/Error/IgnoredError/a_Body.hpp \
@@ -100,54 +108,59 @@ Music/Haichi/a.o: Music/Haichi/a.cpp Music/Haichi/../Header.hpp \
  C:/Users/user/Documents/Programming/Utility/WrappedType/a.hpp \
  C:/Users/user/Documents/Programming/Mathematics/SetTheory/DirectProduct/a_Body.hpp \
  C:/Users/user/Documents/Programming/SFINAE/MemberFunction/a_Body.hpp \
- Music/Haichi/../OnMei/Pitch/../HenKaKiGou/a_Body.hpp \
- Music/Haichi/../Chou/a_Body.hpp Music/Haichi/../Chou/OnKai/a_Body.hpp \
- Music/Haichi/../Chou/OnKai/../KaiMei/a_Body.hpp \
- Music/Haichi/../OnMei/Pitch/OnDo/a_Body.hpp \
- Music/Haichi/../OnMei/Pitch/OnDo/a.hpp \
- Music/Haichi/../OnMei/Pitch/OnDo/SetTouJi/a.hpp \
- Music/Haichi/../OnMei/Pitch/OnDo/SetTouJi/a_Macro.hpp \
- Music/Haichi/../OnMei/Pitch/OnDo/SetTouJi/a_Alias.hpp \
- Music/Haichi/../OnMei/Pitch/OnDo/a_Alias.hpp \
- Music/Haichi/../OnMei/Pitch/OnDo/SetTouJi/a_Body.hpp
+ Music/Haichi/KyouWaOn/../../OnMei/Pitch/../HenKaKiGou/a_Body.hpp \
+ Music/Haichi/KyouWaOn/../../Chou/a_Body.hpp \
+ Music/Haichi/KyouWaOn/../../Chou/OnKai/a_Body.hpp \
+ Music/Haichi/KyouWaOn/../../Chou/OnKai/../KaiMei/a_Body.hpp \
+ Music/Haichi/KyouWaOn/../../OnMei/Pitch/OnDo/a_Body.hpp \
+ Music/Haichi/KyouWaOn/../../OnMei/Pitch/OnDo/a.hpp \
+ Music/Haichi/KyouWaOn/../../OnMei/Pitch/OnDo/SetTouJi/a.hpp \
+ Music/Haichi/KyouWaOn/../../OnMei/Pitch/OnDo/SetTouJi/a_Macro.hpp \
+ Music/Haichi/KyouWaOn/../../OnMei/Pitch/OnDo/SetTouJi/a_Alias.hpp \
+ Music/Haichi/KyouWaOn/../../OnMei/Pitch/OnDo/a_Alias.hpp \
+ Music/Haichi/KyouWaOn/../../OnMei/Pitch/OnDo/SetTouJi/a_Body.hpp \
+ Music/Haichi/KyouWaOn/../../WaOn/SanWaOn/KyouWaOn/a_Body.hpp \
+ Music/Haichi/KyouWaOn/../../WaOn/SanWaOn/KyouWaOn/../a_Body.hpp
 
-Music/Haichi/../Header.hpp:
+Music/Haichi/KyouWaOn/../../Header.hpp:
 
-Music/Haichi/../../Utility/Header.hpp:
+Music/Haichi/KyouWaOn/../../../Utility/Header.hpp:
 
-Music/Haichi/../../Utility/Header_Alias.hpp:
+Music/Haichi/KyouWaOn/../../../Utility/Header_Alias.hpp:
 
-Music/Haichi/a_Body.hpp:
+Music/Haichi/KyouWaOn/a_Body.hpp:
 
-Music/Haichi/a.hpp:
+Music/Haichi/KyouWaOn/a.hpp:
 
-Music/Haichi/a_Macro.hpp:
+Music/Haichi/KyouWaOn/../a.hpp:
 
-Music/Haichi/../../Utility/Macro_Macro.hpp:
+Music/Haichi/KyouWaOn/../a_Macro.hpp:
 
-Music/Haichi/../OnMei/Pitch/a.hpp:
+Music/Haichi/KyouWaOn/../../../Utility/Macro_Macro.hpp:
 
-Music/Haichi/../OnMei/Pitch/../a.hpp:
+Music/Haichi/KyouWaOn/../../OnMei/Pitch/a.hpp:
 
-Music/Haichi/../OnMei/Pitch/../KanOn/a.hpp:
+Music/Haichi/KyouWaOn/../../OnMei/Pitch/../a.hpp:
 
-Music/Haichi/../OnMei/Pitch/../KanOn/a_Macro.hpp:
+Music/Haichi/KyouWaOn/../../OnMei/Pitch/../KanOn/a.hpp:
+
+Music/Haichi/KyouWaOn/../../OnMei/Pitch/../KanOn/a_Macro.hpp:
 
 C:/Users/user/Documents/Programming/Mathematics/Arithmetic/Mod/a.hpp:
 
-Music/Haichi/../OnMei/Pitch/../HenKaKiGou/a.hpp:
+Music/Haichi/KyouWaOn/../../OnMei/Pitch/../HenKaKiGou/a.hpp:
 
-Music/Haichi/../OnMei/Pitch/../a_Alias.hpp:
+Music/Haichi/KyouWaOn/../../OnMei/Pitch/../a_Alias.hpp:
 
-Music/Haichi/../OnMei/Pitch/a_Alias.hpp:
+Music/Haichi/KyouWaOn/../../OnMei/Pitch/a_Alias.hpp:
 
-Music/Haichi/../Chou/a.hpp:
+Music/Haichi/KyouWaOn/../../Chou/a.hpp:
 
-Music/Haichi/../Chou/OnKai/a.hpp:
+Music/Haichi/KyouWaOn/../../Chou/OnKai/a.hpp:
 
-Music/Haichi/../Chou/OnKai/a_Macro.hpp:
+Music/Haichi/KyouWaOn/../../Chou/OnKai/a_Macro.hpp:
 
-Music/Haichi/../Chou/OnKai/../../../Utility/Macro.hpp:
+C:/Users/user/Documents/Programming/Utility/Macro.hpp:
 
 C:/Users/user/Documents/Programming/Utility/String/a.hpp:
 
@@ -173,17 +186,23 @@ C:/Users/user/Documents/Programming/SFINAE/a_Alias.hpp:
 
 C:/Users/user/Documents/Programming/Utility/String/a_Alias.hpp:
 
-Music/Haichi/../Chou/OnKai/../KaiMei/a.hpp:
+Music/Haichi/KyouWaOn/../../Chou/OnKai/../KaiMei/a.hpp:
 
 C:/Users/user/Documents/Programming/Mathematics/Function/a.hpp:
 
 C:/Users/user/Documents/Programming/Mathematics/Function/a_Alias.hpp:
 
-Music/Haichi/../OnMei/Pitch/a_Body.hpp:
+Music/Haichi/KyouWaOn/../../WaOn/SanWaOn/KyouWaOn/a.hpp:
 
-Music/Haichi/../OnMei/Pitch/../a_Body.hpp:
+Music/Haichi/KyouWaOn/../../WaOn/SanWaOn/KyouWaOn/../a.hpp:
 
-Music/Haichi/../OnMei/Pitch/../KanOn/a_Body.hpp:
+Music/Haichi/KyouWaOn/../a_Body.hpp:
+
+Music/Haichi/KyouWaOn/../../OnMei/Pitch/a_Body.hpp:
+
+Music/Haichi/KyouWaOn/../../OnMei/Pitch/../a_Body.hpp:
+
+Music/Haichi/KyouWaOn/../../OnMei/Pitch/../KanOn/a_Body.hpp:
 
 C:/Users/user/Documents/Programming/Mathematics/Arithmetic/Mod/a_Body.hpp:
 
@@ -325,24 +344,28 @@ C:/Users/user/Documents/Programming/Mathematics/SetTheory/DirectProduct/a_Body.h
 
 C:/Users/user/Documents/Programming/SFINAE/MemberFunction/a_Body.hpp:
 
-Music/Haichi/../OnMei/Pitch/../HenKaKiGou/a_Body.hpp:
+Music/Haichi/KyouWaOn/../../OnMei/Pitch/../HenKaKiGou/a_Body.hpp:
 
-Music/Haichi/../Chou/a_Body.hpp:
+Music/Haichi/KyouWaOn/../../Chou/a_Body.hpp:
 
-Music/Haichi/../Chou/OnKai/a_Body.hpp:
+Music/Haichi/KyouWaOn/../../Chou/OnKai/a_Body.hpp:
 
-Music/Haichi/../Chou/OnKai/../KaiMei/a_Body.hpp:
+Music/Haichi/KyouWaOn/../../Chou/OnKai/../KaiMei/a_Body.hpp:
 
-Music/Haichi/../OnMei/Pitch/OnDo/a_Body.hpp:
+Music/Haichi/KyouWaOn/../../OnMei/Pitch/OnDo/a_Body.hpp:
 
-Music/Haichi/../OnMei/Pitch/OnDo/a.hpp:
+Music/Haichi/KyouWaOn/../../OnMei/Pitch/OnDo/a.hpp:
 
-Music/Haichi/../OnMei/Pitch/OnDo/SetTouJi/a.hpp:
+Music/Haichi/KyouWaOn/../../OnMei/Pitch/OnDo/SetTouJi/a.hpp:
 
-Music/Haichi/../OnMei/Pitch/OnDo/SetTouJi/a_Macro.hpp:
+Music/Haichi/KyouWaOn/../../OnMei/Pitch/OnDo/SetTouJi/a_Macro.hpp:
 
-Music/Haichi/../OnMei/Pitch/OnDo/SetTouJi/a_Alias.hpp:
+Music/Haichi/KyouWaOn/../../OnMei/Pitch/OnDo/SetTouJi/a_Alias.hpp:
 
-Music/Haichi/../OnMei/Pitch/OnDo/a_Alias.hpp:
+Music/Haichi/KyouWaOn/../../OnMei/Pitch/OnDo/a_Alias.hpp:
 
-Music/Haichi/../OnMei/Pitch/OnDo/SetTouJi/a_Body.hpp:
+Music/Haichi/KyouWaOn/../../OnMei/Pitch/OnDo/SetTouJi/a_Body.hpp:
+
+Music/Haichi/KyouWaOn/../../WaOn/SanWaOn/KyouWaOn/a_Body.hpp:
+
+Music/Haichi/KyouWaOn/../../WaOn/SanWaOn/KyouWaOn/../a_Body.hpp:

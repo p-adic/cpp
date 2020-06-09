@@ -41,19 +41,21 @@ uint Haichi::GetNumberOfOnMei() const noexcept
 bool Haichi::CheckValidKaiMei( const Chou& N , const KaiMei& n ) noexcept
 {
 
-  if( N == ChouOnKai() ){
+  const OnKai& s = N.GetOnKai();
+
+  if( s == ChouOnKai() ){
 
     return true;
 
   }
 
-  if( N == WaSeiTekiTanOnKai() ){
+  if( s == WaSeiTekiTanOnKai() ){
 
     return n == KaiMei::V();
 
   }
   
-  if( N == ShiZenTanOnKai() ){
+  if( s == ShiZenTanOnKai() ){
 
     return n != KaiMei::V();
 

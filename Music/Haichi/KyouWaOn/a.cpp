@@ -3,7 +3,7 @@
 #include "../../Header.hpp"
 #include "a_Body.hpp"
 
-HaichiOfKyoWaOn::SetValidity( const Chou& N , const KaiMei& n , const uint& bas_num , const uint& bas_octave , const uint& ten_num , const uint& ten_octave , const uint& alt_num , const uint& alt_octave , const uint& sop_num , const uint& sop_octave ) noexcept
+void HaichiOfKyouWaOn::SetValidity( const Chou& N , const KaiMei& n , const uint& bas_num , const uint& bas_octave , const uint& ten_num , const uint& ten_octave , const uint& alt_num , const uint& alt_octave , const uint& sop_num , const uint& sop_octave ) noexcept
 {
 
   if( bas_num == 5 ){
@@ -32,7 +32,7 @@ HaichiOfKyoWaOn::SetValidity( const Chou& N , const KaiMei& n , const uint& bas_
 
   if( CheckHasDoubleDaiSanOn( bas_num , ten_num , alt_num , sop_num ) ){
 
-    if( N == ChouWaOn() ){
+    if( N.GetOnKai() == ChouOnKai() ){
 
       if( n == KaiMei::V() ){
 
