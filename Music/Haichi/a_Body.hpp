@@ -6,6 +6,8 @@
 #include "../OnMei/Pitch/a_Body.hpp"
 #include "../Chou/a_Body.hpp"
 
+#include "../OnMei/Pitch/OnDo/a_Body.hpp"
+
 inline Haichi::Haichi( const OnMei& bas_onmei , const Octave& bas_octave , const OnMei& ten_onmei , const Octave& ten_octave , const OnMei& alt_onmei , const Octave& alt_octave , const OnMei& sop_onmei , const Octave& sop_octave ) noexcept :
   m_sop( sop_onmei , sop_octave ) ,
   m_alt( alt_onmei , alt_octave ) ,
