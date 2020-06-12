@@ -110,15 +110,14 @@ VLArray<T> GetInitialSegment( const VLArray<T>& a , const uint& n )
 {
 
   auto a_copy = a;
-  const uint m = n+1;
-
-  if( a_copy.size() < m ){
+  
+  if( a_copy.size() < n ){
 
     ERR_IMPUT( a , n );
 
   }
 
-  while( a_copy.size() > m ){
+  while( a_copy.size() > n ){
 
     a_copy.pop_back();
     
@@ -132,15 +131,14 @@ template <typename T> VLTree<T> GetInitialSegment( const VLTree<T>& a , const ui
 {
 
   auto a_copy = a;
-  const uint m = n+1;
 
-  if( a_copy.size() < m ){
+  if( a_copy.size() < n ){
 
     ERR_IMPUT( a , n );
 
   }
 
-  while( a_copy.size() > m ){
+  while( a_copy.size() > n ){
 
     a_copy.pop_RightMost();
     
@@ -158,15 +156,14 @@ VLArray<T> GetFinialSegment( const VLArray<T>& a , const uint& n )
 {
 
   auto a_copy = a;
-  const uint m = n+1;
 
-  if( a_copy.size() < m ){
+  if( a_copy.size() < n ){
 
     ERR_IMPUT( a , n );
 
   }
 
-  while( a_copy.size() > m ){
+  while( a_copy.size() > n ){
 
     a_copy.pop_front();
     
@@ -180,15 +177,14 @@ template <typename T> VLTree<T> GetFinalSegment( const VLTree<T>& a , const uint
 {
 
   auto a_copy = a;
-  const uint m = n+1;
 
-  if( a_copy.size() < m ){
+  if( a_copy.size() < n ){
 
     ERR_IMPUT( a , n );
 
   }
 
-  while( a_copy.size() > m ){
+  while( a_copy.size() > n ){
 
     a_copy.pop_LeftMost();
     
