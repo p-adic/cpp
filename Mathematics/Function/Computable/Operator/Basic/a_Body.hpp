@@ -24,7 +24,7 @@ template <typename Ret> inline FunctionSymbol<Ret,Ret> operator^( const Function
 
      f.GetNodeString( 2 ) + SupString() + LbraceString() + n.GetNodeString( 2 ) + RbraceString() ,
      GetTypeName<Ret>() ,
-     VariableSymbol<Ret>( f.GetNodeString( 4 , 2 , 2 ) )
+     VariableSymbol<Ret>( f.GetNodeString( 4 , 4 , 2 ) )
 
      );
 
@@ -38,7 +38,7 @@ inline RelationSymbol<bool> operator^( const RelationSymbol<bool>& r , const Pre
 
      r.GetNodeString( 2 ) + SupString() + LbraceString() + n.GetNodeString( 2 ) + RbraceString() ,
      GetTypeName<bool>() ,
-     VariableSymbol<bool>( r.GetNodeString( 4 , 2 , 2 ) )
+     VariableSymbol<bool>( r.GetNodeString( 4 , 4 , 2 ) )
 
      );
 
@@ -53,7 +53,16 @@ template <typename Ret, typename Arg1, typename Arg2> inline FunctionSymbol<Ret,
     return FunctionSymbol<Ret,Arg2>
       (
 
+       Recursiveness() ,
        f.GetNodeString( 2 ) + x.GetNodeString( 2 ) ,
+       SeparatorOfComputableFunction
+       (
+
+	0 ,
+	f.GetNodeString( 5 , 1 ) + x.GetNodeString( 2 ) + f.GetNodeString( 5 , 2 ) ,
+	f.GetNodeString( 5 , 3 )
+	
+	) ,
        GetTypeName<Ret>() ,
        VariableSymbol<Arg2>( f.GetNodeString( 4 , 5 , 2 ) )
 
@@ -93,9 +102,18 @@ template <typename Arg1, typename Arg2> inline RelationSymbol<Arg2> CurryingSymb
     return RelationSymbol<Arg2>
       (
 
+       Recursiveness() ,
        r.GetNodeString( 2 ) + x.GetNodeString( 2 ) ,
+       SeparatorOfComputableFunction
+       (
+
+	0 ,
+	r.GetNodeString( 5 , 1 ) + x.GetNodeString( 2 ) + r.GetNodeString( 5 , 2 ) ,
+	r.GetNodeString( 5 , 3 )
+	
+	) ,
        GetTypeName<bool>() ,
-       VariableSymbol<Arg2>( r.GetNodeString( 4 , 3 , 2 ) )
+       VariableSymbol<Arg2>( r.GetNodeString( 4 , 5 , 2 ) )
 
        );
 
@@ -108,7 +126,7 @@ template <typename Arg1, typename Arg2> inline RelationSymbol<Arg2> CurryingSymb
 
        r.GetNodeString( 2 ) + SubString() + LbraceString() + x.GetNodeString( 2 ) + RbraceString() ,
        GetTypeName<bool>() ,
-       VariableSymbol<Arg2>( r.GetNodeString( 4 , 3 , 2 ) )
+       VariableSymbol<Arg2>( r.GetNodeString( 4 , 5 , 2 ) )
 
        );
 
@@ -119,7 +137,7 @@ template <typename Arg1, typename Arg2> inline RelationSymbol<Arg2> CurryingSymb
 
      style + LparenString() + r.GetNodeString( 2 ) + CommaString() + x.GetNodeString( 2 ) + RparenString() ,
      GetTypeName<bool>() ,
-     VariableSymbol<Arg2>( r.GetNodeString( 4 , 3 , 2 ) )
+     VariableSymbol<Arg2>( r.GetNodeString( 4 , 5 , 2 ) )
 
      );
  
