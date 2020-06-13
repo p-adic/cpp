@@ -55,7 +55,7 @@ template <typename Ret, typename Arg1, typename Arg2> inline FunctionSymbol<Ret,
 
        f.GetNodeString( 2 ) + x.GetNodeString( 2 ) ,
        GetTypeName<Ret>() ,
-       VariableSymbol<Arg2>( f.GetNodeString( 4 , 3 , 2 ) )
+       VariableSymbol<Arg2>( f.GetNodeString( 4 , 5 , 2 ) )
 
        );
 
@@ -68,7 +68,7 @@ template <typename Ret, typename Arg1, typename Arg2> inline FunctionSymbol<Ret,
 
        f.GetNodeString( 2 ) + SubString() + LbraceString() + x.GetNodeString( 2 ) + RbraceString() ,
        GetTypeName<Ret>() ,
-       VariableSymbol<Arg2>( f.GetNodeString( 4 , 3 , 2 ) )
+       VariableSymbol<Arg2>( f.GetNodeString( 4 , 5 , 2 ) )
 
        );
 
@@ -79,7 +79,7 @@ template <typename Ret, typename Arg1, typename Arg2> inline FunctionSymbol<Ret,
 
      style + LparenString() + f.GetNodeString( 2 ) + CommaString() + x.GetNodeString( 2 ) + RparenString() ,
      GetTypeName<Ret>() ,
-     VariableSymbol<Arg2>( f.GetNodeString( 4 , 3 , 2 ) )
+     VariableSymbol<Arg2>( f.GetNodeString( 4 , 5 , 2 ) )
 
      );
  

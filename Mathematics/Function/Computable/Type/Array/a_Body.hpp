@@ -56,10 +56,10 @@ template <typename Ret> inline DEFINITION_OF_TWO_ARY_BASIC_FUNCTION( ArrayTypeOf
 
 
 
-template <typename Ret> inline const FunctionSymbol<nat,ArrayTypeOfComputableFunction<Ret> >& LengthSymbol()
+template <typename Ret> inline const PrettyFunction<nat,ArrayTypeOfComputableFunction<Ret> >& LengthSymbol()
 {
 
-  static const FunctionSymbol<nat,ArrayTypeOfComputableFunction<Ret> > f
+  static const PrettyFunction<nat,ArrayTypeOfComputableFunction<Ret> > f
     {
 
     "Lng" ,
@@ -110,10 +110,10 @@ template <typename Ret> inline const PrettyOperator<Ret,ArrayTypeOfComputableFun
 
 template <typename Ret> inline ExpressionOfComputableFunction<Ret> EntryAccessSymbolApplication( const ExpressionOfComputableFunction<ArrayTypeOfComputableFunction<Ret> >& a , const PrettyExpression<nat>& n ) { return EntryAccessSymbol<Ret>()( a , n ); }
 
-template <typename Ret> inline const FunctionSymbol<ArrayTypeOfComputableFunction<Ret>,ArrayTypeOfComputableFunction<Ret>,nat>& InitialSegmentSymbol()
+template <typename Ret> inline const PrettyFunction<ArrayTypeOfComputableFunction<Ret>,ArrayTypeOfComputableFunction<Ret>,nat>& InitialSegmentSymbol()
 {
 
-  static const FunctionSymbol<ArrayTypeOfComputableFunction<Ret>,ArrayTypeOfComputableFunction<Ret>,nat> f
+  static const PrettyFunction<ArrayTypeOfComputableFunction<Ret>,ArrayTypeOfComputableFunction<Ret>,nat> f
   {
 
      "IniSeg" ,
@@ -139,10 +139,10 @@ template <typename Ret> inline const FunctionSymbol<ArrayTypeOfComputableFunctio
 template <typename Ret> inline ExpressionOfComputableFunction<ArrayTypeOfComputableFunction<Ret> > InitialSegmentSymbolApplication( const ExpressionOfComputableFunction<ArrayTypeOfComputableFunction<Ret> >& a , PrettyExpression<nat> n ) { return InitialSegmentSymbol<Ret>()( a , n ); }
 
 
-template <typename Ret> inline const FunctionSymbol<ArrayTypeOfComputableFunction<Ret>,ArrayTypeOfComputableFunction<Ret>,nat>& FinalSegmentSymbol()
+template <typename Ret> inline const PrettyFunction<ArrayTypeOfComputableFunction<Ret>,ArrayTypeOfComputableFunction<Ret>,nat>& FinalSegmentSymbol()
 {
 
-  static const FunctionSymbol<ArrayTypeOfComputableFunction<Ret>,ArrayTypeOfComputableFunction<Ret>,nat> f
+  static const PrettyFunction<ArrayTypeOfComputableFunction<Ret>,ArrayTypeOfComputableFunction<Ret>,nat> f
   {
 
      "FinSeg" ,
@@ -170,7 +170,7 @@ template <typename Ret> inline ExpressionOfComputableFunction<ArrayTypeOfComputa
 template <typename Ret> inline const PrettyFunction<ArrayTypeOfComputableFunction<Ret>,Ret>& WrapSymbol()
 {
 
-  static const FunctionSymbol<ArrayTypeOfComputableFunction<Ret>,Ret> f
+  static const PrettyFunction<ArrayTypeOfComputableFunction<Ret>,Ret> f
   {
 
      "Wrap" ,
@@ -197,7 +197,7 @@ template <typename Ret> inline ExpressionOfComputableFunction<ArrayTypeOfComputa
 template <typename Ret> inline PrettyFunction<ArrayTypeOfComputableFunction<Ret>,nat> ArrayiseSymbol( const FunctionSymbol<Ret,int>& f , const PrettyVariable<nat>& n )
 {
 
-  return FunctionSymbol<ArrayTypeOfComputableFunction<Ret>,int>
+  return PrettyFunction<ArrayTypeOfComputableFunction<Ret>,nat>
     (
 
      "Arrayised_" + f.GetNodeString( 2 ) ,
@@ -235,7 +235,7 @@ template <typename Ret> inline PrettyFunction<ArrayTypeOfComputableFunction<Ret>
 inline PrettyFunction<ArrayTypeOfComputableFunction<bool>,nat> ArrayiseSymbol( const RelationSymbol<int>& r , const PrettyVariable<nat>& n )
 {
 
-  return FunctionSymbol<ArrayTypeOfComputableFunction<bool>,int>
+  return PrettyFunction<ArrayTypeOfComputableFunction<bool>,nat>
     (
 
      "Arrayised_" + r.GetNodeString( 2 ) ,
