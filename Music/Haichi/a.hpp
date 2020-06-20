@@ -1,4 +1,4 @@
-// c:/Users/user/Documents/Programming/Music/Haichi/a.hpp
+// c:/Users/user/Documents/Programming/Music/HaiChi/a.hpp
 
 #pragma once
 #include "a_Macro.hpp"
@@ -6,7 +6,7 @@
 #include "../OnMei/Pitch/a.hpp"
 #include "../Chou/a.hpp"
 
-class Haichi
+class HaiChi
 {
 
 private:
@@ -16,7 +16,7 @@ private:
   Pitch m_bas;
   
 public:
-  inline Haichi( const OnMei& bas_onmei , const Octave& bas_octave , const OnMei& ten_onmei , const Octave& ten_octave , const OnMei& alt_onmei , const Octave& alt_octave , const OnMei& sop_onmei , const Octave& sop_octave ) noexcept;
+  inline HaiChi( const OnMei& bas_onmei , const Octave& bas_octave , const OnMei& ten_onmei , const Octave& ten_octave , const OnMei& alt_onmei , const Octave& alt_octave , const OnMei& sop_onmei , const Octave& sop_octave ) noexcept;
 
   inline bool IsNaturallyOrdered() const noexcept;
   uint GetNumberOfOnMei() const noexcept;
@@ -57,5 +57,5 @@ private:
 
 };
 
-bool operator==( const Haichi& C1 , const Haichi& C2 ) noexcept;
-inline bool operator!=( const Haichi& C1 , const Haichi& C2 ) noexcept;
+bool operator==( const HaiChi& C1 , const HaiChi& C2 ) noexcept;
+inline bool operator!=( const HaiChi& C1 , const HaiChi& C2 ) noexcept;

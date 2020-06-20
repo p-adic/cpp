@@ -1,10 +1,10 @@
-// c:/Users/user/Documents/Programming/Music/Haichi/a.cpp
+// c:/Users/user/Documents/Programming/Music/HaiChi/a.cpp
 
 #include "../Header.hpp"
 #include "a_Body.hpp"
 
 
-uint Haichi::GetNumberOfOnMei() const noexcept
+uint HaiChi::GetNumberOfOnMei() const noexcept
 {
 
   const Pitch* table[4];
@@ -38,7 +38,7 @@ uint Haichi::GetNumberOfOnMei() const noexcept
 
 }
 
-bool Haichi::CheckValidKaiMei( const Chou& N , const KaiMei& n ) noexcept
+bool HaiChi::CheckValidKaiMei( const Chou& N , const KaiMei& n ) noexcept
 {
 
   const OnKai& s = N.GetOnKai();
@@ -68,7 +68,7 @@ bool Haichi::CheckValidKaiMei( const Chou& N , const KaiMei& n ) noexcept
 }
 
 
-bool operator==( const Haichi& C1 , const Haichi& C2 ) noexcept
+bool operator==( const HaiChi& C1 , const HaiChi& C2 ) noexcept
 {
 
   for( uint i = 0 ; i < 4 ; i++ ){
