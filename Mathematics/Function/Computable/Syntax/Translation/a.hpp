@@ -13,6 +13,7 @@ void DisplayFinishedWriting( const string& language );
 // type
 void InputDefinitionOfRecursiveSet( ofstream& ofs , const string& type_name , const string& definition , const string& language , const string& style );
 void SetDefinitionOfRecursiveSet( string& type_name , string& definition , const string& language , const string& style );
+void InputSignature( ofstream& ofs , const string& type_name , const string& language , const string& style );
 void InputSignatureOfRecursiveSet( ofstream& ofs , const string& type_name , const string& language , const string& style );
 void InputInlineWay( ofstream& ofs , const string& definition , const string& language , const string& style );
 
