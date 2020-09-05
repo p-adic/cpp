@@ -15,3 +15,7 @@ public:
   inline const Arg& Get() const noexcept;
 
 };
+
+template <typename... Types>
+class WrappedTypes
+{};

@@ -15,7 +15,7 @@ private:
 
 public:
   inline LabeledList();
-  template <typename Arg1 , typename Arg2> inline LabeledList( const WrapForVLArray<Arg1>& , const WrapForVLArray<Arg2>& );
+  template <typename Arg1 , typename Arg2> inline LabeledList( const WrappedType<Arg1>& , const WrappedType<Arg2>& );
   
   T& operator()( const Key1& , const Key2&... );
   void Insert( const Key1& , const Key2&... , const T& );
