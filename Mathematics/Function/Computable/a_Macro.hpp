@@ -216,8 +216,8 @@
 #define __DEFINITION_OF_string__ BaseType<string>() 
 #define __DEFINITION_OF_bool__ BaseType<bool>() 
 
-#define __SYMBOL_OF_int__ __DEFINITION_OF__int__ 
-#define __SYMBOL_OF_string__ __DEFINITION_OF__string__ 
-#define __SYMBOL_OF_bool__ __DEFINITION_OF__bool__ 
+#define __SYMBOL_OF_int__ __DEFINITION_OF_int__ 
+#define __SYMBOL_OF_string__ __DEFINITION_OF_string__ 
+#define __SYMBOL_OF_bool__ __DEFINITION_OF_bool__ 
 
 #define WRITE( FUNC , LANGUAGE , STYLE , FILE , OPEN_MODE ) CONNECT( CONNECT( __DEFINITION_OF_ , FUNC ) , __ ).WriteTo( CONNECT( CONNECT( __SYMBOL_OF_, FUNC ) , __ ) , LANGUAGE , STYLE , TO_STRING( FILE ) , OPEN_MODE );
