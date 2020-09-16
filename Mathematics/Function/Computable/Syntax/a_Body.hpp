@@ -24,7 +24,7 @@ template <typename... Args> inline const string& SyntaxOfComputableFunction::Get
 template <typename... Args> inline VLTree<string> SyntaxOfComputableFunction::GetSubTree( const Args&... args ) const { return VLTree<string>( 0 , m_syntax.GetIterator( args... ) ); }
 
 
-inline string SyntaxOfComputableFunction::Display( const string& name , const string& language ) const noexcept { TRY_CATCH( DisplayTreeStructure( name , language ) , const ErrorType& e , IGNORED_ERROR( e ) ); return m_syntax.Display(); }
+inline string SyntaxOfComputableFunction::Display( const string& name , const string& language ) const noexcept { TRY_CATCH( DisplayTreeStructure( name , language ) , const ErrorType& e , IGNORED_ERR( e ) ); return m_syntax.Display(); }
 
 
 template <typename... Args>
