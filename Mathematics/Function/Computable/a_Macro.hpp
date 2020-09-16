@@ -24,15 +24,9 @@
 // function
 #define OPERATOR_SYMBOL_CONSTRUCTOR( RET , NAME , ... )			\
 									\
-  TRY_CATCH								\
-  (									\
+  OperatorSymbol_Guide<BaseTypeOf< RET >::type>::Get( TO_STRING( NAME ) , GetTypeName< RET >() , __VA_ARGS__ ) \
 									\
-   OperatorSymbol_Guide<BaseTypeOf< RET >::type>::Get( TO_STRING( NAME ) , GetTypeName< RET >() , __VA_ARGS__ ) , \
-   const ErrorType& e ,							\
-   CALL( e )								\
-									\
-									) \
-
+   
 
 #define PLUS( ... ) PlusSymbolApplication( __VA_ARGS__ ) 
 #define TIMES( ... ) TimesSymbolApplication( __VA_ARGS__ ) 
