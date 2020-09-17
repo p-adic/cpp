@@ -4,7 +4,7 @@
 #include "../../../../../Utility/VLTree/a.hpp"
 #include <fstream>
 
-// filex
+// file
 void DisplayTreeStructureOfDefinition( const string& function_name , const string& language );
 void DisplayWritingTranslationOfDefinition( const string& function_name , const string& filename , const string& language );
 void DisplayFileOpenError( const string& language );
