@@ -73,5 +73,5 @@ T CppClassForComposition<FunctionPointerType<T,T> >::operator()( const T& t ) co
 }
 
 
-inline CppClassForFunctionString operator^( const CppClassForFunctionString& func , const CppClassForString& n ) { return "CppClassForComposition( " + func.Get() + " , " + n.GetTermString() + " )"; }
-inline CppClassForFunctionString operator^( const CppClassForFunctionString& func , const uint& n ) { return "CppClassForComposition( " + func.Get() + " , " + to_string( n ) + " )"; }
+inline CppClassForFunctionString operator^( const CppClassForFunctionString& func , const CppClassForString& n ) { return "CppClassForComposition( &" + func.Get() + " , " + n.GetTermString() + " )"; }
+inline CppClassForFunctionString operator^( const CppClassForFunctionString& func , const uint& n ) { return "CppClassForComposition( &" + func.Get() + " , " + to_string( n ) + " )"; }

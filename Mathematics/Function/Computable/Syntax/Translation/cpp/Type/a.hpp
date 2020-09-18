@@ -11,7 +11,9 @@ template <typename Arg> inline auto ConcatenateWithSeparator( const string& s , 
 
 template <typename Arg1, typename Arg2, typename... Args> inline auto ConcatenateWithSeparator( const string& s , const Arg1& arg1 , const Arg2& arg2 , const Args&... args ) -> typename enable_if<is_same<Arg1,string>::value && is_same<Arg2,string>::value && conjunction<is_same<Args,string>...>::value,string>::type;
 
+inline string ArgumentString();
 template <typename Arg, typename... Args> inline string ArgumentString( const Arg& arg , const Args&... args );
 template <typename Arg, typename... Args> inline string TypeString();
+inline string TypeAndArgumentString();
 template <typename Arg, typename... Args> inline string TypeAndArgumentString( const Arg& arg , const Args&... args );
 

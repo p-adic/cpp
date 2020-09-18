@@ -199,6 +199,48 @@ void SetDefinitionOfRecursiveSet( string& type_name , string& definition , const
   
 }
 
+void InputSignature( ofstream& ofs , const string& type_name , const string& language , const string& style )
+{
+
+  if( language == JapaneseString() ){
+
+    ofs << type_name;
+    return;
+
+  }
+
+  if( language == EnglishString() ){
+
+    ofs << "I define " << type_name << " ";
+    return;
+  }
+
+  if( language == ChineseString() ){
+
+    ofs << "‰ä›’" << type_name << "’è‹`";
+    return;
+
+  }
+
+  if( language == FrenchString() ){
+
+    ofs << "Je d\\'efinis " << type_name << " ";
+    return;
+
+  }
+
+  if( language == GermanString() ){
+
+    ofs << "Ich definiere " << type_name << " ";
+    return;
+
+  }
+
+  ERR_IMPUT( language );
+  return;
+
+}
+
 void InputSignatureOfRecursiveSet( ofstream& ofs , const string& type_name , const string& language , const string& style )
 {
 
@@ -211,7 +253,7 @@ void InputSignatureOfRecursiveSet( ofstream& ofs , const string& type_name , con
 
   if( language == EnglishString() ){
 
-    ofs << "I define a set " << type_name;
+    ofs << "I define a set " << type_name << " ";
     return;
   }
 
@@ -224,14 +266,14 @@ void InputSignatureOfRecursiveSet( ofstream& ofs , const string& type_name , con
 
   if( language == FrenchString() ){
 
-    ofs << "Je d\\'efinis un ensemble " << type_name;
+    ofs << "Je d\\'efinis un ensemble " << type_name << " ";
     return;
 
   }
 
   if( language == GermanString() ){
 
-    ofs << "Ich definiere eine Menge " << type_name;
+    ofs << "Ich definiere eine Menge " << type_name << " ";
     return;
 
   }
@@ -253,7 +295,7 @@ void InputInlineWay( ofstream& ofs , const string& definition , const string& la
 
   if( language == EnglishString() ){
 
-    ofs << " as " << definition << "." << endl;
+    ofs << "as " << definition << "." << endl;
     return;
   }
 
@@ -266,14 +308,14 @@ void InputInlineWay( ofstream& ofs , const string& definition , const string& la
 
   if( language == FrenchString() ){
 
-    ofs << " comme " << definition << "." << endl;
+    ofs << "comme " << definition << "." << endl;
     return;
 
   }
 
   if( language == GermanString() ){
 
-    ofs << " als " << definition << "." << endl;
+    ofs << "als " << definition << "." << endl;
     return;
 
   }

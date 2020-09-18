@@ -10,7 +10,6 @@
 									\
   const CppClassForString& CONST = x	\
 									\
-  
 
 // variable
 #define LDOTS( V ) LdotsSymbol<BaseTypeOf< V >::type>() 
@@ -82,7 +81,7 @@
   __SYMBOL_OF_OFS__() << "#define " << TO_STRING( CONNECT( CONNECT( __DECLARATION_OF_ , FUNC ) , __ ) ) << " " << TypeString<BaseTypeOf< RET >::type>() << " " << TO_STRING( FUNC ) << "( " << TypeAndArgumentString( __VA_ARGS__ ) << " ) " << endl << endl; \
   __SYMBOL_OF_OFS__() << TO_STRING( CONNECT( CONNECT( __DECLARATION_OF_ , FUNC ) , __ ) ) << ";" << endl << endl; \
 									\
-  const CppClassForFunctionString FUNC { TO_STRING( FUNC ) } \
+  const CppClassForFunctionString FUNC { TO_STRING( FUNC ) }		\
 
 // symbol setting
 #define STR EmptyString()
@@ -179,4 +178,3 @@
 #define TRUNC ios::trunc 
 
 #define WRITE( FUNC , LANGUAGE , STYLE , FILE , OPEN_MODE ) 
-

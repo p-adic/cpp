@@ -10,10 +10,12 @@ template <typename Arg> inline auto ConcatenateWithSeparator( const string& s , 
 template <typename Arg1, typename Arg2, typename... Args> inline auto ConcatenateWithSeparator( const string& s , const Arg1& arg1 , const Arg2& arg2 , const Args&... args ) -> typename enable_if<is_same<Arg1,string>::value && is_same<Arg2,string>::value && conjunction<is_same<Args,string>...>::value,string>::type { return arg1 + " " + s + " " + ConcatenateWithSeparator( s , arg2 , args... ); }
 
 
+inline string ArgumentString() { return "";}
 template <typename Arg, typename... Args> inline string ArgumentString( const Arg& arg , const Args&... args ) { return ConcatenateWithSeparator( CommaString() , CppClassForArgumentString<Arg>::GetString( arg ) , CppClassForArgumentString<Args>::GetString( args )... ); }
 
 template <typename Arg, typename... Args> inline string TypeString() { return ConcatenateWithSeparator( CommaString() , CppClassForTypeString<Arg>::GetString() , CppClassForTypeString<Args>::GetString()... ); }
 
+inline string TypeAndArgumentString() { return ""; }
 template <typename Arg, typename... Args> inline string TypeAndArgumentString( const Arg& arg , const Args&... args ) { return ConcatenateWithSeparator( CommaString() , CppClassForTypeAndArgumentString<Arg>::GetString( arg ) , CppClassForTypeAndArgumentString<Args>::GetString( args )... ); }
 
 
