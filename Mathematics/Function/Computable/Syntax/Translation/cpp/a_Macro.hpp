@@ -8,7 +8,8 @@
   {									\
 									\
     static ofstream ofs( TO_STRING( FILE ) , OPEN_MODE );		\
-    ofs << "#include \"Mathematics/Function/Computable/Library/cpp/a.hpp\"" << endl << endl; \
+    ofs << "// 以下のRelativePathはフォルダcppの相対パスに置き換える。" << endl << endl; \
+    ofs << "#include \"RelativePath/cpp/Mathematics/Function/Computable/Library/cpp/a.hpp\"" << endl << endl; \
     return ofs;								\
 									\
   }									\
