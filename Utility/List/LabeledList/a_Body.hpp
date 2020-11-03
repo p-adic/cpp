@@ -1,4 +1,4 @@
-// LabeledList/a_Body.hpp
+// c:/Users/user/Documents/Programming/Utility/List/LabeledList/a_Body.hpp
 
 #pragma once
 #include "a.hpp"
@@ -24,7 +24,7 @@ T& LabeledList<T,Key1,Key2...>::operator()( const Key1& key1 , const Key2&... ke
   
   while( itr1 != end ){
 
-    if( Equal( *itr1 , key1 , key2... ) ){
+    if( *itr1 == DirectProduct<Key1,Key2...>( key1 , key2... ) ){
 
       return *itr2;
 
@@ -65,7 +65,7 @@ void LabeledList<T,Key1,Key2...>::Delete( const Key1& key1 , const Key2&... key2
   
   for( size_t i = 0 ; itr1 != end ; i++ ){
 
-    if( Equal( *itr1 , key1 , key2... ) ){
+    if( *itr1 == DirectProduct<Key1,Key2...>( key1 , key2... ) ){
 
       m_key.erase( itr1 );
       m_t.erase( itr2 );
@@ -90,7 +90,7 @@ bool LabeledList<T,Key1,Key2...>::Contain( const Key1& key1 , const Key2&... key
 
   for( typename VLArray<DirectProduct<Key1,Key2...> >::const_iterator itr = m_key.begin() , end = m_key.end() ; itr != end ; itr++ ){
 
-    if( Equal( *itr , key1 , key2... ) ){
+    if( *itr == DirectProduct<Key1,Key2...>( key1 , key2... ) ){
 
       return true;
       
