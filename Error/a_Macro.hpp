@@ -11,7 +11,7 @@
 #define g_MEMORISE_LINE ( *GLOBAL_VARIABLE( int , MEMORISE_LINE , 0 ) ) 
 #define g_MEMORISE_FUNC ( *GLOBAL_VARIABLE( string , MEMORISE_FUNC , "NaN" ) ) 
 
-#define CHECK_ERR CheckError( POSITION )
+#define CHECK_ERR CheckError( FILE , LINE , FUNC )
 
 // リリース時にブロックが解除されるので、例外排出そのものがコードのバグである箇所にのみ用いる。
 // コンマの影響でマクロが展開できないブロックは波括弧{ }で囲む。

@@ -47,9 +47,6 @@ ErrorType::~ErrorType()
     cout << "However, there is some error ignored at " << endl;
     IndicatePosition( g_MEMORISE_FILE , g_MEMORISE_LINE , g_MEMORISE_FUNC );
     g_CHECK_OVERLAPPING = false;
-    g_MEMORISE_FILE = "NaN";
-    g_MEMORISE_LINE = 0;
-    g_MEMORISE_FUNC = "NaN";
     
   }
 
@@ -97,13 +94,13 @@ void IndicateError( const char* const FILE , const int& LINE , const char* const
 bool CheckError( const char* const FILE , const int& LINE , const char* const FUNC ) noexcept
 {
 
+  g_MEMORISE_FILE = to_string( FILE );
+  g_MEMORISE_LINE = LINE;
+  g_MEMORISE_FUNC = to_string( FUNC );
+
   if( g_OCCURRENCE_OF_ERR == true ){
 
     g_CHECK_OVERLAPPING = true;
-    g_MEMORISE_FILE = to_string( FILE );
-    g_MEMORISE_LINE = LINE;
-    g_MEMORISE_FUNC = to_string( FUNC );
-
     return true;
 
   }
