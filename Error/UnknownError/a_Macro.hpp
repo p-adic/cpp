@@ -7,7 +7,7 @@
 #ifdef DEBUG
 
   #define ERR_UNKNOWN( ... ) \
-    BreakPoint(); \
+    BREAK; \
     ThrowUnknownError( POSITION , ARGUMENTS( __VA_ARGS__ ) ) 
 
 #else

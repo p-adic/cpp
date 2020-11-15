@@ -5,11 +5,11 @@
 #ifdef DEBUG
 
   #define WARNING( body ) \
-    BreakPoint(); \
+    BREAK; \
     IndicateWarning( POSITION , body ) 
 
   #define MESSAGE( body ) \
-    BreakPoint(); \
+    BREAK; \
     IndicateMessage( POSITION , body ) 
 
 #else

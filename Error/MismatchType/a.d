@@ -1,23 +1,24 @@
-Error/MismatchType/a.o: Error/MismatchType/a.cpp \
- Error/MismatchType/../Header.hpp \
- Error/MismatchType/../../Utility/Header.hpp \
- Error/MismatchType/../../Utility/Header_Alias.hpp \
- Error/MismatchType/a_Body.hpp Error/MismatchType/a.hpp \
- Error/MismatchType/a_Macro.hpp Error/MismatchType/../a_Macro.hpp \
- Error/MismatchType/../Position/a_Macro.hpp \
- Error/MismatchType/../../Utility/GlobalVariable/a_Macro.hpp \
+../../Error/MismatchType/a.o: ../../Error/MismatchType/a.cpp \
+ ../../Error/MismatchType/../Header.hpp \
+ ../../Error/MismatchType/../../Utility/Header.hpp \
+ ../../Error/MismatchType/../../Utility/Header_Alias.hpp \
+ ../../Error/MismatchType/a_Body.hpp ../../Error/MismatchType/a.hpp \
+ ../../Error/MismatchType/a_Macro.hpp \
+ ../../Error/MismatchType/../a_Macro.hpp \
+ ../../Error/MismatchType/../Position/a_Macro.hpp \
+ ../../Error/MismatchType/../../Utility/GlobalVariable/a_Macro.hpp \
  C:/Users/user/Documents/Programming/Utility/Macro_Macro.hpp \
- Error/MismatchType/../Warning/a_Macro.hpp Error/MismatchType/../a.hpp \
- Error/MismatchType/../BreakPoint/a.hpp \
- Error/MismatchType/../BreakPoint/a_Macro.hpp \
- Error/MismatchType/../../Utility/SmartPointer/a.hpp \
- Error/MismatchType/../Position/a.hpp Error/MismatchType/../Warning/a.hpp \
- Error/MismatchType/../../Utility/GlobalVariable/a.hpp \
- Error/MismatchType/../../Utility/GlobalVariable/a_Alias.hpp \
- C:/Users/user/Documents/Programming/Mathematics/Function/a_Alias.hpp \
- Error/MismatchType/../../Utility/Macro.hpp \
- Error/MismatchType/../../Utility/../Utility/String/a.hpp \
- Error/MismatchType/../../Utility/../Utility/String/a_Macro.hpp \
+ ../../Error/MismatchType/../Warning/a_Macro.hpp \
+ ../../Error/MismatchType/../a.hpp \
+ ../../Error/MismatchType/../BreakPoint/a.hpp \
+ ../../Error/MismatchType/../BreakPoint/a_Macro.hpp \
+ ../../Error/MismatchType/../../Utility/SmartPointer/a.hpp \
+ ../../Error/MismatchType/../Position/a.hpp \
+ ../../Error/MismatchType/../Warning/a.hpp \
+ ../../Error/MismatchType/../../Utility/GlobalVariable/a.hpp \
+ ../../Error/MismatchType/../../Utility/Macro.hpp \
+ C:/Users/user/Documents/Programming/Utility/String/a.hpp \
+ C:/Users/user/Documents/Programming/Utility/String/a_Macro.hpp \
  C:/Users/user/Documents/Programming/SFINAE/MemberFunction/a_Macro.hpp \
  C:/Users/user/Documents/Programming/SFINAE/a_Macro.hpp \
  C:/Users/user/Documents/Programming/SFINAE/MemberFunction/a.hpp \
@@ -27,18 +28,18 @@ Error/MismatchType/a.o: Error/MismatchType/a.cpp \
  C:/Users/user/Documents/Programming/Mathematics/SetTheory/EmptySet/a.hpp \
  C:/Users/user/Documents/Programming/SFINAE/MetaFunction/IsReferenceOf/a.hpp \
  C:/Users/user/Documents/Programming/SFINAE/a_Alias.hpp \
- Error/MismatchType/../../Utility/../Utility/String/a_Alias.hpp \
- Error/MismatchType/../UnknownError/a_Body.hpp \
- Error/MismatchType/../UnknownError/a.hpp \
- Error/MismatchType/../UnknownError/a_Macro.hpp \
- Error/MismatchType/../UnknownError/../a_Body.hpp \
- Error/MismatchType/../UnknownError/../FaultInCoding/a.hpp \
- Error/MismatchType/../UnknownError/../FaultInCoding/a_Macro.hpp \
- Error/MismatchType/../UnknownError/../BreakPoint/a_Body.hpp \
+ C:/Users/user/Documents/Programming/Utility/String/a_Alias.hpp \
+ ../../Error/MismatchType/../UnknownError/a_Body.hpp \
+ ../../Error/MismatchType/../UnknownError/a.hpp \
+ ../../Error/MismatchType/../UnknownError/a_Macro.hpp \
+ C:/Users/user/Documents/Programming/Error/a_Body.hpp \
+ C:/Users/user/Documents/Programming/Error/FaultInCoding/a.hpp \
+ C:/Users/user/Documents/Programming/Error/FaultInCoding/a_Macro.hpp \
+ C:/Users/user/Documents/Programming/Error/BreakPoint/a_Body.hpp \
  C:/Users/user/Documents/Programming/Error/IllegalImput/a_Body.hpp \
  C:/Users/user/Documents/Programming/Error/IllegalImput/a.hpp \
  C:/Users/user/Documents/Programming/Error/IllegalImput/a_Macro.hpp \
- Error/MismatchType/../UnknownError/../Position/a_Body.hpp \
+ C:/Users/user/Documents/Programming/Error/Position/a_Body.hpp \
  C:/Users/user/Documents/Programming/Utility/String/Normalised/a_Body.hpp \
  C:/Users/user/Documents/Programming/Utility/String/Normalised/a.hpp \
  C:/Users/user/Documents/Programming/SFINAE/NonMemberFunction/Constified/a.hpp \
@@ -86,51 +87,47 @@ Error/MismatchType/a.o: Error/MismatchType/a.cpp \
  C:/Users/user/Documents/Programming/Utility/WrappedType/a.hpp \
  C:/Users/user/Documents/Programming/Mathematics/SetTheory/DirectProduct/a_Body.hpp
 
-Error/MismatchType/../Header.hpp:
+../../Error/MismatchType/../Header.hpp:
 
-Error/MismatchType/../../Utility/Header.hpp:
+../../Error/MismatchType/../../Utility/Header.hpp:
 
-Error/MismatchType/../../Utility/Header_Alias.hpp:
+../../Error/MismatchType/../../Utility/Header_Alias.hpp:
 
-Error/MismatchType/a_Body.hpp:
+../../Error/MismatchType/a_Body.hpp:
 
-Error/MismatchType/a.hpp:
+../../Error/MismatchType/a.hpp:
 
-Error/MismatchType/a_Macro.hpp:
+../../Error/MismatchType/a_Macro.hpp:
 
-Error/MismatchType/../a_Macro.hpp:
+../../Error/MismatchType/../a_Macro.hpp:
 
-Error/MismatchType/../Position/a_Macro.hpp:
+../../Error/MismatchType/../Position/a_Macro.hpp:
 
-Error/MismatchType/../../Utility/GlobalVariable/a_Macro.hpp:
+../../Error/MismatchType/../../Utility/GlobalVariable/a_Macro.hpp:
 
 C:/Users/user/Documents/Programming/Utility/Macro_Macro.hpp:
 
-Error/MismatchType/../Warning/a_Macro.hpp:
+../../Error/MismatchType/../Warning/a_Macro.hpp:
 
-Error/MismatchType/../a.hpp:
+../../Error/MismatchType/../a.hpp:
 
-Error/MismatchType/../BreakPoint/a.hpp:
+../../Error/MismatchType/../BreakPoint/a.hpp:
 
-Error/MismatchType/../BreakPoint/a_Macro.hpp:
+../../Error/MismatchType/../BreakPoint/a_Macro.hpp:
 
-Error/MismatchType/../../Utility/SmartPointer/a.hpp:
+../../Error/MismatchType/../../Utility/SmartPointer/a.hpp:
 
-Error/MismatchType/../Position/a.hpp:
+../../Error/MismatchType/../Position/a.hpp:
 
-Error/MismatchType/../Warning/a.hpp:
+../../Error/MismatchType/../Warning/a.hpp:
 
-Error/MismatchType/../../Utility/GlobalVariable/a.hpp:
+../../Error/MismatchType/../../Utility/GlobalVariable/a.hpp:
 
-Error/MismatchType/../../Utility/GlobalVariable/a_Alias.hpp:
+../../Error/MismatchType/../../Utility/Macro.hpp:
 
-C:/Users/user/Documents/Programming/Mathematics/Function/a_Alias.hpp:
+C:/Users/user/Documents/Programming/Utility/String/a.hpp:
 
-Error/MismatchType/../../Utility/Macro.hpp:
-
-Error/MismatchType/../../Utility/../Utility/String/a.hpp:
-
-Error/MismatchType/../../Utility/../Utility/String/a_Macro.hpp:
+C:/Users/user/Documents/Programming/Utility/String/a_Macro.hpp:
 
 C:/Users/user/Documents/Programming/SFINAE/MemberFunction/a_Macro.hpp:
 
@@ -150,21 +147,21 @@ C:/Users/user/Documents/Programming/SFINAE/MetaFunction/IsReferenceOf/a.hpp:
 
 C:/Users/user/Documents/Programming/SFINAE/a_Alias.hpp:
 
-Error/MismatchType/../../Utility/../Utility/String/a_Alias.hpp:
+C:/Users/user/Documents/Programming/Utility/String/a_Alias.hpp:
 
-Error/MismatchType/../UnknownError/a_Body.hpp:
+../../Error/MismatchType/../UnknownError/a_Body.hpp:
 
-Error/MismatchType/../UnknownError/a.hpp:
+../../Error/MismatchType/../UnknownError/a.hpp:
 
-Error/MismatchType/../UnknownError/a_Macro.hpp:
+../../Error/MismatchType/../UnknownError/a_Macro.hpp:
 
-Error/MismatchType/../UnknownError/../a_Body.hpp:
+C:/Users/user/Documents/Programming/Error/a_Body.hpp:
 
-Error/MismatchType/../UnknownError/../FaultInCoding/a.hpp:
+C:/Users/user/Documents/Programming/Error/FaultInCoding/a.hpp:
 
-Error/MismatchType/../UnknownError/../FaultInCoding/a_Macro.hpp:
+C:/Users/user/Documents/Programming/Error/FaultInCoding/a_Macro.hpp:
 
-Error/MismatchType/../UnknownError/../BreakPoint/a_Body.hpp:
+C:/Users/user/Documents/Programming/Error/BreakPoint/a_Body.hpp:
 
 C:/Users/user/Documents/Programming/Error/IllegalImput/a_Body.hpp:
 
@@ -172,7 +169,7 @@ C:/Users/user/Documents/Programming/Error/IllegalImput/a.hpp:
 
 C:/Users/user/Documents/Programming/Error/IllegalImput/a_Macro.hpp:
 
-Error/MismatchType/../UnknownError/../Position/a_Body.hpp:
+C:/Users/user/Documents/Programming/Error/Position/a_Body.hpp:
 
 C:/Users/user/Documents/Programming/Utility/String/Normalised/a_Body.hpp:
 

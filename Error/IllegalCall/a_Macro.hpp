@@ -6,7 +6,7 @@
 #ifdef DEBUG
 
   #define ERR_CALL \
-    BreakPoint(); \
+    BREAK; \
     IndicateIllegalCall( POSITION ) 
 
 #else

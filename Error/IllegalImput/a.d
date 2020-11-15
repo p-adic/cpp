@@ -1,23 +1,24 @@
-Error/IllegalImput/a.o: Error/IllegalImput/a.cpp \
- Error/IllegalImput/../Header.hpp \
- Error/IllegalImput/../../Utility/Header.hpp \
- Error/IllegalImput/../../Utility/Header_Alias.hpp \
- Error/IllegalImput/a_Body.hpp Error/IllegalImput/a.hpp \
- Error/IllegalImput/a_Macro.hpp Error/IllegalImput/../a_Macro.hpp \
- Error/IllegalImput/../Position/a_Macro.hpp \
- Error/IllegalImput/../../Utility/GlobalVariable/a_Macro.hpp \
+../../Error/IllegalImput/a.o: ../../Error/IllegalImput/a.cpp \
+ ../../Error/IllegalImput/../Header.hpp \
+ ../../Error/IllegalImput/../../Utility/Header.hpp \
+ ../../Error/IllegalImput/../../Utility/Header_Alias.hpp \
+ ../../Error/IllegalImput/a_Body.hpp ../../Error/IllegalImput/a.hpp \
+ ../../Error/IllegalImput/a_Macro.hpp \
+ ../../Error/IllegalImput/../a_Macro.hpp \
+ ../../Error/IllegalImput/../Position/a_Macro.hpp \
+ ../../Error/IllegalImput/../../Utility/GlobalVariable/a_Macro.hpp \
  C:/Users/user/Documents/Programming/Utility/Macro_Macro.hpp \
- Error/IllegalImput/../Warning/a_Macro.hpp Error/IllegalImput/../a.hpp \
- Error/IllegalImput/../BreakPoint/a.hpp \
- Error/IllegalImput/../BreakPoint/a_Macro.hpp \
- Error/IllegalImput/../../Utility/SmartPointer/a.hpp \
- Error/IllegalImput/../Position/a.hpp Error/IllegalImput/../Warning/a.hpp \
- Error/IllegalImput/../../Utility/GlobalVariable/a.hpp \
- Error/IllegalImput/../../Utility/GlobalVariable/a_Alias.hpp \
- C:/Users/user/Documents/Programming/Mathematics/Function/a_Alias.hpp \
- Error/IllegalImput/../../Utility/Macro.hpp \
- Error/IllegalImput/../../Utility/../Utility/String/a.hpp \
- Error/IllegalImput/../../Utility/../Utility/String/a_Macro.hpp \
+ ../../Error/IllegalImput/../Warning/a_Macro.hpp \
+ ../../Error/IllegalImput/../a.hpp \
+ ../../Error/IllegalImput/../BreakPoint/a.hpp \
+ ../../Error/IllegalImput/../BreakPoint/a_Macro.hpp \
+ ../../Error/IllegalImput/../../Utility/SmartPointer/a.hpp \
+ ../../Error/IllegalImput/../Position/a.hpp \
+ ../../Error/IllegalImput/../Warning/a.hpp \
+ ../../Error/IllegalImput/../../Utility/GlobalVariable/a.hpp \
+ ../../Error/IllegalImput/../../Utility/Macro.hpp \
+ C:/Users/user/Documents/Programming/Utility/String/a.hpp \
+ C:/Users/user/Documents/Programming/Utility/String/a_Macro.hpp \
  C:/Users/user/Documents/Programming/SFINAE/MemberFunction/a_Macro.hpp \
  C:/Users/user/Documents/Programming/SFINAE/a_Macro.hpp \
  C:/Users/user/Documents/Programming/SFINAE/MemberFunction/a.hpp \
@@ -27,12 +28,12 @@ Error/IllegalImput/a.o: Error/IllegalImput/a.cpp \
  C:/Users/user/Documents/Programming/Mathematics/SetTheory/EmptySet/a.hpp \
  C:/Users/user/Documents/Programming/SFINAE/MetaFunction/IsReferenceOf/a.hpp \
  C:/Users/user/Documents/Programming/SFINAE/a_Alias.hpp \
- Error/IllegalImput/../../Utility/../Utility/String/a_Alias.hpp \
- Error/IllegalImput/../a_Body.hpp \
- Error/IllegalImput/../FaultInCoding/a.hpp \
- Error/IllegalImput/../FaultInCoding/a_Macro.hpp \
- Error/IllegalImput/../BreakPoint/a_Body.hpp \
- Error/IllegalImput/../Position/a_Body.hpp \
+ C:/Users/user/Documents/Programming/Utility/String/a_Alias.hpp \
+ ../../Error/IllegalImput/../a_Body.hpp \
+ ../../Error/IllegalImput/../FaultInCoding/a.hpp \
+ ../../Error/IllegalImput/../FaultInCoding/a_Macro.hpp \
+ ../../Error/IllegalImput/../BreakPoint/a_Body.hpp \
+ ../../Error/IllegalImput/../Position/a_Body.hpp \
  C:/Users/user/Documents/Programming/Utility/String/Normalised/a_Body.hpp \
  C:/Users/user/Documents/Programming/Utility/String/Normalised/a.hpp \
  C:/Users/user/Documents/Programming/SFINAE/NonMemberFunction/Constified/a.hpp \
@@ -63,7 +64,7 @@ Error/IllegalImput/a.o: Error/IllegalImput/a.cpp \
  C:/Users/user/Documents/Programming/SFINAE/NonMemberFunction/a_Body.hpp \
  C:/Users/user/Documents/Programming/SFINAE/MemberFunction/Constructor/a_Body.hpp \
  C:/Users/user/Documents/Programming/SFINAE/NonMemberFunction/ToValue/a_Body.hpp \
- Error/IllegalImput/../../Utility/GlobalVariable/a_Body.hpp \
+ ../../Error/IllegalImput/../../Utility/GlobalVariable/a_Body.hpp \
  C:/Users/user/Documents/Programming/Utility/List/LabeledList/a_Body.hpp \
  C:/Users/user/Documents/Programming/Utility/List/LabeledList/a.hpp \
  C:/Users/user/Documents/Programming/Utility/VLArray/a.hpp \
@@ -83,51 +84,47 @@ Error/IllegalImput/a.o: Error/IllegalImput/a.cpp \
  C:/Users/user/Documents/Programming/Utility/WrappedType/a.hpp \
  C:/Users/user/Documents/Programming/Mathematics/SetTheory/DirectProduct/a_Body.hpp
 
-Error/IllegalImput/../Header.hpp:
+../../Error/IllegalImput/../Header.hpp:
 
-Error/IllegalImput/../../Utility/Header.hpp:
+../../Error/IllegalImput/../../Utility/Header.hpp:
 
-Error/IllegalImput/../../Utility/Header_Alias.hpp:
+../../Error/IllegalImput/../../Utility/Header_Alias.hpp:
 
-Error/IllegalImput/a_Body.hpp:
+../../Error/IllegalImput/a_Body.hpp:
 
-Error/IllegalImput/a.hpp:
+../../Error/IllegalImput/a.hpp:
 
-Error/IllegalImput/a_Macro.hpp:
+../../Error/IllegalImput/a_Macro.hpp:
 
-Error/IllegalImput/../a_Macro.hpp:
+../../Error/IllegalImput/../a_Macro.hpp:
 
-Error/IllegalImput/../Position/a_Macro.hpp:
+../../Error/IllegalImput/../Position/a_Macro.hpp:
 
-Error/IllegalImput/../../Utility/GlobalVariable/a_Macro.hpp:
+../../Error/IllegalImput/../../Utility/GlobalVariable/a_Macro.hpp:
 
 C:/Users/user/Documents/Programming/Utility/Macro_Macro.hpp:
 
-Error/IllegalImput/../Warning/a_Macro.hpp:
+../../Error/IllegalImput/../Warning/a_Macro.hpp:
 
-Error/IllegalImput/../a.hpp:
+../../Error/IllegalImput/../a.hpp:
 
-Error/IllegalImput/../BreakPoint/a.hpp:
+../../Error/IllegalImput/../BreakPoint/a.hpp:
 
-Error/IllegalImput/../BreakPoint/a_Macro.hpp:
+../../Error/IllegalImput/../BreakPoint/a_Macro.hpp:
 
-Error/IllegalImput/../../Utility/SmartPointer/a.hpp:
+../../Error/IllegalImput/../../Utility/SmartPointer/a.hpp:
 
-Error/IllegalImput/../Position/a.hpp:
+../../Error/IllegalImput/../Position/a.hpp:
 
-Error/IllegalImput/../Warning/a.hpp:
+../../Error/IllegalImput/../Warning/a.hpp:
 
-Error/IllegalImput/../../Utility/GlobalVariable/a.hpp:
+../../Error/IllegalImput/../../Utility/GlobalVariable/a.hpp:
 
-Error/IllegalImput/../../Utility/GlobalVariable/a_Alias.hpp:
+../../Error/IllegalImput/../../Utility/Macro.hpp:
 
-C:/Users/user/Documents/Programming/Mathematics/Function/a_Alias.hpp:
+C:/Users/user/Documents/Programming/Utility/String/a.hpp:
 
-Error/IllegalImput/../../Utility/Macro.hpp:
-
-Error/IllegalImput/../../Utility/../Utility/String/a.hpp:
-
-Error/IllegalImput/../../Utility/../Utility/String/a_Macro.hpp:
+C:/Users/user/Documents/Programming/Utility/String/a_Macro.hpp:
 
 C:/Users/user/Documents/Programming/SFINAE/MemberFunction/a_Macro.hpp:
 
@@ -147,17 +144,17 @@ C:/Users/user/Documents/Programming/SFINAE/MetaFunction/IsReferenceOf/a.hpp:
 
 C:/Users/user/Documents/Programming/SFINAE/a_Alias.hpp:
 
-Error/IllegalImput/../../Utility/../Utility/String/a_Alias.hpp:
+C:/Users/user/Documents/Programming/Utility/String/a_Alias.hpp:
 
-Error/IllegalImput/../a_Body.hpp:
+../../Error/IllegalImput/../a_Body.hpp:
 
-Error/IllegalImput/../FaultInCoding/a.hpp:
+../../Error/IllegalImput/../FaultInCoding/a.hpp:
 
-Error/IllegalImput/../FaultInCoding/a_Macro.hpp:
+../../Error/IllegalImput/../FaultInCoding/a_Macro.hpp:
 
-Error/IllegalImput/../BreakPoint/a_Body.hpp:
+../../Error/IllegalImput/../BreakPoint/a_Body.hpp:
 
-Error/IllegalImput/../Position/a_Body.hpp:
+../../Error/IllegalImput/../Position/a_Body.hpp:
 
 C:/Users/user/Documents/Programming/Utility/String/Normalised/a_Body.hpp:
 
@@ -219,7 +216,7 @@ C:/Users/user/Documents/Programming/SFINAE/MemberFunction/Constructor/a_Body.hpp
 
 C:/Users/user/Documents/Programming/SFINAE/NonMemberFunction/ToValue/a_Body.hpp:
 
-Error/IllegalImput/../../Utility/GlobalVariable/a_Body.hpp:
+../../Error/IllegalImput/../../Utility/GlobalVariable/a_Body.hpp:
 
 C:/Users/user/Documents/Programming/Utility/List/LabeledList/a_Body.hpp:
 

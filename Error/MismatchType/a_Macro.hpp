@@ -6,7 +6,7 @@
 #ifdef DEBUG
 
   #define MISMATCH( ... ) \
-    BreakPoint(); \
+    BREAK; \
     ThrowMismatchType< __VA_ARGS__ >( POSITION ) 
 
 #else

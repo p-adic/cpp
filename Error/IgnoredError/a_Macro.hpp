@@ -7,7 +7,7 @@
 #ifdef DEBUG
 
   #define IGNORED_ERR( ... ) \
-    BreakPoint(); \
+    BREAK; \
     IndicateIgnoredError( POSITION , ARGUMENTS( __VA_ARGS__ ) ) 
 
 #else

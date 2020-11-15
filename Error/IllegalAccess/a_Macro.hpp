@@ -9,7 +9,7 @@
 #ifdef DEBUG
 
   #define UNINITIALISED( ... ) \
-    BreakPoint(); \
+    BREAK; \
     IndicateUninitialisedAccess( POSITION , ARGUMENTS( __VA_ARGS__ ) ) 
 
 #else

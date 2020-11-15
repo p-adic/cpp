@@ -25,10 +25,10 @@ public:
   
 };
 
-inline void BreakPoint() noexcept;
+inline void BreakPoint( const char* const FILE , const int& LINE , const char* const FUNC ) noexcept;
 
-void CountCall( const uint& i0 = 0 ) noexcept;
-template <typename... ARGS> void CountCall( const uint& i0 , const uint& i1 , const ARGS&... i2 ) noexcept;
+void CountCall( const char* const FILE , const int& LINE , const char* const FUNC , const uint& i0 = 0 ) noexcept;
+template <typename... ARGS> void CountCall( const char* const FILE , const int& LINE , const char* const FUNC , const uint& i0 , const uint& i1 , const ARGS&... i2 ) noexcept;
 
 inline bool CallFlagContainer( const bool& CalledForCheck ) noexcept;
 template <typename... ARGS> bool CallFlagContainer( const bool& CalledForCheck , const uint& i0 , const uint& i1 , const ARGS&... i2 ) noexcept;

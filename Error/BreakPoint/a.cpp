@@ -36,12 +36,12 @@ void FlagCounter::CheckActive() noexcept
   
 }
 
-void CountCall( const uint& i0 ) noexcept
+void CountCall( const char* const FILE , const int& LINE , const char* const FUNC , const uint& i0 ) noexcept
 {
 
   if( CallFlagContainer( true , i0 , 1 ) ){
     
-    BreakPoint();
+    BreakPoint( FILE , LINE , FUNC );
 
   }
   

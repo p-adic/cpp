@@ -7,7 +7,7 @@
 #ifdef DEBUG
 
   #define ERR_CODE \
-    BreakPoint(); \
+    BREAK; \
     ThrowFaultInCoding( POSITION ) 
 
 #else

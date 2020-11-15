@@ -9,7 +9,7 @@
 #ifdef DEBUG
 
   #define ERR_IMPUT( ... ) \
-    BreakPoint(); \
+    BREAK; \
     ThrowIllegalImput( POSITION , ARGUMENTS( __VA_ARGS__ ) ) 
 
 #else
