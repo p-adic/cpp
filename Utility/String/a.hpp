@@ -14,6 +14,7 @@ inline string to_string( const char* const & s ) noexcept;
 inline string to_string( char* const & s ) noexcept;
 inline string to_string( const bool& ) noexcept;
 
+// to_string( typeid( T ) )Ç≈"T"ÇèoóÕ
 string to_string( const type_info& ) noexcept;
 
 // THREE_WAYS_SFINAE_MEMBER( to_string );

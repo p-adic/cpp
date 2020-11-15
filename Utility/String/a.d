@@ -1,21 +1,21 @@
-Utility/String/a.o: Utility/String/a.cpp Utility/String/Header.hpp \
- Utility/String/../Header.hpp Utility/String/../Header_Alias.hpp \
- Utility/String/a_Body.hpp Utility/String/a.hpp \
- Utility/String/a_Macro.hpp \
- Utility/String/../../SFINAE/MemberFunction/a_Macro.hpp \
+../../Utility/String/a.o: ../../Utility/String/a.cpp \
+ ../../Utility/String/Header.hpp ../../Utility/String/../Header.hpp \
+ ../../Utility/String/../Header_Alias.hpp ../../Utility/String/a_Body.hpp \
+ ../../Utility/String/a.hpp ../../Utility/String/a_Macro.hpp \
+ ../../Utility/String/../../SFINAE/MemberFunction/a_Macro.hpp \
  C:/Users/user/Documents/Programming/SFINAE/a_Macro.hpp \
  C:/Users/user/Documents/Programming/Utility/Macro_Macro.hpp \
- Utility/String/../../SFINAE/MemberFunction/a.hpp \
+ ../../Utility/String/../../SFINAE/MemberFunction/a.hpp \
  C:/Users/user/Documents/Programming/SFINAE/a.hpp \
  C:/Users/user/Documents/Programming/SFINAE/MetaFunction/IsPointerOf/a.hpp \
  C:/Users/user/Documents/Programming/SFINAE/MetaFunction/a.hpp \
  C:/Users/user/Documents/Programming/Mathematics/SetTheory/EmptySet/a.hpp \
  C:/Users/user/Documents/Programming/SFINAE/MetaFunction/IsReferenceOf/a.hpp \
  C:/Users/user/Documents/Programming/SFINAE/a_Alias.hpp \
- Utility/String/a_Alias.hpp \
- Utility/String/../../Error/IgnoredError/a_Body.hpp \
- Utility/String/../../Error/IgnoredError/a.hpp \
- Utility/String/../../Error/IgnoredError/a_Macro.hpp \
+ ../../Utility/String/a_Alias.hpp \
+ ../../Utility/String/../../Error/IgnoredError/a_Body.hpp \
+ ../../Utility/String/../../Error/IgnoredError/a.hpp \
+ ../../Utility/String/../../Error/IgnoredError/a_Macro.hpp \
  C:/Users/user/Documents/Programming/Error/a_Macro.hpp \
  C:/Users/user/Documents/Programming/Error/Position/a_Macro.hpp \
  C:/Users/user/Documents/Programming/Utility/GlobalVariable/a_Macro.hpp \
@@ -27,8 +27,6 @@ Utility/String/a.o: Utility/String/a.cpp Utility/String/Header.hpp \
  C:/Users/user/Documents/Programming/Error/Position/a.hpp \
  C:/Users/user/Documents/Programming/Error/Warning/a.hpp \
  C:/Users/user/Documents/Programming/Utility/GlobalVariable/a.hpp \
- C:/Users/user/Documents/Programming/Utility/GlobalVariable/a_Alias.hpp \
- C:/Users/user/Documents/Programming/Mathematics/Function/a_Alias.hpp \
  C:/Users/user/Documents/Programming/Utility/Macro.hpp \
  C:/Users/user/Documents/Programming/Error/a_Body.hpp \
  C:/Users/user/Documents/Programming/Error/FaultInCoding/a.hpp \
@@ -82,27 +80,27 @@ Utility/String/a.o: Utility/String/a.cpp Utility/String/Header.hpp \
  C:/Users/user/Documents/Programming/Utility/WrappedType/a_Body.hpp \
  C:/Users/user/Documents/Programming/Utility/WrappedType/a.hpp \
  C:/Users/user/Documents/Programming/Mathematics/SetTheory/DirectProduct/a_Body.hpp \
- Utility/String/../../SFINAE/MemberFunction/a_Body.hpp
+ ../../Utility/String/../../SFINAE/MemberFunction/a_Body.hpp
 
-Utility/String/Header.hpp:
+../../Utility/String/Header.hpp:
 
-Utility/String/../Header.hpp:
+../../Utility/String/../Header.hpp:
 
-Utility/String/../Header_Alias.hpp:
+../../Utility/String/../Header_Alias.hpp:
 
-Utility/String/a_Body.hpp:
+../../Utility/String/a_Body.hpp:
 
-Utility/String/a.hpp:
+../../Utility/String/a.hpp:
 
-Utility/String/a_Macro.hpp:
+../../Utility/String/a_Macro.hpp:
 
-Utility/String/../../SFINAE/MemberFunction/a_Macro.hpp:
+../../Utility/String/../../SFINAE/MemberFunction/a_Macro.hpp:
 
 C:/Users/user/Documents/Programming/SFINAE/a_Macro.hpp:
 
 C:/Users/user/Documents/Programming/Utility/Macro_Macro.hpp:
 
-Utility/String/../../SFINAE/MemberFunction/a.hpp:
+../../Utility/String/../../SFINAE/MemberFunction/a.hpp:
 
 C:/Users/user/Documents/Programming/SFINAE/a.hpp:
 
@@ -116,13 +114,13 @@ C:/Users/user/Documents/Programming/SFINAE/MetaFunction/IsReferenceOf/a.hpp:
 
 C:/Users/user/Documents/Programming/SFINAE/a_Alias.hpp:
 
-Utility/String/a_Alias.hpp:
+../../Utility/String/a_Alias.hpp:
 
-Utility/String/../../Error/IgnoredError/a_Body.hpp:
+../../Utility/String/../../Error/IgnoredError/a_Body.hpp:
 
-Utility/String/../../Error/IgnoredError/a.hpp:
+../../Utility/String/../../Error/IgnoredError/a.hpp:
 
-Utility/String/../../Error/IgnoredError/a_Macro.hpp:
+../../Utility/String/../../Error/IgnoredError/a_Macro.hpp:
 
 C:/Users/user/Documents/Programming/Error/a_Macro.hpp:
 
@@ -145,10 +143,6 @@ C:/Users/user/Documents/Programming/Error/Position/a.hpp:
 C:/Users/user/Documents/Programming/Error/Warning/a.hpp:
 
 C:/Users/user/Documents/Programming/Utility/GlobalVariable/a.hpp:
-
-C:/Users/user/Documents/Programming/Utility/GlobalVariable/a_Alias.hpp:
-
-C:/Users/user/Documents/Programming/Mathematics/Function/a_Alias.hpp:
 
 C:/Users/user/Documents/Programming/Utility/Macro.hpp:
 
@@ -256,4 +250,4 @@ C:/Users/user/Documents/Programming/Utility/WrappedType/a.hpp:
 
 C:/Users/user/Documents/Programming/Mathematics/SetTheory/DirectProduct/a_Body.hpp:
 
-Utility/String/../../SFINAE/MemberFunction/a_Body.hpp:
+../../Utility/String/../../SFINAE/MemberFunction/a_Body.hpp:
