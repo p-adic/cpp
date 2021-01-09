@@ -27,7 +27,7 @@ public:
   // Tが引数0のコンストラクタを持たないクラスの場合に使用。
   template <typename Arg> inline VLArray( const WrappedType<Arg>& t );
   
-  inline ~VLArray();
+  virtual ~VLArray();
   
   VLArray<T>& operator=( const VLArray<T>& );
   

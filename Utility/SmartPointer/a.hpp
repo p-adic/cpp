@@ -16,7 +16,7 @@ public:
   template <typename Arg> inline SmartPointer( const Arg& );
   inline SmartPointer( const SmartPointer<T>& ) noexcept;;
   inline SmartPointer( SmartPointer<T>&& ) noexcept;
-  ~SmartPointer();
+  virtual ~SmartPointer();
   SmartPointer<T>& operator=( const SmartPointer<T>& ) noexcept;
   SmartPointer<T>& operator=( T* const& ) noexcept;
   T& operator*() const;

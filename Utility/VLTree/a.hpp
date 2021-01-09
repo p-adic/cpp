@@ -16,7 +16,7 @@ class VLTree :
 public:
   template <typename... Args> inline VLTree( const Args&... );
   VLTree( EntryOfVLTree<T>& ) = delete;
-  inline ~VLTree();
+  virtual ~VLTree();
 
   template <typename Arg> VLTree<T>& operator=( const Arg& );
 

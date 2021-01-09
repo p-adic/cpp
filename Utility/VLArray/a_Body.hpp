@@ -15,7 +15,7 @@ template <typename T> inline VLArray<T>::VLArray( const VLArray<T>& a ) : m_e( a
 
 template <typename T> template <typename Arg> inline VLArray<T>::VLArray( const WrappedType<Arg>& t ) : m_e( t.Get() ) , m_p_e( &m_e ) , m_size( 0 ) {}
 
-template <typename T> inline VLArray<T>::~VLArray() { clear(); }
+template <typename T> VLArray<T>::~VLArray() { clear(); }
 
 template <typename T>
 VLArray<T>& VLArray<T>::operator=( const VLArray<T>& a )
