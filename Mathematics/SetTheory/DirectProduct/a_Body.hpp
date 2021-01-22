@@ -64,7 +64,7 @@ template <typename T0 , typename... T1>
 bool operator==( const DirectProduct<T0,T1...>& v0 , const DirectProduct<T0,T1...>& v1 )
 {
 
-  return ( Projection<0,T0,T1...>( v0 ) == Projection<0,T0,T1...>( v1 ) ) * ( RestrictToRight<1,T0,T1...>( v0 ) == RestrictToRight<1,T0,T1...>( v1 ) );
+  return ( Projection<0,T0,T1...>( v0 ) == Projection<0,T0,T1...>( v1 ) ) && ( RestrictToRight<1,T0,T1...>( v0 ) == RestrictToRight<1,T0,T1...>( v1 ) );
 
 }
 
