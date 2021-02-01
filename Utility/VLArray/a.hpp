@@ -34,10 +34,10 @@ public:
   inline const uint& size() const noexcept;
   inline void clear();
   inline bool empty() const noexcept;
-  inline T& front();
-  inline const T& front() const;
-  inline T& back();
-  inline const T& back() const;
+  T& front();
+  const T& front() const;
+  T& back();
+  const T& back() const;
   
   inline void push_back() const noexcept;
   template <typename Arg1 , typename... Arg2> void push_back( const Arg1& , const Arg2&... );

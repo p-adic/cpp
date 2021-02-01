@@ -53,10 +53,62 @@ void VLArray<T>::EmptyToArray( const VLArray<T>& a )
 template <typename T> inline const uint& VLArray<T>::size() const noexcept { return m_size; }
 template <typename T> inline void VLArray<T>::clear(){ while( m_size > 0 ) pop_back(); }
 template <typename T> inline bool VLArray<T>::empty() const noexcept { return m_size == 0; }
-template <typename T> inline T& VLArray<T>::front() { return m_e.m_next->m_t; }
-template <typename T> inline const T& VLArray<T>::front() const { return m_e.m_next->m_t; }
-template <typename T> inline T& VLArray<T>::back() { return m_e.m_prev->m_t; }
-template <typename T> inline const T& VLArray<T>::back() const { return m_e.m_prev->m_t; }
+
+template <typename T>
+T& VLArray<T>::front()
+{
+
+  if( m_size == 0 ){
+
+    ERR_CALL;
+    
+  }
+  
+  return m_e.m_next->m_t;
+
+}
+
+template <typename T>
+const T& VLArray<T>::front() const
+{
+
+  if( m_size == 0 ){
+
+    ERR_CALL;
+    
+  }
+
+  return m_e.m_next->m_t;
+
+}
+
+template <typename T>
+T& VLArray<T>::back()
+{
+
+  if( m_size == 0 ){
+
+    ERR_CALL;
+    
+  }
+
+  return m_e.m_prev->m_t;
+
+}
+
+template <typename T>
+const T& VLArray<T>::back() const
+{
+
+  if( m_size == 0 ){
+
+    ERR_CALL;
+    
+  }
+
+  return m_e.m_prev->m_t;
+
+}
 
 template <typename T> inline void VLArray<T>::push_back() const noexcept {}
 
