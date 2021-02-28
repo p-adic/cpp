@@ -38,6 +38,15 @@ DECLARATION_OF_NON_MEMBER_WITH_AT_LEAST_ONE_VARIABLE( Invalid_ , to_string , _Co
 
 }
 
+template <typename T0> static auto to_string_Normalised_Body( const T0& t0 ) noexcept -> typename enable_if< ! is_List<T0>::value , string >::type;
+template <typename T0> static auto to_string_Normalised_Body( const T0& t0 ) noexcept -> typename enable_if< is_List<T0>::value , string >::type;
+template <typename T0 , typename T1 , typename... T2> static inline string to_string_Normalised_Body( const T0& t0 , const T1& t1 , const T2&... t2 ) noexcept;
+
+inline string to_string_Normalised() noexcept { return "()"; }
+template <typename T0> inline string to_string_Normalised( const T0& t0 ) noexcept { return to_string_Normalised_Body( t0 ); }
+template <typename T0 , typename T1 , typename... T2> inline string to_string_Normalised( const T0& t0 , const T1& t1 , const T2&... t2 ) noexcept { return "( " + to_string_Normalised_Body( t0 , t1 , t2... ) + " )"; }
+
+
 template <typename T0>
 auto to_string_Normalised_Body( const T0& t0 ) noexcept -> typename enable_if< ! is_List<T0>::value , string >::type
 {
@@ -55,12 +64,6 @@ auto to_string_Normalised_Body( const T0& t0 ) noexcept -> typename enable_if< !
 template <typename T0>
 auto to_string_Normalised_Body( const T0& t0 ) noexcept -> typename enable_if< is_List<T0>::value , string >::type
 {
-
-  if( t0.empty() ){
-
-    return "\\empty";
-
-  }
   
   string s = "( ";
   
@@ -82,39 +85,10 @@ auto to_string_Normalised_Body( const T0& t0 ) noexcept -> typename enable_if< i
 
 }
 
-template <typename T0 , typename T1 , typename... T2>
-string to_string_Normalised_Body( const T0& t0 , const T1& t1 , const T2&... t2 ) noexcept
-{
+template <typename T0 , typename T1 , typename... T2> inline string to_string_Normalised_Body( const T0& t0 , const T1& t1 , const T2&... t2 ) noexcept {  return to_string_Normalised_Body( t0 ) + " , " + to_string_Normalised_Body( t1 , t2... ); }
 
-  return to_string_Normalised_Body( t0 ) + " , " + to_string_Normalised_Body( t1 , t2... );
 
-}
-
-template <typename T0>
-string to_string_Normalised( const T0& t0 ) noexcept
-{
-
-  return to_string_Normalised_Body( t0 );
-
-}
-
-template <typename T0 , typename T1 , typename... T2>
-string to_string_Normalised( const T0& t0 , const T1& t1 , const T2&... t2 ) noexcept
-{
-
-  return "( " + to_string_Normalised_Body( t0 , t1 , t2... ) + " )";
-
-}
-
-template <typename T>
-void echo( const T& t ) noexcept
-{
-
-  const string s = to_string_Normalised( t );
-  cout << s << endl;
-  return;
-
-}
+template <typename T> inline void echo( const T& t ) noexcept { cout << to_string_Normalised( t ) << endl; }
 
 template <typename Arg1 , typename... Arg2>
 void IndicateArguments_Body( const string& VARIABLE_NAMES , string& s , const Arg1& arg1 , const Arg2&... arg2 ) noexcept
