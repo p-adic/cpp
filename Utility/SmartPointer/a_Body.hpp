@@ -5,7 +5,7 @@
 
 template <typename T> inline SmartPointer<T>::SmartPointer() : m_p( new T() ) , m_n( new uint( 1 ) ) , m_b( new bool( false ) ){}
 
-template <typename T> template <typename Arg> inline SmartPointer<T>::SmartPointer( const Arg& t ) : m_p( new T( t ) ) , m_n( new uint( 1 ) ) , m_b( new bool( true ) ){}
+template <typename T> template <typename... Args> inline SmartPointer<T>::SmartPointer( const Args&... args ) : m_p( new T( args... ) ) , m_n( new uint( 1 ) ) , m_b( new bool( true ) ){}
 
 template <typename T> inline SmartPointer<T>::SmartPointer( const SmartPointer<T>& p ) noexcept : m_p( p.m_p ) , m_n( p.m_n ) , m_b( p.m_b ){ *m_n += 1; }
 

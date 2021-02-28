@@ -13,7 +13,7 @@ private:
 
 public:
   inline SmartPointer();
-  template <typename Arg> inline SmartPointer( const Arg& );
+  template <typename... Args> inline SmartPointer( const Args&... );
   inline SmartPointer( const SmartPointer<T>& ) noexcept;;
   inline SmartPointer( SmartPointer<T>&& ) noexcept;
   virtual ~SmartPointer();
