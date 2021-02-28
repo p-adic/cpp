@@ -30,4 +30,4 @@ private:
 
 ofstream& ToOfstream( const string& filename , const ios_base::openmode& open_mode = ios::app );
 
-template <typename T> inline void operator<<( ofstream& ofs , const T& t );
+template <typename... T> inline void WriteIn( const string& filename , const T&... t );

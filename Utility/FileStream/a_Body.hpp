@@ -12,4 +12,4 @@ inline bool FileHolder::Contain( const string& filename ) const { return Ofstrea
 
 inline LabeledList<SmartPointer<ofstream>,string>& FileHolder::OfstreamTable() { static auto list = LabeledList<SmartPointer<ofstream>,string>( WrappedType<DirectProduct<string> >( "" ) , WrappedType<SmartPointer<ofstream> >( "dummy file name for OfstreamTable" , ios::in ) ); return list; }
 
-template <typename T> inline void operator<<( ofstream& ofs , const T& t ) { ofs << to_string( t ); }
+template <typename... T> inline void WriteIn( const string& filename , const T&... t ) { ToOfstream( filename ) << to_string_Normalised( t... ) << endl;  }
