@@ -262,7 +262,7 @@ T GetRemoveNestedArray( const VLTree<T>& t )
 
 }
 
-template <typename Arg> inline CppClassForString RemovableNestedArrayStringApplication( const Arg& arg ) { return ArgumentString( arg ) + ".empty()"; }
+template <typename Arg> inline CppClassForString RemovableNestedArrayStringApplication( const Arg& arg ) { return ArgumentString( arg ) + ".IsLeaf()"; }
 
 
 template <typename Arg1, typename Arg2> inline CppClassForString EqStringApplication( const Arg1& arg1 , const Arg2& arg2 ) { return WrapInParenthesis( ArgumentString( arg1 ) ) + " == " + WrapInParenthesis( ArgumentString( arg2 ) ); }
