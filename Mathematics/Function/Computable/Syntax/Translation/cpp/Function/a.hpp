@@ -4,6 +4,7 @@
 #include "a_Macro.hpp"
 
 #include "../Type/a.hpp"
+#include "../../../../../a.hpp"
 
 class CppClassForString;
 
