@@ -40,9 +40,9 @@ private:
   string m_t;
   
 public:
-  inline CppClassForTerm( const string& t ) : m_t( t ) {};
+  inline CppClassForTerm( const string& t ) : m_t( "\"" + t + "\"" ) {};
 
-  inline const string& Get() const noexcept { return "\"" + m_t + "\""; };
+  inline const string& Get() const noexcept { return m_t; };
   inline void Set( const string& t ) { m_t = t; };
 
 };
