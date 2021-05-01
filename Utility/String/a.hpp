@@ -38,3 +38,6 @@ bool CheckContain( const string& , const string& ) noexcept;
 bool CheckContainInt( const string& ) noexcept;
 
 bool Equal( const char* const& c0 , const char* const& c1 );
+
+inline bool IsKaigyou( const unsigned char& c ) noexcept;
+inline bool IsFirstHalfOfZenkaku( const unsigned char& c ) noexcept;

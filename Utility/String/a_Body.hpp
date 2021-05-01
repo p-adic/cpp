@@ -103,3 +103,6 @@ auto to_string() noexcept -> typename enable_if< less_equal<uint>()( 2 , sizeof.
 }
 
 inline bool CheckEmpty( const string& s ) noexcept { return s == ""; }
+
+inline bool IsKaigyou( const unsigned char& c ) noexcept { return c == '\n'; }
+inline bool IsFirstHalfOfZenkaku( const unsigned char& c ) noexcept { return ( 0x81 <= c && c <= 0x9f ) || ( 0xe0 <= c && c <= 0xfc ); }
