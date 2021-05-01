@@ -5,9 +5,9 @@
 // Argument
 template <typename T> class CppClassForArgumentString;
 
-// constant
+// int, bool
 // template <>
-// class CppClassForArgumentString :
+// class CppClassForArgumentString<T> :
 //   public EmptySet
 // {
 
@@ -17,8 +17,18 @@ template <typename T> class CppClassForArgumentString;
 // };
 
 DEFINITION_OF_PRIMITIVE_CPP_CLASS_FOR_ARGUMENT_STRING( int );
-DEFINITION_OF_PRIMITIVE_CPP_CLASS_FOR_ARGUMENT_STRING( string );
 DEFINITION_OF_PRIMITIVE_CPP_CLASS_FOR_ARGUMENT_STRING( bool );
+
+// string
+template <>
+class CppClassForArgumentString<string> :
+  public EmptySet
+{
+
+public:
+  static inline string GetString( const string& t ) { return "\"" + t + "\""; };
+
+};
 
 template <uint N>
 class CppClassForArgumentString<char[N]> :
