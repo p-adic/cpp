@@ -22,7 +22,7 @@ inline CppClassForString operator>=( const CppClassForString& arg1 , const CppCl
 inline DEFINITION_OF_OPERATOR_OF_CPP_CLASS_FOR_STRING( < );
 inline DEFINITION_OF_OPERATOR_OF_CPP_CLASS_FOR_STRING( > );
 
-inline CppClassForString operator!( const CppClassForString& arg ) { return NegString() + WrapInParenthesis( ArgumentString( arg ) ); }
+inline CppClassForString operator!( const CppClassForString& arg ) { return "!" + WrapInParenthesis( ArgumentString( arg ) ); }
 
 inline DEFINITION_OF_OPERATOR_OF_CPP_CLASS_FOR_STRING( && );
 inline DEFINITION_OF_OPERATOR_OF_CPP_CLASS_FOR_STRING( || );
