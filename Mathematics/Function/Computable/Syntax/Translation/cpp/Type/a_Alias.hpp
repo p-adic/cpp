@@ -20,6 +20,11 @@ DEFINITION_OF_PRIMITIVE_CPP_CLASS_FOR_ARGUMENT_STRING( int );
 DEFINITION_OF_PRIMITIVE_CPP_CLASS_FOR_ARGUMENT_STRING( string );
 DEFINITION_OF_PRIMITIVE_CPP_CLASS_FOR_ARGUMENT_STRING( bool );
 
+template <uint N>
+class CppClassForArgumentString<char[N]> :
+  public CppClassForArgumentString<string>
+{};
+
 // variadic variable
 template <typename Ret>
 class CppClassForArgumentString<VariadicVariableSymbol<Ret> > :
