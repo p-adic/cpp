@@ -42,7 +42,7 @@ private:
 public:
   inline CppClassForTerm( const string& t ) : m_t( t ) {};
 
-  inline const atring& Get() const noexcept { return "\"" + m_t + "\""; };
+  inline const string& Get() const noexcept { return "\"" + m_t + "\""; };
   inline void Set( const string& t ) { m_t = t; };
 
 };
