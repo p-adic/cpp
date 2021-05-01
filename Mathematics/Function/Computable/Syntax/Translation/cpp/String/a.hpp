@@ -11,6 +11,7 @@ private:
 
 public:
   template <typename Arg> inline CppClassForString( const Arg& term_name ) : CppClassForString( EmptyString() , to_string( term_name ) ) {};
+  inline CppClassForString( const char* const & term_name ) : CppClassForString( EmptyString() , "\"" + to_string( term_name ) + "\"" ) {};
   inline CppClassForString( const string& type_name , const string& term_name ) : m_t( type_name , term_name ) {};
   inline const string& GetTypeString() const noexcept { return m_t.GetNode( 1 ); };
   inline const string& GetTermString() const noexcept { return m_t.GetNode( 2 ); };
