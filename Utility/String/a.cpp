@@ -80,15 +80,15 @@ string InitialSegmentOf( const string& s , const uint& n )
 
     }
     
-    return a.substr( 0 , 2 ) + GetInitialSegment( s.substr( 2 , length - 2 ) , n - 1 );
+    return s.substr( 0 , 2 ) + InitialSegmentOf( s.substr( 2 , length - 2 ) , n - 1 );
 
   }
 
-  return a.substr( 0 , 1 ) + GetInitialSegment( s.substr( 1 , length - 1 ) , n - 1 );
+  return s.substr( 0 , 1 ) + InitialSegmentOf( s.substr( 1 , length - 1 ) , n - 1 );
 
 }
 
-static FinalSegmentOf_Body( const string& s , const uint& n , uint& current_length );
+static string FinalSegmentOf_Body( const string& s , const uint& n , uint& current_length );
 
 string FinalSegmentOf( const string& s , const uint& n )
 {
@@ -98,7 +98,7 @@ string FinalSegmentOf( const string& s , const uint& n )
 
 }
 
-static FinalSegmentOf_Body( const string& s , const uint& n , uint& current_length )
+static string FinalSegmentOf_Body( const string& s , const uint& n , uint& current_length )
 {
 
   if( n == 0 ){
