@@ -13,6 +13,7 @@ class CppClassForTerm :
   public EmptySet
 {};
 
+// int, bool
 // class CppClassForTerm< T >
 // {
 
@@ -29,7 +30,23 @@ class CppClassForTerm :
 
 DEFINITION_OF_PRIMITIVE_CPP_CLASS_FOR_TERM( int );
 DEFINITION_OF_PRIMITIVE_CPP_CLASS_FOR_TERM( bool );
-DEFINITION_OF_PRIMITIVE_CPP_CLASS_FOR_TERM( string );
+
+// string
+template <>
+class CppClassForTerm<string>
+{
+
+private:
+  string m_t;
+  
+public:
+  inline CppClassForTerm( const string& t ) : m_t( t ) {};
+
+  inline const atring& Get() const noexcept { return "\"" + m_t + "\""; };
+  inline void Set( const string& t ) { m_t = t; };
+
+};
+
 
 template <typename Ret>
 class CppClassForTerm<VariadicVariableSymbol<Ret> >
