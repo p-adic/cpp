@@ -59,3 +59,84 @@ bool Equal( const char* const& c0 , const char* const& c1 )
   return s0 == s1;
 
 }
+
+string InitialSegmentOf( const string& s , const uint& n )
+{
+
+  if( n == 0 ){
+
+    return "";
+
+  }
+
+  const uint length = s.size();
+  const unsigned char letter = s[0];
+  
+  if( IsFirstHalfOfZenkaku( letter ) ){
+
+    if( length < 2 ){
+
+      ERR_IMPUT( s , n , length );
+
+    }
+    
+    return a.substr( 0 , 2 ) + GetInitialSegment( s.substr( 2 , length - 2 ) , n - 1 );
+
+  }
+
+  return a.substr( 0 , 1 ) + GetInitialSegment( s.substr( 1 , length - 1 ) , n - 1 );
+
+}
+
+static FinalSegmentOf_Body( const string& s , const uint& n , uint& current_length );
+
+string FinalSegmentOf( const string& s , const uint& n )
+{
+
+  uint current_length = 0;
+  return FinalSegmentOf_Body( s , n , current_length );
+
+}
+
+static FinalSegmentOf_Body( const string& s , const uint& n , uint& current_length )
+{
+
+  if( n == 0 ){
+
+    return "";
+
+  }
+
+  uint length = s.size();
+  uint dlength;
+  const unsigned char letter = s[0];
+  
+  if( IsFirstHalfOfZenkaku( letter ) ){
+
+    if( length < 2 ){
+
+      ERR_IMPUT( s , n , length );
+
+    }
+    
+    dlength = 2;
+
+  } else {
+
+    dlength = 1;
+
+  }
+  
+  const string first = s.substr( 0 , dlength );
+  const string current_segment = FinalSegmentOf_Body( s.substr( dlength , length - dlength ) , n , current_length );
+
+  if( n == current_length ){
+
+    return current_segment;
+
+  }
+
+  current_length++;
+  return first + current_segment;
+
+}

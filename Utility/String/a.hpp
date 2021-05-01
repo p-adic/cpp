@@ -41,3 +41,7 @@ bool Equal( const char* const& c0 , const char* const& c1 );
 
 inline bool IsKaigyou( const unsigned char& c ) noexcept;
 inline bool IsFirstHalfOfZenkaku( const unsigned char& c ) noexcept;
+
+// string::substr( ˆÊ’u , ƒTƒCƒY )‚ÆˆÙ‚È‚è‘SŠp‚©”¼Šp‚©‚ð”½‰f‚·‚é
+string InitialSegmentOf( const string& s , const uint& n );
+string FinalSegmentOf( const string& s , const uint& n );
