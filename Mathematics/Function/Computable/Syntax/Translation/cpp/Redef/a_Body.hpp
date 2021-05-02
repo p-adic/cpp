@@ -29,20 +29,11 @@ VLArray<T> GetPlus( const VLArray<T>& arg1 , const VLArray<T>& arg2 , const Args
 }
 
 template <typename T, typename... Args>
-VLTree<T> GetPlus( const VLTree<T>& arg1 , const VLTree<T>& arg2 , const Args&... args )
+VLNestedArray<T> GetPlus( const VLNestedArray<T>& arg1 , const VLNestedArray<T>& arg2 , const Args&... args )
 {
 
-  auto t = arg1;
-
-  auto itr = arg2.LeftMostNode();
-  
-  while( itr.IsValid() ){
-
-    t.push_RightMost( arg2.GetBranchCopy( itr ) );
-    itr++;
-
-  }
-  
+  VLNestedArray<T> t{ arg1 };
+  arg1.Concatenate( arg2 );
   return GetPlus( t , args... );
 
 }
@@ -100,22 +91,23 @@ template <typename Arg> inline CppClassForString StringiseStringApplication( con
 template <typename Arg> inline CppClassForString LengthStringApplication( const Arg& arg ) { return ArgumentString( arg ) + ".size()"; }
 
 template <typename Arg1, typename Arg2> inline CppClassForString EntryAccessStringApplication( const Arg1& arg1 , const Arg2& arg2 ) { return "GetEntryAccess( " + ArgumentString( arg1 , arg2 ) + " )"; }
+
 template <typename T> inline T GetEntryAccess( const VLArray<T>& a , const uint& n ) { return a[n]; }
-template <typename T> inline VLTree<T> GetEntryAccess( const VLTree<T>& a , const uint& n ) { return a.GetBranchCopy( n ); }
+template <typename T> inline VLNestedArray<T> GetEntryAccess( const VLNestedArray<T>& a , const uint& n ) { if( a.Denestable() ){ ERR_IMPUT( a , ,n ); } return a.GetBranchCopy( n ); }
 
 template <typename Arg1, typename Arg2> inline CppClassForString InitialSegmentStringApplication( const Arg1& arg1 , const Arg2& arg2 ) { return "GetInitialSegment( " + ArgumentString( arg1 , arg2 ) + " )"; }
 
 template <typename T>
 VLArray<T> GetInitialSegment( const VLArray<T>& a , const uint& n )
 {
-
-  auto a_copy = a;
   
-  if( a_copy.size() < n ){
+  if( a.size() < n ){
 
     ERR_IMPUT( a , n );
 
   }
+
+  VLArray<T> a_copy{ a };
 
   while( a_copy.size() > n ){
 
@@ -127,16 +119,22 @@ VLArray<T> GetInitialSegment( const VLArray<T>& a , const uint& n )
 
 }
 
-template <typename T> VLTree<T> GetInitialSegment( const VLTree<T>& a , const uint& n )
+template <typename T> VLNestedArray<T> GetInitialSegment( const VLNestedArray<T>& a , const uint& n )
 {
 
-  auto a_copy = a;
-
-  if( a_copy.size() < n ){
+  if( a.Denestable() ){
 
     ERR_IMPUT( a , n );
 
   }
+  
+  if( a.size() < n ){
+
+    ERR_IMPUT( a , n );
+
+  }
+
+  VLNestedArray<T> a_copy{ a };
 
   while( a_copy.size() > n ){
 
@@ -148,6 +146,8 @@ template <typename T> VLTree<T> GetInitialSegment( const VLTree<T>& a , const ui
 
 }
 
+inline string GetInitialSegment( const string& a , const uint& n ) { return InitialSegmentOf( a , n ); }
+
 
 template <typename Arg1, typename Arg2> inline CppClassForString FinalSegmentStringApplication( const Arg1& arg1 , const Arg2& arg2 ) { return "GetFinalSegment( " + ArgumentString( arg1 , arg2 ) + " )"; }
 
@@ -155,13 +155,13 @@ template <typename T>
 VLArray<T> GetFinialSegment( const VLArray<T>& a , const uint& n )
 {
 
-  auto a_copy = a;
-
-  if( a_copy.size() < n ){
+  if( a.size() < n ){
 
     ERR_IMPUT( a , n );
 
   }
+
+  VLArray<T> a_copy{ a };
 
   while( a_copy.size() > n ){
 
@@ -173,16 +173,22 @@ VLArray<T> GetFinialSegment( const VLArray<T>& a , const uint& n )
 
 }
 
-template <typename T> VLTree<T> GetFinalSegment( const VLTree<T>& a , const uint& n )
+template <typename T> VLNestedArray<T> GetFinalSegment( const VLNestedArray<T>& a , const uint& n )
 {
 
-  auto a_copy = a;
-
-  if( a_copy.size() < n ){
+  if( a.Denestable() ){
 
     ERR_IMPUT( a , n );
 
   }
+
+  if( a.size() < n ){
+
+    ERR_IMPUT( a , n );
+
+  }
+
+  VLNestedArray<T> a_copy{ a };
 
   while( a_copy.size() > n ){
 
@@ -194,6 +200,8 @@ template <typename T> VLTree<T> GetFinalSegment( const VLTree<T>& a , const uint
 
 }
 
+inline string GetFinalSegment( const string& a , const uint& n ) { return FinalSegmentOf( a , n ); }
+
 
 template <uint i, typename Arg> inline CppClassForString ProjectionStringApplication( const Arg& arg ) { return "Projection<" + to_string( i ) +">( " + ArgumentString( arg ) + " )"; }
 
@@ -202,57 +210,27 @@ template <typename Arg> inline CppClassForString WrapStringApplication( const Ar
 
 template <typename Arg> inline CppClassForString NestedWrapStringApplication( const Arg& arg ) { return "GetNestedWrap( " + ArgumentString( arg ) + " )"; }
 
-template <typename T>
-VLTree<T> GetNestedWrap( const VLTree<T>& a )
-{
-
-  auto t = VLTree<T>();
-  t.push_RightMost( a );
-  return t;
-
-}
+template <typename T> inline VLNestedArray<T> GetNestedWrap( const VLNestedArray<T>& a ) { return a.Wrap(); }
 
 template <typename Arg> inline CppClassForString NestifyStringApplication( const Arg& arg ) { return "GetNestify( " + ArgumentString( arg ) + " )"; }
 
-template <typename T>
-VLTree<T> GetNestify( const VLArray<T>& a )
-{
+template <typename T> inline VLNestedArray<T> GetNestify( const VLArray<T>& a ) { return VLNestedArray<T>( a ); }
 
-  auto t = VLTree<T>();
-
-  for( auto itr = a.begin() , end = a.end() ; itr != end ; itr++ ){
-
-    t.push_RightMost( *itr );
-
-  }
-
-  return t;
-
-}
-
-template <typename T> inline VLTree<T> GetNestify( const VLTree<T>& t ) { return t; }
+template <typename T> inline VLNestedArray<T> GetNestify( const VLNestedArray<T>& t ) { return t; }
 
 template <typename... Args> inline CppClassForString TupleStringApplication( const Args&... args ) { return "DirectProduct( " + ArgumentString( args... ) + " )"; }
 
 template <typename Arg> inline CppClassForString ToTrivialNestedArrayStringApplication( const Arg& arg ) { return "GetToTrivialNestedArray( " + ArgumentString( arg ) + " )"; }
 
-template <typename T>
-VLTree<T> GetToTrivialNestedArray( const T& t )
-{
-
-  auto t_copy = VLTree<T>();
-  t_copy.SetRoot( t );
-  return t;
-
-}
+template <typename T> inline VLNestedArray<T> GetToTrivialNestedArray( const T& t ) { return VLNestedArray<T>( t ); }
 
 template <typename Arg> inline CppClassForString RemoveNestedArrayStringApplication( const Arg& arg ) { return "GetRemoveNestedArray( " + ArgumentString( arg ) + " )"; }
 
 template <typename T>
-T GetRemoveNestedArray( const VLTree<T>& t )
+T GetRemoveNestedArray( const VLNestedArray<T>& t )
 {
 
-  if( ! t.empty() ){
+  if( ! t.Denestable() ){
 
     ERR_IMPUT( t );
 
