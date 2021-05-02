@@ -34,8 +34,12 @@ public:
   inline void pop_RightMost();
   inline void pop_LeftMost();
 
+  static inline bool Equal( const VLNestedArray<T>& a0 , const VLNestedArray<T>& a1 ) noexcept;
 
 };
+
+inline bool operator==( const VLNestedArray<T>& a0 , const VLNestedArray<T>& a1 ) noexcept;
+inline bool operator!=( const VLNestedArray<T>& a0 , const VLNestedArray<T>& a1 ) noexcept;
 
 
 inline string WrapInParenthesis( const string& arg );

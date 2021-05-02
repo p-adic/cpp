@@ -80,6 +80,9 @@ template <typename T> void VLNestedArray<T>::Concatenate( const VLNestedArray& a
 template <typename T> inline void VLNestedArray<T>::pop_RightMost(){ m_t.pop_RightMost(); m_denestable.pop_RightMost(); }
 template <typename T> inline void VLNestedArray<T>::pop_LeftMost(){ m_t.pop_LeftMost(); m_denestable.pop_LeftMost(); }
 
+template <typename T> inline bool VLNestedArray<T>::Equal( const VLNestedArray<T>& a0 , const VLNestedArray<T>& a1 ) noexcept { return a0.m_t == a1.m_t && a0.m_denestable == a1.m_denestable; }
+template <typename T> inline bool operator==( const VLNestedArray<T>& a0 , const VLNestedArray<T>& a1 ) noexcept { return VLNestedArray<T>::Equal( a0 , a1 ); }
+template <typename T> inline bool operator!=( const VLNestedArray<T>& a0 , const VLNestedArray<T>& a1 ) noexcept { return !( a0 == a1 ); }
 
 
 inline string WrapInParenthesis( const string& arg ) { return LparenString() + arg + RparenString(); }
