@@ -127,7 +127,7 @@ static string FinalSegmentOf_Body( const string& s , const uint& n , uint& curre
 
 }
 
-string FirstBitOf( const string& s )
+uint FirstBitOf( const string& s )
 {
 
   if( s == "" ){
