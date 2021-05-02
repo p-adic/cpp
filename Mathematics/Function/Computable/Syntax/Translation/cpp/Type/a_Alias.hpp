@@ -90,7 +90,7 @@ class CppClassForTypeString<NestedArrayTypeOfComputableFunction<Ret> > :
 {
 
 public:
-  static inline string GetString() { return "VLTree< " + TypeString<Ret>() + " >"; };
+  static inline string GetString() { return "VLNestedArray< " + TypeString<Ret>() + " >"; };
 
 };
 
