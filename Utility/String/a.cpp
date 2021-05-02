@@ -143,7 +143,7 @@ uint FirstBitOf( const string& s )
 
     if( length < 2 ){
 
-      ERR_IMPUT( s , n , length );
+      ERR_IMPUT( s , length );
 
     }
     

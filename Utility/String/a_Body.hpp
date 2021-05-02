@@ -108,5 +108,5 @@ inline bool IsKaigyou( const unsigned char& c ) noexcept { return c == '\n'; }
 inline bool IsFirstHalfOfZenkaku( const unsigned char& c ) noexcept { return ( 0x81 <= c && c <= 0x9f ) || ( 0xe0 <= c && c <= 0xfc ); }
 
 inline string FirstLetterOf( const string& s ) { const uint d = FirstBitOf( s ); return s.substr( 0 , d ); }
-inline string LongestProperFinalSegmentOf( const string& s ) { const uint d = FirstBitOf( s ); return s.substr( d , length - d ); }
-inline uint LengthOf( const string& s ) { return 1 + LengthOf( LongestPropoerFinalSegmentOf( s ) ); }
+inline string LongestProperFinalSegmentOf( const string& s ) { const uint d = FirstBitOf( s ); return s.substr( d , s.size() - d ); }
+inline uint LengthOf( const string& s ) { return 1 + LengthOf( LongestProperFinalSegmentOf( s ) ); }
