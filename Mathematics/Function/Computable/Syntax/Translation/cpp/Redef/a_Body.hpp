@@ -90,7 +90,7 @@ template <typename Arg> inline CppClassForString StringiseStringApplication( con
 
 template <typename Arg> inline CppClassForString LengthStringApplication( const Arg& arg ) { return "LengthOf( " + ArgumentString( arg ) + " )"; }
 template <typename T> inline const uint& LengthOf( const VLArray<T>& a ) { return a.size(); }
-template <typename T> inline const uint& LengthOf( const VLTree<T>& t ) { return t.size(); }
+template <typename T> inline const uint& LengthOf( const VLNestedArray<T>& t ) { return t.size(); }
 
 
 template <typename Arg1, typename Arg2> inline CppClassForString EntryAccessStringApplication( const Arg1& arg1 , const Arg2& arg2 ) { return "GetEntryAccess( " + ArgumentString( arg1 , arg2 ) + " )"; }

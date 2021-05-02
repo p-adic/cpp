@@ -41,7 +41,7 @@ template <typename Arg> inline CppClassForString StringiseStringApplication( con
 
 template <typename Arg> inline CppClassForString LengthStringApplication( const Arg& arg );
 template <typename T> inline const uint& LengthOf( const VLArray<T>& a );
-template <typename T> inline const uint& LengthOf( const VLTree<T>& t );
+template <typename T> inline const uint& LengthOf( const VLNestedArray<T>& t );
 
 template <typename Arg1, typename Arg2> inline CppClassForString EntryAccessStringApplication( const Arg1& arg1 , const Arg2& arg2 );
 template <typename T> inline T GetEntryAccess( const VLArray<T>& a , const uint& n );
