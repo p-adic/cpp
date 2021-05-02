@@ -4,11 +4,11 @@
 #include "a.hpp"
 
 
-template <typename T> inline VLNestedArray<T>::VLNestedArray( const T& t ) : VLTree<T>() , m_denestable() { m_t.SetRoot( t ); m_denestable.SetRoot( true ); };
+template <typename T> inline VLNestedArray<T>::VLNestedArray( const T& t ) : m_t() , m_denestable() { m_t.SetRoot( t ); m_denestable.SetRoot( true ); };
 template <typename T> inline VLNestedArray<T>::VLNestedArray( const VLTree<T>& t , const VLTree<bool>& denestable ) : m_t( t ) , m_denestable( denestable ) {};
-template <typename T> inline VLNestedArray<T>::VLNestedArray( const VLNestedArray<T>& a ) : VLNestdArray( a.m_t , a.m_denestable ) {};
+template <typename T> inline VLNestedArray<T>::VLNestedArray( const VLNestedArray<T>& a ) : VLNestedArray( a.m_t , a.m_denestable ) {};
 
-template <typename T> VLNestedArray<T>::VLNestedArray( const VLArray<T>& t ) : VLNestdArray( VLTree<T>() , VLTree<bool>() )
+template <typename T> VLNestedArray<T>::VLNestedArray( const VLArray<T>& t ) : VLNestedArray( VLTree<T>() , VLTree<bool>() )
 {
 
   for( auto itr = t.begin() , end = t.end() ; itr != end ; itr++ ){
@@ -23,16 +23,16 @@ template <typename T> VLNestedArray<T>::VLNestedArray( const VLArray<T>& t ) : V
 };
 
 
-template <typename T> inline VLNestedArray<T>& VLNestedArray<T>::operator=( const VLNestedArray<T>& a ){ m_t = a.m_t; m_denestable = a.m_denestable; }
+template <typename T> inline VLNestedArray<T>& VLNestedArray<T>::operator=( const VLNestedArray<T>& a ){ m_t = a.m_t; m_denestable = a.m_denestable; return *this; }
 
 template <typename T> inline const bool& VLNestedArray<T>::Denestable() const noexcept { return m_denestable.GetRoot(); }
 template <typename T> inline const uint& VLNestedArray<T>::size() const noexcept { return m_t.size(); }
 
 
-template <typename T> inline string VLNestedArray<T>::to_string() const noexcept { return "( " + to_string( m_t ) + " , " + to_string( m_denestable ) + " )"; }
+template <typename T> inline string VLNestedArray<T>::Display() const noexcept { return "( " + to_string( m_t ) + " , " + to_string( m_denestable ) + " )"; }
 
 
-template <typename T> inline VLNestedArray<T> VLNestedArray::GetBranchCopy( const uint& n ) const { return VLNestedArray<T>{ m_t.GetBranchCopy( n ) , m_denestable.GetBranchCopy( n ) }; }
+template <typename T> inline VLNestedArray<T> VLNestedArray<T>::GetBranchCopy( const uint& n ) const { return VLNestedArray<T>{ m_t.GetBranchCopy( n ) , m_denestable.GetBranchCopy( n ) }; }
 template <typename T> inline const T& VLNestedArray<T>::GetRoot() const noexcept { return m_t.GetRoot(); }
 
 
@@ -77,8 +77,8 @@ template <typename T> void VLNestedArray<T>::Concatenate( const VLNestedArray& a
   
 }
 
-template <typename T> inline void VLNestedArray<T>::Pop_RightMost(){ m_t.popRigttMost(); m_denestable.pop_RightMost(); }
-template <typename T> inline void VLNestedArray<T>::Pop_LeftMost(){ m_t.popLeftMost(); m_denestable.pop_LeftMost(); }
+template <typename T> inline void VLNestedArray<T>::pop_RightMost(){ m_t.pop_RightMost(); m_denestable.pop_RightMost(); }
+template <typename T> inline void VLNestedArray<T>::pop_LeftMost(){ m_t.pop_LeftMost(); m_denestable.pop_LeftMost(); }
 
 
 

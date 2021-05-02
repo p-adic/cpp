@@ -33,7 +33,7 @@ VLNestedArray<T> GetPlus( const VLNestedArray<T>& arg1 , const VLNestedArray<T>&
 {
 
   VLNestedArray<T> t{ arg1 };
-  arg1.Concatenate( arg2 );
+  t.Concatenate( arg2 );
   return GetPlus( t , args... );
 
 }
@@ -88,12 +88,15 @@ template <typename Arg, typename... Args> inline DEFINITION_OF_VARIADIC_CPP_FUNC
 
 template <typename Arg> inline CppClassForString StringiseStringApplication( const Arg& arg ) { return "to_string( " + ArgumentString( arg ) + " )"; }
 
-template <typename Arg> inline CppClassForString LengthStringApplication( const Arg& arg ) { return ArgumentString( arg ) + ".size()"; }
+template <typename Arg> inline CppClassForString LengthStringApplication( const Arg& arg ) { return "LengthOf( " + ArgumentString( arg ) + " )"; }
+template <typename T> inline const uint& LengthOf( const VLArray<T>& a ) { return a.size(); }
+template <typename T> inline const uint& LengthOf( const VLTree<T>& t ) { return t.size(); }
+
 
 template <typename Arg1, typename Arg2> inline CppClassForString EntryAccessStringApplication( const Arg1& arg1 , const Arg2& arg2 ) { return "GetEntryAccess( " + ArgumentString( arg1 , arg2 ) + " )"; }
 
 template <typename T> inline T GetEntryAccess( const VLArray<T>& a , const uint& n ) { return a[n]; }
-template <typename T> inline VLNestedArray<T> GetEntryAccess( const VLNestedArray<T>& a , const uint& n ) { if( a.Denestable() ){ ERR_IMPUT( a , ,n ); } return a.GetBranchCopy( n ); }
+template <typename T> inline VLNestedArray<T> GetEntryAccess( const VLNestedArray<T>& a , const uint& n ) { if( a.Denestable() ){ ERR_IMPUT( a , n ); } return a.GetBranchCopy( n ); }
 
 template <typename Arg1, typename Arg2> inline CppClassForString InitialSegmentStringApplication( const Arg1& arg1 , const Arg2& arg2 ) { return "GetInitialSegment( " + ArgumentString( arg1 , arg2 ) + " )"; }
 
@@ -223,6 +226,7 @@ template <typename... Args> inline CppClassForString TupleStringApplication( con
 template <typename Arg> inline CppClassForString ToTrivialNestedArrayStringApplication( const Arg& arg ) { return "GetToTrivialNestedArray( " + ArgumentString( arg ) + " )"; }
 
 template <typename T> inline VLNestedArray<T> GetToTrivialNestedArray( const T& t ) { return VLNestedArray<T>( t ); }
+inline VLNestedArray<string> GetToTrivialNestedArray( const char* const & t ) { return VLNestedArray<string>( "\"" + to_string( t ) + "\"" ); }
 
 template <typename Arg> inline CppClassForString RemoveNestedArrayStringApplication( const Arg& arg ) { return "GetRemoveNestedArray( " + ArgumentString( arg ) + " )"; }
 
@@ -240,7 +244,7 @@ T GetRemoveNestedArray( const VLNestedArray<T>& t )
 
 }
 
-template <typename Arg> inline CppClassForString RemovableNestedArrayStringApplication( const Arg& arg ) { return ArgumentString( arg ) + ".IsLeaf()"; }
+template <typename Arg> inline CppClassForString RemovableNestedArrayStringApplication( const Arg& arg ) { return ArgumentString( arg ) + ".Denestable()"; }
 
 
 template <typename Arg1, typename Arg2> inline CppClassForString EqStringApplication( const Arg1& arg1 , const Arg2& arg2 ) { return WrapInParenthesis( ArgumentString( arg1 ) ) + " == " + WrapInParenthesis( ArgumentString( arg2 ) ); }
@@ -273,7 +277,15 @@ template <typename Arg1, typename Arg2, typename... Args> inline CppClassForStri
 
 }
 
-template <typename Arg1, typename Arg2> inline CppClassForString PutStringApplication( const Arg1& arg1 , const Arg2& arg2 ) { return ArgumentString( arg1 ) + " = " + WrapInParenthesis( ArgumentString( arg2 ) ) + ";\n\n"; }
+template <typename Arg1, typename Arg2> inline CppClassForString PutStringApplication( const Arg1& arg1 , const Arg2& arg2 )
+{
+
+
+  return ArgumentString( arg1 ) + " = " + WrapInParenthesis( ArgumentString( arg2 ) ) + ";\n\n";
+
+
+
+}
 
 template <typename Arg, typename... Args> inline CppClassForString PrintStringApplication( const Arg& arg , const Args&... args ) { return "cout << " + ConcatenateWithSeparator( " << " , ArgumentString( arg ) , ArgumentString( args )... ) + " << endl;\n\n"; }
 

@@ -40,6 +40,8 @@ template <typename Arg, typename... Args> inline DECLARATION_OF_VARIADIC_CPP_FUN
 template <typename Arg> inline CppClassForString StringiseStringApplication( const Arg& arg );
 
 template <typename Arg> inline CppClassForString LengthStringApplication( const Arg& arg );
+template <typename T> inline const uint& LengthOf( const VLArray<T>& a );
+template <typename T> inline const uint& LengthOf( const VLTree<T>& t );
 
 template <typename Arg1, typename Arg2> inline CppClassForString EntryAccessStringApplication( const Arg1& arg1 , const Arg2& arg2 );
 template <typename T> inline T GetEntryAccess( const VLArray<T>& a , const uint& n );
@@ -71,6 +73,7 @@ template <typename... Args> inline CppClassForString TupleStringApplication( con
 
 template <typename Arg> inline CppClassForString ToTrivialNestedArrayStringApplication( const Arg& arg );
 template <typename T> inline VLNestedArray<T> GetToTrivialNestedArray( const T& t );
+inline VLNestedArray<string> GetToTrivialNestedArray( const char* const & t );
 
 template <typename Arg> inline CppClassForString RemoveNestedArrayStringApplication( const Arg& arg );
 template <typename T> T GetRemoveNestedArray( const VLNestedArray<T>& t );

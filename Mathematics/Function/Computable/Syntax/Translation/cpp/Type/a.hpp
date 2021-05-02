@@ -24,7 +24,7 @@ public:
   inline const bool& Denestable() const noexcept;
   inline const uint& size() const noexcept;
 
-  inline string to_string() const noexcept;
+  inline string Display() const noexcept;
   
   inline VLNestedArray<T> GetBranchCopy( const uint& n ) const;
   inline const T& GetRoot() const noexcept;

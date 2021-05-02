@@ -8,7 +8,7 @@
 									\
   __SYMBOL_OF_OFS__() << "#define " << TO_STRING( CONST ) << " " << x.GetTermString() << " " << endl; \
 									\
-  const CppClassForString& CONST = x	\
+  const CppClassForString& CONST = x					\
 									\
 
 // variable
@@ -73,7 +73,8 @@
   const CppClassForString VARIABLE{ TypeString<BaseTypeOf< TYPE_NAME >::type>() , TO_STRING( VARIABLE ) }; \
   const VariableSymbol< TYPE_NAME > CONNECT( CONNECT( __SYMBOL_OF_ , VARIABLE ) , __ )( TO_STRING( VARIABLE ) ); \
 									\
-  __SYMBOL_OF_OFS__() << TypeString<BaseTypeOf< TYPE_NAME >::type>() << " " << TO_STRING( VARIABLE ) << ";" << endl << endl; \
+  __SYMBOL_OF_OFS__() << "// " << TO_STRING( VARIABLE ) << "への代入を行うPUT文をQpでの定義文内に含む演算子、すなわち\"" <<  TO_STRING( VARIABLE ) << " = \"という代入演算子の適用をc++への翻訳後の定義文に含む演算子は、c++への翻訳後の定義文の冒頭に次の１行を手動でコピー＆ペーストしそのコメントアウトを解除し改行する：" << endl; \
+  __SYMBOL_OF_OFS__() << "// " << TypeString<BaseTypeOf< TYPE_NAME >::type>() << " " << TO_STRING( VARIABLE ) << ";" << endl << endl; \
 
   
 #define IMP( RET , FUNC , ... )						\
