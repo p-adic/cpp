@@ -3,6 +3,85 @@
 #pragma once
 #include "a.hpp"
 
+
+template <typename T> inline VLNestedArray<T>::VLNestedArray( const T& t ) : VLTree<T>() , m_denestable() { m_t.SetRoot( t ); m_denestable.SetRoot( true ); };
+template <typename T> inline VLNestedArray<T>::VLNestedArray( const VLTree<T>& t , const VLTree<bool>& denestable ) : m_t( t ) , m_denestable( denestable ) {};
+template <typename T> inline VLNestedArray<T>::VLNestedArray( const VLNestedArray<T>& a ) : VLNestdArray( a.m_t , a.m_denestable ) {};
+
+template <typename T> VLNestedArray<T>::VLNestedArray( const VLArray<T>& t ) : VLNestdArray( VLTree<T>() , VLTree<bool>() )
+{
+
+  for( auto itr = t.begin() , end = t.end() ; itr != end ; itr++ ){
+
+    m_t.push_RightMost( *itr );
+    m_denestable.push_RightMost( true );
+
+  }
+
+  m_denestable.SetRoot( false );
+
+};
+
+
+template <typename T> inline VLNestedArray<T>& VLNestedArray<T>::operator=( const VLNestedArray<T>& a ){ m_t = a.m_t; m_denestable = a.m_denestable; }
+
+template <typename T> inline const bool& VLNestedArray<T>::Denestable() const noexcept { return m_denestable.GetRoot(); }
+template <typename T> inline const uint& VLNestedArray<T>::size() const noexcept { return m_t.size(); }
+
+
+template <typename T> inline string VLNestedArray<T>::to_string() const noexcept { return "( " + to_string( m_t ) + " , " + to_string( m_denestable ) + " )"; }
+
+
+template <typename T> inline VLNestedArray<T> VLNestedArray::GetBranchCopy( const uint& n ) const { return VLNestedArray<T>{ m_t.GetBranchCopy( n ) , m_denestable.GetBranchCopy( n ) }; }
+template <typename T> inline const T& VLNestedArray<T>::GetRoot() const noexcept { return m_t.GetRoot(); }
+
+
+template <typename T> VLNestedArray<T> VLNestedArray<T>::Wrap() const
+{
+
+  VLTree<T> t{};
+  t.push_RightMost( m_t );
+  
+  VLTree<bool> denestable{};
+  denestable.push_RightMost( m_denestable );
+  denestable.SetRoot( false );
+
+  return VLNestedArray<T>{ t , denestable };
+
+}
+
+
+
+template <typename T> void VLNestedArray<T>::Concatenate( const VLNestedArray& a )
+{
+
+  if( Denestable() || a.Denestable() ){
+
+    ERR_IMPUT( *this , a );
+
+  }
+  
+  auto itr_t = a.m_t.LeftMostNode();
+  auto itr_denestable = a.m_denestable.LeftMostNode();
+
+  while( itr_t.IsValid() ){
+
+    m_t.push_RightMost( a.m_t.GetBranchCopy( itr_t ) );
+    m_denestable.push_RightMost( a.m_denestable.GetBranchCopy( itr_denestable ) );
+    itr_t++;
+    itr_denestable++;
+
+  }
+
+  return;
+  
+}
+
+template <typename T> inline void VLNestedArray<T>::Pop_RightMost(){ m_t.popRigttMost(); m_denestable.pop_RightMost(); }
+template <typename T> inline void VLNestedArray<T>::Pop_LeftMost(){ m_t.popLeftMost(); m_denestable.pop_LeftMost(); }
+
+
+
 inline string WrapInParenthesis( const string& arg ) { return LparenString() + arg + RparenString(); }
 
 template <typename Arg> inline auto ConcatenateWithSeparator( const string& s , const Arg& arg ) -> typename enable_if<is_same<Arg,string>::value,string>::type { return arg; }

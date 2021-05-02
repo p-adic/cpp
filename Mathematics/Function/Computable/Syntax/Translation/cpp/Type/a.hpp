@@ -5,6 +5,39 @@
 
 #include "a_Alias.hpp"
 
+template <typename T>
+class VLNestedArray
+{
+
+private:
+  VLTree<T> m_t;
+  VLTree<bool> m_denestable;
+
+public:
+  inline VLNestedArray( const T& t );
+  inline VLNestedArray( const VLTree<T>& t , const VLTree<bool>& denestable );
+  inline VLNestedArray( const VLNestedArray<T>& a );
+  VLNestedArray( const VLArray<T>& t );
+
+  inline VLNestedArray<T>& operator=( const VLNestedArray<T>& a );
+
+  inline const bool& Denestable() const noexcept { return m_denestable.GetRoot(); }
+  inline const uint& size() const noexcept;
+
+  inline string to_string() const noexcept;
+  
+  inline VLNestedArray<T> GetBranchCopy( const uint& n ) const;
+  inline const T& GetRoot() const noexcept;
+  VLNestedArray<T> Wrap() const;
+
+  void Concatenate( const VLNestedArray& a );
+  inline void pop_RightMost();
+  inline void pop_LeftMost();
+
+
+};
+
+
 inline string WrapInParenthesis( const string& arg );
 
 template <typename Arg> inline auto ConcatenateWithSeparator( const string& s , const Arg& arg ) -> typename enable_if<is_same<Arg,string>::value,string>::type;
