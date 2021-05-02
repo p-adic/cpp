@@ -69,27 +69,19 @@ string InitialSegmentOf( const string& s , const uint& n )
 
   }
 
-  const unsigned char letter = s[0];
-  const uint length = s.size();
-  uint dlength;
-  
-  if( IsFirstHalfOfZenkaku( letter ) ){
+  uint d;
 
-    if( length < 2 ){
-
-      ERR_IMPUT( s , n , length );
-
-    }
+  try{
     
-    dlength = 2;
+    d = FirstBitOf( s );
 
-  } else {
+  } catch( ErrorType& e ) {
 
-    dlength = 1;
+    CALL_P( e , s , n );
 
   }
 
-  return s.substr( 0 , dlength ) + InitialSegmentOf( s.substr( dlength , length - dlength ) , n - 1 );
+  return s.substr( 0 , d ) + InitialSegmentOf( s.substr( d , s.size() - d ) , n - 1 );
 
 }
 
@@ -99,7 +91,19 @@ string FinalSegmentOf( const string& s , const uint& n )
 {
 
   uint current_length = 0;
-  return FinalSegmentOf_Body( s , n , current_length );
+  string s0;
+
+  try{
+    
+    s0 = FinalSegmentOf_Body( s , n , current_length );
+
+  } catch( ErrorType& e ) {
+
+    CALL_P( e , s , n );
+
+  }
+  
+  return s0;
 
 }
 
@@ -112,7 +116,18 @@ static string FinalSegmentOf_Body( const string& s , const uint& n , uint& curre
 
   }
 
-  const uint d = FirstBitOf( s );
+  uint d;
+
+  try{
+    
+    d = FirstBitOf( s );
+
+  } catch( ErrorType& e ) {
+
+    CALL_P( e , s , n , current_length );
+
+  }
+  
   const string first = s.substr( 0 , d );
   const string current_segment = FinalSegmentOf_Body( s.substr( d , s.size() - d ) , n , current_length );
 
