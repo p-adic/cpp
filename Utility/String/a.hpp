@@ -45,3 +45,7 @@ inline bool IsFirstHalfOfZenkaku( const unsigned char& c ) noexcept;
 // string::substr( ˆÊ’u , ƒTƒCƒY )‚ÆˆÙ‚È‚è‘SŠp‚©”¼Šp‚©‚ð”½‰f‚·‚é
 string InitialSegmentOf( const string& s , const uint& n );
 string FinalSegmentOf( const string& s , const uint& n );
+string FirstBitOf( const string& s );
+inline string FirstLetterOf( const string& s );
+inline string LongestProperFinalSegmentOf( const string& s );
+inline uint LengthOf( const string& s );

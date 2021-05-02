@@ -69,8 +69,9 @@ string InitialSegmentOf( const string& s , const uint& n )
 
   }
 
-  const uint length = s.size();
   const unsigned char letter = s[0];
+  const uint length = s.size();
+  uint dlength;
   
   if( IsFirstHalfOfZenkaku( letter ) ){
 
@@ -80,11 +81,15 @@ string InitialSegmentOf( const string& s , const uint& n )
 
     }
     
-    return s.substr( 0 , 2 ) + InitialSegmentOf( s.substr( 2 , length - 2 ) , n - 1 );
+    dlength = 2;
+
+  } else {
+
+    dlength = 1;
 
   }
 
-  return s.substr( 0 , 1 ) + InitialSegmentOf( s.substr( 1 , length - 1 ) , n - 1 );
+  return s.substr( 0 , dlength ) + InitialSegmentOf( s.substr( dlength , length - dlength ) , n - 1 );
 
 }
 
@@ -107,28 +112,9 @@ static string FinalSegmentOf_Body( const string& s , const uint& n , uint& curre
 
   }
 
-  uint length = s.size();
-  uint dlength;
-  const unsigned char letter = s[0];
-  
-  if( IsFirstHalfOfZenkaku( letter ) ){
-
-    if( length < 2 ){
-
-      ERR_IMPUT( s , n , length );
-
-    }
-    
-    dlength = 2;
-
-  } else {
-
-    dlength = 1;
-
-  }
-  
-  const string first = s.substr( 0 , dlength );
-  const string current_segment = FinalSegmentOf_Body( s.substr( dlength , length - dlength ) , n , current_length );
+  const uint d = FirstBitOf( s );
+  const string first = s.substr( 0 , d );
+  const string current_segment = FinalSegmentOf_Body( s.substr( d , length - d ) , n , current_length );
 
   if( n == current_length ){
 
@@ -138,5 +124,33 @@ static string FinalSegmentOf_Body( const string& s , const uint& n , uint& curre
 
   current_length++;
   return first + current_segment;
+
+}
+
+string FirstBitOf( const string& s )
+{
+
+  if( s == "" ){
+
+    ERR_IMPUT( s );
+
+  }
+  
+  const unsigned char letter = s[0];
+  uint length = s.size();
+  
+  if( IsFirstHalfOfZenkaku( letter ) ){
+
+    if( length < 2 ){
+
+      ERR_IMPUT( s , n , length );
+
+    }
+    
+    return 2;
+
+  }
+
+  return 1;
 
 }
