@@ -114,7 +114,7 @@ static string FinalSegmentOf_Body( const string& s , const uint& n , uint& curre
 
   const uint d = FirstBitOf( s );
   const string first = s.substr( 0 , d );
-  const string current_segment = FinalSegmentOf_Body( s.substr( d , length - d ) , n , current_length );
+  const string current_segment = FinalSegmentOf_Body( s.substr( d , s.size() - d ) , n , current_length );
 
   if( n == current_length ){
 
