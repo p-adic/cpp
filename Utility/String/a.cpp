@@ -116,6 +116,12 @@ static string FinalSegmentOf_Body( const string& s , const uint& n , uint& curre
 
   }
 
+  if( s.empty() ){
+
+    return "";
+    
+  }
+
   uint d;
 
   try{
