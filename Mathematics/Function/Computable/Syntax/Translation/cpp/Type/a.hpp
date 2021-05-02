@@ -14,14 +14,14 @@ private:
   VLTree<bool> m_denestable;
 
 public:
-  inline VLNestedArray( const T& t );
+  inline VLNestedArray( const T& t = T() );
   inline VLNestedArray( const VLTree<T>& t , const VLTree<bool>& denestable );
   inline VLNestedArray( const VLNestedArray<T>& a );
   VLNestedArray( const VLArray<T>& t );
 
   inline VLNestedArray<T>& operator=( const VLNestedArray<T>& a );
 
-  inline const bool& Denestable() const noexcept { return m_denestable.GetRoot(); }
+  inline const bool& Denestable() const noexcept;
   inline const uint& size() const noexcept;
 
   inline string to_string() const noexcept;
