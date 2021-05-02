@@ -109,4 +109,4 @@ inline bool IsFirstHalfOfZenkaku( const unsigned char& c ) noexcept { return ( 0
 
 inline string FirstLetterOf( const string& s ) { const uint d = FirstBitOf( s ); return s.substr( 0 , d ); }
 inline string LongestProperFinalSegmentOf( const string& s ) { const uint d = FirstBitOf( s ); return s.substr( d , s.size() - d ); }
-inline uint LengthOf( const string& s ) { return 1 + LengthOf( LongestProperFinalSegmentOf( s ) ); }
+inline uint LengthOf( const string& s ) { return s.empty() ? 0 : 1 + LengthOf( LongestProperFinalSegmentOf( s ) ); }
