@@ -289,7 +289,7 @@ template <typename Arg1, typename Arg2> inline CppClassForString PutStringApplic
 
 template <typename Arg, typename... Args> inline CppClassForString PrintStringApplication( const Arg& arg , const Args&... args ) { return "cout << " + ConcatenateWithSeparator( " << " , ArgumentString( arg ) , ArgumentString( args )... ) + " << endl;\n\n"; }
 
-inline CppClassForString ExitStringApplication() { return "ERR_CODE;\n\n"; }
+inline CppClassForString ExitStringApplication() { return to_string( "ERR_CODE;\n\n" ); }
 
 template <typename Arg> inline CppClassForString ReturnStringApplication( const Arg& arg ) { return "return " + ArgumentString( arg ) + ";\n\n"; }
 
