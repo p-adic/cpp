@@ -39,7 +39,7 @@ template <typename Ret> inline DEFINITION_OF_TWO_ARY_BASIC_FUNCTION( NestedArray
 template <typename Ret> inline const PrettyFunction<nat,NestedArrayTypeOfComputableFunction<Ret> >& NestedLengthSymbol()
 {
 
-  static const FunctionSymbol<nat,NestedArrayTypeOfComputableFunction<Ret> > f
+  static const PrettyFunction<nat,NestedArrayTypeOfComputableFunction<Ret> > f
     {
 
     "Lng" ,
@@ -52,7 +52,7 @@ template <typename Ret> inline const PrettyFunction<nat,NestedArrayTypeOfComputa
 
       ) ,
      GetTypeName<nat>() ,
-     VariableSymbol<ArrayTypeOfComputableFunction<Ret> >( "a" ) ,
+     VariableSymbol<NestedArrayTypeOfComputableFunction<Ret> >( "a" ) ,
 
       };
 
@@ -95,7 +95,7 @@ template <typename Ret> inline ExpressionOfComputableFunction<NestedArrayTypeOfC
 template <typename Ret> inline const PrettyFunction<NestedArrayTypeOfComputableFunction<Ret>,NestedArrayTypeOfComputableFunction<Ret>,nat>& NestedInitialSegmentSymbol()
 {
 
-  static const FunctionSymbol<NestedArrayTypeOfComputableFunction<Ret>,NestedArrayTypeOfComputableFunction<Ret>,nat> f
+  static const PrettyFunction<NestedArrayTypeOfComputableFunction<Ret>,NestedArrayTypeOfComputableFunction<Ret>,nat> f
   {
 
      "IniSeg" ,
@@ -124,7 +124,7 @@ template <typename Ret> inline ExpressionOfComputableFunction<NestedArrayTypeOfC
 template <typename Ret> inline const PrettyFunction<NestedArrayTypeOfComputableFunction<Ret>,NestedArrayTypeOfComputableFunction<Ret>,nat>& NestedFinalSegmentSymbol()
 {
 
-  static const FunctionSymbol<NestedArrayTypeOfComputableFunction<Ret>,NestedArrayTypeOfComputableFunction<Ret>,nat> f
+  static const PrettyFunction<NestedArrayTypeOfComputableFunction<Ret>,NestedArrayTypeOfComputableFunction<Ret>,nat> f
   {
 
      "FinSeg" ,
@@ -152,7 +152,7 @@ template <typename Ret> inline ExpressionOfComputableFunction<NestedArrayTypeOfC
 template <typename Ret> inline const PrettyFunction<NestedArrayTypeOfComputableFunction<Ret>,Ret>& ToTrivialNestedArraySymbol()
 {
 
-  static const FunctionSymbol<NestedArrayTypeOfComputableFunction<Ret>,Ret> f
+  static const PrettyFunction<NestedArrayTypeOfComputableFunction<Ret>,Ret> f
   {
 
      "ToTrivialNestedArray" ,
@@ -179,7 +179,7 @@ template <typename Ret> inline ExpressionOfComputableFunction<NestedArrayTypeOfC
 template <typename Ret> inline const PrettyFunction<Ret,NestedArrayTypeOfComputableFunction<Ret> >& RemoveNestedArraySymbol()
 {
 
-  static const FunctionSymbol<NestedArrayTypeOfComputableFunction<Ret>,NestedArrayTypeOfComputableFunction<Ret> > f
+  static const PrettyFunction<Ret,NestedArrayTypeOfComputableFunction<Ret> > f
   {
 
      "RemoveNestedArray" ,
@@ -205,7 +205,7 @@ template <typename Ret> inline ExpressionOfComputableFunction<Ret> RemoveNestedA
 template <typename Ret> inline const PrettyRelation<NestedArrayTypeOfComputableFunction<Ret> >& RemovableNestedArraySymbol()
 {
 
-  static const RelationSymbol<NestedArrayTypeOfComputableFunction<Ret> > r
+  static const PrettyRelation<NestedArrayTypeOfComputableFunction<Ret> > r
   {
 
      "RemovableNestedArray" ,
@@ -232,7 +232,7 @@ template <typename Ret> inline ConditionOfComputableFunction RemovableNestedArra
 template <typename Ret> inline const PrettyFunction<NestedArrayTypeOfComputableFunction<Ret>,ArrayTypeOfComputableFunction<Ret> >& NestifySymbol()
 {
 
-  static const FunctionSymbol<NestedArrayTypeOfComputableFunction<Ret>,ArrayTypeOfComputableFunction<Ret> > f
+  static const PrettyFunction<NestedArrayTypeOfComputableFunction<Ret>,ArrayTypeOfComputableFunction<Ret> > f
   {
 
      "Nestify" ,
