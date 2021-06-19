@@ -196,7 +196,7 @@
 // display
 #define DISPLAY( OBJECT , LANGUAGE )					\
   									\
-  cout << CONNECT( CONNECT( __SYMBOL_OF_, OBJECT ) , __ ).Display( TO_STRING( OBJECT ) , LANGUAGE ) << endl; \
+  cout << ( OBJECT ).Display( TO_STRING( OBJECT ) , LANGUAGE ) << endl;	\
   cout << endl;								\
 
 
