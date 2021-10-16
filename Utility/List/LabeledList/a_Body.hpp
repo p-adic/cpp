@@ -41,6 +41,31 @@ T& LabeledList<T,Key1,Key2...>::operator()( const Key1& key1 , const Key2&... ke
 }
 
 template <typename T , typename Key1 , typename... Key2>
+const T& LabeledList<T,Key1,Key2...>::operator()( const Key1& key1 , const Key2&... key2 ) const
+{
+
+  typename VLArray<DirectProduct<Key1,Key2...> >::const_iterator itr1 = m_key.begin() , end = m_key.end();
+  typename VLArray<T>::const_iterator itr2 = m_t.begin();
+  
+  while( itr1 != end ){
+
+    if( *itr1 == DirectProduct<Key1,Key2...>( key1 , key2... ) ){
+
+      return *itr2;
+
+    }
+
+    itr1++;
+    itr2++;
+    
+  }
+
+  ERR_IMPUT( m_key , key1 , key2... );
+  return m_t.front();
+
+}
+
+template <typename T , typename Key1 , typename... Key2>
 void LabeledList<T,Key1,Key2...>::Insert( const Key1& key1 , const Key2&... key2 , const T& t )
 {
 
