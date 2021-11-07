@@ -54,6 +54,8 @@ public:
   inline iterator end() noexcept;
   inline const_iterator end() const noexcept;
   template <typename Arg> void insert( const iterator& , const Arg& );
+  template <typename Arg> void insert_front( const iterator& , const Arg& );
+  template <typename Arg> void insert_back( const iterator& , const Arg& );
   iterator erase( iterator& );
 
   T& operator[]( const uint& );
