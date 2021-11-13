@@ -211,7 +211,7 @@ void VLArray<T>::insert_front( const typename VLArray<T>::iterator& itr , const 
   } else {
 
     EntryOfVLArray<T>* p1 = itr.m_p;
-    EntryOfVLArray<T>* p0 = ( *p0 ).m_prev;
+    EntryOfVLArray<T>* p0 = p1->m_prev;
     auto p = new EntryOfVLArray<T>( t , p0 , p1 );
   
     p0->m_next = p;
@@ -236,7 +236,7 @@ void VLArray<T>::insert_back( const typename VLArray<T>::iterator& itr , const A
   }
   
   EntryOfVLArray<T>* p0 = itr.m_p;
-  EntryOfVLArray<T>* p1 = ( *p0 ).m_next;
+  EntryOfVLArray<T>* p1 = p0->m_next;
   auto p = new EntryOfVLArray<T>( t , p0 , p1 );
   
   p1->m_prev = p;
