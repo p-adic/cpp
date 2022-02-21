@@ -45,6 +45,9 @@ public:
   void pop_back();
   void pop_front();
 
+  inline void Concatenate() const noexcept;
+  template <typename... Arg> void Concatenate( const VLArray<T>& , const Arg&... );
+
   using iterator = IteratorOfVLArray<T>;
   using const_iterator = ConstIteratorOfVLArray<T>;
 
@@ -66,9 +69,6 @@ public:
 
   string Display() const;
 
-private:
-  void EmptyToArray( const VLArray<T>& a );
-
 };
 
 
@@ -79,3 +79,5 @@ template <typename T> VLArray<T> to_VLArray( const uint& , const T& );
 template <typename T> inline VLMatrix<1,T> to_VLMatrix( const uint& , const T& );
 template <typename T> inline VLMatrix<2,T> to_VLMatrix( const uint& , const uint& , const T& );
 template <typename T> inline VLMatrix<3,T> to_VLMatrix( const uint& , const uint& , const uint& , const T& );
+
+template <typename T> template <typename... Arg> void Frown( const Arg&... );

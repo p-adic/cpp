@@ -11,7 +11,7 @@
 
 template <typename T> inline VLArray<T>::VLArray() : m_e() , m_p_e( &m_e ) , m_size( 0 ) {}
 template <typename T> template <typename Arg1 , typename... Arg2> inline VLArray<T>::VLArray( const Arg1& t0 , const Arg2&... t1 ) : VLArray() { push_back( t0 , t1... ); }
-template <typename T> inline VLArray<T>::VLArray( const VLArray<T>& a ) : m_e( a.m_e.m_t ) , m_p_e( &m_e ) , m_size( 0 ) { EmptyToArray( a ); }
+template <typename T> inline VLArray<T>::VLArray( const VLArray<T>& a ) : m_e( a.m_e.m_t ) , m_p_e( &m_e ) , m_size( 0 ) { Concatenate( a ); }
 
 template <typename T> template <typename Arg> inline VLArray<T>::VLArray( const WrappedType<Arg>& t ) : m_e( t.Get() ) , m_p_e( &m_e ) , m_size( 0 ) {}
 
@@ -24,29 +24,11 @@ VLArray<T>& VLArray<T>::operator=( const VLArray<T>& a )
   if( this != &a ){
     
     clear();
-    EmptyToArray( a );
+    Concatenate( a );
   
   }
 
   return *this;
-
-}
-
-template <typename T>
-void VLArray<T>::EmptyToArray( const VLArray<T>& a )
-{
-
-  const EntryOfVLArray<T>* p = a.m_p_e;
-  const uint& N = a.m_size;
-    
-  for( uint n = 0 ; n < N ; n++ ){
-
-    p = p->m_next;
-    push_back( p->m_t );
-
-  }
-
-  return;
 
 }
 
@@ -185,6 +167,26 @@ void VLArray<T>::pop_front()
   m_size--;
   return;
   
+}
+
+template <typename T> inline void VLArray<T>::Concatenate() const noexcept {}
+
+template <typename T> template <typename... Arg>
+void VLArray<T>::Concatenate( const VLArray<T>& a , const Arg&... args )
+{
+  
+  const EntryOfVLArray<T>* p = a.m_p_e;
+  const uint& N = a.m_size;
+    
+  for( uint n = 0 ; n < N ; n++ ){
+
+    p = p->m_next;
+    push_back( p->m_t );
+
+  }
+
+  Concatenate( args... );
+  return;
 }
 
 template <typename T> inline typename VLArray<T>::iterator VLArray<T>::begin() noexcept { return IteratorOfVLArray<T>( m_e.m_next ); }
@@ -456,3 +458,13 @@ template <typename T> inline VLMatrix<1,T> to_VLMatrix( const uint& N , const T&
 template <typename T> inline VLMatrix<2,T> to_VLMatrix( const uint& N0 , const uint& N1 , const T& t ){ return to_VLArray( N1 , to_VLArray( N0 , t ) ); }
 
 template <typename T> inline VLMatrix<3,T> to_VLMatrix( const uint& N0 , const uint& N1 , const uint& N2 , const T& t){ return to_VLArray( N2 , to_VLMatrix( N0 , N1 , t ) ); }
+
+template <typename T> template <typename... Arg>
+void Frown( const Arg&... args )
+{
+
+  VLArray<T> a{};
+  a.Concatenate( args... );
+  return a;
+
+}
