@@ -189,7 +189,7 @@ void VLArray<T>::Concatenate( const Arg& a )
 
 template <typename T> template <typename Arg> inline int VLArray<T>::Concatenate_int( const Arg& a ) { Concatenate( a ); return 0; }
 
-template <typename T> template <typename... Arg> inline void VLArray<T>::Concatenate( const Arg&... args ) { ExpandParameterPack( Concatenate_int( args )... ); }
+template <typename T> template <typename... Args> inline void VLArray<T>::Concatenate( const Args&... args ) { ExpandParameterPack( Concatenate_int( args )... ); }
 
 template <typename T> inline typename VLArray<T>::iterator VLArray<T>::begin() noexcept { return IteratorOfVLArray<T>( m_e.m_next ); }
 template <typename T> inline typename VLArray<T>::const_iterator VLArray<T>::begin() const noexcept { return ConstIteratorOfVLArray<T>( m_e.m_next ); }

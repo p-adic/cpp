@@ -46,7 +46,7 @@ public:
   void pop_front();
 
   template <typename Arg> void Concatenate( const Arg& );
-  template <typename... Arg> inline void Concatenate( const Args&... );
+  template <typename... Args> inline void Concatenate( const Args&... );
 
   using iterator = IteratorOfVLArray<T>;
   using const_iterator = ConstIteratorOfVLArray<T>;
