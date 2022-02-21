@@ -459,7 +459,7 @@ template <typename T> inline VLMatrix<2,T> to_VLMatrix( const uint& N0 , const u
 
 template <typename T> inline VLMatrix<3,T> to_VLMatrix( const uint& N0 , const uint& N1 , const uint& N2 , const T& t){ return to_VLArray( N2 , to_VLMatrix( N0 , N1 , t ) ); }
 
-template <typename T> template <typename... Arg>
+template <typename T , typename... Arg>
 VLArray<T> Frown( const Arg&... args )
 {
 

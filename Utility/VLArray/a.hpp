@@ -80,4 +80,4 @@ template <typename T> inline VLMatrix<1,T> to_VLMatrix( const uint& , const T& )
 template <typename T> inline VLMatrix<2,T> to_VLMatrix( const uint& , const uint& , const T& );
 template <typename T> inline VLMatrix<3,T> to_VLMatrix( const uint& , const uint& , const uint& , const T& );
 
-template <typename T> template <typename... Arg> VLArray<T> Frown( const Arg&... );
+template <typename T , typename... Arg> VLArray<T> Frown( const Arg&... );
