@@ -1,7 +1,6 @@
 // c:/Users/user/Documents/Programming/Utility/VLArray/a.hpp
 
 #pragma once
-#include <initializer_list>
 #include "Entry/a.hpp"
 
 #include "a_Alias.hpp"
@@ -23,7 +22,6 @@ public:
   // Tは引数0のコンストラクタを持つクラスのみ許容。
   inline VLArray();
   template <typename Arg1 , typename... Arg2> inline VLArray( const Arg1& , const Arg2&... );
-  inline VLArray( const initialiser_list<T>& );
   inline VLArray( const VLArray<T>& );
 
   // Tが引数0のコンストラクタを持たないクラスの場合に使用。
@@ -41,14 +39,14 @@ public:
   T& back();
   const T& back() const;
   
-  inline void push_back() const noexcept;
-  template <typename Arg1 , typename... Arg2> void push_back( const Arg1& , const Arg2&... );
+  void push_back( const T& );
+  template <typename... Args> inline void push_back( const Args&... );
   template <typename Arg> void push_front( const Arg& );
   void pop_back();
   void pop_front();
 
-  inline void Concatenate() const noexcept;
-  template <typename... Arg> void Concatenate( const VLArray<T>& , const Arg&... );
+  void Concatenate( const VLArray<T>& );
+  template <typename... Arg> inline void Concatenate( const Arg&... );
 
   using iterator = IteratorOfVLArray<T>;
   using const_iterator = ConstIteratorOfVLArray<T>;
@@ -70,6 +68,9 @@ public:
   bool CheckContain( const const_iterator& ) const noexcept;
 
   string Display() const;
+
+private:
+  template <typename... Args> static inline void Dummy( const Args&... ) noexcept;
 
 };
 
