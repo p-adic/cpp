@@ -11,7 +11,7 @@
 
 template <typename T> inline VLArray<T>::VLArray() : m_e() , m_p_e( &m_e ) , m_size( 0 ) {}
 template <typename T> template <typename Arg1 , typename... Arg2> inline VLArray<T>::VLArray( const Arg1& t0 , const Arg2&... t1 ) : VLArray() { push_back( t0 , t1... ); }
-template <typename T> inline VLArray<T>::VLArray( const intialiser_list<T>& a ) : VLArray() { for( auto entry : a ){ push_back( entry ); } }
+template <typename T> inline VLArray<T>::VLArray( const initialiser_list<T>& a ) : VLArray() { for( auto entry : a ){ push_back( entry ); } }
 template <typename T> inline VLArray<T>::VLArray( const VLArray<T>& a ) : m_e( a.m_e.m_t ) , m_p_e( &m_e ) , m_size( 0 ) { Concatenate( a ); }
 template <typename T> template <typename Arg> inline VLArray<T>::VLArray( const WrappedType<Arg>& t ) : m_e( t.Get() ) , m_p_e( &m_e ) , m_size( 0 ) {}
 
