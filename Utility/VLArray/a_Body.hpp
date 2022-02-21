@@ -91,8 +91,8 @@ const T& VLArray<T>::back() const
 
 }
 
-template <typename T>
-void VLArray<T>::push_back( const T& t )
+template <typename T> template <typename Arg>
+void VLArray<T>::push_back( const Arg& t )
 {
   
   EntryOfVLArray<T>* p_e_prev = m_e.m_prev;
@@ -106,7 +106,7 @@ void VLArray<T>::push_back( const T& t )
 
 }
 
-template <typename T> inline int VLArray<T>::push_back_int( const T& t ) { push_back( t ); return 0; }
+template <typename T> template <typename Arg> inline int VLArray<T>::push_back_int( const Arg& t ) { push_back( t ); return 0; }
 
 template <typename T> template <typename... Args> inline void VLArray<T>::push_back( const Args&... args ) { ExpandParameterPack( push_back_int( args )... ); }
 
@@ -169,8 +169,8 @@ void VLArray<T>::pop_front()
   
 }
 
-template <typename T>
-void VLArray<T>::Concatenate( const VLArray<T>& a )
+template <typename T> template <typename Arg>
+void VLArray<T>::Concatenate( const Arg& a )
 {
   
   const EntryOfVLArray<T>* p = a.m_p_e;
@@ -187,7 +187,7 @@ void VLArray<T>::Concatenate( const VLArray<T>& a )
 
 }
 
-template <typename T> inline int VLArray<T>::Concatenate_int( const VLArray<T>& a ) { Concatenate( a ); return 0; }
+template <typename T> template <typename Arg> inline int VLArray<T>::Concatenate_int( const Arg& a ) { Concatenate( a ); return 0; }
 
 template <typename T> template <typename... Arg> inline void VLArray<T>::Concatenate( const Arg&... args ) { ExpandParameterPack( Concatenate_int( args )... ); }
 

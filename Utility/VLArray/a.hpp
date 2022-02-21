@@ -39,14 +39,14 @@ public:
   T& back();
   const T& back() const;
   
-  void push_back( const T& );
+  template <typename Arg> void push_back( const Arg& );
   template <typename... Args> inline void push_back( const Args&... );
   template <typename Arg> void push_front( const Arg& );
   void pop_back();
   void pop_front();
 
-  void Concatenate( const VLArray<T>& );
-  template <typename... Arg> inline void Concatenate( const Arg&... );
+  template <typename Arg> void Concatenate( const Arg& );
+  template <typename... Arg> inline void Concatenate( const Args&... );
 
   using iterator = IteratorOfVLArray<T>;
   using const_iterator = ConstIteratorOfVLArray<T>;
@@ -70,8 +70,8 @@ public:
   string Display() const;
 
 private:
-  inline int push_back_int( const T& );
-  inline int Concatenate_int( const VLArray<T>& );
+  template <typename Arg> inline int push_back_int( const Arg& );
+  template <typename Arg> inline int Concatenate_int( const Arg& );
   template <typename... Args> static inline void ExpandParameterPack( const Args&... ) noexcept;
 
 };
