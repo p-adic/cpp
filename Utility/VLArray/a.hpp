@@ -72,7 +72,7 @@ public:
 private:
   inline int push_back_int( const T& );
   inline int Concatenate_int( const VLArray<T>& );
-  template <typename... Args> static inline void ExpandParameterPack( Args&&... ) noexcept;
+  template <typename... Args> static inline void ExpandParameterPack( const Args&... ) noexcept;
 
 };
 
