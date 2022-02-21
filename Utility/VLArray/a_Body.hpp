@@ -106,7 +106,9 @@ void VLArray<T>::push_back( const T& t )
 
 }
 
-template <typename T> template <typename... Args> inline void VLArray<T>::push_back( const Args&... args ) { Dummy( push_back( args )... ); }
+template <typename T> inline int VLArray<T>::push_back_int( const T& t ) { push_back( t ); return 0; }
+
+template <typename T> template <typename... Args> inline void VLArray<T>::push_back( const Args&... args ) { ExpandParameterPack( push_back_int( args )... ); }
 
 template <typename T> template <typename Arg>
 void VLArray<T>::push_front( const Arg& t )
@@ -185,7 +187,9 @@ void VLArray<T>::Concatenate( const VLArray<T>& a )
 
 }
 
-template <typename T> template <typename... Arg> inline void VLArray<T>::Concatenate( const Arg&... args ) { Dummy( Concatenate( args )... ); }
+template <typename T> inline int VLArray<T>::Concatenate_int( const VLArray<T>& a ) { Concatenate( a ); return 0; }
+
+template <typename T> template <typename... Arg> inline void VLArray<T>::Concatenate( const Arg&... args ) { ExpandParameterPack( Concatenate_int( args )... ); }
 
 template <typename T> inline typename VLArray<T>::iterator VLArray<T>::begin() noexcept { return IteratorOfVLArray<T>( m_e.m_next ); }
 template <typename T> inline typename VLArray<T>::const_iterator VLArray<T>::begin() const noexcept { return ConstIteratorOfVLArray<T>( m_e.m_next ); }
@@ -406,7 +410,7 @@ string VLArray<T>::Display() const
 
 }
 
-template <typename T> template <typename... Args> inline void VLArray<T>::Dummy( const Args&... ) noexcept {};
+template <typename T> template <typename... Args> inline void VLArray<T>::ExpandParameterPack( const Args&... ) noexcept {};
 
 template <typename T>
 bool operator==( const VLArray<T>& a1 , const VLArray<T>& a2 )

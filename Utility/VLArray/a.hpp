@@ -70,7 +70,9 @@ public:
   string Display() const;
 
 private:
-  template <typename... Args> static inline void Dummy( const Args&... ) noexcept;
+  inline int push_back_int( const T& );
+  inline int Concatenate_int( const VLArray<T>& );
+  template <typename... Args> static inline void ExpandParameterPack( Args&&... ) noexcept;
 
 };
 
