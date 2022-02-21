@@ -4,6 +4,9 @@
 #include "../WrappedType/Int/a.hpp"
 #include "../../Mathematics/SetTheory/EmptySet/a.hpp"
 
+template <typename T>
+using initialiser_list = initializer_list<T>;
+
 template <typename T> class VLArray;
 
 template <typename N , typename T> class VLMatrix_Body;

@@ -1,6 +1,7 @@
 // c:/Users/user/Documents/Programming/Utility/VLArray/a.hpp
 
 #pragma once
+#include <initializer_list>
 #include "Entry/a.hpp"
 
 #include "a_Alias.hpp"
@@ -22,6 +23,7 @@ public:
   // Tは引数0のコンストラクタを持つクラスのみ許容。
   inline VLArray();
   template <typename Arg1 , typename... Arg2> inline VLArray( const Arg1& , const Arg2&... );
+  inline VLArray( const intialiser_list<T>& );
   inline VLArray( const VLArray<T>& );
 
   // Tが引数0のコンストラクタを持たないクラスの場合に使用。
