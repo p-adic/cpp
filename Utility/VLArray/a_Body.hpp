@@ -106,9 +106,21 @@ void VLArray<T>::push_back( const Arg& t )
 
 }
 
-template <typename T> template <typename Arg> inline int VLArray<T>::push_back_int( const Arg& t ) { push_back( t ); return 0; }
 
-template <typename T> template <typename... Args> inline void VLArray<T>::push_back( const Args&... args ) { ExpandParameterPack( push_back_int( args )... ); }
+template <typename T> template <typename... Args>
+void VLArray<T>::push_back( const Args&... args )
+{
+
+  VLArray<T> copy{};
+
+  // 関数の処理は後ろからなのでbackではなくfrontを使う。
+  copy.ExpandParameterPack( push_front_int( args )... );
+  Concatenate_back( copy );
+  return;
+  
+}
+
+template <typename T> template <typename Arg> inline int VLArray<T>::push_back_int( const Arg& t ) { push_back( t ); return 0; }
 
 template <typename T> template <typename Arg>
 void VLArray<T>::push_front( const Arg& t )
@@ -124,6 +136,21 @@ void VLArray<T>::push_front( const Arg& t )
   return;
 
 }
+
+template <typename T> template <typename... Args>
+void VLArray<T>::push_front( const Args&... args )
+{
+
+  VLArray<T> copy{};
+
+  // 関数の処理は後ろからなのでfrontではなくbackを使う。
+  copy.ExpandParameterPack( push_back_int( args )... );
+  Concatenate_front( copy );
+  return;
+
+}
+
+template <typename T> template <typename Arg> inline int VLArray<T>::push_front_int( const Arg& t ) { push_front( t ); return 0; }
 
 template <typename T>
 void VLArray<T>::pop_back()
@@ -169,8 +196,10 @@ void VLArray<T>::pop_front()
   
 }
 
+template <typename T> template <typename... Args> inline void VLArray<T>::Concatenate( const Args&... args ) { Concatenate_back( args... ); }
+
 template <typename T> template <typename Arg>
-void VLArray<T>::Concatenate( const Arg& a )
+void VLArray<T>::Concatenate_back( const Arg& a )
 {
   
   const EntryOfVLArray<T>* p = a.m_p_e;
@@ -187,9 +216,54 @@ void VLArray<T>::Concatenate( const Arg& a )
 
 }
 
-template <typename T> template <typename Arg> inline int VLArray<T>::Concatenate_int( const Arg& a ) { Concatenate( a ); return 0; }
+template <typename T> template <typename... Args>
+void VLArray<T>::Concatenate_back( const Args&... args )
+{
 
-template <typename T> template <typename... Args> inline void VLArray<T>::Concatenate( const Args&... args ) { ExpandParameterPack( Concatenate_int( args )... ); }
+  VLArray<T> copy{};
+
+  // 関数の処理は後ろからなのでbackではなくfrontを使う。
+  copy.ExpandParameterPack( Concatenate_front_int( args )... );
+  Concatenate_back( copy );
+  return;
+
+}
+
+template <typename T> template <typename Arg> inline int VLArray<T>::Concatenate_back_int( const Arg& a ) { Concatenate( a ); return 0; }
+
+template <typename T> template <typename Arg>
+void VLArray<T>::Concatenate_front( const Arg& a )
+{
+  
+  const EntryOfVLArray<T>* p = a.m_p_e;
+  const uint& N = a.m_size;
+    
+  for( uint n = 0 ; n < N ; n++ ){
+
+    p = p->m_pred;
+    push_front( p->m_t );
+
+  }
+
+  return;
+
+}
+
+template <typename T> template <typename... Args>
+void VLArray<T>::Concatenate_front( const Args&... args )
+{
+
+  VLArray<T> copy{};
+
+  // 関数の処理は後ろからなのでfrontではなくbackを使う。
+  copy.ExpandParameterPack( Concatenate_back_int( args )... );
+  Concatenate_front( copy );
+  return;
+
+}
+
+template <typename T> template <typename Arg> inline int VLArray<T>::Concatenate_front_int( const Arg& a ) { Concatenate_front( a ); return 0; }
+
 
 template <typename T> inline typename VLArray<T>::iterator VLArray<T>::begin() noexcept { return IteratorOfVLArray<T>( m_e.m_next ); }
 template <typename T> inline typename VLArray<T>::const_iterator VLArray<T>::begin() const noexcept { return ConstIteratorOfVLArray<T>( m_e.m_next ); }

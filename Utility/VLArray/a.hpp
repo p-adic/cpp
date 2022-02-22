@@ -40,13 +40,19 @@ public:
   const T& back() const;
   
   template <typename Arg> void push_back( const Arg& );
-  template <typename... Args> inline void push_back( const Args&... );
+  template <typename... Args> void push_back( const Args&... );
   template <typename Arg> void push_front( const Arg& );
+  // 前から順にpush_frontする。
+  template <typename... Args> void push_front( const Args&... );
   void pop_back();
   void pop_front();
 
-  template <typename Arg> void Concatenate( const Arg& );
   template <typename... Args> inline void Concatenate( const Args&... );
+  template <typename Arg> void Concatenate_back( const Arg& );
+  template <typename... Args> void Concatenate_back( const Args&... );
+  template <typename Arg> void Concatenate_front( const Arg& );
+  // 前から順にConcatenate_frontする。
+  template <typename... Args> void Concatenate_front( const Args&... );
 
   using iterator = IteratorOfVLArray<T>;
   using const_iterator = ConstIteratorOfVLArray<T>;
@@ -71,7 +77,9 @@ public:
 
 private:
   template <typename Arg> inline int push_back_int( const Arg& );
-  template <typename Arg> inline int Concatenate_int( const Arg& );
+  template <typename Arg> inline int push_front_int( const Arg& );
+  template <typename Arg> inline int Concatenate_back_int( const Arg& );
+  template <typename Arg> inline int Concatenate_front_int( const Arg& );
   template <typename... Args> static inline void ExpandParameterPack( const Args&... ) noexcept;
 
 };
