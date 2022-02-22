@@ -240,7 +240,7 @@ void VLArray<T>::Concatenate_front( const Arg& a )
     
   for( uint n = 0 ; n < N ; n++ ){
 
-    p = p->m_pred;
+    p = p->m_prev;
     push_front( p->m_t );
 
   }
