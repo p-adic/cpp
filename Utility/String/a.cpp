@@ -175,3 +175,43 @@ uint FirstBitOf( const string& s )
   return 1;
 
 }
+
+void Separate( const string& s , const string& separator , string& s_front , string& s_back )
+{
+
+  const uint separator_length = separator.length();
+  uint size = s.length();
+    
+  if( separator_length > 0 ){
+
+    const uint d = separator_length - 1;
+      
+    if( size > d ){
+
+      size -= d;
+
+    } else {
+
+      size = 0;
+      
+    }
+
+  }
+  
+  for( uint i = 0 ; i < size ; i++ ){
+
+    if( s.substr( i , separator_length ) == separator ){
+
+      s_front = s.substr( 0 , i );
+      s_back = s.substr( i );
+      return;
+
+    }
+
+  }
+
+  s_front = s;
+  s_back = "";
+  return;
+
+}
