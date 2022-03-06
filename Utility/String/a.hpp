@@ -50,4 +50,4 @@ inline string FirstLetterOf( const string& s );
 inline string LongestProperFinalSegmentOf( const string& s );
 inline uint LengthOf( const string& s );
 
-void Separate( const string& s , const string& separator , string& s_front , string& s_back );
+void Separate( const string& s , const string& separator , string& s_front , string& s_back ) noexcept;

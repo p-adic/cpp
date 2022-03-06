@@ -176,7 +176,7 @@ uint FirstBitOf( const string& s )
 
 }
 
-void Separate( const string& s , const string& separator , string& s_front , string& s_back )
+void Separate( const string& s , const string& separator , string& s_front , string& s_back ) noexcept
 {
 
   const uint separator_length = separator.length();
