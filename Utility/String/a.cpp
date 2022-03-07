@@ -203,7 +203,7 @@ void Separate( const string& s , const string& separator , string& s_front , str
     if( s.substr( i , separator_length ) == separator ){
 
       s_front = s.substr( 0 , i );
-      s_back = s.substr( i );
+      s_back = s.substr( i + separator_length );
       return;
 
     }
