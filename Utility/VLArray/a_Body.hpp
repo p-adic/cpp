@@ -114,7 +114,7 @@ void VLArray<T>::push_back( const Args&... args )
   VLArray<T> copy{};
 
   // 関数の処理は後ろからなのでbackではなくfrontを使う。
-  copy.ExpandParameterPack( push_front_int( args )... );
+  ExpandParameterPack( copy.push_front_int( args )... );
   Concatenate_back( copy );
   return;
   
@@ -144,7 +144,7 @@ void VLArray<T>::push_front( const Args&... args )
   VLArray<T> copy{};
 
   // 関数の処理は後ろからなのでfrontではなくbackを使う。
-  copy.ExpandParameterPack( push_back_int( args )... );
+  ExpandParameterPack( copy.push_back_int( args )... );
   Concatenate_front( copy );
   return;
 
@@ -223,7 +223,7 @@ void VLArray<T>::Concatenate_back( const Args&... args )
   VLArray<T> copy{};
 
   // 関数の処理は後ろからなのでbackではなくfrontを使う。
-  copy.ExpandParameterPack( Concatenate_front_int( args )... );
+  ExpandParameterPack( copy.Concatenate_front_int( args )... );
   Concatenate_back( copy );
   return;
 
@@ -256,7 +256,7 @@ void VLArray<T>::Concatenate_front( const Args&... args )
   VLArray<T> copy{};
 
   // 関数の処理は後ろからなのでfrontではなくbackを使う。
-  copy.ExpandParameterPack( Concatenate_back_int( args )... );
+  ExpandParameterPack( copy.Concatenate_back_int( args )... );
   Concatenate_front( copy );
   return;
 

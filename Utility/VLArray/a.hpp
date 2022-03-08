@@ -80,6 +80,7 @@ private:
   template <typename Arg> inline int push_front_int( const Arg& );
   template <typename Arg> inline int Concatenate_back_int( const Arg& );
   template <typename Arg> inline int Concatenate_front_int( const Arg& );
+
   template <typename... Args> static inline void ExpandParameterPack( const Args&... ) noexcept;
 
 };
