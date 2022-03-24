@@ -24,7 +24,7 @@ VLArray<string> ToArrayOfLetters( const string& s )
 
   } catch( ErrorType& e ) {
 
-    CALL_P( e , s , n , current_length );
+    CALL_P( e , s );
 
   }
   
@@ -42,15 +42,15 @@ void Separate( const string& s , const string& separator , VLArray<string>& a_fr
 
   try{
     
-    s_front = ToArrayOfLetters( s );
+    a_front = ToArrayOfLetters( s );
 
   } catch( ErrorType& e ) {
 
-    CALL_P( e , s , n );
+    CALL_P( e , s , separator );
 
   }
 
-  s_back = VLArray<string>();
+  a_back = VLArray<string>();
   const uint size = s_front.size();
   
   for( uint i = 0 ; i < size ; i++ ){
@@ -59,12 +59,12 @@ void Separate( const string& s , const string& separator , VLArray<string>& a_fr
 
       while( size > i + 1 ){
 
-	s_back.push_front( s_front.back() );
-	s_front.pop_back();
+	a_back.push_front( s_front.back() );
+	a_front.pop_back();
 
       }
 
-      s_front.pop_back();
+      a_front.pop_back();
       return;
 
     }
