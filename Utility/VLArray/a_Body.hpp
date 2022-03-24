@@ -545,3 +545,17 @@ VLArray<T> Frown( const Arg&... args )
   return a;
 
 }
+
+template <typename T> T Sum( const VLArray<T>& a )
+{
+  
+  T t{};
+  for( auto itr = a.begin() , end = a.end() ; itr != end ; itr++ ){
+
+    t += *itr;
+
+  }
+
+  return t;
+
+}
