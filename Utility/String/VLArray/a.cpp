@@ -51,11 +51,11 @@ void Separate( const string& s , const string& separator , VLArray<string>& a_fr
   }
 
   a_back = VLArray<string>();
-  const uint size = s_front.size();
+  const uint size = a_front.size();
   
   for( uint i = 0 ; i < size ; i++ ){
 
-    if( a[i] == separator ){
+    if( a_front[i] == separator ){
 
       while( size > i + 1 ){
 
