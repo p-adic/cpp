@@ -147,7 +147,7 @@ void Separate( const string& s , const string& separator , string& s_front , str
 
   } catch( ErrorType& e ) {
 
-    CALL_P( e , s , n );
+    CALL_P( e , s , separate );
 
   }
 
