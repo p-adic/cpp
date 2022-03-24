@@ -59,7 +59,7 @@ void Separate( const string& s , const string& separator , VLArray<string>& a_fr
 
       while( size > i + 1 ){
 
-	a_back.push_front( s_front.back() );
+	a_back.push_front( a_front.back() );
 	a_front.pop_back();
 
       }
