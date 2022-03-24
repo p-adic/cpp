@@ -31,7 +31,6 @@ template <typename... T0> auto to_string() noexcept -> typename enable_if< equal
 template <typename... T0> auto to_string() noexcept -> typename enable_if< equal_to<uint>()( sizeof...( T0 ) , 1 ) , string >::type;
 template <typename... T0> auto to_string() noexcept -> typename enable_if< less_equal<uint>()( 2 , sizeof...( T0 ) ) , string >::type;
 
-string Sum( const list<string>& ) noexcept;
 
 bool CheckEmpty( const string& ) noexcept;
 bool CheckContain( const string& , const string& ) noexcept;
@@ -50,4 +49,4 @@ inline string FirstLetterOf( const string& s );
 inline string LongestProperFinalSegmentOf( const string& s );
 inline uint LengthOf( const string& s );
 
-void Separate( const string& s , const string& separator , string& s_front , string& s_back ) noexcept;
+void Separate( const string& s , const string& separator , string& s_front , string& s_back );

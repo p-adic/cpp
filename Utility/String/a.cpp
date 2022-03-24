@@ -1,6 +1,9 @@
+// c:/Users/user/Documents/Programming/Utility/String/a.cpp
+
 #include "Header.hpp"
 #include "a_Body.hpp"
 
+#include "VLArray/a_Body.hpp"
 #include <cxxabi.h>
 
 // abi::__cxa_demangleによりデマングリング。メモリリークあり。
@@ -9,20 +12,6 @@ string to_string( const type_info& T ) noexcept
 
   int status;
   return to_string( abi::__cxa_demangle( T.name() , 0 , 0, &status ) );
-
-}
-
-string Sum( const list<string>& ss ) noexcept
-{
-  
-  string s = "";
-  for( list<string>::const_iterator itr = ss.begin() , end = ss.end() ; itr != end ; itr++ ){
-
-    s += *itr;
-
-  }
-
-  return s;
 
 }
 
@@ -85,66 +74,36 @@ string InitialSegmentOf( const string& s , const uint& n )
 
 }
 
-static string FinalSegmentOf_Body( const string& s , const uint& n , uint& current_length );
-
 string FinalSegmentOf( const string& s , const uint& n )
 {
 
-  uint current_length = 0;
-  string s0;
+  VLArray<string> a;
 
   try{
     
-    s0 = FinalSegmentOf_Body( s , n , current_length );
+    a = ToArrayOfLetters( s );
 
   } catch( ErrorType& e ) {
 
     CALL_P( e , s , n );
 
   }
-  
-  return s0;
 
-}
+  const uint& size = a.size();
 
-static string FinalSegmentOf_Body( const string& s , const uint& n , uint& current_length )
-{
+  if( size < n ){
 
-  if( n == 0 ){
-
-    return "";
+    ERR_IMPUT( s , n , a , size );
 
   }
 
-  if( s.empty() ){
+  while( size > n ){
 
-    return "";
-    
-  }
-
-  uint d;
-
-  try{
-    
-    d = FirstBitOf( s );
-
-  } catch( ErrorType& e ) {
-
-    CALL_P( e , s , n , current_length );
+    a.pop_front();
 
   }
   
-  const string first = s.substr( 0 , d );
-  const string current_segment = FinalSegmentOf_Body( s.substr( d , s.size() - d ) , n , current_length );
-
-  if( n == current_length ){
-
-    return current_segment;
-
-  }
-
-  current_length++;
-  return first + current_segment;
+  return Sum( a );
 
 }
 
@@ -176,42 +135,24 @@ uint FirstBitOf( const string& s )
 
 }
 
-void Separate( const string& s , const string& separator , string& s_front , string& s_back ) noexcept
+void Separate( const string& s , const string& separator , string& s_front , string& s_back )
 {
 
-  const uint separator_length = separator.length();
-  uint size = s.length();
+  VLArray<string> a_front;
+  VLArray<string> a_back;
+
+  try{
     
-  if( separator_length > 0 ){
+    Separate( s , separator , a_front , a_back );
 
-    const uint d = separator_length - 1;
-      
-    if( size > d ){
+  } catch( ErrorType& e ) {
 
-      size -= d;
-
-    } else {
-
-      size = 0;
-      
-    }
-
-  }
-  
-  for( uint i = 0 ; i < size ; i++ ){
-
-    if( s.substr( i , separator_length ) == separator ){
-
-      s_front = s.substr( 0 , i );
-      s_back = s.substr( i + separator_length );
-      return;
-
-    }
+    CALL_P( e , s , n );
 
   }
 
-  s_front = s;
-  s_back = "";
+  s_front = Sum( a_front );
+  s_back = Sum( a_back );
   return;
 
 }
