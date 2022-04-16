@@ -6,15 +6,18 @@
 #include "../../../Utility/String/a_Body.hpp"
 #include "../../../Utility/WrappedType/Int/a.hpp"
 
-template <typename T0> inline DirectProduct<T0>::DirectProduct() :
+template <typename T0>
+inline DirectProduct<T0>::DirectProduct() :
   m_t() , m_c()
 {}
 
-template <typename T0> inline DirectProduct<T0>::DirectProduct( const T0& t0 ) :
+template <typename T0>
+inline DirectProduct<T0>::DirectProduct( const T0& t0 ) :
   m_t( t0 ) , m_c()
 {}
 
-template <typename T0 , typename T1 , typename... T2> inline DirectProduct<T0,T1,T2...>::DirectProduct() :
+template <typename T0 , typename T1 , typename... T2>
+inline DirectProduct<T0,T1,T2...>::DirectProduct() :
   m_t() , m_v()
 {}
 
@@ -22,12 +25,13 @@ template <typename T0 , typename T1 , typename... T2> inline DirectProduct<T0,T1
   DirectProduct<T0,T1,T2...>( t0 , DirectProduct<T1,T2...>( t1 , t2... ) )
 {}
 
-template <typename T0 , typename T1 , typename... T2> inline DirectProduct<T0,T1,T2...>::DirectProduct( const T0& t0 , const DirectProduct<T1,T2...>& v1 ) :
+template <typename T0 , typename T1 , typename... T2>
+inline DirectProduct<T0,T1,T2...>::DirectProduct( const T0& t0 , const DirectProduct<T1,T2...>& v1 ) :
   m_t( t0 ) , m_v( v1 )
 {}
 
 template <typename T0>
-const T0& DirectProduct<T0>::GetInitial() const
+inline const T0& DirectProduct<T0>::GetInitial() const noexcept
 {
 
   return m_t;
@@ -35,7 +39,7 @@ const T0& DirectProduct<T0>::GetInitial() const
 }
 
 template <typename T0 , typename T1 , typename... T2>
-const T0& DirectProduct<T0,T1,T2...>::GetInitial() const
+inline const T0& DirectProduct<T0,T1,T2...>::GetInitial() const noexcept
 {
 
   return m_t;
@@ -43,7 +47,7 @@ const T0& DirectProduct<T0,T1,T2...>::GetInitial() const
 }
 
 template <typename T0>
-const DirectProduct<>& DirectProduct<T0>::IgnoreInitial() const
+inline const DirectProduct<>& DirectProduct<T0>::IgnoreInitial() const noexcept
 {
 
   return m_c;
@@ -51,24 +55,24 @@ const DirectProduct<>& DirectProduct<T0>::IgnoreInitial() const
 }
 
 template <typename T0 , typename T1 , typename... T2>
-const DirectProduct<T1,T2...>& DirectProduct<T0,T1,T2...>::IgnoreInitial() const
+inline const DirectProduct<T1,T2...>& DirectProduct<T0,T1,T2...>::IgnoreInitial() const noexcept
 {
 
   return m_v;
 
 }
 
-inline bool operator==( const DirectProduct<>& , const DirectProduct<>& ){ return true; }
+inline bool operator==( const DirectProduct<>& , const DirectProduct<>& ) noexcept { return true; }
 
 template <typename T0 , typename... T1>
-bool operator==( const DirectProduct<T0,T1...>& v0 , const DirectProduct<T0,T1...>& v1 )
+inline bool operator==( const DirectProduct<T0,T1...>& v0 , const DirectProduct<T0,T1...>& v1 )
 {
 
   return ( Projection<0,T0,T1...>( v0 ) == Projection<0,T0,T1...>( v1 ) ) && ( RestrictToRight<1,T0,T1...>( v0 ) == RestrictToRight<1,T0,T1...>( v1 ) );
 
 }
 
-inline bool Equal( const DirectProduct<>& ){ return true; }
+inline bool Equal( const DirectProduct<>& ) noexcept { return true; }
 
 template <typename T0 , typename... T1>
 bool Equal( const DirectProduct<T0,T1...>& v0 , const T0& t0 , const T1&... t1 )
@@ -79,7 +83,7 @@ bool Equal( const DirectProduct<T0,T1...>& v0 , const T0& t0 , const T1&... t1 )
 }
 
 template <typename T0 , typename... T1>
-const T0& SeparateInitialLeft( const DirectProduct<T0,T1...>& v )
+inline const T0& SeparateInitialLeft( const DirectProduct<T0,T1...>& v ) noexcept
 {
 
   return v.GetInitial();
@@ -87,7 +91,7 @@ const T0& SeparateInitialLeft( const DirectProduct<T0,T1...>& v )
 }
 
 template <typename T0 , typename... T1>
-const DirectProduct<T1...>& SeparateInitialRight( const DirectProduct<T0,T1...>& v )
+inline const DirectProduct<T1...>& SeparateInitialRight( const DirectProduct<T0,T1...>& v ) noexcept
 {
 
   return v.IgnoreInitial();
@@ -95,7 +99,7 @@ const DirectProduct<T1...>& SeparateInitialRight( const DirectProduct<T0,T1...>&
 }
 
 template <typename T0>
-TypeOfIgnoreFinal<T0> SeparateFinalLeft( const DirectProduct<T0>& v0 )
+inline const TypeOfIgnoreFinal<T0>& SeparateFinalLeft( const DirectProduct<T0>& v0 ) noexcept
 {
 
   return SeparateInitialRight( v0 );
@@ -103,17 +107,15 @@ TypeOfIgnoreFinal<T0> SeparateFinalLeft( const DirectProduct<T0>& v0 )
 }
 
 template <typename T0 , typename T1 , typename... T2>
-TypeOfIgnoreFinal<T0,T1,T2...> SeparateFinalLeft( const DirectProduct<T0,T1,T2...>& v0 )
+inline TypeOfIgnoreFinal<T0,T1,T2...> SeparateFinalLeft( const DirectProduct<T0,T1,T2...>& v0 )
 {
-
-  TypeOfIgnoreFinal<T1,T2...> v_v1;
   
   return Connect( SeparateInitialLeft( v0 ) , SeparateFinalLeft( SeparateInitialRight( v0 ) ) );
 
 }
 
 template <typename T0>
-TypeOfFinal<T0> SeparateFinalRight( const DirectProduct<T0>& v0 )
+inline const TypeOfFinal<T0>& SeparateFinalRight( const DirectProduct<T0>& v0 ) noexcept
 {
 
   return SeparateInitialLeft( v0 );
@@ -129,7 +131,7 @@ TypeOfFinal<T0,T1,T2...> SeparateFinalRight( const DirectProduct<T0,T1,T2...>& v
 }
 
 template <typename... T0>
-DirectProduct<T0...> Connect( const DirectProduct<>& c , const DirectProduct<T0...>& v0 )
+inline const DirectProduct<T0...>& Connect( const DirectProduct<>& c , const DirectProduct<T0...>& v0 ) noexcept
 {
 
   return v0;
@@ -137,7 +139,7 @@ DirectProduct<T0...> Connect( const DirectProduct<>& c , const DirectProduct<T0.
 }
 
 template <typename T0 , typename... T1>
-DirectProduct<T0,T1...> Connect( const DirectProduct<T0,T1...>& v0 , const DirectProduct<>& c )
+inline const DirectProduct<T0,T1...>& Connect( const DirectProduct<T0,T1...>& v0 , const DirectProduct<>& c ) noexcept
 {
 
   return v0;
@@ -145,14 +147,15 @@ DirectProduct<T0,T1...> Connect( const DirectProduct<T0,T1...>& v0 , const Direc
 }
 
 template <typename T0 , typename T1 , typename... T2>
-DirectProduct<T0,T1,T2...> Connect( const DirectProduct<T0>& v0 , const DirectProduct<T1,T2...>& v1 )
+inline DirectProduct<T0,T1,T2...> Connect( const DirectProduct<T0>& v0 , const DirectProduct<T1,T2...>& v1 )
 {
   
   return DirectProduct<T0,T1,T2...>( SeparateInitialLeft( v0 ) , v1 );
 
 }
 
-template <typename T0 , typename T1 , typename... T2 , typename T3 , typename... T4> DirectProduct<T0,T1,T2...,T3,T4...> Connect( const DirectProduct<T0,T1,T2...>& v0 , const DirectProduct<T3,T4...>& v1 )
+template <typename T0 , typename T1 , typename... T2 , typename T3 , typename... T4>
+inline DirectProduct<T0,T1,T2...,T3,T4...> Connect( const DirectProduct<T0,T1,T2...>& v0 , const DirectProduct<T3,T4...>& v1 )
 {
 
   return DirectProduct<T0,T1,T2...,T3,T4...>( SeparateInitialLeft( v0 ) , Connect( SeparateInitialRight( v0 ) , v1 ) );
@@ -205,8 +208,8 @@ template <uint i , typename... T0>
 auto RestrictToLeft( const DirectProduct<T0...>& v ) -> typename enable_if< less<uint>()( sizeof...( T0 ) , i ) , TypeOfRestrictToLeft<i,T0...> >::type
 {
 
-    ERR_IMPUT( i , sizeof...( T0 ) , v );
-    return EmptySet();
+  ERR_IMPUT( i , sizeof...( T0 ) , v );
+  return EmptySet();
 
 }
 
@@ -227,7 +230,7 @@ auto RestrictToLeft( const DirectProduct<T0,T1,T2...>& v ) -> typename enable_if
 }
 
 template <uint i , typename T0 , typename T1 , typename T2 , typename... T3>
-auto RestrictToLeft( const DirectProduct<T0,T1,T2,T3...>& v ) -> typename enable_if< less<uint>()( 1 ,  i ) , TypeOfRestrictToLeft<i,T0,T1,T2,T3...> >::type
+auto RestrictToLeft( const DirectProduct<T0,T1,T2,T3...>& v ) -> typename enable_if< less<uint>()( 1 ,  i ) && less<uint>()( i , 3 + sizeof...( T3 ) ) , TypeOfRestrictToLeft<i,T0,T1,T2,T3...> >::type
 {
 
   return Connect( RestrictToLeft<1,T0,T1,T2,T3...>( v ) , RestrictToLeft<i-1,T1,T2,T3...>( SeparateInitialRight( v ) ) );
