@@ -68,7 +68,7 @@ class TypeOfRestrictToLeft_Body<i,T0,T1...> :
 {
 
 public:
-  using type = typename conditional< less_equal<uint>()( i , sizeof...( T1 ) + 1 ) , decltype( Connect( declval<DirectProduct<T0> >() , declval<typename TypeOfRestrictToLeft_Body<i-1,T1...>::type>() , Em@tySet ) ) >::type;
+  using type = typename conditional< less_equal<uint>()( i , sizeof...( T1 ) + 1 ) , decltype( Connect( declval<DirectProduct<T0> >() , declval<typename TypeOfRestrictToLeft_Body<i-1,T1...>::type>() , EmptySet ) ) >::type;
 
 };
 
