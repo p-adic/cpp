@@ -15,7 +15,7 @@ private:
 
 public:
   inline LabeledList();
-  // コピーコンストラクタを持たない型Tを使いたい時は代わりにSartPointer<T>を用い、このコンストラクタを適用してWrappedType<SmartPointer<T> >を渡す。
+  // コピーコンストラクタを持たない型Tを使いたい時は代わりにSmartPointer<T>を用い、このコンストラクタを適用してWrappedType<SmartPointer<T> >を渡す。
   inline LabeledList( const WrappedType<DirectProduct<Key1,Key2...> >& , const WrappedType<T>& );
   
   T& operator()( const Key1& , const Key2&... );

@@ -12,7 +12,7 @@ template <typename T , typename Key1 , typename... Key2> inline LabeledList<T,Ke
 {}
 
 template <typename T , typename Key1 , typename... Key2> inline LabeledList<T,Key1,Key2...>::LabeledList( const WrappedType<DirectProduct<Key1,Key2...> >& key , const WrappedType<T>& t ) :
-  m_key( key ) , m_t( t )
+  m_key( key.Get() ) , m_t( t.Get() )
 {}
 
 template <typename T , typename Key1 , typename... Key2>
