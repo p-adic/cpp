@@ -130,16 +130,18 @@ TypeOfFinal<T0,T1,T2...> SeparateFinalRight( const DirectProduct<T0,T1,T2...>& v
 
 }
 
+// const参照にするとTypeOfRestrictToRightがconst参照になってしまう。
 template <typename... T0>
-inline const DirectProduct<T0...>& Connect( const DirectProduct<>& c , const DirectProduct<T0...>& v0 ) noexcept
+inline DirectProduct<T0...> Connect( const DirectProduct<>& c , const DirectProduct<T0...>& v0 ) noexcept
 {
 
   return v0;
 
 }
 
+// const参照にするとTypeOfRestrictToLeftがconst参照になってしまう。
 template <typename T0 , typename... T1>
-inline const DirectProduct<T0,T1...>& Connect( const DirectProduct<T0,T1...>& v0 , const DirectProduct<>& c ) noexcept
+inline DirectProduct<T0,T1...> Connect( const DirectProduct<T0,T1...>& v0 , const DirectProduct<>& c ) noexcept
 {
 
   return v0;

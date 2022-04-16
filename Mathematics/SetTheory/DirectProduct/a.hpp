@@ -65,8 +65,8 @@ template <typename T0> inline const TypeOfFinal<T0>& SeparateFinalRight( const D
 template <typename T0 , typename T1 , typename... T2> TypeOfFinal<T0,T1,T2...> SeparateFinalRight( const DirectProduct<T0,T1,T2...>& );
 
 // DirectProduct<T0,...,Tn> Connect( const DirectProduct<T0,...,Ti>& , const DirectProduct<T{i+1},...,Tn>& )
-template <typename... T0> inline const DirectProduct<T0...>& Connect( const DirectProduct<>& , const DirectProduct<T0...>& ) noexcept;
-template <typename T0 , typename... T1> inline const DirectProduct<T0,T1...>& Connect( const DirectProduct<T0,T1...>& , const DirectProduct<>& ) noexcept;
+template <typename... T0> inline DirectProduct<T0...> Connect( const DirectProduct<>& , const DirectProduct<T0...>& ) noexcept;
+template <typename T0 , typename... T1> inline DirectProduct<T0,T1...> Connect( const DirectProduct<T0,T1...>& , const DirectProduct<>& ) noexcept;
 template <typename T0 , typename T1 , typename... T2> inline DirectProduct<T0,T1,T2...> Connect( const DirectProduct<T0>& , const DirectProduct<T1,T2...>& );
 template <typename T0 , typename T1 , typename... T2 , typename T3 , typename... T4> inline DirectProduct<T0,T1,T2...,T3,T4...> Connect( const DirectProduct<T0,T1,T2...>& , const DirectProduct<T3,T4...>& );
 
