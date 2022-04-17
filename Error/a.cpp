@@ -1,9 +1,9 @@
 // c:/Users/user/Documents/Programming/Error/a.cpp
 
+#include "Debug/a_Macro.hpp"
+
 #include "Header.hpp"
 #include "a_Body.hpp"
-
-#include "Debug/a_Macro.hpp"
 
 #include "BreakPoint/a_Body.hpp"
 #include "../Utility/GlobalVariable/a_Body.hpp"
