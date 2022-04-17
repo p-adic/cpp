@@ -11,8 +11,9 @@ template <typename T , typename Key1 , typename... Key2> inline LabeledList<T,Ke
   m_key() , m_t()
 {}
 
+// VLArray<T>::VLArray( const WrappedType<T>& )‚ğg—p‚·‚éB
 template <typename T , typename Key1 , typename... Key2> inline LabeledList<T,Key1,Key2...>::LabeledList( const WrappedType<DirectProduct<Key1,Key2...> >& key , const WrappedType<T>& t ) :
-  m_key( key.Get() ) , m_t( t.Get() )
+  m_key( key ) , m_t( t )
 {}
 
 template <typename T , typename Key1 , typename... Key2>
