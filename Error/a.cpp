@@ -3,6 +3,8 @@
 #include "Header.hpp"
 #include "a_Body.hpp"
 
+#include "Debug/a_Macro.hpp"
+
 #include "BreakPoint/a_Body.hpp"
 #include "../Utility/GlobalVariable/a_Body.hpp"
 #include "../Utility/SmartPointer/a_Body.hpp"
@@ -15,13 +17,8 @@ ErrorType::ErrorType() noexcept :
 
   m_count += count;  
   count++;
-
-  #ifdef DEBUG
-
-    BreakPoint();
-
-  #endif
-
+  BREAK;
+  
 }
 
 ErrorType::~ErrorType()
