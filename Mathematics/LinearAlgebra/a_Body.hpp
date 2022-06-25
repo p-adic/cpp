@@ -70,7 +70,7 @@ Matrix<T> Power( const Matrix<T>& mat , const U& num )
 
   if( num == 0 ){
       
-    return Unit( mat.size() );
+    return Unit<T,U>( mat.size() );
 
   }
 
@@ -95,7 +95,7 @@ Matrix<T> Power( const Matrix<T>& mat , const U& num )
   }
 
   const U num_next = num - two_power;
-  Matrix<T> p1 = Power2( mat , d );
+  Matrix<T> p1 = Power2<T,U>( mat , d );
 
   if( num_next == 0 ){
 
@@ -103,7 +103,7 @@ Matrix<T> Power( const Matrix<T>& mat , const U& num )
 
   }
   
-  Matrix<T> p2 = Power( mat , num_next );
+  Matrix<T> p2 = Power<T,U>( mat , num_next );
   return p1 * p2;
 
 }
