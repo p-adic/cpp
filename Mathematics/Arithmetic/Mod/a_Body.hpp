@@ -5,8 +5,8 @@
 
 #include "../Power/a_Body.hpp"
 
-template <int M>
-int Mod<M>::Residue( const int& n ) noexcept
+template <typename INT , INT M>
+INT Mod<M>::Residue( const INT& n ) noexcept
 {
 
   if( M == 0 ){
@@ -15,12 +15,12 @@ int Mod<M>::Residue( const int& n ) noexcept
 
   }
 
-  const int M_abs = ( M >= 0 ? M : -M );
+  const INT M_abs = ( M >= 0 ? M : -M );
 
   if( n < 0 ){
 
-    const int n_abs = -n;
-    const int res = n_abs % M_abs;
+    const INT n_abs = -n;
+    const INT res = n_abs % M_abs;
 
     if( res == 0 ){
 
@@ -36,18 +36,18 @@ int Mod<M>::Residue( const int& n ) noexcept
 
 }
 
-template <int M>
+template <typename INT , INT M>
 Mod<M>::Mod() noexcept : m_n( 0 ) , m_inv( M ){}
 
-template <int M>
-Mod<M>::Mod( const int& n ) noexcept : m_n( Residue( n ) ) , m_inv( 0 ){}
+template <typename INT , INT M>
+Mod<M>::Mod( const INT& n ) noexcept : m_n( Residue( n ) ) , m_inv( 0 ){}
 
-template <int M>
+template <typename INT , INT M>
 Mod<M>::Mod( const Mod<M>& n ) noexcept : m_n( n.m_n ) , m_inv( 0 ){}
 
-template <int M> inline Mod<M>& Mod<M>::operator=( const int& n ) noexcept { return operator=( Mod<M>( n ) ); }
+template <typename INT , INT M> inline Mod<M>& Mod<M>::operator=( const INT& n ) noexcept { return operator=( Mod<M>( n ) ); }
 
-template <int M>
+template <typename INT , INT M>
 Mod<M>& Mod<M>::operator=( const Mod<M>& n ) noexcept
 {
 
@@ -57,8 +57,8 @@ Mod<M>& Mod<M>::operator=( const Mod<M>& n ) noexcept
 
 }
 
-template <int M>
-Mod<M>& Mod<M>::operator+=( const int& n ) noexcept
+template <typename INT , INT M>
+Mod<M>& Mod<M>::operator+=( const INT& n ) noexcept
 {
 
   m_n = Residue( m_n + n );
@@ -67,14 +67,14 @@ Mod<M>& Mod<M>::operator+=( const int& n ) noexcept
 
 }
 
-template <int M> inline Mod<M>& Mod<M>::operator+=( const Mod<M>& n ) noexcept { return operator+=( n.m_n ); };
+template <typename INT , INT M> inline Mod<M>& Mod<M>::operator+=( const Mod<M>& n ) noexcept { return operator+=( n.m_n ); };
 
-template <int M> inline Mod<M>& Mod<M>::operator-=( const int& n ) noexcept { return operator+=( -n ); }
+template <typename INT , INT M> inline Mod<M>& Mod<M>::operator-=( const INT& n ) noexcept { return operator+=( -n ); }
 
-template <int M> inline Mod<M>& Mod<M>::operator-=( const Mod<M>& n ) noexcept { return operator-=( n.m_n ); }
+template <typename INT , INT M> inline Mod<M>& Mod<M>::operator-=( const Mod<M>& n ) noexcept { return operator-=( n.m_n ); }
 
-template <int M>
-Mod<M>& Mod<M>::operator*=( const int& n ) noexcept
+template <typename INT , INT M>
+Mod<M>& Mod<M>::operator*=( const INT& n ) noexcept
 {
 
   m_n = Residue( m_n * n );
@@ -83,7 +83,7 @@ Mod<M>& Mod<M>::operator*=( const int& n ) noexcept
 
 }
 
-template <int M>
+template <typename INT , INT M>
 Mod<M>& Mod<M>::operator*=( const Mod<M>& n ) noexcept
 {
 
@@ -108,15 +108,15 @@ Mod<M>& Mod<M>::operator*=( const Mod<M>& n ) noexcept
 }
 
 // âºëzä÷êîÇ»ÇÃÇ≈inlineéwíËÇµÇ»Ç¢ÅB
-template <int M>
-Mod<M>& Mod<M>::operator/=( const int& n )
+template <typename INT , INT M>
+Mod<M>& Mod<M>::operator/=( const INT& n )
 {
 
   return operator/=( Mod<M>( n ) );
 
 }
 
-template <int M>
+template <typename INT , INT M>
 Mod<M>& Mod<M>::operator/=( const Mod<M>& n )
 {
   
@@ -124,8 +124,8 @@ Mod<M>& Mod<M>::operator/=( const Mod<M>& n )
   
 }
 
-template <int M>
-Mod<M>& Mod<M>::operator%=( const int& n )
+template <typename INT , INT M>
+Mod<M>& Mod<M>::operator%=( const INT& n )
 {
 
   m_n %= Residue( n );
@@ -134,22 +134,22 @@ Mod<M>& Mod<M>::operator%=( const int& n )
 
 }
 
-template <int M> inline Mod<M>& Mod<M>::operator%=( const Mod<M>& n ) { return operator%=( n.m_n ); }
+template <typename INT , INT M> inline Mod<M>& Mod<M>::operator%=( const Mod<M>& n ) { return operator%=( n.m_n ); }
 
-template <ll M> inline Mod<M>& Mod<M>::operator++() noexcept { return operator+=( 1 ); }
-template <ll M> inline Mod<M>& Mod<M>::operator++( int ) noexcept { return operator++(); }
-template <ll M> inline Mod<M>& Mod<M>::operator--() noexcept { return operator-=( 1 ); }
-template <ll M> inline Mod<M>& Mod<M>::operator--( int ) noexcept { return operator-=(); }
+template <typename INT , INT M> inline Mod<M>& Mod<M>::operator++() noexcept { return operator+=( 1 ); }
+template <typename INT , INT M> inline Mod<M>& Mod<M>::operator++( int ) noexcept { return operator++(); }
+template <typename INT , INT M> inline Mod<M>& Mod<M>::operator--() noexcept { return operator-=( 1 ); }
+template <typename INT , INT M> inline Mod<M>& Mod<M>::operator--( int ) noexcept { return operator-=(); }
 
-template <int M> inline const int& Mod<M>::Represent() const noexcept { return m_n; }
+template <typename INT , INT M> inline const INT& Mod<M>::Represent() const noexcept { return m_n; }
 
-template <int M>
+template <typename INT , INT M>
 void Mod<M>::Invert() noexcept
 {
 
   if( CheckInvertible() ){
 
-    int i = m_inv;
+    INT i = m_inv;
     m_inv = m_n;
     m_n = i;
 
@@ -163,13 +163,13 @@ void Mod<M>::Invert() noexcept
   
 }
 
-template <int M>
+template <typename INT , INT M>
 bool Mod<M>::CheckInvertible() noexcept
 {
 
   if( m_inv == 0 ){
 
-    for( int i = 1 ; i < M ; i++ ){
+    for( INT i = 1 ; i < M ; i++ ){
 
       if( Residue( m_n * i ) == 1 ){
 
@@ -188,35 +188,35 @@ bool Mod<M>::CheckInvertible() noexcept
   
 }
 
-template <int M> inline bool Mod<M>::IsSmallerThan( const int& n ) const noexcept { return m_n < Residue( n ); }
-template <int M> inline bool Mod<M>::IsBiggerThan( const int& n ) const noexcept { return m_n > Residue( n ); }
+template <typename INT , INT M> inline bool Mod<M>::IsSmallerThan( const INT& n ) const noexcept { return m_n < Residue( n ); }
+template <typename INT , INT M> inline bool Mod<M>::IsBiggerThan( const INT& n ) const noexcept { return m_n > Residue( n ); }
 
-template <int M> inline bool operator==( const Mod<M>& n0 , const int& n1 ) noexcept { return n0 == Mod<M>( n1 ); }
-template <int M> inline bool operator==( const int& n0 , const Mod<M>& n1 ) noexcept { return Mod<M>( n0 ) == n0; }
-template <int M> inline bool operator==( const Mod<M>& n0 , const Mod<M>& n1 ) noexcept { return n0.Represent() == n1.Represent(); }
+template <typename INT , INT M> inline bool operator==( const Mod<M>& n0 , const INT& n1 ) noexcept { return n0 == Mod<M>( n1 ); }
+template <typename INT , INT M> inline bool operator==( const INT& n0 , const Mod<M>& n1 ) noexcept { return Mod<M>( n0 ) == n0; }
+template <typename INT , INT M> inline bool operator==( const Mod<M>& n0 , const Mod<M>& n1 ) noexcept { return n0.Represent() == n1.Represent(); }
 
-template <int M> inline bool operator!=( const Mod<M>& n0 , const int& n1 ) noexcept { return !( n0 == n1 ); }
-template <int M> inline bool operator!=( const int& n0 , const Mod<M>& n1 ) noexcept { return !( n0 == n1 ); }
-template <int M> inline bool operator!=( const Mod<M>& n0 , const Mod<M>& n1 ) noexcept { return !( n0 == n1 ); }
+template <typename INT , INT M> inline bool operator!=( const Mod<M>& n0 , const INT& n1 ) noexcept { return !( n0 == n1 ); }
+template <typename INT , INT M> inline bool operator!=( const INT& n0 , const Mod<M>& n1 ) noexcept { return !( n0 == n1 ); }
+template <typename INT , INT M> inline bool operator!=( const Mod<M>& n0 , const Mod<M>& n1 ) noexcept { return !( n0 == n1 ); }
 
-template <int M> inline bool operator<( const Mod<M>& n0 , const int& n1 ) noexcept { return n0.IsSmallerThan( n1 ); }
-template <int M> inline bool operator<( const int& n0 , const Mod<M>& n1 ) noexcept { return n1.IsBiggerThan( n0 ); }
-template <int M> inline bool operator<( const Mod<M>& n0 , const Mod<M>& n1 ) noexcept { return n0.Represent() < n1.Represent(); }
+template <typename INT , INT M> inline bool operator<( const Mod<M>& n0 , const INT& n1 ) noexcept { return n0.IsSmallerThan( n1 ); }
+template <typename INT , INT M> inline bool operator<( const INT& n0 , const Mod<M>& n1 ) noexcept { return n1.IsBiggerThan( n0 ); }
+template <typename INT , INT M> inline bool operator<( const Mod<M>& n0 , const Mod<M>& n1 ) noexcept { return n0.Represent() < n1.Represent(); }
 
-template <int M> inline bool operator<=( const Mod<M>& n0 , const int& n1 ) noexcept { return !( n1 < n0 ); }
-template <int M> inline bool operator<=( const int& n0 , const Mod<M>& n1 ) noexcept { return !( n1 < n0 ); }
-template <int M> inline bool operator<=( const Mod<M>& n0 , const Mod<M>& n1 ) noexcept { return !( n1 < n0 ); }
+template <typename INT , INT M> inline bool operator<=( const Mod<M>& n0 , const INT& n1 ) noexcept { return !( n1 < n0 ); }
+template <typename INT , INT M> inline bool operator<=( const INT& n0 , const Mod<M>& n1 ) noexcept { return !( n1 < n0 ); }
+template <typename INT , INT M> inline bool operator<=( const Mod<M>& n0 , const Mod<M>& n1 ) noexcept { return !( n1 < n0 ); }
 
-template <int M> inline bool operator>( const Mod<M>& n0 , const int& n1 ) noexcept { return n1 < n0; }
-template <int M> inline bool operator>( const int& n0 , const Mod<M>& n1 ) noexcept { return n1 < n0; }
-template <int M> inline bool operator>( const Mod<M>& n0 , const Mod<M>& n1 ) noexcept { return n1 < n0; }
+template <typename INT , INT M> inline bool operator>( const Mod<M>& n0 , const INT& n1 ) noexcept { return n1 < n0; }
+template <typename INT , INT M> inline bool operator>( const INT& n0 , const Mod<M>& n1 ) noexcept { return n1 < n0; }
+template <typename INT , INT M> inline bool operator>( const Mod<M>& n0 , const Mod<M>& n1 ) noexcept { return n1 < n0; }
 
-template <int M> inline bool operator>=( const Mod<M>& n0 , const int& n1 ) noexcept { return !( n0 < n1 ); }
-template <int M> inline bool operator>=( const int& n0 , const Mod<M>& n1 ) noexcept { return !( n0 < n1 ); }
-template <int M> inline bool operator>=( const Mod<M>& n0 , const Mod<M>& n1 ) noexcept { return !( n0 < n1 ); }
+template <typename INT , INT M> inline bool operator>=( const Mod<M>& n0 , const INT& n1 ) noexcept { return !( n0 < n1 ); }
+template <typename INT , INT M> inline bool operator>=( const INT& n0 , const Mod<M>& n1 ) noexcept { return !( n0 < n1 ); }
+template <typename INT , INT M> inline bool operator>=( const Mod<M>& n0 , const Mod<M>& n1 ) noexcept { return !( n0 < n1 ); }
 
-template <int M>
-Mod<M> operator+( const Mod<M>& n0 , const int& n1 ) noexcept
+template <typename INT , INT M>
+Mod<M> operator+( const Mod<M>& n0 , const INT& n1 ) noexcept
 {
 
   auto n = n0;
@@ -225,18 +225,18 @@ Mod<M> operator+( const Mod<M>& n0 , const int& n1 ) noexcept
 
 }
 
-template <int M> inline Mod<M> operator+( const int& n0 , const Mod<M>& n1 ) noexcept { return n1 + n0; }
+template <typename INT , INT M> inline Mod<M> operator+( const INT& n0 , const Mod<M>& n1 ) noexcept { return n1 + n0; }
 
-template <int M> inline Mod<M> operator+( const Mod<M>& n0 , const Mod<M>& n1 ) noexcept { return n0 + n1.Represent(); }
+template <typename INT , INT M> inline Mod<M> operator+( const Mod<M>& n0 , const Mod<M>& n1 ) noexcept { return n0 + n1.Represent(); }
 
-template <int M> inline Mod<M> operator-( const Mod<M>& n0 , const int& n1 ) noexcept { return n0 + ( -n1 ); }
+template <typename INT , INT M> inline Mod<M> operator-( const Mod<M>& n0 , const INT& n1 ) noexcept { return n0 + ( -n1 ); }
 
-template <int M> inline Mod<M> operator-( const int& n0 , const Mod<M>& n1 ) noexcept { return Mod<M>( n0 - n1.Represent() ); }
+template <typename INT , INT M> inline Mod<M> operator-( const INT& n0 , const Mod<M>& n1 ) noexcept { return Mod<M>( n0 - n1.Represent() ); }
 
-template <int M> inline Mod<M> operator-( const Mod<M>& n0 , const Mod<M>& n1 ) noexcept { return n0 - n1.Represent(); }
+template <typename INT , INT M> inline Mod<M> operator-( const Mod<M>& n0 , const Mod<M>& n1 ) noexcept { return n0 - n1.Represent(); }
 
-template <int M>
-Mod<M> operator*( const Mod<M>& n0 , const int& n1 ) noexcept
+template <typename INT , INT M>
+Mod<M> operator*( const Mod<M>& n0 , const INT& n1 ) noexcept
 {
 
   auto n = n0;
@@ -245,9 +245,9 @@ Mod<M> operator*( const Mod<M>& n0 , const int& n1 ) noexcept
 
 }
 
-template <int M> inline Mod<M> operator*( const int& n0 , const Mod<M>& n1 ) noexcept { return n1 * n0; }
+template <typename INT , INT M> inline Mod<M> operator*( const INT& n0 , const Mod<M>& n1 ) noexcept { return n1 * n0; }
 
-template <int M>
+template <typename INT , INT M>
 Mod<M> operator*( const Mod<M>& n0 , const Mod<M>& n1 ) noexcept
 {
 
@@ -257,11 +257,11 @@ Mod<M> operator*( const Mod<M>& n0 , const Mod<M>& n1 ) noexcept
 
 }
 
-template <int M> inline Mod<M> operator/( const Mod<M>& n0 , const int& n1 ) { return n0 / Mod<M>( n1 ); }
+template <typename INT , INT M> inline Mod<M> operator/( const Mod<M>& n0 , const INT& n1 ) { return n0 / Mod<M>( n1 ); }
 
-template <int M> inline Mod<M> operator/( const int& n0 , const Mod<M>& n1 ) { return Mod<M>( n0 ) / n1; }
+template <typename INT , INT M> inline Mod<M> operator/( const INT& n0 , const Mod<M>& n1 ) { return Mod<M>( n0 ) / n1; }
 
-template <int M>
+template <typename INT , INT M>
 Mod<M> operator/( const Mod<M>& n0 , const Mod<M>& n1 )
 {
 
@@ -271,8 +271,8 @@ Mod<M> operator/( const Mod<M>& n0 , const Mod<M>& n1 )
 
 }
 
-template <int M>
-Mod<M> operator%( const Mod<M>& n0 , const int& n1 )
+template <typename INT , INT M>
+Mod<M> operator%( const Mod<M>& n0 , const INT& n1 )
 {
 
   auto n = n0;
@@ -281,11 +281,11 @@ Mod<M> operator%( const Mod<M>& n0 , const int& n1 )
 
 }
 
-template <int M> inline Mod<M> operator%( const int& n0 , const Mod<M>& n1 ) { return Mod<M>( n0 ) % n1.Represent(); }
+template <typename INT , INT M> inline Mod<M> operator%( const INT& n0 , const Mod<M>& n1 ) { return Mod<M>( n0 ) % n1.Represent(); }
 
-template <int M> inline Mod<M> operator%( const Mod<M>& n0 , const Mod<M>& n1 ) { return n0 % n1.Represent(); }
+template <typename INT , INT M> inline Mod<M> operator%( const Mod<M>& n0 , const Mod<M>& n1 ) { return n0 % n1.Represent(); }
 
-template <int M>
+template <typename INT , INT M>
 Mod<M> Inverse( const Mod<M>& n )
 {
 
@@ -295,13 +295,13 @@ Mod<M> Inverse( const Mod<M>& n )
 
 }
 
-template <int M>
-Mod<M> Power( const Mod<M>& n , const int& p , const bool& is_binary_method )
+template <typename INT , INT M>
+Mod<M> Power( const Mod<M>& n , const INT& p , const bool& is_binary_method )
 {
 
   if( p >= 0 ){
 
-    return Power<Mod<M>,int>( n , p , 1 , true , true , is_binary_method );
+    return Power<Mod<M>,INT>( n , p , 1 , true , true , is_binary_method );
 
   }
 
