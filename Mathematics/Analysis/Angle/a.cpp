@@ -11,14 +11,6 @@ Angle& Angle::operator=( const int& n ) noexcept
 
 }
 
-Angle& Angle::operator=( const uint& n ) noexcept
-{
-
-  Mod<360>::operator=( n );
-  return *this;
-
-}
-
 Angle& Angle::operator=( const Angle& n ) noexcept
 {
 
@@ -36,15 +28,6 @@ Angle& Angle::operator/=( const int& n )
 
 }
 
-Angle& Angle::operator/=( const uint& n )
-{
-
-  m_n /= (int)Residue( n );
-  m_inv = 0;
-  return *this;
-
-}
-
 Angle& Angle::operator/=( const Angle& n )
 {
 
@@ -55,15 +38,6 @@ Angle& Angle::operator/=( const Angle& n )
 }
 
 Angle operator/( const Angle& n0 , const int& n1 )
-{
-
-  auto n = n0;
-  n /= n1;
-  return n;
-
-}
-
-Angle operator/( const Angle& n0 , const uint& n1 )
 {
 
   auto n = n0;
