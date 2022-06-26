@@ -246,6 +246,8 @@ Mod<M> operator+( const Mod<M>& n0 , const int& n1 ) noexcept
 
 }
 
+template <int M> inline Mod<M> operator+( const int& n0 , const Mod<M>& n1 ) noexcept { return Mod<M>( n0 ) + n1; }
+
 template <int M>
 Mod<M> operator+( const Mod<M>& n0 , const Mod<M>& n1 ) noexcept
 {
@@ -265,6 +267,8 @@ Mod<M> operator-( const Mod<M>& n0 , const int& n1 ) noexcept
   return n;
 
 }
+
+template <int M> inline Mod<M> operator-( const int& n0 , const Mod<M>& n1 ) noexcept { return Mod<M>( n0 ) - n1; }
 
 template <int M>
 Mod<M> operator-( const Mod<M>& n0 , const Mod<M>& n1 ) noexcept
@@ -286,6 +290,8 @@ Mod<M> operator*( const Mod<M>& n0 , const int& n1 ) noexcept
 
 }
 
+template <int M> inline Mod<M> operator+( const int& n0 , const Mod<M>& n1 ) noexcept { return Mod<M>( n0 ) * n1; }
+
 template <int M>
 Mod<M> operator*( const Mod<M>& n0 , const Mod<M>& n1 ) noexcept
 {
@@ -306,6 +312,8 @@ Mod<M> operator/( const Mod<M>& n0 , const int& n1 )
 
 }
 
+template <int M> inline Mod<M> operator/( const int& n0 , const Mod<M>& n1 ) { return Mod<M>( n0 ) / n1; }
+
 template <int M>
 Mod<M> operator/( const Mod<M>& n0 , const Mod<M>& n1 )
 {
@@ -325,6 +333,8 @@ Mod<M> operator%( const Mod<M>& n0 , const int& n1 )
   return n;
 
 }
+
+template <int M> inline Mod<M> operator+( const int& n0 , const Mod<M>& n1 ) { return Mod<M>( n0 ) % n1; }
 
 template <int M>
 Mod<M> operator%( const Mod<M>& n0 , const Mod<M>& n1 )
