@@ -45,7 +45,7 @@ Mod<M>::Mod( const int& n ) noexcept : m_n( Residue( n ) ) , m_inv( 0 ){}
 template <int M>
 Mod<M>::Mod( const Mod<M>& n ) noexcept : m_n( n.m_n ) , m_inv( 0 ){}
 
-template <int M> inline Mod<M>& Mod<M>::operator=( const int& n ) noexcept { return operator=( Mod<M>( n ) ) }
+template <int M> inline Mod<M>& Mod<M>::operator=( const int& n ) noexcept { return operator=( Mod<M>( n ) ); }
 
 template <int M>
 Mod<M>& Mod<M>::operator=( const Mod<M>& n ) noexcept
@@ -91,7 +91,7 @@ Mod<M>& Mod<M>::operator*=( const Mod<M>& n ) noexcept
 
   if( m_inv == 0 || n.m_inv == 0 ){
 
-    m_inv == 0;
+    m_inv = 0;
     
   } else if( m_inv == M || n.m_inv == M ){
 
