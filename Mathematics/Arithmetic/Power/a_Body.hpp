@@ -5,9 +5,9 @@
 
 
 template <typename T , typename U>
-inline T Power( const T& t , const U& num , const T& init , const bool& init_is_unit , const bool& for_right_multiplication , const bool& is_binary_method ) { return is_binary_method ? PowerBinaryMethod( t , num , init , init_is_unit , for_right_multiplication ) : PowerNormalMethod( t , num , init , for_right_multiplication ); }
+inline T Power( const T& t , const U& num , const T& init , const bool& init_is_unit , const bool& for_right_multiplication , const bool& is_binary_method ) { return is_binary_method ? PowerBinaryMethod<T,U>( t , num , init , init_is_unit , for_right_multiplication ) : PowerNormalMethod<T,U>( t , num , init , for_right_multiplication ); }
 
-template <typename T , typename U> inline T PowerNormalMethod( const T& t , const U& num , const T& init , const bool& for_right_multiplication ) { return num == 0 ? init : ( for_right_multiplication ? PowerNormalMethod( t , num - 1 , init ) * t : t * PowerNormalMethod( t , num - 1 , init ) ); }
+template <typename T , typename U> inline T PowerNormalMethod( const T& t , const U& num , const T& init , const bool& for_right_multiplication ) { return num == 0 ? init : ( for_right_multiplication ? PowerNormalMethod<T,U>( t , num - 1 , init ) * t : t * PowerNormalMethod( t , num - 1 , init ) ); }
 
 template <typename T , typename U>
 T PowerBinaryMethod( const T& t , const U& num , const T& init , const bool& init_is_unit , const bool& for_right_multiplication )
