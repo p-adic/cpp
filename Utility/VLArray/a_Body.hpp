@@ -461,7 +461,7 @@ VLArray<T> VLArray<T>::GetInitialSegment( const int& n ) const
 }
 
 template <typename T>
-VLArray<T> VLArray<T>::GetFinalSegment( const int& ) const
+VLArray<T> VLArray<T>::GetFinalSegment( const int& n ) const
 {
 
   const int N = (int)m_size;
