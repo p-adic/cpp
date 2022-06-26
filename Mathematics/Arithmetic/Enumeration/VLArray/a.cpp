@@ -294,26 +294,6 @@ uint BijProdN1( const VLArray<dim>& a_d , const VLArray<uint>& a_n )
 
 }
 
-list<uint> BijProd1Infty( const uint& n )
-{
-
-  VLArray<uint> a;
-
-  try{
-    
-    BijProd1Infty( n , a );
-
-  }
-  catch( const ErrorType& e ){
-
-    CALL( e , n );
-
-  }
-  
-  return a;
-
-}
-
 void BijProd1Infty( const uint& n , VLArray<uint>& a )
 {
 
@@ -351,5 +331,25 @@ void BijProd1Infty( const uint& n , VLArray<uint>& a )
   }
 
   return;
+
+}
+
+VLArray<uint> BijProd1Infty( const uint& n )
+{
+
+  VLArray<uint> a;
+
+  try{
+    
+    BijProd1Infty( n , a );
+
+  }
+  catch( const ErrorType& e ){
+
+    CALL( e , n );
+
+  }
+  
+  return a;
 
 }

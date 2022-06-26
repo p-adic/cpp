@@ -25,5 +25,5 @@ inline uint BijProdN1( const VLArray<uint>& a_n );
 
 
 // 可算無限濃度の集合可算無限個の直積の本質的有限部分の数え上げ
-void BijProd1Infty( const uint& , VLArray<uint>& );
+void BijProd1Infty( const uint& n , VLArray<uint>& a );
 VLArray<uint> BijProd1Infty( const uint& );
