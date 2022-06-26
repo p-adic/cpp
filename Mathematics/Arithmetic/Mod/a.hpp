@@ -24,8 +24,11 @@ public:
   Mod<M>& operator-=( const Mod<M>& n ) noexcept;
   Mod<M>& operator*=( const int& n ) noexcept;
   Mod<M>& operator*=( const Mod<M>& n ) noexcept;
+
+  // intÇ≈ÇÃäÑÇËéZÇ≈ÇÕÇ»Ç¢Ç±Ç∆Ç…íçà”
   virtual Mod<M>& operator/=( const int& n );
   virtual Mod<M>& operator/=( const Mod<M>& n );
+  
   Mod<M>& operator%=( const int& n );
   Mod<M>& operator%=( const Mod<M>& n );
   inline const int& Represent() const noexcept;
