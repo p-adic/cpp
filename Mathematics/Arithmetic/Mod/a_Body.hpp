@@ -162,9 +162,9 @@ Mod<M>& Mod<M>::operator%=( const Mod<M>& n )
 }
 
 template <ll M> inline Mod<M>& Mod<M>::operator++() noexcept { return operator+=( 1 ); }
-template <ll M> inline Mod<M>& Mod<M>::operator++( const int& ) noexcept { return operator++(); }
+template <ll M> inline Mod<M>& Mod<M>::operator++( int ) noexcept { return operator++(); }
 template <ll M> inline Mod<M>& Mod<M>::operator--() noexcept { return operator-=( 1 ); }
-template <ll M> inline Mod<M>& Mod<M>::operator--( const int& ) noexcept { return operator-=(); }
+template <ll M> inline Mod<M>& Mod<M>::operator--( int ) noexcept { return operator-=(); }
 
 template <int M> inline const int& Mod<M>::Represent() const noexcept { return m_n; }
 
