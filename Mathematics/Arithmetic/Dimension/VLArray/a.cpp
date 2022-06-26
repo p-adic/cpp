@@ -1,7 +1,7 @@
 // c:/Users/user/Documents/Programming/Mathematics/Arithmetic/Dimension/VLArray/a.cpp
 
 #pragma once
-#include "Header.hpp"
+#include "../../../Header.hpp"
 #include "a_Body.hpp"
 
 dim Sum( const VLArray<dim>& a ) noexcept
