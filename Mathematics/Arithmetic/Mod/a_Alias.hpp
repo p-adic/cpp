@@ -2,5 +2,5 @@
 
 #pragma once
 
-template <int M>
-using Mod<M> = Mod<int,M>;
+using INT_TYPE_FOR_MOD = int;
+// using INT_TYPE_FOR_MOD = long long int;
