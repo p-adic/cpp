@@ -308,3 +308,5 @@ Mod<M> Power( const Mod<M>& n , const INT_TYPE_FOR_MOD& p , const bool& is_binar
   return Inverse( Power( n , -p , is_binary_method ) );
 
 }
+
+template <INT_TYPE_FOR_MOD M> inline Mod<M> Power( const Mod<M>& n , const Mod<M>& p , const bool& is_binary_method ) { return Power( n , p.Represent() , is_binary_method ); }

@@ -94,4 +94,9 @@ template <INT_TYPE_FOR_MOD M> Mod<M> operator%( const Mod<M>& n0 , const INT_TYP
 template <INT_TYPE_FOR_MOD M> inline Mod<M> operator%( const INT_TYPE_FOR_MOD& n0 , const Mod<M>& n1 );
 template <INT_TYPE_FOR_MOD M> inline Mod<M> operator%( const Mod<M>& n0 , const Mod<M>& n1 );
 template <INT_TYPE_FOR_MOD M> Mod<M> Inverse( const Mod<M>& n );
+
 template <INT_TYPE_FOR_MOD M> Mod<M> Power( const Mod<M>& n , const INT_TYPE_FOR_MOD& p , const bool& is_binary_method = false );
+
+// MèÊÇ™1Ç…Ç»ÇÈÇÊÇ§íËã`Ç≥ÇÍÇƒÇ¢ÇÈÇ±Ç∆Ç…íçà”
+template <INT_TYPE_FOR_MOD M> inline Mod<M> Power( const Mod<M>& n , const Mod<M>& p , const bool& is_binary_method );
+
