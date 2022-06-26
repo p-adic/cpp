@@ -12,6 +12,6 @@ T PowerBinaryMethod( const T& t , const UINT& num , const T& init = 1 , const bo
 
 // Power‚Ì2ã°‚Ö‚Ì•”•ª“ÁŽê‰»
 template <typename T , typename UINT>
-T Power2( const T& t , const UINT& d );
+T Power2Power( const T& t , const UINT& d );
 
 

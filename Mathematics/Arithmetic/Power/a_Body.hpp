@@ -40,7 +40,7 @@ T PowerBinaryMethod( const T& t , const UINT& num , const T& init , const bool& 
   }
 
   const UINT num_reduced = num - two_power;
-  T power1 = Power2<T,UINT>( t , d );
+  T power1 = Power2Power<T,UINT>( t , d );
 
   if( num_reduced == 0 && init_is_unit ){
 
@@ -55,7 +55,7 @@ T PowerBinaryMethod( const T& t , const UINT& num , const T& init , const bool& 
 
 // Power‚Ì2ã°‚Ö‚Ì•”•ª“ÁŽê‰»
 template <typename T , typename UINT>
-T Power2( const T& t , const UINT& d )
+T Power2Power( const T& t , const UINT& d )
 {
 
   if( d == 0 ){
