@@ -151,12 +151,6 @@ void Separate( const int& n , const list<T>& a , list<T>& a_1 , list<T>& a_2 )
   a_1 = Front( n , a );
   const int N = Length( a );
 
-  if( N < 0 ){
-
-    ERR_IMPUT( n , a , N );
-
-  }
-  
   if( N <= n || n <= -N ){
 
     a_2 = Back( 0 , a );
@@ -183,12 +177,6 @@ template <typename T> list<T> Front( const int& n , const list<T>& a )
 
   const int N = Length( a );
 
-  if( N < 0 ){
-
-    ERR_IMPUT( n , a , N );
-
-  }
-
   int M;
 
   if( N <= n ){
@@ -209,7 +197,7 @@ template <typename T> list<T> Front( const int& n , const list<T>& a )
 
   }
 
-  list<T> b;
+  list<T> b{};
   typename list<T>::const_iterator itr = a.begin() , end = a.end();
 
   for( int m = 1 ; m <= M ; m++ ){
@@ -228,12 +216,6 @@ template <typename T> list<T> Back( const int& n , const list<T>& a )
 
   const int N = Length( a );
   
-  if( N < 0 ){
-
-    ERR_IMPUT( n , a , N );
-
-  }
-
   int M;
 
   if( N <= n ){
@@ -254,7 +236,7 @@ template <typename T> list<T> Back( const int& n , const list<T>& a )
   
   }
 
-  list<T> b;
+  list<T> b{};
   typename list<T>::const_iterator end = a.end() , itr = end;
 
   for( int m = 1 ; m <= M ; m++ ){
