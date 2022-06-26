@@ -198,7 +198,7 @@ template <typename T> list<T> Front( const int& n , const list<T>& a )
   }
 
   list<T> b{};
-  typename list<T>::const_iterator itr = a.begin() , end = a.end();
+  typename list<T>::const_iterator itr = a.begin();
 
   for( int m = 1 ; m <= M ; m++ ){
 
@@ -237,7 +237,7 @@ template <typename T> list<T> Back( const int& n , const list<T>& a )
   }
 
   list<T> b{};
-  typename list<T>::const_iterator end = a.end() , itr = end;
+  typename list<T>::const_iterator itr = a.end();
 
   for( int m = 1 ; m <= M ; m++ ){
 
