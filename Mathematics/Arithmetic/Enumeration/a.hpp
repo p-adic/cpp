@@ -2,27 +2,30 @@
 
 #pragma once
 #include "../Dimension/a.hpp"
+#include "../../../Utility/VLArray/a.hpp"
 
-uint BijSum21( const uint& , const uint& );
-uint BijSum21( const dim& , const dim& , const uint& , const uint& );
-void BijSum12( const uint& , uint& , uint& );
-void BijSum12( const dim& , const dim& , const uint& , uint& , uint& );
+// ”Z“xd_1‚Æd_2‚ÌW‡‚Ì”r‘¼“I˜aW‡‚Ì”‚¦ã‚°
+void BijSum12( const dim& d_1 , const dim& d_2, const uint& n , uint& n_1 , uint& n_2 );
+inline void BijSum12( const uint& m , uint& n_1 , uint& n_2 );
 
-uint BijSumN1( const uint& , const uint& , const uint& );
-uint BijSumN1( const list<dim>& , const uint&  , const uint&  );
-void BijSum1N( const uint& , const uint& , uint& , uint& );
-void BijSum1N( const list<dim>& , const uint& , uint& , uint& );
+// BijSum12‚Ì‹t
+uint BijSum21( const dim& d_1 , const dim& d_2 , const uint& n_1 , const uint& n_2 );
+inline uint BijSum21( const uint& n_1 , const uint& n_2 );
 
-uint BijProd21( const uint& , const uint& );
-uint BijProd21( const dim& , const dim& , const uint& , const uint& );
-void BijProd12( const uint& , uint& , uint& );
+// ‰ÂZ–³ŒÀ”Z“x‚ÌW‡‚ÌNŒÂ”r‘¼“I˜aW‡‚Ì”‚¦ã‚°
+inline void BijSum1N( const uint& N , const uint& n , uint& n_1 , uint& n_2 );
+
+// BijSum1N‚Ì‹t
+inline uint BijSumN1( const uint& N , const uint& n_1 , const uint& n_2 );
+
+
+// ”Z“xd_1‚Æd_2‚ÌW‡‚Ì’¼Ï‚Ì”‚¦ã‚°
 void BijProd12( const dim& , const dim& , const uint& , uint& , uint& );
+inline void BijProd12( const uint& n , uint& n_1 , uint& n_2 );
 
-uint BijProdN1( const list<uint>& );
-uint BijProdN1( const list<dim>& , const list<uint>& );
-list<uint> BijProd1N( const uint& , const uint& );
-void BijProd1N( const uint& , const uint& , list<uint>& );
-list<uint> BijProd1N( const list<dim>& , const uint& );
-void BijProd1N( const list<dim>& , const uint& , list<uint>& );
-list<uint> BijProd1Infty( const uint& );
-void BijProd1Infty( const uint& , list<uint>& );
+// BijProd12‚Ì‹t
+uint BijProd21( const dim& d_1 , const dim& d_2 , const uint& n_1 , const uint& n_2 );
+inline uint BijProd21( const uint& n_1 , const uint& n_2 );
+
+// ê‡‚Ì”
+template <typename U> U Comb()
