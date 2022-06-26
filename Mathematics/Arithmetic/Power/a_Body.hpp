@@ -48,7 +48,7 @@ T PowerBinaryMethod( const T& t , const UINT& num , const T& init , const bool& 
 
   }
   
-  T power2 = Power<T,UINT>( t , num_reduced );
+  T power2 = PowerBinaryMethod<T,UINT>( t , num_reduced , init , init_is_unit , for_right_multiplication );
   return for_right_multiplication ? power2 * power1 : power1 * power2;
 
 }
