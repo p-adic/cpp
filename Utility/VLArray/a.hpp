@@ -69,6 +69,8 @@ public:
 
   T& operator[]( const uint& );
   const T& operator[]( const uint& ) const;
+  VLArray<T> GetInitialSegment( const int& ) const;
+  VLArray<T> GetFinalSegment( const int& ) const;
 
   bool CheckContain( const iterator& ) const noexcept;
   bool CheckContain( const const_iterator& ) const noexcept;

@@ -422,6 +422,84 @@ const T& VLArray<T>::operator[]( const uint& i ) const
 }
 
 template <typename T>
+VLArray<T> VLArray<T>::GetInitialSegment( const int& n ) const
+{
+
+  const int N = (int)m_size;
+  int M;
+
+  if( N <= n ){
+
+    M = N;
+
+  } else {
+    
+    if( 0 <= n ){
+
+      M = n;
+      
+    } else {
+
+      M = N + n;
+
+    }
+
+  }
+
+  VLArray<T> b{};
+  const_iterator itr = a.begin() , end = a.end();
+
+  for( int m = 1 ; m <= M ; m++ ){
+
+    b.push_back( *itr );
+    itr++;
+
+  }
+
+  return b;
+
+}
+
+template <typename T>
+VLArray<T> VLArray<T>::GetFinalSegment( const int& ) const
+{
+
+  const int N = (int)m_size;
+  int M;
+
+  if( N <= n ){
+
+    M = N;
+
+  } else {
+    
+    if( 0 <= n ){
+
+      M = n;
+      
+    } else {
+
+      M = N + n;
+
+    }
+  
+  }
+
+  VLArray<T> b{};
+  const_iterator end = a.end() , itr = end;
+
+  for( int m = 1 ; m <= M ; m++ ){
+
+    itr--;
+    b.push_front( *itr );
+
+  }
+
+  return b;
+
+}
+
+template <typename T>
 bool VLArray<T>::CheckContain( const iterator& itr ) const noexcept
 {
 
