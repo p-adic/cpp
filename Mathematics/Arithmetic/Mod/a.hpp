@@ -31,6 +31,13 @@ public:
   
   Mod<M>& operator%=( const int& n );
   Mod<M>& operator%=( const Mod<M>& n );
+
+  // 前置++/--を使うつもりがないので後置++/--と同じものとして定義する
+  inline const Mod<M>& operator++();
+  inline const Mod<M>& operator++( const int& );
+  inline const Mod<M>& operator--();
+  inline const Mod<M>& operator--( const int& );
+  
   inline const int& Represent() const noexcept;
   void Invert() noexcept;
   bool CheckInvertible() noexcept;
