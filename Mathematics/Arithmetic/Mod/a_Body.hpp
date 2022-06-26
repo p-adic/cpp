@@ -1,7 +1,9 @@
-// Mod/a_Body.hpp
+// c:/Users/user/Documents/Programming/Mathematics/Arithmetic/Mod/a_Body.hpp
 
 #pragma once
 #include "a.hpp"
+
+#include "../Power/a_Body.hpp"
 
 template <int M>
 int Mod<M>::Residue( const int& n ) noexcept
@@ -13,31 +15,24 @@ int Mod<M>::Residue( const int& n ) noexcept
 
   }
 
-  int M_copy;
-
-  if( 0 <= M ){
-
-    M_copy = M;
-
-  } else {
-
-    M_copy = -M;
-
-  }
+  const int M_abs = ( M >= 0 ? M : -M );
 
   if( n < 0 ){
 
-    return Residue( n + M_copy );
+    const int n_abs = -n;
+    const int res = n_abs % M_abs;
 
-  }
-  
-  if( M_copy <= n ){
+    if( res == 0 ){
 
-    return Residue( n - M_copy );
+      return 0;
+
+    }
     
+    return M_abs - res;
+
   }
 
-  return n;
+  return n % M_abs;
 
 }
 
@@ -167,39 +162,6 @@ Mod<M>& Mod<M>::operator%=( const Mod<M>& n )
 }
 
 template <int M> inline const int& Mod<M>::Represent() const noexcept { return m_n; }
-
-template <int M>
-Mod<M>& Mod<M>::Power( const int& p ) noexcept
-{
-
-  int p_copy;
-
-  if( 0 <= p ){
-
-    p_copy = p;
-
-  } else {
-
-    p_copy = -p;
-    Invert();
-
-  }
-
-  int m_n_copy = m_n;
-  int m_inv_copy = m_inv;
-  m_n = 1;
-  m_inv = 1;
-
-  for( int m = 0 ; m < p_copy ; m++ ){
-
-    m_n *= m_n_copy;
-    m_inv *= m_inv_copy;
-
-  }
-
-  return *this;
-
-}
 
 template <int M>
 void Mod<M>::Invert() noexcept
@@ -385,11 +347,15 @@ Mod<M> Inverse( const Mod<M>& n )
 }
 
 template <int M>
-Mod<M> Power( const Mod<M>& n , const int& p )
+Mod<M> Power( const Mod<M>& n , const int& p , const bool& is_binary_method )
 {
 
-  auto n_copy = n;
-  n_copy.Power( p );
-  return n_copy;
+  if( p >= 0 ){
+
+    return Power<Mod<M>,int>( n , p , 1 , true , true , is_binary_method );
+
+  }
+
+  return Power( Inverse( n ) , -p , is_binary_method );
 
 }

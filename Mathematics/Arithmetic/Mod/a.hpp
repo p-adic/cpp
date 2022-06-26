@@ -29,7 +29,6 @@ public:
   Mod<M>& operator%=( const int& n );
   Mod<M>& operator%=( const Mod<M>& n );
   inline const int& Represent() const noexcept;
-  Mod<M>& Power( const int& p ) noexcept;
   void Invert() noexcept;
   bool CheckInvertible() noexcept;
   bool IsSmallerThan( const int& n ) const noexcept;
@@ -77,4 +76,4 @@ template <int M> Mod<M> operator/( const Mod<M>& n0 , const Mod<M>& n1 );
 template <int M> Mod<M> operator%( const Mod<M>& n0 , const int& n1 );
 template <int M> Mod<M> operator%( const Mod<M>& n0 , const Mod<M>& n1 );
 template <int M> Mod<M> Inverse( const Mod<M>& n );
-template <int M> Mod<M> Power( const Mod<M>& n , const int& p );
+template <int M> Mod<M> Power( const Mod<M>& n , const int& p , const bool& is_binary_method = false );
