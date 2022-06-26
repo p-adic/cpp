@@ -356,6 +356,6 @@ Mod<M> Power( const Mod<M>& n , const int& p , const bool& is_binary_method )
 
   }
 
-  return Power( Inverse( n ) , -p , is_binary_method );
+  return Inverse( Power( n , -p , is_binary_method ) );
 
 }
