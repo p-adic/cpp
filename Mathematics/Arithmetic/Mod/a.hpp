@@ -16,12 +16,12 @@ public:
   Mod() noexcept;
   Mod( const int& n ) noexcept;
   Mod( const Mod<M>& n ) noexcept;
-  Mod<M>& operator=( const int& n ) noexcept;
+  inline Mod<M>& operator=( const int& n ) noexcept;
   Mod<M>& operator=( const Mod<M>& n ) noexcept;
   Mod<M>& operator+=( const int& n ) noexcept;
-  Mod<M>& operator+=( const Mod<M>& n ) noexcept;
-  Mod<M>& operator-=( const int& n ) noexcept;
-  Mod<M>& operator-=( const Mod<M>& n ) noexcept;
+  inline Mod<M>& operator+=( const Mod<M>& n ) noexcept;
+  inline Mod<M>& operator-=( const int& n ) noexcept;
+  inline Mod<M>& operator-=( const Mod<M>& n ) noexcept;
   Mod<M>& operator*=( const int& n ) noexcept;
   Mod<M>& operator*=( const Mod<M>& n ) noexcept;
 
@@ -30,7 +30,7 @@ public:
   virtual Mod<M>& operator/=( const Mod<M>& n );
   
   Mod<M>& operator%=( const int& n );
-  Mod<M>& operator%=( const Mod<M>& n );
+  inline Mod<M>& operator%=( const Mod<M>& n );
 
   // 前置++/--を使うつもりがないので後置++/--と同じものとして定義する
   inline Mod<M>& operator++() noexcept;
@@ -78,7 +78,7 @@ template <int M> inline bool operator>=( const Mod<M>& n0 , const Mod<M>& n1 ) n
 template <int M> Mod<M> operator+( const Mod<M>& n0 , const int& n1 ) noexcept;
 template <int M> Mod<M> operator+( const int& n0 , const Mod<M>& n1 ) noexcept;
 template <int M> Mod<M> operator+( const Mod<M>& n0 , const Mod<M>& n1 ) noexcept;
-template <int M> Mod<M> operator-( const Mod<M>& n0 , const int& n1 ) noexcept;
+template <int M> inline Mod<M> operator-( const Mod<M>& n0 , const int& n1 ) noexcept;
 template <int M> Mod<M> operator-( const int& n0 , const Mod<M>& n1 ) noexcept;
 template <int M> Mod<M> operator-( const Mod<M>& n0 , const Mod<M>& n1 ) noexcept;
 template <int M> Mod<M> operator*( const Mod<M>& n0 , const int& n1 ) noexcept;
@@ -88,7 +88,7 @@ template <int M> Mod<M> operator/( const Mod<M>& n0 , const int& n1 );
 template <int M> Mod<M> operator/( const int& n0 , const Mod<M>& n1 );
 template <int M> Mod<M> operator/( const Mod<M>& n0 , const Mod<M>& n1 );
 template <int M> Mod<M> operator%( const Mod<M>& n0 , const int& n1 );
-template <int M> Mod<M> operator%( const int& n0 , const Mod<M>& n1 );
-template <int M> Mod<M> operator%( const Mod<M>& n0 , const Mod<M>& n1 );
+template <int M> inline Mod<M> operator%( const int& n0 , const Mod<M>& n1 );
+template <int M> inline Mod<M> operator%( const Mod<M>& n0 , const Mod<M>& n1 );
 template <int M> Mod<M> Inverse( const Mod<M>& n );
 template <int M> Mod<M> Power( const Mod<M>& n , const int& p , const bool& is_binary_method = false );
