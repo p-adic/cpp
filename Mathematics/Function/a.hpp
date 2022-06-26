@@ -1,4 +1,12 @@
-// Function/a.hpp
+// c:/Users/user/Documents/Programming/Mathematics/Function/a.hpp
 
 #pragma once
+#include "../../Utility/Macro_Macro.hpp"
 #include "a_Alias.hpp"
+
+DECLARATION_OF_ITERATED_COMPOSITION_FOR_NON_MEMBER_FUNCTION( Function );
+DECLARATION_OF_ITERATED_COMPOSITION_FOR_NON_MEMBER_FUNCTION( NoexceptFunction );
+DECLARATION_OF_ITERATED_COMPOSITION_FOR_MEMBER_FUNCTION( MemberFunction );
+DECLARATION_OF_ITERATED_COMPOSITION_FOR_MEMBER_FUNCTION( ConstMemberFunction );
+DECLARATION_OF_ITERATED_COMPOSITION_FOR_MEMBER_FUNCTION( NoexceptMemberFunction );
+DECLARATION_OF_ITERATED_COMPOSITION_FOR_MEMBER_FUNCTION( ConstNoexceptMemberFunction );
