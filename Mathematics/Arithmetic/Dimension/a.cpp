@@ -5,28 +5,25 @@
 
 #include "../../../Error/IllegalImput/a_Body.hpp"
 
-const uint dim::m_infty = -1;
-
-dim& dim::operator=( const dim& d )
+dim& dim::operator=( const dim& d ) noexcept
 {
-  
+
   m_d = d.m_d;
+  m_is_infty = d.m_is_infty;
   return *this;
 
 }
 
-dim& dim::operator+=( const dim& d )
+dim& dim::operator+=( const dim& d ) noexcept
 {
 
-  const uint& c = d.m_d;
-  
-  if( m_d == m_infty || c == m_infty ){
-	  
-    m_d = m_infty;
+  if( m_is_infty || d.m_is_infty ){
+    
+    *this = Generate_infty();
 	  
   } else {
 	
-    m_d += c;
+    m_d += d.m_d;
   
   }
   
@@ -37,16 +34,20 @@ dim& dim::operator+=( const dim& d )
 dim& dim::operator-=( const dim& d )
 {
 
-  const uint& c = d.m_d;
-
-  if( m_d < c || c == m_infty ){
+  if( d.m_is_infty ){
 
     ERR_IMPUT( *this , d );
 
   }
       
-  if( m_d != m_infty ){
+  if( ! m_is_infty ){
       
+    if( m_d < c ){
+
+      ERR_IMPUT( *this , d );
+
+    }
+    
     m_d -= c;
     
   }
@@ -58,11 +59,9 @@ dim& dim::operator-=( const dim& d )
 dim& dim::operator*=( const dim& d )
 {
 
-  const uint& c = d.m_d;
+  if( m_is_infty ){
 
-  if( m_d == m_infty ){
-
-    if( c == 0 ){
+    if( d.m_d == 0 ){
       
       ERR_IMPUT( *this , d );
 
@@ -70,7 +69,7 @@ dim& dim::operator*=( const dim& d )
     
   } else {
 
-    if( c == m_infty ){
+    if( d.m_is_infty ){
 
       if( m_d == 0 ){
 
@@ -78,13 +77,13 @@ dim& dim::operator*=( const dim& d )
 
       } else {
 
-	m_d = m_infty;
+	*this = Generate_infty();
 
       }
 
     } else {
 
-      m_d *= c;
+      m_d *= d.m_d;
       
     }
 
@@ -97,11 +96,9 @@ dim& dim::operator*=( const dim& d )
 dim& dim::operator/=( const dim& d )
 {
 
-  const uint& c = d.m_d;
-  
-  if( c == m_infty ){
+  if( d.m_is_infty ){
 
-    if( m_d == m_infty ){
+    if( m_is_infty ){
 	
       ERR_IMPUT( *this , d );
 	
@@ -113,7 +110,7 @@ dim& dim::operator/=( const dim& d )
 
   } else {
 
-    if( c == 0 ){
+    if( d.m_d == 0 ){
 
       if( m_d == 0 ){
 
@@ -121,13 +118,13 @@ dim& dim::operator/=( const dim& d )
 
       } else {
 
-	m_d = m_infty;
+	*this = Generate_infty();
 
       }
       
     } else {
 
-      if( m_d != m_infty ){
+      if( ! m_is_infty ){
 
 	m_d /= c;
 
@@ -144,16 +141,13 @@ dim& dim::operator/=( const dim& d )
 dim& dim::operator%=( const dim& d )
 {
 
-  const uint& c = d.m_d;
-  
-  if( m_d == m_infty || c == 0 || c == m_infty ){
+  if( m_is_infty || d.m_d == 0 || d.m_is_infty ){
 	
     ERR_IMPUT( *this , d );
 
   }
 
-  m_d %= c;
-  
+  m_d %= d.m_d;
   return *this;
   
 }
@@ -161,7 +155,7 @@ dim& dim::operator%=( const dim& d )
 const uint& dim::Get() const
 {
 
-  if( IsInfty() ){
+  if( m_is_infty ){
 
     ERR_IMPUT( *this );
     
@@ -171,48 +165,26 @@ const uint& dim::Get() const
   
 }
 
-string dim::Display() const
+bool operator<=( const dim& d_1 , const dim& d_2 ) noexcept
 {
 
-  if( m_d == m_infty ){
-
-    return "\\infty";
-
-  } else {
-
-    return to_string( m_d );
-    
-  }
-
-}
-
-const dim* const dim::Generate_infty()
-{
-
-  return GLOBAL_CONSTANT( dim , "infty" , m_infty );
-
-}
-
-bool operator<=( const dim& d_1 , const dim& d_2 )
-{
-
-  if( CheckInfty( d_2 ) ){
+  if( d_2.IsInfty() ){
 
     return true;
 
   }
 
-  if( CheckInfty( d_1 ) ){
+  if( d_1.IsInfty() ){
     
     return false;
 
   }
 
-  return to_int( d_1 )<= to_int( d_2 );
+  return d_1.Get() <= d_2.Get();
 
 }
 
-dim operator+( const dim& d_1 , const dim& d_2 )
+dim operator+( const dim& d_1 , const dim& d_2 ) noexcept
 {
 
   dim d = d_1;
@@ -254,43 +226,5 @@ dim operator%( const dim& d_1 , const dim& d_2 )
   dim d = d_1;
   d %= d_2;
   return d;
-
-}
-
-dim Sum( const list<dim>& a )
-{
-
-  dim d = 0;
-  
-  for( list<dim>::const_iterator itr = a.begin() ; itr != a.end() ; itr++ ){
-
-    if( *itr == *infty() ){
-
-      return *infty();
-
-    } else {
-	
-      d += *itr;
-
-    }
-
-  }
-
-  return d;
-
-}
-
-dim Prod( const list<dim>& a )
-{
-
-  dim d = 1;
-  
-  for( list<dim>::const_iterator itr = a.begin() , end = a.end() ; itr != end ; itr++ ){
-
-    d *= *itr;
-
-  }
-  
-  return d; 
 
 }

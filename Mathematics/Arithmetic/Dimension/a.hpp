@@ -7,75 +7,74 @@ class dim
 
 private:
   uint m_d;
-  static const uint m_infty;
+  bool m_is_infinity;
 
 public:
-  dim();
-  dim( const uint& );
-  dim& operator=( const dim& );
-  dim& operator=( const uint& );
-  dim& operator+=( const dim& );
-  dim& operator+=( const uint& );
-  dim& operator-=( const dim& );
-  dim& operator-=( const uint& );
-  dim& operator*=( const dim& );
-  dim& operator*=( const uint& );
-  dim& operator/=( const dim& );
-  dim& operator/=( const uint& );
-  dim& operator%=( const dim& );
-  dim& operator%=( const uint& );
-  const uint& Get() const;
-  string Display() const;
-  bool IsInfty() const;
-  static const dim* const Generate_infty();
+  inline dim( const uint& c = 0 ) noexcept;
+  inline dim& operator=( const dim& c ) noexcept;
+  inline dim& operator=( const uint& c ) noexcept;
+  inline dim& operator+=( const dim& c ) noexcept;
+  inline dim& operator+=( const uint& c ) noexcept;
+  inline dim& operator-=( const dim& c );
+  inline dim& operator-=( const uint& c );
+  inline dim& operator*=( const dim& c );
+  inline dim& operator*=( const uint& c );
+  inline dim& operator/=( const dim& c );
+  inline dim& operator/=( const uint& c );
+  inline dim& operator%=( const dim& c );
+  inline dim& operator%=( const uint& c );
+  inline const uint& Get() const;
+  inline string Display() const noexcept;
+  inline const bool& IsInfty() const noexcept;
+  static inline const dim& Generate_infty() noexcept;
+
+private:
+  static inline dim Generate_infty_Body() noexcept;
   
 };
 
-const dim* const infty();
+const dim& infty() noexcept;
 
-bool operator==( const dim& , const dim& );
-bool operator==( const dim& , const uint& );
-bool operator==( const uint& , const dim& );
+inline bool operator==( const dim& d_1 , const dim& d_2 ) noexcept;
+inline bool operator==( const dim& d_1 , const uint& c_2 ) noexcept;
+inline bool operator==( const uint& c_1 , const dim& d_2 ) noexcept;
 
-bool operator!=( const dim& , const dim& );
-bool operator!=( const dim& , const uint& );
-bool operator!=( const uint& , const dim& );
+inline bool operator!=( const dim& d_1 , const dim& d_2 ) noexcept;
+inline bool operator!=( const dim& d_1 , const uint& c_2 ) noexcept;
+inline bool operator!=( const uint& c_1 , const dim& d_2 ) noexcept;
 
-bool operator<( const dim& , const dim& );
-bool operator<( const dim& , const uint& );
-bool operator<( const uint& , const dim& );
+inline bool operator<( const dim& d_1 , const dim& d_2 ) noexcept;
+inline bool operator<( const dim& d_1 , const uint& c_2 ) noexcept;
+inline bool operator<( const uint& c_1 , const dim& d_2 ) noexcept;
 
-bool operator>( const dim& , const dim& );
-bool operator>( const dim& , const uint& );
-bool operator>( const uint& , const dim& );
+inline bool operator>( const dim& d_1 , const dim& d_2 ) noexcept;
+inline bool operator>( const dim& d_1 , const uint& c_2 ) noexcept;
+inline bool operator>( const uint& c_1 , const dim& d_2 ) noexcept;
 
-bool operator<=( const dim& , const dim& );
-bool operator<=( const dim& , const uint& );
-bool operator<=( const uint& , const dim& );
+inline bool operator<=( const dim& d_1 , const dim& d_2 ) noexcept;
+inline bool operator<=( const dim& d_1 , const uint& c_2 ) noexcept;
+inline bool operator<=( const uint& c_1 , const dim& d_2 ) noexcept;
 
-bool operator>=( const dim& , const dim& );
-bool operator>=( const dim& , const uint& );
-bool operator>=( const uint& , const dim& );
+inline bool operator>=( const dim& d_1 , const dim& d_2 ) noexcept;
+inline bool operator>=( const dim& d_1 , const uint& c_2 ) noexcept;
+inline bool operator>=( const uint& c_1 , const dim& d_2 ) noexcept;
 
-dim operator+( const dim& , const dim& );
-dim operator+( const dim& , const uint& );
+dim operator+( const dim& d_1 , const dim& d_2 ) noexcept;
+inline dim operator+( const dim& d_1 , const uint& c_2 ) noexcept;
 
-dim operator-( const dim& , const dim& );
-dim operator-( const dim& , const uint& );
+dim operator-( const dim& d_1 , const dim& d_2 );
+inline dim operator-( const dim& d_1 , const uint& c_2 );
 
-dim operator*( const dim& , const dim& );
-dim operator*( const dim& , const uint& );
+dim operator*( const dim& d_1 , const dim& d_2 );
+inline dim operator*( const dim& d_1 , const uint& c_2 );
 
-dim operator/( const dim& , const dim& );
-dim operator/( const dim& , const uint& );
+dim operator/( const dim& d_1 , const dim& d_2 ) noexcept;
+inline dim operator/( const dim& d_1 , const uint& c_2 ) noexcept;
 
-dim operator%( const dim& , const dim& );
-dim operator%( const dim& , const uint& );
+dim operator%( const dim& d_1 , const dim& d_2 ) noexcept;
+inline dim operator%( const dim& d_1 , const uint& c_2 ) noexcept;
 
-dim Sum( const list<dim>& );
-dim Prod( const list<dim>& );
+inline dim to_dim( const uint& c ) noexcept;
+inline const uint& to_int( const dim& d ) noexcept;
 
-dim to_dim( const uint& );
-const uint& to_int( const dim& );
-
-bool CheckInfty( const dim& );
+inline const bool& CheckInfty( const dim& d ) noexcept;

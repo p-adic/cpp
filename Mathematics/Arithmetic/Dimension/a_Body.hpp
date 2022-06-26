@@ -3,50 +3,56 @@
 #pragma once
 #include "a.hpp"
 
-inline dim::dim() : dim( 0 ) {}
-inline dim::dim( const uint& c ) : m_d( c ){}
+#include "../../../Utility/VLArray/a_Body.hpp"
 
-inline dim& dim::operator=( const uint& c ){ return operator=( to_dim( c ) ); }
-inline dim& dim::operator+=( const uint& c ){ return operator+=( to_dim( c ) ); }
-inline dim& dim::operator-=( const uint& c ){ return operator-=( to_dim( c ) ); }
-inline dim& dim::operator*=( const uint& c ){ return operator*=( to_dim( c ) ); }
-inline dim& dim::operator/=( const uint& c ){ return operator/=( to_dim( c ) ); }
-inline dim& dim::operator%=( const uint& c ){ return operator%=( to_dim( c ) ); }
+inline dim::dim( const uint& c ) noexcept : m_d( c ) , m_is_infinity( false ) {}
 
-inline bool dim::IsInfty() const { return m_d == m_infty; }
+inline dim& dim::operator=( const uint& c ) noexcept { return operator=( dim( c ) ); }
+inline dim& dim::operator+=( const uint& c ) noexcept { return operator+=( dim( c ) ); }
+inline dim& dim::operator-=( const uint& c ) noexcept { return operator-=( dim( c ) ); }
+inline dim& dim::operator*=( const uint& c ) noexcept { return operator*=( dim( c ) ); }
+inline dim& dim::operator/=( const uint& c ) noexcept { return operator/=( dim( c ) ); }
+inline dim& dim::operator%=( const uint& c ) noexcept { return operator%=( dim( c ) ); }
 
-inline const dim* const infty(){ return dim::Generate_infty(); }
+inline string dim::Display() const noexcept { return m_is_infty ? "\\infty" : to_string( m_d ); }
 
-inline bool operator==( const dim& d_1 , const dim& d_2 ){ return ( d_1 <= d_2 ) && ( d_1 >= d_2 ); }
-inline bool operator==( const dim& d_1 , const uint& c_2 ){ return d_1 == to_dim( c_2 ); }
-inline bool operator==( const uint& c_1 , const dim& d_2 ){ return d_2 == c_1; }
+inline const bool& dim::IsInfty() const noexcept { return m_is_infty; }
 
-inline bool operator!=( const dim& d_1 , const dim& d_2 ){ return ! ( d_1 == d_2 ); }
-inline bool operator!=( const dim& d_1 , const uint& c_2 ){ return ! ( d_1 == c_2 ); }
-inline bool operator!=( const uint& c_1 , const dim& d_2 ){ return ! ( c_1 == d_2 ); }
+inline const dim& dim::Generate_infty() noexcept { static const dim = Generate_unfty_Body(); return d; }
+inline dim dim::Generate_infty_Body() noexcept { dim d{}; d.m_is_infty = true; return d; }
 
-inline bool operator<( const dim& d_1 , const dim& d_2 ){ return ( d_1 <= d_2 ) && ( d_1 != d_2 ); }
-inline bool operator<( const dim& d_1 , const uint& c_2 ){ return d_1 < to_dim( c_2 ); }
-inline bool operator<( const uint& c_1 , const dim& d_2 ){ return to_dim( c_1 ) < d_2 ; }
+inline const dim& const infty() noexcept { return dim::Generate_infty(); }
 
-inline bool operator>( const dim& d_1 , const dim& d_2 ){ return d_2 < d_1; }
-inline bool operator>( const dim& d_1 , const uint& c_2 ){ return c_2 < d_1; }
-inline bool operator>( const uint& c_1 , const dim& d_2 ){ return d_2 < c_1; }
+inline bool operator==( const dim& d_1 , const dim& d_2 ) noexcept { return ( d_1 <= d_2 ) && ( d_1 >= d_2 ); }
+inline bool operator==( const dim& d_1 , const uint& c_2 ) noexcept { return d_1 == dim( c_2 ); }
+inline bool operator==( const uint& c_1 , const dim& d_2 ) noexcept { return d_2 == c_1; }
 
-inline bool operator<=( const dim& d_1 , const uint& c_2 ){ return d_1 <= to_dim( c_2 ); }
-inline bool operator<=( const uint& c_1 , const dim& d_2 ){ return to_dim( c_1 ) <= d_2; }
+inline bool operator!=( const dim& d_1 , const dim& d_2 ) noexcept { return ! ( d_1 == d_2 ); }
+inline bool operator!=( const dim& d_1 , const uint& c_2 ) noexcept { return ! ( d_1 == c_2 ); }
+inline bool operator!=( const uint& c_1 , const dim& d_2 ) noexcept { return ! ( c_1 == d_2 ); }
 
-inline bool operator>=( const dim& d_1 , const dim& d_2 ){ return d_2 <= d_1; }
-inline bool operator>=( const dim& d_1 , const uint& c_2 ){ return c_2 <= d_1; }
-inline bool operator>=( const uint& c_1 , const dim& d_2 ){ return d_2 <= c_1; }
+inline bool operator<( const dim& d_1 , const dim& d_2 ) noexcept { return ( d_1 <= d_2 ) && ( d_1 != d_2 ); }
+inline bool operator<( const dim& d_1 , const uint& c_2 ) noexcept { return d_1 < dim( c_2 ); }
+inline bool operator<( const uint& c_1 , const dim& d_2 ) noexcept { return dim( c_1 ) < d_2 ; }
 
-inline dim operator+( const dim& d_1 , const uint& c_2 ){ return d_1 + to_dim( c_2 ); }
-inline dim operator-( const dim& d_1 , const uint& c_2 ){ return d_1 - to_dim( c_2 ); }
-inline dim operator*( const dim& d_1 , const uint& c_2 ){ return d_1 * to_dim( c_2 ); }
-inline dim operator/( const dim& d_1 , const uint& c_2 ){ return d_1 / to_dim( c_2 ); }
-inline dim operator%( const dim& d_1 , const uint& c_2 ){ return d_1 % to_dim( c_2 ); }
+inline bool operator>( const dim& d_1 , const dim& d_2 ) noexcept { return d_2 < d_1; }
+inline bool operator>( const dim& d_1 , const uint& c_2 ) noexcept { return c_2 < d_1; }
+inline bool operator>( const uint& c_1 , const dim& d_2 ) noexcept { return d_2 < c_1; }
 
-inline dim to_dim( const uint& c ){ return dim( c ); }
-inline const uint& to_int( const dim& d ){ return d.Get(); }
+inline bool operator<=( const dim& d_1 , const uint& c_2 ) noexcept { return d_1 <= dim( c_2 ); }
+inline bool operator<=( const uint& c_1 , const dim& d_2 ) noexcept { return dim( c_1 ) <= d_2; }
 
-inline bool CheckInfty( const dim& d ){ return d.IsInfty(); }
+inline bool operator>=( const dim& d_1 , const dim& d_2 ) noexcept { return d_2 <= d_1; }
+inline bool operator>=( const dim& d_1 , const uint& c_2 ) noexcept { return c_2 <= d_1; }
+inline bool operator>=( const uint& c_1 , const dim& d_2 ) noexcept { return d_2 <= c_1; }
+
+inline dim operator+( const dim& d_1 , const uint& c_2 ) noexcept { return d_1 + dim( c_2 ); }
+inline dim operator-( const dim& d_1 , const uint& c_2 ) { return d_1 - dim( c_2 ); }
+inline dim operator*( const dim& d_1 , const uint& c_2 ) noexcept { return d_1 * dim( c_2 ); }
+inline dim operator/( const dim& d_1 , const uint& c_2 ) noexcept { return d_1 / dim( c_2 ); }
+inline dim operator%( const dim& d_1 , const uint& c_2 ) noexcept { return d_1 % dim( c_2 ); }
+
+inline dim to_dim( const uint& c ) noexcept { return dim( c ); }
+inline const uint& to_int( const dim& d ) noexcept { return d.Get(); }
+
+inline const bool& CheckInfty( const dim& d ) noexcept { return d.IsInfty(); }
