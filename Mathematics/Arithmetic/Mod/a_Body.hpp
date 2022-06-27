@@ -3,6 +3,7 @@
 #pragma once
 #include "a.hpp"
 
+#include "VLArray/a_Body.hpp"
 #include "../Power/a_Body.hpp"
 
 template <INT_TYPE_FOR_MOD M>
@@ -169,18 +170,7 @@ bool Mod<M>::CheckInvertible() noexcept
 
   if( m_inv == 0 ){
 
-    for( INT_TYPE_FOR_MOD i = 1 ; i < M ; i++ ){
-
-      if( Residue( m_n * i ) == 1 ){
-
-	m_inv = i;
-	return true;
-      
-      }
-
-    }
-
-    m_inv = M;
+    LazyEvaluationOfModularInverse( M , m_n , m_inv );
 
   }
 
@@ -305,7 +295,7 @@ Mod<M> Power( const Mod<M>& n , const INT_TYPE_FOR_MOD& p , const bool& is_binar
 
   }
 
-  return Inverse( Power( n , -p , is_binary_method ) );
+  return Inverse( Power<M>( n , -p , is_binary_method ) );
 
 }
 
