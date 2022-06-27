@@ -156,7 +156,9 @@ void Mod<M>::Invert() noexcept
 
   } else {
 
-    m_n = 0;
+    // m_nがMになるのはここの処理に限るのでRepresent()の値を参照することで例外処理可能
+    m_n = M;
+    m_inv = M;
 
   }
 

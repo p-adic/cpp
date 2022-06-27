@@ -9,31 +9,41 @@
 void LazyEvaluationOfModularInverse( const INT_TYPE_FOR_MOD& M , const INT_TYPE_FOR_MOD& n , INT_TYPE_FOR_MOD& m )
 {
 
+  static INT_TYPE_FOR_MOD M_prev = 0;
   static VLArray<VLArray<VLArray<INT_TYPE_FOR_MOD> > > a{};
-  VLArray<VLArray<INT_TYPE_FOR_MOD> >* p = nullptr;
+  static VLArray<VLArray<INT_TYPE_FOR_MOD> >* p_prev = nullptr;
 
-  for( auto itr = a.begin() , end = a.end() ; itr != end && p != nullptr ; itr++ ){
+  if( M_prev != M ){
 
-    if( itr->front().back() == M ){
+    p_prev = nullptr;
+    
+    for( auto itr = a.begin() , end = a.end() ; itr != end && p_prev != nullptr ; itr++ ){
 
-      p = &( *itr );
+      if( itr->front().back() == M ){
+
+	p_prev = &( *itr );
+
+      }
+
+    }
+
+    if( p_prev == nullptr ){
+
+      a.push_back( VLArray<VLArray<INT_TYPE_FOR_MOD> >() );
+      p_prev = &( a.back() );
+      VLArray<INT_TYPE_FOR_MOD> inv_pair{};
+      inv_pair.push_back( 0 );
+      inv_pair.push_back( M );
+      p_prev->push_back( inv_pair );
+      inv_pair.clear();
+      inv_pair.push_back( 1 );
+      inv_pair.push_back( 1 );
 
     }
 
   }
-
-  if( p == nullptr ){
-
-    a.push_back( VLArray<VLArray<INT_TYPE_FOR_MOD> >() );
-    p = &( a.back() );
-    VLArray<INT_TYPE_FOR_MOD> inv_pair{};
-    inv_pair.push_back( 0 );
-    inv_pair.push_back( M );
-    p->push_back( inv_pair );
-
-  }
-
-  for( auto itr = p->begin() , end = p->end() ; itr != end ; itr++ ){
+  
+  for( auto itr = p_prev->begin() , end = p_prev->end() ; itr != end ; itr++ ){
 
     if( itr->front() == n ){
 
@@ -50,29 +60,43 @@ void LazyEvaluationOfModularInverse( const INT_TYPE_FOR_MOD& M , const INT_TYPE_
     }
     
   }
-  
+
   const INT_TYPE_FOR_MOD M_abs = M >= 0 ? M : -M;
+  const INT_TYPE_FOR_MOD n_sub = M_abs % n;
+  INT_TYPE_FOR_MOD n_sub_inv;
+  LazyEvaluationOfModularInverse( M , n_sub , n_sub_inv );
+
+  if( n_sub_inv != M ){
+
+    m = M_abs - ( ( n_sub_inv * ( M_abs / n ) ) % M_abs );
+    VLArray<INT_TYPE_FOR_MOD> inv_pair{};
+    inv_pair.push_back( n );
+    inv_pair.push_back( m );
+    p_prev->push_back( inv_pair );
+    return;
+
+  }
   
-  for( INT_TYPE_FOR_MOD i = 1 ; i < M ; i++ ){
+  for( INT_TYPE_FOR_MOD i = 1 ; i < M_abs ; i++ ){
+    
+    if( ( n * i ) % M_abs == 1 ){
 
-    if( n * i % M_abs == 1 ){
-
+      m = i;
       VLArray<INT_TYPE_FOR_MOD> inv_pair{};
       inv_pair.push_back( n );
-      inv_pair.push_back( i );
-      p->push_back( inv_pair );
-      m = i;
+      inv_pair.push_back( m );
+      p_prev->push_back( inv_pair );
       return;
       
     }
 
   }
 
+  m = M;
   VLArray<INT_TYPE_FOR_MOD> inv_pair{};
   inv_pair.push_back( n );
-  inv_pair.push_back( M );
-  p->push_back( inv_pair );
-  m = M;
+  inv_pair.push_back( m );
+  p_prev->push_back( inv_pair );
   return;
 
 }
