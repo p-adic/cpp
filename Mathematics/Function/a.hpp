@@ -1,7 +1,7 @@
 // c:/Users/user/Documents/Programming/Mathematics/Function/a.hpp
 
 #pragma once
-#include "../../Utility/Macro_Macro.hpp"
+#include "a_Macro.hpp"
 #include "a_Alias.hpp"
 
 DECLARATION_OF_ITERATED_COMPOSITION_FOR_NON_MEMBER_FUNCTION( Function );
