@@ -1,6 +1,5 @@
 // c:/Users/user/Documents/Programming/Mathematics/Arithmetic/Mod/VLArray/a.cpp
 
-#pragma once
 #include "../../../Header.hpp"
 #include "a_Body.hpp"
 
