@@ -447,7 +447,7 @@ VLArray<T> VLArray<T>::GetInitialSegment( const int& n ) const
   }
 
   VLArray<T> b{};
-  const_iterator itr = a.begin();
+  const_iterator itr = begin();
 
   for( int m = 1 ; m <= M ; m++ ){
 
@@ -486,7 +486,7 @@ VLArray<T> VLArray<T>::GetFinalSegment( const int& n ) const
   }
 
   VLArray<T> b{};
-  const_iterator itr = a.end();
+  const_iterator itr = end();
 
   for( int m = 1 ; m <= M ; m++ ){
 
