@@ -18,7 +18,7 @@ string to_string( const type_info& T ) noexcept
 int to_int( const string& s )
 {
 
-  VLArrat<string> a = ToArrayOfLetters( s );
+  VLArray<string> a = ToArrayOfLetters( s );
   int n = 0;
   bool negative;
   auto itr = a.begin() , end = a.end();
