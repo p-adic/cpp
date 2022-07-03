@@ -31,6 +31,7 @@ template <typename... T0> auto to_string() noexcept -> typename enable_if< equal
 template <typename... T0> auto to_string() noexcept -> typename enable_if< equal_to<uint>()( sizeof...( T0 ) , 1 ) , string >::type;
 template <typename... T0> auto to_string() noexcept -> typename enable_if< less_equal<uint>()( 2 , sizeof...( T0 ) ) , string >::type;
 
+int to_int( const string& s );
 
 bool CheckEmpty( const string& ) noexcept;
 bool CheckContain( const string& , const string& ) noexcept;

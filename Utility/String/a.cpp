@@ -15,6 +15,56 @@ string to_string( const type_info& T ) noexcept
 
 }
 
+int to_int( const string& s )
+{
+
+  VLArrat<string> a = ToArrayOfLetters( s );
+  int n = 0;
+  bool negative;
+  auto itr = a.begin() , end = a.end();
+
+  if( *itr == "-" ){
+
+    negative = true;
+    itr++;
+
+  } else {
+
+    negative = false;
+
+  }
+
+  while( itr != end ){
+
+    const string& c = *itr;
+
+    for( int i = 0 ; i < 10 ; i++ ){
+
+      if( c == to_string( i ) ){
+
+	n *= 10;
+	n += i;
+	i = 10;
+
+      }
+
+    }
+
+    itr++;
+
+  }
+
+  if( negative ){
+
+    n *= -1;
+
+  }
+  
+  
+  return n;
+
+}
+
 bool CheckContain( const string& s0 , const string& s1 ) noexcept
 {
 
