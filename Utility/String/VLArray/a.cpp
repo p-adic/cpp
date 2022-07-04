@@ -40,9 +40,12 @@ VLArray<string> ToArrayOfLetters( const string& s )
 void Separate( const string& s , const string& separator , VLArray<string>& a_front , VLArray<string>& a_back )
 {
 
+  VLArray<string> separator_copy;
+  
   try{
     
     a_front = ToArrayOfLetters( s );
+    separator_copy = ToArrayOfLetters( separator );
 
   } catch( ErrorType& e ) {
 
@@ -51,21 +54,40 @@ void Separate( const string& s , const string& separator , VLArray<string>& a_fr
   }
 
   a_back = VLArray<string>();
-  const uint size = a_front.size();
+  const uint& size1 = a_front.size();
+  const uint& size2 = separator_copy.size();
   
-  for( uint i = 0 ; i < size ; i++ ){
+  for( uint i = 0 ; i + size2 < size1 + 1 ; i++ ){
 
-    if( a_front[i] == separator ){
+    bool b = true;
+    
+    for( uint j = 0 ; j < size2 && b ; j++ ){
 
-      while( size > i + 1 ){
+      if( a_front[ i + j ] != separator_copy[j] ){
+
+	b = false;
+
+      }
+
+    }
+
+    if( b ){
+
+      while( i + size2 < size1 ){
 
 	a_back.push_front( a_front.back() );
 	a_front.pop_back();
 
       }
 
-      a_front.pop_back();
+      while( i < size1 ){
+
+	a_front.pop_back();
+
+      }
+
       return;
+
 
     }
 
