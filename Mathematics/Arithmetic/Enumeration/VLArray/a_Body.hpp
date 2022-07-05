@@ -24,7 +24,7 @@ template <typename INT1 , typename INT2>
 INT1 ModularFactorialNormalMethod( const INT2& n , const INT2& n_min )
 {
 
-  if( n == 0 ){
+  if( n < n_min ){
 
     return 1;
 
@@ -88,7 +88,7 @@ template <typename INT1 , typename INT2>
 INT1 ModularFactorialInverseNormalMethod( const INT2& n , const INT2& n_min )
 {
 
-  if( n == 0 ){
+  if( n < n_min ){
 
     return 1;
 
