@@ -26,6 +26,3 @@ inline void BijProd12( const uint& n , uint& n_1 , uint& n_2 );
 // BijProd12‚Ì‹t
 uint BijProd21( const dim& d_1 , const dim& d_2 , const uint& n_1 , const uint& n_2 );
 inline uint BijProd21( const uint& n_1 , const uint& n_2 );
-
-// ê‡‚Ì”
-template <typename U> U Comb()

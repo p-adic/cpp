@@ -14,3 +14,163 @@ inline VLArray<uint> BijProd1N( const uint& N , const uint& n ) { return BijProd
 inline void BijProd1N( const uint& N , const uint& n , VLArray<uint>& a_n ) { BijProd1N(to_VLArray<dim>( N , infty() ) , n , a_n ); }
 
 inline uint BijProdN1( const VLArray<uint>& a_n ) { return BijProdN1( to_VLArray<dim>( a_n.size() , infty() ) , a_n ); }
+
+
+template <typename INT> inline INT Factorial( const INT& n , const INT& n_min , const string& mode ) { return ModularFactorial<INT,INT>( n , n_min , mode ); }
+
+template <typename INT1 , typename INT2> inline INT1 ModularFactorial( const INT2& n , const INT2& n_min , const string& mode ) { return mode == "loop" ? ModularFactorialLoopMethod<INT1,INT2>( n , n_min ) : ModularFactorialNormalMethod<INT1,INT2>( n , n_min ); }
+
+template <typename INT1 , typename INT2>
+INT1 ModularFactorialNormalMethod( const INT2& n , const INT2& n_min )
+{
+
+  if( n == 0 ){
+
+    return 1;
+
+  }
+  
+  if( n == n_min ){
+
+    return n;
+
+  }
+  
+  static VLArray<INT2> memory_n{};
+  static VLArray<INT2> memory_n_min{};
+  static VLArray<INT1> memory_answer{};
+
+  auto itr_n = memory_n.begin() , end_n = memory_n.end();
+  auto itr_n_min = memory_n_min.begin();
+  auto itr_answer = memory_answer.begin();
+
+  while( itr_n != end_n ){
+
+    if( *itr_n == n && *itr_n_min == n_min ){
+
+      return *itr_answer;
+
+    }
+
+  }
+
+  const INT1 answer = n * ModularFactorialNormalMethod<INT1,INT2>( n - 1 );
+  memory_n.push_front( n );
+  memory_n_min.push_front( n_min );
+  memory_answer.push_front( answer );  
+  return answer;
+
+}
+
+template <typename INT1 , typename INT2>
+INT1 ModularFactorialLoopMethod( const INT2& n , const INT2& n_min )
+{
+
+  INT1 f = 1;
+
+  for( INT2 i = n_min ; i <= n ; i++ ){
+
+    f *= i;
+
+  }
+
+  return f;
+
+}
+
+template <typename INT>
+INT Combination( const INT& n , const INT& m , const string& mode )
+{
+
+  if( n < m ){
+
+    return 0;
+
+  }
+
+  const INT m_comp = n - m;
+
+  if( m_comp < m ){
+
+    return Combination<INT>( n , m_comp , mode );
+
+  }
+
+  if( mode == "loop" ){
+
+    return CombinationLoopMethod<INT>( n , m );
+
+  }
+
+  if( mode == "factorial normal" ){
+
+    return CombinationFactorialNormalMethod<INT>( n , m );
+
+  }
+
+  if( mode == "factorial loop" ){
+
+    return CombinationFactorialLoopMethod<INT>( n , m );
+
+  }
+
+  return CombinationNormalMethod<INT>( n , m );
+
+}
+
+template <typename INT>
+INT CombinationNormalMethod( const INT& n , const INT& m )
+{
+
+  if( m == 0 ){
+
+    return 1;
+
+  }
+  
+  static VLArray<INT> memory_n{};
+  static VLArray<INT> memory_m{};
+  static VLArray<INT> memory_answer{};
+
+  auto itr_n = memory_n.begin() , end_n = memory_n.end();
+  auto itr_m = memory_m.begin();
+  auto itr_answer = memory_answer.begin();
+
+  while( itr_n != end_n ){
+
+    if( *itr_n == n && *itr_m == m ){
+
+      return *itr_answer;
+
+    }
+
+  }
+
+  const INT answer = ( n * CombinationNormalMethod<INT>( n - 1 , m - 1 ) ) / m;;
+  memory_n.push_front( n );
+  memory_m.push_front( m );
+  memory_answer.push_front( answer );  
+  return answer; 
+}
+
+template <typename INT>
+INT CombinationLoopMethod( const INT& n , const INT& m )
+{
+
+  INT c = 1;
+
+  for( INT i = 0 ; i < m ; i++ ){
+
+    c *= ( n - i );
+    c /= i + 1;
+
+  }
+  
+  return c;
+
+}
+
+template <typename INT> inline INT CombinationFactorialNormalMethod( const INT& n , const INT& m ) { return Factorial<INT>( n , n - m + 1 , "normal" ) / Factorial<INT>( m , 1 , "normal" ); }
+
+template <typename INT> inline INT CombinationFactorialLoopMethod( const INT& n , const INT& m ) { return Factorial<INT>( n , n - m + 1 , "loop" ) / Factorial<INT>( m , 1 , "loop" ); }
+
