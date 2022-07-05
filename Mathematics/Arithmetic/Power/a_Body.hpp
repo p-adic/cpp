@@ -5,7 +5,7 @@
 
 
 template <typename T , typename UINT>
-inline T Power( const T& t , const UINT& num , const T& init , const bool& init_is_unit , const bool& for_right_multiplication , const bool& is_binary_method ) { return is_binary_method ? PowerBinaryMethod<T,UINT>( t , num , init , init_is_unit , for_right_multiplication ) : PowerNormalMethod<T,UINT>( t , num , init , for_right_multiplication ); }
+inline T Power( const T& t , const UINT& num , const T& init , const bool& init_is_unit , const bool& for_right_multiplication , const string& method ) { return method == "binary" ? PowerBinaryMethod<T,UINT>( t , num , init , init_is_unit , for_right_multiplication ) : PowerNormalMethod<T,UINT>( t , num , init , for_right_multiplication ); }
 
 template <typename T , typename UINT> inline T PowerNormalMethod( const T& t , const UINT& num , const T& init , const bool& for_right_multiplication ) { return num == 0 ? init : ( for_right_multiplication ? PowerNormalMethod<T,UINT>( t , num - 1 , init ) * t : t * PowerNormalMethod<T,UINT>( t , num - 1 , init ) ); }
 

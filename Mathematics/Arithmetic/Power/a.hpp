@@ -4,7 +4,7 @@
 
 // init * ( t ^ num )
 template <typename T , typename UINT>
-T Power( const T& t , const UINT& num , const T& init = 1 , const bool& init_is_unit = true , const bool& for_right_multiplication = true , const bool& is_binary_method = false );
+T Power( const T& t , const UINT& num , const T& init = 1 , const bool& init_is_unit = true , const bool& for_right_multiplication = true , const string& method = "normal" );
 
 template <typename T , typename UINT> inline T PowerNormalMethod( const T& t , const UINT& num , const T& init = 1 , const bool& for_right_multiplication = true );
 template <typename T , typename UINT>
