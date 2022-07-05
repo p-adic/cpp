@@ -58,7 +58,7 @@ INT1 ModularFactorialNormalMethod( const INT2& n , const INT2& n_min )
 
   }
 
-  const INT1 answer = n * ModularFactorialNormalMethod<INT1,INT2>( n - 1 );
+  const INT1 answer = n_min == 1 ? n * ModularFactorialNormalMethod<INT1,INT2>( n - 1 ) : ModularFactorialNormalMethod<INT1,INT2>( n , n_min + 1 ) * n_min;
   memory_n.push_front( n );
   memory_n_min.push_front( n_min );
   memory_answer.push_front( answer );  
@@ -122,7 +122,7 @@ INT1 ModularFactorialInverseNormalMethod( const INT2& n , const INT2& n_min )
 
   }
 
-  const INT1 answer = ModularFactorialInverseNormalMethod<INT1,INT2>( n - 1 ) / n;
+  const INT1 answer = n_min == 1 ? ModularFactorialInverseNormalMethod<INT1,INT2>( n - 1 ) / n : ModularFactorialInverseNormalMethod<INT1,INT2>( n , n_min + 1 ) / n_min;
   memory_n.push_front( n );
   memory_n_min.push_front( n_min );
   memory_answer.push_front( answer );  
