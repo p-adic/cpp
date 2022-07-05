@@ -52,6 +52,10 @@ INT1 ModularFactorialNormalMethod( const INT2& n , const INT2& n_min )
 
     }
 
+    itr_n++;
+    itr_n_min++;
+    itr_answer++;
+
   }
 
   const INT1 answer = n * ModularFactorialNormalMethod<INT1,INT2>( n - 1 );
@@ -143,6 +147,10 @@ INT CombinationNormalMethod( const INT& n , const INT& m )
       return *itr_answer;
 
     }
+
+    itr_n++;
+    itr_m++;
+    itr_answer++;
 
   }
 
