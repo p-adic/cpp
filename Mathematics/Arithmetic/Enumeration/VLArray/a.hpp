@@ -43,6 +43,17 @@ INT1 ModularFactorialNormalMethod( const INT2& n , const INT2& n_min = 1 );
 template <typename INT1 , typename INT2>
 INT1 ModularFactorialLoopMethod( const INT2& n , const INT2& n_min = 1 );
 
+// modular階乗の逆数（INT1 = Mod<M>の時にMでの値がサポート外であることに注意）
+template <typename INT1 , typename INT2> inline INT1 ModularFactorialInverse( const INT2& n , const INT2& n_min = 1 , const string& mode = "normal" );
+
+// 再帰式（呼び出し順によっては再帰深度が大きい）
+template <typename INT1 , typename INT2>
+INT1 ModularFactorialInverseNormalMethod( const INT2& n , const INT2& n_min = 1 );
+
+// ループ
+template <typename INT1 , typename INT2>
+INT1 ModularFactorialInverseLoopMethod( const INT2& n , const INT2& n_min = 1 );
+
 // 場合の数
 template <typename INT>
 INT Combination( const INT& n , const INT& m , const string& mode = "normal" );
@@ -58,3 +69,6 @@ INT CombinationLoopMethod( const INT& n , const INT& m );
 // 階乗の比（modular演算でない時はオーバーフローしやすい）
 template <typename INT> inline INT CombinationFactorialNormalMethod( const INT& n , const INT& m );
 template <typename INT> inline INT CombinationFactorialLoopMethod( const INT& n , const INT& m );
+template <typename INT> inline INT CombinationModularFactorialInverseNormalMethod( const INT& n , const INT& m );
+template <typename INT> inline INT CombinationModularFactorialInverseLoopMethod( const INT& n , const INT& m );
+

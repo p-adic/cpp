@@ -82,6 +82,70 @@ INT1 ModularFactorialLoopMethod( const INT2& n , const INT2& n_min )
 
 }
 
+template <typename INT1 , typename INT2> inline INT1 ModularFactorialInverse( const INT2& n , const INT2& n_min , const string& mode ) { return mode == "loop" ? ModularFactorialInverseLoopMethod<INT1,INT2>( n , n_min ) : ModularFactorialInverseNormalMethod<INT1,INT2>( n , n_min ); }
+
+template <typename INT1 , typename INT2>
+INT1 ModularFactorialInverseNormalMethod( const INT2& n , const INT2& n_min )
+{
+
+  if( n == 0 ){
+
+    return 1;
+
+  }
+  
+  if( n == n_min ){
+
+    return 1 / n;
+
+  }
+  
+  static VLArray<INT2> memory_n{};
+  static VLArray<INT2> memory_n_min{};
+  static VLArray<INT1> memory_answer{};
+
+  auto itr_n = memory_n.begin() , end_n = memory_n.end();
+  auto itr_n_min = memory_n_min.begin();
+  auto itr_answer = memory_answer.begin();
+
+  while( itr_n != end_n ){
+
+    if( *itr_n == n && *itr_n_min == n_min ){
+
+      return *itr_answer;
+
+    }
+
+    itr_n++;
+    itr_n_min++;
+    itr_answer++;
+
+  }
+
+  const INT1 answer = ModularFactorialInverseNormalMethod<INT1,INT2>( n - 1 ) / n;
+  memory_n.push_front( n );
+  memory_n_min.push_front( n_min );
+  memory_answer.push_front( answer );  
+  return answer;
+
+}
+
+template <typename INT1 , typename INT2>
+INT1 ModularFactorialInverseLoopMethod( const INT2& n , const INT2& n_min )
+{
+
+  INT1 f = 1;
+
+  for( INT2 i = n_min ; i <= n ; i++ ){
+
+    f /= i;
+
+  }
+
+  return f;
+
+}
+
 template <typename INT>
 INT Combination( const INT& n , const INT& m , const string& mode )
 {
@@ -115,6 +179,18 @@ INT Combination( const INT& n , const INT& m , const string& mode )
   if( mode == "factorial loop" ){
 
     return CombinationFactorialLoopMethod<INT>( n , m );
+
+  }
+
+  if( mode == "modular factorial inverse normal" ){
+
+    return CombinationModularFactorialInverseNormalMethod<INT>( n , m );
+
+  }
+
+  if( mode == "modular factorial inverse loop" ){
+
+    return CombinationModularFactorialInverseLoopMethod<INT>( n , m );
 
   }
 
@@ -181,4 +257,8 @@ INT CombinationLoopMethod( const INT& n , const INT& m )
 template <typename INT> inline INT CombinationFactorialNormalMethod( const INT& n , const INT& m ) { return Factorial<INT>( n , n - m + 1 , "normal" ) / Factorial<INT>( m , 1 , "normal" ); }
 
 template <typename INT> inline INT CombinationFactorialLoopMethod( const INT& n , const INT& m ) { return Factorial<INT>( n , n - m + 1 , "loop" ) / Factorial<INT>( m , 1 , "loop" ); }
+
+template <typename INT> inline INT CombinationModularFactorialInverseNormalMethod( const INT& n , const INT& m ) { return Factorial<INT>( n , n - m + 1 , "normal" ) * ModularFactorialInverse<INT,INT>( m , 1 , "normal" ); }
+
+template <typename INT> inline INT CombinationModularFactorialInverseLoopMethod( const INT& n , const INT& m ) { return Factorial<INT,INT>( n , n - m + 1 , "loop" ) * ModularFactorialInverse<INT,INT>( m , 1 , "loop" ); }
 
