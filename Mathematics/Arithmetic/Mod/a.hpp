@@ -12,13 +12,11 @@ class Mod
 protected:
   INT_TYPE_FOR_MOD m_n;
   INT_TYPE_FOR_MOD m_inv;
-  
-  static INT_TYPE_FOR_MOD Residue( const INT_TYPE_FOR_MOD& n ) noexcept;
 
 public:
-  Mod() noexcept;
-  Mod( const INT_TYPE_FOR_MOD& n ) noexcept;
-  Mod( const Mod<M>& n ) noexcept;
+  inline Mod() noexcept;
+  inline Mod( const INT_TYPE_FOR_MOD& n ) noexcept;
+  inline Mod( const Mod<M>& n ) noexcept;
   inline Mod<M>& operator=( const INT_TYPE_FOR_MOD& n ) noexcept;
   Mod<M>& operator=( const Mod<M>& n ) noexcept;
   Mod<M>& operator+=( const INT_TYPE_FOR_MOD& n ) noexcept;
@@ -95,8 +93,8 @@ template <INT_TYPE_FOR_MOD M> inline Mod<M> operator%( const INT_TYPE_FOR_MOD& n
 template <INT_TYPE_FOR_MOD M> inline Mod<M> operator%( const Mod<M>& n0 , const Mod<M>& n1 );
 template <INT_TYPE_FOR_MOD M> Mod<M> Inverse( const Mod<M>& n );
 
-template <INT_TYPE_FOR_MOD M> Mod<M> Power( const Mod<M>& n , const INT_TYPE_FOR_MOD& p , const bool& is_binary_method = false );
+template <INT_TYPE_FOR_MOD M> Mod<M> Power( const Mod<M>& n , const INT_TYPE_FOR_MOD& p , const string& method = "normal" );
 
 // MèÊÇ™1Ç…Ç»ÇÈÇÊÇ§íËã`Ç≥ÇÍÇƒÇ¢ÇÈÇ±Ç∆Ç…íçà”
-template <INT_TYPE_FOR_MOD M> inline Mod<M> Power( const Mod<M>& n , const Mod<M>& p , const bool& is_binary_method );
+template <INT_TYPE_FOR_MOD M> inline Mod<M> Power( const Mod<M>& n , const Mod<M>& p , const string& method = "normal" );
 

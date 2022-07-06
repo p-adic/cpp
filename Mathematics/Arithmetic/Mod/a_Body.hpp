@@ -3,48 +3,15 @@
 #pragma once
 #include "a.hpp"
 
+#include "Residue/a_Body.hpp"
 #include "VLArray/a_Body.hpp"
 #include "../Power/a_Body.hpp"
 
-template <INT_TYPE_FOR_MOD M>
-INT_TYPE_FOR_MOD Mod<M>::Residue( const INT_TYPE_FOR_MOD& n ) noexcept
-{
+template <INT_TYPE_FOR_MOD M> inline Mod<M>::Mod() noexcept : m_n( 0 ) , m_inv( M ){}
 
-  if( M == 0 ){
+template <INT_TYPE_FOR_MOD M> inline Mod<M>::Mod( const INT_TYPE_FOR_MOD& n ) noexcept : m_n( Residue<INT_TYPE_FOR_MOD>( M , n ) ) , m_inv( 0 ){}
 
-    return 0;
-
-  }
-
-  const INT_TYPE_FOR_MOD M_abs = ( M >= 0 ? M : -M );
-
-  if( n < 0 ){
-
-    const INT_TYPE_FOR_MOD n_abs = -n;
-    const INT_TYPE_FOR_MOD res = n_abs % M_abs;
-
-    if( res == 0 ){
-
-      return 0;
-
-    }
-    
-    return M_abs - res;
-
-  }
-
-  return n % M_abs;
-
-}
-
-template <INT_TYPE_FOR_MOD M>
-Mod<M>::Mod() noexcept : m_n( 0 ) , m_inv( M ){}
-
-template <INT_TYPE_FOR_MOD M>
-Mod<M>::Mod( const INT_TYPE_FOR_MOD& n ) noexcept : m_n( Residue( n ) ) , m_inv( 0 ){}
-
-template <INT_TYPE_FOR_MOD M>
-Mod<M>::Mod( const Mod<M>& n ) noexcept : m_n( n.m_n ) , m_inv( 0 ){}
+template <INT_TYPE_FOR_MOD M> inline Mod<M>::Mod( const Mod<M>& n ) noexcept : m_n( n.m_n ) , m_inv( 0 ){}
 
 template <INT_TYPE_FOR_MOD M> inline Mod<M>& Mod<M>::operator=( const INT_TYPE_FOR_MOD& n ) noexcept { return operator=( Mod<M>( n ) ); }
 
@@ -62,7 +29,7 @@ template <INT_TYPE_FOR_MOD M>
 Mod<M>& Mod<M>::operator+=( const INT_TYPE_FOR_MOD& n ) noexcept
 {
 
-  m_n = Residue( m_n + n );
+  m_n = Residue<INT_TYPE_FOR_MOD>( M , m_n + n );
   m_inv = 0;
   return *this;
 
@@ -78,7 +45,7 @@ template <INT_TYPE_FOR_MOD M>
 Mod<M>& Mod<M>::operator*=( const INT_TYPE_FOR_MOD& n ) noexcept
 {
 
-  m_n = Residue( m_n * n );
+  m_n = Residue<INT_TYPE_FOR_MOD>( M , m_n * n );
   m_inv = 0;
   return *this;
 
@@ -88,7 +55,7 @@ template <INT_TYPE_FOR_MOD M>
 Mod<M>& Mod<M>::operator*=( const Mod<M>& n ) noexcept
 {
 
-  m_n = Residue( m_n * n.m_n );
+  m_n = Residue<INT_TYPE_FOR_MOD>( M , m_n * n.m_n );
 
   if( m_inv == 0 || n.m_inv == 0 ){
 
@@ -100,7 +67,7 @@ Mod<M>& Mod<M>::operator*=( const Mod<M>& n ) noexcept
     
   } else {
 
-    Residue( m_inv * n.m_inv );
+    Residue<INT_TYPE_FOR_MOD>( M , m_inv * n.m_inv );
 
   }
   
@@ -129,7 +96,7 @@ template <INT_TYPE_FOR_MOD M>
 Mod<M>& Mod<M>::operator%=( const INT_TYPE_FOR_MOD& n )
 {
 
-  m_n %= Residue( n );
+  m_n %= Residue<INT_TYPE_FOR_MOD>( M , n );
   m_inv = 0;
   return *this;
 
@@ -180,8 +147,8 @@ bool Mod<M>::CheckInvertible() noexcept
   
 }
 
-template <INT_TYPE_FOR_MOD M> inline bool Mod<M>::IsSmallerThan( const INT_TYPE_FOR_MOD& n ) const noexcept { return m_n < Residue( n ); }
-template <INT_TYPE_FOR_MOD M> inline bool Mod<M>::IsBiggerThan( const INT_TYPE_FOR_MOD& n ) const noexcept { return m_n > Residue( n ); }
+template <INT_TYPE_FOR_MOD M> inline bool Mod<M>::IsSmallerThan( const INT_TYPE_FOR_MOD& n ) const noexcept { return m_n < Residue<INT_TYPE_FOR_MOD>( M , n ); }
+template <INT_TYPE_FOR_MOD M> inline bool Mod<M>::IsBiggerThan( const INT_TYPE_FOR_MOD& n ) const noexcept { return m_n > Residue<INT_TYPE_FOR_MOD>( M , n ); }
 
 template <INT_TYPE_FOR_MOD M> inline bool operator==( const Mod<M>& n0 , const INT_TYPE_FOR_MOD& n1 ) noexcept { return n0 == Mod<M>( n1 ); }
 template <INT_TYPE_FOR_MOD M> inline bool operator==( const INT_TYPE_FOR_MOD& n0 , const Mod<M>& n1 ) noexcept { return Mod<M>( n0 ) == n0; }
@@ -288,17 +255,17 @@ Mod<M> Inverse( const Mod<M>& n )
 }
 
 template <INT_TYPE_FOR_MOD M>
-Mod<M> Power( const Mod<M>& n , const INT_TYPE_FOR_MOD& p , const bool& is_binary_method )
+Mod<M> Power( const Mod<M>& n , const INT_TYPE_FOR_MOD& p , const string& method )
 {
 
   if( p >= 0 ){
 
-    return Power<Mod<M>,INT_TYPE_FOR_MOD>( n , p , 1 , true , true , is_binary_method );
+    return Power<Mod<M>,INT_TYPE_FOR_MOD>( n , p , 1 , true , true , method );
 
   }
 
-  return Inverse( Power<M>( n , -p , is_binary_method ) );
+  return Inverse( Power<M>( n , -p , method ) );
 
 }
 
-template <INT_TYPE_FOR_MOD M> inline Mod<M> Power( const Mod<M>& n , const Mod<M>& p , const bool& is_binary_method ) { return Power( n , p.Represent() , is_binary_method ); }
+template <INT_TYPE_FOR_MOD M> inline Mod<M> Power( const Mod<M>& n , const Mod<M>& p , const string& method ) { return Power<Mod<M>,INT_TYPE_FOR_MOD>( n , p.Represent() , method ); }
