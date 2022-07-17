@@ -37,7 +37,7 @@ template <typename INT1 , typename INT2> inline INT1 ModularFactorial( const INT
 
 // 再帰式（呼び出し順によっては再帰深度が大きい）
 template <typename INT1 , typename INT2>
-INT1 ModularFactorialNormalMethod( const INT2& n , const INT2& n_min = 1 );
+const INT1& ModularFactorialNormalMethod( const INT2& n , const INT2& n_min = 1 );
 
 // ループ
 template <typename INT1 , typename INT2>
@@ -48,7 +48,7 @@ template <typename INT1 , typename INT2> inline INT1 ModularFactorialInverse( co
 
 // 再帰式（呼び出し順によっては再帰深度が大きい）
 template <typename INT1 , typename INT2>
-INT1 ModularFactorialInverseNormalMethod( const INT2& n , const INT2& n_min = 1 );
+const INT1& ModularFactorialInverseNormalMethod( const INT2& n , const INT2& n_min = 1 );
 
 // ループ
 template <typename INT1 , typename INT2>
@@ -60,7 +60,7 @@ INT Combination( const INT& n , const INT& m , const string& mode = "normal" );
 
 // 再帰式（呼び出し順によっては再帰深度が大きい）
 template <typename INT>
-INT CombinationNormalMethod( const INT& n , const INT& m );
+const INT& CombinationNormalMethod( const INT& n , const INT& m );
 
 // ループ（割り算回数が大きい）
 template <typename INT>

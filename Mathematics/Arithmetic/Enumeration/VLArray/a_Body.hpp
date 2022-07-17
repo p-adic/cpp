@@ -21,18 +21,36 @@ template <typename INT> inline INT Factorial( const INT& n , const INT& n_min , 
 template <typename INT1 , typename INT2> inline INT1 ModularFactorial( const INT2& n , const INT2& n_min , const string& mode ) { return mode == "loop" ? ModularFactorialLoopMethod<INT1,INT2>( n , n_min ) : ModularFactorialNormalMethod<INT1,INT2>( n , n_min ); }
 
 template <typename INT1 , typename INT2>
-INT1 ModularFactorialNormalMethod( const INT2& n , const INT2& n_min )
+const INT1& ModularFactorialNormalMethod( const INT2& n , const INT2& n_min )
 {
 
+  // const参照返しなので静的const変数を返す。
   if( n < n_min ){
 
-    return 1;
+    static constexpr const INT1 one = 1;
+    return one;
 
   }
   
   if( n == n_min ){
 
-    return n;
+    static VLArray<const INT1> memory_n_min{};
+    const INT1 n_min_copy = n_min;
+    
+    if( ! memory_n_min.empty() ){
+
+      const INT1& memory_n_min_back = memory_n_min.back();
+      
+      if( memory_n_min_back == n_min_copy  ){
+
+	return memory_n_min_back;
+
+      }
+
+    }
+
+    memory_n_min.push_back( n_min_copy );
+    return memory_n_min.back();
 
   }
   
@@ -85,18 +103,36 @@ INT1 ModularFactorialLoopMethod( const INT2& n , const INT2& n_min )
 template <typename INT1 , typename INT2> inline INT1 ModularFactorialInverse( const INT2& n , const INT2& n_min , const string& mode ) { return mode == "loop" ? ModularFactorialInverseLoopMethod<INT1,INT2>( n , n_min ) : ModularFactorialInverseNormalMethod<INT1,INT2>( n , n_min ); }
 
 template <typename INT1 , typename INT2>
-INT1 ModularFactorialInverseNormalMethod( const INT2& n , const INT2& n_min )
+const INT1& ModularFactorialInverseNormalMethod( const INT2& n , const INT2& n_min )
 {
 
+  // const参照返しなので静的const変数を返す。
   if( n < n_min ){
 
-    return 1;
+    static constexpr const INT1 one = 1;
+    return one;
 
   }
   
   if( n == n_min ){
 
-    return 1 / n;
+    static VLArray<const INT1> memory_n_min_inv{};
+    const INT1 n_min_inv_copy = 1 / (INT1)n_min;
+    
+    if( ! memory_n_min_inv.empty() ){
+
+      const INT1& memory_n_min_inv_back = memory_n_min_inv.back();
+      
+      if( memory_n_min_inv_back == n_min_inv_copy  ){
+
+	return memory_n_min_inv_back;
+
+      }
+
+    }
+
+    memory_n_min_inv.push_back( n_min_inv_copy );
+    return memory_n_min_inv.back();
 
   }
   
@@ -126,7 +162,7 @@ INT1 ModularFactorialInverseNormalMethod( const INT2& n , const INT2& n_min )
   memory_n.push_front( n );
   memory_n_min.push_front( n_min );
   memory_answer.push_front( answer );  
-   return memory_answer.front();
+  return memory_answer.front();
 
 }
 
@@ -199,12 +235,14 @@ INT Combination( const INT& n , const INT& m , const string& mode )
 }
 
 template <typename INT>
-INT CombinationNormalMethod( const INT& n , const INT& m )
+const INT& CombinationNormalMethod( const INT& n , const INT& m )
 {
 
+  // const参照返しなので静的const変数を返す。
   if( m == 0 ){
 
-    return 1;
+    static constexpr const INT one = 1;
+    return one;
 
   }
   
