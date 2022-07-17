@@ -34,7 +34,7 @@ const INT1& ModularFactorialNormalMethod( const INT2& n , const INT2& n_min )
   
   if( n == n_min ){
 
-    static VLArray<const INT1> memory_n_min{};
+    static VLArray<INT1> memory_n_min{};
     const INT1 n_min_copy = n_min;
     
     if( ! memory_n_min.empty() ){
@@ -116,7 +116,7 @@ const INT1& ModularFactorialInverseNormalMethod( const INT2& n , const INT2& n_m
   
   if( n == n_min ){
 
-    static VLArray<const INT1> memory_n_min_inv{};
+    static VLArray<INT1> memory_n_min_inv{};
     const INT1 n_min_inv_copy = 1 / (INT1)n_min;
     
     if( ! memory_n_min_inv.empty() ){
