@@ -1,35 +1,265 @@
-// c:/Users/user/Documents/Programming/Mathematics/Arithmetic/Power/a_Body.hpp
+// c:/Users/user/Documents/Programming/Mathematics/Arithmetic/Enumeration/VLArray/a_Body.hpp
 
 #pragma once
 #include "a.hpp"
 
-#include "../Padic/a_Body.hpp"
+#include "../a_Body.hpp"
 
-template <typename T , typename UINT>
-inline T Power( const T& t , const UINT& num , const T& init , const bool& for_right_multiplication , const string& method ) { return method == "binary" ? PowerBinaryMethod<T,UINT>( t , num , init , for_right_multiplication ) : PowerNormalMethod<T,UINT>( t , num , init , for_right_multiplication ); }
+#include "VLArray/a_Body.hpp"
 
-template <typename T , typename UINT> inline T PowerNormalMethod( const T& t , const UINT& num , const T& init , const bool& for_right_multiplication ) { return num == 0 ? init : ( for_right_multiplication ? PowerNormalMethod<T,UINT>( t , num - 1 , init ) * t : t * PowerNormalMethod<T,UINT>( t , num - 1 , init ) ); }
+inline void BijSum1N( const uint& N , const uint& n , uint& n_1 , uint& n_2 ) { return BijSum1N( to_VLArray<dim>( N , infty() ) , n , n_1 , n_2 ); }
+inline uint BijSumN1( const uint& N , const uint& n_1 , const uint& n_2 ) { return BijSumN1( to_VLArray<dim>( N , infty() ) , n_1 , n_2 ); }
 
-template <typename T , typename UINT>
-T PowerBinaryMethod( const T& t , const UINT& num , const T& init , const bool& for_right_multiplication )
+inline VLArray<uint> BijProd1N( const uint& N , const uint& n ) { return BijProd1N( to_VLArray<dim>( N , infty() ) , n ); }
+inline void BijProd1N( const uint& N , const uint& n , VLArray<uint>& a_n ) { BijProd1N(to_VLArray<dim>( N , infty() ) , n , a_n ); }
+
+inline uint BijProdN1( const VLArray<uint>& a_n ) { return BijProdN1( to_VLArray<dim>( a_n.size() , infty() ) , a_n ); }
+
+
+template <typename INT> inline INT Factorial( const INT& n , const INT& n_min , const string& mode ) { return ModularFactorial<INT,INT>( n , n_min , mode ); }
+
+template <typename INT1 , typename INT2> inline INT1 ModularFactorial( const INT2& n , const INT2& n_min , const string& mode ) { return mode == "loop" ? ModularFactorialLoopMethod<INT1,INT2>( n , n_min ) : ModularFactorialNormalMethod<INT1,INT2>( n , n_min ); }
+
+template <typename INT1 , typename INT2>
+INT1 ModularFactorialNormalMethod( const INT2& n , const INT2& n_min )
 {
 
-  const VLArray<UINT>& num_binary = AdicInt<2>::Expand( num );
-  T answer = init;
-  T power = t;
+  if( n < n_min ){
 
-  for( auto itr = num_binary.begin() , end = num_binary.end() ; itr != end ; itr++ ){
+    return 1;
 
-    if( *itr == 1 ){
+  }
+  
+  if( n == n_min ){
 
-      answer = for_right_multiplication ? answer * power : power * answer;
+    return n;
+
+  }
+  
+  static VLArray<INT2> memory_n{};
+  static VLArray<INT2> memory_n_min{};
+  static VLArray<INT1> memory_answer{};
+
+  auto itr_n = memory_n.begin() , end_n = memory_n.end();
+  auto itr_n_min = memory_n_min.begin();
+  auto itr_answer = memory_answer.begin();
+
+  while( itr_n != end_n ){
+
+    if( *itr_n == n && *itr_n_min == n_min ){
+
+      return *itr_answer;
 
     }
 
-    power = power * power;
+    itr_n++;
+    itr_n_min++;
+    itr_answer++;
 
   }
 
-  return answer;
+  const INT1 answer = n_min == 1 ? n * ModularFactorialNormalMethod<INT1,INT2>( n - 1 ) : ModularFactorialNormalMethod<INT1,INT2>( n , n_min + 1 ) * n_min;
+  memory_n.push_front( n );
+  memory_n_min.push_front( n_min );
+  memory_answer.push_front( answer );  
+  return memory_answer.back();
 
 }
+
+template <typename INT1 , typename INT2>
+INT1 ModularFactorialLoopMethod( const INT2& n , const INT2& n_min )
+{
+
+  INT1 f = 1;
+
+  for( INT2 i = n_min ; i <= n ; i++ ){
+
+    f *= i;
+
+  }
+
+  return f;
+
+}
+
+template <typename INT1 , typename INT2> inline INT1 ModularFactorialInverse( const INT2& n , const INT2& n_min , const string& mode ) { return mode == "loop" ? ModularFactorialInverseLoopMethod<INT1,INT2>( n , n_min ) : ModularFactorialInverseNormalMethod<INT1,INT2>( n , n_min ); }
+
+template <typename INT1 , typename INT2>
+INT1 ModularFactorialInverseNormalMethod( const INT2& n , const INT2& n_min )
+{
+
+  if( n < n_min ){
+
+    return 1;
+
+  }
+  
+  if( n == n_min ){
+
+    return 1 / n;
+
+  }
+  
+  static VLArray<INT2> memory_n{};
+  static VLArray<INT2> memory_n_min{};
+  static VLArray<INT1> memory_answer{};
+
+  auto itr_n = memory_n.begin() , end_n = memory_n.end();
+  auto itr_n_min = memory_n_min.begin();
+  auto itr_answer = memory_answer.begin();
+
+  while( itr_n != end_n ){
+
+    if( *itr_n == n && *itr_n_min == n_min ){
+
+      return *itr_answer;
+
+    }
+
+    itr_n++;
+    itr_n_min++;
+    itr_answer++;
+
+  }
+
+  const INT1 answer = n_min == 1 ? ModularFactorialInverseNormalMethod<INT1,INT2>( n - 1 ) / n : ModularFactorialInverseNormalMethod<INT1,INT2>( n , n_min + 1 ) / n_min;
+  memory_n.push_front( n );
+  memory_n_min.push_front( n_min );
+  memory_answer.push_front( answer );  
+   return memory_answer.back();
+
+}
+
+template <typename INT1 , typename INT2>
+INT1 ModularFactorialInverseLoopMethod( const INT2& n , const INT2& n_min )
+{
+
+  INT1 f = 1;
+
+  for( INT2 i = n_min ; i <= n ; i++ ){
+
+    f /= i;
+
+  }
+
+  return f;
+
+}
+
+template <typename INT>
+INT Combination( const INT& n , const INT& m , const string& mode )
+{
+
+  if( n < m ){
+
+    return 0;
+
+  }
+
+  const INT m_comp = n - m;
+
+  if( m_comp < m ){
+
+    return Combination<INT>( n , m_comp , mode );
+
+  }
+
+  if( mode == "loop" ){
+
+    return CombinationLoopMethod<INT>( n , m );
+
+  }
+
+  if( mode == "factorial normal" ){
+
+    return CombinationFactorialNormalMethod<INT>( n , m );
+
+  }
+
+  if( mode == "factorial loop" ){
+
+    return CombinationFactorialLoopMethod<INT>( n , m );
+
+  }
+
+  if( mode == "modular factorial inverse normal" ){
+
+    return CombinationModularFactorialInverseNormalMethod<INT>( n , m );
+
+  }
+
+  if( mode == "modular factorial inverse loop" ){
+
+    return CombinationModularFactorialInverseLoopMethod<INT>( n , m );
+
+  }
+
+  return CombinationNormalMethod<INT>( n , m );
+
+}
+
+template <typename INT>
+INT CombinationNormalMethod( const INT& n , const INT& m )
+{
+
+  if( m == 0 ){
+
+    return 1;
+
+  }
+  
+  static VLArray<INT> memory_n{};
+  static VLArray<INT> memory_m{};
+  static VLArray<INT> memory_answer{};
+
+  auto itr_n = memory_n.begin() , end_n = memory_n.end();
+  auto itr_m = memory_m.begin();
+  auto itr_answer = memory_answer.begin();
+
+  while( itr_n != end_n ){
+
+    if( *itr_n == n && *itr_m == m ){
+
+      return *itr_answer;
+
+    }
+
+    itr_n++;
+    itr_m++;
+    itr_answer++;
+
+  }
+
+  const INT answer = ( CombinationNormalMethod<INT>( n , m - 1 ) * ( n - m + 1 ) ) / m;
+  memory_n.push_front( n );
+  memory_m.push_front( m );
+  memory_answer.push_front( answer );  
+  return memory_answer.back();
+
+}
+
+template <typename INT>
+INT CombinationLoopMethod( const INT& n , const INT& m )
+{
+
+  INT c = 1;
+
+  for( INT i = 0 ; i < m ; i++ ){
+
+    c *= ( n - i );
+    c /= i + 1;
+
+  }
+  
+  return c;
+
+}
+
+template <typename INT> inline INT CombinationFactorialNormalMethod( const INT& n , const INT& m ) { return Factorial<INT>( n , n - m + 1 , "normal" ) / Factorial<INT>( m , 1 , "normal" ); }
+
+template <typename INT> inline INT CombinationFactorialLoopMethod( const INT& n , const INT& m ) { return Factorial<INT>( n , n - m + 1 , "loop" ) / Factorial<INT>( m , 1 , "loop" ); }
+
+template <typename INT> inline INT CombinationModularFactorialInverseNormalMethod( const INT& n , const INT& m ) { return Factorial<INT>( n , n - m + 1 , "normal" ) * ModularFactorialInverse<INT,INT>( m , 1 , "normal" ); }
+
+template <typename INT> inline INT CombinationModularFactorialInverseLoopMethod( const INT& n , const INT& m ) { return Factorial<INT>( n , n - m + 1 , "loop" ) * ModularFactorialInverse<INT,INT>( m , 1 , "loop" ); }
+
