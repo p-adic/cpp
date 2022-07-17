@@ -14,7 +14,7 @@ template <typename T , typename UINT>
 T PowerBinaryMethod( const T& t , const UINT& num , const T& init , const bool& for_right_multiplication )
 {
 
-  const VLArray<UINT> num_binary = AdicInt<2>::Expand( num );
+  const VLArray<UINT>& num_binary = AdicInt<2>::Expand( num );
   T answer = init;
   T power = t;
 
