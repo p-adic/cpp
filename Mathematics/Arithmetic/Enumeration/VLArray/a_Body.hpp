@@ -62,7 +62,7 @@ INT1 ModularFactorialNormalMethod( const INT2& n , const INT2& n_min )
   memory_n.push_front( n );
   memory_n_min.push_front( n_min );
   memory_answer.push_front( answer );  
-  return memory_answer.back();
+  return memory_answer.front();
 
 }
 
@@ -126,7 +126,7 @@ INT1 ModularFactorialInverseNormalMethod( const INT2& n , const INT2& n_min )
   memory_n.push_front( n );
   memory_n_min.push_front( n_min );
   memory_answer.push_front( answer );  
-   return memory_answer.back();
+   return memory_answer.front();
 
 }
 
@@ -234,7 +234,7 @@ INT CombinationNormalMethod( const INT& n , const INT& m )
   memory_n.push_front( n );
   memory_m.push_front( m );
   memory_answer.push_front( answer );  
-  return memory_answer.back();
+  return memory_answer.front();
 
 }
 
