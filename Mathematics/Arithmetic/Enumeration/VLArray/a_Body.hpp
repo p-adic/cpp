@@ -27,7 +27,7 @@ const INT1& ModularFactorialNormalMethod( const INT2& n , const INT2& n_min )
   // const参照返しなので静的const変数を返す。
   if( n < n_min ){
 
-    static constexpr const INT1 one = 1;
+    static const INT1 one = 1;
     return one;
 
   }
@@ -109,7 +109,7 @@ const INT1& ModularFactorialInverseNormalMethod( const INT2& n , const INT2& n_m
   // const参照返しなので静的const変数を返す。
   if( n < n_min ){
 
-    static constexpr const INT1 one = 1;
+    static const INT1 one = 1;
     return one;
 
   }
@@ -241,7 +241,7 @@ const INT& CombinationNormalMethod( const INT& n , const INT& m )
   // const参照返しなので静的const変数を返す。
   if( m == 0 ){
 
-    static constexpr const INT one = 1;
+    static const INT one = 1;
     return one;
 
   }
