@@ -4,14 +4,18 @@
 #include "a_Body.hpp"
 #include <chrono>
 
-void StopWatch( const string& process_name )
+void StopWatch( const int& how_many_times , const string& process_name )
 {
 
   static bool off = true;
   static chrono::system_clock::time_point watch;
+  static count;
 
   if( off ){
 
+    off = false;
+    count = 0;
+    
     if( process_name == "nothing" ){
 
       cout << "Start watching execution time: ";
@@ -26,11 +30,16 @@ void StopWatch( const string& process_name )
 
   } else {
 
-    watch = chrono::system_clock::now() - watch;
+    count++;
 
-    const double time = static_cast<double>( chrono::duration_cast<chrono::microseconds>( watch ).count() / 1000.0);
-    cout << time << " [ms]" << endl;
+    if( count == how_many_times ){
 
+      const double time = static_cast<double>( chrono::duration_cast<chrono::microseconds>( chrono::system_clock::now() - watch ).count() / 1000.0 );
+      cout << time << " [ms]" << endl;
+      off = true;
+
+    }
+    
   }
 
   return;
