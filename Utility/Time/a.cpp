@@ -9,7 +9,7 @@ void StopWatch( const int& how_many_times , const string& process_name )
 
   static bool off = true;
   static chrono::system_clock::time_point watch;
-  static count;
+  static int count;
 
   if( off ){
 
