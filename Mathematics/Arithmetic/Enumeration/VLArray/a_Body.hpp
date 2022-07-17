@@ -21,9 +21,61 @@ template <typename INT> inline INT Factorial( const INT& n , const INT& n_min , 
 template <typename INT1 , typename INT2> inline INT1 ModularFactorial( const INT2& n , const INT2& n_min , const string& mode ) { return mode == "loop" ? ModularFactorialLoopMethod<INT1,INT2>( n , n_min ) : ModularFactorialNormalMethod<INT1,INT2>( n , n_min ); }
 
 template <typename INT1 , typename INT2>
+const INT1& ModularFactorialNormalMethod( const INT2& n )
+{
+
+  // const参照返しなので静的const変数を返す。
+  if( n < 1 ){
+
+    static const INT1 one = 1;
+    return one;
+
+  }
+  
+  static VLArray<INT2> memory_n{};
+  static VLArray<INT1> memory_answer{};
+  
+  auto itr_n = memory_n.begin() , end_n = memory_n.end();
+  auto itr_answer = memory_answer.begin();
+
+  while( itr_n != end_n ){
+
+    if( *itr_n == n ){
+
+      return *itr_answer;
+      
+    }
+
+    itr_n++;
+    itr_answer++;
+
+  }
+
+  const INT1 answer = n * ModularFactorialNormalMethod<INT1,INT2>( n - 1 );
+  memory_n.push_front( n );
+  memory_answer.push_front( answer );  
+  return memory_answer.front();
+
+}
+
+template <typename INT1 , typename INT2>
 const INT1& ModularFactorialNormalMethod( const INT2& n , const INT2& n_min )
 {
 
+  if( n_min == 1 ){
+
+    return ModularFactorialNormalMethod<INT1,INT2>( n );
+
+  }
+
+  return ModularFactorialNormalMethod_Body<INT1,INT2>( n , n_min );
+  
+}
+
+template <typename INT1 , typename INT2>
+const INT1& ModularFactorialNormalMethod_Body( const INT2& n , const INT2& n_min )
+{
+  
   // const参照返しなので静的const変数を返す。
   if( n < n_min ){
 
@@ -31,42 +83,23 @@ const INT1& ModularFactorialNormalMethod( const INT2& n , const INT2& n_min )
     return one;
 
   }
-  
-  if( n == n_min ){
 
-    static VLArray<INT1> memory_n_min{};
-    const INT1 n_min_copy = n_min;
-    
-    if( ! memory_n_min.empty() ){
-
-      const INT1& memory_n_min_back = memory_n_min.back();
-      
-      if( memory_n_min_back == n_min_copy  ){
-
-	return memory_n_min_back;
-
-      }
-
-    }
-
-    memory_n_min.push_back( n_min_copy );
-    return memory_n_min.back();
-
-  }
-  
   static VLArray<INT2> memory_n{};
-  static VLArray<INT2> memory_n_min{};
-  static VLArray<INT1> memory_answer{};
-
+  static VLArray<VLArray<INT2> > memory_n_min{};
+  static VLArray<VLArray<INT1> > memory_answer{};
+  VLArray<INT2>* p_n_min = nullptr;
+  VLArray<INT1>* p_answer = nullptr;
+  
   auto itr_n = memory_n.begin() , end_n = memory_n.end();
   auto itr_n_min = memory_n_min.begin();
   auto itr_answer = memory_answer.begin();
 
-  while( itr_n != end_n ){
+  while( itr_n != end_n && p_n_min == nullptr ){
 
-    if( *itr_n == n && *itr_n_min == n_min ){
+    if( *itr_n == n ){
 
-      return *itr_answer;
+      p_n_min = &( *itr_n_min );
+      p_answer = &( *itr_answer );
 
     }
 
@@ -76,11 +109,36 @@ const INT1& ModularFactorialNormalMethod( const INT2& n , const INT2& n_min )
 
   }
 
-  const INT1 answer = n_min == 1 ? n * ModularFactorialNormalMethod<INT1,INT2>( n - 1 ) : ModularFactorialNormalMethod<INT1,INT2>( n , n_min + 1 ) * n_min;
-  memory_n.push_front( n );
-  memory_n_min.push_front( n_min );
-  memory_answer.push_front( answer );  
-  return memory_answer.front();
+  if( p_n_min == nullptr ){
+
+    memory_n.push_front( n );
+    memory_n_min.push_front( VLArray<INT2>() );
+    memory_answer.push_front( VLArray<INT1>() );
+    p_n_min = &( memory_n_min.front() );
+    p_answer = &( memory_answer.front() );
+
+  }
+
+  auto itr_n_min_current = p_n_min->begin() , end_n_min_current = p_n_min->end();
+  auto itr_answer_current = p_answer->begin();
+
+  while( itr_n_min_current != end_n_min_current ){
+
+    if( *itr_n_min_current == n_min ){
+
+      return *itr_answer_current;
+
+    }
+
+    itr_n_min_current++;
+    itr_answer_current++;
+
+  }
+
+  const INT1 answer = ModularFactorialNormalMethod<INT1,INT2>( n , n_min + 1 ) * n_min;
+  p_n_min->push_front( n_min );
+  p_answer->push_front( answer );  
+  return p_answer->front();
 
 }
 
@@ -103,9 +161,61 @@ INT1 ModularFactorialLoopMethod( const INT2& n , const INT2& n_min )
 template <typename INT1 , typename INT2> inline INT1 ModularFactorialInverse( const INT2& n , const INT2& n_min , const string& mode ) { return mode == "loop" ? ModularFactorialInverseLoopMethod<INT1,INT2>( n , n_min ) : ModularFactorialInverseNormalMethod<INT1,INT2>( n , n_min ); }
 
 template <typename INT1 , typename INT2>
+const INT1& ModularFactorialInverseNormalMethod( const INT2& n )
+{
+
+  // const参照返しなので静的const変数を返す。
+  if( n < 1 ){
+
+    static const INT1 one = 1;
+    return one;
+
+  }
+  
+  static VLArray<INT2> memory_n{};
+  static VLArray<INT1> memory_answer{};
+
+  auto itr_n = memory_n.begin() , end_n = memory_n.end();
+  auto itr_answer = memory_answer.begin();
+
+  while( itr_n != end_n ){
+
+    if( *itr_n == n ){
+
+      return *itr_answer;
+
+    }
+
+    itr_n++;
+    itr_answer++;
+
+  }
+
+  const INT1 answer = ModularFactorialInverseNormalMethod<INT1,INT2>( n - 1 ) / n;
+  memory_n.push_front( n );
+  memory_answer.push_front( answer );  
+  return memory_answer.front();
+
+}
+
+template <typename INT1 , typename INT2>
 const INT1& ModularFactorialInverseNormalMethod( const INT2& n , const INT2& n_min )
 {
 
+  if( n_min == 1 ){
+
+    return ModularFactorialInverseNormalMethod<INT1,INT2>( n );
+
+  }
+
+  return ModularFactorialInverseNormalMethod_Body<INT1,INT2>( n , n_min );
+
+}
+
+template <typename INT1 , typename INT2>
+const INT1& ModularFactorialInverseNormalMethod_Body( const INT2& n , const INT2& n_min )
+{
+  
   // const参照返しなので静的const変数を返す。
   if( n < n_min ){
 
@@ -113,42 +223,23 @@ const INT1& ModularFactorialInverseNormalMethod( const INT2& n , const INT2& n_m
     return one;
 
   }
-  
-  if( n == n_min ){
 
-    static VLArray<INT1> memory_n_min_inv{};
-    const INT1 n_min_inv_copy = 1 / (INT1)n_min;
-    
-    if( ! memory_n_min_inv.empty() ){
-
-      const INT1& memory_n_min_inv_back = memory_n_min_inv.back();
-      
-      if( memory_n_min_inv_back == n_min_inv_copy  ){
-
-	return memory_n_min_inv_back;
-
-      }
-
-    }
-
-    memory_n_min_inv.push_back( n_min_inv_copy );
-    return memory_n_min_inv.back();
-
-  }
-  
   static VLArray<INT2> memory_n{};
-  static VLArray<INT2> memory_n_min{};
-  static VLArray<INT1> memory_answer{};
-
+  static VLArray<VLArray<INT2> > memory_n_min{};
+  static VLArray<VLArray<INT1> > memory_answer{};
+  VLArray<INT2>* p_n_min = nullptr;
+  VLArray<INT1>* p_answer = nullptr;
+  
   auto itr_n = memory_n.begin() , end_n = memory_n.end();
   auto itr_n_min = memory_n_min.begin();
   auto itr_answer = memory_answer.begin();
 
-  while( itr_n != end_n ){
+  while( itr_n != end_n && p_n_min == nullptr ){
 
-    if( *itr_n == n && *itr_n_min == n_min ){
+    if( *itr_n == n ){
 
-      return *itr_answer;
+      p_n_min = &( *itr_n_min );
+      p_answer = &( *itr_answer );
 
     }
 
@@ -158,11 +249,36 @@ const INT1& ModularFactorialInverseNormalMethod( const INT2& n , const INT2& n_m
 
   }
 
-  const INT1 answer = n_min == 1 ? ModularFactorialInverseNormalMethod<INT1,INT2>( n - 1 ) / n : ModularFactorialInverseNormalMethod<INT1,INT2>( n , n_min + 1 ) / n_min;
-  memory_n.push_front( n );
-  memory_n_min.push_front( n_min );
-  memory_answer.push_front( answer );  
-  return memory_answer.front();
+  if( p_n_min == nullptr ){
+
+    memory_n.push_front( n );
+    memory_n_min.push_front( VLArray<INT2>() );
+    memory_answer.push_front( VLArray<INT1>() );
+    p_n_min = &( memory_n_min.front() );
+    p_answer = &( memory_answer.front() );
+
+  }
+
+  auto itr_n_min_current = p_n_min->begin() , end_n_min_current = p_n_min->end();
+  auto itr_answer_current = p_answer->begin();
+
+  while( itr_n_min_current != end_n_min_current ){
+
+    if( *itr_n_min_current == n_min ){
+
+      return *itr_answer_current;
+
+    }
+
+    itr_n_min_current++;
+    itr_answer_current++;
+
+  }
+
+  const INT1 answer = ModularFactorialInverseNormalMethod<INT1,INT2>( n , n_min + 1 ) / (INT1)n_min;
+  p_n_min->push_front( n_min );
+  p_answer->push_front( answer );  
+  return p_answer->front();
 
 }
 

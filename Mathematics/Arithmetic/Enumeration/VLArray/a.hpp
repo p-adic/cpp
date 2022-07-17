@@ -37,7 +37,11 @@ template <typename INT1 , typename INT2> inline INT1 ModularFactorial( const INT
 
 // 再帰式（呼び出し順によっては再帰深度が大きい）
 template <typename INT1 , typename INT2>
-const INT1& ModularFactorialNormalMethod( const INT2& n , const INT2& n_min = 1 );
+const INT1& ModularFactorialNormalMethod( const INT2& n );
+template <typename INT1 , typename INT2>
+const INT1& ModularFactorialNormalMethod( const INT2& n , const INT2& n_min );
+template <typename INT1 , typename INT2>
+const INT1& ModularFactorialNormalMethod_Body( const INT2& n , const INT2& n_min );
 
 // ループ
 template <typename INT1 , typename INT2>
@@ -48,7 +52,11 @@ template <typename INT1 , typename INT2> inline INT1 ModularFactorialInverse( co
 
 // 再帰式（呼び出し順によっては再帰深度が大きい）
 template <typename INT1 , typename INT2>
-const INT1& ModularFactorialInverseNormalMethod( const INT2& n , const INT2& n_min = 1 );
+const INT1& ModularFactorialInverseNormalMethod( const INT2& n );
+template <typename INT1 , typename INT2>
+const INT1& ModularFactorialInverseNormalMethod( const INT2& n , const INT2& n_min );
+template <typename INT1 , typename INT2>
+const INT1& ModularFactorialInverseNormalMethod_Body( const INT2& n , const INT2& n_min );
 
 // ループ
 template <typename INT1 , typename INT2>
