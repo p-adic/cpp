@@ -60,9 +60,14 @@ void LazyEvaluationOfModularInverse( const INT_TYPE_FOR_MOD& M , const INT_TYPE_
 
   const INT_TYPE_FOR_MOD M_abs = M >= 0 ? M : -M;
   const INT_TYPE_FOR_MOD n_sub = M_abs % n;
-  INT_TYPE_FOR_MOD n_sub_inv;
-  LazyEvaluationOfModularInverse( M , n_sub , n_sub_inv );
+  INT_TYPE_FOR_MOD n_sub_inv = ( *p_inverse )[n_sub];
 
+  if( n_sub_inv == 0 ){
+
+    LazyEvaluationOfModularInverse( M , n_sub , n_sub_inv );
+
+  }
+  
   if( n_sub_inv != M ){
 
     n_inv = M_abs - ( ( n_sub_inv * ( M_abs / n ) ) % M_abs );
