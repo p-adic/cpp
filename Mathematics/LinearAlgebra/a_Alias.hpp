@@ -3,4 +3,7 @@
 #pragma once
 
 template <typename T>
-using Matrix<T> = VLMatrix<2,T>;
+using Matrix_Body = VLMatrix<2,T>;
+
+using SizeTypeForMatrix = uint;
+// using SizeTypeForMatrix = ll;
