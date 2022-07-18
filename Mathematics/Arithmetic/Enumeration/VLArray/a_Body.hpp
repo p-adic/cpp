@@ -308,14 +308,6 @@ INT Combination( const INT& n , const INT& m , const string& mode )
 
   }
 
-  const INT m_comp = n - m;
-
-  if( m_comp < m ){
-
-    return Combination<INT>( n , m_comp , mode );
-
-  }
-
   if( mode == "loop" ){
 
     return CombinationLoopMethod<INT>( n , m );
@@ -371,7 +363,6 @@ const INT& CombinationNormalMethod( const INT& n , const INT& m )
   auto itr_n = memory_n.begin() , end_n = memory_n.end();
   auto itr_m = memory_m.begin();
   auto itr_answer = memory_answer.begin();
-  
 
   while( itr_n != end_n && p_m == nullptr ){
 
@@ -432,16 +423,18 @@ template <typename INT>
 INT CombinationLoopMethod( const INT& n , const INT& m )
 {
 
-  INT c = 1;
+  const INT m_comp = n - m;
+  const INT m_copy = m_comp < m ? m_comp : m;
+  INT answer = 1;
 
-  for( INT i = 0 ; i < m ; i++ ){
+  for( INT i = 0 ; i < m_copy ; i++ ){
 
-    c *= ( n - i );
-    c /= i + 1;
+    answer *= ( n - i );
+    answer /= i + 1;
 
   }
   
-  return c;
+  return answer;
 
 }
 
