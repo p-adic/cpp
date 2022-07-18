@@ -403,7 +403,7 @@ const INT& CombinationNormalMethod( const INT& n , const INT& m )
 
   while( itr_m_current != end_m_current ){
 
-    if( itr_m_current == m ){
+    if( *itr_m_current == m ){
 
       return *itr_answer_current;
 
