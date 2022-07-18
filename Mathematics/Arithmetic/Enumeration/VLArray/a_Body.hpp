@@ -363,18 +363,22 @@ const INT& CombinationNormalMethod( const INT& n , const INT& m )
   }
   
   static VLArray<INT> memory_n{};
-  static VLArray<INT> memory_m{};
-  static VLArray<INT> memory_answer{};
+  static VLArray<VLArray<INT> > memory_m{};
+  static VLArray<VLArray<INT> > memory_answer{};
+  VLArray<INT>* p_m = nullptr;
+  VLArray<INT>* p_answer = nullptr;
 
   auto itr_n = memory_n.begin() , end_n = memory_n.end();
   auto itr_m = memory_m.begin();
   auto itr_answer = memory_answer.begin();
+  
 
-  while( itr_n != end_n ){
+  while( itr_n != end_n && p_m == nullptr ){
 
-    if( *itr_n == n && *itr_m == m ){
+    if( *itr_n == n ){
 
-      return *itr_answer;
+      p_m = &( *itr_m );
+      p_answer = &( *itr_answer );
 
     }
 
@@ -384,11 +388,20 @@ const INT& CombinationNormalMethod( const INT& n , const INT& m )
 
   }
 
+  if( p_m == nullptr ){
+
+    memory_n.push_front( n );
+    memory_m.push_front( VLArray<INT>() );
+    memory_answer.push_front( VLArray<INT>() );
+    p_m = &( memory_m.front() );
+    p_answer = &( memory_answer.front() );
+
+  }
+
   const INT answer = ( CombinationNormalMethod<INT>( n , m - 1 ) * ( n - m + 1 ) ) / m;
-  memory_n.push_front( n );
-  memory_m.push_front( m );
-  memory_answer.push_front( answer );  
-  return memory_answer.front();
+  p_m->push_front( m );
+  p_answer->push_front( answer );  
+  return p_answer->front();
 
 }
 
