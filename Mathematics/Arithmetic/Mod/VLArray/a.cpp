@@ -35,7 +35,7 @@ void LazyEvaluationOfModularInverse( const INT_TYPE_FOR_MOD& M , const INT_TYPE_
   if( p_inverse == nullptr ){
 
     memory_M.push_front( M );
-    memory_inverse.push_front( VLArray<INT_TYPE_FOR_MOD>() );
+    memory_inverse.push_front( vector<INT_TYPE_FOR_MOD>() );
     p_inverse = &( memory_inverse.front() );
     p_inverse->push_back( M );
 
@@ -75,7 +75,7 @@ void LazyEvaluationOfModularInverse( const INT_TYPE_FOR_MOD& M , const INT_TYPE_
     
     if( ( n * i ) % M_abs == 1 ){
 
-      n_inv = i
+      n_inv = i;
       m = n_inv;
       return;
       
