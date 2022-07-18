@@ -14,11 +14,11 @@ void StartWatch( const string& process_name )
 
     if( process_name == "nothing" ){
 
-      cout << "Counting execution time: ";
+      cout << "Start counting execution time:" << endl;
 
     } else {
 
-      cout << "Counting execution time of " << process_name << ": ";
+      cout << "Start counting execution time of " << process_name << ":" << endl;
 
     }
     
@@ -39,7 +39,7 @@ void StopWatch( const int& how_many_times )
   if( count == how_many_times ){
 
     const double time = static_cast<double>( chrono::duration_cast<chrono::microseconds>( chrono::system_clock::now() - GetWatch() ).count() / 1000.0 );
-    cout << time << " [ms] par " << how_many_times << " executions" << endl;
+    cout << "Stop counting execution time: " << time << " [ms] par " << how_many_times << " executions" << endl;
     count = 0;
 
   }
