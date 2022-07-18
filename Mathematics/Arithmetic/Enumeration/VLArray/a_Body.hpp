@@ -398,6 +398,22 @@ const INT& CombinationNormalMethod( const INT& n , const INT& m )
 
   }
 
+  auto itr_m_current = p_m->begin() , end_m_current = p_m->end();
+  auto itr_answer_current = p_answer->begin();
+
+  while( itr_m_current != end_m_current ){
+
+    if( itr_m_current == m ){
+
+      return *itr_answer_current;
+
+    }
+
+    itr_m_current++;
+    itr_answer_current++;
+
+  }
+
   const INT answer = ( CombinationNormalMethod<INT>( n , m - 1 ) * ( n - m + 1 ) ) / m;
   p_m->push_front( m );
   p_answer->push_front( answer );  
