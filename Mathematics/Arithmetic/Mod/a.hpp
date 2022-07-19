@@ -95,6 +95,13 @@ template <INT_TYPE_FOR_MOD M> Mod<M> Inverse( const Mod<M>& n );
 
 template <INT_TYPE_FOR_MOD M> Mod<M> Power( const Mod<M>& n , const INT_TYPE_FOR_MOD& p , const string& method = "normal" );
 
+template <> Mod<2> Power( const Mod<2>& n , const INT_TYPE_FOR_MOD& p , const string& method = "normal" );
+
 // Mæ‚ª1‚É‚È‚é‚æ‚¤’è‹`‚³‚ê‚Ä‚¢‚é‚±‚Æ‚É’ˆÓ
 template <INT_TYPE_FOR_MOD M> inline Mod<M> Power( const Mod<M>& n , const Mod<M>& p , const string& method = "normal" );
 
+template <> inline Mod<2> Power( const Mod<2>& n , const Mod<2>& p , const string& method = "normal" );
+
+// ../Power/a_Body.hpp‚É‚Ä’è‹`
+template <typename T> inline T Square( const T& t );
+template <> inline Mod<2> Square<Mod<2> >( const Mod<2>& t );
