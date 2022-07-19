@@ -26,10 +26,13 @@ T PowerBinaryMethod( const T& t , const UINT& num , const T& init , const bool& 
 
     }
 
-    power = power * power;
+    // 部分特殊化ではなくオーバーロードで処理できるようにするためにSquare<T>としない。
+    power = Square( power );
 
   }
 
   return answer;
 
 }
+
+template <typename T> inline T Square( const T& t ) { return t * t; }
