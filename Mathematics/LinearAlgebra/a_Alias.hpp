@@ -3,7 +3,13 @@
 #pragma once
 
 template <typename T>
-using Matrix_Body = VLMatrix<2,T>;
+using LineTypeForMatrix = VLArray<T>;
+// vector‚Ì•û‚ªæ–@‚ÌŒvZ‚ª‚‘¬
+// template <typename T>
+// using LineTypeForMatrix = vector<T>;
+
+template <typename T>
+using TableTypeForMatrix = LineTypeForMatrix<LineTypeForMatrix<T> >;
 
 using SizeTypeForMatrix = uint;
 // using SizeTypeForMatrix = ll;

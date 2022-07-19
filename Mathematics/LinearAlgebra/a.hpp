@@ -10,7 +10,7 @@ class Matrix
 {
 
 private:
-  Matrix_Body<T>  m_M;
+  TableTypeForMatrix<T>  m_M;
 
 public:
   // argsの長さがXYでなくてもコンパイルエラーとならないがサポート外である。
@@ -19,7 +19,7 @@ public:
   inline Matrix( const Matrix<X,Y,T>& mat ) noexcept;
 
   // ( X , Y )行列でないものも引数に取れるがサポート外である。
-  template <typename... Args> inline Matrix( const Matrix_Body<T>& M ) noexcept;
+  template <typename... Args> inline Matrix( const TableTypeForMatrix<T>& M ) noexcept;
 
   Matrix<Y,X,T>& operator=( const Matrix<Y,X,T>& mat ) noexcept;
   Matrix<Y,X,T>& operator+=( const Matrix<Y,X,T>& mat );
@@ -27,14 +27,14 @@ public:
   Matrix<Y,X,T>& operator*=( const T& scalar ) noexcept;
 
   // 行や列の長さを変更可能だがサポート外である。
-  inline Matrix_Body<T>& GetMatrixBody() noexcept;
-  inline const Matrix_Body<T>& GetMatrixBody() const noexcept;
+  inline TableTypeForMatrix<T>& RefTable() noexcept;
+  inline const TableTypeForMatrix<T>& GetTable() const noexcept;
 
   static inline const Matrix<Y,X,T>& Unit() noexcept;
 
 private:
-  static inline void ConstructMatrixBody( Matrix_Body<T>& M , VLArray<T>& vec ) noexcept;
-  template <typename Arg , typename... Args> static void ConstructMatrixBody( Matrix_Body<T>& M , VLArray<T>& vec , const Arg& arg , const Args&... args ) noexcept;
+  static inline void ConstructTable( TableTypeForMatrix<T>& M , LineTypeForMatrix<T>& vec ) noexcept;
+  template <typename Arg , typename... Args> static void ConstructTable( TableTypeForMatrix<T>& M , LineTypeForMatrix<T>& vec , const Arg& arg , const Args&... args ) noexcept;
   
   static Matrix<Y,X,T> Unit_Body() noexcept;
 
@@ -61,3 +61,8 @@ Matrix<X,Y,T> Transpose( const Matrix<Y,X,T>& mat );
 
 template <SizeTypeForMatrix X , typename T>
 T Trace( const Matrix<X,X,T>& mat );
+
+// ../Arithmetic/Power/a_Body.hppにて定義
+template <typename T> inline T Square( const T& t );
+// Tが可換な場合のみ定義する。非可換な場合はオーバーロードする。
+template <typename T> inline Matrix<2,2,T> Square( const Matrix<2,2,T>& mat );
