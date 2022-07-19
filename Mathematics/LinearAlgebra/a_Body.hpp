@@ -189,7 +189,7 @@ template <SizeTypeForMatrix Y , SizeTypeForMatrix X , SizeTypeForMatrix Z , type
   const TableTypeForMatrix<T>& M1 = mat1.GetTable();
   const TableTypeForMatrix<T>& M2 = mat2.GetTable();
   TableTypeForMatrix<T> M_prod{};
-  auto begin2x = M2.begin() , end2x = M2.end();
+  auto begin2x = M2.begin();
   
   for( auto itr1y = M1.begin() , end1y = M1.end() ; itr1y != end1y ; itr1y++ ){
 
