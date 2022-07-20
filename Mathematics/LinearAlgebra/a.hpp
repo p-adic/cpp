@@ -16,7 +16,7 @@ public:
   // argsの長さがXYでなくてもコンパイルエラーとならないがサポート外である。
   template <typename... Args> Matrix( const Args&... args ) noexcept;
 
-  inline Matrix( const Matrix<X,Y,T>& mat ) noexcept;
+  inline Matrix( const Matrix<Y,X,T>& mat ) noexcept;
 
   // ( X , Y )行列でないものも引数に取れるがサポート外である。
   template <typename... Args> inline Matrix( const TableTypeForMatrix<T>& M ) noexcept;
@@ -62,7 +62,9 @@ Matrix<X,Y,T> Transpose( const Matrix<Y,X,T>& mat );
 template <SizeTypeForMatrix X , typename T>
 T Trace( const Matrix<X,X,T>& mat );
 
+
 // ../Arithmetic/Power/a_Body.hppにて定義
-template <typename T> inline T Square( const T& t );
-// Tが可換な場合のみ定義する。非可換な場合はオーバーロードする。
-template <typename T> inline Matrix<2,2,T> Square( const Matrix<2,2,T>& mat );
+// template <typename T , typename UINT>
+// T PowerBinaryMethod( const T& t , const UINT& num , const T& init , const bool& for_right_multiplication );
+template <typename T , typename UINT>
+Matrix<2,2,T> PowerBinaryMethod( const Matrix<2,2,T>& mat , const UINT& num , const Matrix<2,2,T>& init_dummy , const bool& for_right_multiplication_dummy );

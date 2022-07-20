@@ -3,7 +3,7 @@
 #pragma once
 #include "a.hpp"
 
-#include "../Arithmetic/Power/a_Body.hpp"
+#include "2by2/a_Body.hpp"
 #include "../../Utility/VLrray/a_Body.hpp"
 
 
@@ -19,7 +19,7 @@ Matrix<Y,X,T>::Matrix( const Args&... args ) noexcept
 
 }
 
-template <SizeTypeForMatrix Y , SizeTypeForMatrix X , typename T> inline Matrix<Y,X,T>::Matrix( const Matrix<X,Y,T>& mat ) noexcept : m_M( mat.m_M ) {}
+template <SizeTypeForMatrix Y , SizeTypeForMatrix X , typename T> inline Matrix<Y,X,T>::Matrix( const Matrix<Y,X,T>& mat ) noexcept : m_M( mat.m_M ) {}
 
 template <SizeTypeForMatrix Y , SizeTypeForMatrix X , typename T> template <typename... Args> inline Matrix<Y,X,T>::Matrix( const TableTypeForMatrix<T>& M ) noexcept : m_M( M ) {}
 
@@ -286,20 +286,4 @@ T Trace( const Matrix<X,X,T>& mat )
 
 }
 
-template <typename T> inline Matrix<2,2,T> Square( const Matrix<2,2,T>& mat )
-{
-
-  const TableTypeForMatrix<T>& M = mat.GetTable();
-  const LineTypeForMatrix<T>& M0 = M[0];
-  const LineTypeForMatrix<T>& M1 = M[1];
-  const T& M00 = M0[0];
-  const T& M01 = M0[1];
-  const T& M10 = M1[0];
-  const T& M11 = M1[1];
-  return Matrix<2,2,T>
-    (
-     Square<T>( M00 ) + M01 * M10 , ( M00 + M11 ) * M01 ,
-     M10 * ( M00 + M11 ) , M10 * M11 + Square<T>( M11 )
-     );
-
-}
+template <typename T , typename UINT> inline Matrix<2,2,T> PowerBinaryMethod( const Matrix<2,2,T>& mat , const UINT& num , const Matrix<2,2,T>& init_dummy , const bool& for_right_multiplication_dummy ) { return PowerBinaryMethod( TwoByTwoMatrix<T>( mat ) , num , TwoByTwoMatrix<T>( init_dummy ) , for_right_multiplication_dummy ).GetMatrix22(); }
