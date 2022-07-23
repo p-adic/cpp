@@ -95,7 +95,7 @@ template <INT_TYPE_FOR_MOD M> Mod<M> Inverse( const Mod<M>& n );
 
 template <INT_TYPE_FOR_MOD M> Mod<M> Power( const Mod<M>& n , const INT_TYPE_FOR_MOD& p , const string& method = "normal" );
 
-template <> Mod<2> Power( const Mod<2>& n , const INT_TYPE_FOR_MOD& p , const string& method );
+template <> inline Mod<2> Power( const Mod<2>& n , const INT_TYPE_FOR_MOD& p , const string& method );
 
 // MèÊÇ™1Ç…Ç»ÇÈÇÊÇ§íËã`Ç≥ÇÍÇƒÇ¢ÇÈÇ±Ç∆Ç…íçà”
 template <INT_TYPE_FOR_MOD M> inline Mod<M> Power( const Mod<M>& n , const Mod<M>& p , const string& method = "normal" );

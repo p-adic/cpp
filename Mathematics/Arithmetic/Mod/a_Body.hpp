@@ -268,7 +268,7 @@ Mod<M> Power( const Mod<M>& n , const INT_TYPE_FOR_MOD& p , const string& method
 
 }
 
-template <> Mod<2> Power( const Mod<2>& n , const INT_TYPE_FOR_MOD& p , const string& method ) { return p == 0 ? 1 : n; }
+template <> inline Mod<2> Power( const Mod<2>& n , const INT_TYPE_FOR_MOD& p , const string& method ) { return p == 0 ? 1 : n; }
 
 template <INT_TYPE_FOR_MOD M> inline Mod<M> Power( const Mod<M>& n , const Mod<M>& p , const string& method ) { return Power<Mod<M>,INT_TYPE_FOR_MOD>( n , p.Represent() , method ); }
 
