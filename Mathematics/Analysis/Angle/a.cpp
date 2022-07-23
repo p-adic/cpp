@@ -22,7 +22,7 @@ Angle& Angle::operator=( const Angle& n ) noexcept
 Angle& Angle::operator/=( const int& n )
 {
 
-  m_n /= Residue( n );
+  m_n /= n;
   m_inv = 0;
   return *this;
 
