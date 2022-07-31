@@ -34,8 +34,9 @@ template <typename... T0> auto to_string() noexcept -> typename enable_if< less_
 int to_int( const string& s );
 
 bool CheckEmpty( const string& ) noexcept;
-bool CheckContain( const string& , const string& ) noexcept;
-bool CheckContainInt( const string& ) noexcept;
+// ‘SŠp‚É‘Î‰ž
+bool CheckContain( const string& , const string& );
+bool CheckContainInt( const string& );
 
 bool Equal( const char* const& c0 , const char* const& c1 );
 

@@ -65,14 +65,34 @@ int to_int( const string& s )
 
 }
 
-bool CheckContain( const string& s0 , const string& s1 ) noexcept
+bool CheckContain( const string& s0 , const string& s1 )
 {
 
-  return !( s0.find( s1 ) == string::npos );
+
+  if( s1 == "" ){
+
+    return true;
+
+  }
+
+  string s_front;
+  string s_back;
+  
+  try{
+    
+    Separate( s0 , s1 , s_front , s_back );
+
+  } catch( ErrorType& e ) {
+
+    CALL_P( e , s0 , s1 );
+
+  }
+
+  return !( s0 != s_front );
 
 }
 
-bool CheckContainInt( const string& s ) noexcept
+bool CheckContainInt( const string& s )
 {
 
   for( int i = 0 ; i < 10 ; i++ ){
