@@ -14,4 +14,4 @@ inline LabeledList<SmartPointer<ofstream>,string>& FileHolder::OfstreamTable() {
 
 inline void DeleteContents( const string& filename ) { ToOfstream( filename , ios::trunc ); }
 
-template <typename... T> inline void WriteIn( const string& filename , const T&... t ) { ToOfstream( filename ) << to_string_Normalised( t... ) << endl;  }
+template <typename T> inline void WriteIn( const string& filename , const T& t ) { ToOfstream( filename ) << to_string( t ) << endl;  }
