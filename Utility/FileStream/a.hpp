@@ -31,4 +31,6 @@ private:
 ofstream& ToOfstream( const string& filename , const ios_base::openmode& open_mode = ios::app );
 
 inline void DeleteContents( const string& filename );
-template <typename T> inline void WriteIn( const string& filename , const T& t );
+
+template <typename T>
+void WriteIn( const string& filename , const T& t , const bool& insert_endl = true );
