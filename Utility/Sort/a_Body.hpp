@@ -92,16 +92,16 @@ void NormalSortNoCut( VLArray<T>& a )
 
       }
 
-      if( changing ){
+    }
 
-	a.insert_back( itr_ins , t );
-	a.erase_back( itr0 );
+    if( changing ){
 
-      } else {
+      a.insert_back( itr_ins , t );
+      a.erase_back( itr0 );
+
+    } else {
 	
-	itr0++;
-
-      }
+      itr0++;
 
     }
 
