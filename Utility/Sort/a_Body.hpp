@@ -65,15 +65,16 @@ void NormalSortNoCut( VLArray<T>& a )
     const T& t = *itr0;
     auto itr1 = itr0;
     itr1--;
-    bool stable = true;
+    auto itr_ins = end0;
+    bool changing = false;
     
     while( itr1 != end0 ){
 
       if( *itr1 > t ){
 
-	if( stable ){
+	if( ! changing ){
 
-	  stable = false;
+	  changing = true;
 
 	}
 	
@@ -81,15 +82,9 @@ void NormalSortNoCut( VLArray<T>& a )
 
       } else {
 
-	if( stable ){
+	if( ! changing ){
 
-	  itr0++;
-
-	} else {
-
-	  a.insert_back( itr1 , t );
-	  a.erase_back( itr0 );
-	  stable = true;
+	  itr_ins = itr1;
 
 	}
 
@@ -97,10 +92,14 @@ void NormalSortNoCut( VLArray<T>& a )
 
       }
 
-      if( ! stable ){
+      if( changing ){
 
-	a.insert_back( end0 , t );
+	a.insert_back( itr_ins , t );
 	a.erase_back( itr0 );
+
+      } else {
+	
+	itr0++;
 
       }
 
