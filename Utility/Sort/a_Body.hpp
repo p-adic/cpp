@@ -35,11 +35,11 @@ void NormalSort( VLArray<T>& a , const VLArray<int>& option )
 
       if( cut_length_signed > 0 ){
 
-	NormalSortCut<T>( a , cut_length , true );
+	NormalSortCut<T>( a , cut_length_signed , true );
 
       } else {
 
-	NormalSortCut<T>( a , - cut_length , false );
+	NormalSortCut<T>( a , - cut_length_signed , false );
 
       }
 
@@ -130,7 +130,7 @@ void NormalSortCut( VLArray<T>& a , const int& cut_length , const bool& cut_larg
 
   if( cut_large ){
 
-    itr0 = = a.begin();
+    itr0 = a.begin();
     incr = &( type::operator++ );
     decr = &( type::operator-- );
     ins = &( VLArray<T>::insert_back );
@@ -153,11 +153,10 @@ void NormalSortCut( VLArray<T>& a , const int& cut_length , const bool& cut_larg
     const T& t = *itr0;
     auto itr1 = itr0;
     ( itr1.*decr )();
+    auto itr_ins = end0;
     bool changing = false;
     
     while( itr1 != end0 ){
-
-      auto itr_ins = end0;
       
       if( *itr1 > t ){
 
@@ -425,7 +424,7 @@ void MergeSortCut( VLArray<T>& a , const int& cut_length , const bool& cut_large
 }
 
 template <typename T>
-void MergeSortCutNormal( VLArray<T>& a , const int& cut_length , const bool& cut_large , const int& noral_method_length )
+void MergeSortCutNormal( VLArray<T>& a , const int& cut_length , const bool& cut_large , const int& normal_method_length )
 {
 
   const uint& size_a = a.size();
