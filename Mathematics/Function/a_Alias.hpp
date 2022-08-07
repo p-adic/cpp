@@ -3,22 +3,22 @@
 #pragma once
 
 template <typename Ret , typename... Args>
-using FunctionType = Ret( const Args&... );
+using FunctionType = Ret( Args&... );
 
 template <typename Ret , typename... Args>
-using FunctionPointerType = Ret(*)( const Args&... );
+using FunctionPointerType = Ret(*)( Args&... );
 
 template <typename Ret , typename... Args>
-using NoexceptFunctionPointerType = Ret(*)( const Args&... ) noexcept;
+using NoexceptFunctionPointerType = Ret(*)( Args&... ) noexcept;
 
 template <typename Ret , typename T , typename... Args>
-using MemberFunctionPointerType = Ret( T::* )( const Args&... );
+using MemberFunctionPointerType = Ret( T::* )( Args&... );
 
 template <typename Ret , typename T , typename... Args>
-using ConstMemberFunctionPointerType = Ret( T::* )( const Args&... ) const;
+using ConstMemberFunctionPointerType = Ret( T::* )( Args&... ) const;
 
 template <typename Ret , typename T , typename... Args>
-using NoexceptMemberFunctionPointerType = Ret( T::* )( const Args&... ) noexcept;
+using NoexceptMemberFunctionPointerType = Ret( T::* )( Args&... ) noexcept;
 
 template <typename Ret , typename T , typename... Args>
-using ConstNoexceptMemberFunctionPointerType = Ret( T::* )( const Args&... ) const noexcept;
+using ConstNoexceptMemberFunctionPointerType = Ret( T::* )( Args&... ) const noexcept;
