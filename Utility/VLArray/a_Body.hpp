@@ -325,8 +325,10 @@ void VLArray<T>::insert_back( const typename VLArray<T>::iterator& itr , const A
 
 }
 
+template <typename T> inline typename VLArray<T>::iterator VLArray<T>::erase( typename VLArray<T>::iterator& itr ) { return erase_back( itr ); }
+
 template <typename T>
-typename VLArray<T>::iterator VLArray<T>::erase( typename VLArray<T>::iterator& itr )
+typename VLArray<T>::iterator VLArray<T>::erase_back( typename VLArray<T>::iterator& itr )
 {
   
   if( ! CheckContain( itr ) ){
@@ -342,6 +344,30 @@ typename VLArray<T>::iterator VLArray<T>::erase( typename VLArray<T>::iterator& 
   p0->m_next = p1;
   p1->m_prev = p0;
   itr++;
+  
+  delete p;
+  m_size--;
+  return itr;
+
+}
+
+template <typename T>
+typename VLArray<T>::iterator VLArray<T>::erase_front( typename VLArray<T>::iterator& itr )
+{
+  
+  if( ! CheckContain( itr ) ){
+
+    ERR_IMPUT( itr );
+    
+  }
+
+  EntryOfVLArray<T>* p = itr.m_p;
+  EntryOfVLArray<T>* p0 = p->m_prev;
+  EntryOfVLArray<T>* p1 = p->m_next;
+  
+  p0->m_next = p1;
+  p1->m_prev = p0;
+  itr--;
   
   delete p;
   m_size--;

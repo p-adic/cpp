@@ -66,6 +66,8 @@ public:
   template <typename Arg> void insert_front( const iterator& , const Arg& );
   template <typename Arg> void insert_back( const iterator& , const Arg& );
   iterator erase( iterator& );
+  iterator erase_back( iterator& );
+  iterator erase_front( iterator& );
 
   T& operator[]( const uint& );
   const T& operator[]( const uint& ) const;
