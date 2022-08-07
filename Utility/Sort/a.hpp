@@ -14,7 +14,7 @@ template <typename T>
 void NormalSortNoCut( VLArray<T>& a );
 
 template <typename T>
-void NormalSortCut( VLArray<T>& a , const int& cut_length , const bool& cut_large );
+void NormalSortCut( VLArray<T>& a , const uint& cut_length , const bool& cut_large );
 
 
 template <typename T>
@@ -24,7 +24,4 @@ template <typename T>
 void MergeSortNoCut( VLArray<T>& a );
 
 template <typename T>
-void MergeSortCut( VLArray<T>& a , const int& cut_length , const bool& cut_large );
-
-template <typename T>
-void MergeSortCutNormal( VLArray<T>& a , const int& cut_length , const bool& cut_large , const int& noral_method_length );
+void MergeSortCut( VLArray<T>& a , const uint& cut_length , const bool& cut_large , const uint& normal_method_length = 2 );
