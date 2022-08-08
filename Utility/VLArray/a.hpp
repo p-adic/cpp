@@ -1,6 +1,8 @@
 // c:/Users/user/Documents/Programming/Utility/VLArray/a.hpp
 
 #pragma once
+#include "a_Macro.hpp"
+
 #include "Entry/a.hpp"
 
 #include "a_Alias.hpp"
