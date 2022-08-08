@@ -82,7 +82,7 @@ void NormalSortNoCut( VLArray<T>& a )
 
       } else {
 
-	if( ! changing ){
+	if( changing ){
 
 	  itr_ins = itr1;
 
@@ -130,18 +130,18 @@ void NormalSortCut( VLArray<T>& a , const uint& cut_length , const bool& cut_lar
   if( cut_large ){
 
     itr0 = a.begin();
-    incr = type::operator++;
-    decr = type::operator--;
-    ins = VLArray<T>::insert_back;
-    er = VLArray<T>::erase_back;
+    incr = &type::operator++;
+    decr = &type::operator--;
+    ins = &VLArray<T>::insert_back;
+    er = &VLArray<T>::erase_back;
 
   } else {
 
     itr0--;
-    incr = type::operator--;
-    decr = type::operator++;
-    ins = VLArray<T>::insert_front;
-    er = VLArray<T>::erase_front;
+    incr = &type::operator--;
+    decr = &type::operator++;
+    ins = &VLArray<T>::insert_front;
+    er = &VLArray<T>::erase_front;
 
   }
 
@@ -383,23 +383,23 @@ void MergeSortCut( VLArray<T>& a , const uint& cut_length , const bool& cut_larg
   if( cut_large ){
 
     itr = a.begin();
-    fr = VLArray<T>::front;
-    incr = type::operator++;
-    ins = VLArray<T>::insert_front;
-    push = VLArray<T>::push_back;
-    pop_fr = VLArray<T>::pop_front;
-    pop_ba = VLArray<T>::pop_back;
+    fr = &VLArray<T>::front;
+    incr = &type::operator++;
+    ins = &VLArray<T>::insert_front;
+    push = &VLArray<T>::push_back;
+    pop_fr = &VLArray<T>::pop_front;
+    pop_ba = &VLArray<T>::pop_back;
 
   } else {
 
     itr = end;
     itr--;
-    fr = VLArray<T>::back;
-    incr = type::operator--;
-    ins = VLArray<T>::insert_back;
-    push = VLArray<T>::push_front;
-    pop_fr = VLArray<T>::pop_back;
-    pop_ba = VLArray<T>::pop_front;
+    fr = &VLArray<T>::back;
+    incr = &type::operator--;
+    ins = &VLArray<T>::insert_back;
+    push = &VLArray<T>::push_front;
+    pop_fr = &VLArray<T>::pop_back;
+    pop_ba = &VLArray<T>::pop_front;
 
   }
 
