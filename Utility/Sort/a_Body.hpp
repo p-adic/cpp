@@ -29,7 +29,7 @@ void NormalSort( VLArray<T>& a , const VLArray<int>& option )
 
   if( ! option.empty() ){
 
-    const uint& cut_length_signed = option[0];
+    const int& cut_length_signed = option[0];
 
     if( cut_length_signed != 0 ){
 
@@ -70,7 +70,7 @@ void NormalSortNoCut( VLArray<T>& a )
     
     while( itr1 != end0 ){
 
-      if( t < *itr1 ){
+      if( *itr1 > t ){
 
 	if( ! changing ){
 
@@ -155,7 +155,7 @@ void NormalSortCut( VLArray<T>& a , const uint& cut_length , const bool& cut_lar
     
     while( itr1 != end0 ){
       
-      if( t < *itr1 ){
+      if( cut_large ? t < *itr1 : *itr1 < t ){
 
 	if( ! changing ){
 
@@ -216,7 +216,7 @@ void MergeSort( VLArray<T>& a , const VLArray<int>& option )
   
   if( size > 0 ){
 
-    const uint& cut_length_signed = option[0];
+    const int& cut_length_signed = option[0];
 
     if( cut_length_signed != 0 ){
 
@@ -403,14 +403,14 @@ void MergeSortCut( VLArray<T>& a , const uint& cut_length , const bool& cut_larg
 
   }
 
-  while( size_b != 0 && i <= cut_length ){
+  while( size_b != 0 && i < cut_length ){
 
     const T& t = ( b.*fr )();
     bool not_inserted = true;
     
     while( itr != end && not_inserted ){
 
-      if( t < *itr ){
+      if( cut_large ? t < *itr : *itr < t ){
 
 	( a.*ins )( itr , t );
 	not_inserted = false;
