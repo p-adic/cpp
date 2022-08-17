@@ -13,6 +13,9 @@ private:
   VLArray<DirectProduct<Key1,Key2...> > m_key;
   VLArray<T> m_t;
 
+  bool m_has_temp;
+  DirectProduct<Key1,Key2...> m_temp_key;
+  
 public:
   inline LabeledList();
 
@@ -20,11 +23,14 @@ public:
   // 更にコピーコンストラクタも持たない型Tを使いたい時はTの代わりにSmartPointer<T>を用い、このコンストラクタを適用する。
   inline LabeledList( const WrappedType<DirectProduct<Key1,Key2...> >& , const WrappedType<T>& );
 
-  const VLArray<DirectProduct<Key1,Key2...> >& inline Key() const noexcept;
+  const VLArray<DirectProduct<Key1,Key2...> >& inline GetKey() const noexcept;
   T& operator()( const Key1& , const Key2&... );
   const T& operator()( const Key1& , const Key2&... ) const;
   void Insert( const Key1& , const Key2&... , const T& );
   void Delete( const Key1& , const Key2&... );
   bool Contain( const Key1& , const Key2&... ) const;
+
+  // Containでないならばinsertをし、その後operator()をする。
+  T& Ref( const Key1& , const Key2&... , const T& );
 
 };
