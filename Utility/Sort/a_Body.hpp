@@ -70,7 +70,7 @@ void NormalSortNoCut( VLArray<T>& a )
     
     while( itr1 != end0 ){
 
-      if( *itr1 > t ){
+      if( t < *itr1 ){
 
 	if( ! changing ){
 
