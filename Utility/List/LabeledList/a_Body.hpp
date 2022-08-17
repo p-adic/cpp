@@ -16,6 +16,8 @@ template <typename T , typename Key1 , typename... Key2> inline LabeledList<T,Ke
   m_key( key ) , m_t( t )
 {}
 
+template <typename T , typename Key1 , typename... Key2>  const VLArray<DirectProduct<Key1,Key2...> >& inline LabeledList<T,Key1,Key2...>::Key() const noexcept { return m_key; }
+
 template <typename T , typename Key1 , typename... Key2>
 T& LabeledList<T,Key1,Key2...>::operator()( const Key1& key1 , const Key2&... key2 )
 {

@@ -19,7 +19,8 @@ public:
   // デフォルトコンストラクタを持たないがコピーコンストラクタを持つ型Tを使いたい時は、このコンストラクタを適用する。
   // 更にコピーコンストラクタも持たない型Tを使いたい時はTの代わりにSmartPointer<T>を用い、このコンストラクタを適用する。
   inline LabeledList( const WrappedType<DirectProduct<Key1,Key2...> >& , const WrappedType<T>& );
-  
+
+  const VLArray<DirectProduct<Key1,Key2...> >& inline Key() const noexcept;
   T& operator()( const Key1& , const Key2&... );
   const T& operator()( const Key1& , const Key2&... ) const;
   void Insert( const Key1& , const Key2&... , const T& );
