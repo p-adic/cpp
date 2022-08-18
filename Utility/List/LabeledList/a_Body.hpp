@@ -3,20 +3,14 @@
 #pragma once
 #include "a.hpp"
 
+#include "../../Sort/a_Body.hpp"
 #include "../../VLArray/a_Body.hpp"
 #include "../../../Error/IllegalImput/a_Body.hpp"
 #include "../../../Mathematics/SetTheory/DirectProduct/a_Body.hpp"
 
-template <typename T , typename Key1 , typename... Key2> inline LabeledList<T,Key1,Key2...>::LabeledList() :
-  m_key() , m_t()
-{}
+template <typename T , typename Key1 , typename... Key2> inline LabeledList<T,Key1,Key2...>::LabeledList() : m_v() {}
 
-// VLArray<T>::VLArray( const WrappedType<T>& )ÇégópÇ∑ÇÈÅB
-template <typename T , typename Key1 , typename... Key2> inline LabeledList<T,Key1,Key2...>::LabeledList( const WrappedType<DirectProduct<Key1,Key2...> >& key , const WrappedType<T>& t ) :
-  m_key( key ) , m_t( t )
-{}
-
-template <typename T , typename Key1 , typename... Key2>  const VLArray<DirectProduct<Key1,Key2...> >& inline LabeledList<T,Key1,Key2...>::GetKey() const noexcept { return m_key; }
+template <typename T , typename Key1 , typename... Key2> inline const VLArray<DirectProduct<DirectProduct<Key1,Key2...>,T> >& LabeledList<T,Key1,Key2...>::Get() const noexcept { return m_v; }
 
 template <typename T , typename Key1 , typename... Key2>
 T& LabeledList<T,Key1,Key2...>::operator()( const Key1& key1 , const Key2&... key2 )
@@ -24,24 +18,18 @@ T& LabeledList<T,Key1,Key2...>::operator()( const Key1& key1 , const Key2&... ke
 
   const DirectProduct<Key1,Key2...> key_temp{ key1 , key2... };
 
-  typename VLArray<DirectProduct<Key1,Key2...> >::const_iterator itr1 = m_key.begin() , end = m_key.end();
-  typename VLArray<T>::iterator itr2 = m_t.begin();
-  
-  while( itr1 != end ){
+  for( auto itr = m_v.begin() , end = m_v.end() ; itr != end ; itr++ ){
 
-    if( *itr1 == key_temp ){
+    if( itr->template Get<0>() == key_temp ){
 
-      return *itr2;
+      return itr->template Ref<1>();
 
     }
 
-    itr1++;
-    itr2++;
-    
   }
 
-  ERR_IMPUT( m_key , key1 , key2... );
-  return m_t.front();
+  ERR_IMPUT( key1 , key2... );
+  return m_v.back().template Ref<1>();
 
 }
 
@@ -51,37 +39,22 @@ const T& LabeledList<T,Key1,Key2...>::operator()( const Key1& key1 , const Key2&
 
   const DirectProduct<Key1,Key2...> key_temp{ key1 , key2... };
 
-  typename VLArray<DirectProduct<Key1,Key2...> >::const_iterator itr1 = m_key.begin() , end = m_key.end();
-  typename VLArray<T>::const_iterator itr2 = m_t.begin();
-  
-  while( itr1 != end ){
+  for( auto itr = m_v.begin() , end = m_v.end() ; itr != end ; itr++ ){
 
-    if( *itr1 == key_temp ){
+    if( itr->template Get<0>() == key_temp ){
 
-      return *itr2;
+      return itr->template Get<1>();
 
     }
 
-    itr1++;
-    itr2++;
-    
   }
-
-  ERR_IMPUT( m_key , key1 , key2... );
-  return m_t.front();
-
-}
-
-template <typename T , typename Key1 , typename... Key2>
-void LabeledList<T,Key1,Key2...>::Insert( const Key1& key1 , const Key2&... key2 , const T& t )
-{
-
-  const DirectProduct<Key1,Key2...> key_temp{ key1 , key2... };
-  m_key.push_back( key );
-  m_t.push_back( t );
-  return;
+  
+  ERR_IMPUT( key1 , key2... );
+  return Projection<1,DirectProduct<Key1,Key2...>,T>( m_v.back() );
 
 }
+
+template <typename T , typename Key1 , typename... Key2> inline void LabeledList<T,Key1,Key2...>::Insert( const Key1& key1 , const Key2&... key2 , const T& t ) { m_v.push_back( DirectProduct<DirectProduct<Key1,Key2...>,T>( DirectProduct<Key1,Key2...>( key1 , key2... ) , t ) ); }
 
 template <typename T , typename Key1 , typename... Key2>
 void LabeledList<T,Key1,Key2...>::Delete( const Key1& key1 , const Key2&... key2 )
@@ -89,23 +62,17 @@ void LabeledList<T,Key1,Key2...>::Delete( const Key1& key1 , const Key2&... key2
 
   const DirectProduct<Key1,Key2...> key_temp{ key1 , key2... };
   
-  typename VLArray<DirectProduct<Key1,Key2...> >::const_iterator itr1 = m_key.begin() , end = m_key.end();
-  typename VLArray<T>::iterator itr2 = m_t.begin();
-  
-  while( itr1 != end ){
+  for( auto itr = m_v.begin() , end = m_v.end() ; itr != end ; itr++ ){
 
-    if( *itr1 == key_temp ){
+    if( itr->template Get<0>() == key_temp ){
 
-      return;
+      m_v.erase( itr );
 
     }
 
-    itr1++;
-    itr2++;
-    
   }
 
-  ERR_IMPUT( m_key , key1 , key2... );
+  ERR_IMPUT( key1 , key2... );
   return;
 
 }
@@ -116,51 +83,49 @@ bool LabeledList<T,Key1,Key2...>::Contain( const Key1& key1 , const Key2&... key
 
   const DirectProduct<Key1,Key2...> key_temp{ key1 , key2... };
   
-  typename VLArray<DirectProduct<Key1,Key2...> >::const_iterator itr1 = m_key.begin() , end = m_key.end();
-  typename VLArray<T>::const_iterator itr2 = m_t.begin();
-  
-  while( itr1 != end ){
+  for( auto itr = m_v.begin() , end = m_v.end() ; itr != end ; itr++ ){
 
-    if( *itr1 == key_temp ){
+    if( itr->template Get<0>() == key_temp ){
 
       return true;
-      
+
     }
 
-    itr1++;
-    itr2++;
-   
   }
 
   return false;
 
 }
 
-
 template <typename T , typename Key1 , typename... Key2>
-T& LabeledList<T,Key1,Key2...>::Ref( const Key1& key1 , const Key2&... key2 , const T& t )
+T& LabeledList<T,Key1,Key2...>::RefInsert( const Key1& key1 , const Key2&... key2 , const T& t )
 {
 
   const DirectProduct<Key1,Key2...> key_temp{ key1 , key2... };
   
-  typename VLArray<DirectProduct<Key1,Key2...> >::const_iterator itr1 = m_key.begin() , end = m_key.end();
-  typename VLArray<T>::iterator itr2 = m_t.begin();
-  
-  while( itr1 != end ){
+  for( auto itr = m_v.begin() , end = m_v.end() ; itr != end ; itr++ ){
 
-    if( *itr1 == key_temp ){
+    if( itr->template Get<0>() == key_temp ){
 
-      return *itr2;
-      
+      return itr->template Ref<1>();
+
     }
 
-    itr1++;
-    itr2++;
-   
   }
 
-  Insert( const Key1& key1 , const Key2&... key2 , const T& t );
-  itr2--;
-  return *itr2;
+  Insert( key1 , key2... , t );
+  return Projection<1,DirectProduct<Key1,Key2...>,T>( m_v.back() );
 
 }
+
+template <typename T , typename Key1 , typename... Key2>
+void LabeledList<T,Key1,Key2...>::SortKey()
+{
+
+  // Sort()
+
+
+}
+
+template <typename T , typename Key1 , typename... Key2> inline bool operator<( const DirectProduct<DirectProduct<Key1,Key2...>,T>& v0 , const DirectProduct<DirectProduct<Key1,Key2...>,T>& v1 ) { return Projection<0,Key1,Key2...>( v0 ) < Projection<0,Key1,Key2...>( v1 ); }
+

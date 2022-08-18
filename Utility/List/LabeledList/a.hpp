@@ -10,27 +10,25 @@ class LabeledList
 {
 
 private:
-  VLArray<DirectProduct<Key1,Key2...> > m_key;
-  VLArray<T> m_t;
-
-  bool m_has_temp;
-  DirectProduct<Key1,Key2...> m_temp_key;
+  VLArray<DirectProduct<DirectProduct<Key1,Key2...>,T> > m_v;
   
 public:
   inline LabeledList();
 
-  // デフォルトコンストラクタを持たないがコピーコンストラクタを持つ型Tを使いたい時は、このコンストラクタを適用する。
-  // 更にコピーコンストラクタも持たない型Tを使いたい時はTの代わりにSmartPointer<T>を用い、このコンストラクタを適用する。
-  inline LabeledList( const WrappedType<DirectProduct<Key1,Key2...> >& , const WrappedType<T>& );
-
-  const VLArray<DirectProduct<Key1,Key2...> >& inline GetKey() const noexcept;
+  inline const VLArray<DirectProduct<DirectProduct<Key1,Key2...>,T> >& Get() const noexcept;
   T& operator()( const Key1& , const Key2&... );
   const T& operator()( const Key1& , const Key2&... ) const;
-  void Insert( const Key1& , const Key2&... , const T& );
+  inline void Insert( const Key1& , const Key2&... , const T& );
   void Delete( const Key1& , const Key2&... );
   bool Contain( const Key1& , const Key2&... ) const;
 
   // Containでないならばinsertをし、その後operator()をする。
-  T& Ref( const Key1& , const Key2&... , const T& );
+  T& RefInsert( const Key1& , const Key2&... , const T& );
+
+  
+  // 以下bool operator<( const DirectProduct<Key1,Key2...>& , const DirectProduct<Key1,Key2...>& )が定義されている時のみ実体化可能
+  void SortKey();
 
 };
+
+template <typename T , typename Key1 , typename... Key2> inline bool operator<( const DirectProduct<DirectProduct<Key1,Key2...>,T>& , const DirectProduct<DirectProduct<Key1,Key2...>,T>& );
