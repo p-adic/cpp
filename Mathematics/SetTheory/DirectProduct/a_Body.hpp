@@ -6,296 +6,55 @@
 #include "../../../Utility/String/a_Body.hpp"
 #include "../../../Utility/WrappedType/Int/a.hpp"
 
-template <typename T0>
-inline DirectProduct<T0>::DirectProduct() :
-  m_t() , m_c()
-{}
+template <typename T0 , typename... T1> inline DirectProduct<T0,T1...>::DirectProduct() : m_t() , m_v() {}
+template <typename T0 , typename... T1> inline DirectProduct<T0,T1...>::DirectProduct( const T0& t0 , const T1&... t1 ) : DirectProduct<T0,T1...>( t0 , DirectProduct<T1...>( t1... ) ) {}
+template <typename T0 , typename... T1> inline DirectProduct<T0,T1...>::DirectProduct( const T0& t , const DirectProduct<T1...>& v ) : m_t( t ) , m_v( v ) {}
 
-template <typename T0>
-inline DirectProduct<T0>::DirectProduct( const T0& t0 ) :
-  m_t( t0 ) , m_c()
-{}
 
-template <typename T0 , typename T1 , typename... T2>
-inline DirectProduct<T0,T1,T2...>::DirectProduct() :
-  m_t() , m_v()
-{}
+template<uint i> inline EmptySet DirectProduct<>::Get() const { return EmptySet(); }
+template <typename T0 , typename... T1> template<uint i> inline auto DirectProduct<T0,T1...>::Get() const -> typename enable_if< equal_to<uint>()( 0 , i ) , ConstTypeOfProjection<i,T0,T1...> >::type { return m_t; }
+template <typename T0 , typename... T1> template<uint i> inline auto DirectProduct<T0,T1...>::Get() const -> typename enable_if< less_equal<uint>()( 1 , i ) , ConstTypeOfProjection<i,T0,T1...> >::type{ return m_v.template Get<i-1>(); }
 
-template <typename T0 , typename T1 , typename... T2> inline DirectProduct<T0,T1,T2...>::DirectProduct( const T0& t0 , const T1& t1 , const T2&... t2 ) :
-  DirectProduct<T0,T1,T2...>( t0 , DirectProduct<T1,T2...>( t1 , t2... ) )
-{}
 
-template <typename T0 , typename T1 , typename... T2>
-inline DirectProduct<T0,T1,T2...>::DirectProduct( const T0& t0 , const DirectProduct<T1,T2...>& v1 ) :
-  m_t( t0 ) , m_v( v1 )
-{}
+template<uint i> inline EmptySet DirectProduct<>::Ref() { return EmptySet(); }
+template <typename T0 , typename... T1> template<uint i> inline auto DirectProduct<T0,T1...>::Ref() -> typename enable_if< equal_to<uint>()( 0 , i ) , TypeOfProjection<i,T0,T1...> >::type { return m_t; }
+template <typename T0 , typename... T1> template<uint i> inline auto DirectProduct<T0,T1...>::Ref() -> typename enable_if< less_equal<uint>()( 1 , i ) , TypeOfProjection<i,T0,T1...> >::type{ return m_v.template Ref<i-1>(); }
 
-template <typename T0>
-inline const T0& DirectProduct<T0>::GetInitial() const noexcept
-{
 
-  return m_t;
+template<uint i> inline auto DirectProduct<>::GetFinalSegment() const -> typename enable_if< equal_to<uint>()( 0 , i ) , ConstTypeOfFinalSegment<i> >::type { return *this; }
+template<uint i> inline auto DirectProduct<>::GetFinalSegment() const -> typename enable_if< less_equal<uint>()( 1 , i ) , ConstTypeOfFinalSegment<i> >::type { return EmptySet(); }
+template <typename T0 , typename... T1> template<uint i> inline auto DirectProduct<T0,T1...>::GetFinalSegment() const -> typename enable_if< equal_to<uint>()( 0 , i ) , ConstTypeOfFinalSegment<i,T0,T1...> >::type { return *this; }
+template <typename T0 , typename... T1> template<uint i> inline auto DirectProduct<T0,T1...>::GetFinalSegment() const -> typename enable_if< less_equal<uint>()( 1 , i ) , ConstTypeOfFinalSegment<i,T0,T1...> >::type { return m_v.template GetFinalSegment<i-1>(); }
 
-}
 
-template <typename T0 , typename T1 , typename... T2>
-inline const T0& DirectProduct<T0,T1,T2...>::GetInitial() const noexcept
-{
+template<uint i> inline auto DirectProduct<>::RefFinalSegment() -> typename enable_if< equal_to<uint>()( 0 , i ) , TypeOfFinalSegment<i> >::type { return *this; }
+template<uint i> inline auto DirectProduct<>::RefFinalSegment() -> typename enable_if< less_equal<uint>()( 1 , i ) , TypeOfFinalSegment<i> >::type { return EmptySet(); }
+template <typename T0 , typename... T1> template<uint i> inline auto DirectProduct<T0,T1...>::RefFinalSegment() -> typename enable_if< equal_to<uint>()( 0 , i ) , TypeOfFinalSegment<i,T0,T1...> >::type { return *this; }
+template <typename T0 , typename... T1> template<uint i> inline auto DirectProduct<T0,T1...>::RefFinalSegment() -> typename enable_if< less_equal<uint>()( 1 , i ) , TypeOfFinalSegment<i,T0,T1...> >::type { return m_v.template RefFinalSegment<i-1>(); }
 
-  return m_t;
 
-}
-
-template <typename T0>
-inline const DirectProduct<>& DirectProduct<T0>::IgnoreInitial() const noexcept
-{
-
-  return m_c;
-
-}
-
-template <typename T0 , typename T1 , typename... T2>
-inline const DirectProduct<T1,T2...>& DirectProduct<T0,T1,T2...>::IgnoreInitial() const noexcept
-{
-
-  return m_v;
-
-}
+template<uint i> inline auto DirectProduct<>::CopyInitialSegment() const -> typename enable_if< equal_to<uint>()( 0 , i ) , TypeOfInitialSegment<i> >::type { return *this; }
+template<uint i> inline auto DirectProduct<>::CopyInitialSegment() const -> typename enable_if< less_equal<uint>()( 1 , i ) , TypeOfInitialSegment<i> >::type { return EmptySet(); }
+template <typename T0 , typename... T1> template<uint i> inline auto DirectProduct<T0,T1...>::CopyInitialSegment() const -> typename enable_if< equal_to<uint>()( 0 , i ) , TypeOfInitialSegment<i,T0,T1...> >::type { return DirectProduct<>(); }
+template <typename T0 , typename... T1> template<uint i> inline auto DirectProduct<T0,T1...>::CopyInitialSegment() const -> typename enable_if< less_equal<uint>()( 1 , i ) , TypeOfInitialSegment<i,T0,T1...> >::type { return TypeOfInitialSegment<i,T0,T1...>( m_t , m_v.template CopyInitialSegment<i-1>() ); }
 
 inline bool operator==( const DirectProduct<>& , const DirectProduct<>& ) noexcept { return true; }
 
-template <typename T0 , typename... T1>
-inline bool operator==( const DirectProduct<T0,T1...>& v0 , const DirectProduct<T0,T1...>& v1 )
-{
-
-  return ( Projection<0,T0,T1...>( v0 ) == Projection<0,T0,T1...>( v1 ) ) && ( RestrictToRight<1,T0,T1...>( v0 ) == RestrictToRight<1,T0,T1...>( v1 ) );
-
-}
+template <typename T0 , typename... T1> inline bool operator==( const DirectProduct<T0,T1...>& v0 , const DirectProduct<T0,T1...>& v1 ) { return ( v0.template Get<0>() == v1.template Get<0>() ) && v0.template GetFinalSegment<1>() == v1.template GetFinalSegment<1>(); }
 
 inline bool Equal( const DirectProduct<>& ) noexcept { return true; }
-
-template <typename T0 , typename... T1>
-bool Equal( const DirectProduct<T0,T1...>& v0 , const T0& t0 , const T1&... t1 )
-{
-
-  return Projection<0,T0,T1...>( v0 ) == t0 && Equal( RestrictToRight<1,T0,T1...>( v0 ) , t1... );
-
-}
-
-template <typename T0 , typename... T1>
-inline const T0& SeparateInitialLeft( const DirectProduct<T0,T1...>& v ) noexcept
-{
-
-  return v.GetInitial();
-
-}
-
-template <typename T0 , typename... T1>
-inline const DirectProduct<T1...>& SeparateInitialRight( const DirectProduct<T0,T1...>& v ) noexcept
-{
-
-  return v.IgnoreInitial();
-
-}
-
-template <typename T0>
-inline const TypeOfIgnoreFinal<T0>& SeparateFinalLeft( const DirectProduct<T0>& v0 ) noexcept
-{
-
-  return SeparateInitialRight( v0 );
-
-}
-
-template <typename T0 , typename T1 , typename... T2>
-inline TypeOfIgnoreFinal<T0,T1,T2...> SeparateFinalLeft( const DirectProduct<T0,T1,T2...>& v0 )
-{
-  
-  return Connect( SeparateInitialLeft( v0 ) , SeparateFinalLeft( SeparateInitialRight( v0 ) ) );
-
-}
-
-template <typename T0>
-inline const TypeOfFinal<T0>& SeparateFinalRight( const DirectProduct<T0>& v0 ) noexcept
-{
-
-  return SeparateInitialLeft( v0 );
-
-}
-
-template <typename T0 , typename T1 , typename... T2>
-TypeOfFinal<T0,T1,T2...> SeparateFinalRight( const DirectProduct<T0,T1,T2...>& v0 )
-{
-  
-  return SeparateFinalRight( SeparateInitialRight( v0 ) );
-
-}
-
-// const参照にするとTypeOfRestrictToRightがconst参照になってしまう。
-template <typename... T0>
-inline DirectProduct<T0...> Connect( const DirectProduct<>& c , const DirectProduct<T0...>& v0 ) noexcept
-{
-
-  return v0;
-
-}
-
-// const参照にするとTypeOfRestrictToLeftがconst参照になってしまう。
-template <typename T0 , typename... T1>
-inline DirectProduct<T0,T1...> Connect( const DirectProduct<T0,T1...>& v0 , const DirectProduct<>& c ) noexcept
-{
-
-  return v0;
-
-}
-
-template <typename T0 , typename T1 , typename... T2>
-inline DirectProduct<T0,T1,T2...> Connect( const DirectProduct<T0>& v0 , const DirectProduct<T1,T2...>& v1 )
-{
-  
-  return DirectProduct<T0,T1,T2...>( SeparateInitialLeft( v0 ) , v1 );
-
-}
-
-template <typename T0 , typename T1 , typename... T2 , typename T3 , typename... T4>
-inline DirectProduct<T0,T1,T2...,T3,T4...> Connect( const DirectProduct<T0,T1,T2...>& v0 , const DirectProduct<T3,T4...>& v1 )
-{
-
-  return DirectProduct<T0,T1,T2...,T3,T4...>( SeparateInitialLeft( v0 ) , Connect( SeparateInitialRight( v0 ) , v1 ) );
-
-}
-
-// Only for TypeOfRestrictToLeft
-template <typename T0> EmptySet Connect( const DirectProduct<T0>& v0 , const EmptySet& v1 )
-{
-
-  ERR_IMPUT( v0 , v1 );
-  return v1;
-
-}
-
-template <uint i , typename... T0>
-auto RestrictToRight( const DirectProduct<T0...>& v ) -> typename enable_if< equal_to<uint>()( 0 , i ) , TypeOfRestrictToRight<i,T0...> >::type
-{
-
-  return v;
-
-}
-
-template <uint i , typename... T0>
-auto RestrictToRight( const DirectProduct<T0...>& v ) -> typename enable_if< less<uint>()( sizeof...( T0 ) , i ) , TypeOfRestrictToRight<i,T0...> >::type
-{
-
-  ERR_IMPUT( i , sizeof...( T0 ) , v );
-  return EmptySet();
-
-}
-
-template <uint i , typename T0 ,  typename... T1>
-auto RestrictToRight( const DirectProduct<T0,T1...>& v ) -> typename enable_if< less<uint>()( 0 , i ) && less_equal<uint>()( i , sizeof...( T1 ) + 1 ) , TypeOfRestrictToRight<i,T0,T1...> >::type
-{
-
-  return RestrictToRight<i-1,T1...>( SeparateInitialRight( v ) );
-
-}
-
-template <uint i , typename... T0>
-auto RestrictToLeft( const DirectProduct<T0...>& v ) -> typename enable_if< equal_to<uint>()( i , sizeof...( T0 ) ) , TypeOfRestrictToLeft<i,T0...> >::type
-{
-
-  return v;
-
-}
-
-template <uint i , typename... T0>
-auto RestrictToLeft( const DirectProduct<T0...>& v ) -> typename enable_if< less<uint>()( sizeof...( T0 ) , i ) , TypeOfRestrictToLeft<i,T0...> >::type
-{
-
-  ERR_IMPUT( i , sizeof...( T0 ) , v );
-  return EmptySet();
-
-}
-
-template <uint i , typename T0 , typename... T1>
-auto RestrictToLeft( const DirectProduct<T0,T1...>& v ) -> typename enable_if< equal_to<uint>()( 0 , i ) , TypeOfRestrictToLeft<i,T0,T1...> >::type
-{
-
-  return SeparateInitialRight( DirectProduct<T0>( SeparateInitialLeft( v ) ) );
-
-}
-
-template <uint i , typename T0 , typename T1 , typename... T2>
-auto RestrictToLeft( const DirectProduct<T0,T1,T2...>& v ) -> typename enable_if< equal_to<uint>()( i , 1 ) , TypeOfRestrictToLeft<i,T0,T1,T2...> >::type
-{
-
-  return DirectProduct<T0>( SeparateInitialLeft( v ) );
-
-}
-
-template <uint i , typename T0 , typename T1 , typename T2 , typename... T3>
-auto RestrictToLeft( const DirectProduct<T0,T1,T2,T3...>& v ) -> typename enable_if< less<uint>()( 1 ,  i ) && less<uint>()( i , 3 + sizeof...( T3 ) ) , TypeOfRestrictToLeft<i,T0,T1,T2,T3...> >::type
-{
-
-  return Connect( RestrictToLeft<1,T0,T1,T2,T3...>( v ) , RestrictToLeft<i-1,T1,T2,T3...>( SeparateInitialRight( v ) ) );
-
-
-}
-
-template <uint i , typename T0 , typename... T1>
-auto Projection( const DirectProduct<T0,T1...>& v ) -> typename enable_if< equal_to<uint>()( 0 , i ) , TypeOfProjection<i,T0,T1...> >::type
-{
-
-  return SeparateInitialLeft( v );
-
-}
-
-template <uint i , typename T0 , typename T1 , typename... T2>
-auto Projection( const DirectProduct<T0,T1,T2...>& v ) -> typename enable_if< less_equal<uint>()( 1 , i ) && less_equal<uint>()( i , sizeof...( T2 ) + 1 ) , TypeOfProjection<i,T0,T1,T2...> >::type
-{
-
-  return Projection<i-1,T1,T2...>( SeparateInitialRight( v ) );
-
-}
-
-template <uint i , typename... T0>
-auto Projection( const DirectProduct<T0...>& v ) -> typename enable_if< less_equal<uint>()( sizeof...( T0 ) , i ) , TypeOfProjection<i,T0...> >::type
-{
-
-  ERR_IMPUT( i , sizeof...( T0 ) , v );
-  return EmptySet();
-
-}
-
-template <uint i , typename... T0>
-auto Projection( const T0&... v ) -> typename TypeOfProjection<i,T0...>::type
-{
-
-  return ACCESS( Projection<i,const T0*...>( DirectProduct<const T0*...>( &v... ) ) );
-
-}
-
+template <typename T0 , typename... T1> bool Equal( const DirectProduct<T0,T1...>& v0 , const T0& t0 , const T1&... t1 ) {  return v0.template Get<0>() == t0 && Equal( v0.template GetFinalSegmnt<1>() , t1... ); }
+
+template <typename... T0> inline DirectProduct<T0...> Connect( const DirectProduct<>& c , const DirectProduct<T0...>& v0 ) noexcept { return v0; }
+template <typename T0 , typename... T1> inline DirectProduct<T0,T1...> Connect( const DirectProduct<T0,T1...>& v0 , const DirectProduct<>& c ) noexcept { return v0; }
+template <typename T0 , typename T1 , typename... T2> inline DirectProduct<T0,T1,T2...> Connect( const DirectProduct<T0>& v0 , const DirectProduct<T1,T2...>& v1 ) { return DirectProduct<T0,T1,T2...>( v0.template Get<0>() , v1 ); }
+template <typename T0 , typename T1 , typename... T2 , typename T3 , typename... T4> inline DirectProduct<T0,T1,T2...,T3,T4...> Connect( const DirectProduct<T0,T1,T2...>& v0 , const DirectProduct<T3,T4...>& v1 ) { return DirectProduct<T0,T1,T2...,T3,T4...>( v0.template Get<0>() , Connect( v0.template GetFinalSegment<1>() , v1 ) ); }
+template <typename T0> inline EmptySet Connect( const DirectProduct<T0>& v0 , const EmptySet& v1 ) { return v1; }
+
+template <uint i , typename... T0> inline auto Projection( const T0&... v ) -> ConstTypeOfProjection<i,T0...> { return *( Projection<i,const T0*...>( DirectProduct<const T0*...>( &v... ) ) ); }
+template <uint i , typename... T0> inline auto Projection( T0&... v ) -> TypeOfProjection<i,T0...> { return *( Projection<i,T0*...>( DirectProduct<T0*...>( &v... ) ) ); }
 
 inline string to_string_Body( const DirectProduct<>& ){ return " "; }
-
-template <typename T0>
-static string to_string_Body( const DirectProduct<T0>& v )
-{
-    
-  return " " + to_string_Normalised( Projection<0,T0>( v ) ) + " ";
-
-}
-
-template <typename T0 , typename T1 , typename... T2>
-static string to_string_Body( const DirectProduct<T0,T1,T2...>& v )
-{
-
-  return to_string_Body( RestrictToLeft<1,T0,T1,T2...>( v ) ) + "," + to_string_Body( RestrictToRight<1,T0,T1,T2...>( v ) );
-
-}
-
-template <typename... T0>
-string to_string( const DirectProduct<T0...>& v )
-{
-    
-  return "(" + to_string_Body( v ) + ")";
-
-}
+template <typename T0> static inline string to_string_Body( const DirectProduct<T0>& v ) { return " " + to_string_Normalised( v.template Get<0>() ) + " "; }
+template <typename T0 , typename T1 , typename... T2> static inline string to_string_Body( const DirectProduct<T0,T1,T2...>& v ) { return to_string_Body( v.template Get<0>() ) + "," + to_string_Body( v.template GetFinalSegment<1>() ); }
+template <typename... T0> inline string to_string( const DirectProduct<T0...>& v ) { return "(" + to_string_Body( v ) + ")"; }
