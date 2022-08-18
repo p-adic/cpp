@@ -118,14 +118,7 @@ T& LabeledList<T,Key1,Key2...>::RefInsert( const Key1& key1 , const Key2&... key
 
 }
 
-template <typename T , typename Key1 , typename... Key2>
-void LabeledList<T,Key1,Key2...>::SortKey()
-{
+template <typename T , typename Key1 , typename... Key2> inline void LabeledList<T,Key1,Key2...>::SortKey( const string& method , const VLArray<int>& option ) { Sort( m_v , method , option ); }
 
-  // Sort()
-
-
-}
-
-template <typename T , typename Key1 , typename... Key2> inline bool operator<( const DirectProduct<DirectProduct<Key1,Key2...>,T>& v0 , const DirectProduct<DirectProduct<Key1,Key2...>,T>& v1 ) { return Projection<0,Key1,Key2...>( v0 ) < Projection<0,Key1,Key2...>( v1 ); }
+template <typename T , typename Key1 , typename... Key2> inline bool operator<( const DirectProduct<DirectProduct<Key1,Key2...>,T>& v0 , const DirectProduct<DirectProduct<Key1,Key2...>,T>& v1 ) { return v0.template Get<0>() < v1.template Get<0>(); }
 

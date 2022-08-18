@@ -27,7 +27,7 @@ public:
 
   
   // ˆÈ‰ºbool operator<( const DirectProduct<Key1,Key2...>& , const DirectProduct<Key1,Key2...>& )‚ª’è‹`‚³‚ê‚Ä‚¢‚éŽž‚Ì‚ÝŽÀ‘Ì‰»‰Â”\
-  void SortKey();
+  void SortKey( const string& method = "normal" , const VLArray<int>& option = VLArray<int>() );
 
 };
 
