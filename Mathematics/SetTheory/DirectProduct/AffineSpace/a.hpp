@@ -16,7 +16,7 @@ public:
   template <uint E> inline AffineSpace( const T (&v)[E] );
   template <uint E> inline AffineSpace( const AffineSpace<T,E>& x );
   // E < Dの場合のみサポート
-  inline AffineSpace( const uint& E );
+  template <typename... ARGS> inline AffineSpace( const uint& E , const ARGS&... args );
 
   template <uint E> inline AffineSpace<T,D>& operator=( const AffineSpace<T,E>& x );
   T& operator[]( const uint& i );

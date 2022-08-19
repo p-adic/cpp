@@ -7,7 +7,7 @@ template <typename T , uint D> inline AffineSpace<T,D>::AffineSpace() : m_v() {}
 template <typename T , uint D> inline AffineSpace<T,D>::AffineSpace( const initializer_list<T> init ) : m_v() { Substitute( init ); }
 template <typename T , uint D> template <uint E> inline AffineSpace<T,D>::AffineSpace( const T (&v)[E] ) : m_v() { Substitute<E>( v ); }
 template <typename T , uint D> template <uint E> inline AffineSpace<T,D>::AffineSpace( const AffineSpace<T,E>& x ) : m_v() { Substitute<E>( x ); }
-template <typename T , uint D> inline AffineSpace<T,D>::AffineSpace( const uint& E ) : m_v() { m_v[E]++; }
+template <typename T , uint D> template <typename... ARGS> inline AffineSpace<T,D>::AffineSpace( const uint& E , const ARGS&... args ) : AffineSpace( args... ) { m_v[E]++; }
 
 template <typename T , uint D> template <uint E> inline AffineSpace<T,D>& AffineSpace<T,D>::operator=( const AffineSpace<T,E>& x ) { Set<E>( x.m_v ); return *this; }
 
