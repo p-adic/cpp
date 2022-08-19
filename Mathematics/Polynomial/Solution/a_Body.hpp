@@ -8,21 +8,27 @@
 
 #include "../GroebnerBasis/a_Body.hpp"
 
-template <INT_TYPE_FOR_MOD P uint D>
-void Solve( vector<Polinomial<Mod<P>,D> >& F , AffineSpace<Mod<P>,D>& x , bool& solvable )
+template <INT_TYPE_FOR_MOD P , uint D>
+void CheckSolvable( vector<Polynomial<Mod<P>,D> >& F , bool& solvable )
 {
 
+  for( auto itr = F.begin() , end = F.end() ; itr != end ; itr++ ){
+
+    itr->RecursivelyRemoveRedundantZero();
+
+  }
+
   vector<PolynomialIndex<D> > LT_F{};
-  vector<Mod<P> > LC_F{};
+  vector<Mod<P> >& LC_F{};
   uint size_F = F.size();
   SetLeadingTermsNoRedundantZero( F , LT_F , LC_F , size_F );
-  Solve( F , LT_F , LC_F , size_F , x , solvable );
+  CheckSolvable( F , LT_F , LC_F , size_F , solvable );
   return;
-
+  
 }
 
-template <INT_TYPE_FOR_MOD P uint D>
-void Solve( vector<Polinomial<Mod<P>,D> >& F , vector<PolynomialIndex<D> >& LT_F , vector<Mod<P> >& LC_F , uint& size_F , AffineSpace<Mod<P>,D>& x , bool& solvable )
+template <INT_TYPE_FOR_MOD P , uint D>
+void CheckSolvableNoRedundantZero( vector<Polynomial<Mod<P>,D> >& F , vector<PolynomialIndex<D> >& LT_F , vector<Mod<P> >& LC_F , uint& size_F , bool& solvable )
 {
   
   F = ReducedGroebnerBasisNoRedundantZero( F , LT_F , LC_F , size_F );
@@ -36,7 +42,48 @@ void Solve( vector<Polinomial<Mod<P>,D> >& F , vector<PolynomialIndex<D> >& LT_F
   }
 
   solvable = true;
+  return;
+  
+}
 
+template <INT_TYPE_FOR_MOD P , uint D>
+void Solve( vector<Polynomial<Mod<P>,D> >& F , AffineSpace<Mod<P>,D>& x , bool& solvable )
+{
+
+  for( auto itr = F.begin() , end = F.end() ; itr != end ; itr++ ){
+
+    itr->RecursivelyRemoveRedundantZero();
+
+  }
+
+  vector<PolynomialIndex<D> > LT_F{};
+  vector<Mod<P> > LC_F{};
+  uint size_F = F.size();
+  SetLeadingTermsNoRedundantZero( F , LT_F , LC_F , size_F );
+  SolveNoRedundantZero( F , LT_F , LC_F , size_F , x , solvable );
+  return;
+
+}
+
+template <INT_TYPE_FOR_MOD P , uint D>
+void SolveNoRedundantZero( vector<Polynomial<Mod<P>,D> >& F , vector<PolynomialIndex<D> >& LT_F , vector<Mod<P> >& LC_F , uint& size_F , AffineSpace<Mod<P>,D>& x , bool& solvable )
+{
+
+  CheckSolvableNoRedundantZero( F , LT_F , LC_F , size , solvable );
+
+  if( solvable ){
+    
+    FindSolutionFromReducedGroebnerBasis( vector<Polynomial<Mod<P>,D> >& F , vector<PolynomialIndex<D> >& LT_F , vector<Mod<P> >& LC_F , uint& size_F , AffineSpace<Mod<P>,D>& x );
+  }
+
+  return;
+  
+}
+
+template <INT_TYPE_FOR_MOD P , uint D>
+void FindSolutionFromReducedGroebnerBasis( vector<Polynomial<Mod<P>,D> >& F , vector<PolynomialIndex<D> >& LT_F , vector<Mod<P> >& LC_F , uint& size_F , AffineSpace<Mod<P>,D>& x )
+{
+  
   for( uint d = 0 ; d < D ; d++ ){
 
     bool searching = true;
@@ -44,7 +91,7 @@ void Solve( vector<Polinomial<Mod<P>,D> >& F , vector<PolynomialIndex<D> >& LT_F
     
     for( int i = 0 ; i < P && searching ; i++ ){
 
-      vector<Polinomial<Mod<P>,D> > G{ F };
+      vector<Polynomial<Mod<P>,D> > G{ F };
       vector<PolynomialIndex<D> > LT_G{ LT_F};
       vector<Mod<P>> LC_G{ LC_F };
       PolynomialIndex<D> Id{};

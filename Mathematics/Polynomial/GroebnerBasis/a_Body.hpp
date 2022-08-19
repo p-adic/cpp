@@ -170,7 +170,7 @@ auto LeadingTermNoRedundantZero( const Polynomial<T,D>& f ) -> typename enable_i
 }
 
 template <typename T , uint D> 
-SetLeadingTermsNoRedundantZero( const vector<Polynomial<T,D> >& F , vector<PolynomialIndex<D> >& LT_F , vector<T>& LC_F , const uint& size )
+void SetLeadingTermsNoRedundantZero( const vector<Polynomial<T,D> >& F , vector<PolynomialIndex<D> >& LT_F , vector<T>& LC_F , const uint& size )
 {
   
   for( uint i = 0 ; i < size ; i++ ){
