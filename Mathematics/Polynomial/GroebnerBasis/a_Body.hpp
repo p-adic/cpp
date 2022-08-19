@@ -169,6 +169,23 @@ auto LeadingTermNoRedundantZero( const Polynomial<T,D>& f ) -> typename enable_i
   
 }
 
+template <typename T , uint D> 
+SetLeadingTermsNoRedundantZero( const vector<Polynomial<T,D> >& F , vector<PolynomialIndex<D> >& LT_F , vector<T>& LC_F , const uint& size )
+{
+  
+  for( uint i = 0 ; i < size ; i++ ){
+
+    const Polynomial<T,D>& Fi = F[i];
+    const PolynomialIndex<D> LT_Fi = LeadingTermNoRedundantZero( Fi );
+    LT_F.push_back( LT_Fi );
+    LC_F.push_back( Fi( LT_Fi ) );
+
+  }
+
+  return;
+
+}
+
 template <typename T , uint D> inline Polynomial<T,D> SPolynomial( Polynomial<T,D>& f0 , Polynomial<T,D>& f1 ) { f0.RecursivelyRemoveRedundantZero(); f1.RecursivelyRemoveRedundantZero(); SPolynomialNoRedundantZero( f0 , f1 ); }
 
 template <typename T , uint D>
@@ -239,15 +256,12 @@ vector<Polynomial<T,D> > GroebnerBasisNoRedundantZero( const vector<Polynomial<T
   uint size = F.size();
   vector<PolynomialIndex<D> > LT_F{};
   vector<T> LC_F{};
+  SetLeadingTermsNoRedundantZero( F , LT_F , LC_F , size );
+
   vector<uint> i_F{};
   vector<uint> j_F{};
-
+  
   for( uint i = 0 ; i < size ; i++ ){
-
-    const Polynomial<T,D>& Fi = F[i];
-    const PolynomialIndex<D> LT_Fi = LeadingTermNoRedundantZero( Fi );
-    LT_F.push_back( LT_Fi );
-    LC_F.push_back( Fi( LT_Fi ) );
     
     for( uint j = i + 1 ; j < size ; j++ ){
 
@@ -315,22 +329,26 @@ template <typename T , uint D> vector<Polynomial<T,D> > ReducedGroebnerBasis( ve
 
 }
 
-template <typename T , uint D> vector<Polynomial<T,D> > ReducedGroebnerBasisNoRedundantZero( const vector<Polynomial<T,D> >& F )
+template <typename T , uint D>
+vector<Polynomial<T,D> > ReducedGroebnerBasisNoRedundantZero( const vector<Polynomial<T,D> >& F )
 {
 
-  // グレブナー基底計算
   uint size = F.size();
   vector<PolynomialIndex<D> > LT_F{};
   vector<T> LC_F{};
+  SetLeadingTermsNoRedundantZero( F , LT_F , LC_F , size );
+  return ReducedGroebnerBasisNoRedundantZero( F , LT_F , LC_F , size );
+
+}
+
+template <typename T , uint D>
+vector<Polynomial<T,D> > ReducedGroebnerBasisNoRedundantZero( const vector<Polynomial<T,D> >& F , vector<PolynomialIndex<D> >& LT_F , vector<T>& LC_F , uint& size )
+{
+
   vector<uint> i_F{};
   vector<uint> j_F{};
-
+  
   for( uint i = 0 ; i < size ; i++ ){
-
-    const Polynomial<T,D>& Fi = F[i];
-    const PolynomialIndex<D> LT_Fi = LeadingTermNoRedundantZero( Fi );
-    LT_F.push_back( LT_Fi );
-    LC_F.push_back( Fi( LT_Fi ) );
     
     for( uint j = i + 1 ; j < size ; j++ ){
 
