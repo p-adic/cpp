@@ -73,7 +73,8 @@ void SolveNoRedundantZero( vector<Polynomial<Mod<P>,D> >& F , vector<PolynomialI
 
   if( solvable ){
     
-    FindSolutionFromReducedGroebnerBasis( vector<Polynomial<Mod<P>,D> >& F , vector<PolynomialIndex<D> >& LT_F , vector<Mod<P> >& LC_F , uint& size_F , AffineSpace<Mod<P>,D>& x );
+    FindSolutionFromReducedGroebnerBasis( F , LT_F , LC_F , size_F , x );
+
   }
 
   return;
@@ -84,6 +85,8 @@ template <INT_TYPE_FOR_MOD P , uint D>
 void FindSolutionFromReducedGroebnerBasis( vector<Polynomial<Mod<P>,D> >& F , vector<PolynomialIndex<D> >& LT_F , vector<Mod<P> >& LC_F , uint& size_F , AffineSpace<Mod<P>,D>& x )
 {
   
+  const Mod<P>& one = Polynomial<Mod<P>,0>::const_one();
+
   for( uint d = 0 ; d < D ; d++ ){
 
     bool searching = true;
@@ -108,8 +111,8 @@ void FindSolutionFromReducedGroebnerBasis( vector<Polynomial<Mod<P>,D> >& F , ve
 	x[d] = xd;
 	F = G;
 	LT_F = LT_G;
-	LC_F = LT_G;
-	size = size_G;
+	LC_F = LC_G;
+	size_F = size_G;
 
       } else {
 
