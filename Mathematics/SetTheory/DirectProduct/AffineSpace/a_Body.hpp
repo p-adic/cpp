@@ -4,6 +4,7 @@
 #include "a.hpp"
 
 template <typename T , uint D> inline AffineSpace<T,D>::AffineSpace() : m_v() {};
+template <typename T , uint D> inline AffineSpace<T,D>::AffineSpace( const initializer_list<T> init ) : m_v( init ) {}
 template <typename T , uint D> template<uint E> inline AffineSpace<T,D>::AffineSpace( const T (&v)[E] ) : m_v() { Substitute<E>( v ); }
 template <typename T , uint D> template<uint E> inline AffineSpace<T,D>& AffineSpace<T,D>::operator=( const AffineSpace<T,E>& x ) { Set<E>( x.m_v ); return *this; }
 

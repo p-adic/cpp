@@ -1,6 +1,7 @@
 // c:/Users/user/Documents/Programming/Mathematics/SetTheory/DirectProduct/AffineSpace/a.hpp
 
 #pragma once
+#include <initializer_list>
 
 template <typename T , uint D>
 class AffineSpace
@@ -11,6 +12,7 @@ private:
 
 public:
   inline AffineSpace();
+  inline AffineSpace( const initializer_list<T> init );
   template<uint E> inline AffineSpace( const T (&v)[E] );
   template<uint E> inline AffineSpace<T,D>& operator=( const AffineSpace<T,E>& x );
   T& operator[]( const uint& i );
