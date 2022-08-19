@@ -4,7 +4,6 @@
 #include "a.hpp"
 
 #include "../SetTheory/DirectProduct/AffineSpace/a_Body.hpp"
-#include "../../Utility/List/LabeledList/a_Body.hpp"
 
 
 template <typename T> inline Polynomial<T,0>::Polynomial() : m_t() {}
