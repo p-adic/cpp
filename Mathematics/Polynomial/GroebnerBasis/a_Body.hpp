@@ -253,9 +253,9 @@ template <typename T , uint D>
 vector<Polynomial<T,D> > GroebnerBasisNoRedundantZero( const vector<Polynomial<T,D> >& F )
 {
 
-  uint size = F.size();
   vector<PolynomialIndex<D> > LT_F{};
   vector<T> LC_F{};
+  uint size = F.size();
   SetLeadingTermsNoRedundantZero( F , LT_F , LC_F , size );
 
   vector<uint> i_F{};
@@ -333,9 +333,9 @@ template <typename T , uint D>
 vector<Polynomial<T,D> > ReducedGroebnerBasisNoRedundantZero( const vector<Polynomial<T,D> >& F )
 {
 
-  uint size = F.size();
   vector<PolynomialIndex<D> > LT_F{};
   vector<T> LC_F{};
+  uint size = F.size();
   SetLeadingTermsNoRedundantZero( F , LT_F , LC_F , size );
   return ReducedGroebnerBasisNoRedundantZero( F , LT_F , LC_F , size );
 
