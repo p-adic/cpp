@@ -8,18 +8,18 @@ template <typename T , int N> inline HybridBIT<T,N>::HybridBIT( const T ( & a )[
 
 template <typename T , int N> inline const T& HybridBIT<T,N>::operator[]( const int& i ) const { return m_a[i]; }
 
-template <typename T , int N> inline HybridBIT<T,N>& HybridBIT<T,N>::operator+=()( const T ( & a )[N] ) { for( int i = 0 ; i < N ; i++ ){ Add( i , a[i] ); } return *this; }
+template <typename T , int N> inline HybridBIT<T,N>& HybridBIT<T,N>::operator+=( const T ( & a )[N] ) { for( int i = 0 ; i < N ; i++ ){ Add( i , a[i] ); } return *this; }
 
 template <typename T , int N>
 void HybridBIT<T,N>::Add( const int& i , const T& n )
 {
   
-  m_a[i] += x;
+  m_a[i] += n;
   int j = i + 1;
 
   while( j <= N ){
 
-    m_fenwick[j] += x;
+    m_fenwick[j] += n;
     j += ( j & -j );
 
   }
