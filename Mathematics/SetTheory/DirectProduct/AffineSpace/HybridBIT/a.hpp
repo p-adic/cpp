@@ -2,7 +2,7 @@
 
 #pragma once
 
-//  InitialSegmentSumで負の入力を扱うためにintをテンプレート引数にする。
+//  InitialSegmentSumで負の入力を扱うためにuintではなくintをテンプレート引数にする。
 template <typename T , int N>
 class HybridBIT
 {
