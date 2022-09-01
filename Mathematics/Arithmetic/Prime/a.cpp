@@ -1,18 +1,15 @@
 // c:/Users/user/Documents/Programming/Mathematics/Arithmetic/Prime/a.cpp
 
 #include "../../Header.hpp"
-#include "a.hpp"
-
-#include "../../../Utility/VLArray/a_Body.hpp"
+#include "a_Body.hpp"
 
 const uint& GetPrime( const uint& i ) noexcept
 {
 
-  static VLArray<uint> P{ 2 , 3 , 5 , 7 , 11 };
+  static vector<uint> P{ 2 , 3 , 5 , 7 , 11 };
+  const uint L = P.size();
 
-  const uint& L = P.size();
-  
-  if( i < L - 1 ){
+  if( i < L ){
 
     return P[i];
 
@@ -28,7 +25,14 @@ const uint& GetPrime( const uint& i ) noexcept
     
     for( uint j = 0 ; j < L && prime ; j++ ){
 
-      prime = ( p % P[j] != 0 );
+      uint& Pj = P[j];
+      prime = ( p % Pj != 0 );
+
+      if( Pj * Pj >= p ){
+
+	j = L;
+	
+      }
 
     }
 
@@ -45,6 +49,56 @@ const uint& GetPrime( const uint& i ) noexcept
 
 }
 
+void SetPrimeFactorisation( const uint& n , vector<uint>& P , vector<uint>& exponent )
+{
+
+  uint n_copy = n;
+  uint p = 2;
+
+  if( n_copy % p == 0 ){
+
+    P.push_back( p );
+    exponent.push_back( 1 );
+    uint& exponent_back = exponent.back();
+    n_copy /= p;
+    
+    while( n_copy % p == 0 ){
+
+      exponent_back++;
+      n_copy /= p;
+      
+    }
+
+  }
+
+  p++;
+
+  while( n_copy != 1 ){
+
+    if( n_copy % p == 0 ){
+
+      P.push_back( p );
+      exponent.push_back( 1 );
+      uint& exponent_back = exponent.back();
+      n_copy /= p;
+    
+      while( n_copy % p == 0 ){
+
+	exponent_back++;
+	n_copy /= p;
+      
+      }
+
+    }
+
+    p += 2;
+
+  }
+
+  return;
+  
+}
+
 static void CheckExpressible( const uint& power , bool& expressible , const uint& s , const uint& i , const uint& j , bool& solved , uint& s0 , uint& s2 , const uint& p1 ) noexcept;
 static void CheckSum( uint& s_copy , uint& subset_copy , uint& k , bool& rejected ) noexcept;
 static void SetExpressibility( bool& expressible , uint& s_copy , const uint& s , uint& subset_copy , const uint& subset , uint& k , const uint& i , const uint& j ) noexcept;
@@ -53,6 +107,7 @@ static void ShiftInterval( bool& solved , uint& s0 , const uint& s ,  uint& s2 ,
 static void ComputeMaximum( uint& j , uint& power , const uint& s0 , uint& s1 , const uint& i ) noexcept;
 static void UpdatePrimeTable( bool& solved , uint& j , uint& power , uint& s0 , const uint& p0 , uint& p1 , const uint& i , uint& s1 , uint& s2 ) noexcept;
 
+// èoìTÅFTORLEIV KLOVE, SUMS OF DISTINCT PRIMES, Nordisk Matematisk Tidskrift, Vol. 21, No. 4 (1974), pp. 138-140.
 uint GetKloveSequence( const uint& i ) noexcept
 {
 
