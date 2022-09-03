@@ -52,7 +52,7 @@ static const uint& GetPrimeBounded_Body( const uint& i );
 }
 
 template <uint N>
-void SGetPrimeFactorisationBounded( const uint& n , uint ( &P )[N] , uint ( &exponent )[N] )
+void SetPrimeFactorisationBounded( const uint& n , uint ( &P )[N] , uint ( &exponent )[N] )
 {
 
   uint n_copy = n;
@@ -99,6 +99,12 @@ void SGetPrimeFactorisationBounded( const uint& n , uint ( &P )[N] , uint ( &exp
 
     p += 2;
 
+    if( p * p > n_copy ){
+
+      p = n_copy;
+
+    }
+    
   }
 
   return;

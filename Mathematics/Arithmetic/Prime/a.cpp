@@ -93,6 +93,12 @@ void SetPrimeFactorisation( const uint& n , vector<uint>& P , vector<uint>& expo
 
     p += 2;
 
+    if( p * p > n_copy ){
+
+      p = n_copy;
+
+    }
+
   }
 
   return;
