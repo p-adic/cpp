@@ -198,15 +198,37 @@ TruncatedPolynomial<T> Inverse( const TruncatedPolynomial<T>& f )
   const uint& N = f.GetTruncation();
   const T& one = Polynomial<T>::const_one();
   const T two = one + one;
+  uint power_prev = 1;
   uint power = 1;
   TruncatedPolynomial<T> f_inv{ power , one / f[0] };
   
   while( power < N ){
 
+    power_prev = power;
     power *= 2;
     f_inv.SetTruncation( power < N ? power : N );
-    f_inv *= - f_inv * f + two;
+    TruncatedPolynomial<T> f_rec = - f_inv * f + two;
+    uint i_lim = m_N - power_prev;
+    vector<T> product{ i_lim };
+      
+    for( uint i = 0 ; i < i_lim ; i++ ){
 
+      T& product_i = product[i];
+      
+      for( uint j = 0 ; j < power_prev ; j++ ){
+	
+	product_i += f_inv.Polynomial<T>::operator[]( j ) * f_rec.Polynomial<T>::operator[]( i + power_prev - j );
+
+      }
+
+    }
+
+    for( uint i = 0 ; i < i_lim ; i++ ){
+
+      f_inv[i + power_prev] = product[i];
+
+    }
+    
   }
 
   return f_inv;
@@ -220,17 +242,39 @@ TruncatedPolynomial<T> Exp( const TruncatedPolynomial<T>& f )
   const uint& N = f.GetTruncation();
   const T& one = Polynomial<T>::const_one();
   uint power = 1;
-  TruncatedPolynomial<T> f_inv{ power , one };
+  TruncatedPolynomial<T> f_exp{ power , one };
   
   while( power < N ){
 
+    power_prev = power;
     power *= 2;
-    f_inv.SetTruncation( power < N ? power : N );
-    f_inv *= f - Log( f_inv ) + one;
+    f_exp.SetTruncation( power < N ? power : N );
+    TruncatedPolynomial<T> f_rec = - Log( f_exp ) + f + one;
+    uint i_lim = m_N - power_prev;
+    vector<T> product{ i_lim };
+      
+    for( uint i = 0 ; i < i_lim ; i++ ){
 
+      T& product_i = product[i];
+      
+      for( uint j = 0 ; j < power_prev ; j++ ){
+	
+	product_i += f_exp.Polynomial<T>::operator[]( j ) * f_rec.Polynomial<T>::operator[]( i + power_prev - j );
+
+      }
+
+    }
+
+    for( uint i = 0 ; i < i_lim ; i++ ){
+
+      f_exp[i + power_prev] = product[i];
+
+    }
+
+    
   }
 
-  return f_inv;
+  return f_exp;
   
 }
 
