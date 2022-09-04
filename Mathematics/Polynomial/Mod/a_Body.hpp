@@ -198,13 +198,14 @@ TruncatedPolynomial<T> Inverse( const TruncatedPolynomial<T>& f )
   const uint& N = f.GetTruncation();
   const T& one = Polynomial<T>::const_one();
   const T two = one + one;
-  TruncatedPolynomial<T> f_inv{ N , one / f[0] };
   uint power = 1;
+  TruncatedPolynomial<T> f_inv{ power , one / f[0] };
   
   while( power < N ){
 
-    f_inv *= - f_inv * f + two;
     power *= 2;
+    f_inv.SetTruncation( power < N ? power : N );
+    f_inv *= - f_inv * f + two;
 
   }
 
@@ -218,13 +219,14 @@ TruncatedPolynomial<T> Exp( const TruncatedPolynomial<T>& f )
 
   const uint& N = f.GetTruncation();
   const T& one = Polynomial<T>::const_one();
-  TruncatedPolynomial<T> f_inv{ N , one };
   uint power = 1;
+  TruncatedPolynomial<T> f_inv{ power , one };
   
   while( power < N ){
 
-    f_inv *= f - Log( f_inv ) + one;
     power *= 2;
+    f_inv.SetTruncation( power < N ? power : N );
+    f_inv *= f - Log( f_inv ) + one;
 
   }
 
