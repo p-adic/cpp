@@ -33,6 +33,8 @@ public:
   Mod<M>& operator%=( const INT_TYPE_FOR_MOD& n );
   inline Mod<M>& operator%=( const Mod<M>& n );
 
+  inline Mod<M> operator-() const noexcept;
+
   // 前置++/--を使うつもりがないので後置++/--と同じものとして定義する
   inline Mod<M>& operator++() noexcept;
   inline Mod<M>& operator++( int ) noexcept;
