@@ -147,12 +147,13 @@ TruncatedPolynomial<T> Exp( const TruncatedPolynomial<T>& f )
 
 }
 
+template <typename T> inline TruncatedPolynomial<T> Log( const TruncatedPolynomial<T>& f ) { return ShiftedLog<T>( f - TruncatedPolynomial<T>::const_one() ); }
+
 template <typename T>
-TruncatedPolynomial<T> Log( const TruncatedPolynomial<T>& f )
+TruncatedPolynomial<T> ShiftedLog( const TruncatedPolynomial<T>& f )
 {
 
   const uint& N = f.GetTruncation();
-  TruncatedPolynomial<T> e = f - 1;
   TruncatedPolynomial<T> answer{ N , 1 };
   TruncatedPolynomial<T> power{ N , 1 };
 

@@ -47,8 +47,10 @@ template <typename T>
 TruncatedPolynomial<T> Exp( const TruncatedPolynomial<T>& f );
 
 // Tが標数0またはf.m_N以上の体でかつf[0] == 1の場合のみサポート
+template <typename T> inline TruncatedPolynomial<T> Log( const TruncatedPolynomial<T>& f );
+// Tが標数0またはf.m_N以上の体でかつf[0] == 0の場合のみサポート
 template <typename T>
-TruncatedPolynomial<T> Log( const TruncatedPolynomial<T>& f );
+TruncatedPolynomial<T> ShiftedLog( const TruncatedPolynomial<T>& f );
 
 // Tが標数0またはf.m_N以上の体でかつf[0] == 1の場合のみサポート
 template <typename T>
