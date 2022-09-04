@@ -197,6 +197,8 @@ Polynomial<T>& Polynomial<T>::operator%=( const T& t )
 
 }
 
+template <typename T> inline Polynomial<T> Polynomial<T>::operator-() const { Polynomial<T>().operator-=( *this ); }
+
 template <typename T> inline const uint& Polynomial<T>::size() const noexcept { return m_size; }
 
 template <typename T>
@@ -298,7 +300,8 @@ bool operator==( const Polynomial<T>& f0 , const Polynomial<T>& f1 )
 template <typename T , typename P> inline bool operator!=( const Polynomial<T>& f0 , const P& f1 ) { return !( f0 == f1 ); }
 
 template <typename T , typename P> inline Polynomial<T> operator+( const Polynomial<T>& f0 , const P& f1 ) { Polynomial<T> f = f0; f += f1; return f; }
-template <typename T , typename P> inline Polynomial<T> operator-( const Polynomial<T>& f0 , const P& f1 ) { Polynomial<T> f = f0; f -= f1; return f; }
-template <typename T , typename P> inline Polynomial<T> operator*( const Polynomial<T>& f0 , const P& f1 ) { Polynomial<T> f = f0; f *= f1; return f; }
-template <typename T> inline Polynomial<T> operator/( const Polynomial<T>& f0 , const T& t1 ) { Polynomial<T> f = f0; f /= t1; return f; }
-template <typename T> inline Polynomial<T> operator%( const Polynomial<T>& f0 , const T& t1 ) { Polynomial<T> f = f0; f %= t1; return f; }
+template <typename T , typename P> inline Polynomial<T> operator-( const Polynomial<T>& f ) { return Polynomial<T>::zero() - f; }
+template <typename T , typename P> inline Polynomial<T> operator-( const Polynomial<T>& f0 , const P& f1 ) { Polynomial<T> f = f0; return f.operator-=( f1 ); }
+template <typename T , typename P> inline Polynomial<T> operator*( const Polynomial<T>& f0 , const P& f1 ) { Polynomial<T> f = f0; return f.operator*=( f1 ); }
+template <typename T> inline Polynomial<T> operator/( const Polynomial<T>& f0 , const T& t1 ) { Polynomial<T> f = f0; return f.operator/=( t1 ); }
+template <typename T> inline Polynomial<T> operator%( const Polynomial<T>& f0 , const T& t1 ) { Polynomial<T> f = f0; return f.operator%=( t1 ); }
