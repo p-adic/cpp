@@ -1,12 +1,13 @@
 // c:/Users/user/Documents/Programming/Mathematics/Polynomial/a.hpp
 
 #pragma once
+#include <vector>
 
 template <typename T>
 class Polynomial
 {
 
-private:
+protected:
   vector<T> m_f;
   // m_f‚Ìsize
   uint m_size;
@@ -33,6 +34,12 @@ public:
   Polynomial<T>& operator/=( const T& t );
   Polynomial<T>& operator%=( const T& t );
 
+  inline const uint& size() const noexcept;
+  
+  void RemoveRedundantZero();
+
+  inline string Display() const noexcept;
+  
   static inline const Polynomial<T>& zero();
   static inline const T& const_zero();
   static inline const T& const_one();

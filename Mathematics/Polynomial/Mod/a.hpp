@@ -13,7 +13,7 @@ private:
   uint m_N;
   
 public:
-  inline TruncatedPolynomial();
+  inline TruncatedPolynomial( const uint& N = 0 );
   inline TruncatedPolynomial( const TruncatedPolynomial<T>& f );
   inline TruncatedPolynomial( const uint& N , const T& t );
   TruncatedPolynomial( const uint& N , const Polynomial<T>& f );
@@ -22,7 +22,7 @@ public:
   // m_N‚à‘ã“ü‚³‚ê‚é‚±‚Æ‚É’ˆÓ
   inline TruncatedPolynomial<T>& operator=( const TruncatedPolynomial<T>& f );
   inline TruncatedPolynomial<T>& operator=( const T& t );
-  inline TruncatedPolynomial<T>& operator=( const Polynomial& f );
+  inline TruncatedPolynomial<T>& operator=( const Polynomial<T>& f );
 
   // m_N‚Í•Ï‰»‚µ‚È‚¢‚±‚Æ‚É’ˆÓ
   inline TruncatedPolynomial<T>& operator+=( const T& t );

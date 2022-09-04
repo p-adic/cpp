@@ -224,26 +224,6 @@ void Polynomial<T>::RemoveRedundantZero()
 }
 
 template <typename T>
-void Polynomial<T>::RecursivelyRemoveRedundantZero()
-{
-
-  if( ! m_no_redundant_zero ){
-    
-    RemoveRedundantZero();
-
-  }
-  
-  for( uint i = 0 ; i < m_size ; i++ ){
-
-    m_f[i].RecursivelyRemoveRedundantZero();
-    
-  }
-
-  return;
-
-}
-
-template <typename T>
 string Polynomial<T>::Display() const noexcept
 {
 
@@ -268,6 +248,8 @@ string Polynomial<T>::Display() const noexcept
 
 
 template <typename T> inline const Polynomial<T>& Polynomial<T>::zero() { static const Polynomial<T> z{}; return z; }
+template <typename T> inline const T& Polynomial<T>::const_zero() { static const T z{ 0 }; return z; }
+template <typename T> inline const T& Polynomial<T>::const_one() { static const T o{ 1 }; return o; }
 
 
 template <typename T>
@@ -275,7 +257,7 @@ bool operator==( const Polynomial<T>& f0 , const T& t1 )
 {
 
   const uint& size = f0.size();
-  const T& zero = const_zero();
+  const T& zero = Polynomial<T>::const_zero();
 
   for( uint i = 1 ; i < size ; i++ ){
 
