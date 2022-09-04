@@ -3,19 +3,19 @@
 #pragma once
 #include "a.hpp"
 
-#include "../a_Body.hpp"
+#include "../Multivariable/a_Body.hpp"
 
 template <typename T , uint D>
-void DevideNoRedundantZero( Polynomial<T,D>& f , const vector<Polynomial<T,D> >& F )
+void DevideNoRedundantZero( MultivariablePolynomial<T,D>& f , const vector<MultivariablePolynomial<T,D> >& F )
 {
 
-  vector<PolynomialIndex<D> > LT_F{};
+  vector<MultivariablePolynomialIndex<D> > LT_F{};
   vector<T> LC_F{};
 
   for( auto itr = F.begin() , end = F.end() ; itr != end ; itr++ ){
 
-    Polynomial<T,D>& Fi = *itr;
-    const PolynomialIndex<D> LT_Fi = LeadingTermNoRedundantZero( Fi );
+    MultivariablePolynomial<T,D>& Fi = *itr;
+    const MultivariablePolynomialIndex<D> LT_Fi = LeadingTermNoRedundantZero( Fi );
     LT_F.push_back( LT_Fi );
     LC_F.push_back( Fi( LT_Fi ) );
     
@@ -27,15 +27,15 @@ void DevideNoRedundantZero( Polynomial<T,D>& f , const vector<Polynomial<T,D> >&
 }
 
 template <typename T , uint D>
-static void DevideNoRedundantZero_Body( Polynomial<T,D>& f , const vector<Polynomial<T,D> >& F , const vector<PolynomialIndex<D> >& LT_F , const vector<T>& LC_F , uint& i , const PolynomialIndex<D>& LT , const T& LC , bool& undevided );
+static void DevideNoRedundantZero_Body( MultivariablePolynomial<T,D>& f , const vector<MultivariablePolynomial<T,D> >& F , const vector<MultivariablePolynomialIndex<D> >& LT_F , const vector<T>& LC_F , uint& i , const MultivariablePolynomialIndex<D>& LT , const T& LC , bool& undevided );
 
 template <typename T , uint D>
-void DevideNoRedundantZero( Polynomial<T,D>& f , const vector<Polynomial<T,D> >& F , const vector<PolynomialIndex<D> >& LT_F , const vector<T>& LC_F )
+void DevideNoRedundantZero( MultivariablePolynomial<T,D>& f , const vector<MultivariablePolynomial<T,D> >& F , const vector<MultivariablePolynomialIndex<D> >& LT_F , const vector<T>& LC_F )
 {
   
-  const T& z = Polynomial<T,0>::const_zero();
-  PolynomialIndex<D> LT = LeadingTermNoRedundantZero<T,D>( f );
-  Polynomial<T,D> residue{};
+  const T& z = MultivariablePolynomial<T,0>::const_zero();
+  MultivariablePolynomialIndex<D> LT = LeadingTermNoRedundantZero<T,D>( f );
+  MultivariablePolynomial<T,D> residue{};
   const uint& size_f = f.size();
   const uint size_F = F.size();
   
@@ -52,7 +52,7 @@ void DevideNoRedundantZero( Polynomial<T,D>& f , const vector<Polynomial<T,D> >&
 
     if( undevided ){
 
-      residue += Polynomial<T,D>( LT , LC );
+      residue += MultivariablePolynomial<T,D>( LT , LC );
       LC = z;
 
     }
@@ -68,12 +68,12 @@ void DevideNoRedundantZero( Polynomial<T,D>& f , const vector<Polynomial<T,D> >&
 }
 
 template <typename T , uint D>
-void DevideNoRedundantZero( Polynomial<T,D>& f , const vector<Polynomial<T,D> >& F , const vector<PolynomialIndex<D> >& LT_F , const vector<T>& LC_F , const vector<uint>& use )
+void DevideNoRedundantZero( MultivariablePolynomial<T,D>& f , const vector<MultivariablePolynomial<T,D> >& F , const vector<MultivariablePolynomialIndex<D> >& LT_F , const vector<T>& LC_F , const vector<uint>& use )
 {
   
-  const T& z = Polynomial<T,0>::const_zero();
-  PolynomialIndex<D> LT = LeadingTermNoRedundantZero<T,D>( f );
-  Polynomial<T,D> residue{};
+  const T& z = MultivariablePolynomial<T,0>::const_zero();
+  MultivariablePolynomialIndex<D> LT = LeadingTermNoRedundantZero<T,D>( f );
+  MultivariablePolynomial<T,D> residue{};
   const uint& size_f = f.size();
   const uint size_F = F.size();
   
@@ -94,7 +94,7 @@ void DevideNoRedundantZero( Polynomial<T,D>& f , const vector<Polynomial<T,D> >&
 
     if( undevided ){
 
-      residue += Polynomial<T,D>( LT , LC );
+      residue += MultivariablePolynomial<T,D>( LT , LC );
       LC = z;
 
     }
@@ -110,11 +110,11 @@ void DevideNoRedundantZero( Polynomial<T,D>& f , const vector<Polynomial<T,D> >&
 }
 
 template <typename T , uint D>
-void DevideNoRedundantZero_Body( Polynomial<T,D>& f , const vector<Polynomial<T,D> >& F , const vector<PolynomialIndex<D> >& LT_F , const vector<T>& LC_F , uint& i , const PolynomialIndex<D>& LT , const T& LC , bool& undevided )
+void DevideNoRedundantZero_Body( MultivariablePolynomial<T,D>& f , const vector<MultivariablePolynomial<T,D> >& F , const vector<MultivariablePolynomialIndex<D> >& LT_F , const vector<T>& LC_F , uint& i , const MultivariablePolynomialIndex<D>& LT , const T& LC , bool& undevided )
 {
 
   bool divisible = true;
-  const PolynomialIndex<D>& I_F = LT_F[i];
+  const MultivariablePolynomialIndex<D>& I_F = LT_F[i];
 
   for( uint d = 1 ; d < D && divisible ; d++ ){
 
@@ -128,7 +128,7 @@ void DevideNoRedundantZero_Body( Polynomial<T,D>& f , const vector<Polynomial<T,
 
   if( divisible ){
 
-    PolynomialIndex<D> I{};
+    MultivariablePolynomialIndex<D> I{};
 
     for( uint d = 1 ; d < D ; i++ ){
 
@@ -136,7 +136,7 @@ void DevideNoRedundantZero_Body( Polynomial<T,D>& f , const vector<Polynomial<T,
 
     }
 
-    Polynomial<T,D> q{ I , LC / LC_F[i] };
+    MultivariablePolynomial<T,D> q{ I , LC / LC_F[i] };
     f -= q * F[i];
     i = D;
     undevided = false;
@@ -147,36 +147,36 @@ void DevideNoRedundantZero_Body( Polynomial<T,D>& f , const vector<Polynomial<T,
 
 }
 
-template <typename T , uint D> inline auto LeadingTerm( Polynomial<T,D>& f ) -> typename enable_if< equal_to<uint>()( 0 , D ) , PolynomialIndex<D> >::type { return PolynomialIndex<D>(); }
-template <typename T , uint D> inline auto LeadingTerm( Polynomial<T,D>& f ) -> typename enable_if< less_equal<uint>()( 1 , D ) , PolynomialIndex<D> >::type { f.RecursivelyRemoveRedundantZero(); return LeadingTermNoRedundantZero( f ); }
+template <typename T , uint D> inline auto LeadingTerm( MultivariablePolynomial<T,D>& f ) -> typename enable_if< equal_to<uint>()( 0 , D ) , MultivariablePolynomialIndex<D> >::type { return MultivariablePolynomialIndex<D>(); }
+template <typename T , uint D> inline auto LeadingTerm( MultivariablePolynomial<T,D>& f ) -> typename enable_if< less_equal<uint>()( 1 , D ) , MultivariablePolynomialIndex<D> >::type { f.RecursivelyRemoveRedundantZero(); return LeadingTermNoRedundantZero( f ); }
 
-template <typename T , uint D> inline auto LeadingTermNoRedundantZero( const Polynomial<T,D>& f ) -> typename enable_if< equal_to<uint>()( 0 , D ) , PolynomialIndex<D> >::type { return PolynomialIndex<D>(); }
+template <typename T , uint D> inline auto LeadingTermNoRedundantZero( const MultivariablePolynomial<T,D>& f ) -> typename enable_if< equal_to<uint>()( 0 , D ) , MultivariablePolynomialIndex<D> >::type { return MultivariablePolynomialIndex<D>(); }
 template <typename T , uint D>
-auto LeadingTermNoRedundantZero( const Polynomial<T,D>& f ) -> typename enable_if< less_equal<uint>()( 1 , D ) , PolynomialIndex<D> >::type
+auto LeadingTermNoRedundantZero( const MultivariablePolynomial<T,D>& f ) -> typename enable_if< less_equal<uint>()( 1 , D ) , MultivariablePolynomialIndex<D> >::type
 {
   
   const uint& size = f.size();
 
   if( size > 0 ){
 
-    PolynomialIndex<D> I = LeadingTermNoRedundantZero<T,D-1>( f[ size - 1 ] );
+    MultivariablePolynomialIndex<D> I = LeadingTermNoRedundantZero<T,D-1>( f[ size - 1 ] );
     I[D-1] = size - 1;
     return I;
 
   }
 
-  return PolynomialIndex<D>();
+  return MultivariablePolynomialIndex<D>();
   
 }
 
 template <typename T , uint D> 
-void SetLeadingTermsNoRedundantZero( const vector<Polynomial<T,D> >& F , vector<PolynomialIndex<D> >& LT_F , vector<T>& LC_F , const uint& size )
+void SetLeadingTermsNoRedundantZero( const vector<MultivariablePolynomial<T,D> >& F , vector<MultivariablePolynomialIndex<D> >& LT_F , vector<T>& LC_F , const uint& size )
 {
   
   for( uint i = 0 ; i < size ; i++ ){
 
-    const Polynomial<T,D>& Fi = F[i];
-    const PolynomialIndex<D> LT_Fi = LeadingTermNoRedundantZero( Fi );
+    const MultivariablePolynomial<T,D>& Fi = F[i];
+    const MultivariablePolynomialIndex<D> LT_Fi = LeadingTermNoRedundantZero( Fi );
     LT_F.push_back( LT_Fi );
     LC_F.push_back( Fi( LT_Fi ) );
 
@@ -186,26 +186,26 @@ void SetLeadingTermsNoRedundantZero( const vector<Polynomial<T,D> >& F , vector<
 
 }
 
-template <typename T , uint D> inline Polynomial<T,D> SPolynomial( Polynomial<T,D>& f0 , Polynomial<T,D>& f1 ) { f0.RecursivelyRemoveRedundantZero(); f1.RecursivelyRemoveRedundantZero(); SPolynomialNoRedundantZero( f0 , f1 ); }
+template <typename T , uint D> inline MultivariablePolynomial<T,D> SMultivariablePolynomial( MultivariablePolynomial<T,D>& f0 , MultivariablePolynomial<T,D>& f1 ) { f0.RecursivelyRemoveRedundantZero(); f1.RecursivelyRemoveRedundantZero(); SMultivariablePolynomialNoRedundantZero( f0 , f1 ); }
 
 template <typename T , uint D>
-Polynomial<T,D> SPolynomialNoRedundantZero( const Polynomial<T,D>& f0 , const Polynomial<T,D>& f1 )
+MultivariablePolynomial<T,D> SMultivariablePolynomialNoRedundantZero( const MultivariablePolynomial<T,D>& f0 , const MultivariablePolynomial<T,D>& f1 )
 {
 
-  Polynomial<T,D> LT0 = LeadingTermNoRedundantZero( f0 );
-  Polynomial<T,D> LT1 = LeadingTermNoRedundantZero( f1 );
+  MultivariablePolynomial<T,D> LT0 = LeadingTermNoRedundantZero( f0 );
+  MultivariablePolynomial<T,D> LT1 = LeadingTermNoRedundantZero( f1 );
   const T& LC0 = f0( LT0 );
   const T& LC1 = f1( LT1 );
-  return SPolynomialNoRedundantZero( f0 , f1 , LT0 , LT1 , LC0 , LC1 );
+  return SMultivariablePolynomialNoRedundantZero( f0 , f1 , LT0 , LT1 , LC0 , LC1 );
   
 }
 
 template <typename T , uint D>
-Polynomial<T,D> SPolynomialNoRedundantZero( const Polynomial<T,D>& f0 , const Polynomial<T,D>& f1 , const PolynomialIndex<D>& LT0 , const PolynomialIndex<D>& LT1 , const T& LC0 , const T& LC1 )
+MultivariablePolynomial<T,D> SMultivariablePolynomialNoRedundantZero( const MultivariablePolynomial<T,D>& f0 , const MultivariablePolynomial<T,D>& f1 , const MultivariablePolynomialIndex<D>& LT0 , const MultivariablePolynomialIndex<D>& LT1 , const T& LC0 , const T& LC1 )
 {
   
-  PolynomialIndex<D> I0{};
-  PolynomialIndex<D> I1{};
+  MultivariablePolynomialIndex<D> I0{};
+  MultivariablePolynomialIndex<D> I1{};
   
   for( uint i = 0 ; i < D ; i++ ){
 
@@ -225,18 +225,18 @@ Polynomial<T,D> SPolynomialNoRedundantZero( const Polynomial<T,D>& f0 , const Po
   }
 
 
-  const T& zero = Polynomial<T,0>::const_zero();
-  const T& one = Polynomial<T,0>::const_one();
-  const Polynomial<T,D> g0 = ( LC0 == zero ? f0 : f0 * Polynomial<T,D>( I0 , one / LC0 ) );
-  const Polynomial<T,D> g1 = ( LC1 == zero ? f1 : f1 * Polynomial<T,D>( I1 , one / LC1 ) );
-  Polynomial<T,D> g = g0 - g1;
+  const T& zero = MultivariablePolynomial<T,0>::const_zero();
+  const T& one = MultivariablePolynomial<T,0>::const_one();
+  const MultivariablePolynomial<T,D> g0 = ( LC0 == zero ? f0 : f0 * MultivariablePolynomial<T,D>( I0 , one / LC0 ) );
+  const MultivariablePolynomial<T,D> g1 = ( LC1 == zero ? f1 : f1 * MultivariablePolynomial<T,D>( I1 , one / LC1 ) );
+  MultivariablePolynomial<T,D> g = g0 - g1;
   g.RecursivelyRemoveRedundantZero();
   return g;
 
 }
 
 template <typename T , uint D>
-vector<Polynomial<T,D> > GroebnerBasis( vector<Polynomial<T,D> >& F )
+vector<MultivariablePolynomial<T,D> > GroebnerBasis( vector<MultivariablePolynomial<T,D> >& F )
 {
 
   for( auto itr = F.begin() , end = F.end() ; itr != end ; itr++ ){
@@ -250,10 +250,10 @@ vector<Polynomial<T,D> > GroebnerBasis( vector<Polynomial<T,D> >& F )
 }
 
 template <typename T , uint D>
-vector<Polynomial<T,D> > GroebnerBasisNoRedundantZero( const vector<Polynomial<T,D> >& F )
+vector<MultivariablePolynomial<T,D> > GroebnerBasisNoRedundantZero( const vector<MultivariablePolynomial<T,D> >& F )
 {
 
-  vector<PolynomialIndex<D> > LT_F{};
+  vector<MultivariablePolynomialIndex<D> > LT_F{};
   vector<T> LC_F{};
   uint size = F.size();
   SetLeadingTermsNoRedundantZero( F , LT_F , LC_F , size );
@@ -277,24 +277,24 @@ vector<Polynomial<T,D> > GroebnerBasisNoRedundantZero( const vector<Polynomial<T
 }
 
 template <typename T , uint D>
-vector<Polynomial<T,D> > GroebnerBasisNoRedundantZero( const vector<Polynomial<T,D> >& F , vector<PolynomialIndex<D> >& LT_F , vector<T>& LC_F , vector<uint>& i_F , vector<uint>& j_F , uint& size )
+vector<MultivariablePolynomial<T,D> > GroebnerBasisNoRedundantZero( const vector<MultivariablePolynomial<T,D> >& F , vector<MultivariablePolynomialIndex<D> >& LT_F , vector<T>& LC_F , vector<uint>& i_F , vector<uint>& j_F , uint& size )
 {
 
-  vector<Polynomial<T,D> > G{ F };
-  const Polynomial<T,D>& zero = Polynomial<T,D>::zero();
+  vector<MultivariablePolynomial<T,D> > G{ F };
+  const MultivariablePolynomial<T,D>& zero = MultivariablePolynomial<T,D>::zero();
 
   while( ! i_F.empty() ){
 
     const uint& i = i_F.back();
     const uint& j = j_F.back();
-    Polynomial<T,D> f = SPolynomialNoRedundantZero( G[i] , G[j] , LT_F[i] , LT_F[j] , LC_F[i] , LC_F[j] );
+    MultivariablePolynomial<T,D> f = SMultivariablePolynomialNoRedundantZero( G[i] , G[j] , LT_F[i] , LT_F[j] , LC_F[i] , LC_F[j] );
     i_F.pop_back();
     j_F.pop_back();
     DevideNoRedundantZero( f , G , LT_F , LC_F );
 
     if( f != zero ){
 
-      const PolynomialIndex<D> LT_f = LeadingTermNoRedundantZero( f );
+      const MultivariablePolynomialIndex<D> LT_f = LeadingTermNoRedundantZero( f );
       G.push_back( f );
       LT_F.push_back( LT_f );
       LC_F.push_back( f( LT_f ) );      
@@ -316,7 +316,7 @@ vector<Polynomial<T,D> > GroebnerBasisNoRedundantZero( const vector<Polynomial<T
 
 }
 
-template <typename T , uint D> vector<Polynomial<T,D> > ReducedGroebnerBasis( vector<Polynomial<T,D> >& F )
+template <typename T , uint D> vector<MultivariablePolynomial<T,D> > ReducedGroebnerBasis( vector<MultivariablePolynomial<T,D> >& F )
 {
 
   for( auto itr = F.begin() , end = F.end() ; itr != end ; itr++ ){
@@ -330,10 +330,10 @@ template <typename T , uint D> vector<Polynomial<T,D> > ReducedGroebnerBasis( ve
 }
 
 template <typename T , uint D>
-vector<Polynomial<T,D> > ReducedGroebnerBasisNoRedundantZero( const vector<Polynomial<T,D> >& F )
+vector<MultivariablePolynomial<T,D> > ReducedGroebnerBasisNoRedundantZero( const vector<MultivariablePolynomial<T,D> >& F )
 {
 
-  vector<PolynomialIndex<D> > LT_F{};
+  vector<MultivariablePolynomialIndex<D> > LT_F{};
   vector<T> LC_F{};
   uint size = F.size();
   SetLeadingTermsNoRedundantZero( F , LT_F , LC_F , size );
@@ -342,7 +342,7 @@ vector<Polynomial<T,D> > ReducedGroebnerBasisNoRedundantZero( const vector<Polyn
 }
 
 template <typename T , uint D>
-vector<Polynomial<T,D> > ReducedGroebnerBasisNoRedundantZero( const vector<Polynomial<T,D> >& F , vector<PolynomialIndex<D> >& LT_F , vector<T>& LC_F , uint& size )
+vector<MultivariablePolynomial<T,D> > ReducedGroebnerBasisNoRedundantZero( const vector<MultivariablePolynomial<T,D> >& F , vector<MultivariablePolynomialIndex<D> >& LT_F , vector<T>& LC_F , uint& size )
 {
 
   vector<uint> i_F{};
@@ -359,7 +359,7 @@ vector<Polynomial<T,D> > ReducedGroebnerBasisNoRedundantZero( const vector<Polyn
 
   }
 
-  const vector<Polynomial<T,D> > G = GroebnerBasisNoRedundantZero( F , LT_F , LC_F , i_F , j_F , size );
+  const vector<MultivariablePolynomial<T,D> > G = GroebnerBasisNoRedundantZero( F , LT_F , LC_F , i_F , j_F , size );
 
   // ã…è¨âª
   vector<uint> use{};
@@ -373,7 +373,7 @@ vector<Polynomial<T,D> > ReducedGroebnerBasisNoRedundantZero( const vector<Polyn
 
   for( uint i = 0 ; i < size ; i++ ){
 
-    const PolynomialIndex<D>& LT_Fi = LT_F[i];
+    const MultivariablePolynomialIndex<D>& LT_Fi = LT_F[i];
     uint& use_i = use[i];
 
     for( uint j = 0 ; j < size && use_i == 1 ; j++ ){
@@ -383,7 +383,7 @@ vector<Polynomial<T,D> > ReducedGroebnerBasisNoRedundantZero( const vector<Polyn
 	if( i != j ){
 
 	  bool divisible = true;
-	  const PolynomialIndex<D>& LT_Fj = LT_F[j];
+	  const MultivariablePolynomialIndex<D>& LT_Fj = LT_F[j];
 
 	  for( uint d = 0 ; d < D && divisible ; d++ ){
 
@@ -410,7 +410,7 @@ vector<Polynomial<T,D> > ReducedGroebnerBasisNoRedundantZero( const vector<Polyn
   }
 
   // ëäå›ä»ñÒâª
-  vector<Polynomial<T,D> > G_min{};
+  vector<MultivariablePolynomial<T,D> > G_min{};
   vector<T> LC_min{};
   LC_min.reserve( size );
   
@@ -421,9 +421,9 @@ vector<Polynomial<T,D> > ReducedGroebnerBasisNoRedundantZero( const vector<Polyn
       vector<uint> use_current = use;
       use_current[i] = 0;
       G_min.push_back( G[i] );
-      Polynomial<T,D>& f = G_min.back();
+      MultivariablePolynomial<T,D>& f = G_min.back();
       DevideNoRedundantZero( f , G , LT_F , LC_F , use_current );
-      const PolynomialIndex<D> I = LeadingTermNoRedundantZero( f );
+      const MultivariablePolynomialIndex<D> I = LeadingTermNoRedundantZero( f );
       f /= f( I );
 
     }

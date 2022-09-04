@@ -3,13 +3,13 @@
 #pragma once
 #include "a.hpp"
 
-#include "../a_Body.hpp"
+#include "../Multivariable/a_Body.hpp"
 #include "../../Arithmetic/Mod/a_Body.hpp"
 
 #include "../GroebnerBasis/a_Body.hpp"
 
 template <INT_TYPE_FOR_MOD P , uint D>
-void CheckSolvable( vector<Polynomial<Mod<P>,D> >& F , bool& solvable )
+void CheckSolvable( vector<MultivariablePolynomial<Mod<P>,D> >& F , bool& solvable )
 {
 
   for( auto itr = F.begin() , end = F.end() ; itr != end ; itr++ ){
@@ -18,7 +18,7 @@ void CheckSolvable( vector<Polynomial<Mod<P>,D> >& F , bool& solvable )
 
   }
 
-  vector<PolynomialIndex<D> > LT_F{};
+  vector<MultivariablePolynomialIndex<D> > LT_F{};
   vector<Mod<P> >& LC_F{};
   uint size_F = F.size();
   SetLeadingTermsNoRedundantZero( F , LT_F , LC_F , size_F );
@@ -28,11 +28,11 @@ void CheckSolvable( vector<Polynomial<Mod<P>,D> >& F , bool& solvable )
 }
 
 template <INT_TYPE_FOR_MOD P , uint D>
-void CheckSolvableNoRedundantZero( vector<Polynomial<Mod<P>,D> >& F , vector<PolynomialIndex<D> >& LT_F , vector<Mod<P> >& LC_F , uint& size_F , bool& solvable )
+void CheckSolvableNoRedundantZero( vector<MultivariablePolynomial<Mod<P>,D> >& F , vector<MultivariablePolynomialIndex<D> >& LT_F , vector<Mod<P> >& LC_F , uint& size_F , bool& solvable )
 {
   
   F = ReducedGroebnerBasisNoRedundantZero( F , LT_F , LC_F , size_F );
-  const Mod<P>& one = Polynomial<Mod<P>,0>::const_one();
+  const Mod<P>& one = MultivariablePolynomial<Mod<P>,0>::const_one();
   
   if( size_F == 1 ? F.front() == one : false ){
 
@@ -47,7 +47,7 @@ void CheckSolvableNoRedundantZero( vector<Polynomial<Mod<P>,D> >& F , vector<Pol
 }
 
 template <INT_TYPE_FOR_MOD P , uint D>
-void Solve( vector<Polynomial<Mod<P>,D> >& F , AffineSpace<Mod<P>,D>& x , bool& solvable )
+void Solve( vector<MultivariablePolynomial<Mod<P>,D> >& F , AffineSpace<Mod<P>,D>& x , bool& solvable )
 {
 
   for( auto itr = F.begin() , end = F.end() ; itr != end ; itr++ ){
@@ -56,7 +56,7 @@ void Solve( vector<Polynomial<Mod<P>,D> >& F , AffineSpace<Mod<P>,D>& x , bool& 
 
   }
 
-  vector<PolynomialIndex<D> > LT_F{};
+  vector<MultivariablePolynomialIndex<D> > LT_F{};
   vector<Mod<P> > LC_F{};
   uint size_F = F.size();
   SetLeadingTermsNoRedundantZero( F , LT_F , LC_F , size_F );
@@ -66,7 +66,7 @@ void Solve( vector<Polynomial<Mod<P>,D> >& F , AffineSpace<Mod<P>,D>& x , bool& 
 }
 
 template <INT_TYPE_FOR_MOD P , uint D>
-void SolveNoRedundantZero( vector<Polynomial<Mod<P>,D> >& F , vector<PolynomialIndex<D> >& LT_F , vector<Mod<P> >& LC_F , uint& size_F , AffineSpace<Mod<P>,D>& x , bool& solvable )
+void SolveNoRedundantZero( vector<MultivariablePolynomial<Mod<P>,D> >& F , vector<MultivariablePolynomialIndex<D> >& LT_F , vector<Mod<P> >& LC_F , uint& size_F , AffineSpace<Mod<P>,D>& x , bool& solvable )
 {
 
   CheckSolvableNoRedundantZero( F , LT_F , LC_F , size , solvable );
@@ -82,10 +82,10 @@ void SolveNoRedundantZero( vector<Polynomial<Mod<P>,D> >& F , vector<PolynomialI
 }
 
 template <INT_TYPE_FOR_MOD P , uint D>
-void FindSolutionFromReducedGroebnerBasis( vector<Polynomial<Mod<P>,D> >& F , vector<PolynomialIndex<D> >& LT_F , vector<Mod<P> >& LC_F , uint& size_F , AffineSpace<Mod<P>,D>& x )
+void FindSolutionFromReducedGroebnerBasis( vector<MultivariablePolynomial<Mod<P>,D> >& F , vector<MultivariablePolynomialIndex<D> >& LT_F , vector<Mod<P> >& LC_F , uint& size_F , AffineSpace<Mod<P>,D>& x )
 {
   
-  const Mod<P>& one = Polynomial<Mod<P>,0>::const_one();
+  const Mod<P>& one = MultivariablePolynomial<Mod<P>,0>::const_one();
 
   for( uint d = 0 ; d < D ; d++ ){
 
@@ -94,12 +94,12 @@ void FindSolutionFromReducedGroebnerBasis( vector<Polynomial<Mod<P>,D> >& F , ve
     
     for( int i = 0 ; i < P && searching ; i++ ){
 
-      vector<Polynomial<Mod<P>,D> > G{ F };
-      vector<PolynomialIndex<D> > LT_G{ LT_F};
+      vector<MultivariablePolynomial<Mod<P>,D> > G{ F };
+      vector<MultivariablePolynomialIndex<D> > LT_G{ LT_F};
       vector<Mod<P>> LC_G{ LC_F };
-      PolynomialIndex<D> Id{};
+      MultivariablePolynomialIndex<D> Id{};
       Id[d] = 1;
-      G.push_back( Polynomial<Mod<P>,D>( Id , one ) - xd );
+      G.push_back( MultivariablePolynomial<Mod<P>,D>( Id , one ) - xd );
       LT_G.push_back( Id );
       LC_G.push_back( one );
       uint size_G = size_F + 1;
