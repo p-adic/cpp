@@ -3,9 +3,13 @@
 #pragma once
 #include <vector>
 
+template <typename T> class TruncatedPolynomial;
+
 template <typename T>
 class Polynomial
 {
+
+  friend class TruncatedPolynomial<T>;
 
 protected:
   vector<T> m_f;
@@ -18,6 +22,7 @@ public:
   inline Polynomial( const T& t );
   inline Polynomial( const Polynomial<T>& f );
   inline Polynomial( const uint& i , const T& t );
+  inline Polynomial( vector<T>&& f );
 
   Polynomial<T>& operator=( const T& t );
   Polynomial<T>& operator=( const Polynomial<T>& f );
@@ -36,6 +41,7 @@ public:
 
   inline Polynomial<T> operator-() const;
 
+  inline const vector<T>& GetCoefficient() const noexcept;
   inline const uint& size() const noexcept;
   
   void RemoveRedundantZero();
@@ -45,6 +51,7 @@ public:
   static inline const Polynomial<T>& zero();
   static inline const T& const_zero();
   static inline const T& const_one();
+  static inline const T& const_minus_one();
 
 };
 

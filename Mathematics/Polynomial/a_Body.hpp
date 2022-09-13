@@ -7,6 +7,7 @@ template <typename T> inline Polynomial<T>::Polynomial() : m_f() , m_size( 0 ) ,
 template <typename T> inline Polynomial<T>::Polynomial( const T& t ) : Polynomial() { if( t != const_zero() ){ operator[]( 0 ) = t; } }
 template <typename T> inline Polynomial<T>::Polynomial( const Polynomial<T>& f ) : m_f( f.m_f ) , m_size( f.m_size ) , m_no_redundant_zero( f.m_no_redundant_zero ) {}
 template <typename T> inline Polynomial<T>::Polynomial( const uint& i , const T& t ) : Polynomial() { if( t != const_zero() ){ operator[]( i ) = t; } }
+template <typename T> inline Polynomial<T>::Polynomial( vector<T>&& f ) : m_f( move( f ) ) , m_size( m_f.size() ) , m_no_redundant_zero( false ) {}
 
 
 template <typename T> inline Polynomial<T>& Polynomial<T>::operator=( const T& t ) { m_f.clear(); m_size = 0; operator[]( 0 ) = t; return *this; }
@@ -31,13 +32,18 @@ template <typename T> inline T& Polynomial<T>::operator[]( const uint& i )
 {
 
   m_no_redundant_zero = false;
-  const T& z = const_zero();
 
-  while( m_size <= i ){
-
-    m_f.push_back( z );
-    m_size++;
+  if( m_size <= i ){
     
+    const T& z = const_zero();
+
+    while( m_size <= i ){
+
+      m_f.push_back( z );
+      m_size++;
+    
+    }
+
   }
 
   return m_f[i];
@@ -80,11 +86,12 @@ template <typename T>
 Polynomial<T>& Polynomial<T>::operator*=( const T& t )
 {
 
-  if( ! m_no_redundant_zero ){
+  // Tが位数の小さい環である場合も扱う時は冗長な0が生じやすいので次のコメントアウトを解除する。
+  // if( ! m_no_redundant_zero ){
     
-    RemoveRedundantZero();
+  //   RemoveRedundantZero();
 
-  }
+  // }
 
   if( m_size == 0 || t == const_one() ){
 
@@ -104,8 +111,8 @@ Polynomial<T>& Polynomial<T>::operator*=( const T& t )
 
   }
 
-  // Tが体である場合は省略可能
-  RemoveRedundantZero();
+  // Tが整域でない場合も扱う時は冗長な0が生じうるので次のコメントアウトを解除する。
+  // RemoveRedundantZero();
   return *this;
 
 }
@@ -114,11 +121,12 @@ template <typename T>
 Polynomial<T>& Polynomial<T>::operator*=( const Polynomial<T>& f )
 {
   
-  if( ! m_no_redundant_zero ){
+  // Tが位数の小さい環である場合も扱う時は冗長な0が生じやすいので次のコメントアウトを解除する。
+  // if( ! m_no_redundant_zero ){
     
-    RemoveRedundantZero();
+  //   RemoveRedundantZero();
 
-  }
+  // }
 
   if( m_size == 0 ){
 
@@ -149,7 +157,8 @@ Polynomial<T>& Polynomial<T>::operator*=( const Polynomial<T>& f )
 
   }
 
-  product.RemoveRedundantZero();
+  // Tが整域でない場合も扱う時は冗長な0が生じうるので次のコメントアウトを解除する。
+  // product.RemoveRedundantZero();
   return operator=( product );
 
 }
@@ -158,9 +167,16 @@ template <typename T>
 Polynomial<T>& Polynomial<T>::operator/=( const T& t )
 {
   
-  if( ! m_no_redundant_zero ){
+  // Tが位数の小さい環である場合も扱う時は冗長な0が生じやすいので次のコメントアウトを解除する。
+  // if( ! m_no_redundant_zero ){
     
-    RemoveRedundantZero();
+  //   RemoveRedundantZero();
+
+  // }
+
+  if( t == const_one() ){
+
+    return *this;
 
   }
   
@@ -170,8 +186,8 @@ Polynomial<T>& Polynomial<T>::operator/=( const T& t )
 
   }
 
-  // Tが体である場合は省略可能
-  RemoveRedundantZero();
+  // Tが体でない場合も扱う時は冗長な0が生じうるので次のコメントアウトを解除する。
+  // RemoveRedundantZero();
   return *this;
 
 }
@@ -180,25 +196,34 @@ template <typename T>
 Polynomial<T>& Polynomial<T>::operator%=( const T& t )
 {
 
-  if( ! m_no_redundant_zero ){
+  // Tが位数の小さい環である場合も扱う時は冗長な0が生じやすいので次のコメントアウトを解除する。
+  // if( ! m_no_redundant_zero ){
     
-    RemoveRedundantZero();
+  //   RemoveRedundantZero();
+
+  // }
+
+  if( t == const_one() ){
+
+    return operator=( zero() );
 
   }
-
+  
   for( uint i = 0 ; i < m_size ; i++ ){
 
     operator[]( i ) %= t;
 
   }
 
-  RemoveRedundantZero();
+  // Tが位数の小さい環である場合も扱う時は冗長な0が生じやすいので次のコメントアウトを解除する。
+  // RemoveRedundantZero();
   return *this;
 
 }
 
 template <typename T> inline Polynomial<T> Polynomial<T>::operator-() const { Polynomial<T>().operator-=( *this ); }
 
+template <typename T> inline const vector<T>& Polynomial<T>::GetCoefficient() const noexcept { return m_f; }
 template <typename T> inline const uint& Polynomial<T>::size() const noexcept { return m_size; }
 
 template <typename T>
@@ -237,7 +262,7 @@ string Polynomial<T>::Display() const noexcept
 
     for( uint i = 1 ; i < m_size ; i++ ){
 
-      s += "," + to_string( m_f[i] );
+      s += ", " + to_string( m_f[i] );
 
     }
 
@@ -252,6 +277,7 @@ string Polynomial<T>::Display() const noexcept
 template <typename T> inline const Polynomial<T>& Polynomial<T>::zero() { static const Polynomial<T> z{}; return z; }
 template <typename T> inline const T& Polynomial<T>::const_zero() { static const T z{ 0 }; return z; }
 template <typename T> inline const T& Polynomial<T>::const_one() { static const T o{ 1 }; return o; }
+template <typename T> inline const T& Polynomial<T>::const_minus_one() { static const T m{ -1 }; return m; }
 
 
 template <typename T>

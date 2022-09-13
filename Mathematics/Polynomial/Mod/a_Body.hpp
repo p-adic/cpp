@@ -5,6 +5,8 @@
 
 #include "../a_Body.hpp"
 
+#include "../../Analysis/FFT/a_Body.hpp"
+
 template <typename T> inline TruncatedPolynomial<T>::TruncatedPolynomial( const uint& N ) : Polynomial<T>() , m_N( N ) {}
 template <typename T> inline TruncatedPolynomial<T>::TruncatedPolynomial( const TruncatedPolynomial<T>& f ) : Polynomial<T>( f ) , m_N( f.m_N ) {}
 template <typename T> inline TruncatedPolynomial<T>::TruncatedPolynomial( const uint& N , const T& t ) : Polynomial<T>( t ) , m_N( N ) {}
@@ -13,12 +15,11 @@ template <typename T>
 TruncatedPolynomial<T>::TruncatedPolynomial( const uint& N , const Polynomial<T>& f ) : Polynomial<T>() , m_N( N )
 {
 
-  const uint& f_size = f.Polynomial<T>::size();
-  const uint& size = f_size < m_N ? f_size : m_N;
+  const uint& size = f.Polynomial<T>::m_size < m_N ? f.Polynomial<T>::m_size : m_N;
   
   for( uint i = 0 ; i < size ; i++ ){
 
-    Polynomial<T>::m_f.push_back( f.Polynomial<T>::operator[]( i ) );
+    Polynomial<T>::m_f.push_back( f.Polynomial<T>::m_f[i] );
     Polynomial<T>::m_size++;
     
   }
@@ -27,22 +28,44 @@ TruncatedPolynomial<T>::TruncatedPolynomial( const uint& N , const Polynomial<T>
 
 template <typename T> inline TruncatedPolynomial<T>::TruncatedPolynomial( const uint& N , const uint& i , const T& t ) : Polynomial<T>() , m_N( N ) { if( i < m_N ? t != Polynomial<T>::const_zero() : false ){ Polynomial<T>::operator[]( i ) = t; } }
 
+template <typename T> inline TruncatedPolynomial<T>::TruncatedPolynomial( const uint& N , vector<T>&& f ) : Polynomial<T>( move( f ) ) , m_N( N )
+{
+
+  while( Polynomial<T>::m_size > m_N ){
+
+    Polynomial<T>::m_f.pop_back();
+    Polynomial<T>::m_size--;
+
+  }
+
+}
+
+
 template <typename T> inline TruncatedPolynomial<T>& TruncatedPolynomial<T>::operator=( const TruncatedPolynomial<T>& f ) { Polynomial<T>::operator=( f ); m_N = f.m_N; return *this; }
 template <typename T> inline TruncatedPolynomial<T>& TruncatedPolynomial<T>::operator=( const T& t ) { Polynomial<T>::operator=( t ); return *this; }
 template <typename T> inline TruncatedPolynomial<T>& TruncatedPolynomial<T>::operator=( const Polynomial<T>& f ) { return operator=( TruncatedPolynomial<T>( m_N , f ) ); }
 
 template <typename T> inline TruncatedPolynomial<T>& TruncatedPolynomial<T>::operator+=( const T& t ) { Polynomial<T>::operator+=( t ); return *this; }
 
+template <typename T> inline TruncatedPolynomial<T>& TruncatedPolynomial<T>::operator+=( const Polynomial<T>& f ) { return TruncatedPolynomial<T>::TruncatedPlus( f , 0 , f.Polynomial<T>::m_size ); }
+
 template <typename T>
-TruncatedPolynomial<T>& TruncatedPolynomial<T>::operator+=( const Polynomial<T>& f )
+TruncatedPolynomial<T>& TruncatedPolynomial<T>::TruncatedPlus( const Polynomial<T>& f , const uint& N_output_start , const uint& N_output_limit )
 {
 
-  const uint& f_size = f.Polynomial<T>::size();
-  const uint& size = f_size < m_N ? f_size : m_N;
+  const uint& size = N_output_limit < m_N ? N_output_limit < f.Polynomial<T>::m_size ? N_output_limit : f.Polynomial<T>::m_size : m_N < f.Polynomial<T>::m_size ? m_N : f.Polynomial<T>::m_size;
+  const uint& size_min = Polynomial<T>::m_size < size ? Polynomial<T>::m_size : size;
+  
+  for( uint i = N_output_start ; i < size_min ; i++ ){
 
-  for( uint i = 0 ; i < size ; i++ ){
+    Polynomial<T>::m_f[i] += f.Polynomial<T>::m_f[i];
 
-    Polynomial<T>::operator[]( i ) += f.Polynomial<T>::operator[]( i );
+  }
+
+  for( uint i = Polynomial<T>::m_size ; i < size ; i++ ){
+    
+    Polynomial<T>::m_f.push_back( f.Polynomial<T>::m_f[i] );
+    Polynomial<T>::m_size++;
 
   }
 
@@ -52,16 +75,25 @@ TruncatedPolynomial<T>& TruncatedPolynomial<T>::operator+=( const Polynomial<T>&
 
 template <typename T> inline TruncatedPolynomial<T>& TruncatedPolynomial<T>::operator-=( const T& t ) { Polynomial<T>::operator-=( t ); return *this; }
 
+template <typename T> inline TruncatedPolynomial<T>& TruncatedPolynomial<T>::operator-=( const Polynomial<T>& f ) { return TruncatedPolynomial<T>::TruncatedMinus( f , 0 , f.Polynomial<T>::m_size ); }
+
 template <typename T>
-TruncatedPolynomial<T>& TruncatedPolynomial<T>::operator-=( const Polynomial<T>& f )
+TruncatedPolynomial<T>& TruncatedPolynomial<T>::TruncatedMinus( const Polynomial<T>& f , const uint& N_output_start , const uint& N_output_limit )
 {
 
-  const uint& f_size = f.Polynomial<T>::size();
-  const uint& size = f_size < m_N ? f_size : m_N;
+  const uint& size = N_output_limit < m_N ? N_output_limit < f.Polynomial<T>::m_size ? N_output_limit : f.Polynomial<T>::m_size : m_N < f.Polynomial<T>::m_size ? m_N : f.Polynomial<T>::m_size;
+  const uint& size_min = Polynomial<T>::m_size < size ? Polynomial<T>::m_size : size;
   
-  for( uint i = 0 ; i < size ; i++ ){
+  for( uint i = N_output_start ; i < size_min ; i++ ){
 
-    Polynomial<T>::operator[]( i ) -= f.Polynomial<T>::operator[]( i );
+    Polynomial<T>::m_f[i] -= f.Polynomial<T>::m_f[i];
+
+  }
+
+  for( uint i = Polynomial<T>::m_size ; i < size ; i++ ){
+
+    Polynomial<T>::m_f.push_back( - f.Polynomial<T>::m_f[i] );
+    Polynomial<T>::m_size++;
 
   }
 
@@ -75,52 +107,257 @@ template <typename T>
 TruncatedPolynomial<T>& TruncatedPolynomial<T>::operator*=( const Polynomial<T>& f )
 {
 
-  if( ! Polynomial<T>::m_no_redundant_zero ){
+  constexpr const uint border_0 = 21;
+  const T& zero = Polynomial<T>::const_zero();
+  bool searching = true;
+
+  if( Polynomial<T>::m_size < border_0 && f.Polynomial<T>::m_size < border_0 ){
+
+    RETURN_ZERO_FOR_MULTIPLICATION_FOR_TRUNCATED_POLYNOMIAL_IF( f.Polynomial<T>::m_size == 0 );
+    DEFINITION_0_OF_MULTIPLICATION_FOR_TRUNCATED_POLYNOMIAL;
+
+  } else {
+
+    DEFINITION_1_OF_MULTIPLICATION_FOR_TRUNCATED_POLYNOMIAL;
+    RETURN_ZERO_FOR_MULTIPLICATION_FOR_TRUNCATED_POLYNOMIAL_IF( searching );
+    DEFINITION_2_OF_MULTIPLICATION_FOR_TRUNCATED_POLYNOMIAL;
+    const uint N_output_lim_fixed = N_input_max_0_max_1 < m_N ? N_input_max_0_max_1 + 1 : m_N;
+    RETURN_ZERO_FOR_MULTIPLICATION_FOR_TRUNCATED_POLYNOMIAL_IF( N_input_start_0_start_1 >= m_N );
+    DEFINITION_3_OF_MULTIPLICATION_FOR_TRUNCATED_POLYNOMIAL;
+
+  }
+
+  return *this;
+
+}
+
+template <typename T>
+TruncatedPolynomial<T>& TruncatedPolynomial<T>::FFT_Multiplication( const Polynomial<T>& f )
+{
+
+  constexpr const uint& border_0 = FFT_Multiplication_border_0<T>;
+  const T& zero = Polynomial<T>::const_zero();
+  bool searching = true;
+
+  if( Polynomial<T>::m_size < border_0 && f.Polynomial<T>::m_size < border_0 ){
+
+    RETURN_ZERO_FOR_MULTIPLICATION_FOR_TRUNCATED_POLYNOMIAL_IF( f.Polynomial<T>::m_size == 0 );
+    DEFINITION_0_OF_MULTIPLICATION_FOR_TRUNCATED_POLYNOMIAL;
     
-    Polynomial<T>::RemoveRedundantZero();
+  } else {
+
+    DEFINITION_1_OF_MULTIPLICATION_FOR_TRUNCATED_POLYNOMIAL;
+    RETURN_ZERO_FOR_MULTIPLICATION_FOR_TRUNCATED_POLYNOMIAL_IF( searching );
+    DEFINITION_2_OF_MULTIPLICATION_FOR_TRUNCATED_POLYNOMIAL;
+    const uint N_output_lim_fixed = N_input_max_0_max_1 < m_N ? N_input_max_0_max_1 + 1 : m_N;
+    RETURN_ZERO_FOR_MULTIPLICATION_FOR_TRUNCATED_POLYNOMIAL_IF( N_input_start_0_start_1 >= N_output_lim_fixed );
+    const uint N_input_truncated_deg_0_deg_1 = N_input_max_0 - N_input_start_0 + N_input_max_1 - N_input_start_1;
+    constexpr const uint& border_1 = FFT_Multiplication_border_1<T>;
+
+    if( N_input_truncated_deg_0_deg_1 < border_1 ){
+    
+      DEFINITION_3_OF_MULTIPLICATION_FOR_TRUNCATED_POLYNOMIAL;
+    
+    } else {
+
+      DEFINITION_4_OF_MULTIPLICATION_FOR_TRUNCATED_POLYNOMIAL;
+      Polynomial<T>::m_f = move( IFFT<T>( f0 , 0 , two_power , 0 , 0 , N_output_lim_fixed - N_input_start_0_start_1 , N_input_start_0_start_1 , two_power , two_power_inv , exponent ) );
+      Polynomial<T>::m_size = Polynomial<T>::m_f.size();
+
+    }
 
   }
-
-  if( Polynomial<T>::m_size == 0 ){
-
-    return *this;
-
-  }
-
-  const uint& f_size = f.Polynomial<T>::size();
   
-  if( f_size == 0 ){
+  return *this;
 
-    return operator=( Polynomial<T>::zero() );
+}
 
-  }
+template <typename T> 
+TruncatedPolynomial<T>& TruncatedPolynomial<T>::TruncatedMultiplication( const Polynomial<T>& f , const uint& N_output_start , const uint& N_output_lim )
+{
+
+  constexpr const uint border_0 = 21;
+  const T& zero = Polynomial<T>::const_zero();
+  bool searching = true;
+
+  if( Polynomial<T>::m_size < border_0 && f.Polynomial<T>::m_size < border_0 ){
+
+    DEFINITION_0_OF_MULTIPLICATION_FOR_TRUNCATED_POLYNOMIAL;
+    
+  } else {
+
+    DEFINITION_1_OF_MULTIPLICATION_FOR_TRUNCATED_POLYNOMIAL;
+    DEFINITION_2_OF_MULTIPLICATION_FOR_TRUNCATED_POLYNOMIAL;
+    uint N_output_lim_fixed = N_input_max_0_max_1 < m_N ? N_input_max_0_max_1 + 1 : m_N;
+
+    if( N_output_lim_fixed > N_output_lim ){
+
+      N_output_lim_fixed = N_output_lim;
+    
+    }
   
-  uint size = Polynomial<T>::m_size + f_size - 1;
-
-  if( size >= m_N ){
-
-    size = m_N;
+    RETURN_ZERO_FOR_MULTIPLICATION_FOR_TRUNCATED_POLYNOMIAL_IF( N_input_start_0_start_1 >= N_output_lim_fixed );
+    DEFINITION_3_OF_MULTIPLICATION_FOR_TRUNCATED_POLYNOMIAL;
 
   }
 
-  TruncatedPolynomial<T> product{ m_N , 0 };  
-      
-  for( uint i = 0 ; i < size ; i++ ){
+  return *this;
 
-    T& product_i = product[i];
-    const uint j_min = Polynomial<T>::m_size <= i ? i - Polynomial<T>::m_size + 1 : 0;
-    const uint j_lim = i < f_size ? i + 1 : f_size;
-      
-    for( uint j = j_min ; j < j_lim ; j++ ){
-	
-      product_i += Polynomial<T>::operator[]( i - j ) * f.Polynomial<T>::operator[]( j );
+}
+
+template <typename T> 
+TruncatedPolynomial<T>& TruncatedPolynomial<T>::FFT_TruncatedMultiplication( const Polynomial<T>& f , const uint& N_output_start , const uint& N_output_lim )
+{
+
+  constexpr const uint& border_0 = FFT_Multiplication_border_0<T>;
+  const T& zero = Polynomial<T>::const_zero();
+  bool searching = true;
+
+  if( Polynomial<T>::m_size < border_0 && f.Polynomial<T>::m_size < border_0 ){
+
+    DEFINITION_0_OF_MULTIPLICATION_FOR_TRUNCATED_POLYNOMIAL;
+    
+  } else {
+
+    DEFINITION_1_OF_MULTIPLICATION_FOR_TRUNCATED_POLYNOMIAL;
+    DEFINITION_2_OF_MULTIPLICATION_FOR_TRUNCATED_POLYNOMIAL;
+    uint N_output_lim_fixed = N_input_max_0_max_1 < m_N ? N_input_max_0_max_1 + 1 : m_N;
+
+    if( N_output_lim_fixed > N_output_lim ){
+
+      N_output_lim_fixed = N_output_lim;
+    
+    }
+  
+    RETURN_ZERO_FOR_MULTIPLICATION_FOR_TRUNCATED_POLYNOMIAL_IF( N_input_start_0_start_1 >= N_output_lim_fixed );
+    const uint N_input_truncated_deg_0_deg_1 = N_input_max_0 - N_input_start_0 + N_input_max_1 - N_input_start_1;
+    constexpr const uint& border_1 = FFT_Multiplication_border_1<T>;
+
+    if( N_input_truncated_deg_0_deg_1 < border_1 ){
+    
+      DEFINITION_3_OF_MULTIPLICATION_FOR_TRUNCATED_POLYNOMIAL;
+    
+    } else {
+
+      DEFINITION_4_OF_MULTIPLICATION_FOR_TRUNCATED_POLYNOMIAL;
+      uint N_output_start_shifted;
+      uint N_output_shift_shifted;
+
+      if( N_output_start < N_input_start_0_start_1 ){
+
+	N_output_start_shifted = 0;
+	N_output_shift_shifted = N_input_start_0_start_1;
+
+      } else {
+    
+	N_output_start_shifted = N_output_start - N_input_start_0_start_1;
+	N_output_shift_shifted = N_output_start;
+
+      }
+
+      const uint N_output_lim_shifted = N_output_lim_fixed - N_input_start_0_start_1;
+      f0 = move( IFFT<T>( f0 , 0 , two_power , 0 , N_output_start_shifted , N_output_lim_shifted , N_output_shift_shifted , two_power , two_power_inv , exponent ) );
+      SET_VECTOR_FOR_ANSWER_OF_MULTIPLICATION_FOR_TRUNCATED_POLYNOMIAL( N_output_lim_fixed );
+
+      for( uint i = N_output_start ; i < N_output_lim_fixed ; i++ ){
+    
+	Polynomial<T>::m_f[i] = f0[i];
+
+      }
 
     }
 
   }
 
-  product.Polynomial<T>::RemoveRedundantZero();
-  return operator=( product );
+  return *this;
+  
+}
+
+template <typename T> 
+TruncatedPolynomial<T> TruncatedPolynomial<T>::TruncatedMultiplication_const( const Polynomial<T>& f , const uint& N_output_start , const uint& N_output_lim ) const
+{
+
+  constexpr const uint border_0 = 21;
+  const T& zero = Polynomial<T>::const_zero();
+  bool searching = true;
+
+  if( Polynomial<T>::m_size < border_0 && f.Polynomial<T>::m_size < border_0 ){
+
+    DEFINITION_0_OF_TRUNCATED_MULTIPLICATION_CONST_FOR_TRUNCATED_POLYNOMIAL;
+    return TruncatedPolynomial<T>( m_N , move( answer ) );
+    
+  }
+
+  DEFINITION_1_OF_TRUNCATED_MULTIPLICATION_CONST_FOR_TRUNCATED_POLYNOMIAL;
+  DEFINITION_2_OF_TRUNCATED_MULTIPLICATION_CONST_FOR_TRUNCATED_POLYNOMIAL;
+  uint N_output_lim_fixed = N_input_max_0_max_1 < m_N ? N_input_max_0_max_1 + 1 : m_N;
+
+  if( N_output_lim_fixed > N_output_lim ){
+
+    N_output_lim_fixed = N_output_lim;
+    
+  }
+  
+  RETURN_ZERO_FOR_TRUNCATED_MULTIPLICATION_CONST_FOR_TRUNCATED_POLYNOMIAL_IF( N_input_start_0_start_1 >= N_output_lim_fixed );
+  DEFINITION_3_OF_TRUNCATED_MULTIPLICATION_CONST_FOR_TRUNCATED_POLYNOMIAL;
+  return TruncatedPolynomial<T>( m_N , move( answer ) );
+  
+}
+
+template <typename T> 
+TruncatedPolynomial<T> TruncatedPolynomial<T>::FFT_TruncatedMultiplication_const( const Polynomial<T>& f , const uint& N_output_start , const uint& N_output_lim ) const
+{
+
+  constexpr const uint& border_0 = FFT_Multiplication_border_0<T>;
+  const T& zero = Polynomial<T>::const_zero();
+  bool searching = true;
+
+  if( Polynomial<T>::m_size < border_0 && f.Polynomial<T>::m_size < border_0 ){
+
+    DEFINITION_0_OF_TRUNCATED_MULTIPLICATION_CONST_FOR_TRUNCATED_POLYNOMIAL;
+    return TruncatedPolynomial<T>( m_N , move( answer ) );
+    
+  }
+
+  DEFINITION_1_OF_TRUNCATED_MULTIPLICATION_CONST_FOR_TRUNCATED_POLYNOMIAL;
+  DEFINITION_2_OF_TRUNCATED_MULTIPLICATION_CONST_FOR_TRUNCATED_POLYNOMIAL;
+  uint N_output_lim_fixed = N_input_max_0_max_1 < m_N ? N_input_max_0_max_1 + 1 : m_N;
+
+  if( N_output_lim_fixed > N_output_lim ){
+
+    N_output_lim_fixed = N_output_lim;
+    
+  }
+  
+  RETURN_ZERO_FOR_TRUNCATED_MULTIPLICATION_CONST_FOR_TRUNCATED_POLYNOMIAL_IF( N_input_start_0_start_1 >= N_output_lim_fixed );
+  const uint N_input_truncated_deg_0_deg_1 = N_input_max_0 - N_input_start_0 + N_input_max_1 - N_input_start_1;
+  constexpr const uint& border_1 = FFT_Multiplication_border_1<T>;
+
+  if( N_input_truncated_deg_0_deg_1 < border_1 ){
+    
+    DEFINITION_3_OF_TRUNCATED_MULTIPLICATION_CONST_FOR_TRUNCATED_POLYNOMIAL;
+    return TruncatedPolynomial<T>( m_N , move( answer ) );
+    
+  }
+
+  DEFINITION_4_OF_TRUNCATED_MULTIPLICATION_CONST_FOR_TRUNCATED_POLYNOMIAL;
+  uint N_output_start_shifted;
+  uint N_output_shift_shifted;
+
+  if( N_output_start < N_input_start_0_start_1 ){
+
+    N_output_start_shifted = 0;
+    N_output_shift_shifted = N_input_start_0_start_1;
+
+  } else {
+    
+    N_output_start_shifted = N_output_start - N_input_start_0_start_1;
+    N_output_shift_shifted = N_output_start;
+
+  }
+
+  const uint N_output_lim_shifted = N_output_lim_fixed - N_input_start_0_start_1;
+  return TruncatedPolynomial<T>( m_N , move( IFFT<T>( f0 , 0 , two_power , 0 , N_output_start_shifted , N_output_lim_shifted , N_output_shift_shifted , two_power , two_power_inv , exponent ) ) );
 
 }
 
@@ -133,37 +370,52 @@ template <typename T> inline TruncatedPolynomial<T>& TruncatedPolynomial<T>::ope
 template <typename T> inline TruncatedPolynomial<T> TruncatedPolynomial<T>::operator-() const { return TruncatedPolynomial<T>( m_N ).operator-=( *this ); }
 
 
-template <typename T> inline void TruncatedPolynomial<T>::SetTruncation( const uint& N ) noexcept { m_N = N; Truncate(); }
+template <typename T> inline void TruncatedPolynomial<T>::SetTruncation( const uint& N ) noexcept { m_N = N; TruncateFinal( m_N ); }
 template <typename T> inline const uint& TruncatedPolynomial<T>::GetTruncation() const noexcept { return m_N; }
 
-template <typename T> inline void TruncatedPolynomial<T>::Truncate(){ while( Polynomial<T>::m_size > m_N ){ Polynomial<T>::m_f.pop_back(); Polynomial<T>::m_size--; } }
+template <typename T> inline TruncatedPolynomial<T>& TruncatedPolynomial<T>::TruncateInitial( const uint& N ) noexcept { const uint& size = N < Polynomial<T>::m_size ? N : Polynomial<T>::m_size; for( uint i = 0 ; i < size ; i++ ){ Polynomial<T>::m_f[i] = 0; } return *this; }
+
+template <typename T> inline TruncatedPolynomial<T>& TruncatedPolynomial<T>::TruncateFinal( const uint& N ) noexcept { while( Polynomial<T>::m_size > N ){ Polynomial<T>::m_f.pop_back(); Polynomial<T>::m_size--; } return *this; }
+
+template <typename T , typename P> inline TruncatedPolynomial<T> operator+( const TruncatedPolynomial<T>& f0 , const P& f1 ) { return TruncatedPolynomial<T>( f0 ).operator+=( f1 ); }
+template <typename T , typename P> inline TruncatedPolynomial<T> operator-( const TruncatedPolynomial<T>& f ) { return TruncatedPolynomial<T>( f ).operator*=( Polynomial<T>::const_minus_one()); }
+template <typename T , typename P> inline TruncatedPolynomial<T> operator-( const TruncatedPolynomial<T>& f0 , const P& f1 ) { return TruncatedPolynomial<T>( f0 ).operator-=( f1 ); }
+template <typename T , typename P> inline TruncatedPolynomial<T> operator*( const TruncatedPolynomial<T>& f0 , const P& f1 ) { return TruncatedPolynomial<T>( f0 ).operator*=( f1 ); }
+template <typename T , typename P> inline TruncatedPolynomial<T> operator/( const TruncatedPolynomial<T>& f0 , const P& f1 ) { return TruncatedPolynomial<T>( f0 ).operator*=( Inverse( f1 ) ); }
+template <typename T> inline TruncatedPolynomial<T> operator%( const TruncatedPolynomial<T>& f0 , const T& t1 ) { return TruncatedPolynomial<T>( f0 ).operator%=( t1 ); }
 
 
-template <typename T , typename P> inline TruncatedPolynomial<T> operator+( const TruncatedPolynomial<T>& f0 , const P& f1 ) { TruncatedPolynomial<T> f = f0; f += f1; return f; }
-template <typename T , typename P> inline TruncatedPolynomial<T> operator-( const TruncatedPolynomial<T>& f ) { return TruncatedPolynomial<T>::zero() - f; }
-template <typename T , typename P> inline TruncatedPolynomial<T> operator-( const TruncatedPolynomial<T>& f0 , const P& f1 ) { TruncatedPolynomial<T> f = f0; return f.operator-=( f1 ); }
-template <typename T , typename P> inline TruncatedPolynomial<T> operator*( const TruncatedPolynomial<T>& f0 , const P& f1 ) { TruncatedPolynomial<T> f = f0; return f.operator*=( f1 ); }
-template <typename T , typename P> inline TruncatedPolynomial<T> operator/( const TruncatedPolynomial<T>& f0 , const P& f1 ) { TruncatedPolynomial<T> f = f0; return f.operator/=( f1 ); }
-template <typename T> inline TruncatedPolynomial<T> operator%( const TruncatedPolynomial<T>& f0 , const T& t1 ) { TruncatedPolynomial<T> f = f0; return f.operator%=( t1 ); }
+template <typename T> inline TruncatedPolynomial<T> Differential( const TruncatedPolynomial<T>& f ) { return TruncatedDifferential<T>( f , 1 ); }
 
+template <typename T> inline TruncatedPolynomial<T> Differential( const uint& i , const TruncatedPolynomial<T>& f ) { return i == 0 ? f : Differential<T>( i - 1 , Differential<T>( f ) ); }
 
 template <typename T>
-TruncatedPolynomial<T> Differential( const TruncatedPolynomial<T>& f )
+TruncatedPolynomial<T> TruncatedDifferential( const TruncatedPolynomial<T>& f , const uint& N_output_start_plus_one )
 {
 
-  const uint& N = f.GetTruncation();
-
-  if( N == 0 ){
+  if( f.m_N == 0 ){
 
     return TruncatedPolynomial<T>();
 
   }
 
-  TruncatedPolynomial<T> f_dif{ N - 1 };
+  TruncatedPolynomial<T> f_dif{ f.m_N - 1 };
 
-  for( uint i = 1 ; i < N ; i++ ){
+  if( N_output_start_plus_one < f.Polynomial<T>::m_size ){
 
-    f_dif[i - 1] = i * f[i];
+    for( uint i = 1 ; i < N_output_start_plus_one ; i++ ){
+
+      f_dif.Polynomial<T>::m_f.push_back( 0 );
+
+    }
+
+    for( uint i = N_output_start_plus_one ; i < f.Polynomial<T>::m_size ; i++ ){
+
+      f_dif.Polynomial<T>::m_f.push_back( i * f.Polynomial<T>::m_f[i] );
+
+    }
+
+    f_dif.Polynomial<T>::m_size = f.Polynomial<T>::m_size - 1;
 
   }
 
@@ -171,63 +423,41 @@ TruncatedPolynomial<T> Differential( const TruncatedPolynomial<T>& f )
 
 }
 
+template <typename T> inline TruncatedPolynomial<T> Integral( const TruncatedPolynomial<T>& f ) { return TruncatedIntegral<T>( f , 1 ); }
+
 template <typename T>
-TruncatedPolynomial<T> Integral( const TruncatedPolynomial<T>& f )
+TruncatedPolynomial<T> TruncatedIntegral( const TruncatedPolynomial<T>& f , const uint& N_output_start )
 {
 
-  const uint& N = f.GetTruncation();
+  TruncatedPolynomial<T> f_int{ f.m_N + 1 };
 
-  TruncatedPolynomial<T> f_int{ N + 1 };
+  if( N_output_start <= f.Polynomial<T>::m_size ){
 
-  for( uint i = 1 ; i <= N ; i++ ){
+    for( uint i = 0 ; i < N_output_start ; i++ ){
 
-    f_int[i] = f[i - 1] / T( i );
+      f_int.Polynomial<T>::m_f.push_back( 0 );
 
+    }
+
+    for( uint i = N_output_start ; i <= f.Polynomial<T>::m_size ; i++ ){
+
+      f_int.Polynomial<T>::m_f.push_back( f.Polynomial<T>::m_f[i - 1] / T( i ) );
+
+    }
+
+    f_int.Polynomial<T>::m_size = f.Polynomial<T>::m_size + 1;
+    
   }
 
   return f_int;
 
 }
 
-template <typename T> inline TruncatedPolynomial<T> Differential( const uint& i , const TruncatedPolynomial<T>& f ) { return i == 0 ? f : Differential<T>( i - 1 , Differential<T>( f ) ); }
-
 template <typename T>
 TruncatedPolynomial<T> Inverse( const TruncatedPolynomial<T>& f )
 {
 
-  const uint& N = f.GetTruncation();
-  const T& one = Polynomial<T>::const_one();
-  const T two = one + one;
-  uint power_prev = 1;
-  uint power = 1;
-  uint N_current;
-  TruncatedPolynomial<T> f_inv{ power , one / f[0] };
-  
-  while( power < N ){
-
-    power_prev = power;
-    power *= 2;
-    N_current = power < N ? power : N;
-    uint i_lim = N_current - power_prev;
-    f_inv.SetTruncation( N_current );
-    TruncatedPolynomial<T> f_rec = - f_inv * f + two;
-    vector<T> product{ i_lim };
-    
-    for( uint i = 0 ; i < i_lim ; i++ ){
-
-      T& f_inv_i = f_inv[i + power_prev];
-      
-      for( uint j = 0 ; j < power_prev ; j++ ){
-	
-	f_inv_i += f_inv.Polynomial<T>::operator[]( j ) * f_rec.Polynomial<T>::operator[]( i + power_prev - j );
-
-      }
-
-    }
-    
-  }
-
-  return f_inv;
+  DEFINITION_OF_INVERSE_FOR_TRUNCATED_POLYNOMIAL( T , f_inv.TruncatedMinus( f_inv.TruncatedMultiplication_const( f , power , power_2 ).TruncatedMultiplication( f_inv , power , power_2 ) , power , power_2 ) );
   
 }
 
@@ -235,42 +465,42 @@ template <typename T>
 TruncatedPolynomial<T> Exp( const TruncatedPolynomial<T>& f )
 {
 
-  const uint& N = f.GetTruncation();
-  const T& one = Polynomial<T>::const_one();
-  uint power_prev = 1;
-  uint power = 1;
-  uint N_current;
-  TruncatedPolynomial<T> f_exp{ power , one };
-  
-  while( power < N ){
-
-    power_prev = power;
-    power *= 2;
-    N_current = power < N ? power : N;
-    uint i_lim = N_current - power_prev;
-    f_exp.SetTruncation( N_current );
-    TruncatedPolynomial<T> f_rec = - Log( f_exp ) + f + one;
-    uint i_lim = N - power_prev;
-    vector<T> product{ i_lim };
-      
-    for( uint i = 0 ; i < i_lim ; i++ ){
-
-      T& f_exp_i = f_exp[i + power_prev];
-      
-      for( uint j = 0 ; j < power_prev ; j++ ){
-	
-	f_exp_i += f_exp.Polynomial<T>::operator[]( j ) * f_rec.Polynomial<T>::operator[]( i + power_prev - j );
-
-      }
-
-    }
-    
-  }
-
-  return f_exp;
+  DEFINITION_OF_EXP_FOR_TRUNCATED_POLYNOMIAL( T , f_exp.TruncatedMinus( ( TruncatedIntegral( Differential( f_exp ).TruncatedMultiplication_const( Inverse( f_exp ) , power - 1 , power_2 ) , power ).TruncatedMinus( f , power , power_2 ) ).TruncatedMultiplication( f_exp , power ) , power , power_2 ) );
   
 }
 
-template <typename T> inline TruncatedPolynomial<T> Log( const TruncatedPolynomial<T>& f ) { return Integral<T>( Differential<T>( f ) / f ); }
+template <typename T> inline TruncatedPolynomial<T> Log( const TruncatedPolynomial<T>& f ) { return Integral<T>( Differential<T>( f ) /= f ); }
 
-template <typename T> inline TruncatedPolynomial<T> Power( const TruncatedPolynomial<T>& f , const T& t ) { return Exp( Log( f ) * t ); }
+template <typename T> inline TruncatedPolynomial<T> Power( const TruncatedPolynomial<T>& f , const T& t ) { return Exp( Log( f ) *= t ); }
+
+
+// DEFINITION_OF_PARTIAL_SPECIALISATION_OF_MULTIPLICATION_OF_TRUNCATED_POLYNOMIAL( Mod<998244353> , 0 , 0 , 1 , 0 , 1 );
+// DEFINITION_OF_PARTIAL_SPECIALISATION_OF_MULTIPLICATION_OF_TRUNCATED_POLYNOMIAL( Mod<998244353> , 1 , 1 , 2 , 1 , 499122176 );
+// DEFINITION_OF_PARTIAL_SPECIALISATION_OF_MULTIPLICATION_OF_TRUNCATED_POLYNOMIAL( Mod<998244353> , 2 , 2 , 4 , 2 , 748683265 );
+
+// intå^ìôÇÃconstéQè∆ÇäOÇµÇΩèÍçáÇÃÇRÇ¬ÇÃÉAÉãÉSÉäÉYÉÄÇÃç≈ìKï™äÚ
+// DEFINITION_OF_PARTIAL_SPECIALISATION_OF_MULTIPLICATION_OF_TRUNCATED_POLYNOMIAL( Mod<998244353> , 4 , 4 , 8 , 3 , 873463809 );
+
+// DEFINITION_OF_PARTIAL_SPECIALISATION_OF_MULTIPLICATION_OF_TRUNCATED_POLYNOMIAL( Mod<998244353> , 8 , 8 , 16 , 4 , 935854081 );
+// DEFINITION_OF_PARTIAL_SPECIALISATION_OF_MULTIPLICATION_OF_TRUNCATED_POLYNOMIAL( Mod<998244353> , 16 , 16 , 32 , 3 , 967049217 );
+
+// DEFINITION_OF_PARTIAL_SPECIALISATION_OF_MULTIPLICATION_OF_TRUNCATED_POLYNOMIAL( Mod<998244353> , 17 , 128 , 256 , 8 , 994344961 ); // 12.954 -- 13.215
+// DEFINITION_OF_PARTIAL_SPECIALISATION_OF_MULTIPLICATION_OF_TRUNCATED_POLYNOMIAL( Mod<998244353> , 17 , 256 , 512 , 9 , 996294657 ); // 12.939 -- 13.284
+
+// DEFINITION_OF_PARTIAL_SPECIALISATION_OF_MULTIPLICATION_OF_TRUNCATED_POLYNOMIAL( Mod<998244353> , 15 , 512 , 1024 , 10 , 997269505 ); // 13.039 -- 13.270
+// DEFINITION_OF_PARTIAL_SPECIALISATION_OF_MULTIPLICATION_OF_TRUNCATED_POLYNOMIAL( Mod<998244353> , 16 , 512 , 1024 , 10 , 997269505 ); // 13.252 -- 13.393
+
+// intå^ìôÇÃconstéQè∆ÇäOÇ≥Ç»Ç¢èÍçáÇÃÇRÇ¬ÇÃÉAÉãÉSÉäÉYÉÄÇÃç≈ìKï™äÚ
+DEFINITION_OF_PARTIAL_SPECIALISATION_OF_MULTIPLICATION_OF_TRUNCATED_POLYNOMIAL( Mod<998244353> , 17 , 512 , 1024 , 10 , 997269505 ); // 12.886 -- 12.987
+
+// DEFINITION_OF_PARTIAL_SPECIALISATION_OF_MULTIPLICATION_OF_TRUNCATED_POLYNOMIAL( Mod<998244353> , 18 , 512 , 1024 , 10 , 997269505 ); // 12.888 -- 12.985
+// DEFINITION_OF_PARTIAL_SPECIALISATION_OF_MULTIPLICATION_OF_TRUNCATED_POLYNOMIAL( Mod<998244353> , 19 , 512 , 1024 , 10 , 997269505 ); // 13.048 -- 13.063
+// DEFINITION_OF_PARTIAL_SPECIALISATION_OF_MULTIPLICATION_OF_TRUNCATED_POLYNOMIAL( Mod<998244353> , 20 , 512 , 1024 , 10 , 997269505 ); // 12.905 -- 13.138
+// DEFINITION_OF_PARTIAL_SPECIALISATION_OF_MULTIPLICATION_OF_TRUNCATED_POLYNOMIAL( Mod<998244353> , 21 , 512 , 1024 , 10 , 997269505 ); // 13.150 -- 13.337
+
+// DEFINITION_OF_PARTIAL_SPECIALISATION_OF_MULTIPLICATION_OF_TRUNCATED_POLYNOMIAL( Mod<998244353> , 17 , 1024 , 2048 , 11 , 997756929 ); // 14.297 -- 15.765
+// DEFINITION_OF_PARTIAL_SPECIALISATION_OF_MULTIPLICATION_OF_TRUNCATED_POLYNOMIAL( Mod<998244353> , 17 , 2048 , 4096 , 12 , 998000641 ); // 12.902 -- 13.265
+// DEFINITION_OF_PARTIAL_SPECIALISATION_OF_MULTIPLICATION_OF_TRUNCATED_POLYNOMIAL( Mod<998244353> , 17 , 4096 , 8192 , 13 , 998122497 ); // 13.799 -- 14.025
+// DEFINITION_OF_PARTIAL_SPECIALISATION_OF_MULTIPLICATION_OF_TRUNCATED_POLYNOMIAL( Mod<998244353> , 17 , 8192 , 16384 , 14 , 998183425 );
+// DEFINITION_OF_PARTIAL_SPECIALISATION_OF_MULTIPLICATION_OF_TRUNCATED_POLYNOMIAL( Mod<998244353> , 17 , 16384 , 32768 , 15 , 998213889 );
+// DEFINITION_OF_PARTIAL_SPECIALISATION_OF_MULTIPLICATION_OF_TRUNCATED_POLYNOMIAL( Mod<998244353> , 17 , 32768 , 65536 , 16 , 998229121 );
