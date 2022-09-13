@@ -277,3 +277,5 @@ template <INT_TYPE_FOR_MOD M> inline Mod<M> Power( const Mod<M>& n , const Mod<M
 template <> inline Mod<2> Power( const Mod<2>& n , const Mod<2>& p , const string& method ) { return p == 0 ? 1 : n; }
 
 template <> inline Mod<2> Square<Mod<2> >( const Mod<2>& t ) { return t; }
+
+template <INT_TYPE_FOR_MOD M> inline string to_string( const Mod<M>& n ) noexcept { return to_string( n.Represent() ) + " + MZ"; }

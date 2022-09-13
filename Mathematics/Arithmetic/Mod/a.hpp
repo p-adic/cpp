@@ -107,3 +107,5 @@ template <> inline Mod<2> Power( const Mod<2>& n , const Mod<2>& p , const strin
 // ../Power/a_Body.hpp‚É‚Ä’è‹`
 template <typename T> inline T Square( const T& t );
 template <> inline Mod<2> Square<Mod<2> >( const Mod<2>& t );
+
+template <INT_TYPE_FOR_MOD M> inline string to_string( const Mod<M>& n ) noexcept;
