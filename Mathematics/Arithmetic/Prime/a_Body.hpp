@@ -118,7 +118,7 @@ INT GCD( const INT& a , const INT& b )
   INT b_c = b >= 0 ? b : -b;
   while( a_c > 0 && b_c > 0 ){
     if( a_c < b_c ){
-      b_c -= a_c * ( a_c / b_c );
+      b_c -= a_c * ( b_c / a_c );
     } else {
       a_c -= b_c * ( a_c / b_c );
     }
