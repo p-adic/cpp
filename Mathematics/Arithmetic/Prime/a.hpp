@@ -19,3 +19,6 @@ void SGetPrimeFactorisationBounded( const uint& n , uint ( &P )[N] , uint ( &exp
 
 // 1+i”Ô–Ú‚Ì‘f”ˆÈã‚Ì‘ŠˆÙ‚È‚é‘f”—LŒÀŒÂ‚Ì˜a‚Å•\‚¹‚È‚¢Å¬‚Ì”ñ•‰®”‚ğ•Ô‚·
 uint GetKloveSequence( const uint& i ) noexcept;
+
+template <typename INT>
+INT GCD( const INT& a , const INT& b );

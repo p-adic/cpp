@@ -110,3 +110,18 @@ void SetPrimeFactorisationBounded( const uint& n , uint ( &P )[N] , uint ( &expo
   return;
 
 }
+
+template <typename INT>
+INT GCD( const INT& a , const INT& b )
+{
+  INT a_c = a >= 0 ? a : -a;
+  INT b_c = b >= 0 ? b : -b;
+  while( a_c > 0 && b_c > 0 ){
+    if( a_c < b_c ){
+      b_c -= a_c * ( a_c / b_c );
+    } else {
+      a_c -= b_c * ( a_c / b_c );
+    }
+  }
+  return a_c > 0 ? a_c : b_c;
+}
