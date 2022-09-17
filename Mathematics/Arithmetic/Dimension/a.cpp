@@ -152,7 +152,7 @@ dim& dim::operator%=( const dim& d )
   
 }
 
-const uint& dim::Get() const
+const INT_TYPE_FOR_DIM& dim::Get() const
 {
 
   if( m_is_infty ){
