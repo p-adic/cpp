@@ -22,7 +22,7 @@ INT FloorSum( const INT& a_0 , const INT& a_1 , const INT& q , const INT& n )
   const INT r_0 = a_0 % q;
   const INT r_1 = a_1 % q;
   const INT value_lim = ( r_0 + r_1 * n ) / q;
-  INT answer = ( a_0 / q ) * ( n % 2 == 0 ? ( n / 2 ) * ( n - 1 ) : n * ( ( n - 1 ) / 2 ) ) + ( a_1 / q );
+  INT answer = ( a_0 / q ) * ( n % 2 == 0 ? ( n / 2 ) * ( n - 1 ) : n * ( ( n - 1 ) / 2 ) ) + ( a_1 / q ) * n;
   
   if( value_lim != 0 ){
 
