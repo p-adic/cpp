@@ -6,11 +6,11 @@
 
 #include "../../Dimension/VLArray/a_Body.hpp"
 
-void BijSum1N( const VLArray<dim>& a_d , const uint& n , uint& n_1 , uint& n_2 )
+void BijSum1N( const VLArray<dim>& a_d , const INT_TYPE_FOR_DIM& n , INT_TYPE_FOR_DIM& n_1 , INT_TYPE_FOR_DIM& n_2 )
 {
 
   const dim d = Sum( a_d );
-  uint m = n;
+  INT_TYPE_FOR_DIM m = n;
 
   if( ! d.IsInfty() ){
 
@@ -51,7 +51,7 @@ void BijSum1N( const VLArray<dim>& a_d , const uint& n , uint& n_1 , uint& n_2 )
 
   } else {
     
-    uint n_3 = 0;
+    INT_TYPE_FOR_DIM n_3 = 0;
 
     try{
       
@@ -72,7 +72,7 @@ void BijSum1N( const VLArray<dim>& a_d , const uint& n , uint& n_1 , uint& n_2 )
 
 }
 
-uint BijSumN1( const VLArray<dim>& a_d , const uint& n_1 , const uint& n_2 )
+INT_TYPE_FOR_DIM BijSumN1( const VLArray<dim>& a_d , const INT_TYPE_FOR_DIM& n_1 , const INT_TYPE_FOR_DIM& n_2 )
 {
 
   if( a_d.empty() ){
@@ -111,7 +111,7 @@ uint BijSumN1( const VLArray<dim>& a_d , const uint& n_1 , const uint& n_2 )
 
   }
 
-  uint n;
+  INT_TYPE_FOR_DIM n;
 
   try{
       
@@ -141,10 +141,10 @@ uint BijSumN1( const VLArray<dim>& a_d , const uint& n_1 , const uint& n_2 )
 }
 
 
-VLArray<uint> BijProd1N( const VLArray<dim>& a_d , const uint& n )
+VLArray<INT_TYPE_FOR_DIM> BijProd1N( const VLArray<dim>& a_d , const INT_TYPE_FOR_DIM& n )
 {
 
-  VLArray<uint> a_n;
+  VLArray<INT_TYPE_FOR_DIM> a_n;
   
   try{
     
@@ -161,12 +161,12 @@ VLArray<uint> BijProd1N( const VLArray<dim>& a_d , const uint& n )
 
 }
 
-void BijProd1N( const VLArray<dim>& a_d , const uint& n , VLArray<uint>& a_n )
+void BijProd1N( const VLArray<dim>& a_d , const INT_TYPE_FOR_DIM& n , VLArray<INT_TYPE_FOR_DIM>& a_n )
 {
 
   if( a_d.empty() ){
 
-    a_n = VLArray<uint>();
+    a_n = VLArray<INT_TYPE_FOR_DIM>();
 
     if( n != 0 ){
 
@@ -184,11 +184,11 @@ void BijProd1N( const VLArray<dim>& a_d , const uint& n , VLArray<uint>& a_n )
 
     if( d.IsInfty() ){
 	  
-      a_n = VLArray<uint>( n );
+      a_n = VLArray<INT_TYPE_FOR_DIM>( n );
 
     } else {
 
-      const uint N = (uint)( d.Get() );
+      const INT_TYPE_FOR_DIM N = (INT_TYPE_FOR_DIM)( d.Get() );
 
       if( N == 0 ){
 
@@ -196,7 +196,7 @@ void BijProd1N( const VLArray<dim>& a_d , const uint& n , VLArray<uint>& a_n )
       
       } else {
 
-	a_n = VLArray<uint>( n % N );
+	a_n = VLArray<INT_TYPE_FOR_DIM>( n % N );
 
       }
 
@@ -205,8 +205,8 @@ void BijProd1N( const VLArray<dim>& a_d , const uint& n , VLArray<uint>& a_n )
   } else {
     
     const VLArray<dim> b_d = a_d.GetFinalSegment( -1 );
-    uint n_1;
-    uint n_2;
+    INT_TYPE_FOR_DIM n_1;
+    INT_TYPE_FOR_DIM n_2;
 
     try{
       
@@ -238,7 +238,7 @@ void BijProd1N( const VLArray<dim>& a_d , const uint& n , VLArray<uint>& a_n )
 
 }
 
-uint BijProdN1( const VLArray<dim>& a_d , const VLArray<uint>& a_n )
+INT_TYPE_FOR_DIM BijProdN1( const VLArray<dim>& a_d , const VLArray<INT_TYPE_FOR_DIM>& a_n )
 {
 
   if( a_n.empty() ){
@@ -254,7 +254,7 @@ uint BijProdN1( const VLArray<dim>& a_d , const VLArray<uint>& a_n )
   }
 
   const dim& d = a_d.front();
-  const uint& n = a_n.front();
+  const INT_TYPE_FOR_DIM& n = a_n.front();
 
   if( a_n.size() == 1 ) ){
 
@@ -275,9 +275,9 @@ uint BijProdN1( const VLArray<dim>& a_d , const VLArray<uint>& a_n )
   }
   
   const VLArray<dim> b_d = a_d.GetFinalSegment( -1 );
-  const VLArray<uint> b_n = a_n.GetFinalSegment( -1 );
+  const VLArray<INT_TYPE_FOR_DIM> b_n = a_n.GetFinalSegment( -1 );
 
-  uint m;
+  INT_TYPE_FOR_DIM m;
   
   try{
     
@@ -294,17 +294,17 @@ uint BijProdN1( const VLArray<dim>& a_d , const VLArray<uint>& a_n )
 
 }
 
-void BijProd1Infty( const uint& n , VLArray<uint>& a )
+void BijProd1Infty( const INT_TYPE_FOR_DIM& n , VLArray<INT_TYPE_FOR_DIM>& a )
 {
 
   if( n == 0 ){
 
-    a = VLArray<uint>();
+    a = VLArray<INT_TYPE_FOR_DIM>();
 
   } else {
     
-    uint n1;
-    uint n2;
+    INT_TYPE_FOR_DIM n1;
+    INT_TYPE_FOR_DIM n2;
 
     try{
       
@@ -319,7 +319,7 @@ void BijProd1Infty( const uint& n , VLArray<uint>& a )
 
     try{
       
-      a = Frown( VLAray<uint>( n1 ) , BijProd1Infty( n2 ) );
+      a = Frown( VLAray<INT_TYPE_FOR_DIM>( n1 ) , BijProd1Infty( n2 ) );
   
     }
     catch( const ErrorType& e ){
@@ -334,10 +334,10 @@ void BijProd1Infty( const uint& n , VLArray<uint>& a )
 
 }
 
-VLArray<uint> BijProd1Infty( const uint& n )
+VLArray<INT_TYPE_FOR_DIM> BijProd1Infty( const INT_TYPE_FOR_DIM& n )
 {
 
-  VLArray<uint> a;
+  VLArray<INT_TYPE_FOR_DIM> a;
 
   try{
     

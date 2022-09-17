@@ -5,7 +5,7 @@
 
 #include "../../../Utility/List/a_Body.hpp"
 
-void BijSum12( const dim& d_1 , const dim& d_2, const uint& n , uint& n_1 , uint& n_2 )
+void BijSum12( const dim& d_1 , const dim& d_2, const INT_TYPE_FOR_DIM& n , INT_TYPE_FOR_DIM& n_1 , INT_TYPE_FOR_DIM& n_2 )
 {
 
   if( d_1 == infty() && d_2 == infty() ){
@@ -18,7 +18,7 @@ void BijSum12( const dim& d_1 , const dim& d_2, const uint& n , uint& n_1 , uint
 
   if( d_1 != infty() && d_2 == infty() ){
 
-    const uint N_1& = d_1.Get();
+    const INT_TYPE_FOR_DIM N_1& = d_1.Get();
 
     if( N_1 > n ){
 
@@ -38,7 +38,7 @@ void BijSum12( const dim& d_1 , const dim& d_2, const uint& n , uint& n_1 , uint
 
   if( d_1 == infty() && d_2 != infty() ){
 
-    const uint N_2 = to_int( d_2 );
+    const INT_TYPE_FOR_DIM N_2 = to_int( d_2 );
 
     if( N_2 > n ){
 
@@ -56,8 +56,8 @@ void BijSum12( const dim& d_1 , const dim& d_2, const uint& n , uint& n_1 , uint
 
   }
 
-  const uint N_1 = to_int( d_1 );
-  const uint N = n_1 + to_int( d_2 );
+  const INT_TYPE_FOR_DIM N_1 = to_int( d_1 );
+  const INT_TYPE_FOR_DIM N = n_1 + to_int( d_2 );
 
   if( N == 0 ){
 
@@ -65,7 +65,7 @@ void BijSum12( const dim& d_1 , const dim& d_2, const uint& n , uint& n_1 , uint
 
   }
 
-  const uint m = n % N;
+  const INT_TYPE_FOR_DIM m = n % N;
   
   if( N_1 > m ){
 
@@ -84,13 +84,13 @@ void BijSum12( const dim& d_1 , const dim& d_2, const uint& n , uint& n_1 , uint
 }
 
 // BijSum12によるBijSum21(n_1,n_2)以下までの像の各成分の最大値を記録する。
-static void BijSum21_Body( const dim& d_1 , const dim& d_2 , const uint& n_1 , const uint& n_2 , uint& m_1 , uint& m_2 );
+static void BijSum21_Body( const dim& d_1 , const dim& d_2 , const INT_TYPE_FOR_DIM& n_1 , const INT_TYPE_FOR_DIM& n_2 , INT_TYPE_FOR_DIM& m_1 , INT_TYPE_FOR_DIM& m_2 );
 
-uint BijSum21( const dim& d_1 , const dim& d_2 , const uint& n_1 , const uint& n_2 )
+INT_TYPE_FOR_DIM BijSum21( const dim& d_1 , const dim& d_2 , const INT_TYPE_FOR_DIM& n_1 , const INT_TYPE_FOR_DIM& n_2 )
 {
 
-  uint m_1;
-  uint m_2;
+  INT_TYPE_FOR_DIM m_1;
+  INT_TYPE_FOR_DIM m_2;
 
   try{
     
@@ -107,7 +107,7 @@ uint BijSum21( const dim& d_1 , const dim& d_2 , const uint& n_1 , const uint& n
 
 }
 
-static void BijSum21_Body( const dim& d_1 , const dim& d_2 , const uint& n_1 , const uint& n_2 , uint& m_1 , uint& m_2 )
+static void BijSum21_Body( const dim& d_1 , const dim& d_2 , const INT_TYPE_FOR_DIM& n_1 , const INT_TYPE_FOR_DIM& n_2 , INT_TYPE_FOR_DIM& m_1 , INT_TYPE_FOR_DIM& m_2 )
 {
 
   if( n_1 >= 2 ){
@@ -187,14 +187,14 @@ static void BijSum21_Body( const dim& d_1 , const dim& d_2 , const uint& n_1 , c
 
 }
 
-void BijProd12( const dim& d_1 , const dim& d_2 , const uint& n , uint& n_1 , uint& n_2 )
+void BijProd12( const dim& d_1 , const dim& d_2 , const INT_TYPE_FOR_DIM& n , INT_TYPE_FOR_DIM& n_1 , INT_TYPE_FOR_DIM& n_2 )
 {
 
   if( d_1 == infty() ){
 
     if( d_2 == infty() ){
       
-      uint i = 0;
+      INT_TYPE_FOR_DIM i = 0;
     
       while( ( ( i + 1 ) * ( i + 2 ) ) / 2 <= n ){
 	  
@@ -208,7 +208,7 @@ void BijProd12( const dim& d_1 , const dim& d_2 , const uint& n , uint& n_1 , ui
       
     } else {
 
-      const uint& N_2 = to_int( d_2 );
+      const INT_TYPE_FOR_DIM& N_2 = to_int( d_2 );
       
       if( N_2 == 0 ){
 
@@ -224,7 +224,7 @@ void BijProd12( const dim& d_1 , const dim& d_2 , const uint& n , uint& n_1 , ui
 
   }
 
-  const uint& N_1 = to_int( d_1 );
+  const INT_TYPE_FOR_DIM& N_1 = to_int( d_1 );
 
   if( N_1 == 0 ){
 
@@ -240,7 +240,7 @@ void BijProd12( const dim& d_1 , const dim& d_2 , const uint& n , uint& n_1 , ui
 
   } else {
 
-    const uint& N_2 = to_int( d_2 );
+    const INT_TYPE_FOR_DIM& N_2 = to_int( d_2 );
     n_2 = ( n / N_1 ) % N_2;
 
   }
@@ -249,7 +249,7 @@ void BijProd12( const dim& d_1 , const dim& d_2 , const uint& n , uint& n_1 , ui
 
 }
 
-uint BijProd21( const dim& d_1 , const dim& d_2 , const uint& n_1 , const uint& n_2 )
+INT_TYPE_FOR_DIM BijProd21( const dim& d_1 , const dim& d_2 , const INT_TYPE_FOR_DIM& n_1 , const INT_TYPE_FOR_DIM& n_2 )
 {
 
   if( d_1 == infty() && d_2 == infty() ){
@@ -260,7 +260,7 @@ uint BijProd21( const dim& d_1 , const dim& d_2 , const uint& n_1 , const uint& 
 
   if( d_1 == infty() && d_2 != infty() ){
 
-    const uint N_2 = to_int( d_2 );
+    const INT_TYPE_FOR_DIM N_2 = to_int( d_2 );
       
     if( N_2 == 0 ){
 
@@ -274,7 +274,7 @@ uint BijProd21( const dim& d_1 , const dim& d_2 , const uint& n_1 , const uint& 
 
   if( d_1 != infty() && d_2 == infty() ){
 
-    const uint N_1 = to_int( d_1 );
+    const INT_TYPE_FOR_DIM N_1 = to_int( d_1 );
       
     if( N_1 == 0 ){
 
@@ -286,8 +286,8 @@ uint BijProd21( const dim& d_1 , const dim& d_2 , const uint& n_1 , const uint& 
 
   }
 
-  const uint N_1 = to_int( d_1 );
-  const uint N_2 = to_int( d_2 );
+  const INT_TYPE_FOR_DIM N_1 = to_int( d_1 );
+  const INT_TYPE_FOR_DIM N_2 = to_int( d_2 );
       
   if( N_1 == 0 || N_2 == 0 ){
 

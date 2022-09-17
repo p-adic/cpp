@@ -7,13 +7,13 @@
 
 #include "VLArray/a_Body.hpp"
 
-inline void BijSum1N( const uint& N , const uint& n , uint& n_1 , uint& n_2 ) { return BijSum1N( to_VLArray<dim>( N , infty() ) , n , n_1 , n_2 ); }
-inline uint BijSumN1( const uint& N , const uint& n_1 , const uint& n_2 ) { return BijSumN1( to_VLArray<dim>( N , infty() ) , n_1 , n_2 ); }
+inline void BijSum1N( const INT_TYPE_FOR_DIM& N , const INT_TYPE_FOR_DIM& n , INT_TYPE_FOR_DIM& n_1 , INT_TYPE_FOR_DIM& n_2 ) { return BijSum1N( to_VLArray<dim>( N , infty() ) , n , n_1 , n_2 ); }
+inline INT_TYPE_FOR_DIM BijSumN1( const INT_TYPE_FOR_DIM& N , const INT_TYPE_FOR_DIM& n_1 , const INT_TYPE_FOR_DIM& n_2 ) { return BijSumN1( to_VLArray<dim>( N , infty() ) , n_1 , n_2 ); }
 
-inline VLArray<uint> BijProd1N( const uint& N , const uint& n ) { return BijProd1N( to_VLArray<dim>( N , infty() ) , n ); }
-inline void BijProd1N( const uint& N , const uint& n , VLArray<uint>& a_n ) { BijProd1N(to_VLArray<dim>( N , infty() ) , n , a_n ); }
+inline VLArray<INT_TYPE_FOR_DIM> BijProd1N( const INT_TYPE_FOR_DIM& N , const INT_TYPE_FOR_DIM& n ) { return BijProd1N( to_VLArray<dim>( N , infty() ) , n ); }
+inline void BijProd1N( const INT_TYPE_FOR_DIM& N , const INT_TYPE_FOR_DIM& n , VLArray<INT_TYPE_FOR_DIM>& a_n ) { BijProd1N(to_VLArray<dim>( N , infty() ) , n , a_n ); }
 
-inline uint BijProdN1( const VLArray<uint>& a_n ) { return BijProdN1( to_VLArray<dim>( a_n.size() , infty() ) , a_n ); }
+inline INT_TYPE_FOR_DIM BijProdN1( const VLArray<INT_TYPE_FOR_DIM>& a_n ) { return BijProdN1( to_VLArray<dim>( a_n.size() , infty() ) , a_n ); }
 
 
 template <typename INT> inline INT Factorial( const INT& n , const INT& n_min , const string& mode ) { return ModularFactorial<INT,INT>( n , n_min , mode ); }
