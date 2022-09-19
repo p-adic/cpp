@@ -109,3 +109,5 @@ template <typename T> inline T Square( const T& t );
 template <> inline Mod<2> Square<Mod<2> >( const Mod<2>& t );
 
 template <INT_TYPE_FOR_MOD M> inline string to_string( const Mod<M>& n ) noexcept;
+
+template<INT_TYPE_FOR_MOD M , class Traits> inline basic_ostream<char,Traits>& operator<<( basic_ostream<char,Traits>& os , const Mod<M>& n );

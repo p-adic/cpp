@@ -279,3 +279,5 @@ template <> inline Mod<2> Power( const Mod<2>& n , const Mod<2>& p , const strin
 template <> inline Mod<2> Square<Mod<2> >( const Mod<2>& t ) { return t; }
 
 template <INT_TYPE_FOR_MOD M> inline string to_string( const Mod<M>& n ) noexcept { return to_string( n.Represent() ) + " + MZ"; }
+
+template<INT_TYPE_FOR_MOD M , class Traits> inline basic_ostream<char,Traits>& operator<<( basic_ostream<char,Traits>& os , const Mod<M>& n ) { return os << n.Represent(); }
