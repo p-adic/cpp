@@ -5,6 +5,7 @@
 template <typename T> class IteratorOfVLTree;
 template <typename T> class ConstIteratorOfVLTree;
 template <typename T> class VLSubTree;
+template <typename T> class Forest;
 
 template <typename T>
 class EntryOfVLTree
@@ -13,6 +14,7 @@ class EntryOfVLTree
   friend IteratorOfVLTree<T>;
   friend ConstIteratorOfVLTree<T>;
   friend VLSubTree<T>;
+  friend Forest<T>;
 
 private:
   T m_t;
@@ -25,7 +27,7 @@ private:
   inline EntryOfVLTree();
   template <typename Arg> inline EntryOfVLTree( const Arg& );
   template <typename Arg> inline EntryOfVLTree( const Arg& , EntryOfVLTree<T>* const& , EntryOfVLTree<T>* const& );
-  EntryOfVLTree( const EntryOfVLTree<T>& );
+  inline EntryOfVLTree( const EntryOfVLTree<T>& );
   EntryOfVLTree<T>& operator=( const EntryOfVLTree<T>& );
 
 };

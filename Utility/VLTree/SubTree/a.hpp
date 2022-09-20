@@ -1,12 +1,10 @@
 // c:/Users/user/Documents/Programming/Utility/VLTree/SubTree/a.hpp
 
 #pragma once
-#include "../Entry/a.hpp"
+#include "../Iterator/a.hpp"
+#include "../../WrappedType/a.hpp"
 
-template <typename T> class IteratorOfVLTree;
-template <typename T> class ConstIteratorOfVLTree;
 template <typename T> class VLTree;
-template <typename Arg> class WrappedType;
 
 template <typename T>
 class VLSubTree
@@ -16,15 +14,19 @@ class VLSubTree
   
 private:
   EntryOfVLTree<T> m_e;
-  EntryOfVLTree<T>& m_root;
+  // 通常はm_eを指すが、VLSubTree( EntryOfVLTree<T>& )や
+  // VLSubTree( const IteratorOfVLTree<T>& )経由で呼び出された場合のみ
+  // 参照元のNodeを指す。
+  EntryOfVLTree<T>* m_p_root;
   uint m_size;
 
 private:
   // Tは引数0のコンストラクタを持つクラスのみ許容。
-  // デストラクタがdelete演算子を呼ばないため、VLTree経由でしか呼び出してはいけない。
+  // デストラクタがdelete演算子を呼ばないため、VLTreeかForest経由でしか呼び出してはいけない。
   inline VLSubTree();
 
   // Tは引数0のコンストラクタを持つクラスのみ許容。
+  // rootのみの木に引数たちをpush_RightMostして高々m_size == 1の木を構築する。
   // デストラクタがdelete演算子を呼ばないため、VLTree経由でしか呼び出してはいけない。
   template <typename Arg1 , typename... Arg2> inline VLSubTree( const Arg1& , const Arg2&... );
   
@@ -38,24 +40,30 @@ private:
   // 引数をVLSubConstTree<T>にしたものを定義して委譲するとループしてしまう。
   inline VLSubTree( const VLSubTree<T>& );
 
-  // 部分木のコピーを構築してpush_RightMostNodeで挿入するため、自身への変更が引数へは反映されない。
-  // LeafToTreeとpush_RightMostとConcatenateの相互再帰。
-  // m_size == 0の時しか呼んではいけない。
-  void LeafToTree( const VLSubTree<T>& );
-
-public:
   // 構築された木への変更がコピー元へは反映される。
   // VLTreeを経由しなくても呼び出して良い。
   // VLTreeを経由してはならない。
   inline VLSubTree( EntryOfVLTree<T>& );
   inline VLSubTree( const IteratorOfVLTree<T>& );
-
+  
   // 構築された木への変更がコピー元へは反映されない。
   // デストラクタがdelete演算子を呼ばないため、VLTree経由でしか呼び出してはいけない。
   // intはダミー引数。
   inline VLSubTree( const int& , const EntryOfVLTree<T>& );
   inline VLSubTree( const int& , const ConstIteratorOfVLTree<T>& );
 
+  // 部分木のコピーを構築してpush_RightMostNodeで挿入するため、自身への変更が引数へは反映されない。
+  // LeafToTreeとpush_RightMostとConcatenateの相互再帰。
+  // m_size == 0の時しか呼んではいけない。
+  void LeafToTree( const VLSubTree<T>& );
+
+  // 新たにRightMostNodeを構築し、そこを部分木のRootとして結合する。
+  // 構築された木への変更がコピー元へ反映される。
+  // Forest経由でしか呼び出してはいけない。
+  void Graft( VLSubTree<T>& );
+
+  
+public:
   virtual ~VLSubTree() = default;
 
   // Substriture_Bodyを経由するため、引数が自身と独立でさえあれば、自身への変更が引数へは反映されない。
@@ -84,8 +92,9 @@ public:
   void pop_RightMost();
   void pop_LeftMost();
 
-  // m_size == 1（特にm_root.m_leftmost_node== m_root.m_rightmost_node）の時しか呼んではならない。
-  // deleteされるのは&m_rootでなくm_root.m_leftmost_nodeであるので、iteratorの処理に注意が必要。
+  // m_size == 1（特にm_p_root->m_leftmost_node== m_p_root->m_rightmost_node）の時しか呼んではならない。
+  // m_p_rootはdelete可能とは限らないため、代わりに値のすげかえを行い実際にdeleteされるのはm_p_rootでなくm_p_root->m_leftmost_nodeである。
+  // 従って特にiteratorの処理に注意が必要。
   void pop_Root();
 
   using iterator = IteratorOfVLTree<T>;
@@ -125,7 +134,9 @@ public:
   VLTree<T> GetBranchCopy( const uint& ) const;
   VLTree<T> GetBranchCopy( const iterator& ) const;
   VLTree<T> GetBranchCopy( const const_iterator& ) const;
-  
+
+  // 現在のRightMostNodeやiteratorの指す位置を部分木のRootとしてコピーを構築する。
+  // 構築された木への変更がコピー元へは反映されない。
   // LeafToTreeとpush_RightMostとConcatenateの相互再帰。
   void Concatenate( const VLTree<T>& );
   void Concatenate( const iterator& , const VLTree<T>& );

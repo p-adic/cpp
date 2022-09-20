@@ -1,8 +1,8 @@
 // c:/Users/user/Documents/Programming/Utility/VLTree/Iterator/a.hpp
 
 #pragma once
+#include "../Entry/a.hpp"
 
-template <typename T> class EntryOfVLTree;
 template <typename T> class ConstIteratorOfVLTree;
 template <typename T> class VLSubTree;
 template <typename T> class EntryOfVLArray;

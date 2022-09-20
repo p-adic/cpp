@@ -1,11 +1,6 @@
 // c:/Users/user/Documents/Programming/Utility/VLTree/a.hpp
 
 #pragma once
-
-// VLTtree<T>を使うためにこのファイルをincludeする。
-// Iteratorを不完全型として使うことを避けるために以下もincludeしている。
-#include "Entry/a.hpp"
-#include "Iterator/Sequential/a.hpp"
 #include "SubTree/a.hpp"
 
 template <typename T>
