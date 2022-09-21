@@ -37,9 +37,9 @@ template <typename T>
 void UnionFindForest<T>::push_RightMost( const T& t )
 {
 
-  EntryOfLinkedVector<T>& e = LinkedVector<EntryOfUnionFindForest<T> >::push_back_Body_0();
-  e.m_node.SetRoot( t );
-  LinkedVector<EntryOfUnionFindForest<T> >::push_back_Body_0( e );
+  EntryOfLinkedVector<EntryOfUnionFindForest<T> >& e = LinkedVector<EntryOfUnionFindForest<T> >::push_back_Body_0();
+  e.m_t.m_node.SetRoot( t );
+  LinkedVector<EntryOfUnionFindForest<T> >::push_back_Body_1( e );
   return;
 
 }
@@ -64,9 +64,9 @@ void UnionFindForest<T>::Graft( const uint& num0 , const uint& num1 )
   EntryOfUnionFindForest<T>& e1_root = LinkedVector<EntryOfUnionFindForest<T> >::operator[]( e1_root_index );
   const uint i0 = ( e0_root.m_depth < e1_root.m_depth ? 0 : 1 );
   const uint i1 = 1 - i0;
-  EntryOfUnionFindForest<T>* const p_e_root = { &e0_root , &e1_root };
-  EntryOfUnionFindForest<T>& root_0 = p_e_root[i0];
-  EntryOfUnionFindForest<T>& root_1 = p_e_root[i1];
+  EntryOfUnionFindForest<T>* const p_e_root[2] = { &e0_root , &e1_root };
+  EntryOfUnionFindForest<T>& root_0 = *( p_e_root[i0] );
+  EntryOfUnionFindForest<T>& root_1 = *( p_e_root[i1] );
   root_0.m_root = root_0.m_pred_node = root_1.m_root;
 
   if( root_0.m_depth == root_1.m_depth ){

@@ -14,6 +14,7 @@ class VLSubTree
 
   friend VLTree<T>;
   friend EntryOfUnionFindForest<T>;
+  friend UnionFindForest<T>;
   
 private:
   EntryOfVLTree<T> m_e;
