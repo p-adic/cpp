@@ -6,7 +6,7 @@
 
 template <typename T>
 class UnionFindForest :
-  private LinkedVector<EntryOfUnionFindForest<T> >
+  public LinkedVector<EntryOfUnionFindForest<T> >
 {
 
 public:
@@ -29,6 +29,16 @@ public:
   inline void push_RightMost();
   void push_RightMost( const T& t );
   template <typename... ARGS> inline void push_RightMost( const T& t , const ARGS&... args );
+
+  inline void push_back() = delete;
+  template <typename U> void push_back( const U& u ) = delete;
+  template <typename U , typename... ARGS> inline void push_back( const U& u , const ARGS&... args ) = delete;
+  inline void SetPreviousLink( const uint& i , const uint& j ) = delete;
+  inline void SetNexttLink( const uint& i , const uint& j ) = delete;
+  inline const uint& GetPreviousLinkIndex( const uint& i ) const = delete;
+  inline const uint& GetNexttLinkIndex( const uint& i ) const = delete;
+  const uint& DeLink( const uint& i ) = delete;
+  void ReLink( const uint& i ) = delete;
   
   void Graft( const uint& num0 , const uint& num1 );
   
