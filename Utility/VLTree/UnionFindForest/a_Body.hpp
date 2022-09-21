@@ -39,6 +39,7 @@ void UnionFindForest<T>::push_RightMost( const T& t )
 
   EntryOfLinkedVector<EntryOfUnionFindForest<T> >& e = LinkedVector<EntryOfUnionFindForest<T> >::push_back_Body_0();
   e.m_t.m_node.SetRoot( t );
+  e.m_t.m_pred_node = e.m_t.m_root = LinkedVector<EntryOfUnionFindForest<T> >::m_size_of_vector;
   LinkedVector<EntryOfUnionFindForest<T> >::push_back_Body_1( e );
   return;
 
