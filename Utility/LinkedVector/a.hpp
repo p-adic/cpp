@@ -5,10 +5,16 @@
 #include "Iterator/a.hpp"
 #include <vector>
 
+template <typename T> class IteratorOfLinkedVector;
+template <typename T> class ConstIteratorOfLinkedVector;
+
 template <typename T>
 class LinkedVector
 {
 
+  friend IteratorOfLinkedVector<T>;
+  friend ConstIteratorOfLinkedVector<T>;
+  
 private:
   vector<EntryOfLinkedVector<T> > m_entry;
   uint m_front_linked_entry;
@@ -34,6 +40,9 @@ public:
   inline const uint& GetBackLinkedEntryIndex() const noexcept;
   inline const uint& GetSizeOfVector() const noexcept;
   inline const uint& GetSizeOfLink() const noexcept;
+
+  inline bool EmptyVector() const noexcept;
+  inline bool EmptyLink() const noexcept;
 
   inline void push_back();
   template <typename U> void push_back( const U& u );
@@ -63,7 +72,7 @@ public:
   iterator erase( iterator& itr );
 
 
-private:
+protected:
   inline EntryOfLinkedVector<T>& push_back_Body_0();
   inline void push_back_Body_1( EntryOfLinkedVector<T>& e );
   

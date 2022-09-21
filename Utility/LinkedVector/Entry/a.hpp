@@ -3,13 +3,19 @@
 #pragma once
 
 template <typename T> class LinkedVector;
+template <typename T> class IteratorOfLinkedVector;
+template <typename T> class ConstIteratorOfLinkedVector;
+template <typename T> class UnionFindForest;
 
 template <typename T>
 class EntryOfLinkedVector
 {
 
-  friend LinkedVector<T>;
-  
+  friend class LinkedVector<T>;
+  friend class IteratorOfLinkedVector<T>;
+  friend class ConstIteratorOfLinkedVector<T>;
+  template <typename U> friend class UnionFindForest;
+
 private:
   T m_t;
   uint m_prev_entry;

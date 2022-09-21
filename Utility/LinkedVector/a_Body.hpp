@@ -29,8 +29,8 @@ LinkedVector<T>::LinkedVector( const uint& max_size ) : m_entry() , m_front_link
   
 }
 
-template <typename T> inline const T& LinkedVector<T>::operator[]( const uint& i ) const { return m_entry[i]; }
-template <typename T> inline T& LinkedVector<T>::operator[]( const uint& i ) { return m_entry[i]; }
+template <typename T> inline const T& LinkedVector<T>::operator[]( const uint& i ) const { return m_entry[i].m_t; }
+template <typename T> inline T& LinkedVector<T>::operator[]( const uint& i ) { return m_entry[i].m_t; }
 
 template <typename T>
 uint LinkedVector<T>::GetLinkedEntry( const uint& i ) const
@@ -53,6 +53,9 @@ template <typename T> inline const uint& LinkedVector<T>::GetBackLinkedEntryInde
 template <typename T> inline const uint& LinkedVector<T>::GetSizeOfVector() const noexcept { return m_size_of_vector; }
 template <typename T> inline const uint& LinkedVector<T>::GetSizeOfLink() const noexcept { return m_size_of_link; }
 
+template <typename T> inline bool LinkedVector<T>::EmptyVector() const noexcept { return m_size_of_vector == 0; }
+template <typename T> inline bool LinkedVector<T>::EmptyLink() const noexcept { return m_size_of_link == 0; }
+
 template <typename T> inline void LinkedVector<T>::push_back() {}
 
 template <typename T> template <typename U>
@@ -60,15 +63,15 @@ void LinkedVector<T>::push_back( const U& u )
 {
 
   EntryOfLinkedVector<T>& e = push_back_Body_0();
-  e = u;
-  push_back_Body_0( e );
+  e.m_t = u;
+  push_back_Body_1( e );
   return;
   
 }
 
 template <typename T> template <typename U , typename... ARGS> inline void LinkedVector<T>::push_back( const U& u , const ARGS&... args ) { push_back( u ); push_back( args... ); }
 
-template <typename T> inline EntryOfLinkedVector<T>& LinkedVector<T>::push_back_Body_0() { return m_entry.push_back( EntryOfLinkedVector<T>( m_size_of_vector , m_front_linked_entry ) ); return m_entry[m_size_of_vector]; }
+template <typename T> inline EntryOfLinkedVector<T>& LinkedVector<T>::push_back_Body_0() { m_entry.push_back( EntryOfLinkedVector<T>( m_size_of_vector , m_front_linked_entry ) ); return m_entry[m_size_of_vector]; }
 template <typename T> inline void LinkedVector<T>::push_back_Body_1( EntryOfLinkedVector<T>& e ) { e.m_next_entry = m_size_of_vector + 1; m_entry[m_front_linked_entry].m_prev_entry = m_size_of_vector + 1; m_back_linked_entry = m_size_of_vector; m_size_of_vector++; m_size_of_link++; }
 
 template <typename T> inline void LinkedVector<T>::SetPreviousLink( const uint& i , const uint& j ) { m_entry[i].m_prev_entry = j; }
