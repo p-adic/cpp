@@ -18,8 +18,8 @@ public:
   inline const VLSubTree<T>& GetSubTree( const uint& num ) const;
   // num番目のNodeのPredecessor Nodeを返す。
   inline const uint& GetPredecessorNode( const uint& num ) const;
-  // num番目のNodeのRootを返す。
-  inline const uint& GetRootOfNode( const uint& num ) const;
+  // num番目のNodeのRootを計算して返す。
+  const uint& GetRootOfNode( const uint& num );
   // num番目のRootを返す。
   uint GetRoot( const uint& num ) const;
   inline const uint& GetSizeOfNode() const noexcept;

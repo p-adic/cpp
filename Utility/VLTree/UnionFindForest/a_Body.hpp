@@ -10,7 +10,22 @@ template <typename T> inline UnionFindForest<T>::UnionFindForest( const uint& ma
 
 template <typename T> inline const VLSubTree<T>& UnionFindForest<T>::GetSubTree( const uint& num ) const { return LinkedVector<EntryOfUnionFindForest<T> >::operator[]( num ).m_node; }
 template <typename T> inline const uint& UnionFindForest<T>::GetPredecessorNode( const uint& num ) const { return LinkedVector<EntryOfUnionFindForest<T> >::operator[]( num ).m_pred_node; }
-template <typename T> inline const uint& UnionFindForest<T>::GetRootOfNode( const uint& num ) const { return LinkedVector<EntryOfUnionFindForest<T> >::operator[]( num ).m_root; }
+
+template <typename T>
+const uint& UnionFindForest<T>::GetRootOfNode( const uint& num )
+{
+
+  uint& root = LinkedVector<EntryOfUnionFindForest<T> >::operator[]( num ).m_root;
+
+  if( root != LinkedVector<EntryOfUnionFindForest<T> >::operator[]( root ).m_root ){
+
+    root = GetRootOfNode( root );
+    
+  }
+
+  return root;
+
+}
 
 template <typename T>
 uint UnionFindForest<T>::GetRoot( const uint& num ) const
@@ -68,7 +83,6 @@ void UnionFindForest<T>::Graft( const uint& num0 , const uint& num1 )
   EntryOfUnionFindForest<T>* const p_e_root[2] = { &e0_root , &e1_root };
   EntryOfUnionFindForest<T>& root_0 = *( p_e_root[i0] );
   EntryOfUnionFindForest<T>& root_1 = *( p_e_root[i1] );
-  root_0.m_root = root_0.m_pred_node = root_1.m_root;
 
   if( root_0.m_depth == root_1.m_depth ){
 
@@ -77,7 +91,8 @@ void UnionFindForest<T>::Graft( const uint& num0 , const uint& num1 )
   }
 
   root_1.m_node.Graft( root_0.m_node );
-  LinkedVector<EntryOfUnionFindForest<T> >::DeLink( i0 );
+  LinkedVector<EntryOfUnionFindForest<T> >::DeLink( root_0.m_root );
+  root_0.m_root = root_0.m_pred_node = root_1.m_root;
   return;
 
 }
