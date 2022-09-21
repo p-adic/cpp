@@ -23,5 +23,6 @@ private:
 private:
   inline EntryOfUnionFindForest();
   inline EntryOfUnionFindForest( const T& t , const uint& num );
+  inline EntryOfUnionFindForest( EntryOfUnionFindForest&& e );
 
 };
