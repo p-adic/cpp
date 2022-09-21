@@ -15,7 +15,7 @@ class LinkedVector
   friend IteratorOfLinkedVector<T>;
   friend ConstIteratorOfLinkedVector<T>;
   
-private:
+protected:
   vector<EntryOfLinkedVector<T> > m_entry;
   uint m_front_linked_entry;
   uint m_back_linked_entry;
