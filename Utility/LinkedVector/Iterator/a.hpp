@@ -30,7 +30,7 @@ public:
   inline const LinkedVector<T>& GetLinkedVector() const noexcept;
   inline LinkedVector<T>& RefLinkedVector() noexcept;
   inline const uint& GetIndex() const noexcept;
-  inline const& RefIndex() noexcept;
+  inline const uint& RefIndex() noexcept;
 
 };
 
@@ -58,7 +58,7 @@ public:
 
   inline const LinkedVector<T>& GetLinkedVector() const noexcept;
   inline const uint& GetIndex() const noexcept;
-  inline const& RefIndex() noexcept;
+  inline const uint& RefIndex() noexcept;
 
   
   static inline bool Equal( const IteratorOfLinkedVector<T>& , const IteratorOfLinkedVector<T>& ) noexcept;

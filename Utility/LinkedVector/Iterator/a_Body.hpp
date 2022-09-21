@@ -20,7 +20,7 @@ template <typename T> inline void IteratorOfLinkedVector<T>::operator--( int ) {
 template <typename T> inline const LinkedVector<T>& IteratorOfLinkedVector<T>::GetLinkedVector() const noexcept { return *m_p; }
 template <typename T> inline LinkedVector<T>& IteratorOfLinkedVector<T>::RefLinkedVector() noexcept { return *m_p; }
 template <typename T> inline const uint& IteratorOfLinkedVector<T>::GetIndex() const noexcept { return m_i; }
-template <typename T> inline const& IteratorOfLinkedVector<T>::RefIndex() noexcept { return m_i; }
+template <typename T> inline const uint& IteratorOfLinkedVector<T>::RefIndex() noexcept { return m_i; }
 
 
 
@@ -43,7 +43,7 @@ template <typename T> inline void ConstIteratorOfLinkedVector<T>::operator--( in
 
 template <typename T> inline const LinkedVector<T>& ConstIteratorOfLinkedVector<T>::GetLinkedVector() const noexcept { return *m_p; }
 template <typename T> inline const uint& ConstIteratorOfLinkedVector<T>::GetIndex() const noexcept { return m_i; }
-template <typename T> inline const& ConstIteratorOfLinkedVector<T>::RefIndex() noexcept { return m_i; }
+template <typename T> inline const uint& ConstIteratorOfLinkedVector<T>::RefIndex() noexcept { return m_i; }
 
 template <typename T> inline bool ConstIteratorOfLinkedVector<T>::Equal( const IteratorOfLinkedVector<T>& itr0 , const IteratorOfLinkedVector<T>& itr1 ) noexcept { return itr0.m_p == itr1.m_p && itr0.m_i == itr1.m_i; }
 template <typename T> inline bool ConstIteratorOfLinkedVector<T>::Equal( const ConstIteratorOfLinkedVector<T>& itr0 , const IteratorOfLinkedVector<T>& itr1 ) noexcept { return itr0.m_p == itr1.m_p && itr0.m_i == itr1.m_i; }
