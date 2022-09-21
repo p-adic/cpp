@@ -24,7 +24,7 @@ public:
   inline T& Access() const;
   inline T& operator*() const;
   inline T* operator->() const;
-  IteratorOfVLArray<T>& operator=( const IteratorOfVLArray<T>& ) noexcept;
+  inline IteratorOfVLArray<T>& operator=( const IteratorOfVLArray<T>& ) noexcept;
   inline void operator++( int );
   inline void operator--( int );
 
@@ -46,8 +46,8 @@ public:
 
   inline const T& operator*() const;
   inline const T* operator->() const;
-  ConstIteratorOfVLArray<T>& operator=( const ConstIteratorOfVLArray<T>& ) noexcept;
-  ConstIteratorOfVLArray<T>& operator=( const IteratorOfVLArray<T>& ) noexcept;
+  inline ConstIteratorOfVLArray<T>& operator=( const ConstIteratorOfVLArray<T>& ) noexcept;
+  inline ConstIteratorOfVLArray<T>& operator=( const IteratorOfVLArray<T>& ) noexcept;
   inline void operator++( int );
   inline void operator--( int );
   
