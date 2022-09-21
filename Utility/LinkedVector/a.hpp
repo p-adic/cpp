@@ -35,7 +35,6 @@ public:
   inline const uint& GetSizeOfVector() const noexcept;
   inline const uint& GetSizeOfLink() const noexcept;
 
-  inline void re();
   inline void push_back();
   template <typename U> void push_back( const U& u );
   template <typename U , typename... ARGS> inline void push_back( const U& u , const ARGS&... args );
