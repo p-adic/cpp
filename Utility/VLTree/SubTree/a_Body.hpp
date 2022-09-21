@@ -3,11 +3,11 @@
 #pragma once
 #include "a.hpp"
 
-// ERR_CALL経由のIndicateIllegalCallの呼び出しに必要
-#include "../../../Error/IllegalCall/a.hpp"
-
+#include "../Entry/a_Body.hpp"
 #include "../Iterator/a_Body.hpp"
 #include "../../WrappedType/a_Body.hpp"
+
+// ERR_CALL経由のIndicateIllegalCallの呼び出しに必要
 #include "../../../Error/IllegalImput/a_Body.hpp"
 
 template <typename T> inline VLSubTree<T>::VLSubTree() : m_e() , m_p_root( &m_e ) , m_size( 0 ) {}

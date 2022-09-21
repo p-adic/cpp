@@ -1,16 +1,19 @@
 // c:/Users/user/Documents/Programming/Utility/VLTree/SubTree/a.hpp
 
 #pragma once
+#include "../Entry/a.hpp"
 #include "../Iterator/a.hpp"
 #include "../../WrappedType/a.hpp"
 
 template <typename T> class VLTree;
+template <typename T> class EntryOfUnionFindForest;
 
 template <typename T>
 class VLSubTree
 {
 
   friend VLTree<T>;
+  friend EntryOfUnionFindForest<T>;
   
 private:
   EntryOfVLTree<T> m_e;
