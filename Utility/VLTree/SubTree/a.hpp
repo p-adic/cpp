@@ -126,6 +126,7 @@ public:
 
   // Root‚âNode‚Ìƒ‰ƒxƒ‹‚É’¼Ú“Ç‚İ‘‚«‚ğs‚¤B
   inline const T& GetRoot() const noexcept;
+  inline T& RefRoot() noexcept;
   inline void SetRoot( const T& );
   template <typename... Args> inline const T& GetNode( const Args&... ) const;
 

@@ -439,7 +439,7 @@ typename VLSubTree<T>::iterator VLSubTree<T>::erase( typename VLSubTree<T>::iter
 }
 
 template <typename T> inline const T& VLSubTree<T>::GetRoot() const noexcept { return m_p_root->m_t; }
-
+template <typename T> inline T& VLSubTree<T>::RefRoot() noexcept { return m_p_root->m_t; }
 template <typename T> inline void VLSubTree<T>::SetRoot( const T& t ){ m_p_root->m_t = t; }
 
 template <typename T> template <typename... Args> inline const T& VLSubTree<T>::GetNode( const Args&... args ) const { return ACCESS( GetIterator( args... ) ); }
