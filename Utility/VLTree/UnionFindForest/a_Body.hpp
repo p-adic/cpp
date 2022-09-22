@@ -43,6 +43,10 @@ uint UnionFindForest<T>::GetRoot( const uint& num ) const
   
 }
 
+
+template <typename T> inline const T& UnionFindForest<T>::operator[]( const uint& num ) const { return LinkedVector<EntryOfUnionFindForest<T> >::operator[]( num ).m_node.GetRoot(); }
+template <typename T> inline T& UnionFindForest<T>::operator[]( const uint& num ) { return LinkedVector<EntryOfUnionFindForest<T> >::operator[]( num ).m_node.RefRoot(); }
+
 template <typename T> inline const uint& UnionFindForest<T>::GetSizeOfNode() const noexcept { return LinkedVector<EntryOfUnionFindForest<T> >::GetSizeOfVector(); }
 template <typename T> inline const uint& UnionFindForest<T>::GetSizeOfRoot() const noexcept { return LinkedVector<EntryOfUnionFindForest<T> >::GetSizeOfLink(); }
 

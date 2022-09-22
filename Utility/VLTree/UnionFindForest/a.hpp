@@ -22,6 +22,11 @@ public:
   const uint& GetRootOfNode( const uint& num );
   // num番目のRootを返す。
   uint GetRoot( const uint& num ) const;
+
+  // num番目のNodeに格納された値への参照を返す。
+  inline const T& operator[]( const uint& num ) const;
+  inline T& operator[]( const uint& num );
+  
   inline const uint& GetSizeOfNode() const noexcept;
   inline const uint& GetSizeOfRoot() const noexcept;
 
