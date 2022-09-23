@@ -7,6 +7,7 @@
 
 template <typename T> class VLTree;
 template <typename T> class EntryOfUnionFindForest;
+template <typename T> class UnionFindForest;
 
 template <typename T>
 class VLSubTree
