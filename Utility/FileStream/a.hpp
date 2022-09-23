@@ -28,9 +28,15 @@ private:
 
 };
 
+// ios::out 上書き
+// ios::in 読み取り専用
+// ios::app 末尾に書き込み
+// ios::trunc 上書き（outと同じ）
 ofstream& ToOfstream( const string& filename , const ios_base::openmode& open_mode = ios::app );
 
 inline void DeleteContents( const string& filename );
 
+// iso::appで末尾に書き込みする。
+// 上書きしたい時はDeleteContentsと併用する。
 template <typename T>
 void WriteIn( const string& filename , const T& t , const bool& insert_endl = true );
