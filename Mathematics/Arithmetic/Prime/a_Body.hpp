@@ -4,7 +4,7 @@
 #include "a.hpp"
 
 template <uint N>
-static const uint& GetPrimeBounded_Body( const uint& i );
+static const uint& GetPrimeBounded_Body( const uint& i )
 {
   
   static uint P[N] = { 2 , 3 , 5 , 7 , 11 };
