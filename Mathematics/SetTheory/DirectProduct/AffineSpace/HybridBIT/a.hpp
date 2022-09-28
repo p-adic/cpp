@@ -13,7 +13,9 @@ private:
 public:
   inline HybridBIT();
   inline HybridBIT( const T ( & a )[N] );
+
   inline const T& operator[]( const int& i ) const;
+  inline void Set( const int& i , const T& n );
 
   inline HybridBIT<T,N>& operator+=( const T ( & a )[N] );
   void Add( const int& i , const T& n );

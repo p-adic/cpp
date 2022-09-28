@@ -7,6 +7,7 @@ template <typename T , int N> inline HybridBIT<T,N>::HybridBIT() : m_a() , m_fen
 template <typename T , int N> inline HybridBIT<T,N>::HybridBIT( const T ( & a )[N] ) : m_a() , m_fenwick() { operator+=( a ); }
 
 template <typename T , int N> inline const T& HybridBIT<T,N>::operator[]( const int& i ) const { return m_a[i]; }
+template <typename T , int N> inline void HybridBIT<T,N>::Set( const int& i , const T& n ) { Add( i , n - m_a[i] ); }
 
 template <typename T , int N> inline HybridBIT<T,N>& HybridBIT<T,N>::operator+=( const T ( & a )[N] ) { for( int i = 0 ; i < N ; i++ ){ Add( i , a[i] ); } return *this; }
 
