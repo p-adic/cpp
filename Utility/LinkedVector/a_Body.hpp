@@ -12,7 +12,7 @@ LinkedVector<T>::LinkedVector( const uint& max_size ) : m_entry() , m_front_link
 
   m_entry.shrink_to_fit();
   const uint capacity = m_entry.capacity();
-  m_entry.reserve( max_size );
+  m_entry.reserve( max_size + 1 );
 
   // ˆê’Uƒƒ‚ƒŠ‚ÌÄŠm•Û‚ğ¶‚¶‚³‚¹‚éB
   for( uint i = 0 ; i <= capacity ; i++ ){
