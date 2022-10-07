@@ -11,25 +11,9 @@ template <typename T> inline SequentialIteratorOfVLTree<T>::SequentialIteratorOf
 
 template <typename T> inline SequentialIteratorOfVLTree<T>::SequentialIteratorOfVLTree( const SequentialIteratorOfVLTree<T>& itr ) : IteratorOfVLTree<T>( itr ) , m_itr( itr.m_itr ){}
 
-template <typename T>
-SequentialIteratorOfVLTree<T>& SequentialIteratorOfVLTree<T>::operator=( const IteratorOfVLTree<T>& itr )
-{
+template <typename T> inline SequentialIteratorOfVLTree<T>& SequentialIteratorOfVLTree<T>::operator=( const IteratorOfVLTree<T>& itr ) { IteratorOfVLTree<T>::operator=( itr ); m_itr.clear(); return *this; }
 
-  IteratorOfVLTree<T>::operator=( itr );
-  m_itr.clear();
-  return *this;
-
-}
-
-template <typename T>
-SequentialIteratorOfVLTree<T>& SequentialIteratorOfVLTree<T>::operator=( const SequentialIteratorOfVLTree<T>& itr )
-{
-
-  IteratorOfVLTree<T>::operator=( itr );
-  m_itr = itr.m_itr;
-  return *this;
-
-}
+template <typename T> inline SequentialIteratorOfVLTree<T>& SequentialIteratorOfVLTree<T>::operator=( const SequentialIteratorOfVLTree<T>& itr ) { IteratorOfVLTree<T>::operator=( itr ); m_itr = itr.m_itr; return *this; }
 
 template <typename T>
 void SequentialIteratorOfVLTree<T>::operator[]( const int& i )
@@ -187,25 +171,10 @@ SequentialConstIteratorOfVLTree<T>::SequentialConstIteratorOfVLTree( const Seque
 
 }
 
-template <typename T>
-SequentialConstIteratorOfVLTree<T>& SequentialConstIteratorOfVLTree<T>::operator=( const ConstIteratorOfVLTree<T>& itr )
-{
+template <typename T> inline SequentialConstIteratorOfVLTree<T>& SequentialConstIteratorOfVLTree<T>::operator=( const ConstIteratorOfVLTree<T>& itr ) { ConstIteratorOfVLTree<T>::operator=( itr ); m_itr.clear(); return *this; }
 
-  ConstIteratorOfVLTree<T>::operator=( itr );
-  m_itr.clear();
-  return *this;
-
-}
-
-template <typename T>
-SequentialConstIteratorOfVLTree<T>& SequentialConstIteratorOfVLTree<T>::operator=( const SequentialConstIteratorOfVLTree<T>& itr )
-{
-
-  ConstIteratorOfVLTree<T>::operator=( itr );
-  m_itr = itr.m_itr;
-  return *this;
-
-}
+template <typename T> inline SequentialConstIteratorOfVLTree<T>& SequentialConstIteratorOfVLTree<T>::operator=( const SequentialConstIteratorOfVLTree<T>& itr )
+{ ConstIteratorOfVLTree<T>::operator=( itr ); m_itr = itr.m_itr; return *this; }
 
 template <typename T>
 void SequentialConstIteratorOfVLTree<T>::operator[]( const int& i )

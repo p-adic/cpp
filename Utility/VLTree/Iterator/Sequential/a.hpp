@@ -21,8 +21,8 @@ public:
   inline SequentialIteratorOfVLTree( const IteratorOfVLTree<T>& );
   inline SequentialIteratorOfVLTree( const SequentialIteratorOfVLTree<T>& );
   
-  SequentialIteratorOfVLTree<T>& operator=( const IteratorOfVLTree<T>& );
-  SequentialIteratorOfVLTree<T>& operator=( const SequentialIteratorOfVLTree<T>& );
+  inline SequentialIteratorOfVLTree<T>& operator=( const IteratorOfVLTree<T>& );
+  inline SequentialIteratorOfVLTree<T>& operator=( const SequentialIteratorOfVLTree<T>& );
   void operator[]( const int& );
 
   inline T& Access_Body( const char* const , const int& , const char* const , const string& , const uint& ) const;
@@ -55,8 +55,8 @@ public:
   inline SequentialConstIteratorOfVLTree( const SequentialConstIteratorOfVLTree<T>& );
   SequentialConstIteratorOfVLTree( const SequentialIteratorOfVLTree<T>& );
   
-  SequentialConstIteratorOfVLTree<T>& operator=( const ConstIteratorOfVLTree<T>& );
-  SequentialConstIteratorOfVLTree<T>& operator=( const SequentialConstIteratorOfVLTree<T>& );
+  inline SequentialConstIteratorOfVLTree<T>& operator=( const ConstIteratorOfVLTree<T>& );
+  inline SequentialConstIteratorOfVLTree<T>& operator=( const SequentialConstIteratorOfVLTree<T>& );
   void operator[]( const int& );
 
 

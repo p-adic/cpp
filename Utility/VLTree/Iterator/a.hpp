@@ -30,7 +30,7 @@ public:
   inline T& Access_Body( const char* const , const int& , const char* const , const string& ) const;
   inline T& operator*() const;
   inline T* operator->() const;
-  IteratorOfVLTree<T>& operator=( const IteratorOfVLTree<T>& ) noexcept;
+  inline IteratorOfVLTree<T>& operator=( const IteratorOfVLTree<T>& ) noexcept;
 
   // 通常と異なり自身への参照を渡す。
   IteratorOfVLTree<T>& operator++( int ) noexcept;
@@ -72,8 +72,8 @@ public:
   inline const T& Access_Body( const char* const , const int& , const char* const , const string& ) const;
   inline const T& operator*() const;
   inline const T* operator->() const;
-  ConstIteratorOfVLTree<T>& operator=( const ConstIteratorOfVLTree<T>& ) noexcept;
-  ConstIteratorOfVLTree<T>& operator=( const IteratorOfVLTree<T>& ) noexcept;
+  inline ConstIteratorOfVLTree<T>& operator=( const ConstIteratorOfVLTree<T>& ) noexcept;
+  inline ConstIteratorOfVLTree<T>& operator=( const IteratorOfVLTree<T>& ) noexcept;
 
   // 通常と異なり自身への参照を渡す。
   ConstIteratorOfVLTree<T>& operator++( int ) noexcept;
