@@ -643,6 +643,7 @@ void VLSubTree<T>::Graft( VLSubTree<T>& t )
 
   } else {
 
+    t.m_p_root->m_left_branch = p_rightmost;
     p_rightmost = p_rightmost->m_right_branch = t.m_p_root;
 
   }
