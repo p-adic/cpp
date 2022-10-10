@@ -56,5 +56,5 @@ template <uint i , typename... T0> inline auto Projection( T0&... v ) -> TypeOfP
 
 inline string to_string_Body( const DirectProduct<>& ){ return " "; }
 template <typename T0> static inline string to_string_Body( const DirectProduct<T0>& v ) { return " " + to_string_Normalised( v.template Get<0>() ) + " "; }
-template <typename T0 , typename T1 , typename... T2> static inline string to_string_Body( const DirectProduct<T0,T1,T2...>& v ) { return to_string_Body( v.template Get<0>() ) + "," + to_string_Body( v.template GetFinalSegment<1>() ); }
+template <typename T0 , typename T1 , typename... T2> static inline string to_string_Body( const DirectProduct<T0,T1,T2...>& v ) { return to_string( v.template Get<0>() ) + "," + to_string_Body( v.template GetFinalSegment<1>() ); }
 template <typename... T0> inline string to_string( const DirectProduct<T0...>& v ) { return "(" + to_string_Body( v ) + ")"; }
