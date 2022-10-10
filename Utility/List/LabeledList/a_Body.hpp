@@ -53,7 +53,7 @@ const T& LabeledList<T,Key1,Key2...>::operator()( const Key1& key1 , const Key2&
   }
   
   ERR_IMPUT( key1 , key2... );
-  return Projection<1,DirectProduct<Key1,Key2...>,T>( m_v.back() );
+  return m_v.back().template Get<1>();
 
 }
 
@@ -117,7 +117,7 @@ T& LabeledList<T,Key1,Key2...>::RefInsert( const Key1& key1 , const Key2&... key
   }
 
   Insert( key1 , key2... , t );
-  return Projection<1,DirectProduct<Key1,Key2...>,T>( m_v.back() );
+  return m_v.back().template Ref<1>();
 
 }
 
