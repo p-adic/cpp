@@ -51,7 +51,7 @@ template <typename T0 , typename T1 , typename... T2> inline DirectProduct<T0,T1
 template <typename T0 , typename T1 , typename... T2 , typename T3 , typename... T4> inline DirectProduct<T0,T1,T2...,T3,T4...> Connect( const DirectProduct<T0,T1,T2...>& v0 , const DirectProduct<T3,T4...>& v1 ) { return DirectProduct<T0,T1,T2...,T3,T4...>( v0.template Get<0>() , Connect( v0.template GetFinalSegment<1>() , v1 ) ); }
 template <typename T0> inline EmptySet Connect( const DirectProduct<T0>& v0 , const EmptySet& v1 ) { return v1; }
 
-template <uint i , typename... T0> inline auto Projection( const T0&... v ) -> ConstTypeOfProjection<i,T0...> { return *( DirectProduct<const T0*...>( &v... ).template Get<i>() ) ); }
+template <uint i , typename... T0> inline auto Projection( const T0&... v ) -> ConstTypeOfProjection<i,T0...> { return *( DirectProduct<const T0*...>( &v... ).template Get<i>() ); }
 template <uint i , typename... T0> inline auto Projection( T0&... v ) -> TypeOfProjection<i,T0...> { return *( Projection<i,T0*...>( DirectProduct<T0*...>( &v... ) ) ); }
 
 inline string to_string_Body( const DirectProduct<>& ){ return " "; }
