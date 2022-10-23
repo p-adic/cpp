@@ -1,25 +1,26 @@
-// c:/Users/user/Documents/Programming/Mathematics/SetTheory/DirectProduct/AffineSpace/HybridBIT/a.hpp
+// c:/Users/user/Documents/Programming/Mathematics/SetTheory/DirectProduct/AffineSpace/IntervalAddBIT/a.hpp
 
 #pragma once
 #include "../BIT/a.hpp"
 
-//  InitialSegmentSumで負の入力を扱うためにuintではなくintをテンプレート引数にする。
 template <typename T , int N>
-class HybridBIT :
-  public BIT<T,N>
+class IntervalAddBIT
 {
 private:
   T m_a[N];
+  BIT<T,N> m_bit_0;
+  BIT<T,N> m_bit_1;
 
 public:
-  inline HybridBIT();
-  inline HybridBIT( const T ( & a )[N] );
+  inline IntervalAddBIT();
+  inline IntervalAddBIT( const T ( & a )[N] );
 
   inline const T& operator[]( const int& i ) const;
   inline void Set( const int& i , const T& n );
 
-  inline HybridBIT<T,N>& operator+=( const T ( & a )[N] );
+  inline IntervalAddBIT<T,N>& operator+=( const T ( & a )[N] );
   inline void Add( const int& i , const T& n );
+  inline void IntervalAdd( const int& i_start , const int& i_final , const T& n );
 
   inline T InitialSegmentSum( const int& i_final );
   inline T IntervalSum( const int& i_start , const int& i_final );
