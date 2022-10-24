@@ -20,9 +20,6 @@ public:
 
   inline HybridBIT<T,N>& operator+=( const T ( & a )[N] );
   inline void Add( const int& i , const T& n );
-
-  inline T InitialSegmentSum( const int& i_final );
-  inline T IntervalSum( const int& i_start , const int& i_final );
   
 };
 

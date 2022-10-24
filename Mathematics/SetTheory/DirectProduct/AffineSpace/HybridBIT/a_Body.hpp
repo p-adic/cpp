@@ -5,7 +5,7 @@
 
 #include "../BIT/a_Body.hpp"
 
-template <typename T , int N> inline HybridBIT<T,N>::HybridBIT() : BIT() , m_a() {}
+template <typename T , int N> inline HybridBIT<T,N>::HybridBIT() : BIT<T,N>() , m_a() {}
 template <typename T , int N> inline HybridBIT<T,N>::HybridBIT( const T ( & a )[N] ) : BIT() , m_a() { operator+=( a ); }
 
 template <typename T , int N> inline const T& HybridBIT<T,N>::operator[]( const int& i ) const { return m_a[i]; }
