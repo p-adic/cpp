@@ -8,6 +8,8 @@
 template <typename T , int N> inline IntervalAddBIT<T,N>::IntervalAddBIT() : m_bit_0() , m_bit_1() {}
 template <typename T , int N> inline IntervalAddBIT<T,N>::IntervalAddBIT( const T ( & a )[N] ) : m_bit_0() , m_bit_1() { operator+=( a ); }
 
+template <typename T , int N> inline void IntervalAddBIT<T,N>::Set( const int& i , const T& n ) { Add( i , n - IntervalSum( i , i ) ); }
+
 template <typename T , int N> inline IntervalAddBIT<T,N>& IntervalAddBIT<T,N>::operator+=( const T ( & a )[N] ) { for( int i = 0 ; i < N ; i++ ){ Add( i , a[i] ); } return *this; }
 
 template <typename T , int N> inline void IntervalAddBIT<T,N>::Add( const int& i , const T& n ) { IntervalAdd( i , i , n ); }

@@ -14,6 +14,8 @@ public:
   inline IntervalAddBIT();
   inline IntervalAddBIT( const T ( & a )[N] );
 
+  inline void Set( const int& i , const T& n );
+
   inline IntervalAddBIT<T,N>& operator+=( const T ( & a )[N] );
   inline void Add( const int& i , const T& n );
   inline void IntervalAdd( const int& i_start , const int& i_final , const T& n );
