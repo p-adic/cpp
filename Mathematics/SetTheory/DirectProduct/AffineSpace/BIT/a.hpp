@@ -13,6 +13,8 @@ public:
   inline BIT();
   inline BIT( const T ( & a )[N] );
 
+  inline void Set( const int& i , const T& n );
+
   inline BIT<T,N>& operator+=( const T ( & a )[N] );
   void Add( const int& i , const T& n );
 
