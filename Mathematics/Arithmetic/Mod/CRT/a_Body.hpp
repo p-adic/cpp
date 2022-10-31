@@ -37,7 +37,7 @@ INT ChineseReminderTheorem( const INT& b_0 , const INT& c_0 , const INT& b_1 , c
 
     INT ( & ai )[2] = a[i];
 
-    for( uint j = 0 ; i < 2 ; j++ ){
+    for( uint j = 0 ; j < 2 ; j++ ){
       ai[j] = ( i == j ? 1 : 0 );
     }
 
