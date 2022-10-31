@@ -24,7 +24,7 @@ void CarmichaelTransformation( vector<uint>& exponent )
 
       if( exponent_answer_i < exponent_i ){
 
-	exponent_answer_i = exponent_i:
+	exponent_answer_i = exponent_i;
 
       }
 
@@ -37,7 +37,7 @@ void CarmichaelTransformation( vector<uint>& exponent )
 	if( new_factor % P_j == 0 ){
 
 	  new_factor /= P_j;
-	  new_exponent = 1;
+	  uint new_exponent = 1;
 
 	  while( new_factor % P_j == 0 ){
 
