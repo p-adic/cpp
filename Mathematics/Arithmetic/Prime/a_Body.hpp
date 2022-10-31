@@ -101,7 +101,7 @@ void SetPrimeFactorisationBounded( const uint& n , uint ( &P )[N] , uint ( &expo
 
     if( p * p > n_copy ){
 
-      p = n_copy;
+      break;
 
     }
     
@@ -111,17 +111,68 @@ void SetPrimeFactorisationBounded( const uint& n , uint ( &P )[N] , uint ( &expo
 
 }
 
-template <typename INT>
-INT GCD( const INT& a , const INT& b )
+template <uint N>
+void SetPrimeFactorisationBounded( const uint& n , uint ( &P )[N] , uint ( &exponent )[N] , uint ( &P_power )[N] )
 {
-  INT a_c = a >= 0 ? a : -a;
-  INT b_c = b >= 0 ? b : -b;
-  while( a_c > 0 && b_c > 0 ){
-    if( a_c < b_c ){
-      b_c -= a_c * ( b_c / a_c );
-    } else {
-      a_c -= b_c * ( a_c / b_c );
+  
+  uint n_copy = n;
+  uint p = 2;
+  uint L = 0;
+
+  if( n_copy % p == 0 ){
+
+    P[L] = p;
+    uint& exponent_back = exponent[L];
+    uint& P_power_back = p_power[L];
+    exponent_back = 1;
+    p_power_back = p;
+    n_copy /= p;
+    L++;
+    
+    while( n_copy % p == 0 ){
+
+      exponent_back++;
+      p_power_back *= p;
+      n_copy /= p;
+      
     }
+
   }
-  return a_c > 0 ? a_c : b_c;
+
+  p++;
+
+  while( n_copy != 1 ){
+
+    if( n_copy % p == 0 ){
+
+      P[L] = p;
+      uint& exponent_back = exponent[L];
+      uint& P_power_back = p_power[L];
+      exponent_back = 1;
+      p_power_back = p;
+      n_copy /= p;
+      L++;
+    
+      while( n_copy % p == 0 ){
+
+	exponent_back++;
+	p_power_back *= p;
+	n_copy /= p;
+      
+      }
+
+    }
+
+    p += 2;
+
+    if( p * p > n_copy ){
+
+      break;
+
+    }
+    
+  }
+
+  return;
+  
 }

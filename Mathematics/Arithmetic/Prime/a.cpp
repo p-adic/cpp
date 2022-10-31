@@ -7,45 +7,46 @@ const uint& GetPrime( const uint& i ) noexcept
 {
 
   static vector<uint> P{ 2 , 3 , 5 , 7 , 11 };
-  const uint L = P.size();
 
-  if( i < L ){
+  uint L = P.size();
 
-    return P[i];
+  while( i >= L ){
 
-  }
+    uint p = P.back() + 2;
 
-  uint p = P.back() + 2;
+    bool prime = false;
 
-  bool prime = false;
+    while( ! prime ){
 
-  while( ! prime ){
-
-    prime = true;
+      prime = true;
     
-    for( uint j = 0 ; j < L && prime ; j++ ){
+      for( uint j = 0 ; j < L && prime ; j++ ){
 
-      uint& Pj = P[j];
-      prime = ( p % Pj != 0 );
+	uint& Pj = P[j];
+	prime = ( p % Pj != 0 );
 
-      if( Pj * Pj >= p ){
+	if( Pj * Pj >= p ){
 
-	j = L;
+	  j = L;
 	
+	}
+
+      }
+
+      if( ! prime ){
+
+	p += 2;
+
       }
 
     }
 
-    if( ! prime ){
-
-      p += 2;
-
-    }
+    P.push_back( p );
+    L++;
 
   }
 
-  P.push_back( p );
-  return GetPrime( i );
+  return P[i];
 
 }
 
@@ -95,7 +96,7 @@ void SetPrimeFactorisation( const uint& n , vector<uint>& P , vector<uint>& expo
 
     if( p * p > n_copy ){
 
-      p = n_copy;
+      break;
 
     }
 
@@ -103,6 +104,68 @@ void SetPrimeFactorisation( const uint& n , vector<uint>& P , vector<uint>& expo
 
   return;
   
+}
+
+void SetPrimeFactorisation( const uint& n , vector<uint>& P , vector<uint>& exponent , vector<uint>& P_power )
+{
+
+  uint n_copy = n;
+  uint p = 2;
+
+  if( n_copy % p == 0 ){
+
+    P.push_back( p );
+    exponent.push_back( 1 );
+    P_power.push_back( p );
+    uint& exponent_back = exponent.back();
+    uint& P_power_back = P_power.back();
+    n_copy /= p;
+    
+    while( n_copy % p == 0 ){
+
+      exponent_back++;
+      P_power *= p;
+      n_copy /= p;
+      
+    }
+
+  }
+
+  p++;
+
+  while( n_copy != 1 ){
+
+    if( n_copy % p == 0 ){
+
+      P.push_back( p );
+      exponent.push_back( 1 );
+      P_power.push_back( p );
+      uint& exponent_back = exponent.back();
+      uint& P_power_back = P_power.back();
+      n_copy /= p;
+    
+      while( n_copy % p == 0 ){
+
+	exponent_back++;
+	P_power *= p;
+	n_copy /= p;
+      
+      }
+
+    }
+
+    p += 2;
+
+    if( p * p > n_copy ){
+
+      break;
+
+    }
+
+  }
+
+  return;
+
 }
 
 static void CheckExpressible( const uint& power , bool& expressible , const uint& s , const uint& i , const uint& j , bool& solved , uint& s0 , uint& s2 , const uint& p1 ) noexcept;
