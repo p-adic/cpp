@@ -124,7 +124,7 @@ void SetPrimeFactorisation( const uint& n , vector<uint>& P , vector<uint>& expo
     while( n_copy % p == 0 ){
 
       exponent_back++;
-      P_power *= p;
+      P_power_back *= p;
       n_copy /= p;
       
     }
@@ -147,7 +147,7 @@ void SetPrimeFactorisation( const uint& n , vector<uint>& P , vector<uint>& expo
       while( n_copy % p == 0 ){
 
 	exponent_back++;
-	P_power *= p;
+	P_power_back *= p;
 	n_copy /= p;
       
       }
