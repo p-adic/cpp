@@ -123,16 +123,16 @@ void SetPrimeFactorisationBounded( const uint& n , uint ( &P )[N] , uint ( &expo
 
     P[L] = p;
     uint& exponent_back = exponent[L];
-    uint& P_power_back = p_power[L];
+    uint& P_power_back = P_power[L];
     exponent_back = 1;
-    p_power_back = p;
+    P_power_back = p;
     n_copy /= p;
     L++;
     
     while( n_copy % p == 0 ){
 
       exponent_back++;
-      p_power_back *= p;
+      P_power_back *= p;
       n_copy /= p;
       
     }
@@ -147,16 +147,16 @@ void SetPrimeFactorisationBounded( const uint& n , uint ( &P )[N] , uint ( &expo
 
       P[L] = p;
       uint& exponent_back = exponent[L];
-      uint& P_power_back = p_power[L];
+      uint& P_power_back = P_power[L];
       exponent_back = 1;
-      p_power_back = p;
+      P_power_back = p;
       n_copy /= p;
       L++;
     
       while( n_copy % p == 0 ){
 
 	exponent_back++;
-	p_power_back *= p;
+	P_power_back *= p;
 	n_copy /= p;
       
       }
