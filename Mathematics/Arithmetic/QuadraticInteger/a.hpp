@@ -23,6 +23,7 @@ public:
   inline QuadraticInteger& operator-=( const QuadraticInteger& n ) noexcept;
 
   // 3数の乗法が入るのでオーバーフローに注意
+  // 10^6より大きいmodで計算する時はIntTypeForQuadraticInteger自体をMod<M>としてエイリアスする
   inline QuadraticInteger& operator*=( const QuadraticInteger& n ) noexcept;
   inline QuadraticInteger& operator%=( const IntTypeForQuadraticInteger& a ) noexcept;
 
