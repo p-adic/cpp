@@ -10,10 +10,10 @@ private:
   INT m_a;
   INT m_b;
   const INT* m_p_D;
-  static const INT g_zero = 0;
   
 public:
-  inline QuadraticExtension( const INT& a = 0 ) noexcept;
+  inline QuadraticExtension() noexcept;
+  template <typename T> inline QuadraticExtension( const T& a ) noexcept;
   inline QuadraticExtension( const INT& a , const INT& b , const INT* const & p_D ) noexcept;
   inline QuadraticExtension( const QuadraticExtension<INT>& n ) noexcept;
 
@@ -36,19 +36,19 @@ public:
   // m_p_DÇÃàÍívçûÇ›ÇÃìôçÜ
   static inline bool Equal( const QuadraticExtension<INT>& n0 , const QuadraticExtension<INT>& n1 ) noexcept;
   
+private:
+  static inline const INT& Zero() noexcept;
+
 };
 
 template <typename INT> inline bool operator==( const QuadraticExtension<INT>& n0 , const QuadraticExtension<INT>& n1 ) noexcept;
 template <typename INT> inline bool operator!=( const QuadraticExtension<INT>& n0 , const QuadraticExtension<INT>& n1 ) noexcept;
 
-template <typename INT> inline QuadraticExtension<INT> operator+( const QuadraticExtension<INT>& n0 , const QuadraticExtension<INT>& n1 ) noexcept;
-template <typename INT> template <typename T> inline QuadraticExtension<INT> operator+( const QuadraticExtension<INT>& n0 , const QuadraticExtension<INT>& n1 ) noexcept;
-template <typename INT> inline QuadraticExtension<INT> operator-( const QuadraticExtension<INT>& n0 , const QuadraticExtension<INT>& n1 ) noexcept;
-template <typename INT> template <typename T> inline QuadraticExtension<INT> operator-( const QuadraticExtension<INT>& n0 , const QuadraticExtension<INT>& n1 ) noexcept;
-template <typename INT> inline QuadraticExtension<INT> operator*( const QuadraticExtension<INT>& n0 , const QuadraticExtension<INT>& n1 ) noexcept;
-template <typename INT> template <typename T> inline QuadraticExtension<INT> operator*( const QuadraticExtension<INT>& n0 , const QuadraticExtension<INT>& n1 ) noexcept;
-template <typename INT> template <typename T> inline QuadraticExtension<INT> operator/( const QuadraticExtension<INT>& n , const T& a ) noexcept;
-template <typename INT> template <typename T> inline QuadraticExtension<INT> operator%( const QuadraticExtension<INT>& n , const T& a ) noexcept;
+template <typename INT , typename T> inline QuadraticExtension<INT> operator+( const QuadraticExtension<INT>& n , const T& a ) noexcept;
+template <typename INT , typename T> inline QuadraticExtension<INT> operator-( const QuadraticExtension<INT>& n , const T& a ) noexcept;
+template <typename INT , typename T> inline QuadraticExtension<INT> operator*( const QuadraticExtension<INT>& n , const T& a ) noexcept;
+template <typename INT , typename T> inline QuadraticExtension<INT> operator/( const QuadraticExtension<INT>& n , const T& a ) noexcept;
+template <typename INT , typename T> inline QuadraticExtension<INT> operator%( const QuadraticExtension<INT>& n , const T& a ) noexcept;
 
 // DÇÕàÍéûïœêîÇ≈Ç»Ç¢ïœêî
 template <typename INT> inline QuadraticExtension<INT> Sqrt( const INT& D ) noexcept;
