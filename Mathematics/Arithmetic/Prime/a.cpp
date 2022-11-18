@@ -102,6 +102,13 @@ void SetPrimeFactorisation( const uint& n , vector<uint>& P , vector<uint>& expo
 
   }
 
+  if( n_copy != 1 ){
+
+    P.push_back( n_copy );
+    exponent.push_back( 1 );
+    
+  }
+  
   return;
   
 }
@@ -164,6 +171,13 @@ void SetPrimeFactorisation( const uint& n , vector<uint>& P , vector<uint>& expo
 
   }
 
+  if( n_copy != 1 ){
+
+    P.push_back( n_copy );
+    exponent.push_back( 1 );
+    
+  }
+  
   return;
 
 }
