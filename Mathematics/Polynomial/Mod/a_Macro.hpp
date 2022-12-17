@@ -106,6 +106,22 @@
 									\
 
 
+#define ZEROIFICATION_FOR_MULTIPLICATION_FOR_TRUNCATED_POLYNOMIAL	\
+  for( uint i = 0 ; i < N_input_start_0_start_1 ; i++ ){		\
+									\
+    Polynomial<T>::m_f[i] = 0;						\
+									\
+  }									\
+
+
+#define ZEROIFICATION_FOR_TRUNCATED_MULTIPLICATION_CONST_FOR_TRUNCATED_POLYNOMIAL \
+  for( uint i = 0 ; i < N_input_start_0_start_1 ; i++ ){		\
+									\
+    answer[i] = 0;							\
+									\
+  }									\
+
+
 
 #ifndef CONNECT
 
@@ -209,6 +225,7 @@
 									\
   }									\
 									\
+  CONNECT( CONNECT( ZEROIFICATION_FOR_ , MULTIPLICATION ) , _FOR_TRUNCATED_POLYNOMIAL ); \
 									\
 
 
