@@ -238,7 +238,7 @@
 									\
   vector<T> f0{ move( FFT<T>( Polynomial<T>::m_f , N_input_start_0 , N_input_max_0 + 1 , 0 , two_power , exponent ) ) }; \
   const vector<T> f1{ move( FFT<T>( f.Polynomial<T>::m_f , N_input_start_1 , N_input_max_1 + 1 , 0 , two_power , exponent ) ) }; \
-  Break( __LINE__ );							\
+  									\
   for( uint i = 0 ; i < two_power ; i++ ){				\
 									\
     f0[i] *= f1[i];							\
@@ -283,7 +283,7 @@
   TruncatedPolynomial< TYPE > f_exp{ power_2 , Polynomial< TYPE >::const_one() }; \
 									\
   while( power_2 < N ){							\
-    Break( __LINE__ );							\
+  									\
     power = power_2;							\
     power_2 *= 2;							\
     f_exp.SetTruncation( power_2 );					\
@@ -295,8 +295,6 @@
   return f_exp								\
 									\
 
-
-inline void Break( const uint& n ) {};
 
 #define DEFINITION_OF_PARTIAL_SPECIALISATION_OF_MULTIPLICATION_OF_TRUNCATED_POLYNOMIAL( TYPE , BORDER_0 , BORDER_1 , BORDER_1_2 , BORDER_1_2_EXPONENT , BORDER_1_2_INV ) \
   template <> constexpr const uint FFT_Multiplication_border_0< TYPE > = BORDER_0; \
