@@ -3,6 +3,8 @@
 #pragma once
 #include "a.hpp"
 
+#include "a_Body.hpp"
+
 template <typename T> inline Polynomial<T>::Polynomial() : m_f() , m_size( 0 ) , m_no_redundant_zero( true ) {}
 template <typename T> inline Polynomial<T>::Polynomial( const T& t ) : Polynomial() { if( t != const_zero() ){ operator[]( 0 ) = t; } }
 template <typename T> inline Polynomial<T>::Polynomial( const Polynomial<T>& f ) : m_f( f.m_f ) , m_size( f.m_size ) , m_no_redundant_zero( f.m_no_redundant_zero ) {}
@@ -193,6 +195,62 @@ Polynomial<T>& Polynomial<T>::operator/=( const T& t )
 }
 
 template <typename T>
+Polynomial<T>& Polynomial<T>::operator/=( const Polynomial<T>& f )
+{
+
+  if( m_size >= f.m_size ){
+
+    if( f.m_size == 0 ){
+
+      ERR_IMPUT( f , f.m_size );
+
+    }
+
+    uint size0 = m_size - f.m_size + 1;
+    TruncatedPolynomial<T> f0_copy( size0 );
+
+    for( uint d0 = 0 ; d0 < size0 ; d0++ ){
+
+      f0_copy.Polynomial<T>::m_f.push_back( m_f[m_size - 1 - d0] );
+
+    }
+
+    f0_copy.Polynomial<T>::m_size = size0;
+    f0_copy.Polynomial<T>::m_no_redundant_zero = false;
+    TruncatedPolynomial<T> f1_copy( size0 );
+    uint size1 = size0 < f.m_size ? size0 : f.m_size;
+
+    for( uint d1 = 0 ; d1 < size1 ; d1++ ){
+
+      f1_copy.Polynomial<T>::m_f.push_back( f.m_f[f.m_size - 1 - d1] );
+
+    }
+
+    f1_copy.Polynomial<T>::m_size = size1;
+    f1_copy.Polynomial<T>::m_no_redundant_zero = false;
+    // TruncatedPolynomialの商であることに注意。
+    f0_copy /= f1_copy;
+
+    for( uint d0 = 0 ; d0 < size0 ; d0++ ){
+
+      m_f[d0] = f0_copy[ size0 - 1 - d0 ];
+
+    }
+
+    while( m_size > size0 ){
+
+      m_f.pop_back();
+      m_size--;
+
+    }
+
+  }
+
+  return *this;
+
+}
+
+template <typename T>
 Polynomial<T>& Polynomial<T>::operator%=( const T& t )
 {
 
@@ -217,6 +275,18 @@ Polynomial<T>& Polynomial<T>::operator%=( const T& t )
 
   // Tが位数の小さい環である場合も扱う時は冗長な0が生じやすいので次のコメントアウトを解除する。
   // RemoveRedundantZero();
+  return *this;
+
+}
+
+template <typename T>
+Polynomial<T>& Polynomial<T>::operator%=( const Polynomial<T>& f )
+{
+
+  // TruncatedPoynomialの乗算ではなくPolyonmialの乗算であることに注意。
+  operator-=( ( *this / f ) * f );
+  RemoveRedundantZero();
+  m_no_redundant_zero = true;
   return *this;
 
 }
@@ -329,5 +399,5 @@ template <typename T , typename P> inline Polynomial<T> operator+( const Polynom
 template <typename T , typename P> inline Polynomial<T> operator-( const Polynomial<T>& f ) { return Polynomial<T>::zero() - f; }
 template <typename T , typename P> inline Polynomial<T> operator-( const Polynomial<T>& f0 , const P& f1 ) { Polynomial<T> f = f0; return f.operator-=( f1 ); }
 template <typename T , typename P> inline Polynomial<T> operator*( const Polynomial<T>& f0 , const P& f1 ) { Polynomial<T> f = f0; return f.operator*=( f1 ); }
-template <typename T> inline Polynomial<T> operator/( const Polynomial<T>& f0 , const T& t1 ) { Polynomial<T> f = f0; return f.operator/=( t1 ); }
-template <typename T> inline Polynomial<T> operator%( const Polynomial<T>& f0 , const T& t1 ) { Polynomial<T> f = f0; return f.operator%=( t1 ); }
+template <typename T , typename P> inline Polynomial<T> operator/( const Polynomial<T>& f0 , const P& f1 ) { Polynomial<T> f = f0; return f.operator/=( f1 ); }
+template <typename T , typename P> inline Polynomial<T> operator%( const Polynomial<T>& f0 , const P& f1 ) { Polynomial<T> f = f0; return f.operator%=( f1 ); }

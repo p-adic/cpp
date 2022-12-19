@@ -80,8 +80,11 @@ public:
   TruncatedPolynomial<T> FFT_TruncatedMultiplication_const( const Polynomial<T>& f , const uint& N_output_start , const uint& N_output_lim ) const;
 
   inline TruncatedPolynomial<T>& operator/=( const T& t );
+  // Polynomialとしての商でないことに注意。
   inline TruncatedPolynomial<T>& operator/=( const TruncatedPolynomial<T>& t );
   inline TruncatedPolynomial<T>& operator%=( const T& t );
+  // Polynomialとしての剰余だが、計算にTruncatedPolynomialの乗算を用いる。
+  inline TruncatedPolynomial<T>& operator%=( const TruncatedPolynomial<T>& f );
 
   inline TruncatedPolynomial<T> operator-() const;
 
@@ -106,7 +109,7 @@ template <typename T , typename P> inline TruncatedPolynomial<T> operator-( cons
 template <typename T , typename P> inline TruncatedPolynomial<T> operator-( const TruncatedPolynomial<T>& f0 , const P& f1 );
 template <typename T , typename P> inline TruncatedPolynomial<T> operator*( const TruncatedPolynomial<T>& f0 , const P& f1 );
 template <typename T , typename P> inline TruncatedPolynomial<T> operator/( const TruncatedPolynomial<T>& f0 , const P& f1 );
-template <typename T> inline TruncatedPolynomial<T> operator%( const TruncatedPolynomial<T>& f0 , const T& t1 );
+template <typename T , typename P> inline TruncatedPolynomial<T> operator%( const TruncatedPolynomial<T>& f0 , const P& f1 );
 
 // m_Nが1下がることに注意。
 template <typename T> inline TruncatedPolynomial<T> Differential( const TruncatedPolynomial<T>& f );

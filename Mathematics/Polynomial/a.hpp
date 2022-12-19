@@ -37,7 +37,9 @@ public:
   Polynomial<T>& operator*=( const T& t );
   Polynomial<T>& operator*=( const Polynomial<T>& f );
   Polynomial<T>& operator/=( const T& t );
+  Polynomial<T>& operator/=( const Polynomial<T>& f );
   Polynomial<T>& operator%=( const T& t );
+  Polynomial<T>& operator%=( const Polynomial<T>& f );
 
   inline Polynomial<T> operator-() const;
 
@@ -65,5 +67,5 @@ template <typename T , typename P> inline Polynomial<T> operator+( const Polynom
 template <typename T , typename P> inline Polynomial<T> operator-( const Polynomial<T>& f );
 template <typename T , typename P> inline Polynomial<T> operator-( const Polynomial<T>& f0 , const P& f1 );
 template <typename T , typename P> inline Polynomial<T> operator*( const Polynomial<T>& f0 , const P& f1 );
-template <typename T> inline Polynomial<T> operator/( const Polynomial<T>& f0 , const T& t1 );
-template <typename T> inline Polynomial<T> operator%( const Polynomial<T>& f0 , const T& t1 );
+template <typename T , typename P> inline Polynomial<T> operator/( const Polynomial<T>& f0 , const P& f1 );
+template <typename T , typename P> inline Polynomial<T> operator%( const Polynomial<T>& f0 , const P& f1 );
