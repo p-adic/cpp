@@ -28,6 +28,8 @@ TruncatedPolynomial<T>::TruncatedPolynomial( const uint& N , const Polynomial<T>
 
 }
 
+template <typename T> inline TruncatedPolynomial<T>::TruncatedPolynomial( const uint& N , Polynomial<T>&& f ) : Polynomial<T>( move( f ) ) , m_N( N ) {};
+
 template <typename T> inline TruncatedPolynomial<T>::TruncatedPolynomial( const uint& N , const uint& i , const T& t ) : Polynomial<T>() , m_N( N ) { if( i < m_N ? t != Polynomial<T>::const_zero() : false ){ Polynomial<T>::operator[]( i ) = t; } }
 
 template <typename T> inline TruncatedPolynomial<T>::TruncatedPolynomial( const uint& N , vector<T>&& f ) : Polynomial<T>( move( f ) ) , m_N( N )
@@ -368,35 +370,6 @@ template <typename T> inline TruncatedPolynomial<T>& TruncatedPolynomial<T>::ope
 template <typename T> inline TruncatedPolynomial<T>& TruncatedPolynomial<T>::operator/=( const TruncatedPolynomial<T>& f ) { return operator*=( Inverse( m_N > f.m_N ? f : TruncatedPolynomial<T>( m_N , f ) ) ); }
 
 template <typename T> inline TruncatedPolynomial<T>& TruncatedPolynomial<T>::operator%=( const T& t ) { Polynomial<T>::operator%=( t ); return *this; }
-
-template <typename T> inline TruncatedPolynomial<T>& TruncatedPolynomial<T>::operator%=( const TruncatedPolynomial<T>& f )
-{
-
-  Polynomial<T>& f0 = *this;
-  const Polynomial<T>& f1 = f;
-  TruncatedPolynomial<T> q( m_N );
-  Polynomial<T>& fq = q;
-  fq.m_f = move( ( f0 / f1 ).m_f );
-  fq.m_size = fq.m_f.size();
-  
-  if( m_N >= f1.m_size ){
-
-    q.SetTruncation( f1.m_size - 1 );
-
-  }
-
-  q *= f;
-
-  while( Polynomial<T>::m_size >= f1.m_size ){
-
-    Polynomial<T>::m_f.pop_back();
-    Polynomial<T>::m_size--;
-
-  }
-
-  return operator-=( q );
-  
-}
 
 template <typename T> inline TruncatedPolynomial<T> TruncatedPolynomial<T>::operator-() const { return TruncatedPolynomial<T>( m_N ).operator-=( *this ); }
 

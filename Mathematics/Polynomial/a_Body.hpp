@@ -8,6 +8,7 @@
 template <typename T> inline Polynomial<T>::Polynomial() : m_f() , m_size( 0 ) , m_no_redundant_zero( true ) {}
 template <typename T> inline Polynomial<T>::Polynomial( const T& t ) : Polynomial() { if( t != const_zero() ){ operator[]( 0 ) = t; } }
 template <typename T> inline Polynomial<T>::Polynomial( const Polynomial<T>& f ) : m_f( f.m_f ) , m_size( f.m_size ) , m_no_redundant_zero( f.m_no_redundant_zero ) {}
+template <typename T> inline Polynomial<T>::Polynomial( Polynomial<T>&& f ) : m_f( move( f.m_f ) ) , m_size( move( f.m_size ) ) , m_no_redundant_zero( move( f.m_no_redundant_zero ) ) {}
 template <typename T> inline Polynomial<T>::Polynomial( const uint& i , const T& t ) : Polynomial() { if( t != const_zero() ){ operator[]( i ) = t; } }
 template <typename T> inline Polynomial<T>::Polynomial( vector<T>&& f ) : m_f( move( f ) ) , m_size( m_f.size() ) , m_no_redundant_zero( false ) {}
 
@@ -285,8 +286,7 @@ template <typename T>
 Polynomial<T>& Polynomial<T>::operator%=( const Polynomial<T>& f )
 {
 
-  // TruncatedPoynomial‚ÌæZ‚Å‚Í‚È‚­Polyonmial‚ÌæZ‚Å‚ ‚é‚±‚Æ‚É’ˆÓB
-  operator-=( ( *this / f ) * f );
+  operator-=( TruncatedPolynomial( m_size , move( *this / f ) ) * f );
   RemoveRedundantZero();
   m_no_redundant_zero = true;
   return *this;

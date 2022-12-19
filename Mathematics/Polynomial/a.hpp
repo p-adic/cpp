@@ -21,6 +21,7 @@ public:
   inline Polynomial();
   inline Polynomial( const T& t );
   inline Polynomial( const Polynomial<T>& f );
+  inline Polynomial( Polynomial<T>&& f );
   inline Polynomial( const uint& i , const T& t );
   inline Polynomial( vector<T>&& f );
 

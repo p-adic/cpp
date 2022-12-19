@@ -27,6 +27,7 @@ public:
   inline TruncatedPolynomial( const TruncatedPolynomial<T>& f );
   inline TruncatedPolynomial( const uint& N , const T& t );
   TruncatedPolynomial( const uint& N , const Polynomial<T>& f );
+  inline TruncatedPolynomial( const uint& N , Polynomial<T>&& f );
   inline TruncatedPolynomial( const uint& N , const uint& i , const T& t );
   inline TruncatedPolynomial( const uint& N , vector<T>&& f );
 
@@ -83,8 +84,6 @@ public:
   // Polynomialとしての商でないことに注意。
   inline TruncatedPolynomial<T>& operator/=( const TruncatedPolynomial<T>& t );
   inline TruncatedPolynomial<T>& operator%=( const T& t );
-  // Polynomialとしての剰余だが、計算にTruncatedPolynomialの乗算を用いる。
-  inline TruncatedPolynomial<T>& operator%=( const TruncatedPolynomial<T>& f );
 
   inline TruncatedPolynomial<T> operator-() const;
 
