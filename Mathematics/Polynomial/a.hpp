@@ -69,3 +69,7 @@ template <typename T , typename P> inline Polynomial<T> operator-( const Polynom
 template <typename T , typename P> inline Polynomial<T> operator*( const Polynomial<T>& f0 , const P& f1 );
 template <typename T , typename P> inline Polynomial<T> operator/( const Polynomial<T>& f0 , const P& f1 );
 template <typename T , typename P> inline Polynomial<T> operator%( const Polynomial<T>& f0 , const P& f1 );
+
+// ‘½€®‚Ì—ñ‚Ì‘Šæ‚ğ•ªŠ„“¡‚ÅŒvZ‚µA‚»‚ÌŒ‹‰Ê‚ğ‘æ1¬•ª‚ÉŠi”[‚µ‚ÄQÆ•Ô‚µ‚·‚éB
+template <typename T> inline VLArray<Polynomial<T> >& Prod( list<Polynomial<T> >& f );
+

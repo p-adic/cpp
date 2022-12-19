@@ -142,3 +142,5 @@ template <typename T> inline TruncatedPolynomial<T> Log( const TruncatedPolynomi
 template <typename T>
 TruncatedPolynomial<T> Power( const TruncatedPolynomial<T>& f , const T& t );
 
+// NŸ‚Ìtruncation‚Éİ’è‚µ‚½ã‚Å‘½€®‚Ì—ñ‚Ì‘Šæ‚ğ•ªŠ„“¡‚ÅŒvZ‚µA‚»‚ÌŒ‹‰Ê‚ğ‘æ1¬•ª‚ÉŠi”[‚µ‚ÄQÆ•Ô‚µ‚·‚éB
+template <typename T> inline TruncatedPolynomial<T>& Prod( VLArray<TruncatedPolynomial<T> >& f , const uint& N );

@@ -401,3 +401,38 @@ template <typename T , typename P> inline Polynomial<T> operator-( const Polynom
 template <typename T , typename P> inline Polynomial<T> operator*( const Polynomial<T>& f0 , const P& f1 ) { Polynomial<T> f = f0; return f.operator*=( f1 ); }
 template <typename T , typename P> inline Polynomial<T> operator/( const Polynomial<T>& f0 , const P& f1 ) { Polynomial<T> f = f0; return f.operator/=( f1 ); }
 template <typename T , typename P> inline Polynomial<T> operator%( const Polynomial<T>& f0 , const P& f1 ) { Polynomial<T> f = f0; return f.operator%=( f1 ); }
+
+template <typename T> inline Polynomial<T>& Prod( VLArray<Polynomial<T> >& f )
+{
+
+  if( f.empty() ){
+
+    f.push_back( Polynomial<T>::const_one() );
+
+  }
+
+  if( f.size() == 1 ){
+
+    return f.front();
+
+  }
+
+  auto itr = f.begin() , end = f.end();
+  
+  while( itr != end ){
+
+    Polynomial<T>& t = *itr;
+    itr++;
+
+    if( itr != end ){
+
+      t *= *itr;
+      itr = f.erase( itr );
+      
+    }
+
+  }
+
+  return Prod( f );
+
+}

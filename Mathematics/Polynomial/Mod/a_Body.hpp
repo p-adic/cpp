@@ -535,3 +535,78 @@ DEFINITION_OF_PARTIAL_SPECIALISATION_OF_MULTIPLICATION_OF_TRUNCATED_POLYNOMIAL( 
 // DEFINITION_OF_PARTIAL_SPECIALISATION_OF_MULTIPLICATION_OF_TRUNCATED_POLYNOMIAL( Mod<998244353> , 17 , 8192 , 16384 , 14 , 998183425 );
 // DEFINITION_OF_PARTIAL_SPECIALISATION_OF_MULTIPLICATION_OF_TRUNCATED_POLYNOMIAL( Mod<998244353> , 17 , 16384 , 32768 , 15 , 998213889 );
 // DEFINITION_OF_PARTIAL_SPECIALISATION_OF_MULTIPLICATION_OF_TRUNCATED_POLYNOMIAL( Mod<998244353> , 17 , 32768 , 65536 , 16 , 998229121 );
+
+template <typename T> inline TruncatedPolynomial<T>& Prod_Body( VLArray<TruncatedPolynomial<T> >& f )
+{
+
+  if( f.empty() ){
+
+    ERR_IMPUT( f );
+
+  }
+
+  if( f.size() == 1 ){
+
+    return f.front();
+
+  }
+
+  auto itr = f.begin() , end = f.end();
+  
+  while( itr != end ){
+
+    TruncatedPolynomial<T>& t = *itr;
+    itr++;
+
+    if( itr != end ){
+
+      t *= *itr;
+      itr = f.erase( itr );
+      
+    }
+
+  }
+
+  return Prod_Body( f );
+
+}
+
+template <typename T> inline TruncatedPolynomial<T>& Prod( VLArray<TruncatedPolynomial<T> >& f , const uint& N )
+{
+
+  if( f.empty() ){
+
+    f.push_back( TruncatedPolynomial<T>( N , Polynomial<T>::const_one() ) );
+    return f.front();
+
+  }
+
+  if( f.size() == 1 ){
+
+    TruncatedPolynomial<T>& t = f.front();
+    t.SetTruncation( N );
+    return t;
+
+  }
+
+  auto itr = f.begin() , end = f.end();
+  
+  while( itr != end ){
+
+    TruncatedPolynomial<T>& t = *itr;
+    t.SetTruncation( N );
+    
+    itr++;
+
+    if( itr != end ){
+
+      t *= *itr;
+      itr = f.erase( itr );
+      
+    }
+
+  }
+
+  return Prod_Body( f );
+
+}
