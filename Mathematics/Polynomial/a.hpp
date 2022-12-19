@@ -27,8 +27,12 @@ public:
   Polynomial<T>& operator=( const T& t );
   Polynomial<T>& operator=( const Polynomial<T>& f );
 
+  // ŒW”
   inline const T& operator[]( const uint& i ) const;
   inline T& operator[]( const uint& i );
+
+  // ‘ã“ü
+  inline T operator()( const T& t ) const;
 
   inline Polynomial<T>& operator+=( const T& t );
   Polynomial<T>& operator+=( const Polynomial<T>& f );

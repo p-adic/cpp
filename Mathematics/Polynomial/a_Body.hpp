@@ -52,6 +52,8 @@ template <typename T> inline T& Polynomial<T>::operator[]( const uint& i )
 
 }
 
+template <typename T> inline T Polynomial<T>::operator()( const T& t ) const { return ( *this % ( Polynomial<T>( 1 , const_one() ) - t ) )[0]; }
+
 template <typename T> inline Polynomial<T>& Polynomial<T>::operator+=( const T& t ) { operator[]( 0 ) += t; return *this; }
 
 template <typename T>
