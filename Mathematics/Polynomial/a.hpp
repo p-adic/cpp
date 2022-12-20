@@ -48,6 +48,11 @@ public:
 
   inline Polynomial<T> operator-() const;
 
+  // XをX+tにshift
+  // Tにおいてm_size未満の正整数が可逆である時のみサポート
+  Polynomial<T>& operator<<=( const T& t );
+  
+
   inline const vector<T>& GetCoefficient() const noexcept;
   inline const uint& size() const noexcept;
   
@@ -74,7 +79,7 @@ template <typename T , typename P> inline Polynomial<T> operator-( const Polynom
 template <typename T , typename P> inline Polynomial<T> operator*( const Polynomial<T>& f0 , const P& f1 );
 template <typename T , typename P> inline Polynomial<T> operator/( const Polynomial<T>& f0 , const P& f1 );
 template <typename T , typename P> inline Polynomial<T> operator%( const Polynomial<T>& f0 , const P& f1 );
+template <typename T> inline Polynomial<T> operator<<( const Polynomial<T>& f , const T& t );
 
 // 多項式の列の相乗を分割統治で計算し、その結果を第1成分に格納して参照返しする。
 template <typename T> inline VLArray<Polynomial<T> >& Prod( list<Polynomial<T> >& f );
-
