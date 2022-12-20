@@ -9,6 +9,43 @@
 void LazyEvaluationOfModularInverse( const INT_TYPE_FOR_MOD& M , const INT_TYPE_FOR_MOD& n , INT_TYPE_FOR_MOD& m )
 {
 
+  constexpr const INT_TYPE_FOR_MOD border = 1000000;
+  
+  if( n > border ){
+
+    const INT_TYPE_FOR_MOD n_minus = M - n;
+    
+    if( n_minus <= border ){
+
+      LazyEvaluationOfModularInverse( M , n_minus , m );
+      m = M - m;
+      return;
+      
+    } else {
+      
+      m = 1;
+      INT_TYPE_FOR_MOD exponent = M - 2;
+      INT_TYPE_FOR_MOD power_n = n;
+    
+      while( exponent != 0 ){
+
+	if( exponent % 2 == 1 ){
+
+	  ( m *= power_n ) %= M;
+
+	}
+
+	( power_n *= power_n ) %= M;
+	exponent /= 2;
+
+      }
+
+      return;
+
+    }
+ 
+  }
+  
   static VLArray<INT_TYPE_FOR_MOD> memory_M{};
 
   // vector‚Å‚È‚­VLArray‚¾‚Æˆø”‚ª¬‚³‚¢‡‚ÉŒÄ‚Ño‚µ‚½‚ÌŒvZ—Ê‚ªO(1)‚©‚çO(n)‚É’µ‚Ëã‚ª‚Á‚Ä‚µ‚Ü‚¤B

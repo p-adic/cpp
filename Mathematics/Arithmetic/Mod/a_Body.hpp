@@ -5,11 +5,10 @@
 
 #include "Residue/a_Body.hpp"
 #include "VLArray/a_Body.hpp"
-#include "../Power/a_Body.hpp"
 
 template <INT_TYPE_FOR_MOD M> inline Mod<M>::Mod() noexcept : m_n( 0 ) , m_inv( M ){}
 
-template <INT_TYPE_FOR_MOD M> inline Mod<M>::Mod( const INT_TYPE_FOR_MOD& n ) noexcept : m_n( Residue<INT_TYPE_FOR_MOD>( M , n ) ) , m_inv( 0 ){}
+template <INT_TYPE_FOR_MOD M> inline Mod<M>::Mod( const INT_TYPE_FOR_MOD& n ) noexcept : m_n( Residue<INT_TYPE_FOR_MOD>( n , M ) ) , m_inv( 0 ){}
 
 template <INT_TYPE_FOR_MOD M> inline Mod<M>::Mod( const Mod<M>& n ) noexcept : m_n( n.m_n ) , m_inv( 0 ){}
 
@@ -29,7 +28,7 @@ template <INT_TYPE_FOR_MOD M>
 Mod<M>& Mod<M>::operator+=( const INT_TYPE_FOR_MOD& n ) noexcept
 {
 
-  m_n = Residue<INT_TYPE_FOR_MOD>( M , m_n + n );
+  m_n = Residue<INT_TYPE_FOR_MOD>( m_n + n , M );
   m_inv = 0;
   return *this;
 
@@ -45,7 +44,7 @@ template <INT_TYPE_FOR_MOD M>
 Mod<M>& Mod<M>::operator*=( const INT_TYPE_FOR_MOD& n ) noexcept
 {
 
-  m_n = Residue<INT_TYPE_FOR_MOD>( M , m_n * n );
+  m_n = Residue<INT_TYPE_FOR_MOD>( m_n * n , M );
   m_inv = 0;
   return *this;
 
@@ -55,7 +54,7 @@ template <INT_TYPE_FOR_MOD M>
 Mod<M>& Mod<M>::operator*=( const Mod<M>& n ) noexcept
 {
 
-  m_n = Residue<INT_TYPE_FOR_MOD>( M , m_n * n.m_n );
+  m_n = Residue<INT_TYPE_FOR_MOD>( m_n * n.m_n , M );
 
   if( m_inv == 0 || n.m_inv == 0 ){
 
@@ -67,7 +66,7 @@ Mod<M>& Mod<M>::operator*=( const Mod<M>& n ) noexcept
     
   } else {
 
-    Residue<INT_TYPE_FOR_MOD>( M , m_inv * n.m_inv );
+    Residue<INT_TYPE_FOR_MOD>( m_inv * n.m_inv , M );
 
   }
   
@@ -96,7 +95,7 @@ template <INT_TYPE_FOR_MOD M>
 Mod<M>& Mod<M>::operator%=( const INT_TYPE_FOR_MOD& n )
 {
 
-  m_n %= Residue<INT_TYPE_FOR_MOD>( M , n );
+  m_n %= Residue<INT_TYPE_FOR_MOD>( n , M );
   m_inv = 0;
   return *this;
 
@@ -149,8 +148,8 @@ bool Mod<M>::CheckInvertible() noexcept
   
 }
 
-template <INT_TYPE_FOR_MOD M> inline bool Mod<M>::IsSmallerThan( const INT_TYPE_FOR_MOD& n ) const noexcept { return m_n < Residue<INT_TYPE_FOR_MOD>( M , n ); }
-template <INT_TYPE_FOR_MOD M> inline bool Mod<M>::IsBiggerThan( const INT_TYPE_FOR_MOD& n ) const noexcept { return m_n > Residue<INT_TYPE_FOR_MOD>( M , n ); }
+template <INT_TYPE_FOR_MOD M> inline bool Mod<M>::IsSmallerThan( const INT_TYPE_FOR_MOD& n ) const noexcept { return m_n < Residue<INT_TYPE_FOR_MOD>( n , M ); }
+template <INT_TYPE_FOR_MOD M> inline bool Mod<M>::IsBiggerThan( const INT_TYPE_FOR_MOD& n ) const noexcept { return m_n > Residue<INT_TYPE_FOR_MOD>( n , M ); }
 
 template <INT_TYPE_FOR_MOD M> inline bool operator==( const Mod<M>& n0 , const INT_TYPE_FOR_MOD& n1 ) noexcept { return n0 == Mod<M>( n1 ); }
 template <INT_TYPE_FOR_MOD M> inline bool operator==( const INT_TYPE_FOR_MOD& n0 , const Mod<M>& n1 ) noexcept { return Mod<M>( n0 ) == n0; }
