@@ -64,10 +64,12 @@ public:
   inline const_iterator begin() const noexcept;
   inline iterator end() noexcept;
   inline const_iterator end() const noexcept;
-  template <typename Arg> void insert( const iterator& , const Arg& );
-  template <typename Arg> void insert_front( const iterator& , const Arg& );
-  template <typename Arg> void insert_back( const iterator& , const Arg& );
-  iterator erase( iterator& );
+  // insert_front‚Æ“™‰¿
+  template <typename Arg> inline iterator insert( const iterator& , const Arg& );
+  template <typename Arg> iterator insert_front( const iterator& , const Arg& );
+  template <typename Arg> iterator insert_back( const iterator& , const Arg& );
+  // erase_back‚Æ“™‰¿
+  inline iterator erase( iterator& );
   iterator erase_back( iterator& );
   iterator erase_front( iterator& );
 

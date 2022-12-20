@@ -270,10 +270,10 @@ template <typename T> inline typename VLArray<T>::const_iterator VLArray<T>::beg
 template <typename T> inline typename VLArray<T>::iterator VLArray<T>::end() noexcept { return IteratorOfVLArray<T>( m_p_e ); }
 template <typename T> inline typename VLArray<T>::const_iterator VLArray<T>::end() const noexcept { return ConstIteratorOfVLArray<T>( m_p_e ); }
 
-template <typename T> template <typename Arg> inline void VLArray<T>::insert( const typename VLArray<T>::iterator& itr , const Arg& t ) { insert_back( itr , t ); }
+template <typename T> template <typename Arg> inline typename VLArray<T>::iterator VLArray<T>::insert( const typename VLArray<T>::iterator& itr , const Arg& t ) { return insert_front( itr , t ); }
 
 template <typename T> template <typename Arg>
-void VLArray<T>::insert_front( const typename VLArray<T>::iterator& itr , const Arg& t )
+typename VLArray<T>::iterator VLArray<T>::insert_front( const typename VLArray<T>::iterator& itr , const Arg& t )
 {
 
   if( ! CheckContain( itr ) ){
@@ -285,26 +285,24 @@ void VLArray<T>::insert_front( const typename VLArray<T>::iterator& itr , const 
   if( itr == begin() ){
 
     push_front( t );
-
-  } else {
-
-    EntryOfVLArray<T>* p1 = itr.m_p;
-    EntryOfVLArray<T>* p0 = p1->m_prev;
-    auto p = new EntryOfVLArray<T>( t , p0 , p1 );
-  
-    p0->m_next = p;
-    p1->m_prev = p;
-  
-    m_size++;
+    return begin();
 
   }
+
+  EntryOfVLArray<T>* p1 = itr.m_p;
+  EntryOfVLArray<T>* p0 = p1->m_prev;
+  auto p = new EntryOfVLArray<T>( t , p0 , p1 );
   
-  return;
+  p0->m_next = p;
+  p1->m_prev = p;
+  
+  m_size++;
+  return typename VLArray<T>::iterator( p );
 
 }
 
 template <typename T> template <typename Arg>
-void VLArray<T>::insert_back( const typename VLArray<T>::iterator& itr , const Arg& t )
+typename VLArray<T>::iterator VLArray<T>::insert_back( const typename VLArray<T>::iterator& itr , const Arg& t )
 {
 
   if( ! CheckContain( itr ) ){
@@ -321,7 +319,7 @@ void VLArray<T>::insert_back( const typename VLArray<T>::iterator& itr , const A
   p0->m_next = p;
   
   m_size++;
-  return;
+  return typename VLArray<T>::iterator( p );
 
 }
 
