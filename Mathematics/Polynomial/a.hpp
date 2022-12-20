@@ -51,7 +51,6 @@ public:
   // XをX+tにshift
   // Tにおいてm_size未満の正整数が可逆である時のみサポート
   Polynomial<T>& operator<<=( const T& t );
-  
 
   inline const vector<T>& GetCoefficient() const noexcept;
   inline const uint& size() const noexcept;

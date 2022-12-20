@@ -19,33 +19,33 @@ void SetMultipointEvaluation( const Polynomial<T>& f , const VLArray<VLArray<Tru
 
   }
 
-  VLArray<Polynomial<T> > node = {};
+  VLArray<Polynomial<T> > residue = {};
   const Polynomial<T>& zero = Polynomial<T>::zero();
-  node.push_back( zero );
-  node.back() = move( f % prod.front() );
+  residue.push_back( zero );
+  residue.back() = move( f % prod.front() );
 
   auto itr_tree = point_tree.begin() , end_tree = point_tree.end();
   itr_tree++;
 
   while( itr_tree != end_tree ){
 
-    auto itr_node = node.begin() , end_node = node.end();
+    auto itr_residue = residue.begin() , end_residue = residue.end();
     auto itr_node = itr_tree->begin() , end_node = itr_tree->end();
 
-    while( itr_node != end_node ){
+    while( itr_residue != end_residue ){
 
       const TruncatedPolynomial<T>& f = *itr_tree;
       itr_tree++;
 
       if( itr_tree != end_tree ){
 	
-	*( node.insert( itr_node , zero ) ) = move( *itr_node % f );
-	*itr_node %= *itr_tree;
+	*( residue.insert( itr_residue , zero ) ) = move( *itr_residue % f );
+	*itr_residue %= *itr_tree;
 	itr_tree++;
 
       }
       
-      itr_node++;
+      itr_residue++;
       
     }
 
@@ -54,9 +54,9 @@ void SetMultipointEvaluation( const Polynomial<T>& f , const VLArray<VLArray<Tru
   }
 
   
-  for( auto itr_node = node.begin() , end_node = node.end() ; itr_node != end_node ; itr_node++ ){
+  for( auto itr_residue = residue.begin() , end_residue = residue.end() ; itr_residue != end_residue ; itr_residue++ ){
 
-    answer.push_back( ( *itr_node )[0] );
+    answer.push_back( ( *itr_residue )[0] );
 
   }
 

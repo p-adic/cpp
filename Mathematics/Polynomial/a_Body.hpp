@@ -3,7 +3,7 @@
 #pragma once
 #include "a.hpp"
 
-#include "a_Body.hpp"
+#include "TruncatedPolynomial/a_Body.hpp"
 
 template <typename T> inline Polynomial<T>::Polynomial() : m_f() , m_size( 0 ) , m_no_redundant_zero( true ) {}
 template <typename T> inline Polynomial<T>::Polynomial( const T& t ) : Polynomial() { if( t != const_zero() ){ operator[]( 0 ) = t; } }
@@ -295,6 +295,53 @@ Polynomial<T>& Polynomial<T>::operator%=( const Polynomial<T>& f )
 
 template <typename T> inline Polynomial<T> Polynomial<T>::operator-() const { Polynomial<T>().operator-=( *this ); }
 
+
+template <typename T >
+Polynomial<T>& Polynomial<T>::operator<<=( const T& t )
+{
+
+  static T factorial_curr = 1;
+  static vector<T> factorial = { 1 , 1 };
+  static T factorial_inv_curr = 1;
+  static vector<T> factorial_inv = { 1 , 1 };
+  uint size = factorial.size();
+
+  if( size < m_size ){
+
+    factorial.push_back( factorial_curr *= size );
+    factorial_inv.push_back( factorial_inv_curr /= size );
+    size++;
+
+  }
+
+  for( uint d = 0 ; d < m_size ; d++ ){
+
+    m_f[d] *= factorial[d];
+
+  }
+
+  TruncatedPolynomial<T> f{ m_size * 2 };
+  T power_t = const_one();
+  
+  for( uint d = 0 ; d < m_size ; d++ ){
+
+    f.m_f[m_size - 1 - d] = power_t * factorial_inv[d];
+    power_t *= t;
+
+  }
+
+  f *= *this;
+  
+  for( uint d = 0 ; d < m_size ; d++ ){
+
+    m_f[d] = f.Polynomial<T>::m_f[d + m_size] * factorial_inv[d];
+
+  }
+
+  return *this;
+
+}
+
 template <typename T> inline const vector<T>& Polynomial<T>::GetCoefficient() const noexcept { return m_f; }
 template <typename T> inline const uint& Polynomial<T>::size() const noexcept { return m_size; }
 
@@ -404,6 +451,8 @@ template <typename T , typename P> inline Polynomial<T> operator*( const Polynom
 template <typename T , typename P> inline Polynomial<T> operator/( const Polynomial<T>& f0 , const P& f1 ) { Polynomial<T> f = f0; return f.operator/=( f1 ); }
 template <typename T , typename P> inline Polynomial<T> operator%( const Polynomial<T>& f0 , const P& f1 ) { Polynomial<T> f = f0; return f.operator%=( f1 ); }
 
+template <typename T> Polynomial<T> shift( const Polynomial<T>& f , const T& t ) { return Polynomial<T>( f ) <<= t; };
+
 template <typename T> inline Polynomial<T>& Prod( VLArray<Polynomial<T> >& f )
 {
 
@@ -438,3 +487,4 @@ template <typename T> inline Polynomial<T>& Prod( VLArray<Polynomial<T> >& f )
   return Prod( f );
 
 }
+
