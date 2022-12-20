@@ -35,13 +35,13 @@ void SetMultipointEvaluation( const Polynomial<T>& f , const VLArray<VLArray<Tru
     while( itr_residue != end_residue ){
 
       const TruncatedPolynomial<T>& f = *itr_tree;
-      itr_tree++;
+      itr_node++;
 
-      if( itr_tree != end_tree ){
+      if( itr_node != end_node ){
 	
 	*( residue.insert( itr_residue , zero ) ) = move( *itr_residue % f );
-	*itr_residue %= *itr_tree;
-	itr_tree++;
+	*itr_residue %= *itr_node;
+	itr_node++;
 
       }
       
@@ -70,7 +70,7 @@ void SetPointTree( const VLArray<T>& point , VLArray<VLArray<TruncatedPolynomial
 
   static const VLArray<TruncatedPolynomial<T> > empty{};
   point_tree.push_front( empty );
-  VLArray<TruncatedPolynomial<T> >& linear = point.back();
+  VLArray<TruncatedPolynomial<T> >& linear = point_tree.front();
 
   for( auto itr = point.begin() , end = point.end() ; itr != end ; itr++ ){
 
@@ -85,11 +85,11 @@ void SetPointTree( const VLArray<T>& point , VLArray<VLArray<TruncatedPolynomial
   while( p_node->size() > 2 ){
 
     point_tree.push_front( empty );
-    VLArray<TruncatedPolynomial<T> >& node_curr = point.back();
+    VLArray<TruncatedPolynomial<T> >& node_curr = point_tree.front();
 
     for( auto itr = p_node->begin() , end = p_node->end() ; itr != end ; itr++ ){
 
-      static const Polynomial<T> null = TruncatedPolynomial<T>();
+      static const TruncatedPolynomial<T> null = TruncatedPolynomial<T>();
       node_curr.push_back( null );
       TruncatedPolynomial<T>& f = *itr;
       itr++;

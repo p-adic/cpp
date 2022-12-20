@@ -293,7 +293,7 @@ Polynomial<T>& Polynomial<T>::operator%=( const Polynomial<T>& f )
 
 }
 
-template <typename T> inline Polynomial<T> Polynomial<T>::operator-() const { Polynomial<T>().operator-=( *this ); }
+template <typename T> inline Polynomial<T> Polynomial<T>::operator-() const { return Polynomial<T>().operator-=( *this ); }
 
 
 template <typename T >
@@ -451,7 +451,7 @@ template <typename T , typename P> inline Polynomial<T> operator*( const Polynom
 template <typename T , typename P> inline Polynomial<T> operator/( const Polynomial<T>& f0 , const P& f1 ) { Polynomial<T> f = f0; return f.operator/=( f1 ); }
 template <typename T , typename P> inline Polynomial<T> operator%( const Polynomial<T>& f0 , const P& f1 ) { Polynomial<T> f = f0; return f.operator%=( f1 ); }
 
-template <typename T> Polynomial<T> shift( const Polynomial<T>& f , const T& t ) { return Polynomial<T>( f ) <<= t; };
+template <typename T> Polynomial<T> operator<<( const Polynomial<T>& f , const T& t ) { return Polynomial<T>( f ) <<= t; };
 
 template <typename T> inline Polynomial<T>& Prod( VLArray<Polynomial<T> >& f )
 {

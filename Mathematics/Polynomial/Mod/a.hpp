@@ -39,13 +39,18 @@ public:
   // m_Nは変化しないことに注意
   inline TruncatedPolynomial<T>& operator+=( const T& t );
   inline TruncatedPolynomial<T>& operator+=( const Polynomial<T>& f );
-
+  // m_N == 0の時のみm_Nが変化する。（内積などの計算の仕様）
+  inline TruncatedPolynomial<T>& operator+=( const TruncatedPolynomial<T>& f );
+  
   // N_input_lim <= f.size()の場合のみサポート。
   // 自身を(N_input_start個の0,f[N_input_start],...,f[N_input_lim-1],0,...)を足した値 mod X^{ m_N }で置き換える。
   TruncatedPolynomial<T>& TruncatedPlus( const Polynomial<T>& f , const uint& N_input_start , const uint& N_input_limit );
 
+  // m_Nは変化しないことに注意
   inline TruncatedPolynomial<T>& operator-=( const T& t );
   inline TruncatedPolynomial<T>& operator-=( const Polynomial<T>& f );
+  // m_N == 0の時のみm_Nが変化する。
+  inline TruncatedPolynomial<T>& operator-=( const TruncatedPolynomial<T>& f );
 
   // N_input_lim <= f.size()の場合のみサポート。
   // 自身を(N_input_start個の0,f[N_input_start],...,f[N_input_lim-1],0,...)を引いた値 mod X^{ m_N }で置き換える。
@@ -108,7 +113,7 @@ template <typename T , typename P> inline TruncatedPolynomial<T> operator-( cons
 template <typename T , typename P> inline TruncatedPolynomial<T> operator-( const TruncatedPolynomial<T>& f0 , const P& f1 );
 template <typename T , typename P> inline TruncatedPolynomial<T> operator*( const TruncatedPolynomial<T>& f0 , const P& f1 );
 template <typename T , typename P> inline TruncatedPolynomial<T> operator/( const TruncatedPolynomial<T>& f0 , const P& f1 );
-template <typename T , typename P> inline TruncatedPolynomial<T> operator%( const TruncatedPolynomial<T>& f0 , const P& f1 );
+template <typename T> inline TruncatedPolynomial<T> operator%( const TruncatedPolynomial<T>& f0 , const T& t1 );
 
 // m_Nが1下がることに注意。
 template <typename T> inline TruncatedPolynomial<T> Differential( const TruncatedPolynomial<T>& f );

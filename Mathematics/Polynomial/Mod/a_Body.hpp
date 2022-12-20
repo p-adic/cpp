@@ -53,6 +53,8 @@ template <typename T> inline TruncatedPolynomial<T>& TruncatedPolynomial<T>::ope
 
 template <typename T> inline TruncatedPolynomial<T>& TruncatedPolynomial<T>::operator+=( const Polynomial<T>& f ) { return TruncatedPolynomial<T>::TruncatedPlus( f , 0 , f.Polynomial<T>::m_size ); }
 
+template <typename T> inline TruncatedPolynomial<T>& TruncatedPolynomial<T>::operator+=( const TruncatedPolynomial<T>& f ) { return m_N == 0 ? operator=( f ) : TruncatedPolynomial<T>::TruncatedPlus( f , 0 , f.Polynomial<T>::m_size ); }
+
 template <typename T>
 TruncatedPolynomial<T>& TruncatedPolynomial<T>::TruncatedPlus( const Polynomial<T>& f , const uint& N_output_start , const uint& N_output_limit )
 {
@@ -80,6 +82,8 @@ TruncatedPolynomial<T>& TruncatedPolynomial<T>::TruncatedPlus( const Polynomial<
 template <typename T> inline TruncatedPolynomial<T>& TruncatedPolynomial<T>::operator-=( const T& t ) { Polynomial<T>::operator-=( t ); return *this; }
 
 template <typename T> inline TruncatedPolynomial<T>& TruncatedPolynomial<T>::operator-=( const Polynomial<T>& f ) { return TruncatedPolynomial<T>::TruncatedMinus( f , 0 , f.Polynomial<T>::m_size ); }
+
+template <typename T> inline TruncatedPolynomial<T>& TruncatedPolynomial<T>::operator-=( const TruncatedPolynomial<T>& f ) { return m_N == 0 ? operator=( -f ) : TruncatedPolynomial<T>::TruncatedMinus( f , 0 , f.Polynomial<T>::m_size ); }
 
 template <typename T>
 TruncatedPolynomial<T>& TruncatedPolynomial<T>::TruncatedMinus( const Polynomial<T>& f , const uint& N_output_start , const uint& N_output_limit )
@@ -386,7 +390,7 @@ template <typename T , typename P> inline TruncatedPolynomial<T> operator-( cons
 template <typename T , typename P> inline TruncatedPolynomial<T> operator-( const TruncatedPolynomial<T>& f0 , const P& f1 ) { return TruncatedPolynomial<T>( f0 ).operator-=( f1 ); }
 template <typename T , typename P> inline TruncatedPolynomial<T> operator*( const TruncatedPolynomial<T>& f0 , const P& f1 ) { return TruncatedPolynomial<T>( f0 ).operator*=( f1 ); }
 template <typename T , typename P> inline TruncatedPolynomial<T> operator/( const TruncatedPolynomial<T>& f0 , const P& f1 ) { return TruncatedPolynomial<T>( f0 ).operator*=( Inverse( f1 ) ); }
-template <typename T , typename P> inline TruncatedPolynomial<T> operator%( const TruncatedPolynomial<T>& f0 , const P& f1 ) { return TruncatedPolynomial<T>( f0 ).operator%=( f1 ); }
+template <typename T> inline TruncatedPolynomial<T> operator%( const TruncatedPolynomial<T>& f0 , const T& t1 ) { return TruncatedPolynomial<T>( f0 ).operator%=( t1 ); }
 
 
 template <typename T> inline TruncatedPolynomial<T> Differential( const TruncatedPolynomial<T>& f ) { return TruncatedDifferential<T>( f , 1 ); }
