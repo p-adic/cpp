@@ -82,14 +82,14 @@ void SetPointTree( const VLArray<T>& point , VLArray<VLArray<TruncatedPolynomial
 
   VLArray<TruncatedPolynomial<T>> *p_node = &( point_tree.back() );
   
-  while( p_node->size() > 2 ){
+  while( p_node->size() > 1 ){
 
     point_tree.push_front( empty );
     VLArray<TruncatedPolynomial<T> >& node_curr = point_tree.front();
 
     for( auto itr = p_node->begin() , end = p_node->end() ; itr != end ; itr++ ){
 
-      static const TruncatedPolynomial<T> null = TruncatedPolynomial<T>();
+      static const TruncatedPolynomial<T> null{};
       node_curr.push_back( null );
       TruncatedPolynomial<T>& f = *itr;
       itr++;

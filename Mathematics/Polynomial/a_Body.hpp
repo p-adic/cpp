@@ -247,6 +247,12 @@ Polynomial<T>& Polynomial<T>::operator/=( const Polynomial<T>& f )
 
     }
 
+  } else {
+
+    Polynomial<T>::m_f.clear();
+    Polynomial<T>::m_size = 0;
+    Polynomial<T>::m_no_redundant_zero = true;
+
   }
 
   return *this;
@@ -286,9 +292,14 @@ template <typename T>
 Polynomial<T>& Polynomial<T>::operator%=( const Polynomial<T>& f )
 {
 
-  operator-=( TruncatedPolynomial( m_size , move( *this / f ) ) * f );
-  RemoveRedundantZero();
-  m_no_redundant_zero = true;
+  if( m_size >= f.m_size ){
+
+    operator-=( TruncatedPolynomial( m_size , move( *this / f ) ) * f );
+    RemoveRedundantZero();
+    m_no_redundant_zero = true;
+
+  }
+
   return *this;
 
 }
