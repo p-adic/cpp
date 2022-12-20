@@ -17,6 +17,7 @@ public:
   template <typename... Args> Matrix( const Args&... args ) noexcept;
 
   inline Matrix( const Matrix<Y,X,T>& mat ) noexcept;
+  inline Matrix( Matrix<Y,X,T>&& mat ) noexcept;
 
   // ( X , Y )行列でないものも引数に取れるがサポート外である。
   template <typename... Args> inline Matrix( const TableTypeForMatrix<T>& M ) noexcept;

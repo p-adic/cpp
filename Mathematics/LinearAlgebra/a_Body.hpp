@@ -20,6 +20,7 @@ Matrix<Y,X,T>::Matrix( const Args&... args ) noexcept
 }
 
 template <SizeTypeForMatrix Y , SizeTypeForMatrix X , typename T> inline Matrix<Y,X,T>::Matrix( const Matrix<Y,X,T>& mat ) noexcept : m_M( mat.m_M ) {}
+template <SizeTypeForMatrix Y , SizeTypeForMatrix X , typename T> inline Matrix<Y,X,T>::Matrix( Matrix<Y,X,T>&& mat ) noexcept : m_M( move( mat.m_M ) ) {}
 
 template <SizeTypeForMatrix Y , SizeTypeForMatrix X , typename T> template <typename... Args> inline Matrix<Y,X,T>::Matrix( const TableTypeForMatrix<T>& M ) noexcept : m_M( M ) {}
 
@@ -201,7 +202,7 @@ template <SizeTypeForMatrix Y , SizeTypeForMatrix X , SizeTypeForMatrix Z , type
       auto itr1yx = begin1yx;
       auto itr2x = begin2x;
 
-      T inner_product = 0;
+      T inner_product{};
       
       while( itr1yx != end1yx ){
 
