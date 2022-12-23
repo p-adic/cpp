@@ -96,7 +96,9 @@ template <uint Y , uint X , typename T> Matrix<Y,X,T>& Matrix<Y,X,T>::operator*=
 
 }
 
-template <uint Y , uint X , typename T> Matrix<Y,X,T>& Matrix<Y,X,T>::operator*=( const T& scalar ) noexcept
+template <uint Y , uint X , typename T> inline Matrix<Y,X,T>& Matrix<Y,X,T>::operator*=( const Matrix<X,X,T>& mat ) noexcept { return operator=( move( *this * mat ) ); }
+
+template <uint Y , uint X , typename T> Matrix<Y,X,T>& Matrix<Y,X,T>::operator%=( const T& scalar ) noexcept
 {
 
   for( auto itry = m_M.begin() , endy = m_M.end() ; itry != endy ; itry++ ){

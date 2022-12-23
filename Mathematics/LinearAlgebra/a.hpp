@@ -25,6 +25,7 @@ public:
   Matrix<Y,X,T>& operator+=( const Matrix<Y,X,T>& mat );
   Matrix<Y,X,T>& operator-=( const Matrix<Y,X,T>& mat );
   Matrix<Y,X,T>& operator*=( const T& scalar ) noexcept;
+  inline Matrix<Y,X,T>& operator*=( const Matrix<X,X,T>& mat ) noexcept;
   Matrix<Y,X,T>& operator%=( const T& scalar ) noexcept;
 
   // 行や列の長さを変更可能だがサポート外である。
@@ -49,7 +50,7 @@ template <uint Y , uint X , typename T> inline Matrix<Y,X,T> operator!=( const M
 
 template <uint Y , uint X , typename T> inline Matrix<Y,X,T> operator+( const Matrix<Y,X,T>& mat1 , const Matrix<Y,X,T>& mat2 );
 
-template <uint Y , uint X , typename T> inlne Matrix<Y,X,T> operator-( const Matrix<Y,X,T>& mat1 , const Matrix<Y,X,T>& mat2 );
+template <uint Y , uint X , typename T> inline Matrix<Y,X,T> operator-( const Matrix<Y,X,T>& mat1 , const Matrix<Y,X,T>& mat2 );
 
 template <uint Y , uint X , uint Z , typename T>
 Matrix<Y,Z,T> operator*( const Matrix<Y,X,T>& mat1 , const Matrix<X,Z,T>& mat2 );
