@@ -13,6 +13,7 @@ private:
 public:
   // スカラー行列
   inline Matrix( const T& t ) noexcept;
+  inline Matrix( const int& t ) noexcept;
   // argsの長さがXYでなくてもコンパイルエラーとならないがサポート外である。
   template <typename... Args> Matrix( const Args&... args ) noexcept;
 
@@ -41,7 +42,6 @@ public:
 private:
   static inline void ConstructTable( TableTypeForMatrix<T>& M , LineTypeForMatrix<T>& vec ) noexcept;
   template <typename... Args> static void ConstructTable( TableTypeForMatrix<T>& M , LineTypeForMatrix<T>& vec , const T& t , const Args&... args ) noexcept;
-  template <typename Arg , typename... Args> static inline void ConstructTable( TableTypeForMatrix<T>& M , LineTypeForMatrix<T>& vec , const Arg& arg , const Args&... args ) noexcept;
   
   static Matrix<Y,X,T> Zero_Body() noexcept;
 

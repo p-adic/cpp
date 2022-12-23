@@ -5,6 +5,8 @@
 
 template <uint Y , uint X , typename T> inline Matrix<Y,X,T>::Matrix( const T& t ) noexcept : m_M() { operator=( move( Scalar( t ) ) ); }
 
+template <uint Y , uint X , typename T> inline Matrix<Y,X,T>::Matrix( const int& t ) noexcept : Matrix( T( 1 ) ) {}
+
 template <uint Y , uint X , typename T> template <typename... Args>
 Matrix<Y,X,T>::Matrix( const Args&... args ) noexcept
   : m_M()
@@ -121,7 +123,7 @@ template <uint Y , uint X , typename T> inline TableTypeForMatrix<T>& Matrix<Y,X
 template <uint Y , uint X , typename T> inline const TableTypeForMatrix<T>& Matrix<Y,X,T>::GetTable() const noexcept { return m_M; }
 
 template <uint Y , uint X , typename T> inline const Matrix<Y,X,T>& Matrix<Y,X,T>::Zero() noexcept { static const Matrix<Y,X,T> zero = move( Zero_Body() ); return zero; }
-template <uint Y , uint X , typename T> inline const Matrix<Y,X,T>& Matrix<Y,X,T>::Unit() noexcept { static const Matrix<Y,X,T> unit = move( UScalar( T( 1 ) ) ); return unit; }
+template <uint Y , uint X , typename T> inline const Matrix<Y,X,T>& Matrix<Y,X,T>::Unit() noexcept { static const Matrix<Y,X,T> unit = move( Scalar( T( 1 ) ) ); return unit; }
 
 template <uint Y , uint X , typename T>
 Matrix<Y,X,T> Matrix<Y,X,T>::Zero_Body() noexcept
@@ -156,29 +158,6 @@ template <uint Y , uint X , typename T> template <typename... Args> void Matrix<
 {
 
   vec.push_back( t );
-
-  if( vec.size() == X ){
-
-    LineTypeForMatrix<T> v{};
-    v.swap( vec );
-    ConstructTable( M , v );
-
-  }
-
-  if( M.size() < Y ){
-
-    ConstructTable( M , vec , args... );
-
-  }
-  
-  return;
-
-}
-
-template <uint Y , uint X , typename T> template <typename Arg , typename... Args> void Matrix<Y,X,T>::ConstructTable( TableTypeForMatrix<T>& M , LineTypeForMatrix<T>& vec , const Arg& arg , const Args&... args ) noexcept
-{
-
-  vec.push_back( move( T( arg ) ) );
 
   if( vec.size() == X ){
 
