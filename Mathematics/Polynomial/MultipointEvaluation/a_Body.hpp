@@ -5,13 +5,13 @@
 
 #include "../a_Body.hpp"
 
-template <typename T> inline void SetMultipointEvaluation( const Polynomial<T>& f , const VLArray<T>& point , VLArray<T>& answer ) { VLArray<VLArray<TruncatedPolynomial<T> > > pt{}; SetMultipointEvaluation_Body( point , pt ); SetMultipointEvaluation( f , pt , answer ); }
+template <typename T , typename V> inline void SetMultipointEvaluation( const Polynomial<T>& f , const V& point , V& answer ) { VLArray<VLArray<Polynomial<T> > > pt{}; SetPointTree( point , pt ); SetMultipointEvaluation( f , pt , answer ); }
 
-template <typename T>
-void SetMultipointEvaluation( const Polynomial<T>& f , const VLArray<VLArray<TruncatedPolynomial<T> > >& point_tree , VLArray<T>& answer )
+template <typename T , typename V>
+void SetMultipointEvaluation( const Polynomial<T>& f , const VLArray<VLArray<Polynomial<T> > >& point_tree , V& answer )
 {
 
-  const VLArray<TruncatedPolynomial<T> >& prod = point_tree.front();
+  const VLArray<Polynomial<T> >& prod = point_tree.front();
 
   if( prod.empty() ){
 
@@ -34,11 +34,11 @@ void SetMultipointEvaluation( const Polynomial<T>& f , const VLArray<VLArray<Tru
 
     while( itr_residue != end_residue ){
 
-      const TruncatedPolynomial<T>& f = *itr_tree;
+      const Polynomial<T>& f = *itr_node;
       itr_node++;
 
       if( itr_node != end_node ){
-	
+
 	*( residue.insert( itr_residue , zero ) ) = move( *itr_residue % f );
 	*itr_residue %= *itr_node;
 	itr_node++;
@@ -65,43 +65,32 @@ void SetMultipointEvaluation( const Polynomial<T>& f , const VLArray<VLArray<Tru
 }
 
 template <typename T>
-void SetPointTree( const VLArray<T>& point , VLArray<VLArray<TruncatedPolynomial<T> > >& point_tree )
+void SetProductTree( VLArray<VLArray<T> >& product_tree )
 {
 
-  static const VLArray<TruncatedPolynomial<T> > empty{};
-  point_tree.push_front( empty );
-  VLArray<TruncatedPolynomial<T> >& linear = point_tree.front();
-
-  for( auto itr = point.begin() , end = point.end() ; itr != end ; itr++ ){
-
-    static const TruncatedPolynomial<T> x{ 2 , 1 , Polynomial<T>::const_one() };
-    linear.push_back( x );
-    linear.back()[0] -= *itr;
-
-  }
-
-  VLArray<TruncatedPolynomial<T>> *p_node = &( point_tree.back() );
+  VLArray<T> empty{};
+  VLArray<T> *p_node = &( product_tree.back() );
   
   while( p_node->size() > 1 ){
 
-    point_tree.push_front( empty );
-    VLArray<TruncatedPolynomial<T> >& node_curr = point_tree.front();
+    product_tree.push_front( empty );
+    VLArray<T>& node_curr = product_tree.front();
 
     for( auto itr = p_node->begin() , end = p_node->end() ; itr != end ; itr++ ){
 
-      static const TruncatedPolynomial<T> null{};
+      static const T null{};
       node_curr.push_back( null );
-      TruncatedPolynomial<T>& f = *itr;
+      T& f = *itr;
       itr++;
 
-      if( itr != end ){
+      if( itr == end ){
+
+	node_curr.back() = f;
+	break;
 	
-	TruncatedPolynomial<T>& g = *itr;
-	const uint size = f.size() + g.size() - 1;
-	f.SetTruncation( size );
-	g.SetTruncation( size );
-	TruncatedPolynomial<T>& fg = node_curr.back();
-	fg = move( f * g );
+      } else {
+	
+	node_curr.back() = move( f * *itr );
 
       }
 
@@ -111,6 +100,27 @@ void SetPointTree( const VLArray<T>& point , VLArray<VLArray<TruncatedPolynomial
 
   }
 
+  return;
+
+}
+
+template <typename T , typename V>
+void SetPointTree( const V& point , VLArray<VLArray<Polynomial<T> > >& point_tree )
+{
+
+  static const VLArray<Polynomial<T> > empty{};
+  point_tree.push_front( empty );
+  VLArray<Polynomial<T> >& linear = point_tree.front();
+
+  for( auto itr = point.begin() , end = point.end() ; itr != end ; itr++ ){
+
+    static const Polynomial<T> x{ 1 , Polynomial<T>::const_one() };
+    linear.push_back( x );
+    linear.back()[0] -= *itr;
+
+  }
+
+  SetProductTree( point_tree );
   return;
   
 }

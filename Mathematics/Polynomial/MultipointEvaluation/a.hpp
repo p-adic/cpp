@@ -3,10 +3,13 @@
 #pragma once
 #include "../a.hpp"
 
-template <typename T> inline void SetMultipointEvaluation( const Polynomial<T>& f , const VLArray<T>& point , VLArray<T>& answer );
+template <typename T , typename V> inline void SetMultipointEvaluation( const Polynomial<T>& f , const V& point , V& answer );
+
+template <typename T , typename V>
+void SetMultipointEvaluation( const Polynomial<T>& f , const VLArray<VLArray<Polynomial<T> > >& point_tree , V& answer );template <typename T> inline void SetMultipointEvaluation( const Polynomial<T>& f , const VLArray<T>& point , VLArray<T>& answer );
 
 template <typename T>
-void SetMultipointEvaluation_Body( const Polynomial<T>& f , const VLArray<VLArray<Polynomial<T> > >& point_tree , VLArray<T>& answer );
+void SetProductTree( VLArray<VLArray<T> >& product_tree );
 
-template <typename T>
-void SetPointTree( const VLArray<T>& point , VLArray<VLArray<Polynomial<T> > >& point_tree );
+template <typename T , typename V>
+void SetPointTree( const V& point , VLArray<VLArray<Polynomial<T> > >& point_tree );
