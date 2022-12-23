@@ -3,6 +3,8 @@
 #pragma once
 #include "a.hpp"
 
+template <uint Y , uint X , typename T> inline Matrix<Y,X,T>::Matrix( const T& t ) noexcept : m_M() { operator=( move( Scalar( t ) ) ); }
+
 template <uint Y , uint X , typename T> template <typename... Args>
 Matrix<Y,X,T>::Matrix( const Args&... args ) noexcept
   : m_M()
@@ -119,7 +121,7 @@ template <uint Y , uint X , typename T> inline TableTypeForMatrix<T>& Matrix<Y,X
 template <uint Y , uint X , typename T> inline const TableTypeForMatrix<T>& Matrix<Y,X,T>::GetTable() const noexcept { return m_M; }
 
 template <uint Y , uint X , typename T> inline const Matrix<Y,X,T>& Matrix<Y,X,T>::Zero() noexcept { static const Matrix<Y,X,T> zero = move( Zero_Body() ); return zero; }
-template <uint Y , uint X , typename T> inline const Matrix<Y,X,T>& Matrix<Y,X,T>::Unit() noexcept { static const Matrix<Y,X,T> unit = move( Unit_Body() ); return unit; }
+template <uint Y , uint X , typename T> inline const Matrix<Y,X,T>& Matrix<Y,X,T>::Unit() noexcept { static const Matrix<Y,X,T> unit = move( UScalar( T( 1 ) ) ); return unit; }
 
 template <uint Y , uint X , typename T>
 Matrix<Y,X,T> Matrix<Y,X,T>::Zero_Body() noexcept
@@ -132,28 +134,51 @@ Matrix<Y,X,T> Matrix<Y,X,T>::Zero_Body() noexcept
 }
 
 template <uint Y , uint X , typename T>
-Matrix<Y,X,T> Matrix<Y,X,T>::Unit_Body() noexcept
+Matrix<Y,X,T> Matrix<Y,X,T>::Scalar( const T& t ) noexcept
 {
 
-  LineTypeForMatrix<T> vec( X );
-  TableTypeForMatrix<T> M( Y , vec );
-  const T one{ 1 };
+  Matrix<Y,X,T> M{ move( Zero_Body() ) };
+  constexpr const uint minXY = Y < X ? Y : X;
   
-  for( uint y = 0 ; y < Y ; y++ ){
+  for( uint y = 0 ; y < minXY ; y++ ){
 
-    M[y][y] = one;
+    M.m_M[y][y] = t;
 
   }
 
-  return Matrix<Y,X,T>( move( M ) );
+  return M;
 
 }
+
 template <uint Y , uint X , typename T> inline void Matrix<Y,X,T>::ConstructTable( TableTypeForMatrix<T>& M , LineTypeForMatrix<T>& vec ) noexcept { M.push_back( move( vec ) ); }
+
+template <uint Y , uint X , typename T> template <typename... Args> void Matrix<Y,X,T>::ConstructTable( TableTypeForMatrix<T>& M , LineTypeForMatrix<T>& vec , const T& t , const Args&... args ) noexcept
+{
+
+  vec.push_back( t );
+
+  if( vec.size() == X ){
+
+    LineTypeForMatrix<T> v{};
+    v.swap( vec );
+    ConstructTable( M , v );
+
+  }
+
+  if( M.size() < Y ){
+
+    ConstructTable( M , vec , args... );
+
+  }
+  
+  return;
+
+}
 
 template <uint Y , uint X , typename T> template <typename Arg , typename... Args> void Matrix<Y,X,T>::ConstructTable( TableTypeForMatrix<T>& M , LineTypeForMatrix<T>& vec , const Arg& arg , const Args&... args ) noexcept
 {
 
-  vec.push_back( arg );
+  vec.push_back( move( T( arg ) ) );
 
   if( vec.size() == X ){
 
