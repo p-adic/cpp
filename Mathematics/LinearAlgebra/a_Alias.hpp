@@ -9,4 +9,3 @@ template <typename T>
 using TableTypeForMatrix = LineTypeForMatrix<LineTypeForMatrix<T> >;
 
 using SizeTypeForMatrix = uint;
-// using SizeTypeForMatrix = ll;
