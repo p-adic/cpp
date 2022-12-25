@@ -18,19 +18,19 @@ public:
   inline Mod( const INT_TYPE_FOR_MOD& n ) noexcept;
   inline Mod( const Mod<M>& n ) noexcept;
   inline Mod<M>& operator=( const INT_TYPE_FOR_MOD& n ) noexcept;
-  Mod<M>& operator=( const Mod<M>& n ) noexcept;
-  Mod<M>& operator+=( const INT_TYPE_FOR_MOD& n ) noexcept;
+  inline Mod<M>& operator=( const Mod<M>& n ) noexcept;
+  inline Mod<M>& operator+=( const INT_TYPE_FOR_MOD& n ) noexcept;
   inline Mod<M>& operator+=( const Mod<M>& n ) noexcept;
   inline Mod<M>& operator-=( const INT_TYPE_FOR_MOD& n ) noexcept;
   inline Mod<M>& operator-=( const Mod<M>& n ) noexcept;
-  Mod<M>& operator*=( const INT_TYPE_FOR_MOD& n ) noexcept;
-  Mod<M>& operator*=( const Mod<M>& n ) noexcept;
+  inline Mod<M>& operator*=( const INT_TYPE_FOR_MOD& n ) noexcept;
+  inline Mod<M>& operator*=( const Mod<M>& n ) noexcept;
 
   // INT_TYPE_FOR_MODÇ≈ÇÃäÑÇËéZÇ≈ÇÕÇ»Ç¢Ç±Ç∆Ç…íçà”
-  virtual Mod<M>& operator/=( const INT_TYPE_FOR_MOD& n );
-  virtual Mod<M>& operator/=( const Mod<M>& n );
+  inline Mod<M>& operator/=( const INT_TYPE_FOR_MOD& n );
+  inline Mod<M>& operator/=( const Mod<M>& n );
   
-  Mod<M>& operator%=( const INT_TYPE_FOR_MOD& n );
+  inline Mod<M>& operator%=( const INT_TYPE_FOR_MOD& n );
   inline Mod<M>& operator%=( const Mod<M>& n );
 
   inline Mod<M> operator-() const noexcept;
@@ -46,7 +46,8 @@ public:
   bool CheckInvertible() noexcept;
   bool IsSmallerThan( const INT_TYPE_FOR_MOD& n ) const noexcept;
   bool IsBiggerThan( const INT_TYPE_FOR_MOD& n ) const noexcept;
-
+  inline void swap( Mod<M>& n ) noexcept;
+  
 };
 
 template <INT_TYPE_FOR_MOD M> inline bool operator==( const Mod<M>& n0 , const INT_TYPE_FOR_MOD& n1 ) noexcept;
@@ -107,6 +108,8 @@ template <> inline Mod<2> Power( const Mod<2>& n , const Mod<2>& p , const strin
 // ../Power/a_Body.hppÇ…ÇƒíËã`
 template <typename T> inline T Square( const T& t );
 template <> inline Mod<2> Square<Mod<2> >( const Mod<2>& t );
+
+template <INT_TYPE_FOR_MOD M> inline void swap( Mod<M>& n0 , Mod<M>& n1 ) noexcept;
 
 template <INT_TYPE_FOR_MOD M> inline string to_string( const Mod<M>& n ) noexcept;
 
