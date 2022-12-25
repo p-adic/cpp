@@ -3,19 +3,13 @@
 #pragma once
 #include "a.hpp"
 
-template <uint Y , uint X , typename T> inline Matrix<Y,X,T>::Matrix( const T& t ) noexcept : m_M() { operator=( move( Scalar( t ) ) ); }
+#include "2by2/a_Body.hpp"
 
-template <uint Y , uint X , typename T> inline Matrix<Y,X,T>::Matrix( const int& t ) noexcept : Matrix( T( 1 ) ) {}
+template <uint Y , uint X , typename T> inline Matrix<Y,X,T>::Matrix( const T& t ) noexcept : m_M() { operator=( Scalar( t ) ); }
+template <uint Y , uint X , typename T> inline Matrix<Y,X,T>::Matrix( const int& t ) noexcept : Matrix( T( t ) ) {}
 
-template <uint Y , uint X , typename T> template <typename... Args>
-Matrix<Y,X,T>::Matrix( const Args&... args ) noexcept
-  : m_M()
-{
-
-  LineTypeForMatrix<T> vec{};
-  ConstructTable( m_M , vec , args... );
-
-}
+template <uint Y , uint X , typename T> template <typename... Args> inline Matrix<Y,X,T>::Matrix( const T& t0 , const T& t1 , const Args&... args ) noexcept : m_M() { LineTypeForMatrix<T> vec{}; ConstructTable( m_M , vec , t0 , t1 , args... ); }
+template <uint Y , uint X , typename T> template <typename... Args> inline Matrix<Y,X,T>::Matrix( T&& t0 , T&& t1 , Args&&... args ) noexcept : m_M() { LineTypeForMatrix<T> vec{}; ConstructTable( m_M , vec , move( t0 ) , move( t1 ) , move( args )... ); }
 
 template <uint Y , uint X , typename T> inline Matrix<Y,X,T>::Matrix( const Matrix<Y,X,T>& mat ) noexcept : m_M( mat.m_M ) {}
 template <uint Y , uint X , typename T> inline Matrix<Y,X,T>::Matrix( Matrix<Y,X,T>&& mat ) noexcept : m_M( move( mat.m_M ) ) {}
@@ -24,6 +18,7 @@ template <uint Y , uint X , typename T> template <typename... Args> inline Matri
 template <uint Y , uint X , typename T> template <typename... Args> inline Matrix<Y,X,T>::Matrix( TableTypeForMatrix<T>&& M ) noexcept : m_M( move( M ) ) {}
 
 template <uint Y , uint X , typename T> inline Matrix<Y,X,T>& Matrix<Y,X,T>::operator=( const Matrix<Y,X,T>& mat ) noexcept { m_M = mat.m_M; return *this; }
+template <uint Y , uint X , typename T> inline Matrix<Y,X,T>& Matrix<Y,X,T>::operator=( Matrix<Y,X,T>&& mat ) noexcept { m_M = move( mat.m_M ); return *this; }
 
 template <uint Y , uint X , typename T>
 Matrix<Y,X,T>& Matrix<Y,X,T>::operator+=( const Matrix<Y,X,T>& mat )
@@ -170,6 +165,29 @@ template <uint Y , uint X , typename T> template <typename... Args> void Matrix<
   if( M.size() < Y ){
 
     ConstructTable( M , vec , args... );
+
+  }
+  
+  return;
+
+}
+
+template <uint Y , uint X , typename T> template <typename... Args> void Matrix<Y,X,T>::ConstructTable( TableTypeForMatrix<T>& M , LineTypeForMatrix<T>& vec , T&& t , Args&&... args ) noexcept
+{
+
+  vec.push_back( move( t ) );
+
+  if( vec.size() == X ){
+
+    LineTypeForMatrix<T> v{};
+    v.swap( vec );
+    ConstructTable( M , v );
+
+  }
+
+  if( M.size() < Y ){
+
+    ConstructTable( M , vec , move( args )... );
 
   }
   

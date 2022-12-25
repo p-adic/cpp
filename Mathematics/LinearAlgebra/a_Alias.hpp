@@ -7,5 +7,3 @@ using LineTypeForMatrix = vector<T>;
 
 template <typename T>
 using TableTypeForMatrix = LineTypeForMatrix<LineTypeForMatrix<T> >;
-
-using SizeTypeForMatrix = uint;

@@ -12,10 +12,11 @@ private:
 
 public:
   // スカラー行列
-  inline Matrix( const T& t ) noexcept;
+  inline Matrix( const T& t = T() ) noexcept;
   inline Matrix( const int& t ) noexcept;
-  // argsの長さがXYでなくてもコンパイルエラーとならないがサポート外である。
-  template <typename... Args> Matrix( const Args&... args ) noexcept;
+  // argsの長さ+2がXYでなくてもコンパイルエラーとならないがサポート外である。
+  template <typename... Args> inline Matrix( const T& t0 , const T& t1 , const Args&... args ) noexcept;
+  template <typename... Args> inline Matrix( T&& t0 , T&& t1 ,  Args&&... args ) noexcept;
 
   inline Matrix( const Matrix<Y,X,T>& mat ) noexcept;
   inline Matrix( Matrix<Y,X,T>&& mat ) noexcept;
@@ -25,6 +26,8 @@ public:
   template <typename... Args> inline Matrix( TableTypeForMatrix<T>&& M ) noexcept;
 
   inline Matrix<Y,X,T>& operator=( const Matrix<Y,X,T>& mat ) noexcept;
+  inline Matrix<Y,X,T>& operator=( Matrix<Y,X,T>&& mat ) noexcept;
+  
   Matrix<Y,X,T>& operator+=( const Matrix<Y,X,T>& mat );
   Matrix<Y,X,T>& operator-=( const Matrix<Y,X,T>& mat );
   Matrix<Y,X,T>& operator*=( const T& scalar ) noexcept;
@@ -42,6 +45,7 @@ public:
 private:
   static inline void ConstructTable( TableTypeForMatrix<T>& M , LineTypeForMatrix<T>& vec ) noexcept;
   template <typename... Args> static void ConstructTable( TableTypeForMatrix<T>& M , LineTypeForMatrix<T>& vec , const T& t , const Args&... args ) noexcept;
+  template <typename... Args> static void ConstructTable( TableTypeForMatrix<T>& M , LineTypeForMatrix<T>& vec , T&& t , Args&&... args ) noexcept;
   
   static Matrix<Y,X,T> Zero_Body() noexcept;
 
