@@ -253,8 +253,8 @@
 									\
   }									\
 									\
-  vector<T> f0{ move( FFT<T>( Polynomial<T>::m_f , N_input_start_0 , N_input_max_0 + 1 , 0 , two_power , exponent ) ) }; \
-  const vector<T> f1{ move( FFT<T>( f.Polynomial<T>::m_f , N_input_start_1 , N_input_max_1 + 1 , 0 , two_power , exponent ) ) }; \
+  vector<T> f0{ FFT<T>( Polynomial<T>::m_f , N_input_start_0 , N_input_max_0 + 1 , 0 , two_power , exponent ) }; \
+  const vector<T> f1{ FFT<T>( f.Polynomial<T>::m_f , N_input_start_1 , N_input_max_1 + 1 , 0 , two_power , exponent ) }; \
   									\
   for( uint i = 0 ; i < two_power ; i++ ){				\
 									\
@@ -288,7 +288,7 @@
   }									\
 									\
   f_inv.SetTruncation( N );						\
-  return f_inv								\
+  return f_inv							\
 									\
 
 
@@ -309,7 +309,7 @@
   }									\
 									\
   f_exp.SetTruncation( N );						\
-  return f_exp								\
+  return f_exp							\
 									\
 
 

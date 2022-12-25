@@ -5,13 +5,13 @@
 
 #include "../a_Body.hpp"
 
-template <typename T , typename V> inline void SetMultipointEvaluation( const Polynomial<T>& f , const V& point , V& answer ) { VLArray<VLArray<Polynomial<T> > > pt{}; SetPointTree( point , pt ); SetMultipointEvaluation( f , pt , answer ); }
+template <typename T , template <typename> typename V1 , template <typename> typename V2> inline void SetMultipointEvaluation( const Polynomial<T>& f , const V1<T>& point , V2<T>& answer ) { VLArray<VLArray<Polynomial<T> > > pt{}; SetPointTree( point , pt ); SetPointTreeEvaluation( f , pt , answer ); }
 
-template <typename T , typename V>
-void SetMultipointEvaluation( const Polynomial<T>& f , const VLArray<VLArray<Polynomial<T> > >& point_tree , V& answer )
+template <typename T , template <typename> typename V1 , template <typename> typename V2 , template <typename> typename V3>
+void SetPointTreeEvaluation( const Polynomial<T>& f , const V1<V2<Polynomial<T> > >& point_tree , V3<T>& answer )
 {
 
-  const VLArray<Polynomial<T> >& prod = point_tree.front();
+  const V2<Polynomial<T> >& prod = point_tree.front();
 
   if( prod.empty() ){
 
@@ -22,7 +22,7 @@ void SetMultipointEvaluation( const Polynomial<T>& f , const VLArray<VLArray<Pol
   VLArray<Polynomial<T> > residue = {};
   const Polynomial<T>& zero = Polynomial<T>::zero();
   residue.push_back( zero );
-  residue.back() = move( f % prod.front() );
+  residue.back() = f % prod.front();
 
   auto itr_tree = point_tree.begin() , end_tree = point_tree.end();
   itr_tree++;
@@ -39,7 +39,7 @@ void SetMultipointEvaluation( const Polynomial<T>& f , const VLArray<VLArray<Pol
 
       if( itr_node != end_node ){
 
-	*( residue.insert( itr_residue , zero ) ) = move( *itr_residue % f );
+	*( residue.insert( itr_residue , zero ) ) = *itr_residue % f;
 	*itr_residue %= *itr_node;
 	itr_node++;
 
@@ -52,7 +52,6 @@ void SetMultipointEvaluation( const Polynomial<T>& f , const VLArray<VLArray<Pol
     itr_tree++;
 
   }
-
   
   for( auto itr_residue = residue.begin() , end_residue = residue.end() ; itr_residue != end_residue ; itr_residue++ ){
 
@@ -64,17 +63,17 @@ void SetMultipointEvaluation( const Polynomial<T>& f , const VLArray<VLArray<Pol
   
 }
 
-template <typename T>
-void SetProductTree( VLArray<VLArray<T> >& product_tree )
+template <typename T , template <typename> typename V1 , template <typename> typename V2 >
+void SetProductTree( V1<V2<T> >& product_tree )
 {
 
-  VLArray<T> empty{};
-  VLArray<T> *p_node = &( product_tree.back() );
+  V2<T> empty{};
+  V2<T> *p_node = &( product_tree.back() );
   
   while( p_node->size() > 1 ){
 
     product_tree.push_front( empty );
-    VLArray<T>& node_curr = product_tree.front();
+    V2<T>& node_curr = product_tree.front();
 
     for( auto itr = p_node->begin() , end = p_node->end() ; itr != end ; itr++ ){
 
@@ -90,7 +89,7 @@ void SetProductTree( VLArray<VLArray<T> >& product_tree )
 	
       } else {
 	
-	node_curr.back() = move( f * *itr );
+	node_curr.back() = f * *itr;
 
       }
 
@@ -104,13 +103,13 @@ void SetProductTree( VLArray<VLArray<T> >& product_tree )
 
 }
 
-template <typename T , typename V>
-void SetPointTree( const V& point , VLArray<VLArray<Polynomial<T> > >& point_tree )
+template <typename T , template <typename> typename V1 , template <typename> typename V2 , template <typename> typename V3>
+void SetPointTree( const V1<T>& point , V2<V3<Polynomial<T> > >& point_tree )
 {
 
-  static const VLArray<Polynomial<T> > empty{};
+  static const V3<Polynomial<T> > empty{};
   point_tree.push_front( empty );
-  VLArray<Polynomial<T> >& linear = point_tree.front();
+  V3<Polynomial<T> >& linear = point_tree.front();
 
   for( auto itr = point.begin() , end = point.end() ; itr != end ; itr++ ){
 

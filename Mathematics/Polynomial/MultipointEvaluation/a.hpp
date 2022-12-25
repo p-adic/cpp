@@ -3,13 +3,15 @@
 #pragma once
 #include "../a.hpp"
 
-template <typename T , typename V> inline void SetMultipointEvaluation( const Polynomial<T>& f , const V& point , V& answer );
+template <typename T , template <typename> typename V1 , template <typename> typename V2> inline void SetMultipointEvaluation( const Polynomial<T>& f , const V1<T>& point , V2<T>& answer );
 
-template <typename T , typename V>
-void SetMultipointEvaluation( const Polynomial<T>& f , const VLArray<VLArray<Polynomial<T> > >& point_tree , V& answer );template <typename T> inline void SetMultipointEvaluation( const Polynomial<T>& f , const VLArray<T>& point , VLArray<T>& answer );
+template <typename T , template <typename> typename V1 , template <typename> typename V2 , template <typename> typename V3>
+void SetPointTreeEvaluation( const Polynomial<T>& f , const V1<V2<Polynomial<T> > >& point_tree , V3<T>& answer );
 
-template <typename T>
-void SetProductTree( VLArray<VLArray<T> >& product_tree );
+// beginで総乗にアクセスできるようにするためV1はpush_frontを持つ必要がある。
+template <typename T , template <typename> typename V1 , template <typename> typename V2 >
+void SetProductTree( V1<V2<T> >& product_tree );
 
-template <typename T , typename V>
-void SetPointTree( const V& point , VLArray<VLArray<Polynomial<T> > >& point_tree );
+// SetProductTreeの要件からV2はpush_frontを持つ必要がある。
+template <typename T , template <typename> typename V1 , template <typename> typename V2 , template <typename> typename V3>
+void SetPointTree( const V1<T>& point , V2<V3<Polynomial<T> > >& point_tree );

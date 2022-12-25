@@ -7,6 +7,7 @@
 
 template <typename T> class TruncatedPolynomial;
 
+template <typename T> TruncatedPolynomial<T> Differential( const uint& n , const TruncatedPolynomial<T>& f );
 template <typename T> TruncatedPolynomial<T> TruncatedDifferential( const TruncatedPolynomial<T>& f , const uint& N_output_start_plus_one );
 template <typename T> TruncatedPolynomial<T> TruncatedIntegral( const TruncatedPolynomial<T>& f , const uint& N_output_start );
 
@@ -15,6 +16,7 @@ class TruncatedPolynomial :
   public Polynomial<T>
 {
 
+  friend TruncatedPolynomial<T> Differential<T>( const uint& n , const TruncatedPolynomial<T>& f );
   friend TruncatedPolynomial<T> TruncatedDifferential<T>( const TruncatedPolynomial<T>& f , const uint& N_output_start_plus_one );
   friend TruncatedPolynomial<T> TruncatedIntegral<T>( const TruncatedPolynomial<T>& f , const uint& N_output_start );
   
@@ -25,16 +27,19 @@ private:
 public:
   inline TruncatedPolynomial( const uint& N = 0 );
   inline TruncatedPolynomial( const TruncatedPolynomial<T>& f );
+  inline TruncatedPolynomial( TruncatedPolynomial<T>&& f );
   inline TruncatedPolynomial( const uint& N , const T& t );
-  TruncatedPolynomial( const uint& N , const Polynomial<T>& f );
+  inline TruncatedPolynomial( const uint& N , const Polynomial<T>& f );
   inline TruncatedPolynomial( const uint& N , Polynomial<T>&& f );
   inline TruncatedPolynomial( const uint& N , const uint& i , const T& t );
   inline TruncatedPolynomial( const uint& N , vector<T>&& f );
 
   // m_Nも代入されることに注意
   inline TruncatedPolynomial<T>& operator=( const TruncatedPolynomial<T>& f );
+  inline TruncatedPolynomial<T>& operator=( TruncatedPolynomial<T>&& f );
   inline TruncatedPolynomial<T>& operator=( const T& t );
   inline TruncatedPolynomial<T>& operator=( const Polynomial<T>& f );
+  inline TruncatedPolynomial<T>& operator=( Polynomial<T>&& f );
 
   // m_Nは変化しないことに注意
   inline TruncatedPolynomial<T>& operator+=( const T& t );
@@ -102,11 +107,11 @@ public:
 
 };
 
-template <typename T> inline constexpr const uint FFT_Multiplication_border_0;
-template <typename T> inline constexpr const uint FFT_Multiplication_border_1;
-template <typename T> inline constexpr const uint FFT_Multiplication_border_1_2;
-template <typename T> inline constexpr const uint FFT_Multiplication_border_1_2_exponent;
-template <typename T> inline constexpr const uint FFT_Multiplication_border_1_2_inv;
+template <typename T> inline constexpr const uint FFT_Multiplication_border_0{};
+template <typename T> inline constexpr const uint FFT_Multiplication_border_1{};
+template <typename T> inline constexpr const uint FFT_Multiplication_border_1_2{};
+template <typename T> inline constexpr const uint FFT_Multiplication_border_1_2_exponent{};
+template <typename T> inline constexpr const uint FFT_Multiplication_border_1_2_inv{};
 
 template <typename T , typename P> inline TruncatedPolynomial<T> operator+( const TruncatedPolynomial<T>& f0 , const P& f1 );
 template <typename T , typename P> inline TruncatedPolynomial<T> operator-( const TruncatedPolynomial<T>& f );
@@ -117,8 +122,8 @@ template <typename T> inline TruncatedPolynomial<T> operator%( const TruncatedPo
 
 // m_Nが1下がることに注意。
 template <typename T> inline TruncatedPolynomial<T> Differential( const TruncatedPolynomial<T>& f );
-// m_Nがi下がることに注意。
-template <typename T> inline TruncatedPolynomial<T> Differential( const uint& i , const TruncatedPolynomial<T>& f );
+// m_Nがn下がることに注意。
+template <typename T> inline TruncatedPolynomial<T> Differential( const uint& n , const TruncatedPolynomial<T>& f );
 // m_Nが1下がることに注意。
 // N_output_start_plus_one > 0の場合のみサポート。
 template <typename T> TruncatedPolynomial<T> TruncatedDifferential( const TruncatedPolynomial<T>& f , const uint& N_output_start_plus_one );
@@ -145,6 +150,3 @@ template <typename T> inline TruncatedPolynomial<T> Log( const TruncatedPolynomi
 // Tが標数0またはf.m_N以上の体でかつf[0] == 1の場合のみサポート。
 template <typename T>
 TruncatedPolynomial<T> Power( const TruncatedPolynomial<T>& f , const T& t );
-
-// N次のtruncationに設定した上で多項式の列の相乗を分割統治で計算し、その結果を第1成分に格納して参照返しする。
-template <typename T> inline TruncatedPolynomial<T>& Prod( VLArray<TruncatedPolynomial<T> >& f , const uint& N );
