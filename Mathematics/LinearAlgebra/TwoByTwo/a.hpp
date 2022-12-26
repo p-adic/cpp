@@ -1,6 +1,7 @@
 // c:/Users/user/Documents/Programming/Mathematics/LinearAlgebra/TwoByTwo/a.hpp
 
 #pragma once
+// TwoByTwoMatrix( const Matrix<2,2,T>& mat ) ‚Æ inline Matrix<2,2,T> GetMatrix22() const noexcept ‚ÉŽg—p
 #include "../a.hpp"
 
 template <typename T>
@@ -15,8 +16,16 @@ private:
 
 public:
   inline TwoByTwoMatrix( const T& M00 , const T& M01 , const T& M10 , const T& M11 ) noexcept;
-  TwoByTwoMatrix( const Matrix<2,2,T>& mat );
-  TwoByTwoMatrix<T>& operator=( const TwoByTwoMatrix<T>& mat ) noexcept;
+  inline TwoByTwoMatrix( T&& M00 , T&& M01 , T&& M10 , T&& M11 ) noexcept;
+  inline TwoByTwoMatrix( const T& n = T() ) noexcept;
+  inline TwoByTwoMatrix( const int& n ) noexcept;
+  inline TwoByTwoMatrix( const Matrix<2,2,T>& mat );
+  inline TwoByTwoMatrix( const TwoByTwoMatrix<T>& mat ) noexcept;
+  inline TwoByTwoMatrix( TwoByTwoMatrix<T>&& mat ) noexcept;
+  
+  inline TwoByTwoMatrix<T>& operator=( const TwoByTwoMatrix<T>& mat ) noexcept;
+  inline TwoByTwoMatrix<T>& operator=( TwoByTwoMatrix<T>&& mat ) noexcept;
+  inline TwoByTwoMatrix<T>& operator*=( const TwoByTwoMatrix<T>& mat ) noexcept;
 
   inline Matrix<2,2,T> GetMatrix22() const noexcept;
 

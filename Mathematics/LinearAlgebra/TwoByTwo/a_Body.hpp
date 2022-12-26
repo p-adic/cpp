@@ -6,6 +6,11 @@
 #include "../a_Body.hpp"
 
 template <typename T> inline TwoByTwoMatrix<T>::TwoByTwoMatrix( const T& M00 , const T& M01 , const T& M10 , const T& M11 ) noexcept : m_M00( M00 ) , m_M01( M01 ) , m_M10( M10 ) , m_M11( M11 ) {}
+template <typename T> inline TwoByTwoMatrix<T>::TwoByTwoMatrix( T&& M00 , T&& M01 , T&& M10 , T&& M11 ) noexcept : m_M00( move( M00 ) ) , m_M01( move( M01 ) ) , m_M10( move( M10 ) ) , m_M11( move( M11 ) ) {}
+template <typename T> inline TwoByTwoMatrix<T>::TwoByTwoMatrix( const T& n ) noexcept : m_M00( n ) , m_M01() , m_M10() , m_M11( n ) {}
+template <typename T> inline TwoByTwoMatrix<T>::TwoByTwoMatrix( const int& n ) noexcept : TwoByTwoMatrix( T( n ) ) {}
+template <typename T> inline TwoByTwoMatrix<T>::TwoByTwoMatrix( const TwoByTwoMatrix<T>& mat ) noexcept : m_M00( mat.m_M00 ) , m_M01( mat.m_M01 ) , m_M10( mat.m_M10 ) , m_M11( mat.m_M11 ) {}
+template <typename T> inline TwoByTwoMatrix<T>::TwoByTwoMatrix( TwoByTwoMatrix<T>&& mat ) noexcept : m_M00( move( mat.m_M00 ) ) , m_M01( move( mat.m_M01 ) ) , m_M10( move( mat.m_M10 ) ) , m_M11( move( mat.m_M11 ) ) {}
 
 template <typename T>
 TwoByTwoMatrix<T>::TwoByTwoMatrix( const Matrix<2,2,T>& mat )
@@ -22,22 +27,12 @@ TwoByTwoMatrix<T>::TwoByTwoMatrix( const Matrix<2,2,T>& mat )
 
 }
 
-template <typename T>
-TwoByTwoMatrix<T>& TwoByTwoMatrix<T>::operator=( const TwoByTwoMatrix<T>& mat ) noexcept
-{
+template <typename T> inline TwoByTwoMatrix<T>& TwoByTwoMatrix<T>::operator=( const TwoByTwoMatrix<T>& mat ) noexcept { if( &mat != this ){ m_M00 = mat.m_M00; m_M01 = mat.m_M01; m_M10 = mat.m_M10; m_M11 = mat.m_M11; } return *this; }
 
-  if( &mat != this ){
+template <typename T> inline TwoByTwoMatrix<T>& TwoByTwoMatrix<T>::operator=( TwoByTwoMatrix<T>&& mat ) noexcept { m_M00 = move( mat.m_M00 ); m_M01 = move( mat.m_M01 ); m_M10 = move( mat.m_M10 ); m_M11 = move( mat.m_M11 ); return *this; }
 
-    m_M00 = mat.m_M00;
-    m_M01 = mat.m_M01;
-    m_M10 = mat.m_M10;
-    m_M11 = mat.m_M11;
+template <typename T> inline TwoByTwoMatrix<T>& TwoByTwoMatrix<T>::operator*=( const TwoByTwoMatrix<T>& mat ) noexcept { return operator=( Multiply( *this , mat ) ); }
 
-  }
-
-  return *this;
-
-}
 
 template <typename T> inline Matrix<2,2,T> TwoByTwoMatrix<T>::GetMatrix22() const noexcept { return Matrix<2,2,T>( m_M00 , m_M01 , m_M10 , m_M11 ); }
 
