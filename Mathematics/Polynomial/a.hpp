@@ -30,7 +30,7 @@ public:
   Polynomial<T>& operator=( const Polynomial<T>& f );
   Polynomial<T>& operator=( Polynomial<T>&& f );
 
-  // 係数
+  // 係数を参照。capacity変更時に不正な参照となるのでこの返り値を参照型の引数に渡す時は注意。
   inline const T& operator[]( const uint& i ) const;
   inline T& operator[]( const uint& i );
 

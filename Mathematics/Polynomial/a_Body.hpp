@@ -106,7 +106,7 @@ Polynomial<T>& Polynomial<T>::operator*=( const T& t )
   
   for( uint i = 0 ; i < m_size ; i++ ){
 
-    operator[]( i ) *= t;
+    m_f[i] *= t;
 
   }
 
@@ -244,7 +244,7 @@ Polynomial<T>& Polynomial<T>::operator%=( const T& t )
   
   for( uint i = 0 ; i < m_size ; i++ ){
 
-    operator[]( i ) %= t;
+    m_f[i] %= t;
 
   }
 
