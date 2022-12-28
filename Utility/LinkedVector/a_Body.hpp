@@ -6,28 +6,7 @@
 #include "Entry/a_Body.hpp"
 
 template <typename T> inline LinkedVector<T>::LinkedVector() : m_entry( 1 ) , m_front_linked_entry( 0 ) , m_back_linked_entry( 0 ) , m_size_of_vector( 0 ) , m_size_of_link( 0 ) {}
-template <typename T>
-LinkedVector<T>::LinkedVector( const uint& max_size ) : m_entry() , m_front_linked_entry( 0 ) , m_back_linked_entry( 0 ) , m_size_of_vector( 0 ) , m_size_of_link( 0 )
-{
-
-  m_entry.shrink_to_fit();
-  const uint capacity = m_entry.capacity();
-  m_entry.reserve( max_size + 1 );
-
-  // ˆê’Uƒƒ‚ƒŠ‚ÌÄŠm•Û‚ğ¶‚¶‚³‚¹‚éB
-  for( uint i = 0 ; i <= capacity ; i++ ){
-
-    m_entry.push_back( EntryOfLinkedVector<T>() );
-
-  }
-
-  for( uint i = 0 ; i < capacity ; i++ ){
-
-    m_entry.pop_back();
-
-  }
-  
-}
+template <typename T> inline LinkedVector<T>::LinkedVector( const uint& max_size ) : m_entry() , m_front_linked_entry( 0 ) , m_back_linked_entry( 0 ) , m_size_of_vector( 0 ) , m_size_of_link( 0 ) { m_entry.reserve( max_size + 1 ); }
 
 template <typename T> inline const T& LinkedVector<T>::operator[]( const uint& i ) const { return m_entry[i].m_t; }
 template <typename T> inline T& LinkedVector<T>::operator[]( const uint& i ) { return m_entry[i].m_t; }
