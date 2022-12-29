@@ -153,6 +153,8 @@ Polynomial<T>& Polynomial<T>::operator*=( const Polynomial<T>& f )
 
 }
 
+template <typename T> inline Polynomial<T>& Polynomial<T>::operator*=( Polynomial<T>&& f ) { return operator*=( f ); };
+
 template <typename T>
 Polynomial<T>& Polynomial<T>::operator/=( const T& t )
 {

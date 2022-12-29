@@ -43,6 +43,7 @@ public:
   Polynomial<T>& operator-=( const Polynomial<T>& f );
   Polynomial<T>& operator*=( const T& t );
   Polynomial<T>& operator*=( const Polynomial<T>& f );
+  Polynomial<T>& operator*=( Polynomial<T>&& f );
   Polynomial<T>& operator/=( const T& t );
   inline Polynomial<T>& operator/=( const Polynomial<T>& f );
   Polynomial<T>& operator%=( const T& t );
