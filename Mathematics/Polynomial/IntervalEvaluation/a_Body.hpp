@@ -170,7 +170,7 @@ void SetPRecursiveMatrixAction( const Matrix<Y,Y,Polynomial<T> >& M , Matrix<Y,1
 
     for( uint x = 0 ; x < Y ; x++ ){
 
-      const uint size = M_ref_y[x].size();
+      const uint& size = M_ref_y[x].size();
 
       if( deg < size ){
 
@@ -186,7 +186,7 @@ void SetPRecursiveMatrixAction( const Matrix<Y,Y,Polynomial<T> >& M , Matrix<Y,1
   uint interval_length = 1;
   int exponent = 0;
 
-  while( interval_length * ( interval_length * deg + 1 ) < length ){
+  while( interval_length * ( interval_length * deg + 1 ) <= length ){
 
     interval_length *= 2;
     exponent++;
@@ -199,13 +199,14 @@ void SetPRecursiveMatrixAction( const Matrix<Y,Y,Polynomial<T> >& M , Matrix<Y,1
   uint t_rest_start;
   vector<T> point{};
 
-  if( interval_length > 0 ){
+  if( exponent > 0 ){
 
-    interval_num_max = length / interval_length - 1;
-    t_rest_start = interval_length * ( interval_num_max + 1 );
+    const uint interval_num_lim = length / interval_length;
+    interval_num_max = interval_num_lim - 1;
+    t_rest_start = interval_length * interval_num_lim;
     uint subinterval_num_max = deg;
     T subinterval_length = Polynomial<T>::const_one();
-    SET_MATRIX_MULTIPOINT_EVALUATION( subinterval_num_max , t * interval_length );
+    SET_MATRIX_MULTIPOINT_EVALUATION( subinterval_num_max , interval_num_lim , t * interval_length );
     
     for( int e = 1 ; e < exponent ; e++ ){
 
@@ -232,8 +233,9 @@ void SetPRecursiveMatrixAction( const Matrix<Y,Y,Polynomial<T> >& M , Matrix<Y,1
 
   if( t_rest_start < length ){
     
-    uint rest_num_max = length - t_rest_start - 1;
-    SET_MATRIX_MULTIPOINT_EVALUATION( rest_num_max , t + t_rest_start );
+    const uint rest_num_lim = length - t_rest_start;
+    const uint rest_num_max = rest_num_lim - 1;
+    SET_MATRIX_MULTIPOINT_EVALUATION( rest_num_max , rest_num_lim , t + t_rest_start );
   
     for( uint t = 0 ; t <= rest_num_max ; t++ ){
 

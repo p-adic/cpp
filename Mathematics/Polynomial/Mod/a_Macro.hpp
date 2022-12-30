@@ -248,7 +248,7 @@
 
 
 
-#define DEFINITION_OF_FFT_MULTIPLICATION_FOR_TRUNCATED_POLYNOMIAL( RETURN_LINE_0 , RETURN_LINE_1 , RETURN_LINE_2 , RETURN_LINE_3 , RETURN_LINE_4 , RETURN_LINE_5 , MULTIPLICATION , ACCESS_ENTRY , N_OUTPUT_START , N_OUTPUT_START_SHIFTED , FIX_N_OUTPUT_LIM , DECLARATION_OF_F0 , DECLARATION_OF_F1 , N_INPUT_START , MULTIPLICATiON_FORMULA , VECTOR_FOR_IFFT , SET_ANSWER ) \
+#define DEFINITION_OF_FFT_MULTIPLICATION_FOR_TRUNCATED_POLYNOMIAL( RETURN_LINE_0 , RETURN_LINE_1 , RETURN_LINE_2 , RETURN_LINE_3 , RETURN_LINE_4 , RETURN_LINE_5 , MULTIPLICATION , ACCESS_ENTRY , N_OUTPUT_START , N_OUTPUT_START_SHIFTED , FIX_N_OUTPUT_LIM , DECLARATION_OF_F0 , N_INPUT_START_0 , N_INPUT_LIM_0 , DECLARATION_OF_F1 , N_INPUT_START_1 , N_INPUT_LIM_1 , VECTOR_FOR_IFFT , RESIZE_VECTOR_FOR_IFFT , I_START , MULTIPLICATiON_FORMULA , SET_ANSWER ) \
   constexpr const uint& border_0 = FFT_Multiplication_border_0<T>;	\
   const T& zero = Polynomial<T>::const_zero();				\
   bool searching = true;						\
@@ -290,15 +290,16 @@
 									\
   const uint product_length = N_input_start_0_start_1 + two_power;	\
   DECLARATION_OF_F0;							\
-  FFT<T>( f0 , N_input_start_0 , N_input_max_0 + 1 , two_power , exponent ); \
+  FFT<T>( f0 , N_INPUT_START_0 , N_INPUT_LIM_0 , two_power , exponent ); \
   DECLARATION_OF_F1;							\
-  FFT<T>( f1 , N_input_start_1 , N_input_max_1 + 1 , two_power , exponent ); \
+  FFT<T>( f1 , N_INPUT_START_1 , N_INPUT_LIM_1 , two_power , exponent ); \
+  RESIZE_VECTOR_FOR_IFFT;						\
 									\
-  for( uint i = N_INPUT_START + two_power - 1 ; true ; i-- ){		\
+  for( uint i = I_START + two_power - 1 ; true ; i-- ){				\
 									\
     MULTIPLICATiON_FORMULA;						\
 									\
-    if( i == N_INPUT_START ){						\
+    if( i == I_START ){							\
 									\
       break;								\
 									\

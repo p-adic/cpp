@@ -1,7 +1,7 @@
 // c:/Users/user/Documents/Programming/Mathematics/Polynomial/IntervalEvaluation/a_Macro.hpp
 
 #pragma once
-#define SET_MATRIX_MULTIPOINT_EVALUATION( SAMPLE_NUM_MAX , POINT )	\
+#define SET_MATRIX_MULTIPOINT_EVALUATION( SAMPLE_NUM_MAX , FINAL_LENGTH , POINT ) \
   point = vector<T>( SAMPLE_NUM_MAX + 1 );				\
 									\
   for( uint t = 0 ; t <= SAMPLE_NUM_MAX ; t++ ){			\
@@ -21,13 +21,14 @@
 									\
     for( uint x = 0 ; x < Y ; x++ ){					\
 									\
-      SetMultipointEvaluation( M_ref_y[x] , pt , eval_y[x] );		\
+      SetPointTreeEvaluation( M_ref_y[x] , pt , eval_y[x] );		\
 									\
     }									\
 									\
   }									\
 									\
   vector<Matrix<Y,Y,T> > sample( SAMPLE_NUM_MAX + 1 , Matrix<Y,Y,T>::Zero() ); \
+  sample.reserve( FINAL_LENGTH );					\
 									\
   for( uint t = 0 ; t <= SAMPLE_NUM_MAX ; t++ ){			\
 									\
@@ -49,7 +50,7 @@
   }									\
 
 
-
+// subinterval_length / interval_length‚ÍT‚É‚¨‚¯‚é¤‚Å‚ ‚é‚±‚Æ‚É’ˆÓB
 #define MULTIPLY_SUBPRODUCT_OF_PRECURSIVE_MATRIX( REST_INTERVAL_LENGTH ) \
   vector<Matrix<Y,Y,T> > eval_odd{};					\
   vector<Matrix<Y,Y,T> > eval_even{};					\
