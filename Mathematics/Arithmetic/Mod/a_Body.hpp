@@ -11,25 +11,31 @@ template <INT_TYPE_FOR_MOD M> inline Mod<M>::Mod() noexcept : m_n() {}
 template <INT_TYPE_FOR_MOD M> inline Mod<M>::Mod( const Mod<M>& n ) noexcept : m_n( n.m_n ) {}
 template <INT_TYPE_FOR_MOD M> inline Mod<M>::Mod( Mod<M>&& n ) noexcept : m_n( move( n.m_n ) ) {}
 template <INT_TYPE_FOR_MOD M> inline Mod<M>::Mod( const INT_TYPE_FOR_MOD& n ) noexcept : m_n( Residue<INT_TYPE_FOR_MOD>( n , M ) ) {}
+template <INT_TYPE_FOR_MOD M> inline Mod<M>::Mod( INT_TYPE_FOR_MOD&& n ) noexcept : m_n( Residue<INT_TYPE_FOR_MOD>( move( n ) , M ) ) {}
 
 template <INT_TYPE_FOR_MOD M> inline Mod<M>& Mod<M>::operator=( const Mod<M>& n ) noexcept { m_n = n.m_n; return *this; }
 template <INT_TYPE_FOR_MOD M> inline Mod<M>& Mod<M>::operator=( Mod<M>&& n ) noexcept { m_n = move( n.m_n ); return *this; }
 template <INT_TYPE_FOR_MOD M> inline Mod<M>& Mod<M>::operator=( const INT_TYPE_FOR_MOD& n ) noexcept { m_n = Residue<INT_TYPE_FOR_MOD>( n , M ); return *this; }
+template <INT_TYPE_FOR_MOD M> inline Mod<M>& Mod<M>::operator=( INT_TYPE_FOR_MOD&& n ) noexcept { m_n = Residue<INT_TYPE_FOR_MOD>( move( n ) , M ); return *this; }
 
 template <INT_TYPE_FOR_MOD M> inline Mod<M>& Mod<M>::operator+=( const Mod<M>& n ) noexcept { m_n = Residue<INT_TYPE_FOR_MOD>( m_n + n.m_n , M ); return *this; }
-template <INT_TYPE_FOR_MOD M> inline Mod<M>& Mod<M>::operator+=( const INT_TYPE_FOR_MOD& n ) noexcept { m_n = Residue<INT_TYPE_FOR_MOD>( m_n + Residue<INT_TYPE_FOR_MOD>( n , M ) , M ); return *this; }
+template <INT_TYPE_FOR_MOD M> inline Mod<M>& Mod<M>::operator+=( const INT_TYPE_FOR_MOD& n ) noexcept { m_n = Residue<INT_TYPE_FOR_MOD>( m_n + n , M ); return *this; }
 
 template <INT_TYPE_FOR_MOD M> inline Mod<M>& Mod<M>::operator-=( const Mod<M>& n ) noexcept { m_n = Residue<INT_TYPE_FOR_MOD>( m_n - n.m_n , M ); return *this; }
-template <INT_TYPE_FOR_MOD M> inline Mod<M>& Mod<M>::operator-=( const INT_TYPE_FOR_MOD& n ) noexcept { m_n = Residue<INT_TYPE_FOR_MOD>( m_n - Residue<INT_TYPE_FOR_MOD>( n , M ) , M ); return *this; }
+template <INT_TYPE_FOR_MOD M> inline Mod<M>& Mod<M>::operator-=( const INT_TYPE_FOR_MOD& n ) noexcept { m_n = Residue<INT_TYPE_FOR_MOD>( m_n - n , M ); return *this; }
 
 template <INT_TYPE_FOR_MOD M> inline Mod<M>& Mod<M>::operator*=( const Mod<M>& n ) noexcept { m_n = Residue<INT_TYPE_FOR_MOD>( m_n * n.m_n , M ); return *this; }
 template <INT_TYPE_FOR_MOD M> inline Mod<M>& Mod<M>::operator*=( const INT_TYPE_FOR_MOD& n ) noexcept { m_n = Residue<INT_TYPE_FOR_MOD>( m_n * Residue<INT_TYPE_FOR_MOD>( n , M ) , M ); return *this; }
+template <INT_TYPE_FOR_MOD M> inline Mod<M>& Mod<M>::operator*=( INT_TYPE_FOR_MOD&& n ) noexcept { m_n = Residue<INT_TYPE_FOR_MOD>( m_n * Residue<INT_TYPE_FOR_MOD>( move( n ) , M ) , M ); return *this; }
 
 template <INT_TYPE_FOR_MOD M> inline Mod<M>& Mod<M>::operator/=( const Mod<M>& n ) { return operator*=( Mod<M>( n ).Invert() ); }
+template <INT_TYPE_FOR_MOD M> inline Mod<M>& Mod<M>::operator/=( Mod<M>&& n ) { return operator*=( n.Invert() ); }
 template <INT_TYPE_FOR_MOD M> inline Mod<M>& Mod<M>::operator/=( const INT_TYPE_FOR_MOD& n ) { return operator*=( Mod<M>( n ).Invert() ); }
+template <INT_TYPE_FOR_MOD M> inline Mod<M>& Mod<M>::operator/=( INT_TYPE_FOR_MOD&& n ) { return operator*=( Mod<M>( move( n ) ).Invert() ); }
 
 template <INT_TYPE_FOR_MOD M> inline Mod<M>& Mod<M>::operator%=( const Mod<M>& n ) { m_n %= n.m_n; return *this; }
 template <INT_TYPE_FOR_MOD M> inline Mod<M>& Mod<M>::operator%=( const INT_TYPE_FOR_MOD& n ) { m_n %= Residue<INT_TYPE_FOR_MOD>( n , M ); return *this; }
+template <INT_TYPE_FOR_MOD M> inline Mod<M>& Mod<M>::operator%=( INT_TYPE_FOR_MOD&& n ) { m_n %= Residue<INT_TYPE_FOR_MOD>( move( n ) , M ); return *this; }
 
 template <INT_TYPE_FOR_MOD M> inline Mod<M> Mod<M>::operator-() const noexcept { return move( Mod<M>() -= *this ); }
 
@@ -44,7 +50,7 @@ template <INT_TYPE_FOR_MOD M>
 Mod<M>& Mod<M>::Invert()
 {
 
-  if( m_n > 0 ){
+  if( m_n <= 0 ){
 
     ERR_INPUT( m_n );
 
@@ -88,7 +94,7 @@ Mod<M>& Mod<M>::Invert()
   
 }
 
-template <INT_TYPE_FOR_MOD M> inline const Mod<M>& Mod<M>::Inverse( const INT_TYPE_FOR_MOD& n ) noexcept { static Mod<M> memory[g_memory_length] = { error() , one() }; static int length_curr = 2; while( length_curr <= n ){ memory[length_curr].m_n = M - ( ( memory[M % length_curr].m_n * ( M / n ) ) % M ); length_curr++; } return memory[n]; }
+template <INT_TYPE_FOR_MOD M> inline const Mod<M>& Mod<M>::Inverse( const INT_TYPE_FOR_MOD& n ) noexcept { static Mod<M> memory[g_memory_length] = { error() , one() }; static int length_curr = 2; while( length_curr <= n ){ memory[length_curr].m_n = M - ( ( memory[M % length_curr].m_n * ( M / length_curr ) ) % M ); length_curr++; } return memory[n]; }
 template <INT_TYPE_FOR_MOD M> inline const Mod<M>& Mod<M>::Factorial( const INT_TYPE_FOR_MOD& n ) noexcept { static Mod<M> memory[g_memory_length] = { one() , one() }; static int length_curr = 2; static INT_TYPE_FOR_MOD val_curr = 1; while( length_curr <= n ){ memory[length_curr].m_N = ( ( val_curr *= length_curr ) %= M ); length_curr++; } return memory[n]; }
 template <INT_TYPE_FOR_MOD M> inline const Mod<M>& Mod<M>::FactorialInverse( const INT_TYPE_FOR_MOD& n ) noexcept { static Mod<M> memory[g_memory_length] = { one() , one() }; static int length_curr = 2; static Mod<M> val_curr{ one() }; while( length_curr <= n ){ memory[length_curr].m_N = val_curr *= Inverse( length_curr ); length_curr++; } return memory[n]; }
 
@@ -113,10 +119,10 @@ DEFINITION_OF_COMPARISON_OPERATOR_FOR_MOD( > , IsBiggerThan , IsSmallerThan );
 DEFINITION_OF_COMPARISON_OPERATOR_FOR_MOD( >= , IsBiggerThanOrEqualTo , IsSmallerThanSmallerThan );
 
 DEFINITION_OF_COMMUTATIVE_ARITHMETIC_OPERATOR_FOR_MOD( + );
-DEFINITION_OF_ARITHMETIC_OPERATOR_FOR_MOD( - );
+DEFINITION_OF_NON_COMMUTATIVE_ARITHMETIC_OPERATOR_FOR_MOD( - );
 DEFINITION_OF_COMMUTATIVE_ARITHMETIC_OPERATOR_FOR_MOD( * );
-DEFINITION_OF_ARITHMETIC_OPERATOR_FOR_MOD( / );
-DEFINITION_OF_ARITHMETIC_OPERATOR_FOR_MOD( % );
+DEFINITION_OF_NON_COMMUTATIVE_ARITHMETIC_OPERATOR_FOR_MOD( / );
+DEFINITION_OF_NON_COMMUTATIVE_ARITHMETIC_OPERATOR_FOR_MOD( % );
 
 template <INT_TYPE_FOR_MOD M> inline Mod<M> Inverse( const Mod<M>& n ) { return move( Mod<M>( n ).Invert() ); }
 

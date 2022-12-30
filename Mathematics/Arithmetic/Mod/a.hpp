@@ -20,22 +20,28 @@ public:
   inline Mod( const Mod<M>& n ) noexcept;
   inline Mod( Mod<M>&& n ) noexcept;
   inline Mod( const INT_TYPE_FOR_MOD& n ) noexcept;
+  inline Mod( INT_TYPE_FOR_MOD&& n ) noexcept;
   inline Mod<M>& operator=( const Mod<M>& n ) noexcept;
   inline Mod<M>& operator=( Mod<M>&& n ) noexcept;
   inline Mod<M>& operator=( const INT_TYPE_FOR_MOD& n ) noexcept;
+  inline Mod<M>& operator=( INT_TYPE_FOR_MOD&& n ) noexcept;
   inline Mod<M>& operator+=( const Mod<M>& n ) noexcept;
   inline Mod<M>& operator+=( const INT_TYPE_FOR_MOD& n ) noexcept;
   inline Mod<M>& operator-=( const Mod<M>& n ) noexcept;
   inline Mod<M>& operator-=( const INT_TYPE_FOR_MOD& n ) noexcept;
   inline Mod<M>& operator*=( const Mod<M>& n ) noexcept;
   inline Mod<M>& operator*=( const INT_TYPE_FOR_MOD& n ) noexcept;
+  inline Mod<M>& operator*=( INT_TYPE_FOR_MOD&& n ) noexcept;
 
   // INT_TYPE_FOR_MODでの割り算ではないことに注意
   inline Mod<M>& operator/=( const Mod<M>& n );
+  inline Mod<M>& operator/=( Mod<M>&& n );
   inline Mod<M>& operator/=( const INT_TYPE_FOR_MOD& n );
+  inline Mod<M>& operator/=( INT_TYPE_FOR_MOD&& n );
   
   inline Mod<M>& operator%=( const Mod<M>& n );
   inline Mod<M>& operator%=( const INT_TYPE_FOR_MOD& n );
+  inline Mod<M>& operator%=( INT_TYPE_FOR_MOD&& n );
 
   inline Mod<M> operator-() const noexcept;
 
@@ -47,7 +53,7 @@ public:
   
   inline const INT_TYPE_FOR_MOD& Represent() const noexcept;
   // Mが素数である場合のみサポート
-  inline Mod<M>& Invert() noexcept;
+  inline Mod<M>& Invert();
 
   DECLARATION_OF_COMPARISON_FOR_MOD( IsEqualTo );
   DECLARATION_OF_COMPARISON_FOR_MOD( IsNotEqualTo );
@@ -73,17 +79,17 @@ private:
   
 };
 
-DECLARATION_OF_OPERATOR_FOR_MOD( bool , == );
-DECLARATION_OF_OPERATOR_FOR_MOD( bool , != );
-DECLARATION_OF_OPERATOR_FOR_MOD( bool , < );
-DECLARATION_OF_OPERATOR_FOR_MOD( bool , <= );
-DECLARATION_OF_OPERATOR_FOR_MOD( bool , > );
-DECLARATION_OF_OPERATOR_FOR_MOD( bool , >= );
-DECLARATION_OF_OPERATOR_FOR_MOD( Mod<M> , + );
-DECLARATION_OF_OPERATOR_FOR_MOD( Mod<M> , - );
-DECLARATION_OF_OPERATOR_FOR_MOD( Mod<M> , * );
-DECLARATION_OF_OPERATOR_FOR_MOD( Mod<M> , / );
-DECLARATION_OF_OPERATOR_FOR_MOD( Mod<M> , % );
+DECLARATION_OF_COMPARISON_OPERATOR_FOR_MOD( == );
+DECLARATION_OF_COMPARISON_OPERATOR_FOR_MOD( != );
+DECLARATION_OF_COMPARISON_OPERATOR_FOR_MOD( < );
+DECLARATION_OF_COMPARISON_OPERATOR_FOR_MOD( <= );
+DECLARATION_OF_COMPARISON_OPERATOR_FOR_MOD( > );
+DECLARATION_OF_COMPARISON_OPERATOR_FOR_MOD( >= );
+DECLARATION_OF_ARITHMETIC_OPERATOR_FOR_MOD( + );
+DECLARATION_OF_ARITHMETIC_OPERATOR_FOR_MOD( - );
+DECLARATION_OF_ARITHMETIC_OPERATOR_FOR_MOD( * );
+DECLARATION_OF_ARITHMETIC_OPERATOR_FOR_MOD( / );
+DECLARATION_OF_ARITHMETIC_OPERATOR_FOR_MOD( % );
 
 // Mが素数である場合にのみサポート
 template <INT_TYPE_FOR_MOD M> Mod<M> inline Inverse( const Mod<M>& n );

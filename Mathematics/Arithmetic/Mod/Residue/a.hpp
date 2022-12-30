@@ -2,5 +2,5 @@
 
 #pragma once
 
-template <typename INT>
-INT Residue( const INT& M , const INT& n ) noexcept;
+template <typename INT> inline INT Residue( const INT& n , const INT& M ) noexcept;
+template <typename INT> inline INT Residue( INT&& n , const INT& M ) noexcept;
