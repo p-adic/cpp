@@ -2,5 +2,5 @@
 
 #pragma once
 
+using ull = unsigned long long;
 using INT_TYPE_FOR_MOD = int;
-// using INT_TYPE_FOR_MOD = long long int;
