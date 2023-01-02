@@ -12,7 +12,7 @@ void SetIntervalEvaluation( const uint& deg , const T& t_start , const uint& len
 
   for( uint d = 0 ;  d <= deg ; d++ ){
 
-    eval[d] *= Polynomial<T>::factorial_inverse( d );
+    eval[d] *= T::FactorialInverse( d );
 
   }
 
@@ -23,8 +23,8 @@ void SetIntervalEvaluation( const uint& deg , const T& t_start , const uint& len
   
   for( uint d = exp_inv.size() ; d <= deg ; d++ ){
 
-    exp_inv[d] = ( d % 2 == 0 ? Polynomial<T>::factorial_inverse( d ) : - Polynomial<T>::factorial_inverse( d ) );
-
+    exp_inv[d] = ( d % 2 == 0 ? T::FactorialInverse( d ) : - T::FactorialInverse( d ) );
+    
   }
 
   f *= exp_inv;
@@ -43,7 +43,7 @@ void SetIntervalEvaluation( const uint& deg , const T& t_start , const uint& len
   
   for( uint d = 0 ; d <= deg_f ; d++ ){
 
-    f[d] *= Polynomial<T>::factorial( d );
+    f[d] *= T::Factorial( d );
 
   }
 
@@ -60,7 +60,7 @@ void SetIntervalEvaluation( const uint& deg , const T& t_start , const uint& len
 
   for( uint d = 0 ; d <= deg_f ; d++ ){
 
-    exp_t_Mahler[d] = Polynomial<T>::factorial_inverse( d ) * t_Mahler;
+    exp_t_Mahler[d] = T::FactorialInverse( d ) * t_Mahler;
     t_Mahler *= t_start - d;
 
   }
@@ -75,7 +75,7 @@ void SetIntervalEvaluation( const uint& deg , const T& t_start , const uint& len
 
   for( uint d = 0 ; d <= deg_f ; d++ ){
 
-    f[d] *= Polynomial<T>::factorial_inverse( d );
+    f[d] *= T::FactorialInverse( d );
 
   }
 
@@ -84,7 +84,7 @@ void SetIntervalEvaluation( const uint& deg , const T& t_start , const uint& len
 
   for( uint d = exp.size() ; d < length ; d++ ){
 
-    exp[d] = Polynomial<T>::factorial_inverse( d );
+    exp[d] = T::FactorialInverse( d );
 
   }
 
@@ -92,7 +92,7 @@ void SetIntervalEvaluation( const uint& deg , const T& t_start , const uint& len
 
   for( uint d = 0 ; d < length ; d++ ){
 
-    f[d] *= Polynomial<T>::factorial( d );
+    f[d] *= T::Factorial( d );
 
   }
 

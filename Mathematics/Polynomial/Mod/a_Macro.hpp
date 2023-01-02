@@ -57,7 +57,7 @@
 
 
 #define SET_N_INPUT_START_FOR_MULTIPLICATION_FOR_TRUNCATED_POLYNOMIAL( F , SIZE , N_INPUT_START_NUM ) \
-  uint N_INPUT_START_NUM;						\
+  uint N_INPUT_START_NUM{};						\
 									\
   for( uint i = 0 ; i < SIZE && searching ; i++ ){			\
 									\
@@ -73,7 +73,7 @@
 
 
 #define SET_N_INPUT_MAX_FOR_MULTIPLICATION_FOR_TRUNCATED_POLYNOMIAL( F , SIZE , N_INPUT_MAX_NUM ) \
-  uint N_INPUT_MAX_NUM;							\
+  uint N_INPUT_MAX_NUM{};						\
   searching = true;							\
 									\
   for( uint i = ( SIZE ) - 1 ; searching ; i-- ){			\

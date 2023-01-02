@@ -256,12 +256,12 @@ TruncatedPolynomial<T> Differential( const uint& n , const TruncatedPolynomial<T
 
   if( f.Polynomial<T>::m_size < n ){
 
-    return TruncatedPolynomial( f.m_N - n , Polynomial<T>::zero() );
+    return TruncatedPolynomial<T>( f.m_N - n , Polynomial<T>::zero() );
 
   }
 
   vector<T> df( f.Polynomial<T>::m_size - n );
-  T coef = Polynomial<T>::factorial( n );
+  T coef = T::Factorial( n );
   uint i = n;
 
   while( i < f.Polynomial<T>::m_size ){
@@ -272,7 +272,7 @@ TruncatedPolynomial<T> Differential( const uint& n , const TruncatedPolynomial<T
 
   }
 
-  return TruncatedPolynomial( f.m_N - n , move( df ) );
+  return TruncatedPolynomial<T>( f.m_N - n , move( df ) );
 
 }
 

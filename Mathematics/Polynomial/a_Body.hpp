@@ -10,12 +10,15 @@ template <typename T> inline Polynomial<T>::Polynomial( const T& t ) : Polynomia
 template <typename T> inline Polynomial<T>::Polynomial( const Polynomial<T>& f ) : m_f( f.m_f ) , m_size( f.m_size ) {}
 template <typename T> inline Polynomial<T>::Polynomial( Polynomial<T>&& f ) : m_f( move( f.m_f ) ) , m_size( move( f.m_size ) ) {}
 template <typename T> inline Polynomial<T>::Polynomial( const uint& i , const T& t ) : Polynomial() { if( t != const_zero() ){ operator[]( i ) = t; } }
+template <typename T> inline Polynomial<T>::Polynomial( const vector<T>& f ) : m_f( f ) , m_size( m_f.size() ) {}
 template <typename T> inline Polynomial<T>::Polynomial( vector<T>&& f ) : m_f( move( f ) ) , m_size( m_f.size() ) {}
 
 
 template <typename T> inline Polynomial<T>& Polynomial<T>::operator=( const T& t ) { m_f.clear(); m_size = 0; operator[]( 0 ) = t; return *this; }
 template <typename T> inline Polynomial<T>& Polynomial<T>::operator=( const Polynomial<T>& f ) { m_f = f.m_f; m_size = f.m_size; return *this; }
 template <typename T> inline Polynomial<T>& Polynomial<T>::operator=( Polynomial<T>&& f ) { m_f = move( f.m_f ); m_size = move( f.m_size ); return *this; }
+template <typename T> inline Polynomial<T>& Polynomial<T>::operator=( const vector<T>& f ) { m_f = f; m_size = f.m_size; return *this; }
+template <typename T> inline Polynomial<T>& Polynomial<T>::operator=( vector<T>&& f ) { m_f = move( f ); m_size = m_f.size(); return *this; }
 
 
 template <typename T>
@@ -278,23 +281,9 @@ Polynomial<T>& Polynomial<T>::operator<<=( const T& t )
 
   if( m_size > 0 ){
 
-    static T factorial_curr = 1;
-    static vector<T> factorial = { 1 , 1 };
-    static T factorial_inv_curr = 1;
-    static vector<T> factorial_inv = { 1 , 1 };
-    uint size = factorial.size();
-
-    while( size < m_size ){
-
-      factorial.push_back( factorial_curr *= size );
-      factorial_inv.push_back( factorial_inv_curr /= size );
-      size++;
-
-    }
-
     for( uint d = 0 ; d < m_size ; d++ ){
 
-      m_f[d] *= factorial[d];
+      m_f[d] *= T::Factorial( d );
 
     }
 
@@ -303,7 +292,7 @@ Polynomial<T>& Polynomial<T>::operator<<=( const T& t )
   
     for( uint d = 0 ; d < m_size ; d++ ){
 
-      exp_t_transpose[m_size - 1 - d] = power_t * factorial_inv[d];
+      exp_t_transpose[m_size - 1 - d] = power_t * T::FactorialInverse( d );
       power_t *= t;
 
     }
@@ -312,7 +301,7 @@ Polynomial<T>& Polynomial<T>::operator<<=( const T& t )
   
     for( uint d = 0 ; d < m_size ; d++ ){
 
-      m_f[d] = exp_t_transpose.Polynomial<T>::m_f[d + m_size - 1] * factorial_inv[d];
+      m_f[d] = exp_t_transpose.Polynomial<T>::m_f[d + m_size - 1] * T::FactorialInverse( d );
 
     }
 
@@ -375,10 +364,6 @@ template <typename T> inline const T& Polynomial<T>::const_zero() { static const
 template <typename T> inline const T& Polynomial<T>::const_one() { static const T o{ 1 }; return o; }
 template <typename T> inline const T& Polynomial<T>::const_minus_one() { static const T m{ -1 }; return m; }
 
-template <typename T> inline const T& Polynomial<T>::factorial( const uint& i ) { static vector<T> memory = { const_one() , const_one() }; static T curr = const_one(); static uint size = 2; while( size <= i ){ memory.push_back( curr *= size++ ); } return memory[i]; }
-template <typename T> inline const T& Polynomial<T>::factorial_inverse( const uint& i ) { static vector<T> memory = { const_one() , const_one() }; static T curr = const_one(); static uint size = 2; while( size <= i ){ memory.push_back( curr /= size++ ); } return memory[i]; }
-
-
 template <typename T>
 bool operator==( const Polynomial<T>& f0 , const T& t1 )
 {
@@ -433,7 +418,7 @@ template <typename T> inline Polynomial<T> operator/( const Polynomial<T>& f0 , 
 template <typename T , typename P> inline Polynomial<T> operator%( const Polynomial<T>& f0 , const P& f1 ) { return move( Polynomial<T>( f0 ) %= f1 ); }
 template <typename T> Polynomial<T> operator<<( const Polynomial<T>& f , const T& t ) { return move( Polynomial<T>( f ) <<= t ); };
 
-template <typename T , template <typename> typename V>
+template <typename T , template <typename...> typename V>
 T& Prod( V<T>& f )
 {
 

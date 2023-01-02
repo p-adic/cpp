@@ -24,11 +24,14 @@ public:
   inline Polynomial( const Polynomial<T>& f );
   inline Polynomial( Polynomial<T>&& f );
   inline Polynomial( const uint& i , const T& t );
+  inline Polynomial( const vector<T>& f );
   inline Polynomial( vector<T>&& f );
 
-  Polynomial<T>& operator=( const T& t );
-  Polynomial<T>& operator=( const Polynomial<T>& f );
-  Polynomial<T>& operator=( Polynomial<T>&& f );
+  inline Polynomial<T>& operator=( const T& t );
+  inline Polynomial<T>& operator=( const Polynomial<T>& f );
+  inline Polynomial<T>& operator=( Polynomial<T>&& f );
+  inline Polynomial<T>& operator=( const vector<T>& f );
+  inline Polynomial<T>& operator=( vector<T>&& f );
 
   // 係数を参照。capacity変更時に不正な参照となるのでこの返り値を参照型の引数に渡す時は注意。
   inline const T& operator[]( const uint& i ) const;
@@ -73,8 +76,6 @@ public:
   static inline const T& const_zero();
   static inline const T& const_one();
   static inline const T& const_minus_one();
-  static inline const T& factorial( const uint& i );
-  static inline const T& factorial_inverse( const uint& i );
 
 };
 
@@ -95,5 +96,5 @@ template <typename T> inline Polynomial<T> operator<<( const Polynomial<T>& f , 
 
 // 多項式などの列の総乗を分割統治で計算し、その結果を第1成分に格納して参照返しする。
 // V<T>はeraseを持つ必要がある。
-template <typename T , template <typename> typename V>
-T& Prod( V<T>& f )
+template <typename T , template <typename...> typename V>
+T& Prod( V<T>& f );
