@@ -3,8 +3,6 @@
 #pragma once
 #include "a.hpp"
 
-#include "2by2/a_Body.hpp"
-
 template <uint Y , uint X , typename T> inline Matrix<Y,X,T>::Matrix( const T& t ) noexcept : m_M() { operator=( Scalar( t ) ); }
 template <uint Y , uint X , typename T> inline Matrix<Y,X,T>::Matrix( const int& t ) noexcept : Matrix( T( t ) ) {}
 

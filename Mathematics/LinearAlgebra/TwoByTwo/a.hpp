@@ -4,10 +4,15 @@
 // TwoByTwoMatrix( const Matrix<2,2,T>& mat ) ‚Æ inline Matrix<2,2,T> GetMatrix22() const noexcept ‚ÉŽg—p
 #include "../a.hpp"
 
+
+template <typename T> class TwoByOneMatrix;
+
 template <typename T>
 class TwoByTwoMatrix
 {
 
+  friend class TwoByOneMatrix<T>;
+  
 private:
   T m_M00;
   T m_M01;

@@ -12,20 +12,7 @@ template <typename T> inline TwoByTwoMatrix<T>::TwoByTwoMatrix( const int& n ) n
 template <typename T> inline TwoByTwoMatrix<T>::TwoByTwoMatrix( const TwoByTwoMatrix<T>& mat ) noexcept : m_M00( mat.m_M00 ) , m_M01( mat.m_M01 ) , m_M10( mat.m_M10 ) , m_M11( mat.m_M11 ) {}
 template <typename T> inline TwoByTwoMatrix<T>::TwoByTwoMatrix( TwoByTwoMatrix<T>&& mat ) noexcept : m_M00( move( mat.m_M00 ) ) , m_M01( move( mat.m_M01 ) ) , m_M10( move( mat.m_M10 ) ) , m_M11( move( mat.m_M11 ) ) {}
 
-template <typename T>
-TwoByTwoMatrix<T>::TwoByTwoMatrix( const Matrix<2,2,T>& mat )
-  : m_M00() , m_M01() , m_M10() , m_M11()
-{
-
-  const TableTypeForMatrix<T>& M = mat.GetTable();
-  const LineTypeForMatrix<T>& M0 = M[0];
-  const LineTypeForMatrix<T>& M1 = M[1];
-  m_M00 = M0[0];
-  m_M01 = M0[1];
-  m_M10 = M1[0];
-  m_M11 = M1[1];
-
-}
+template <typename T> inline TwoByTwoMatrix<T>::TwoByTwoMatrix( const Matrix<2,2,T>& mat ) : m_M00() , m_M01() , m_M10() , m_M11() { const TableTypeForMatrix<T>& M = mat.GetTable(); const LineTypeForMatrix<T>& M0 = M[0]; const LineTypeForMatrix<T>& M1 = M[1]; m_M00 = M0[0]; m_M01 = M0[1]; m_M10 = M1[0]; m_M11 = M1[1]; }
 
 template <typename T> inline TwoByTwoMatrix<T>& TwoByTwoMatrix<T>::operator=( const TwoByTwoMatrix<T>& mat ) noexcept { if( &mat != this ){ m_M00 = mat.m_M00; m_M01 = mat.m_M01; m_M10 = mat.m_M10; m_M11 = mat.m_M11; } return *this; }
 
