@@ -21,14 +21,15 @@ template <INT_TYPE_FOR_MOD M> inline Mod<M>::Mod( const Mod<M>& n ) noexcept : m
 template <INT_TYPE_FOR_MOD M> inline Mod<M>::Mod( Mod<M>& n ) noexcept : m_n( n.m_n ) {}
 template <INT_TYPE_FOR_MOD M> inline Mod<M>::Mod( Mod<M>&& n ) noexcept : m_n( move( n.m_n ) ) {}
 // nの書き換えを防ぐために明示的にキャスト
-template <INT_TYPE_FOR_MOD M> template<typename T> inline Mod<M>::Mod( T& n , SFINAE_TYPE_FOR_MOD( int ) dummy ) noexcept : m_n( Residue( decay_t<T>( n ) , M ) ) {}
-template <INT_TYPE_FOR_MOD M> template<typename T> inline Mod<M>::Mod( T&& n , SFINAE_TYPE_FOR_MOD( int ) dummy ) noexcept : m_n( Residue( forward<T>( n ) , M ) ) {}
+template <INT_TYPE_FOR_MOD M> template <SFINAE_FOR_MOD()> inline Mod<M>::Mod( T& n ) noexcept : m_n( Residue( decay_t<T>( n ) , M ) ) {}
+template <INT_TYPE_FOR_MOD M> template <SFINAE_FOR_MOD()> inline Mod<M>::Mod( T&& n ) noexcept : m_n( Residue( forward<T>( n ) , M ) ) {}
+
 
 template <INT_TYPE_FOR_MOD M> inline Mod<M>& Mod<M>::operator=( const Mod<M>& n ) noexcept { return Ref( m_n = n.m_n ); }
 
 template <INT_TYPE_FOR_MOD M> inline Mod<M>& Mod<M>::operator+=( const Mod<M>& n ) noexcept { return Ref( Normalise( m_n += n.m_n - M ) ); }
 template <INT_TYPE_FOR_MOD M> inline Mod<M>& Mod<M>::operator-=( const Mod<M>& n ) noexcept { return Ref( Normalise( m_n -= n.m_n ) ); }
-template <INT_TYPE_FOR_MOD M> inline Mod<M>& Mod<M>::operator*=( const Mod<M>& n ) noexcept { return Ref( MontgomeryMultiplication( m_n , n.m_n ) ); }
+template <INT_TYPE_FOR_MOD M> inline Mod<M>& Mod<M>::operator*=( const Mod<M>& n ) noexcept { return Ref( m_n =  MontgomeryMultiplication( m_n , n.m_n ) ); }
 template <INT_TYPE_FOR_MOD M> inline Mod<M>& Mod<M>::operator/=( const Mod<M>& n ) { return operator*=( Mod<M>( n ).Invert() ); }
 
 template <INT_TYPE_FOR_MOD M> inline Mod<M>& Mod<M>::operator++() noexcept { return Ref( m_n < g_M_minus ? ++m_n : m_n = 0 ); }
@@ -50,7 +51,7 @@ DEFINITION_OF_ARITHMETIC_FOR_MOD( / , Mod<M>( forward<T>( n ) ).Invert() *= *thi
 template <INT_TYPE_FOR_MOD M> inline Mod<M> Mod<M>::operator-() const noexcept { return move( Mod<M>( *this ).SignInvert() ); }
 template <INT_TYPE_FOR_MOD M> inline Mod<M>& Mod<M>::SignInvert() noexcept { return Ref( m_n > 0 ? m_n = M - m_n : m_n ); }
 
-template <INT_TYPE_FOR_MOD M> inline Mod<M>& Mod<M>::Invert() { if( m_n <= 0 ){ ERR_INPUT( m_n ); } INT_TYPE_FOR_MOD m_n_neg; return m_n < g_memory_length ? Ref( m_n = Inverse( m_n ).m_n ) : ( m_n_neg = M - m_n < g_memory_length ) ? Ref( m_n = M - Inverse( m_n_neg ).m_n ) : PositivePower( INT_TYPE_FOR_MOD( g_M_minus_2 ) ); }
+template <INT_TYPE_FOR_MOD M> inline Mod<M>& Mod<M>::Invert() { if( m_n == 0 ){ ERR_INPUT( m_n ); } INT_TYPE_FOR_MOD m_n_neg; return m_n < g_memory_length ? Ref( m_n = Inverse( m_n ).m_n ) : ( m_n_neg = M - m_n < g_memory_length ) ? Ref( m_n = M - Inverse( m_n_neg ).m_n ) : PositivePower( INT_TYPE_FOR_MOD( g_M_minus_2 ) ); }
 
 template <> inline Mod<2>& Mod<2>::Invert() { if( m_n == 0 ){ ERR_IMPUT( m_n ); } return *this; }
 

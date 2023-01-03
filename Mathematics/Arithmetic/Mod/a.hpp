@@ -19,9 +19,9 @@ public:
   inline Mod( Mod<M>& n ) noexcept;
   // INT_TYPE_FOR_MODÇ™intÇ»ÇÁÇŒã∞ÇÁÇ≠é¿çsë¨ìxÇ…âeãøÇµÇ»Ç¢Ç™îOÇÃÇΩÇﬂÅB
   inline Mod( Mod<M>&& n ) noexcept;
-  template <typename T> inline Mod( T& n , SFINAE_TYPE_FOR_MOD( int ) dummy = 0 ) noexcept;
-  template <typename T> inline Mod( T&& n , SFINAE_TYPE_FOR_MOD( int ) dummy = 0 ) noexcept;
-  
+  template <SFINAE_FOR_MOD( = nullptr )> inline Mod( T& n ) noexcept;
+  template <SFINAE_FOR_MOD( = nullptr )> inline Mod( T&& n ) noexcept;
+
   inline Mod<M>& operator=( const Mod<M>& n ) noexcept;
   inline Mod<M>& operator+=( const Mod<M>& n ) noexcept;
   inline Mod<M>& operator-=( const Mod<M>& n ) noexcept;
@@ -83,7 +83,7 @@ private:
   static inline INT_TYPE_FOR_MOD MontgomeryForm( const INT_TYPE_FOR_MOD& n ) noexcept;
   static inline ull& MontgomeryReduction( ull& n ) noexcept;
   static inline INT_TYPE_FOR_MOD MontgomeryMultiplication( const INT_TYPE_FOR_MOD& n0 , const INT_TYPE_FOR_MOD& n1 ) noexcept;
-  static inline void Normalise( INT_TYPE_FOR_MOD& n ) noexcept;
+  static inline INT_TYPE_FOR_MOD& Normalise( INT_TYPE_FOR_MOD& n ) noexcept;
   template <typename T> inline Mod<M>& Ref( T&& n ) noexcept;
 
 };
