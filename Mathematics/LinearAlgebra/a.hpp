@@ -1,74 +1,62 @@
 // c:/Users/user/Documents/Programming/Mathematics/LinearAlgebra/a.hpp
 
 #pragma once
-#include "a_Alias.hpp"
 
 template <uint Y , uint X , typename T>
 class Matrix
 {
 
 private:
-  TableTypeForMatrix<T>  m_M;
+  T m_M[Y][X];
 
 public:
+  inline Matrix() noexcept;
   // スカラー行列
-  inline Matrix( const T& t = T() ) noexcept;
+  inline Matrix( const T& t ) noexcept;
   inline Matrix( const int& t ) noexcept;
-  // argsの長さ+2がXYでなくてもコンパイルエラーとならないがサポート外である。
-  template <typename... Args> inline Matrix( const T& t0 , const T& t1 , const Args&... args ) noexcept;
-  template <typename... Args> inline Matrix( T&& t0 , T&& t1 ,  Args&&... args ) noexcept;
+  template <typename Arg0 , typename Arg1 , typename... Args> inline Matrix( Arg0&& t0 , Arg1&& t1 ,  Args&&... args ) noexcept;
 
   inline Matrix( const Matrix<Y,X,T>& mat ) noexcept;
   inline Matrix( Matrix<Y,X,T>&& mat ) noexcept;
 
-  // ( X , Y )行列でないものも引数に取れるがサポート外である。
-  template <typename... Args> inline Matrix( const TableTypeForMatrix<T>& M ) noexcept;
-  template <typename... Args> inline Matrix( TableTypeForMatrix<T>&& M ) noexcept;
+  template <typename... Args> inline Matrix( const T ( &mat )[Y][X] ) noexcept;
+  template <typename... Args> inline Matrix( T ( &&mat )[Y][X] ) noexcept;
 
   inline Matrix<Y,X,T>& operator=( const Matrix<Y,X,T>& mat ) noexcept;
   inline Matrix<Y,X,T>& operator=( Matrix<Y,X,T>&& mat ) noexcept;
+  inline Matrix<Y,X,T>& operator=( const T ( &mat )[Y][X] ) noexcept;
+  inline Matrix<Y,X,T>& operator=( T ( &&mat )[Y][X] ) noexcept;
   
-  Matrix<Y,X,T>& operator+=( const Matrix<Y,X,T>& mat );
-  Matrix<Y,X,T>& operator-=( const Matrix<Y,X,T>& mat );
-  Matrix<Y,X,T>& operator*=( const T& scalar ) noexcept;
+  inline Matrix<Y,X,T>& operator+=( const Matrix<Y,X,T>& mat ) noexcept;
+  inline Matrix<Y,X,T>& operator-=( const Matrix<Y,X,T>& mat ) noexcept;
+  inline Matrix<Y,X,T>& operator*=( const T& scalar ) noexcept;
   inline Matrix<Y,X,T>& operator*=( const Matrix<X,X,T>& mat ) noexcept;
-  Matrix<Y,X,T>& operator%=( const T& scalar ) noexcept;
+  inline Matrix<Y,X,T>& operator/=( const T& scalar );
+  inline Matrix<Y,X,T>& operator%=( const T& scalar );
 
-  // 行や列の長さを変更可能だがサポート外である。
-  inline TableTypeForMatrix<T>& RefTable() noexcept;
-  inline const TableTypeForMatrix<T>& GetTable() const noexcept;
+  inline bool operator==( const Matrix<Y,X,T>& mat ) const noexcept;
+  template <uint Z> inline Matrix<Y,Z,T> operator*( const Matrix<X,Z,T>& mat ) const noexcept;
+  inline Matrix<X,Y,T> Transpose() const noexcept;
+  inline T Trace() const noexcept;
+  
+  inline const T ( &GetTable() const noexcept )[Y][X];
+  inline T ( &RefTable() noexcept )[Y][X];
 
   static inline const Matrix<Y,X,T>& Zero() noexcept;
   static inline const Matrix<Y,X,T>& Unit() noexcept;
-  static Matrix<Y,X,T> Scalar( const T& t ) noexcept;
+  static inline Matrix<Y,X,T> Scalar( const T& t ) noexcept;
 
 private:
-  static inline void ConstructTable( TableTypeForMatrix<T>& M , LineTypeForMatrix<T>& vec ) noexcept;
-  template <typename... Args> static void ConstructTable( TableTypeForMatrix<T>& M , LineTypeForMatrix<T>& vec , const T& t , const Args&... args ) noexcept;
-  template <typename... Args> static void ConstructTable( TableTypeForMatrix<T>& M , LineTypeForMatrix<T>& vec , T&& t , Args&&... args ) noexcept;
-  
-  static Matrix<Y,X,T> Zero_Body() noexcept;
+  static inline void SetArray( T ( &M )[Y][X] , T ( &&array )[Y * X] ) noexcept;
 
 };
 
-template <uint Y , uint X , typename T> inline Matrix<Y,X,T> operator==( const Matrix<Y,X,T>& mat1 , const Matrix<Y,X,T>& mat2 ) noexcept;
-
 template <uint Y , uint X , typename T> inline Matrix<Y,X,T> operator!=( const Matrix<Y,X,T>& mat1 , const Matrix<Y,X,T>& mat2 ) noexcept;
 
-template <uint Y , uint X , typename T> inline Matrix<Y,X,T> operator+( const Matrix<Y,X,T>& mat1 , const Matrix<Y,X,T>& mat2 );
-
-template <uint Y , uint X , typename T> inline Matrix<Y,X,T> operator-( const Matrix<Y,X,T>& mat1 , const Matrix<Y,X,T>& mat2 );
-
-template <uint Y , uint X , uint Z , typename T>
-Matrix<Y,Z,T> operator*( const Matrix<Y,X,T>& mat1 , const Matrix<X,Z,T>& mat2 );
-
-template <uint Y , uint X , typename T> inline Matrix<Y,X,T> operator*( const Matrix<Y,X,T>& mat , const T& scalar );
-template <uint Y , uint X , typename T> inline Matrix<Y,X,T> operator*( const T& scalar , const Matrix<Y,X,T>& mat );
-
+template <uint Y , uint X , typename T> inline Matrix<Y,X,T> operator+( const Matrix<Y,X,T>& mat1 , const Matrix<Y,X,T>& mat2 ) noexcept;
+template <uint Y , uint X , typename T> inline Matrix<Y,X,T> operator-( const Matrix<Y,X,T>& mat1 , const Matrix<Y,X,T>& mat2 ) noexcept;
+template <uint Y , uint X , typename T> inline Matrix<Y,X,T> operator*( const Matrix<Y,X,T>& mat , const T& scalar ) noexcept;
+template <uint Y , uint X , typename T> inline Matrix<Y,X,T> operator*( const T& scalar , const Matrix<Y,X,T>& mat ) noexcept;
+template <uint Y , uint X , typename T> inline Matrix<Y,X,T> operator/( const Matrix<Y,X,T>& mat , const T& scalar );
 template <uint Y , uint X , typename T> inline Matrix<Y,X,T> operator%( const Matrix<Y,X,T>& mat , const T& scalar );
 
-template <uint Y , uint X , typename T>
-Matrix<X,Y,T> Transpose( const Matrix<Y,X,T>& mat );
-
-template <uint X , typename T>
-T Trace( const Matrix<X,X,T>& mat );
