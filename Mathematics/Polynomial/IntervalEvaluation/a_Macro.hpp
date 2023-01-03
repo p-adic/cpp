@@ -16,7 +16,7 @@
 									\
   for( uint y = 0 ; y < Y ; y++ ){					\
 									\
-    const vector<Polynomial<T> >& M_ref_y = M_ref[y];			\
+    const Polynomial<T> ( &M_ref_y )[Y] = M_ref[y];			\
     vector<T> ( &eval_y )[Y] = eval[y];					\
 									\
     for( uint x = 0 ; x < Y ; x++ ){					\
@@ -32,11 +32,11 @@
 									\
   for( uint t = 0 ; t <= SAMPLE_NUM_MAX ; t++ ){			\
 									\
-    vector<vector<T> >& sample_t_ref = sample[t].RefTable();		\
+    T ( &sample_t_ref )[Y][Y] = sample[t].RefTable();				\
 									\
     for( uint y = 0 ; y < Y ; y++ ){					\
 									\
-      vector<T>& sample_t_ref_y = sample_t_ref[y];			\
+      T ( &sample_t_ref_y )[Y] = sample_t_ref[y];				\
       vector<T> ( &eval_y )[Y] = eval[y];				\
 									\
       for( uint x = 0 ; x < Y ; x++ ){					\

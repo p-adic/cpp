@@ -110,12 +110,12 @@ void SetIntervalEvaluation( const uint& deg , const T& t_start , const uint& len
 
   for( uint t = 0 ; t <= deg ; t++ ){
 
-    const vector<vector<T> >& table = sample[t].GetTable();
+    const T ( &table )[Y][Y] = sample[t].GetTable();
 
     for( uint y = 0 ; y < Y ; y++ ){
 
       vector<T> ( &sample_copy_y )[X] = sample_copy[y];
-      const vector<T>& table_y = table[y];
+      const T ( &table_y )[Y] = table[y];
 
       for( uint x = 0 ; x < X ; x++ ){
 
@@ -138,7 +138,7 @@ void SetIntervalEvaluation( const uint& deg , const T& t_start , const uint& len
 
       for( uint i = 0 ; i < length ; i++ ){
 
-	vector<vector<T> >& table = eval[i].RefTable();
+	T ( &table )[Y][Y] = eval[i].RefTable();
 	table[y][x] = sample_copy_yx[i];
 	  
       }
@@ -161,12 +161,12 @@ void SetPRecursiveMatrixAction( const Matrix<Y,Y,Polynomial<T> >& M , Matrix<Y,1
 
   }
 
-  const vector<vector<Polynomial<T> > >& M_ref = M.GetTable();
+  const Polynomial<T> ( &M_ref )[Y][Y] = M.GetTable();
   uint deg = 1;
 
   for( uint y = 0 ; y < Y ; y++ ){
 
-    const vector<Polynomial<T>>& M_ref_y = M_ref[y];
+    const Polynomial<T> ( &M_ref_y )[Y] = M_ref[y];
 
     for( uint x = 0 ; x < Y ; x++ ){
 
