@@ -1,6 +1,7 @@
 // c:/Users/user/Documents/Programming/Mathematics/LinearAlgebra/a.hpp
 
 #pragma once
+#include "a_Macro.hpp"
 
 template <uint Y , uint X , typename T>
 class Matrix
