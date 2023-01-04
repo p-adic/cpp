@@ -2,6 +2,9 @@
 
 #pragma once
 
+#define SFINAE_FOR_POLYNOMIAL( DEFAULT )				\
+  typename Arg , enable_if_t<is_constructible<T,decay_t<Arg> >::value>* DEFAULT \
+
 #define DEFINITION_BODY_OF_PARTIAL_SPECIALISATION_OF_MULTIPLICATION_OF_POLYNOMIAL( TYPE , ARG , RHS ) \
   template <> Polynomial<TYPE>& Polynomial<TYPE>::operator*=( ARG f )	\
   {									\

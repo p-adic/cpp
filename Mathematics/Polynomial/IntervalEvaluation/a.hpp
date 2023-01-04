@@ -16,8 +16,12 @@ void SetIntervalEvaluation( const uint& deg , const T& t_start , const uint& len
 // M(t_start),M(t_start+1)...,M(t_start+length-1)‚ğeval‚ÉŠi”[‚·‚éB
 template <uint Y , uint X , typename T>
 void SetIntervalEvaluation( const uint& deg , const T& t_start , const uint& length , const vector<Matrix<Y,X,T> >& sample , vector<Matrix<Y,X,T> >& eval );
+template <typename T>
+void SetIntervalEvaluation( const uint& deg , const T& t_start , const uint& length , const vector<TwoByTwoMatrix<T> >& sample , vector<TwoByTwoMatrix<T> >& eval );
 
 // T‚ªlengthˆÈ‰º‚Ì³®”‚ğ‰Â‹t‚É‚·‚é‘Ì‚Å‚ ‚éê‡‚Ì‚İƒTƒ|[ƒg
 // M(length-1) ... M(1) M(0) v‚ÌŒvZŒ‹‰Ê‚ğv‚ÉŠi”[‚µ’¼‚·B
 template <uint Y , typename T>
 void SetPRecursiveMatrixAction( const Matrix<Y,Y,Polynomial<T> >& M , Matrix<Y,1,T>& v , const uint& length );
+template <typename T>
+void SetPRecursiveMatrixAction( const TwoByTwoMatrix<Polynomial<T> >& M ,TwoByOneMatrix<T>& v , const uint& length );

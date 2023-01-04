@@ -21,13 +21,19 @@ protected:
 public:
   inline Polynomial();
   inline Polynomial( const T& t );
+  inline Polynomial( T&& t );
+  template <SFINAE_FOR_POLYNOMIAL( = nullptr )> inline Polynomial( const Arg& n );
   inline Polynomial( const Polynomial<T>& f );
   inline Polynomial( Polynomial<T>&& f );
   inline Polynomial( const uint& i , const T& t );
+  inline Polynomial( const uint& i , T&& t );
+  template <SFINAE_FOR_POLYNOMIAL( = nullptr )> inline Polynomial( const uint& i , const Arg& n );
   inline Polynomial( const vector<T>& f );
   inline Polynomial( vector<T>&& f );
 
   inline Polynomial<T>& operator=( const T& t );
+  inline Polynomial<T>& operator=( T&& t );
+  template <SFINAE_FOR_POLYNOMIAL( = nullptr )> inline Polynomial<T>& operator=( const Arg& n );
   inline Polynomial<T>& operator=( const Polynomial<T>& f );
   inline Polynomial<T>& operator=( Polynomial<T>&& f );
   inline Polynomial<T>& operator=( const vector<T>& f );
@@ -40,11 +46,8 @@ public:
   // ‘ã“ü
   inline T operator()( const T& t ) const;
 
-  inline Polynomial<T>& operator+=( const T& t );
   Polynomial<T>& operator+=( const Polynomial<T>& f );
-  inline Polynomial<T>& operator-=( const T& t );
   Polynomial<T>& operator-=( const Polynomial<T>& f );
-  Polynomial<T>& operator*=( const T& t );
   Polynomial<T>& operator*=( const Polynomial<T>& f );
   Polynomial<T>& operator*=( Polynomial<T>&& f );
   Polynomial<T>& operator/=( const T& t );

@@ -151,6 +151,54 @@ void SetIntervalEvaluation( const uint& deg , const T& t_start , const uint& len
 
 }
 
+template <typename T>
+void SetIntervalEvaluation( const uint& deg , const T& t_start , const uint& length , const vector<TwoByTwoMatrix<T> >& sample , vector<TwoByTwoMatrix<T> >& eval )
+{
+
+  eval = vector<TwoByTwoMatrix<T> >( length , TwoByTwoMatrix<T>() );
+  vector<T> sample_copy[2][2] = {};
+
+  for( uint t = 0 ; t <= deg ; t++ ){
+
+    const TwoByTwoMatrix<T>& sample_t = sample[t];
+
+    for( uint y = 0 ; y < 2 ; y++ ){
+
+      vector<T> ( &sample_copy_y )[2] = sample_copy[y];
+
+      for( uint x = 0 ; x < 2 ; x++ ){
+
+	sample_copy_y[x].push_back( sample_t.GetEntry( y , x ) );
+       
+      }
+
+    }
+
+  }
+  
+  for( uint y = 0 ; y < 2 ; y++ ){
+
+    vector<T> ( &sample_copy_y )[2] = sample_copy[y];
+
+    for( uint x = 0 ; x < 2 ; x++ ){
+
+      vector<T>& sample_copy_yx = sample_copy_y[x];
+      SetIntervalEvaluation( deg , t_start , length , sample_copy_yx );
+
+      for( uint i = 0 ; i < length ; i++ ){
+
+	eval[i].RefEntry( y , x ) = sample_copy_yx[i];
+	  
+      }
+      
+    }
+
+  }
+
+  return;
+
+}
+
 template <uint Y , typename T>
 void SetPRecursiveMatrixAction( const Matrix<Y,Y,Polynomial<T> >& M , Matrix<Y,1,T>& v , const uint& length )
 {
@@ -236,6 +284,101 @@ void SetPRecursiveMatrixAction( const Matrix<Y,Y,Polynomial<T> >& M , Matrix<Y,1
     const uint rest_num_lim = length - t_rest_start;
     const uint rest_num_max = rest_num_lim - 1;
     SET_MATRIX_MULTIPOINT_EVALUATION( rest_num_max , rest_num_lim , t + t_rest_start );
+  
+    for( uint t = 0 ; t <= rest_num_max ; t++ ){
+
+      v = sample[t] * v;
+
+    }
+
+  }
+
+  return;
+
+}
+
+template <typename T>
+void SetPRecursiveMatrixAction( const TwoByTwoMatrix<Polynomial<T> >& M , TwoByOneMatrix<T>& v , const uint& length )
+{
+
+  if( length == 0 ){
+
+    return;
+
+  }
+
+  uint deg = 1;
+
+  for( uint y = 0 ; y < 2 ; y++ ){
+
+    for( uint x = 0 ; x < 2 ; x++ ){
+
+      const uint& size = M.GetEntry( y , x ).size();
+
+      if( deg < size ){
+
+	deg = size;
+
+      }      
+
+    }
+
+  }
+
+  deg--;
+  uint interval_length = 1;
+  int exponent = 0;
+
+  while( interval_length * ( interval_length * deg + 1 ) <= length ){
+
+    interval_length *= 2;
+    exponent++;
+
+  }
+
+  interval_length /= 2;
+  exponent--;
+  uint interval_num_max;
+  uint t_rest_start;
+  vector<T> point{};
+
+  if( exponent > 0 ){
+
+    const uint interval_num_lim = length / interval_length;
+    interval_num_max = interval_num_lim - 1;
+    t_rest_start = interval_length * interval_num_lim;
+    uint subinterval_num_max = deg;
+    T subinterval_length = Polynomial<T>::const_one();
+    SET_2by2MATRIX_MULTIPOINT_EVALUATION( subinterval_num_max , interval_num_lim , t * interval_length );
+    
+    for( int e = 1 ; e < exponent ; e++ ){
+
+      MULTIPLY_SUBPRODUCT_OF_PRECURSIVE_2by2MATRIX( subinterval_num_max );
+      subinterval_num_max *= 2;
+      subinterval_length *= 2;
+
+    }
+
+    uint rest_interval_length = interval_num_max - subinterval_num_max;
+    MULTIPLY_SUBPRODUCT_OF_PRECURSIVE_2by2MATRIX( rest_interval_length );
+
+    for( uint t = 0 ; t <= interval_num_max ; t++ ){
+
+      v = sample[t] * v;
+
+    }
+
+  } else {
+
+    interval_num_max = t_rest_start = 0;
+
+  }
+
+  if( t_rest_start < length ){
+    
+    const uint rest_num_lim = length - t_rest_start;
+    const uint rest_num_max = rest_num_lim - 1;
+    SET_2by2MATRIX_MULTIPOINT_EVALUATION( rest_num_max , rest_num_lim , t + t_rest_start );
   
     for( uint t = 0 ; t <= rest_num_max ; t++ ){
 
