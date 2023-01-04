@@ -2,5 +2,10 @@
 
 #pragma once
 
-template <typename INT> inline INT Residue( const INT& n , const INT& M ) noexcept;
-template <typename INT> inline INT Residue( INT&& n , const INT& M ) noexcept;
+template <typename INT1 , typename INT2> inline INT1 Residue( const INT1& n , const INT2& M ) noexcept;
+// n‚ªQÆ‚Å“n‚³‚ê‚é‚Ì‚Ån‚ª•Ï‰»‚·‚é‚±‚Æ‚É’ˆÓB
+template <typename INT1 , typename INT2> inline INT1& Residue( INT1& n , const INT2& M ) noexcept;
+template <typename INT1 , typename INT2> inline INT1 Residue( INT1&& n , const INT2& M ) noexcept;
+
+template <typename INT1 , typename INT2> inline constexpr INT1 Residue_constexpr( const INT1& n , const INT2& M ) noexcept;
+
