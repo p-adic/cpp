@@ -16,16 +16,16 @@ template <typename T> inline constexpr TwoByTwoMatrix<T>& TwoByTwoMatrix<T>::ope
 
 template <typename T> inline constexpr TwoByTwoMatrix<T>& TwoByTwoMatrix<T>::operator=( TwoByTwoMatrix<T>&& mat ) noexcept { m_M00 = move( mat.m_M00 ); m_M01 = move( mat.m_M01 ); m_M10 = move( mat.m_M10 ); m_M11 = move( mat.m_M11 ); return *this; }
 
-template <typename T> inline constexpr TwoByTwoMatrix<T>& TwoByTwoMatrix<T>::operator+=( const TwoByTwoMatrix<T>& mat ) noexcept { m_M00 += mat.m_M00; m_M01 += mat.m_M01; m_M10 += mat.m_M10; m_M11 += mat.m_M11; return *this; }
-template <typename T> inline constexpr TwoByTwoMatrix<T>& TwoByTwoMatrix<T>::operator-=( const TwoByTwoMatrix<T>& mat ) noexcept { m_M00 -= mat.m_M00; m_M01 -= mat.m_M01; m_M10 -= mat.m_M10; m_M11 -= mat.m_M11; return *this; }
+template <typename T> inline TwoByTwoMatrix<T>& TwoByTwoMatrix<T>::operator+=( const TwoByTwoMatrix<T>& mat ) noexcept { m_M00 += mat.m_M00; m_M01 += mat.m_M01; m_M10 += mat.m_M10; m_M11 += mat.m_M11; return *this; }
+template <typename T> inline TwoByTwoMatrix<T>& TwoByTwoMatrix<T>::operator-=( const TwoByTwoMatrix<T>& mat ) noexcept { m_M00 -= mat.m_M00; m_M01 -= mat.m_M01; m_M10 -= mat.m_M10; m_M11 -= mat.m_M11; return *this; }
 template <typename T> inline constexpr TwoByTwoMatrix<T>& TwoByTwoMatrix<T>::operator*=( const TwoByTwoMatrix<T>& mat ) noexcept { return operator=( *this * mat ); }
 template <typename T> inline constexpr TwoByTwoMatrix<T>& TwoByTwoMatrix<T>::operator*=( const T& scalar ) noexcept { m_M00 *= scalar; m_M01 *= scalar; m_M10 *= scalar; m_M11 *= scalar; return *this; }
 template <typename T> template <SFINAE_FOR_MATRIX()> inline constexpr TwoByTwoMatrix<T>& TwoByTwoMatrix<T>::operator*=( const Arg& scalar ) noexcept { return operator*=( T( scalar ) ); }
 template <typename T> inline TwoByTwoMatrix<T>& TwoByTwoMatrix<T>::operator/=( const TwoByTwoMatrix<T>& mat ) { return operator=( *this / mat ); }
 template <typename T> inline TwoByTwoMatrix<T>& TwoByTwoMatrix<T>::operator/=( const T& scalar ) { return operator*=( T( 1 ) / scalar ); }
-template <typename T> template <SFINAE_FOR_MATRIX()> inline constexpr TwoByTwoMatrix<T>& TwoByTwoMatrix<T>::operator/=( const Arg& scalar ) noexcept { return operator/=( T( scalar ) ); }
+template <typename T> template <SFINAE_FOR_MATRIX()> inline constexpr TwoByTwoMatrix<T>& TwoByTwoMatrix<T>::operator/=( const Arg& scalar ) { return operator/=( T( scalar ) ); }
 template <typename T> inline TwoByTwoMatrix<T>& TwoByTwoMatrix<T>::operator%=( const T& scalar ) { m_M00 %= scalar; m_M01 %= scalar; m_M10 %= scalar; m_M11 %= scalar; return *this; }
-template <typename T> template <SFINAE_FOR_MATRIX()> inline constexpr TwoByTwoMatrix<T>& TwoByTwoMatrix<T>::operator%=( const Arg& scalar ) noexcept { return operator%=( T( scalar ) ); }
+template <typename T> template <SFINAE_FOR_MATRIX()> inline constexpr TwoByTwoMatrix<T>& TwoByTwoMatrix<T>::operator%=( const Arg& scalar ) { return operator%=( T( scalar ) ); }
 
 template <typename T> inline TwoByTwoMatrix<T>& TwoByTwoMatrix<T>::Invert() { const T det_inv{ T( 1 ) / ( m_M00 * m_M11 - m_M01 * m_M10 ) }; swap( m_M00 , m_M11 ); m_M01 = T() - m_M01; m_M11 = T() - m_M10; return operator*=( det_inv ); }
 
@@ -40,8 +40,8 @@ template <typename T> inline constexpr TwoByTwoMatrix<T> TwoByTwoMatrix<T>::Squa
 template <typename T> inline constexpr const T& TwoByTwoMatrix<T>::GetEntry( const uint& y , const uint& x ) const noexcept { return y == 0 ? x == 0 ? m_M00 : m_M01 : x == 0 ? m_M10 : m_M11; }
 template <typename T> inline constexpr T& TwoByTwoMatrix<T>::RefEntry( const uint& y , const uint& x ) noexcept { return y == 0 ? x == 0 ? m_M00 : m_M01 : x == 0 ? m_M10 : m_M11; }
 
-template <typename T> inline constexpr TwoByTwoMatrix<T> operator+( const TwoByTwoMatrix<T>& mat1 , const TwoByTwoMatrix<T>& mat2 ) noexcept { return move( TwoByTwoMatrix<T>( mat1 ) += mat2 ); }
-template <typename T> inline constexpr TwoByTwoMatrix<T> operator-( const TwoByTwoMatrix<T>& mat1 , const TwoByTwoMatrix<T>& mat2 ) noexcept { return move( TwoByTwoMatrix<T>( mat1 ) -= mat2 ); }
+template <typename T> inline TwoByTwoMatrix<T> operator+( const TwoByTwoMatrix<T>& mat1 , const TwoByTwoMatrix<T>& mat2 ) noexcept { return move( TwoByTwoMatrix<T>( mat1 ) += mat2 ); }
+template <typename T> inline TwoByTwoMatrix<T> operator-( const TwoByTwoMatrix<T>& mat1 , const TwoByTwoMatrix<T>& mat2 ) noexcept { return move( TwoByTwoMatrix<T>( mat1 ) -= mat2 ); }
 template <typename T> inline constexpr TwoByTwoMatrix<T> operator*( const T& scalar , const TwoByTwoMatrix<T>& mat ) noexcept { return move( TwoByTwoMatrix<T>( mat ) *= scalar ); }
 template <typename T , SFINAE_FOR_MATRIX()> inline constexpr TwoByTwoMatrix<T> operator*( const Arg& scalar , const TwoByTwoMatrix<T>& mat ) noexcept { return T( scalar ) * mat; }
 template <typename T> inline constexpr TwoByTwoMatrix<T> operator*( const TwoByTwoMatrix<T>& mat , const T& scalar ) noexcept { return move( TwoByTwoMatrix<T>( mat ) *= scalar ); }

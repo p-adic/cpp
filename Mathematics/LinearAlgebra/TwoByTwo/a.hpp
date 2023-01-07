@@ -1,8 +1,9 @@
 // c:/Users/user/Documents/Programming/Mathematics/LinearAlgebra/TwoByTwo/a.hpp
 
 #pragma once
+#include "a_Macro.hpp"
+
 #include "../TwoByOne/a.hpp"
-#include "../a_Macro.hpp"
 
 template <typename T>
 class TwoByTwoMatrix
@@ -24,8 +25,8 @@ public:
   
   inline constexpr TwoByTwoMatrix<T>& operator=( const TwoByTwoMatrix<T>& mat ) noexcept;
   inline constexpr TwoByTwoMatrix<T>& operator=( TwoByTwoMatrix<T>&& mat ) noexcept;
-  inline constexpr TwoByTwoMatrix<T>& operator+=( const TwoByTwoMatrix<T>& mat ) noexcept;
-  inline constexpr TwoByTwoMatrix<T>& operator-=( const TwoByTwoMatrix<T>& mat ) noexcept;
+  inline TwoByTwoMatrix<T>& operator+=( const TwoByTwoMatrix<T>& mat ) noexcept;
+  inline TwoByTwoMatrix<T>& operator-=( const TwoByTwoMatrix<T>& mat ) noexcept;
   inline constexpr TwoByTwoMatrix<T>& operator*=( const TwoByTwoMatrix<T>& mat ) noexcept;
   inline constexpr TwoByTwoMatrix<T>& operator*=( const T& scalar ) noexcept;
   template <SFINAE_FOR_MATRIX( = nullptr )> inline constexpr TwoByTwoMatrix<T>& operator*=( const Arg& scalar ) noexcept;
@@ -48,7 +49,7 @@ public:
   
 };
 
-template <typename T> inline constexpr TwoByTwoMatrix<T> operator+( const TwoByTwoMatrix<T>& mat1 , const TwoByTwoMatrix<T>& mat2 ) noexcept;
+template <typename T> inline TwoByTwoMatrix<T> operator+( const TwoByTwoMatrix<T>& mat1 , const TwoByTwoMatrix<T>& mat2 ) noexcept;
 template <typename T> inline constexpr TwoByTwoMatrix<T> operator-( const TwoByTwoMatrix<T>& mat1 , const TwoByTwoMatrix<T>& mat2 ) noexcept;
 template <typename T> inline constexpr TwoByTwoMatrix<T> operator*( const T& scalar , const TwoByTwoMatrix<T>& mat ) noexcept;
 template <typename T , SFINAE_FOR_MATRIX( = nullptr )> inline constexpr TwoByTwoMatrix<T> operator*( const Arg& scalar , const TwoByTwoMatrix<T>& mat ) noexcept;
