@@ -31,7 +31,7 @@ template <typename T> inline TruncatedPolynomial<T>& TruncatedPolynomial<T>::ope
 template <typename T> inline TruncatedPolynomial<T>& TruncatedPolynomial<T>::operator=( TruncatedPolynomial<T>&& f ) { Polynomial<T>::operator=( move( f ) ); m_N = move( f.m_N ); Polynomial<T>::m_f.reserve( m_N ); return *this; }
 template <typename T> inline TruncatedPolynomial<T>& TruncatedPolynomial<T>::operator=( const T& t ) { Polynomial<T>::operator=( t ); return *this; }
 template <typename T> inline TruncatedPolynomial<T>& TruncatedPolynomial<T>::operator=( T&& t ) { Polynomial<T>::operator=( move( t ) ); return *this; }
-template <typename T> inline TruncatedPolynomial<T>& TruncatedPolynomial<T>::operator=( const int& n ) { Polynomial<T>::operator=( T( n ) ); return *this; }
+template <typename T> template <SFINAE_FOR_POLYNOMIAL()> inline TruncatedPolynomial<T>& TruncatedPolynomial<T>::operator=( const Arg& n ) { Polynomial<T>::operator=( T( n ) ); return *this; }
 template <typename T> inline TruncatedPolynomial<T>& TruncatedPolynomial<T>::operator=( const Polynomial<T>& f ) { return operator=( TruncatedPolynomial<T>( m_N , f ) ); }
 template <typename T> inline TruncatedPolynomial<T>& TruncatedPolynomial<T>::operator=( Polynomial<T>&& f ) { return operator=( TruncatedPolynomial<T>( m_N , move( f ) ) ); }
 
