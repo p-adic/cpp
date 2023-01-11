@@ -11,47 +11,6 @@ template <INT_TYPE_FOR_MOD M> inline constexpr ull& Montgomery<M>::Reduction( ul
 template <INT_TYPE_FOR_MOD M> inline constexpr ull& Montgomery<M>::ReducedMultiplication( ull& n , const INT_TYPE_FOR_MOD& m ) noexcept { return Reduction( n *= m ); }
 template <INT_TYPE_FOR_MOD M> inline constexpr INT_TYPE_FOR_MOD Montgomery<M>::Multiplication( const INT_TYPE_FOR_MOD& n0 , const INT_TYPE_FOR_MOD& n1 ) noexcept { ull n0_copy = n0; return INT_TYPE_FOR_MOD( move( ReducedMultiplication( ReducedMultiplication( n0_copy , n1 ) , ConstantsForMod<M>::g_Montgomery_base_square_mod ) ) ); }
 
-// ullを使わないモンゴメリ乗算。operatorの左辺値をまとめてもullを使うものより遅い。
-// ConstantsForMod<M>::g_Montgomery_digitが偶数で32未満の時のみ有効
-// template <INT_TYPE_FOR_MOD M> inline constexpr INT_TYPE_FOR_MOD& Montgomery<M>::ReducedMultiplication( INT_TYPE_FOR_MOD& n0 , INT_TYPE_FOR_MOD n1 ) noexcept
-// {
-
-//   constexpr const uint M_neg_inverse_d = ConstantsForMod<M>::g_Montgomery_M_neg_inverse & ConstantsForMod<M>::g_Montgomery_base_sqrt_minus;
-//   constexpr const uint M_neg_inverse_u = ConstantsForMod<M>::g_Montgomery_M_neg_inverse >> ConstantsForMod<M>::g_Montgomery_digit_half;
-//   constexpr const uint M_d = M & ConstantsForMod<M>::g_Montgomery_base_sqrt_minus;
-//   constexpr const uint M_u = M >> ConstantsForMod<M>::g_Montgomery_digit_half;
-  
-//   uint n0_u = BaseSquareTruncation( n0 );
-//   uint n1_u = BaseSquareTruncation( n1 );
-//   uint n0_uu = n0_u * n1_u;
-//   n0_u *= n1;
-//   n1_u *= n0;
-//   n0 *= n1;
-//   ( n0_u += n1_u ) += BaseSquareTruncation( n0 );
-//   n0_uu += BaseSquareTruncation( n0_u );
-
-//   n1_u = n0_u;
-//   n1 = n0;
-
-//   ( n1_u *= M_neg_inverse_d ) += ( n1 * M_neg_inverse_u );
-//   n1 *= M_neg_inverse_d;
-//   ( n1_u += BaseSquareTruncation( n1 ) ) &= ConstantsForMod<M>::g_Montgomery_base_sqrt_minus;
-
-//   n0_uu += n1_u * M_u;
-//   ( n1_u *= M_d ) += ( n1 * M_u );
-//   n1 *= M_d;
-//   n1_u += BaseSquareTruncation( n1 );
-//   n0_uu += BaseSquareTruncation( n1_u );
-
-//   n0_u += n1_u;
-//   n0 += n1;
-//   n0_u += n0 >>= ConstantsForMod<M>::g_Montgomery_digit_half; 
-//   n0_uu += n0_u >>= ConstantsForMod<M>::g_Montgomery_digit_half; 
-//   n0 = move( Normalise( n0_uu ) );
-//   return n0;
-
-// }
-
 template <INT_TYPE_FOR_MOD M> inline constexpr uint Montgomery<M>::BaseSquareTruncation( INT_TYPE_FOR_MOD& n ) noexcept { const uint n_u = n >> ConstantsForMod<M>::g_Montgomery_digit_half; n &= ConstantsForMod<M>::g_Montgomery_base_sqrt_minus; return n_u; }
 
 template <INT_TYPE_FOR_MOD M> inline constexpr Montgomery<M>::Montgomery() noexcept : Mod<M>() { static_assert( ! ConstantsForMod<M>::g_even ); }
