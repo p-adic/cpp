@@ -16,7 +16,7 @@ template <typename T> inline constexpr TwoByOneMatrix<T>& TwoByOneMatrix<T>::ope
 
 template <typename T> inline constexpr TwoByOneMatrix<T>& TwoByOneMatrix<T>::operator+=( const TwoByOneMatrix<T>& mat ) noexcept { m_M0 += mat.m_M0; m_M1 += mat.m_M1; return *this; }
 template <typename T> inline constexpr TwoByOneMatrix<T>& TwoByOneMatrix<T>::operator-=( const TwoByOneMatrix<T>& mat ) noexcept { m_M0 -= mat.m_M0; m_M1 -= mat.m_M1; return *this; }
-template <typename T> inline constexpr TwoByOneMatrix<T>& TwoByOneMatrix<T>::operator*=( const TwoByTwoMatrix<T>& mat ) noexcept { return operator=( mat * *this ); }
+template <typename T> inline TwoByOneMatrix<T>& TwoByOneMatrix<T>::operator*=( const TwoByTwoMatrix<T>& mat ) noexcept { return operator=( mat * *this ); }
 template <typename T> inline constexpr TwoByOneMatrix<T>& TwoByOneMatrix<T>::operator*=( const T& scalar ) noexcept { m_M0 *= scalar; m_M1 *= scalar; return *this; }
 template <typename T> template <SFINAE_FOR_MATRIX()> inline constexpr TwoByOneMatrix<T>& TwoByOneMatrix<T>::operator*=( const Arg& scalar ) noexcept { return operator*=( T( scalar ) ); }
 template <typename T> inline TwoByOneMatrix<T>& TwoByOneMatrix<T>::operator/=( const T& scalar ) { m_M0 /= scalar; m_M1 /= scalar; return *this; }

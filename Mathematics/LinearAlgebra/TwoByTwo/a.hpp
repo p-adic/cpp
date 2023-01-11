@@ -27,7 +27,7 @@ public:
   inline constexpr TwoByTwoMatrix<T>& operator=( TwoByTwoMatrix<T>&& mat ) noexcept;
   inline TwoByTwoMatrix<T>& operator+=( const TwoByTwoMatrix<T>& mat ) noexcept;
   inline TwoByTwoMatrix<T>& operator-=( const TwoByTwoMatrix<T>& mat ) noexcept;
-  inline constexpr TwoByTwoMatrix<T>& operator*=( const TwoByTwoMatrix<T>& mat ) noexcept;
+  inline TwoByTwoMatrix<T>& operator*=( const TwoByTwoMatrix<T>& mat ) noexcept;
   inline constexpr TwoByTwoMatrix<T>& operator*=( const T& scalar ) noexcept;
   template <SFINAE_FOR_MATRIX( = nullptr )> inline constexpr TwoByTwoMatrix<T>& operator*=( const Arg& scalar ) noexcept;
   inline TwoByTwoMatrix<T>& operator/=( const TwoByTwoMatrix<T>& mat );
@@ -38,8 +38,8 @@ public:
 
   inline TwoByTwoMatrix<T>& Invert();
 
-  inline constexpr TwoByTwoMatrix<T> operator*( const TwoByTwoMatrix<T>& mat ) const noexcept;
-  inline constexpr TwoByOneMatrix<T> operator*( const TwoByOneMatrix<T>& mat ) const noexcept;
+  inline TwoByTwoMatrix<T> operator*( const TwoByTwoMatrix<T>& mat ) const noexcept;
+  inline TwoByOneMatrix<T> operator*( const TwoByOneMatrix<T>& mat ) const noexcept;
   inline TwoByTwoMatrix<T> operator/( const TwoByTwoMatrix<T>& mat ) const;
   inline constexpr TwoByTwoMatrix<T> Square() const noexcept;
 

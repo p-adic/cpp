@@ -26,7 +26,7 @@ public:
   inline constexpr TwoByOneMatrix<T>& operator+=( const TwoByOneMatrix<T>& mat ) noexcept;
   inline constexpr TwoByOneMatrix<T>& operator-=( const TwoByOneMatrix<T>& mat ) noexcept;
   // ç∂Ç©ÇÁÇÃêœ
-  inline constexpr TwoByOneMatrix<T>& operator*=( const TwoByTwoMatrix<T>& mat ) noexcept;
+  inline TwoByOneMatrix<T>& operator*=( const TwoByTwoMatrix<T>& mat ) noexcept;
   inline constexpr TwoByOneMatrix<T>& operator*=( const T& scalar ) noexcept;
   template <SFINAE_FOR_MATRIX( = nullptr )> inline constexpr TwoByOneMatrix<T>& operator*=( const Arg& scalar ) noexcept;
   inline TwoByOneMatrix<T>& operator/=( const T& scalar );
