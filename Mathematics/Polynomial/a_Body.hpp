@@ -67,9 +67,31 @@ template <typename T>
 Polynomial<T>& Polynomial<T>::operator+=( const Polynomial<T>& f )
 {
 
-  for( uint i = 0 ; i < f.m_size ; i++ ){
+  if( m_size < f.m_size ){
 
-    operator[]( i ) += f.m_f[i];
+    m_f.reserve( f.m_size );
+
+    for( uint i = 0 ; i < m_size ; i++ ){
+
+      m_f[i] += f.m_f[i];
+
+    }
+
+    for( uint i = m_size ; i < f.m_size ; i++ ){
+
+      m_f.push_back( f.m_f[i] );
+
+    }
+
+    m_size = f.m_size;
+
+  } else {
+
+    for( uint i = 0 ; i < f.m_size ; i++ ){
+
+      m_f[i] += f.m_f[i];
+
+    }
 
   }
 
@@ -81,17 +103,37 @@ template <typename T>
 Polynomial<T>& Polynomial<T>::operator-=( const Polynomial<T>& f )
 {
 
-  for( uint i = 0 ; i < f.m_size ; i++ ){
+  if( m_size < f.m_size ){
 
-    operator[]( i ) -= f.m_f[i];
+    m_f.reserve( f.m_size );
+
+    for( uint i = 0 ; i < m_size ; i++ ){
+
+      m_f[i] -= f.m_f[i];
+
+    }
+
+    for( uint i = m_size ; i < f.m_size ; i++ ){
+
+      m_f.push_back( - f.m_f[i] );
+
+    }
+
+    m_size = f.m_size;
+
+  } else {
+
+    for( uint i = 0 ; i < f.m_size ; i++ ){
+
+      m_f[i] -= f.m_f[i];
+
+    }
 
   }
 
   return *this;
 
 }
-
-DEFINITION_OF_PARTIAL_SPECIALISATION_OF_MULTIPLICATION_OF_POLYNOMIAL( Mod<998244353> );
 
 template <typename T>
 Polynomial<T>& Polynomial<T>::operator*=( const Polynomial<T>& f )
@@ -117,7 +159,7 @@ Polynomial<T>& Polynomial<T>::operator*=( const Polynomial<T>& f )
   for( uint i = 0 ; i < size ; i++ ){
 
     T& product_i = product[i];
-    const uint j_min = m_size <= i ? i - m_size + 1 : 0;
+    const uint j_min = m_size > i ? 0 : i - m_size + 1;
     const uint j_lim = i < f.m_size ? i + 1 : f.m_size;
       
     for( uint j = j_min ; j < j_lim ; j++ ){
@@ -153,47 +195,6 @@ Polynomial<T>& Polynomial<T>::operator/=( const T& t )
   }
 
   return *this;
-
-}
-
-template <typename T> inline Polynomial<T>& Polynomial<T>::operator/=( const Polynomial<T>& f ) { return m_size < f.m_size ? *this : operator=( Quotient( *this , f ) ); }
-
-template <typename T>
-Polynomial<T> Polynomial<T>::Quotient( const Polynomial<T>& f0 , const Polynomial<T>& f1 )
-{
-
-  if( f0.m_size < f1.m_size ){
-
-    return f0;
-
-  }
-
-  if( f1.m_size == 0 ){
-
-    ERR_IMPUT( f0 , f1 , f1.m_size );
-
-  }
-
-  const uint f0_transpose_size = f0.m_size - f1.m_size + 1;
-  const uint f1_transpose_size = f0_transpose_size < f1.m_size ? f0_transpose_size : f1.m_size;
-  return TransposeQuotient( f0 , f0_transpose_size , Inverse( TruncatedPolynomial<T>( f0_transpose_size , Transpose( f1 , f1_transpose_size ) ) ) , f1.m_size );
-
-}
-
-template <typename T>
-Polynomial<T> Polynomial<T>::TransposeQuotient( const Polynomial<T>& f0 , const uint& f0_transpose_size , const Polynomial<T>& f1_transpose_inverse , const uint& f1_size )
-{
-
-  TruncatedPolynomial<T> f0_transpose{ f0_transpose_size , Transpose( f0 , f0_transpose_size ) };
-  f0_transpose *= f1_transpose_inverse;
-
-  for( uint d0 = ( f0_transpose_size + 1 ) / 2 ; d0 < f0_transpose_size ; d0++ ){
-
-    ::swap( f0_transpose.Polynomial<T>::m_f[d0] , f0_transpose.Polynomial<T>::m_f[ f0_transpose_size - 1 - d0 ] );
-
-  }
-
-  return f0_transpose;
 
 }
 
@@ -233,59 +234,7 @@ Polynomial<T>& Polynomial<T>::operator%=( const T& t )
 
 }
 
-template <typename T>
-Polynomial<T>& Polynomial<T>::operator%=( const Polynomial<T>& f )
-{
-
-  if( m_size >= f.m_size ){
-
-    operator-=( ( *this / f ) * f );
-    RemoveRedundantZero();
-
-  }
-
-  return *this;
-
-}
-
 template <typename T> inline Polynomial<T> Polynomial<T>::operator-() const { return move( Polynomial<T>() -= *this ); }
-
-
-template <typename T >
-Polynomial<T>& Polynomial<T>::operator<<=( const T& t )
-{
-
-  if( m_size > 0 ){
-
-    for( uint d = 0 ; d < m_size ; d++ ){
-
-      m_f[d] *= T::Factorial( d );
-
-    }
-
-    TruncatedPolynomial<T> exp_t_transpose{ m_size * 2 };
-    T power_t = const_one();
-  
-    for( uint d = 0 ; d < m_size ; d++ ){
-
-      exp_t_transpose[m_size - 1 - d] = power_t * T::FactorialInverse( d );
-      power_t *= t;
-
-    }
-
-    exp_t_transpose *= *this;
-  
-    for( uint d = 0 ; d < m_size ; d++ ){
-
-      m_f[d] = exp_t_transpose.Polynomial<T>::m_f[d + m_size - 1] * T::FactorialInverse( d );
-
-    }
-
-  }
-
-  return *this;
-
-}
 
 template <typename T> inline const vector<T>& Polynomial<T>::GetCoefficient() const noexcept { return m_f; }
 template <typename T> inline const uint& Polynomial<T>::size() const noexcept { return m_size; }
@@ -390,9 +339,6 @@ template <typename T , typename P> inline Polynomial<T> operator-( const Polynom
 template <typename T , typename P> inline Polynomial<T> operator-( const Polynomial<T>& f0 , const P& f1 ) { return move( Polynomial<T>( f0 ) -= f1 ); }
 template <typename T , typename P> inline Polynomial<T> operator*( const Polynomial<T>& f0 , const P& f1 ) { return move( Polynomial<T>( f0 ) *= f1 ); }
 template <typename T> inline Polynomial<T> operator/( const Polynomial<T>& f0 , const T& t1 ) { return move( Polynomial<T>( f0 ) /= t1 ); }
-template <typename T> inline Polynomial<T> operator/( const Polynomial<T>& f0 , const Polynomial<T>& f1 ) { return Polynomial<T>::Quotient( f0 , f1 ); }
-template <typename T , typename P> inline Polynomial<T> operator%( const Polynomial<T>& f0 , const P& f1 ) { return move( Polynomial<T>( f0 ) %= f1 ); }
-template <typename T> Polynomial<T> operator<<( const Polynomial<T>& f , const T& t ) { return move( Polynomial<T>( f ) <<= t ); };
 
 template <typename T , template <typename...> typename V>
 T& Prod( V<T>& f )
@@ -429,3 +375,101 @@ T& Prod( V<T>& f )
   return Prod( f );
 
 }
+
+
+// à»â∫TruncatedPolynomial<T>ÇégópÅB
+template <typename T> inline Polynomial<T>& Polynomial<T>::operator/=( const Polynomial<T>& f ) { return m_size < f.m_size ? *this : operator=( Quotient( *this , f ) ); }
+
+template <typename T>
+Polynomial<T> Polynomial<T>::Quotient( const Polynomial<T>& f0 , const Polynomial<T>& f1 )
+{
+
+  if( f0.m_size < f1.m_size ){
+
+    return f0;
+
+  }
+
+  if( f1.m_size == 0 ){
+
+    ERR_IMPUT( f0 , f1 , f1.m_size );
+
+  }
+
+  const uint f0_transpose_size = f0.m_size - f1.m_size + 1;
+  const uint f1_transpose_size = f0_transpose_size < f1.m_size ? f0_transpose_size : f1.m_size;
+  return TransposeQuotient( f0 , f0_transpose_size , Inverse( TruncatedPolynomial<T>( f0_transpose_size , Transpose( f1 , f1_transpose_size ) ) ) , f1.m_size );
+
+}
+
+template <typename T>
+Polynomial<T> Polynomial<T>::TransposeQuotient( const Polynomial<T>& f0 , const uint& f0_transpose_size , const Polynomial<T>& f1_transpose_inverse , const uint& f1_size )
+{
+
+  TruncatedPolynomial<T> f0_transpose{ f0_transpose_size , Transpose( f0 , f0_transpose_size ) };
+  f0_transpose *= f1_transpose_inverse;
+
+  for( uint d0 = ( f0_transpose_size + 1 ) / 2 ; d0 < f0_transpose_size ; d0++ ){
+
+    ::swap( f0_transpose.Polynomial<T>::m_f[d0] , f0_transpose.Polynomial<T>::m_f[ f0_transpose_size - 1 - d0 ] );
+
+  }
+
+  return f0_transpose;
+
+}
+
+template <typename T>
+Polynomial<T>& Polynomial<T>::operator%=( const Polynomial<T>& f )
+{
+
+  if( m_size >= f.m_size ){
+
+    operator-=( ( *this / f ) * f );
+    RemoveRedundantZero();
+
+  }
+
+  return *this;
+
+}
+
+template <typename T >
+Polynomial<T>& Polynomial<T>::operator<<=( const T& t )
+{
+
+  if( m_size > 0 ){
+
+    for( uint d = 0 ; d < m_size ; d++ ){
+
+      m_f[d] *= T::Factorial( d );
+
+    }
+
+    TruncatedPolynomial<T> exp_t_transpose{ m_size * 2 };
+    T power_t = const_one();
+  
+    for( uint d = 0 ; d < m_size ; d++ ){
+
+      exp_t_transpose[m_size - 1 - d] = power_t * T::FactorialInverse( d );
+      power_t *= t;
+
+    }
+
+    exp_t_transpose *= *this;
+  
+    for( uint d = 0 ; d < m_size ; d++ ){
+
+      m_f[d] = exp_t_transpose.Polynomial<T>::m_f[d + m_size - 1] * T::FactorialInverse( d );
+
+    }
+
+  }
+
+  return *this;
+
+}
+
+template <typename T> inline Polynomial<T> operator/( const Polynomial<T>& f0 , const Polynomial<T>& f1 ) { return Polynomial<T>::Quotient( f0 , f1 ); }
+template <typename T , typename P> inline Polynomial<T> operator%( const Polynomial<T>& f0 , const P& f1 ) { return move( Polynomial<T>( f0 ) %= f1 ); }
+template <typename T> Polynomial<T> operator<<( const Polynomial<T>& f , const T& t ) { return move( Polynomial<T>( f ) <<= t ); };
