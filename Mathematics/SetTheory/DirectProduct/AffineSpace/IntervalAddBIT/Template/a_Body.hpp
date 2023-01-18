@@ -3,7 +3,7 @@
 #pragma once
 #include "a.hpp"
 
-#include "../BIT/a_Body.hpp"
+#include "../BIT/Template/a_Body.hpp"
 
 template <TEMPLETE_ARGUMENTS_FOR_BIT> inline AbstractIntervalAddBIT<T,m_T,e_T,i_T,N>::AbstractIntervalAddBIT() : m_bit_0() , m_bit_1() {}
 template <TEMPLETE_ARGUMENTS_FOR_BIT> inline AbstractIntervalAddBIT<T,m_T,e_T,i_T,N>::AbstractIntervalAddBIT( const T ( & a )[N] ) : m_bit_0() , m_bit_1() { operator+=( a ); }
