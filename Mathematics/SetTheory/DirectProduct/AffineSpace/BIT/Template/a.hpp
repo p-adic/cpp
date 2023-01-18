@@ -4,6 +4,9 @@
 #include "a_Macro.hpp"
 
 // 可換群(T,m_T:T^2->T,e_T:1->T,i_T:T->T)と非負整数Nをパラメータとする。
+// ただしi_Tを使うのはSetとIntervalSumのみなので、
+// AddとInitialSegmentSumしか使わない場合は
+// i_Tを好きに設定して(T,m_T,e_T)をモノイドとして良い。
 template <TEMPLETE_ARGUMENTS_FOR_BIT>
 class AbstractBIT
 {
