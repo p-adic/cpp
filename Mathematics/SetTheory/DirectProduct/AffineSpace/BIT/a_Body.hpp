@@ -4,7 +4,27 @@
 #include "a.hpp"
 
 template <typename T , int N> inline BIT<T,N>::BIT() : m_fenwick() {}
-template <typename T , int N> inline BIT<T,N>::BIT( const T ( & a )[N] ) : m_fenwick() { operator+=( a ); }
+template <typename T , int N>
+BIT<T,N>::BIT( const T ( & a )[N] ) : m_fenwick()
+{
+
+  for( int j = 1 ; j <= N ; j++ ){
+
+    int& fenwick_j = m_fenwick[j];
+    int i = j - 1;
+    fenwick_j = a[i];
+    int i_lim = j - ( j & -j );
+
+    while( i != i_lim ){
+
+      fenwick_j += m_fenwick[i];
+      i -= ( i & -i );
+
+    }
+
+  }
+
+}
 
 template <typename T , int N> inline void BIT<T,N>::Set( const int& i , const T& n ) { Add( i , n - IntervalSum( i , i ) ); }
 

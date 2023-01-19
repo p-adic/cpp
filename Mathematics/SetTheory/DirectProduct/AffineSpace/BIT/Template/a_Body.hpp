@@ -6,7 +6,27 @@
 template <TEMPLETE_ARGUMENTS_FOR_BIT> inline const T& AbstractBIT<T,m_T,e_T,i_T,N>::g_e = e_T();
 
 template <TEMPLETE_ARGUMENTS_FOR_BIT> inline AbstractBIT<T,m_T,e_T,i_T,N>::AbstractBIT() : m_fenwick() { const T& e = g_e; for( int i = 0 ; i <= N ; i++ ){ m_fenwick[i] = e; } }
-template <TEMPLETE_ARGUMENTS_FOR_BIT> inline AbstractBIT<T,m_T,e_T,i_T,N>::AbstractBIT( const T ( & a )[N] ) : m_fenwick() { operator+=( a ); }
+template <TEMPLETE_ARGUMENTS_FOR_BIT>
+AbstractBIT<T,m_T,e_T,i_T,N>::AbstractBIT( const T ( & a )[N] ) : m_fenwick()
+{
+
+  for( int j = 1 ; j <= N ; j++ ){
+
+    int& fenwick_j = m_fenwick[j];
+    int i = j - 1;
+    fenwick_j = a[i];
+    int i_lim = j - ( j & -j );
+
+    while( i != i_lim ){
+
+      fenwick_j = m_T( fenwick_j , m_fenwick[i] );
+      i -= ( i & -i );
+
+    }
+
+  }
+
+}
 
 template <TEMPLETE_ARGUMENTS_FOR_BIT> inline void AbstractBIT<T,m_T,e_T,i_T,N>::Set( const int& i , const T& n ) { Add( i , m_T( i_T( IntervalSum( i , i ) ) , n ) ); }
 

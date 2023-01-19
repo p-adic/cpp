@@ -11,7 +11,7 @@ private:
 
 public:
   inline BIT();
-  inline BIT( const T ( & a )[N] );
+  BIT( const T ( & a )[N] );
 
   inline void Set( const int& i , const T& n );
 

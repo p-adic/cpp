@@ -17,7 +17,7 @@ public:
   static const T& g_e;
 
   inline AbstractBIT();
-  inline AbstractBIT( const T ( & a )[N] );
+  AbstractBIT( const T ( & a )[N] );
 
   inline void Set( const int& i , const T& n );
 
