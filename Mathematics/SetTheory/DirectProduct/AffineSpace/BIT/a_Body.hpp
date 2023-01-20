@@ -10,7 +10,7 @@ BIT<T,N>::BIT( const T ( & a )[N] ) : m_fenwick()
 
   for( int j = 1 ; j <= N ; j++ ){
 
-    int& fenwick_j = m_fenwick[j];
+    T& fenwick_j = m_fenwick[j];
     int i = j - 1;
     fenwick_j = a[i];
     int i_lim = j - ( j & -j );
