@@ -7,19 +7,19 @@
 #include "../../Prime/a_Body.hpp"
 
 
+template <typename INT> inline INT EulerFunction( const INT& n ) { vector<INT> P{}; vector<INT> exponent{}; return EulerFunction( n , P , exponent ); }
+
 template <typename INT>
-INT EulerFunction( const INT& n )
+INT EulerFunction( const INT& n , vector<INT>& P , vector<INT>& exponent )
 {
 
-  vector<uint> P{};
-  vector<uint> exponent{};
   SetPrimeFactorisation( n , P , exponent );
   INT answer = n;
-  uint size = P.size();
+  INT size = P.size();
 
-  for( uint i = 0 ; i < size ; i++ ){
+  for( INT i = 0 ; i < size ; i++ ){
 
-    uint& P_i = P[i];
+    const INT& P_i = P[i];
     answer = ( answer / P_i ) * ( P_i - 1 );
     
   }
@@ -28,21 +28,24 @@ INT EulerFunction( const INT& n )
 
 }
 
+
+template <typename INT> inline INT CarmichaelFunction( const INT& n ) { vector<INT> P{}; vector<INT> exponent{}; vector<INT> P_power{}; return CarmichaelFunction( n , P , exponent , P_power ); }
+  
 template <typename INT>
-INT CarmichaelFunction( const INT& n )
+INT CarmichaelFunction( const INT& n , vector<INT>& P , vector<INT>& exponent , vector<INT>& P_power )
 {
 
-  vector<uint> P{};
-  vector<uint> exponent{};
-  vector<uint> P_power{};
+  vector<INT> P{};
+  vector<INT> exponent{};
+  vector<INT> P_power{};
   SetPrimeFactorisation( n , P , exponent , P_power );
   INT answer = 1;
-  uint size = P.size();
+  INT size = P.size();
 
-  for( uint i = 0 ; i < size ; i++ ){
+  for( INT i = 0 ; i < size ; i++ ){
 
-    uint& P_i = P[i];
-    uint& P_power_i = P_power[i];
+    const INT& P_i = P[i];
+    const INT& P_power_i = P_power[i];
     answer = LCM( answer , ( P_power_i / P_i ) * ( P_i - 1 ) );
     
   }
