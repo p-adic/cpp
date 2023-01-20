@@ -190,7 +190,7 @@ static void ShiftInterval( bool& solved , uint& s0 , const uint& s ,  uint& s2 ,
 static void ComputeMaximum( uint& j , uint& power , const uint& s0 , uint& s1 , const uint& i ) noexcept;
 static void UpdatePrimeTable( bool& solved , uint& j , uint& power , uint& s0 , const uint& p0 , uint& p1 , const uint& i , uint& s1 , uint& s2 ) noexcept;
 
-// 出典：TORLEIV KLOVE, SUMS OF DISTINCT PRIMES, Nordisk Matematisk Tidskrift, Vol. 21, No. 4 (1974), pp. 138-140.
+// ﾂ出窶弋ﾂ：TORLEIV KLOVE, SUMS OF DISTINCT PRIMES, Nordisk Matematisk Tidskrift, Vol. 21, No. 4 (1974), pp. 138-140.
 uint GetKloveSequence( const uint& i ) noexcept
 {
 
