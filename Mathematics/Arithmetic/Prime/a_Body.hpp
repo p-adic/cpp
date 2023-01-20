@@ -3,132 +3,6 @@
 #pragma once
 #include "a.hpp"
 
-template <typename INT , INT N>
-void SetPrimeFactorisationBounded( const INT& n , INT ( &P )[N] , INT ( &exponent )[N] )
-{
-
-  INT n_copy = n;
-  INT p = 2;
-  INT L = 0;
-
-  if( n_copy % p == 0 ){
-
-    P[L] = p;
-    INT& exponent_back = exponent[L];
-    exponent_back = 1;
-    n_copy /= p;
-    L++;
-    
-    while( n_copy % p == 0 ){
-
-      exponent_back++;
-      n_copy /= p;
-      
-    }
-
-  }
-
-  p++;
-
-  while( n_copy != 1 ){
-
-    if( n_copy % p == 0 ){
-
-      P[L] = p;
-      INT& exponent_back = exponent[L];
-      exponent_back = 1;
-      n_copy /= p;
-      L++;
-    
-      while( n_copy % p == 0 ){
-
-	exponent_back++;
-	n_copy /= p;
-      
-      }
-
-    }
-
-    p += 2;
-
-    if( p * p > n_copy ){
-
-      break;
-
-    }
-    
-  }
-
-  return;
-
-}
-
-template <typename INT , INT N>
-void SetPrimeFactorisationBounded( const INT& n , INT ( &P )[N] , INT ( &exponent )[N] , INT ( &P_power )[N] )
-{
-  
-  INT n_copy = n;
-  INT p = 2;
-  INT L = 0;
-
-  if( n_copy % p == 0 ){
-
-    P[L] = p;
-    INT& exponent_back = exponent[L];
-    INT& P_power_back = P_power[L];
-    exponent_back = 1;
-    P_power_back = p;
-    n_copy /= p;
-    L++;
-    
-    while( n_copy % p == 0 ){
-
-      exponent_back++;
-      P_power_back *= p;
-      n_copy /= p;
-      
-    }
-
-  }
-
-  p++;
-
-  while( n_copy != 1 ){
-
-    if( n_copy % p == 0 ){
-
-      P[L] = p;
-      INT& exponent_back = exponent[L];
-      INT& P_power_back = P_power[L];
-      exponent_back = 1;
-      P_power_back = p;
-      n_copy /= p;
-      L++;
-    
-      while( n_copy % p == 0 ){
-
-	exponent_back++;
-	P_power_back *= p;
-	n_copy /= p;
-      
-      }
-
-    }
-
-    p += 2;
-
-    if( p * p > n_copy ){
-
-      break;
-
-    }
-    
-  }
-
-  return;
-  
-}
-
 template <typename INT>
 const INT& GetPrime( const INT& i ) noexcept
 {
@@ -177,6 +51,53 @@ const INT& GetPrime( const INT& i ) noexcept
 
 }
 
+template <typename INT , INT N>
+const INT& GetPrimeBounded( const INT& i )
+{
+
+  static INT P[N] = { 2 , 3 , 5 , 7 , 11 };
+
+  INT L = 5;
+
+  while( i >= L ){
+
+    INT p = P[L - 1] + 2;
+
+    bool prime = false;
+
+    while( ! prime ){
+
+      prime = true;
+    
+      for( INT j = 0 ; j < L && prime ; j++ ){
+
+	INT& Pj = P[j];
+	prime = ( p % Pj != 0 );
+
+	if( Pj * Pj >= p ){
+
+	  j = L;
+	
+	}
+
+      }
+
+      if( ! prime ){
+
+	p += 2;
+
+      }
+
+    }
+
+    P[L++] = p;
+
+  }
+
+  return P[i];
+
+}
+
 template <typename INT>
 void SetPrimeFactorisation( const INT& n , vector<INT>& P , vector<INT>& exponent )
 {
@@ -202,7 +123,7 @@ void SetPrimeFactorisation( const INT& n , vector<INT>& P , vector<INT>& exponen
 
   p++;
 
-  while( n_copy != 1 ){
+  while( p * p <= n_copy ){
 
     if( n_copy % p == 0 ){
 
@@ -221,12 +142,6 @@ void SetPrimeFactorisation( const INT& n , vector<INT>& P , vector<INT>& exponen
     }
 
     p += 2;
-
-    if( p * p > n_copy ){
-
-      break;
-
-    }
 
   }
 
@@ -269,7 +184,7 @@ void SetPrimeFactorisation( const INT& n , vector<INT>& P , vector<INT>& exponen
 
   p++;
 
-  while( n_copy != 1 ){
+  while( p * p <= n_copy ){
 
     if( n_copy % p == 0 ){
 
@@ -292,12 +207,6 @@ void SetPrimeFactorisation( const INT& n , vector<INT>& P , vector<INT>& exponen
 
     p += 2;
 
-    if( p * p > n_copy ){
-
-      break;
-
-    }
-
   }
 
   if( n_copy != 1 ){
@@ -309,4 +218,118 @@ void SetPrimeFactorisation( const INT& n , vector<INT>& P , vector<INT>& exponen
   
   return;
 
+}
+
+template <typename INT , INT N>
+void SetPrimeFactorisationBounded( const INT& n , INT ( &P )[N] , INT ( &exponent )[N] )
+{
+
+  INT n_copy = n;
+  INT p = 2;
+  INT L = 0;
+
+  if( n_copy % p == 0 ){
+
+    P[L] = p;
+    INT& exponent_back = exponent[L];
+    exponent_back = 1;
+    n_copy /= p;
+    L++;
+    
+    while( n_copy % p == 0 ){
+
+      exponent_back++;
+      n_copy /= p;
+      
+    }
+
+  }
+
+  p++;
+
+  while( p * p <= n_copy ){
+
+    if( n_copy % p == 0 ){
+
+      P[L] = p;
+      INT& exponent_back = exponent[L];
+      exponent_back = 1;
+      n_copy /= p;
+      L++;
+    
+      while( n_copy % p == 0 ){
+
+	exponent_back++;
+	n_copy /= p;
+      
+      }
+
+    }
+
+    p += 2;
+    
+  }
+
+  return;
+
+}
+
+template <typename INT , INT N>
+void SetPrimeFactorisationBounded( const INT& n , INT ( &P )[N] , INT ( &exponent )[N] , INT ( &P_power )[N] )
+{
+  
+  INT n_copy = n;
+  INT p = 2;
+  INT L = 0;
+
+  if( n_copy % p == 0 ){
+
+    P[L] = p;
+    INT& exponent_back = exponent[L];
+    INT& P_power_back = P_power[L];
+    exponent_back = 1;
+    P_power_back = p;
+    n_copy /= p;
+    L++;
+    
+    while( n_copy % p == 0 ){
+
+      exponent_back++;
+      P_power_back *= p;
+      n_copy /= p;
+      
+    }
+
+  }
+
+  p++;
+
+  while( p * p <= n_copy ){
+
+    if( n_copy % p == 0 ){
+
+      P[L] = p;
+      INT& exponent_back = exponent[L];
+      INT& P_power_back = P_power[L];
+      exponent_back = 1;
+      P_power_back = p;
+      n_copy /= p;
+      L++;
+    
+      while( n_copy % p == 0 ){
+
+	exponent_back++;
+	P_power_back *= p;
+	n_copy /= p;
+      
+      }
+
+    }
+
+    p += 2;
+    
+  }
+
+  return;
+  
 }
