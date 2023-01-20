@@ -119,11 +119,11 @@ public:
 
 };
 
-template <typename T> inline constexpr const uint FFT_Multiplication_border_0{};
-template <typename T> inline constexpr const uint FFT_Multiplication_border_1{};
-template <typename T> inline constexpr const uint FFT_Multiplication_border_1_2{};
-template <typename T> inline constexpr const uint FFT_Multiplication_border_1_2_exponent{};
-template <typename T> inline constexpr const uint FFT_Multiplication_border_1_2_inv{};
+template <typename T> inline constexpr const uint FFT_Multiplication_border_0;
+template <typename T> inline constexpr const uint FFT_Multiplication_border_1;
+template <typename T> inline constexpr const uint FFT_Multiplication_border_1_2;
+template <typename T> inline constexpr const uint FFT_Multiplication_border_1_2_exponent;
+template <typename T> inline constexpr const uint FFT_Multiplication_border_1_2_inv;
 
 template <typename T , typename P> inline TruncatedPolynomial<T> operator+( const TruncatedPolynomial<T>& f0 , const P& f1 );
 template <typename T , typename P> inline TruncatedPolynomial<T> operator-( const TruncatedPolynomial<T>& f );

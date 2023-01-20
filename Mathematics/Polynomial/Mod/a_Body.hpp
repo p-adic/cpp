@@ -9,8 +9,6 @@
 // 0èúéZÇÃó·äOèàóù
 #include "../../../Error/IllegalImput/a_Body.hpp"
 
-DEFINITION_OF_PARTIAL_SPECIALISATION_OF_POLYNOMIAL( Mod<998244353> );
-
 template <typename T> inline TruncatedPolynomial<T>::TruncatedPolynomial( const uint& N ) : Polynomial<T>() , m_N( N ) { Polynomial<T>::m_f.reserve( m_N ); }
 template <typename T> inline TruncatedPolynomial<T>::TruncatedPolynomial( const TruncatedPolynomial<T>& f ) : Polynomial<T>( f ) , m_N( f.m_N ) { Polynomial<T>::m_f.reserve( m_N ); }
 template <typename T> inline TruncatedPolynomial<T>::TruncatedPolynomial( TruncatedPolynomial<T>&& f ) : Polynomial<T>( move( f ) ) , m_N( move( f.m_N ) ) { Polynomial<T>::m_f.reserve( m_N ); }
@@ -124,8 +122,6 @@ TruncatedPolynomial<T>& TruncatedPolynomial<T>::TruncatedMinus( const Polynomial
   return *this;
 
 }
-
-template <typename T> inline TruncatedPolynomial<T>& TruncatedPolynomial<T>::operator*=( const T& t ) { Polynomial<T>::operator*=( t ); return *this; }
 
 template <typename T>
 TruncatedPolynomial<T>& TruncatedPolynomial<T>::operator*=( const Polynomial<T>& f )
@@ -330,6 +326,9 @@ TruncatedPolynomial<T> Exp( const TruncatedPolynomial<T>& f )
 template <typename T> inline TruncatedPolynomial<T> Log( const TruncatedPolynomial<T>& f ) { return Integral<T>( Differential<T>( f ) /= f ); }
 
 template <typename T> inline TruncatedPolynomial<T> Power( const TruncatedPolynomial<T>& f , const T& t ) { return Exp( Log( f ) *= t ); }
+
+
+template <typename T> inline TruncatedPolynomial<T>& TruncatedPolynomial<T>::operator*=( const T& t ) { Polynomial<T>::operator*=( t ); return *this; }
 // DEFINITION_OF_PARTIAL_SPECIALISATION_OF_MULTIPLICATION_OF_TRUNCATED_POLYNOMIAL( Mod<998244353> , 0 , 0 , 1 , 0 , 1 );
 // DEFINITION_OF_PARTIAL_SPECIALISATION_OF_MULTIPLICATION_OF_TRUNCATED_POLYNOMIAL( Mod<998244353> , 1 , 1 , 2 , 1 , 499122176 );
 // DEFINITION_OF_PARTIAL_SPECIALISATION_OF_MULTIPLICATION_OF_TRUNCATED_POLYNOMIAL( Mod<998244353> , 2 , 2 , 4 , 2 , 748683265 );
@@ -361,4 +360,8 @@ DEFINITION_OF_PARTIAL_SPECIALISATION_OF_MULTIPLICATION_OF_TRUNCATED_POLYNOMIAL( 
 // DEFINITION_OF_PARTIAL_SPECIALISATION_OF_MULTIPLICATION_OF_TRUNCATED_POLYNOMIAL( Mod<998244353> , 17 , 8192 , 16384 , 14 , 998183425 );
 // DEFINITION_OF_PARTIAL_SPECIALISATION_OF_MULTIPLICATION_OF_TRUNCATED_POLYNOMIAL( Mod<998244353> , 17 , 16384 , 32768 , 15 , 998213889 );
 // DEFINITION_OF_PARTIAL_SPECIALISATION_OF_MULTIPLICATION_OF_TRUNCATED_POLYNOMIAL( Mod<998244353> , 17 , 32768 , 65536 , 16 , 998229121 );
+
+
+DEFINITION_OF_PARTIAL_SPECIALISATION_OF_POLYNOMIAL( Mod<998244353> );
+DEFINITION_OF_PARTIAL_SPECIALISATION_OF_POLYNOMIAL( Montgomery<998244353> );
 
