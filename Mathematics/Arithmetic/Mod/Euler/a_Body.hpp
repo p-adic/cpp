@@ -20,7 +20,7 @@ INT EulerFunction( const INT& n , vector<INT>& P , vector<INT>& exponent )
   for( INT i = 0 ; i < size ; i++ ){
 
     const INT& P_i = P[i];
-    answer = ( answer / P_i ) * ( P_i - 1 );
+    answer *= answer / P_i;
     
   }
 
@@ -46,7 +46,7 @@ INT CarmichaelFunction( const INT& n , vector<INT>& P , vector<INT>& exponent , 
 
     const INT& P_i = P[i];
     const INT& P_power_i = P_power[i];
-    answer = LCM( answer , ( P_power_i / P_i ) * ( P_i - 1 ) );
+    answer = LCM( answer , ( P_power_i - P_power_i / P_i ) );
     
   }
 
