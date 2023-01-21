@@ -20,7 +20,7 @@ INT EulerFunction( const INT& n , vector<INT>& P , vector<INT>& exponent )
   for( INT i = 0 ; i < size ; i++ ){
 
     const INT& P_i = P[i];
-    answer *= answer / P_i;
+    answer -= answer / P_i;
     
   }
 
