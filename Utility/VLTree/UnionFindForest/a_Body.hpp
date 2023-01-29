@@ -71,8 +71,8 @@ template <typename T>
 void UnionFindForest<T>::Graft( const uint& num0 , const uint& num1 )
 {
 
-  const uint& e0_root_index = LinkedVector<EntryOfUnionFindForest<T> >::operator[]( num0 ).m_root;
-  const uint& e1_root_index = LinkedVector<EntryOfUnionFindForest<T> >::operator[]( num1 ).m_root;
+  const uint& e0_root_index = GetRootOfNode( num0 );
+  const uint& e1_root_index = GetRootOfNode( num1 );
 
   if( e0_root_index == e1_root_index ){
 
