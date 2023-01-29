@@ -485,7 +485,7 @@ template <typename T>
 VLSubTree<T> VLSubTree<T>::operator[]( typename VLSubTree<T>::iterator& itr )
 {
 
-  if( ! CheckContain( itr )){
+  if( ! CheckContain( itr ) ){
 
     ERR_IMPUT( itr );
 
@@ -499,7 +499,7 @@ template <typename T>
 VLTree<T> VLSubTree<T>::operator[]( const typename VLSubTree<T>::const_iterator& itr ) const
 {
 
-  if( ! CheckContain( itr )){
+  if( ! CheckContain( itr ) ){
 
     ERR_IMPUT( itr );
 
@@ -630,12 +630,6 @@ void VLSubTree<T>::Graft( VLSubTree<T>& t )
 {
 
   EntryOfVLTree<T>*& p_rightmost = m_p_root->m_rightmost_node;
-
-  if( p_rightmost->m_rightmost_node != p_rightmost ){
-
-    ERR_IMPUT( *this , t );
-
-  }
 
   if( m_p_root == p_rightmost ){
     
