@@ -3,6 +3,8 @@
 #pragma once
 #include "a.hpp"
 
+#include "../Residue/a_Body.hpp"
+
 template <typename INT>
 INT GCD( const INT& b_0 , const INT& b_1 )
 {
@@ -72,7 +74,7 @@ INT ChineseRemainderTheorem( const INT& b_0 , const INT& c_0 , const INT& b_1 , 
   INT ( &a_i_0 )[2] = a[i_0];
   INT& a_i_00 = a_i_0[0];
   a_i_00 *= ( c_1 - c ) / gcd;
-  a_i_00 = RESIDUE( a_i_00 , lcm );
+  Residue( a_i_00 , lcm );
   INT& a_i_01 = a_i_0[1];
   a_i_01 *= ( c_0 - c ) / gcd;
   a_i_01 = ( a_i_01 >= 0 ? a_i_01 % lcm : lcm - ( - a_i_01 - 1 ) % lcm - 1 );
