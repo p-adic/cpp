@@ -25,7 +25,7 @@ INT GCD( const INT& b_0 , const INT& b_1 )
 template <typename INT> inline INT LCM( const INT& b_0 , const INT& b_1 ) { return ( b_0 == 0 && b_1 == 0 ) ? 0 : ( b_0 / GCD( b_0 , b_1 ) ) * b_1; }
 
 template <typename INT>
-INT ChineseReminderTheorem( const INT& b_0 , const INT& c_0 , const INT& b_1 , const INT& c_1 )
+INT ChineseRemsinderTheorem( const INT& b_0 , const INT& c_0 , const INT& b_1 , const INT& c_1 )
 {
   
   INT a[2][2];
