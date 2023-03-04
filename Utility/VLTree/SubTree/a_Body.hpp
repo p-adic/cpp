@@ -8,7 +8,7 @@
 #include "../../WrappedType/a_Body.hpp"
 
 // ERR_CALL経由のIndicateIllegalCallの呼び出しに必要
-#include "../../../Error/IllegalImput/a_Body.hpp"
+#include "../../../Error/IllegalInput/a_Body.hpp"
 
 template <typename T> inline VLSubTree<T>::VLSubTree() : m_e() , m_p_root( &m_e ) , m_size( 0 ) {}
 template <typename T> template <typename Arg1 , typename... Arg2> inline VLSubTree<T>::VLSubTree( const Arg1& t0 , const Arg2&... t1 ) : VLSubTree<T>() { push_RightMost( t0 , t1... ); }
@@ -361,7 +361,7 @@ void VLSubTree<T>::insert( const typename VLSubTree<T>::iterator& itr , const Ar
 
   if( ! CheckContain( itr ) ){
 
-    ERR_IMPUT( itr , t );
+    ERR_INPUT( itr , t );
     
   }
   
@@ -383,7 +383,7 @@ typename VLSubTree<T>::iterator VLSubTree<T>::erase( typename VLSubTree<T>::iter
   
   if( ! CheckContain( itr ) ){
 
-    ERR_IMPUT( itr );
+    ERR_INPUT( itr );
     
   }
 
@@ -451,7 +451,7 @@ VLSubTree<T> VLSubTree<T>::operator[]( const uint& i )
 
   if( i >= m_size ){
 
-    ERR_IMPUT( i );
+    ERR_INPUT( i );
 
   }
 
@@ -487,7 +487,7 @@ VLSubTree<T> VLSubTree<T>::operator[]( typename VLSubTree<T>::iterator& itr )
 
   if( ! CheckContain( itr ) ){
 
-    ERR_IMPUT( itr );
+    ERR_INPUT( itr );
 
   }
 
@@ -501,7 +501,7 @@ VLTree<T> VLSubTree<T>::operator[]( const typename VLSubTree<T>::const_iterator&
 
   if( ! CheckContain( itr ) ){
 
-    ERR_IMPUT( itr );
+    ERR_INPUT( itr );
 
   }
 
@@ -515,7 +515,7 @@ VLTree<T> VLSubTree<T>::GetBranchCopy( const uint& i ) const
 
   if( i >= m_size ){
 
-    ERR_IMPUT( i );
+    ERR_INPUT( i );
 
   }
 
@@ -551,7 +551,7 @@ VLTree<T> VLSubTree<T>::GetBranchCopy( const typename VLSubTree<T>::iterator& it
 
   if( ! CheckContain( itr ) ){
 
-    ERR_IMPUT( itr );
+    ERR_INPUT( itr );
 
   }
 
@@ -565,7 +565,7 @@ VLTree<T> VLSubTree<T>::GetBranchCopy( const typename VLSubTree<T>::const_iterat
 
   if( ! CheckContain( itr ) ){
 
-    ERR_IMPUT( itr );
+    ERR_INPUT( itr );
 
   }
 
@@ -581,7 +581,7 @@ void VLSubTree<T>::Concatenate( const VLTree<T>& t )
 
   if( p_rightmost->m_rightmost_node != p_rightmost ){
 
-    ERR_IMPUT( *this , t );
+    ERR_INPUT( *this , t );
 
   }
 
@@ -605,7 +605,7 @@ void VLSubTree<T>::Concatenate( const typename VLSubTree<T>::iterator& itr , con
 
   if( ! itr.IsLeaf() ){
 
-    ERR_IMPUT( itr , t );
+    ERR_INPUT( itr , t );
 
   }
   
