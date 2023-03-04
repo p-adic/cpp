@@ -392,7 +392,7 @@ Polynomial<T> Polynomial<T>::Quotient( const Polynomial<T>& f0 , const Polynomia
 
   if( f1.m_size == 0 ){
 
-    ERR_IMPUT( f0 , f1 , f1.m_size );
+    ERR_INPUT( f0 , f1 , f1.m_size );
 
   }
 
