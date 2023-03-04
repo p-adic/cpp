@@ -3,8 +3,6 @@
 #pragma once
 #include "a.hpp"
 
-#include "../IllegalImput/a_Body.hpp"
-
 inline FlagCounter::FlagCounter( const uint& i0 , const uint& i1 ) noexcept :
   m_i0( i0 ) ,
   m_i1( i1 ) ,
