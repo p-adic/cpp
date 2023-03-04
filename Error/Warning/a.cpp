@@ -13,7 +13,7 @@ void IndicateWarning( const char* FILE , const int& LINE , const char* FUNC  , c
   cout << "Warning at" << endl;
   IndicatePosition( FILE , LINE , FUNC );
 
-  cout << "invalid imput of argument(s):" << endl;
+  cout << "invalid input of argument(s):" << endl;
   cout << endl;
 
   cout << body << endl;
