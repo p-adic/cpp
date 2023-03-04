@@ -7,7 +7,7 @@
 
 #include "Iterator/a_Body.hpp"
 #include "../WrappedType/a_Body.hpp"
-#include "../../Error/IllegalImput/a_Body.hpp"
+#include "../../Error/IllegalInput/a_Body.hpp"
 
 template <typename T> inline VLArray<T>::VLArray() : m_e() , m_p_e( &m_e ) , m_size( 0 ) {}
 template <typename T> template <typename Arg1 , typename... Arg2> inline VLArray<T>::VLArray( const Arg1& t0 , const Arg2&... t1 ) : VLArray() { push_back( t0 , t1... ); }
@@ -278,7 +278,7 @@ typename VLArray<T>::iterator VLArray<T>::insert_front( const typename VLArray<T
 
   if( ! CheckContain( itr ) ){
 
-    ERR_IMPUT( itr , t );
+    ERR_INPUT( itr , t );
     
   }
 
@@ -307,7 +307,7 @@ typename VLArray<T>::iterator VLArray<T>::insert_back( const typename VLArray<T>
 
   if( ! CheckContain( itr ) ){
 
-    ERR_IMPUT( itr , t );
+    ERR_INPUT( itr , t );
     
   }
   
@@ -331,7 +331,7 @@ typename VLArray<T>::iterator VLArray<T>::erase_back( typename VLArray<T>::itera
   
   if( ! CheckContain( itr ) ){
 
-    ERR_IMPUT( itr );
+    ERR_INPUT( itr );
     
   }
 
@@ -355,7 +355,7 @@ typename VLArray<T>::iterator VLArray<T>::erase_front( typename VLArray<T>::iter
   
   if( ! CheckContain( itr ) ){
 
-    ERR_IMPUT( itr );
+    ERR_INPUT( itr );
     
   }
 
@@ -379,7 +379,7 @@ T& VLArray<T>::operator[]( const uint& i )
 
   if( i >= m_size ){
 
-    ERR_IMPUT( i );
+    ERR_INPUT( i );
 
   }
 
@@ -415,7 +415,7 @@ const T& VLArray<T>::operator[]( const uint& i ) const
 
   if( i >= m_size ){
 
-    ERR_IMPUT( i );
+    ERR_INPUT( i );
 
   }
 
