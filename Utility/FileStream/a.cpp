@@ -10,7 +10,7 @@ void FileHolder::LoadFile( const string& filename , const ios_base::openmode& op
 
   if( !( *p_ofs ) ){
 
-    ERR_IMPUT( filename );
+    ERR_INPUT( filename );
 
   }
   
