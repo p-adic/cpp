@@ -32,7 +32,7 @@ template <typename T> void Memorise( const LazyEvaluation<T>& t1 , const T& t2 )
 
   if( ! CheckInitial( t1 ) ){
 
-    ERR_IMPUT( t1 , t2 );
+    ERR_INPUT( t1 , t2 );
 
   }
 
