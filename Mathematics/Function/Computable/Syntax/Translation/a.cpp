@@ -44,7 +44,7 @@ void DisplayTreeStructureOfDefinition( const string& function_name , const strin
 
   }
 
-  ERR_IMPUT( language );
+  ERR_INPUT( language );
   return;
 
 }
@@ -87,7 +87,7 @@ void DisplayWritingTranslationOfDefinition( const string& function_name , const 
 
   }
 
-  ERR_IMPUT( language );
+  ERR_INPUT( language );
   return;
 
 }
@@ -129,7 +129,7 @@ void DisplayFileOpenError( const string& language ){
 
   }
 
-  ERR_IMPUT( language );
+  ERR_INPUT( language );
   return;
 
 }
@@ -172,7 +172,7 @@ void DisplayFinishedWriting( const string& language )
 
   }
 
-  ERR_IMPUT( language );
+  ERR_INPUT( language );
   return;
 
 }
@@ -236,7 +236,7 @@ void InputSignature( ofstream& ofs , const string& type_name , const string& lan
 
   }
 
-  ERR_IMPUT( language );
+  ERR_INPUT( language );
   return;
 
 }
@@ -278,7 +278,7 @@ void InputSignatureOfRecursiveSet( ofstream& ofs , const string& type_name , con
 
   }
 
-  ERR_IMPUT( language );
+  ERR_INPUT( language );
   return;
 
 }
@@ -320,7 +320,7 @@ void InputInlineWay( ofstream& ofs , const string& definition , const string& la
 
   }
 
-  ERR_IMPUT( language );
+  ERR_INPUT( language );
   return;
 
 }
@@ -378,7 +378,7 @@ void SetDefinitionOfArraySet( string& type_name , string& description , const st
 
   }
 
-  ERR_IMPUT( language );
+  ERR_INPUT( language );
   return;
 
 }
@@ -462,7 +462,7 @@ void InputRecursiveWay( ofstream& ofs , const string& language , const string& s
 
   }
 
-  ERR_IMPUT( language );
+  ERR_INPUT( language );
   return;
 
 }
@@ -487,7 +487,7 @@ void InputIndent( ofstream& ofs , const uint depth , const string& language , co
 
   }
 
-  ERR_IMPUT( style );
+  ERR_INPUT( style );
   return;
 
 }
@@ -529,7 +529,7 @@ void InputFirstRuleOfNestedArraySet( ofstream& ofs , const string& form11 , cons
 
   }
 
-  ERR_IMPUT( language );
+  ERR_INPUT( language );
   return;
 
 }
@@ -571,7 +571,7 @@ void InputSecondRuleOfNestedArraySet( ofstream& ofs , const string& form21 , con
 
   }
 
-  ERR_IMPUT( language );
+  ERR_INPUT( language );
   return;
 
 }
@@ -615,7 +615,7 @@ void DisplayTreeStructure( const string& name , const string& language )
 
   }
 
-  ERR_IMPUT( language );
+  ERR_INPUT( language );
   return;
 
 }
@@ -768,7 +768,7 @@ void InputTotality( ofstream& ofs , const string& totality , const string& langu
 
   }
 
-  ERR_IMPUT( totality ,  language );
+  ERR_INPUT( totality ,  language );
   return;
 
 }
@@ -786,7 +786,7 @@ void InputSignatureOfFunction( ofstream& ofs , const string& function_name , con
 
   }
   
-  ERR_IMPUT( style );
+  ERR_INPUT( style );
   return;
 
 }
@@ -917,7 +917,7 @@ void InputNonListLine( ofstream& ofs , const string& function_expression_name , 
 
      );
 
-  ERR_IMPUT( line_name );
+  ERR_INPUT( line_name );
   return;
 
 }
@@ -1030,7 +1030,7 @@ void InputIfListLine( ofstream& ofs , const string& function_expression_name , c
     
   }
 
-  ERR_IMPUT( language );
+  ERR_INPUT( language );
   return;
 
 }
@@ -1097,7 +1097,7 @@ void InputIfNonListLine( ofstream& ofs , const string& function_expression_name 
       
   }
 
-  ERR_IMPUT( language );
+  ERR_INPUT( language );
   return;
 
 }
@@ -1192,7 +1192,7 @@ void InputPutConditionLine_Body( ofstream& ofs , const string& b , const string&
 
     }
 
-    ERR_IMPUT( style );
+    ERR_INPUT( style );
 
   }
 
@@ -1205,7 +1205,7 @@ void InputPutConditionLine_Body( ofstream& ofs , const string& b , const string&
 
     }
 
-    ERR_IMPUT( style );
+    ERR_INPUT( style );
 
   }
 
@@ -1220,7 +1220,7 @@ void InputPutConditionLine_Body( ofstream& ofs , const string& b , const string&
 
     }
 
-    ERR_IMPUT( style );
+    ERR_INPUT( style );
 
   }
 
@@ -1233,7 +1233,7 @@ void InputPutConditionLine_Body( ofstream& ofs , const string& b , const string&
 
     }
 
-    ERR_IMPUT( style );
+    ERR_INPUT( style );
 
   }
 
@@ -1246,7 +1246,7 @@ void InputPutConditionLine_Body( ofstream& ofs , const string& b , const string&
 
     }
 
-    ERR_IMPUT( style );
+    ERR_INPUT( style );
 
   }
 
@@ -1261,7 +1261,7 @@ void InputPutConditionLine_Body( ofstream& ofs , const string& b , const string&
 
     }
 
-    ERR_IMPUT( style );
+    ERR_INPUT( style );
 
   }
 
@@ -1274,7 +1274,7 @@ void InputPutConditionLine_Body( ofstream& ofs , const string& b , const string&
 
     }
 
-    ERR_IMPUT( style );
+    ERR_INPUT( style );
 
   }
 
@@ -1289,11 +1289,11 @@ void InputPutConditionLine_Body( ofstream& ofs , const string& b , const string&
 
     }
 
-    ERR_IMPUT( style );
+    ERR_INPUT( style );
 
   }
 
-  ERR_IMPUT( language );
+  ERR_INPUT( language );
   return;
 
 }
@@ -1310,7 +1310,7 @@ void InputPutNonConditionLine_Body( ofstream& ofs , const string& e , const stri
 
     }
 
-    ERR_IMPUT( style );
+    ERR_INPUT( style );
 
   }
 
@@ -1323,7 +1323,7 @@ void InputPutNonConditionLine_Body( ofstream& ofs , const string& e , const stri
 
     }
     
-    ERR_IMPUT( style );
+    ERR_INPUT( style );
 
   }
 
@@ -1338,7 +1338,7 @@ void InputPutNonConditionLine_Body( ofstream& ofs , const string& e , const stri
 
     }
     
-    ERR_IMPUT( style );
+    ERR_INPUT( style );
 
   }
 
@@ -1351,7 +1351,7 @@ void InputPutNonConditionLine_Body( ofstream& ofs , const string& e , const stri
 
     }
 
-    ERR_IMPUT( style );
+    ERR_INPUT( style );
 
   }
 
@@ -1364,7 +1364,7 @@ void InputPutNonConditionLine_Body( ofstream& ofs , const string& e , const stri
 
     }
     
-    ERR_IMPUT( style );
+    ERR_INPUT( style );
 
   }
 
@@ -1379,7 +1379,7 @@ void InputPutNonConditionLine_Body( ofstream& ofs , const string& e , const stri
 
     }
 
-    ERR_IMPUT( style );
+    ERR_INPUT( style );
     
   }
 
@@ -1392,7 +1392,7 @@ void InputPutNonConditionLine_Body( ofstream& ofs , const string& e , const stri
 
     }
 
-    ERR_IMPUT( style );
+    ERR_INPUT( style );
     
   }
 
@@ -1407,11 +1407,11 @@ void InputPutNonConditionLine_Body( ofstream& ofs , const string& e , const stri
 
     }
 
-    ERR_IMPUT( style );
+    ERR_INPUT( style );
     
   }
 
-  ERR_IMPUT( language );
+  ERR_INPUT( language );
   return;
   
 }
@@ -1497,7 +1497,7 @@ void InputCharacterisationLine( ofstream& ofs , VLTree<string>::const_iterator& 
      );
 
 
-  ERR_IMPUT( characterisation );
+  ERR_INPUT( characterisation );
   return;
 
 }
@@ -1566,7 +1566,7 @@ void InputUniqueExistenceLine( ofstream& ofs , VLTree<string>::const_iterator& i
 
      );
 
-  ERR_IMPUT( variable_type_name );
+  ERR_INPUT( variable_type_name );
   return;
   
 }
@@ -1583,7 +1583,7 @@ void InputUniqueExistenceNaturalNumberLine( ofstream& ofs , const string& local_
 
     }
 
-    ERR_IMPUT( style );
+    ERR_INPUT( style );
 
   }
 
@@ -1596,7 +1596,7 @@ void InputUniqueExistenceNaturalNumberLine( ofstream& ofs , const string& local_
 
     }
 
-    ERR_IMPUT( style );
+    ERR_INPUT( style );
     
   }
 
@@ -1611,7 +1611,7 @@ void InputUniqueExistenceNaturalNumberLine( ofstream& ofs , const string& local_
 
     }
 
-    ERR_IMPUT( style );
+    ERR_INPUT( style );
     
   }
 
@@ -1624,7 +1624,7 @@ void InputUniqueExistenceNaturalNumberLine( ofstream& ofs , const string& local_
     
     }
 
-    ERR_IMPUT( style );
+    ERR_INPUT( style );
 
   }
 
@@ -1637,7 +1637,7 @@ void InputUniqueExistenceNaturalNumberLine( ofstream& ofs , const string& local_
 
     }
 
-    ERR_IMPUT( style );
+    ERR_INPUT( style );
     
   }
 
@@ -1652,7 +1652,7 @@ void InputUniqueExistenceNaturalNumberLine( ofstream& ofs , const string& local_
 
     }
 
-    ERR_IMPUT( style );
+    ERR_INPUT( style );
     
   }
 
@@ -1665,7 +1665,7 @@ void InputUniqueExistenceNaturalNumberLine( ofstream& ofs , const string& local_
 
     }
 
-    ERR_IMPUT( style );
+    ERR_INPUT( style );
     
   }
 
@@ -1680,11 +1680,11 @@ void InputUniqueExistenceNaturalNumberLine( ofstream& ofs , const string& local_
 
     }
 
-    ERR_IMPUT( style );
+    ERR_INPUT( style );
     
   }
 
-  ERR_IMPUT( language );
+  ERR_INPUT( language );
   return;
   
 }
@@ -1701,7 +1701,7 @@ void InputUniqueExistenceStringLine( ofstream& ofs , const string& local_variabl
 
     }
 
-    ERR_IMPUT( style );
+    ERR_INPUT( style );
 
   }
 
@@ -1714,7 +1714,7 @@ void InputUniqueExistenceStringLine( ofstream& ofs , const string& local_variabl
 
     }
 
-    ERR_IMPUT( style );
+    ERR_INPUT( style );
     
   }
 
@@ -1729,7 +1729,7 @@ void InputUniqueExistenceStringLine( ofstream& ofs , const string& local_variabl
 
     }
 
-    ERR_IMPUT( style );
+    ERR_INPUT( style );
     
   }
 
@@ -1742,7 +1742,7 @@ void InputUniqueExistenceStringLine( ofstream& ofs , const string& local_variabl
 
     }
 
-    ERR_IMPUT( style );
+    ERR_INPUT( style );
 
   }
 
@@ -1755,7 +1755,7 @@ void InputUniqueExistenceStringLine( ofstream& ofs , const string& local_variabl
 
     }
 
-    ERR_IMPUT( style );
+    ERR_INPUT( style );
     
   }
 
@@ -1770,7 +1770,7 @@ void InputUniqueExistenceStringLine( ofstream& ofs , const string& local_variabl
 
     }
 
-    ERR_IMPUT( style );
+    ERR_INPUT( style );
     
   }
 
@@ -1783,7 +1783,7 @@ void InputUniqueExistenceStringLine( ofstream& ofs , const string& local_variabl
 
     }
 
-    ERR_IMPUT( style );
+    ERR_INPUT( style );
     
   }
 
@@ -1798,11 +1798,11 @@ void InputUniqueExistenceStringLine( ofstream& ofs , const string& local_variabl
 
     }
 
-    ERR_IMPUT( style );
+    ERR_INPUT( style );
     
   }
 
-  ERR_IMPUT( language );
+  ERR_INPUT( language );
   return;
   
 }
@@ -1812,7 +1812,7 @@ void InputMinimumLine( ofstream& ofs , VLTree<string>::const_iterator& itr_line 
 
   if( variable_type_name != GetTypeString<nat>() ){
 
-    ERR_IMPUT( variable_type_name );
+    ERR_INPUT( variable_type_name );
 
   }
 
@@ -1858,7 +1858,7 @@ void InputMinimumLine_Body( ofstream& ofs , const string& condition , const stri
 
     }
 
-    ERR_IMPUT( style );
+    ERR_INPUT( style );
 
   }
 
@@ -1871,7 +1871,7 @@ void InputMinimumLine_Body( ofstream& ofs , const string& condition , const stri
 
     }
 
-    ERR_IMPUT( style );
+    ERR_INPUT( style );
     
   }
 
@@ -1886,7 +1886,7 @@ void InputMinimumLine_Body( ofstream& ofs , const string& condition , const stri
 
     }
 
-    ERR_IMPUT( style );
+    ERR_INPUT( style );
     
   }
 
@@ -1899,7 +1899,7 @@ void InputMinimumLine_Body( ofstream& ofs , const string& condition , const stri
 
     }
 
-    ERR_IMPUT( style );
+    ERR_INPUT( style );
 
   }
 
@@ -1912,7 +1912,7 @@ void InputMinimumLine_Body( ofstream& ofs , const string& condition , const stri
 
     }
 
-    ERR_IMPUT( style );
+    ERR_INPUT( style );
     
   }
 
@@ -1927,7 +1927,7 @@ void InputMinimumLine_Body( ofstream& ofs , const string& condition , const stri
 
     }
 
-    ERR_IMPUT( style );
+    ERR_INPUT( style );
     
   }
 
@@ -1940,7 +1940,7 @@ void InputMinimumLine_Body( ofstream& ofs , const string& condition , const stri
 
     }
 
-    ERR_IMPUT( style );
+    ERR_INPUT( style );
     
   }
 
@@ -1955,11 +1955,11 @@ void InputMinimumLine_Body( ofstream& ofs , const string& condition , const stri
 
     }
 
-    ERR_IMPUT( style );
+    ERR_INPUT( style );
     
   }
 
-  ERR_IMPUT( language );
+  ERR_INPUT( language );
   return;
 
 }
@@ -1969,7 +1969,7 @@ void InputMaximumLine( ofstream& ofs , VLTree<string>::const_iterator& itr_line 
 
   if( variable_type_name != GetTypeString<nat>() ){
 
-    ERR_IMPUT( variable_type_name );
+    ERR_INPUT( variable_type_name );
 
   }
 
@@ -2023,7 +2023,7 @@ void InputMaximumLine_Body( ofstream& ofs , const string& condition , const stri
 
     }
 
-    ERR_IMPUT( style );
+    ERR_INPUT( style );
     
   }
 
@@ -2036,7 +2036,7 @@ void InputMaximumLine_Body( ofstream& ofs , const string& condition , const stri
 
     }
 
-    ERR_IMPUT( style );
+    ERR_INPUT( style );
     
   }
 
@@ -2051,7 +2051,7 @@ void InputMaximumLine_Body( ofstream& ofs , const string& condition , const stri
 
     }
 
-    ERR_IMPUT( style );
+    ERR_INPUT( style );
     
   }
 
@@ -2064,7 +2064,7 @@ void InputMaximumLine_Body( ofstream& ofs , const string& condition , const stri
 
     }
 
-    ERR_IMPUT( style );
+    ERR_INPUT( style );
     
   }
 
@@ -2077,7 +2077,7 @@ void InputMaximumLine_Body( ofstream& ofs , const string& condition , const stri
 
     }
 
-    ERR_IMPUT( style );
+    ERR_INPUT( style );
     
   }
 
@@ -2092,7 +2092,7 @@ void InputMaximumLine_Body( ofstream& ofs , const string& condition , const stri
 
     }
 
-    ERR_IMPUT( style );
+    ERR_INPUT( style );
     
   }
 
@@ -2105,7 +2105,7 @@ void InputMaximumLine_Body( ofstream& ofs , const string& condition , const stri
 
     }
 
-    ERR_IMPUT( style );
+    ERR_INPUT( style );
     
   }
 
@@ -2120,11 +2120,11 @@ void InputMaximumLine_Body( ofstream& ofs , const string& condition , const stri
 
     }
 
-    ERR_IMPUT( style );
+    ERR_INPUT( style );
     
   }
 
-  ERR_IMPUT( language );
+  ERR_INPUT( language );
   return;
   
 }
@@ -2141,7 +2141,7 @@ void InputPrintLine_Body( ofstream& ofs , const string& variable_name , string& 
 
     }
 
-    ERR_IMPUT( style );
+    ERR_INPUT( style );
 
   }
 
@@ -2154,7 +2154,7 @@ void InputPrintLine_Body( ofstream& ofs , const string& variable_name , string& 
 
     }
 
-    ERR_IMPUT( style );
+    ERR_INPUT( style );
       
   }
 
@@ -2169,7 +2169,7 @@ void InputPrintLine_Body( ofstream& ofs , const string& variable_name , string& 
 
     }
 
-    ERR_IMPUT( style );
+    ERR_INPUT( style );
       
   }
 
@@ -2182,7 +2182,7 @@ void InputPrintLine_Body( ofstream& ofs , const string& variable_name , string& 
 
     }
 
-    ERR_IMPUT( style );
+    ERR_INPUT( style );
       
   }
 
@@ -2195,7 +2195,7 @@ void InputPrintLine_Body( ofstream& ofs , const string& variable_name , string& 
 
     }
 
-    ERR_IMPUT( style );
+    ERR_INPUT( style );
       
   }
 
@@ -2210,7 +2210,7 @@ void InputPrintLine_Body( ofstream& ofs , const string& variable_name , string& 
 
     }
 
-    ERR_IMPUT( style );
+    ERR_INPUT( style );
       
   }
 
@@ -2223,7 +2223,7 @@ void InputPrintLine_Body( ofstream& ofs , const string& variable_name , string& 
 
     }
 
-    ERR_IMPUT( style );
+    ERR_INPUT( style );
       
   }
 
@@ -2238,11 +2238,11 @@ void InputPrintLine_Body( ofstream& ofs , const string& variable_name , string& 
 
     }
 
-    ERR_IMPUT( style );
+    ERR_INPUT( style );
       
   }
 
-  ERR_IMPUT( language );
+  ERR_INPUT( language );
   return;
 
 }
@@ -2259,7 +2259,7 @@ void InputExitLine( ofstream& ofs , const string& function_expression_name , str
 
     }
 
-    ERR_IMPUT( style );
+    ERR_INPUT( style );
 
   }
 
@@ -2272,7 +2272,7 @@ void InputExitLine( ofstream& ofs , const string& function_expression_name , str
 
     }
 
-    ERR_IMPUT( style );
+    ERR_INPUT( style );
 
   }
 
@@ -2287,7 +2287,7 @@ void InputExitLine( ofstream& ofs , const string& function_expression_name , str
     
     }
 
-    ERR_IMPUT( style );
+    ERR_INPUT( style );
 
   }
 
@@ -2300,7 +2300,7 @@ void InputExitLine( ofstream& ofs , const string& function_expression_name , str
 
     }
 
-    ERR_IMPUT( style );
+    ERR_INPUT( style );
 
   }
 
@@ -2313,7 +2313,7 @@ void InputExitLine( ofstream& ofs , const string& function_expression_name , str
 
     }
 
-    ERR_IMPUT( style );
+    ERR_INPUT( style );
 
   }
 
@@ -2328,7 +2328,7 @@ void InputExitLine( ofstream& ofs , const string& function_expression_name , str
 
     }
 
-    ERR_IMPUT( style );
+    ERR_INPUT( style );
 
   }
 
@@ -2341,7 +2341,7 @@ void InputExitLine( ofstream& ofs , const string& function_expression_name , str
 
     }
 
-    ERR_IMPUT( style );
+    ERR_INPUT( style );
 
   }
 
@@ -2356,11 +2356,11 @@ void InputExitLine( ofstream& ofs , const string& function_expression_name , str
     
     }
 
-    ERR_IMPUT( style );
+    ERR_INPUT( style );
 
   }
 
-  ERR_IMPUT( language );
+  ERR_INPUT( language );
   return;
 
 }
@@ -2438,7 +2438,7 @@ void InputReturnLine_Body( ofstream& ofs , const string& function_expression_nam
 
   }
 
-  ERR_IMPUT( language );
+  ERR_INPUT( language );
   return;
 
 }
@@ -2598,7 +2598,7 @@ string ConditionToString( VLTree<string>::const_iterator& itr , bool& complicate
 
      );
 
-  ERR_IMPUT( *p_f );
+  ERR_INPUT( *p_f );
   return "dummy";
   
 }
@@ -2668,7 +2668,7 @@ string NegationToString_Body( const string& b , string& language , const string&
       
   }
 
-  ERR_IMPUT( b , language );
+  ERR_INPUT( b , language );
   return "dummy";
 
 }
@@ -2760,7 +2760,7 @@ string ImplicationToString_Body( const string& b0 , const string& b1 , string& l
       
   }
 
-  ERR_IMPUT( b0 , b1 , language );
+  ERR_INPUT( b0 , b1 , language );
   return "dummy";
 
 }
@@ -2851,7 +2851,7 @@ string EquivalenceToString_Body( const string& b0 , const string& b1 , string& l
       
   }
 
-  ERR_IMPUT( b0 , b1 , language );
+  ERR_INPUT( b0 , b1 , language );
   return "dummy";
 
 }
@@ -3003,7 +3003,7 @@ void AddCommaForLogicalConnective( string& b , const string& connective ,  bool&
 
   }
 
-  ERR_IMPUT( b , language );
+  ERR_INPUT( b , language );
   return;
 
 }
@@ -3025,7 +3025,7 @@ string LogicalConnectiveSymbolToString( const string& connective , string& langu
 
     }
 
-    ERR_IMPUT( connective );
+    ERR_INPUT( connective );
 
   }
 
@@ -3043,7 +3043,7 @@ string LogicalConnectiveSymbolToString( const string& connective , string& langu
 
     }
 
-    ERR_IMPUT( connective );
+    ERR_INPUT( connective );
 
   }
 
@@ -3061,7 +3061,7 @@ string LogicalConnectiveSymbolToString( const string& connective , string& langu
 
     }
 
-    ERR_IMPUT( connective );
+    ERR_INPUT( connective );
 
   }
 
@@ -3079,7 +3079,7 @@ string LogicalConnectiveSymbolToString( const string& connective , string& langu
 
     }
 
-    ERR_IMPUT( connective );
+    ERR_INPUT( connective );
 
   }
 
@@ -3097,11 +3097,11 @@ string LogicalConnectiveSymbolToString( const string& connective , string& langu
 
     }
 
-    ERR_IMPUT( connective );
+    ERR_INPUT( connective );
 
   }
 
-  ERR_IMPUT( language );
+  ERR_INPUT( language );
   return "dummy";
 
 }
@@ -3116,7 +3116,7 @@ void PutMathJax( string& s , const string& style )
 
   }
 
-  ERR_IMPUT( style );
+  ERR_INPUT( style );
   return;
 
 }
@@ -3180,7 +3180,7 @@ void PutWrap( string& s , const string& language )
 
   }
   
-  ERR_IMPUT( s , language );
+  ERR_INPUT( s , language );
   return;
   
 }
