@@ -5,7 +5,7 @@
 
 #include "../../Sort/a_Body.hpp"
 #include "../../VLArray/a_Body.hpp"
-#include "../../../Error/IllegalImput/a_Body.hpp"
+#include "../../../Error/IllegalInput/a_Body.hpp"
 #include "../../../Mathematics/SetTheory/DirectProduct/a_Body.hpp"
 
 template <typename T , typename Key1 , typename... Key2> inline LabeledList<T,Key1,Key2...>::LabeledList() : m_v() {}
@@ -31,7 +31,7 @@ T& LabeledList<T,Key1,Key2...>::operator()( const Key1& key1 , const Key2&... ke
 
   }
 
-  ERR_IMPUT( key1 , key2... );
+  ERR_INPUT( key1 , key2... );
   return m_v.back().template Ref<1>();
 
 }
@@ -52,7 +52,7 @@ const T& LabeledList<T,Key1,Key2...>::operator()( const Key1& key1 , const Key2&
 
   }
   
-  ERR_IMPUT( key1 , key2... );
+  ERR_INPUT( key1 , key2... );
   return m_v.back().template Get<1>();
 
 }
@@ -75,7 +75,7 @@ void LabeledList<T,Key1,Key2...>::Delete( const Key1& key1 , const Key2&... key2
 
   }
 
-  ERR_IMPUT( key1 , key2... );
+  ERR_INPUT( key1 , key2... );
   return;
 
 }

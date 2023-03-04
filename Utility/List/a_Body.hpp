@@ -3,7 +3,7 @@
 #pragma once
 #include "a.hpp"
 
-#include "../../Error/IllegalImput/a_Body.hpp"
+#include "../../Error/IllegalInput/a_Body.hpp"
 #include "../../SFINAE/NonMemberFunction/Operator/Equality/a_Body.hpp"
 
 template <typename T>
@@ -259,7 +259,7 @@ template <typename T> const T& Access( const uint& n , const list<T>& a )
 
     if( itr == end ){
 
-      ERR_IMPUT( n , a , i );
+      ERR_INPUT( n , a , i );
 	
     }
 
@@ -269,7 +269,7 @@ template <typename T> const T& Access( const uint& n , const list<T>& a )
 
   if( itr == end ){
 
-    ERR_IMPUT( n , a );
+    ERR_INPUT( n , a );
 	
   }
 
