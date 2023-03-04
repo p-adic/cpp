@@ -61,7 +61,7 @@ auto ExpressionsToListSyntax( const Args&... args ) -> typename enable_if<conjun
       
       if( ! itr_sub.IsValid() ){
 
-	ERR_IMPUT( t );
+	ERR_INPUT( t );
 	  
       }
 

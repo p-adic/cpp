@@ -205,7 +205,7 @@ string FunctionExpressionToString( VLTree<string>::const_iterator& itr_f , VLTre
 
   if( itr_f.IsValid() ){
 
-    ERR_IMPUT( *itr_f , variadic );
+    ERR_INPUT( *itr_f , variadic );
        
   }
   
@@ -233,7 +233,7 @@ static const string& CurrentSeparator( bool& variadic , VLTree<string>::const_it
 
   if( ! itr_f.IsValid() ){
 
-    ERR_IMPUT( variadic );
+    ERR_INPUT( variadic );
        
   }
 
