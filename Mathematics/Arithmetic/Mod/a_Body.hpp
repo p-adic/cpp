@@ -7,7 +7,7 @@
 #include "Montgomery/a_Body.hpp"
 #include "Residue/a_Body.hpp"
 // 0èúéZópÇÃó·äO
-#include "../../../Error/IllegalImput/a_Body.hpp"
+#include "../../../Error/IllegalInput/a_Body.hpp"
 
 template <INT_TYPE_FOR_MOD M> inline constexpr Mod<M>::Mod() noexcept : m_n() {}
 template <INT_TYPE_FOR_MOD M> inline constexpr Mod<M>::Mod( const Mod<M>& n ) noexcept : m_n( n.m_n ) {}
@@ -58,12 +58,12 @@ template <INT_TYPE_FOR_MOD M> inline constexpr Mod<M>& Mod<M>::Double() noexcept
 template <INT_TYPE_FOR_MOD M> inline constexpr Mod<M>& Mod<M>::Halve() noexcept { return Ref( ( ( m_n & 1 ) == 0 ? m_n : m_n += M ) >>= 1 ); }
 
 template <INT_TYPE_FOR_MOD M> inline Mod<M>& Mod<M>::Invert() { if( m_n == 0 ){ ERR_INPUT( m_n ); } INT_TYPE_FOR_MOD m_n_neg; return m_n < ConstantsForMod<M>::g_memory_length ? Ref( m_n = Inverse( m_n ).m_n ) : ( m_n_neg = M - m_n < ConstantsForMod<M>::g_memory_length ) ? Ref( m_n = M - Inverse( m_n_neg ).m_n ) : PositivePower( INT_TYPE_FOR_MOD( ConstantsForMod<M>::g_M_minus_2 ) ); }
-template <> inline Mod<2>& Mod<2>::Invert() { if( m_n == 0 ){ ERR_IMPUT( m_n ); } return *this; }
+template <> inline Mod<2>& Mod<2>::Invert() { if( m_n == 0 ){ ERR_INPUT( m_n ); } return *this; }
 
 template <INT_TYPE_FOR_MOD M> template <typename T> inline constexpr Mod<M>& Mod<M>::PositivePower( T&& exponent ) noexcept { Mod<M> power{ *this }; exponent--; while( exponent != 0 ){ ( exponent & 1 ) == 1 ? operator*=( power ) : *this; exponent >>= 1; power *= power; } return *this; }
 template <> template <typename T> inline constexpr Mod<2>& Mod<2>::PositivePower( T&& exponent ) noexcept { return *this; }
 template <INT_TYPE_FOR_MOD M> template <typename T> inline constexpr Mod<M>& Mod<M>::NonNegativePower( T&& exponent ) noexcept { return exponent == 0 ? Ref( m_n = 1 ) : Ref( PositivePower( forward<T>( exponent ) ) ); }
-template <INT_TYPE_FOR_MOD M> template <typename T> inline constexpr Mod<M>& Mod<M>::Power( T&& exponent ) { bool neg = exponent < 0; if( neg && m_n == 0 ){ ERR_IMPUT( m_n , exponent ); } neg ? exponent *= ConstantsForMod<M>::g_M_minus_2_neg : exponent; return m_n == 0 ? *this : ( exponent %= ConstantsForMod<M>::g_M_minus ) == 0 ? Ref( m_n = 1 ) : PositivePower( forward<T>( exponent ) ); }
+template <INT_TYPE_FOR_MOD M> template <typename T> inline constexpr Mod<M>& Mod<M>::Power( T&& exponent ) { bool neg = exponent < 0; if( neg && m_n == 0 ){ ERR_INPUT( m_n , exponent ); } neg ? exponent *= ConstantsForMod<M>::g_M_minus_2_neg : exponent; return m_n == 0 ? *this : ( exponent %= ConstantsForMod<M>::g_M_minus ) == 0 ? Ref( m_n = 1 ) : PositivePower( forward<T>( exponent ) ); }
 
 template <INT_TYPE_FOR_MOD M> inline const Mod<M>& Mod<M>::Inverse( const INT_TYPE_FOR_MOD& n ) noexcept { static Mod<M> memory[ConstantsForMod<M>::g_memory_length] = { zero() , one() }; static INT_TYPE_FOR_MOD length_curr = 2; while( length_curr <= n ){ memory[length_curr].m_n = M - Montgomery<M>::Multiplication( memory[M % length_curr].m_n , M / length_curr ); length_curr++; } return memory[n]; }
 template <INT_TYPE_FOR_MOD M> inline const Mod<M>& Mod<M>::Factorial( const INT_TYPE_FOR_MOD& n ) noexcept { static Mod<M> memory[ConstantsForMod<M>::g_memory_length] = { one() , one() }; static INT_TYPE_FOR_MOD length_curr = 2; while( length_curr <= n ){ memory[length_curr] = Montgomery<M>::Factorial( length_curr ).Reduce(); length_curr++; } return memory[n]; }

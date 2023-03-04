@@ -1,4 +1,4 @@
-// c:/Users/user/Documents/Programming/Mathematics/Arithmetic/Mod/Montgomery/a_macro.hpp
+// c:/Users/user/Documents/Programming/Mathematics/Arithmetic/Mod/Montgomery/a_Macro.hpp
 
 #pragma once
 
@@ -17,7 +17,5 @@
   template <INT_TYPE_FOR_MOD M> inline Montgomery<M> Montgomery<M>::operator FUNC( const Montgomery<M>& n ) const noexcept { return move( Montgomery<M>( *this ) FUNC ## = n ); } \
   template <INT_TYPE_FOR_MOD M> template <SFINAE_FOR_MOD()> inline Montgomery<M> Montgomery<M>::operator FUNC( T&& n ) const noexcept { return FORMULA; } \
   template <INT_TYPE_FOR_MOD M , SFINAE_FOR_MOD( = nullptr )> inline Montgomery<M> operator FUNC( T&& n0 , const Montgomery<M>& n1 ) noexcept { return move( Montgomery<M>( forward<T>( n0 ) ) FUNC ## = n1 ); } \
-
-
 
 

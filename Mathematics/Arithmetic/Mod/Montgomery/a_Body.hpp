@@ -1,10 +1,11 @@
 // c:/Users/user/Documents/Programming/Mathematics/Arithmetic/Mod/Montgomery/a_Body.hpp
 
 #pragma once
+#include "a.hpp"
 #include "../Constant/a_Body.hpp"
 #include "../Residue/a_Body.hpp"
 // 0èúéZópÇÃó·äO
-#include "../../../../Error/IllegalImput/a_Body.hpp"
+#include "../../../../Error/IllegalInput/a_Body.hpp"
 
 template <INT_TYPE_FOR_MOD M> inline constexpr INT_TYPE_FOR_MOD Montgomery<M>::Form( const INT_TYPE_FOR_MOD& n ) noexcept { ull n_copy = n; return INT_TYPE_FOR_MOD( move( Reduction( n_copy *= ConstantsForMod<M>::g_Montgomery_base_square_mod ) ) ); }
 template <INT_TYPE_FOR_MOD M> inline constexpr ull& Montgomery<M>::Reduction( ull& n ) noexcept { ull n_sub = n & ConstantsForMod<M>::g_Montgomery_base_minus; return ( ( n += ( ( n_sub *= ConstantsForMod<M>::g_Montgomery_M_neg_inverse ) &= ConstantsForMod<M>::g_Montgomery_base_minus ) *= M ) >>= ConstantsForMod<M>::g_Montgomery_digit ) < M ? n : n -= M; }
@@ -51,7 +52,7 @@ template <INT_TYPE_FOR_MOD M> inline constexpr Montgomery<M>& Montgomery<M>::Sig
 template <INT_TYPE_FOR_MOD M> inline constexpr Montgomery<M>& Montgomery<M>::Double() noexcept { return Ref( Mod<M>::Double() ); }
 template <INT_TYPE_FOR_MOD M> inline constexpr Montgomery<M>& Montgomery<M>::Halve() noexcept { return Ref( Mod<M>::Halve() ); }
 
-template <INT_TYPE_FOR_MOD M> inline constexpr Montgomery<M>& Montgomery<M>::Invert() { if( Mod<M>::m_n == 0 ){ ERR_IMPUT( Mod<M>::m_n ); } return PositivePower( INT_TYPE_FOR_MOD( ConstantsForMod<M>::g_M_minus_2 ) ); }
+template <INT_TYPE_FOR_MOD M> inline constexpr Montgomery<M>& Montgomery<M>::Invert() { if( Mod<M>::m_n == 0 ){ ERR_INPUT( Mod<M>::m_n ); } return PositivePower( INT_TYPE_FOR_MOD( ConstantsForMod<M>::g_M_minus_2 ) ); }
 
 template <INT_TYPE_FOR_MOD M> template <typename T> inline constexpr Montgomery<M>& Montgomery<M>::PositivePower( T&& exponent ) noexcept { Montgomery<M> power{ *this }; ( --exponent ) %= ConstantsForMod<M>::g_M_minus_2; while( exponent != 0 ){ ( exponent & 1 ) == 1 ? operator*=( power ) : *this; exponent >>= 1; power *= power; } return *this; }
 
