@@ -60,7 +60,7 @@ T GetPower( const T& x , const T& y )
 
     }
 
-    ERR_IMPUT( x , y );
+    ERR_INPUT( x , y );
 
   }
 
@@ -96,7 +96,7 @@ template <typename T> inline const uint& LengthOf( const VLNestedArray<T>& t ) {
 template <typename Arg1, typename Arg2> inline CppClassForString EntryAccessStringApplication( const Arg1& arg1 , const Arg2& arg2 ) { return "GetEntryAccess( " + ArgumentString( arg1 , arg2 ) + " )"; }
 
 template <typename T> inline T GetEntryAccess( const VLArray<T>& a , const uint& n ) { return a[n]; }
-template <typename T> inline VLNestedArray<T> GetEntryAccess( const VLNestedArray<T>& a , const uint& n ) { if( a.Denestable() ){ ERR_IMPUT( a , n ); } return a.GetBranchCopy( n ); }
+template <typename T> inline VLNestedArray<T> GetEntryAccess( const VLNestedArray<T>& a , const uint& n ) { if( a.Denestable() ){ ERR_INPUT( a , n ); } return a.GetBranchCopy( n ); }
 
 template <typename Arg1, typename Arg2> inline CppClassForString InitialSegmentStringApplication( const Arg1& arg1 , const Arg2& arg2 ) { return "GetInitialSegment( " + ArgumentString( arg1 , arg2 ) + " )"; }
 
@@ -106,7 +106,7 @@ VLArray<T> GetInitialSegment( const VLArray<T>& a , const uint& n )
   
   if( a.size() < n ){
 
-    ERR_IMPUT( a , n );
+    ERR_INPUT( a , n );
 
   }
 
@@ -127,13 +127,13 @@ template <typename T> VLNestedArray<T> GetInitialSegment( const VLNestedArray<T>
 
   if( a.Denestable() ){
 
-    ERR_IMPUT( a , n );
+    ERR_INPUT( a , n );
 
   }
   
   if( a.size() < n ){
 
-    ERR_IMPUT( a , n );
+    ERR_INPUT( a , n );
 
   }
 
@@ -160,7 +160,7 @@ VLArray<T> GetFinialSegment( const VLArray<T>& a , const uint& n )
 
   if( a.size() < n ){
 
-    ERR_IMPUT( a , n );
+    ERR_INPUT( a , n );
 
   }
 
@@ -181,13 +181,13 @@ template <typename T> VLNestedArray<T> GetFinalSegment( const VLNestedArray<T>& 
 
   if( a.Denestable() ){
 
-    ERR_IMPUT( a , n );
+    ERR_INPUT( a , n );
 
   }
 
   if( a.size() < n ){
 
-    ERR_IMPUT( a , n );
+    ERR_INPUT( a , n );
 
   }
 
@@ -236,7 +236,7 @@ T GetRemoveNestedArray( const VLNestedArray<T>& t )
 
   if( ! t.Denestable() ){
 
-    ERR_IMPUT( t );
+    ERR_INPUT( t );
 
   }
 
