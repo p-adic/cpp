@@ -8,6 +8,7 @@
 #include <cmath>
 
 template <typename... ARGS> inline Angle::Angle( const ARGS&... args ) noexcept : Mod<360>( args... ){}
+template <typename... ARGS> inline Angle::Angle( const Angle& n ) noexcept : Mod<360>( n ){}
 template <typename... ARGS> inline Angle::Angle( Angle&& n ) noexcept : Mod<360>( move( n ) ){}
 
 inline Angle& Angle::operator=( const int& n ) noexcept { Mod<360>::operator=( n ); return *this; }

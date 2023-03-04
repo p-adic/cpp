@@ -12,6 +12,7 @@ public:
   
 public:
   template <typename... ARGS> inline Angle( const ARGS&... args ) noexcept;
+  inline Angle( const Angle& n ) noexcept;
   inline Angle( Angle&& n ) noexcept;
 
   inline Angle& operator=( const int& n ) noexcept;
