@@ -163,7 +163,7 @@ string FinalSegmentOf( const string& s , const uint& n )
 
   if( size < n ){
 
-    ERR_IMPUT( s , n , a , size );
+    ERR_INPUT( s , n , a , size );
 
   }
 
@@ -182,7 +182,7 @@ uint FirstBitOf( const string& s )
 
   if( s == "" ){
 
-    ERR_IMPUT( s );
+    ERR_INPUT( s );
 
   }
   
@@ -193,7 +193,7 @@ uint FirstBitOf( const string& s )
 
     if( length < 2 ){
 
-      ERR_IMPUT( s , length );
+      ERR_INPUT( s , length );
 
     }
     
