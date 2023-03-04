@@ -57,7 +57,7 @@ template <typename T> void VLNestedArray<T>::Concatenate( const VLNestedArray& a
 
   if( Denestable() || a.Denestable() ){
 
-    ERR_IMPUT( *this , a );
+    ERR_INPUT( *this , a );
 
   }
   
