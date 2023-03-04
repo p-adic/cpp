@@ -7,7 +7,7 @@
 
 #include "../../Analysis/FFT/a_Body.hpp"
 // 0œZ‚Ì—áŠOˆ—
-#include "../../../Error/IllegalImput/a_Body.hpp"
+#include "../../../Error/IllegalInput/a_Body.hpp"
 
 template <typename T> inline TruncatedPolynomial<T>::TruncatedPolynomial( const uint& N ) : Polynomial<T>() , m_N( N ) { Polynomial<T>::m_f.reserve( m_N ); }
 template <typename T> inline TruncatedPolynomial<T>::TruncatedPolynomial( const TruncatedPolynomial<T>& f ) : Polynomial<T>( f ) , m_N( f.m_N ) { Polynomial<T>::m_f.reserve( m_N ); }
@@ -255,7 +255,7 @@ TruncatedPolynomial<T> TruncatedDifferential( const TruncatedPolynomial<T>& f , 
 
   if( f.m_N == 0 ){
 
-    ERR_IMPUT( f , f.m_N );
+    ERR_INPUT( f , f.m_N );
 
   }
 
