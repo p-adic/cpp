@@ -3,6 +3,10 @@
 #pragma once
 #include "a.hpp"
 
+template <typename INT , INT M> inline constexpr INT Residue( const INT& n ) noexcept { return Residue<M>( move( INT1( n ) ) ); }
+template <typename INT , INT M> inline constexpr INT Residue( INT& n ) noexcept { return n < 0 ? ( ( ( ( ++n ) *= -1 ) %= M ) *= -1 ) += M - 1 : n %= M; }
+template <typename INT , INT M> inline constexpr INT Residue( INT&& n ) noexcept { return move( Residue<M>( n ) ); }
+
 template <typename INT1 , typename INT2> inline constexpr INT1 Residue( const INT1& n , const INT2& M ) noexcept { return Residue( move( INT1( n ) ) , M ); }
 template <typename INT1 , typename INT2> inline constexpr INT1& Residue( INT1& n , const INT2& M ) noexcept { return n < 0 ? ( ( ( ( ++n ) *= -1 ) %= M ) *= -1 ) += M - 1 : n %= M; }
 template <typename INT1 , typename INT2> inline constexpr INT1 Residue( INT1&& n , const INT2& M ) noexcept { return move( Residue( n , M ) ); }
