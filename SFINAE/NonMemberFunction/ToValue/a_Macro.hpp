@@ -24,7 +24,7 @@
   DECLARATION_OF_NON_MEMBER_WITH_CONST_VARIABLES( False_ , Func  , _ToValue ) \
   {									\
 									\
-    ERR_IMPUT( typeid( Ret ) , typeid( Args )... );			\
+    ERR_INPUT( typeid( Ret ) , typeid( Args )... );			\
     return Ret ();							\
 									\
   }									\
@@ -35,7 +35,7 @@
   DECLARATION_OF_NON_MEMBER_WITH_CONST_VARIABLES( Invalid_ , Func , _ToValue ) \
   {									\
 									\
-    ERR_IMPUT( typeid( Ret ) , typeid( Args )... );			\
+    ERR_INPUT( typeid( Ret ) , typeid( Args )... );			\
     return Ret ();							\
 									\
   }									\

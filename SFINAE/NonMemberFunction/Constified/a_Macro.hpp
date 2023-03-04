@@ -187,7 +187,7 @@
   DECLARATION_OF_NON_MEMBER_WITH_AT_LEAST_ONE_VARIABLE( Invalid_ , Func , _Constified )	\
   {									\
 									\
-    ERR_IMPUT( arg1 , arg2... );					\
+    ERR_INPUT( arg1 , arg2... );					\
     return Ret ();							\
 									\
   }									\
@@ -216,7 +216,7 @@
   DECLARATION_OF_NON_MEMBER_WITH_AT_LEAST_ONE_VARIABLE( False_ , Func , _Constified ) \
   {									\
 									\
-    ERR_IMPUT( arg1 , arg2... );					\
+    ERR_INPUT( arg1 , arg2... );					\
     return Ret ();							\
 									\
   }									\

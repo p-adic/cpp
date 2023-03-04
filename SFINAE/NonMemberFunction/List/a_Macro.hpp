@@ -132,7 +132,7 @@
   DECLARATION_OF_NON_MEMBER_LISTED_REFERENCE_VALID( Func )		\
   {									\
 									\
-    ERR_IMPUT( arg1 , arg2... );					\
+    ERR_INPUT( arg1 , arg2... );					\
     return list<int>();							\
 									\
   }									\
@@ -143,7 +143,7 @@
   DECLARATION_OF_NON_MEMBER_LISTED_INVALID( Func )		\
   {								\
 								\
-    ERR_IMPUT( arg1 , arg2... );				\
+    ERR_INPUT( arg1 , arg2... );				\
     return list< Ret >();					\
 								\
   }								\
@@ -187,7 +187,7 @@
   DECLARATION_OF_NON_MEMBER_LISTED_FALSE( Func )		\
   {								\
 								\
-    ERR_IMPUT( arg1 , arg2... );				\
+    ERR_INPUT( arg1 , arg2... );				\
     return list< Ret >();					\
 								\
   }								\

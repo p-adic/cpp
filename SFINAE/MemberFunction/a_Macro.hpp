@@ -236,7 +236,7 @@
   DECLARATION_OF_MEMBER_INVALID( Func )					\
   {									\
 									\
-    ERR_IMPUT( typeid( T ) , typeid( Ret ) , typeid( Args )...  );	\
+    ERR_INPUT( typeid( T ) , typeid( Ret ) , typeid( Args )...  );	\
     return Ret ();							\
 									\
   }									\
@@ -271,7 +271,7 @@
   DECLARATION_OF_MEMBER_FALSE( Func )			\
   {							\
 							\
-    ERR_IMPUT( typeid( T ) , typeid( Ret ) , typeid( Args )... ); \
+    ERR_INPUT( typeid( T ) , typeid( Ret ) , typeid( Args )... ); \
     return Ret ();					\
 							\
   }							\

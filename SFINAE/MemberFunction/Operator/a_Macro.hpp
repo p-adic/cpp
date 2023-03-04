@@ -70,7 +70,7 @@
   DECLARATION_OF_MEMBER_OPERATOR_INVALID( Oper )	\
   {							\
 							\
-    ERR_IMPUT( typeid( T ) );				\
+    ERR_INPUT( typeid( T ) );				\
     return t1;						\
 							\
   }							\

@@ -7,4 +7,4 @@
 
 template <typename T , typename... Args> inline TYPE_OF_CONSTRUCTOR_VALID Construct( const Args&... args ){ return T( args... ); }
 
-template <typename T , typename... Args> inline TYPE_OF_CONSTRUCTOR_INVALID Construct( const Args&... args ){ ERR_IMPUT( typeid( T ) , args... ); return T(); }
+template <typename T , typename... Args> inline TYPE_OF_CONSTRUCTOR_INVALID Construct( const Args&... args ){ ERR_INPUT( typeid( T ) , args... ); return T(); }

@@ -124,7 +124,7 @@
   DECLARATION_OF_NON_MEMBER_OPERATOR( Invalid_ , Oper )		\
   {								\
   								\
-    ERR_IMPUT( typeid( T ).name() );				\
+    ERR_INPUT( typeid( T ).name() );				\
     return Ret ();						\
     								\
   }								\
@@ -145,7 +145,7 @@
   DECLARATION_OF_NON_MEMBER_OPERATOR( False_ , Oper )		\
   {								\
 								\
-    ERR_IMPUT( typeid( T ) );					\
+    ERR_INPUT( typeid( T ) );					\
     return Ret ();						\
 								\
   }								\

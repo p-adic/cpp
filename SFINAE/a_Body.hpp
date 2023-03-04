@@ -4,7 +4,7 @@
 #include "a.hpp"
 
 #include "../Error/IllegalAccess/a_Body.hpp"
-#include "../Error/IllegalImput/a_Body.hpp"
+#include "../Error/IllegalInput/a_Body.hpp"
 
 template <typename T , typename Ret>
 auto to_Value( const T & t ) -> typename FromValueToValue<T,Ret>::type
@@ -34,7 +34,7 @@ template <typename T , typename Ret>
 auto to_Value( const T & t ) -> typename InvalidToValue<T,Ret>::type
 {
 
-  ERR_IMPUT( t );
+  ERR_INPUT( t );
   return Ret ();
 
 }
@@ -67,7 +67,7 @@ template <typename T , typename Ret>
 auto to_ValueOrReference( const T & t ) -> typename InvalidToValueOrReference<T,Ret>::type
 {
 
-  ERR_IMPUT( t );
+  ERR_INPUT( t );
   return Ret ();
 
 }
