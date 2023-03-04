@@ -3,7 +3,7 @@
 #include "../../Header.hpp"
 #include "a_Body.hpp"
 
-#include "../../../Error/IllegalImput/a_Body.hpp"
+#include "../../../Error/IllegalInput/a_Body.hpp"
 
 dim& dim::operator=( const dim& d ) noexcept
 {
@@ -36,7 +36,7 @@ dim& dim::operator-=( const dim& d )
 
   if( d.m_is_infty ){
 
-    ERR_IMPUT( *this , d );
+    ERR_INPUT( *this , d );
 
   }
       
@@ -44,7 +44,7 @@ dim& dim::operator-=( const dim& d )
       
     if( m_d < c ){
 
-      ERR_IMPUT( *this , d );
+      ERR_INPUT( *this , d );
 
     }
     
@@ -63,7 +63,7 @@ dim& dim::operator*=( const dim& d )
 
     if( d.m_d == 0 ){
       
-      ERR_IMPUT( *this , d );
+      ERR_INPUT( *this , d );
 
     }
     
@@ -73,7 +73,7 @@ dim& dim::operator*=( const dim& d )
 
       if( m_d == 0 ){
 
-	ERR_IMPUT( *this , d );
+	ERR_INPUT( *this , d );
 
       } else {
 
@@ -100,7 +100,7 @@ dim& dim::operator/=( const dim& d )
 
     if( m_is_infty ){
 	
-      ERR_IMPUT( *this , d );
+      ERR_INPUT( *this , d );
 	
     } else {
 
@@ -114,7 +114,7 @@ dim& dim::operator/=( const dim& d )
 
       if( m_d == 0 ){
 
-	ERR_IMPUT( *this , d );
+	ERR_INPUT( *this , d );
 
       } else {
 
@@ -143,7 +143,7 @@ dim& dim::operator%=( const dim& d )
 
   if( m_is_infty || d.m_d == 0 || d.m_is_infty ){
 	
-    ERR_IMPUT( *this , d );
+    ERR_INPUT( *this , d );
 
   }
 
@@ -157,7 +157,7 @@ const INT_TYPE_FOR_DIM& dim::Get() const
 
   if( m_is_infty ){
 
-    ERR_IMPUT( *this );
+    ERR_INPUT( *this );
     
   }
   
