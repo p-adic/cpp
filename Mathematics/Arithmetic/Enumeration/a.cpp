@@ -61,7 +61,7 @@ void BijSum12( const dim& d_1 , const dim& d_2, const INT_TYPE_FOR_DIM& n , INT_
 
   if( N == 0 ){
 
-    ERR_IMPUT( d_1 , d_2 , n );
+    ERR_INPUT( d_1 , d_2 , n );
 
   }
 
@@ -97,7 +97,7 @@ INT_TYPE_FOR_DIM BijSum21( const dim& d_1 , const dim& d_2 , const INT_TYPE_FOR_
     BijSum21_Body( d_1 , d_2 , n_1 , n_2 , m_1 , m_2 );
 
   }
-  catch( const IllegalImput & e ){
+  catch( const IllegalInput & e ){
 
     CALL( e , d_1 , d_2 , n_1 , n_2 );
 
@@ -112,7 +112,7 @@ static void BijSum21_Body( const dim& d_1 , const dim& d_2 , const INT_TYPE_FOR_
 
   if( n_1 >= 2 ){
     
-    ERR_IMPUT( d_1 , d_2 , n_1 , n_2 );
+    ERR_INPUT( d_1 , d_2 , n_1 , n_2 );
 
   }
 
@@ -140,7 +140,7 @@ static void BijSum21_Body( const dim& d_1 , const dim& d_2 , const INT_TYPE_FOR_
 
       if( n_2 >= d_1 ){
 
-	ERR_IMPUT( d_1 , d_2 , n_1 , n_2 );
+	ERR_INPUT( d_1 , d_2 , n_1 , n_2 );
 
       }
 
@@ -153,7 +153,7 @@ static void BijSum21_Body( const dim& d_1 , const dim& d_2 , const INT_TYPE_FOR_
 
 	if( n_2 >= d_2 ){
 
-	  ERR_IMPUT( d_1 , d_2 , n_1 , n_2 );
+	  ERR_INPUT( d_1 , d_2 , n_1 , n_2 );
 	
 	}
 
@@ -177,7 +177,7 @@ static void BijSum21_Body( const dim& d_1 , const dim& d_2 , const INT_TYPE_FOR_
 
     if( n_2 >= d_2 ){
 
-      ERR_IMPUT( d_1 , d_2 , n_1 , n_2 );
+      ERR_INPUT( d_1 , d_2 , n_1 , n_2 );
       
     }
 
@@ -212,7 +212,7 @@ void BijProd12( const dim& d_1 , const dim& d_2 , const INT_TYPE_FOR_DIM& n , IN
       
       if( N_2 == 0 ){
 
-	ERR_IMPUT( d_1 , d_2 , n );
+	ERR_INPUT( d_1 , d_2 , n );
 
       }
     
@@ -228,7 +228,7 @@ void BijProd12( const dim& d_1 , const dim& d_2 , const INT_TYPE_FOR_DIM& n , IN
 
   if( N_1 == 0 ){
 
-    ERR_IMPUT( d_1 , d_2 , n );
+    ERR_INPUT( d_1 , d_2 , n );
 
   }
 
@@ -264,7 +264,7 @@ INT_TYPE_FOR_DIM BijProd21( const dim& d_1 , const dim& d_2 , const INT_TYPE_FOR
       
     if( N_2 == 0 ){
 
-      ERR_IMPUT( d_1 , d_2 , n_1 , n_2 );
+      ERR_INPUT( d_1 , d_2 , n_1 , n_2 );
 
     }
       
@@ -278,7 +278,7 @@ INT_TYPE_FOR_DIM BijProd21( const dim& d_1 , const dim& d_2 , const INT_TYPE_FOR
       
     if( N_1 == 0 ){
 
-      ERR_IMPUT( d_1 , d_2 , n_1 , n_2 );
+      ERR_INPUT( d_1 , d_2 , n_1 , n_2 );
 
     }
 
@@ -291,7 +291,7 @@ INT_TYPE_FOR_DIM BijProd21( const dim& d_1 , const dim& d_2 , const INT_TYPE_FOR
       
   if( N_1 == 0 || N_2 == 0 ){
 
-    ERR_IMPUT( d_1 , d_2 , n_1 , n_2 );
+    ERR_INPUT( d_1 , d_2 , n_1 , n_2 );
       
   }
 

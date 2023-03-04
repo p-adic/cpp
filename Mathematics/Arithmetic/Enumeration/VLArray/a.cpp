@@ -20,7 +20,7 @@ void BijSum1N( const VLArray<dim>& a_d , const INT_TYPE_FOR_DIM& n , INT_TYPE_FO
   
   if( a_d.empty() ){
 
-    ERR_IMPUT( a_d , n );
+    ERR_INPUT( a_d , n );
       
   }
 
@@ -77,7 +77,7 @@ INT_TYPE_FOR_DIM BijSumN1( const VLArray<dim>& a_d , const INT_TYPE_FOR_DIM& n_1
 
   if( a_d.empty() ){
 
-    ERR_IMPUT( a_d , n_1 , n_2 );
+    ERR_INPUT( a_d , n_1 , n_2 );
       
   }
 
@@ -85,7 +85,7 @@ INT_TYPE_FOR_DIM BijSumN1( const VLArray<dim>& a_d , const INT_TYPE_FOR_DIM& n_1
 
     if( n_1 != 0 ){
 
-      ERR_IMPUT( a_d , n_1 , n_2 );
+      ERR_INPUT( a_d , n_1 , n_2 );
 
     }
 
@@ -103,7 +103,7 @@ INT_TYPE_FOR_DIM BijSumN1( const VLArray<dim>& a_d , const INT_TYPE_FOR_DIM& n_1
       return BijSum21( d , Sum( b_d ) , 0 , n_2 );
 
     }
-    catch( const IllegalImput & e ){
+    catch( const IllegalInput & e ){
 
       CALL( e , a_d , n_1 , n_2 );
 
@@ -118,7 +118,7 @@ INT_TYPE_FOR_DIM BijSumN1( const VLArray<dim>& a_d , const INT_TYPE_FOR_DIM& n_1
     n = BijSumN1( b_d , n_1 - 1 , n_2 ) ;
 
   }
-  catch( const IllegalImput & e ){
+  catch( const IllegalInput & e ){
 
     CALL( e , a_d , n_1 , n_2 );
 
@@ -129,7 +129,7 @@ INT_TYPE_FOR_DIM BijSumN1( const VLArray<dim>& a_d , const INT_TYPE_FOR_DIM& n_1
     return BijSum21( d, Sum( b_d ) , 1 , n );
 
   }
-  catch( const IllegalImput & e ){
+  catch( const IllegalInput & e ){
 
     CALL( e , a_d , n_1 , n_2 );
 
@@ -151,7 +151,7 @@ VLArray<INT_TYPE_FOR_DIM> BijProd1N( const VLArray<dim>& a_d , const INT_TYPE_FO
     BijProd1N( a_d , n , a_n );
 
   }
-  catch( const IllegalImput& e ){
+  catch( const IllegalInput& e ){
 
     CALL( e , a_d , n );
 
@@ -170,7 +170,7 @@ void BijProd1N( const VLArray<dim>& a_d , const INT_TYPE_FOR_DIM& n , VLArray<IN
 
     if( n != 0 ){
 
-      ERR_IMPUT( a_d , n );
+      ERR_INPUT( a_d , n );
 
     }
       
@@ -192,7 +192,7 @@ void BijProd1N( const VLArray<dim>& a_d , const INT_TYPE_FOR_DIM& n , VLArray<IN
 
       if( N == 0 ){
 
-	ERR_IMPUT( a_d , n );
+	ERR_INPUT( a_d , n );
       
       } else {
 
@@ -213,7 +213,7 @@ void BijProd1N( const VLArray<dim>& a_d , const INT_TYPE_FOR_DIM& n , VLArray<IN
       BijProd12( d , Prod( b_d ) , n , n_1 , n_2 );      
 
     }
-    catch( const IllegalImput& e ){
+    catch( const IllegalInput& e ){
 
       CALL( e , a_d , n );
 
@@ -224,7 +224,7 @@ void BijProd1N( const VLArray<dim>& a_d , const INT_TYPE_FOR_DIM& n , VLArray<IN
       BijProd1N( b_d , n_2 , a_n );
 
     }
-    catch( const IllegalImput& e ){
+    catch( const IllegalInput& e ){
 
       CALL( e , a_d , n );
 
@@ -245,7 +245,7 @@ INT_TYPE_FOR_DIM BijProdN1( const VLArray<dim>& a_d , const VLArray<INT_TYPE_FOR
 
     if( ! a_d.empty() ){
 
-      ERR_IMPUT( a_d , a_n );
+      ERR_INPUT( a_d , a_n );
 
     }
       
@@ -260,13 +260,13 @@ INT_TYPE_FOR_DIM BijProdN1( const VLArray<dim>& a_d , const VLArray<INT_TYPE_FOR
 
   if( a_d.size() != 1 ) ){
 
-      ERR_IMPUT( a_d , a_n );
+      ERR_INPUT( a_d , a_n );
 
     }
 
     if( n >= d ){
 
-      ERR_IMPUT( a_d , a_n , d , n );
+      ERR_INPUT( a_d , a_n , d , n );
       
     }
       
@@ -284,7 +284,7 @@ INT_TYPE_FOR_DIM BijProdN1( const VLArray<dim>& a_d , const VLArray<INT_TYPE_FOR
     m = BijProd21( d , Prod( b_d ) , n , BijProdN1( b_d , b_n ) );
 
   }
-  catch( const IllegalImput& e ){
+  catch( const IllegalInput& e ){
 
     CALL( e , a_d , a_n );
 
