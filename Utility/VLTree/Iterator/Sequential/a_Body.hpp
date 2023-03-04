@@ -23,7 +23,7 @@ void SequentialIteratorOfVLTree<T>::operator[]( const int& i )
 
     if( m_itr.empty() ){
 
-      ERR_IMPUT( i );
+      ERR_INPUT( i );
       
     }
     
@@ -34,7 +34,7 @@ void SequentialIteratorOfVLTree<T>::operator[]( const int& i )
 
     if( IteratorOfVLTree<T>::IsLeaf() ){
 
-      ERR_IMPUT( i );
+      ERR_INPUT( i );
 
     }
     
