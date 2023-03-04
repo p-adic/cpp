@@ -64,7 +64,7 @@ void FunctionSymbol<Ret,Args...>::SetSeparator( const SeparatorOfComputableFunct
 
   if( sizeof...( Args ) + 1 != s.Get().size() ){
 
-    ERR_IMPUT( s , sizeof...( Args ) + 1 , s.Get().size() );
+    ERR_INPUT( s , sizeof...( Args ) + 1 , s.Get().size() );
 
   }
 
