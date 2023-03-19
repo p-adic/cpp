@@ -3,11 +3,18 @@
 #pragma once
 #include "../BIT/a.hpp"
 
+// 使用演算：
+// T& T::operator=( const T& )（BITそのものに使用）
+// T& T::operator+=( const T& )
+// T operator-( const T& )
+// T operator-( const T& , const T& )
 template <typename T , int N>
 class IntervalAddBIT
 {
 private:
+  // 母関数の微分の負の階差数列（(i-1)a_{i-1} - ia_i）の管理
   BIT<T,N> m_bit_0;
+  // 階差数列（a_i - a_{i-1}）の管理
   BIT<T,N> m_bit_1;
 
 public:

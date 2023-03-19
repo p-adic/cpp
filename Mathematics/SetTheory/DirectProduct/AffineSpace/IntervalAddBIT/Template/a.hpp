@@ -3,6 +3,7 @@
 #pragma once
 #include "../BIT/Template/a.hpp"
 
+// ‰‰Z‚ªoperator+=‚Å‚È‚¢ê‡‚Ég—p
 template <TEMPLETE_ARGUMENTS_FOR_BIT>
 class AbstractIntervalAddBIT
 {
