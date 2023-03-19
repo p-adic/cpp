@@ -3,6 +3,7 @@
 #pragma once
 #include "a_Macro.hpp"
 
+// 演算がoperator+=でない場合に使用
 // 可換群(T,m_T:T^2->T,e_T:1->T,i_T:T->T)と非負整数Nをパラメータとする。
 // ただしi_Tを使うのはSetとIntervalSumのみなので、
 // AddとInitialSegmentSumしか使わない場合は

@@ -2,7 +2,12 @@
 
 #pragma once
 
-//  InitialSegmentSumで負の入力を扱うためにuintではなくintをテンプレート引数にする。
+
+// InitialSegmentSumで負の入力を扱うためにuintではなくintをテンプレート引数にする。
+// 使用演算：
+// T& T::operator=( const T& )
+// T& T::operator+=( const T& )
+// T operator-( const T& , const T& )（ただしIntervalSumを用いない場合は不要）
 template <typename T , int N>
 class BIT
 {
