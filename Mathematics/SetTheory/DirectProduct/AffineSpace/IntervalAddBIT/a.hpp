@@ -6,6 +6,7 @@
 // 使用演算：
 // T& T::operator=( const T& )（BITそのものに使用）
 // T& T::operator+=( const T& )
+// T& operator+( const T& , const T& )
 // T operator-( const T& )
 // T operator-( const T& , const T& )
 template <typename T , int N>
