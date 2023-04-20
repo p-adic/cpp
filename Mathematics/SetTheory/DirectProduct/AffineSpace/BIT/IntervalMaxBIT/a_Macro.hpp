@@ -15,7 +15,7 @@
   public:								\
     inline Interval ## MAX ## BIT( const T& n );			\
 									\
-    const T& Get( const int& i ) const;					\
+    const T& operator[]( const int& i ) const;					\
     void Set ## MAX( const int& i , const T& n );			\
     void Set( const int& i , const T& n );				\
 									\
@@ -26,7 +26,7 @@
 #define DEFINITION_OF_INTERVAL_MAX_BIT( MAX , OP )			\
   template <typename T , int N> inline Interval ## MAX ## BIT<T,N>::Interval ## MAX ## BIT( const T& n ) : m_init( n ) , m_a() , m_fenwick_0() , m_fenwick_1() { for( int i = 0 ; i <= N ; i++ ){ m_fenwick_0[i] = m_fenwick_1[i] = m_init; } } \
 									\
-  template <typename T , int N> inline const T& Interval ## MAX ## BIT<T,N>::Get( const int& i ) const { return m_a[i]; } \
+  template <typename T , int N> inline const T& Interval ## MAX ## BIT<T,N>::operator[]( const int& i ) const { return m_a[i]; } \
   template <typename T , int N>						\
   void Interval ## MAX ## BIT<T,N>::Set ## MAX( const int& i , const T& n ) \
   {									\
