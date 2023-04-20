@@ -3,5 +3,5 @@
 #pragma once
 #include "a.hpp"
 
-DEFINITION_OF_INTERVAL_MAX_BIT( Max , < );
-DEFINITION_OF_INTERVAL_MAX_BIT( Min , > );
+DEFINITION_OF_INTERVAL_MAX_BIT( Max , max );
+DEFINITION_OF_INTERVAL_MAX_BIT( Min , min );
