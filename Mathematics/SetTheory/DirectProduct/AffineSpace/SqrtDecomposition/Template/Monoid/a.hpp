@@ -3,17 +3,15 @@
 #pragma once
 #include "../../Sqrt/a.hpp"
 
-// 演算がoperator+=でない場合に使用
-
 // 可換モノイド(T,m_T:T^2->T,e_T:1->T)と非負整数Nをパラメータとする。
 // 単位元による初期化O(N)
 // 配列による初期化O(N)
 
 // 一点取得O(1)
-// 区間積取得O(N^{1/2})
+// m_Tに関する区間和取得O(N^{1/2})
 
 // 一点更新O(N^{1/2})
-// 乗法による一点更新O(1)（可換性を使う）
+// m_Tによる一点更新O(1)（可換性を使う）
 template <TEMPLATE_ARGUMENTS_FOR_MONOID_SQRT_DECOMPOSITION = SqrtCalculation<N>{}.m_val >
 class MonoidSqrtDecomposition
 {
