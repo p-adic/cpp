@@ -45,7 +45,7 @@ template <TEMPLETE_ARGUMENTS_FOR_MONOID_BIT> inline MonoidBIT<T,m_T,e_T,N>::Mono
 
     while( j > j_llim ){
 
-      fenwick_0i = m_T( fenwick_0i , m_fenwick_0[j] );
+      fenwick_0i = m_T( m_fenwick_0[j] , fenwick_0i );
       j -= ( j & -j );
 
     }
@@ -62,7 +62,7 @@ template <TEMPLETE_ARGUMENTS_FOR_MONOID_BIT> inline MonoidBIT<T,m_T,e_T,N>::Mono
 
     while( j < j_ulim ){
 
-      fenwick_1i = m_T( m_fenwick_1[j] , fenwick_1i );
+      fenwick_1i = m_T( fenwick_1i , m_fenwick_1[j] );
       j += ( j & -j );
 
     }
