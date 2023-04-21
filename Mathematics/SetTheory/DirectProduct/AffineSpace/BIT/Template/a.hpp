@@ -8,7 +8,7 @@
 // ただしi_Tを使うのはSetとIntervalSumのみなので、
 // AddとInitialSegmentSumしか使わない場合は
 // i_Tを好きに設定して(T,m_T,e_T)をモノイドとして良い。
-template <TEMPLETE_ARGUMENTS_FOR_BIT>
+template <TEMPLATE_ARGUMENTS_FOR_BIT>
 class AbstractBIT
 {
 private:
