@@ -17,7 +17,7 @@
 // そのうちの区間和取得と一点更新は
 // M. Dima, R. Ceterchi, Efficient Range Minimum Queries using Binary Indexed Trees, Olympiads in Informatics, 2015, Vol. 9, 39--44
 // の手法を一般の可換羃等モノイドに拡張することで実装
-template <TEMPLETE_ARGUMENTS_FOR_IDEMPOTENT_MONOID_BIT>
+template <TEMPLATE_ARGUMENTS_FOR_IDEMPOTENT_MONOID_BIT>
 class IdempotentMonoidBIT
 {
 private:

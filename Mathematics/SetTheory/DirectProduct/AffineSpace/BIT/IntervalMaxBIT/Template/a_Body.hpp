@@ -3,9 +3,9 @@
 #pragma once
 #include "a.hpp"
 
-template <TEMPLETE_ARGUMENTS_FOR_IDEMPOTENT_MONOID_BIT> inline const T& AbstractBIT<T,m_T,e_T,N>::g_e = e_T();
+template <TEMPLATE_ARGUMENTS_FOR_IDEMPOTENT_MONOID_BIT> inline const T& AbstractBIT<T,m_T,e_T,N>::g_e = e_T();
 
-template <TEMPLETE_ARGUMENTS_FOR_IDEMPOTENT_MONOID_BIT> inline IdempotentMonoidBIT<T,m_T,e_T,N>::IdempotentMonoidBIT() : m_a() , m_fenwick_0() , m_fenwick_1()
+template <TEMPLATE_ARGUMENTS_FOR_IDEMPOTENT_MONOID_BIT> inline IdempotentMonoidBIT<T,m_T,e_T,N>::IdempotentMonoidBIT() : m_a() , m_fenwick_0() , m_fenwick_1()
 {
 
   if( m_a[0] != g_e ){
@@ -26,7 +26,7 @@ template <TEMPLETE_ARGUMENTS_FOR_IDEMPOTENT_MONOID_BIT> inline IdempotentMonoidB
 
 }
 
-template <TEMPLETE_ARGUMENTS_FOR_IDEMPOTENT_MONOID_BIT> inline IdempotentMonoidBIT<T,m_T,e_T,N>::IdempotentMonoidBIT( const T ( &a )[N] ) : m_init( n ) , m_a() , m_fenwick_0() , m_fenwick_1() 
+template <TEMPLATE_ARGUMENTS_FOR_IDEMPOTENT_MONOID_BIT> inline IdempotentMonoidBIT<T,m_T,e_T,N>::IdempotentMonoidBIT( const T ( &a )[N] ) : m_init( n ) , m_a() , m_fenwick_0() , m_fenwick_1() 
 {
 
   for( int i = 0 ; i < N ; i++ ){
@@ -71,10 +71,10 @@ template <TEMPLETE_ARGUMENTS_FOR_IDEMPOTENT_MONOID_BIT> inline IdempotentMonoidB
 
 }
 
-template <TEMPLETE_ARGUMENTS_FOR_IDEMPOTENT_MONOID_BIT> inline const T& IdempotentMonoidBIT<T,m_T,e_T,N>::operator[]( const int& i ) const { return m_a[i]; } 
-template <TEMPLETE_ARGUMENTS_FOR_IDEMPOTENT_MONOID_BIT> inline const T& IdempotentMonoidBIT<T,m_T,e_T,N>::Get( const int& i ) const { return m_a[i]; } 
+template <TEMPLATE_ARGUMENTS_FOR_IDEMPOTENT_MONOID_BIT> inline const T& IdempotentMonoidBIT<T,m_T,e_T,N>::operator[]( const int& i ) const { return m_a[i]; } 
+template <TEMPLATE_ARGUMENTS_FOR_IDEMPOTENT_MONOID_BIT> inline const T& IdempotentMonoidBIT<T,m_T,e_T,N>::Get( const int& i ) const { return m_a[i]; } 
 
-template <TEMPLETE_ARGUMENTS_FOR_IDEMPOTENT_MONOID_BIT>
+template <TEMPLATE_ARGUMENTS_FOR_IDEMPOTENT_MONOID_BIT>
 T IdempotentMonoidBIT<T,m_T,e_T,N>::IntervalSum( const int& i_start , const int& i_final ) 
 {
 
@@ -115,7 +115,7 @@ T IdempotentMonoidBIT<T,m_T,e_T,N>::IntervalSum( const int& i_start , const int&
 
 }
 
-template <TEMPLETE_ARGUMENTS_FOR_IDEMPOTENT_MONOID_BIT>
+template <TEMPLATE_ARGUMENTS_FOR_IDEMPOTENT_MONOID_BIT>
 void IdempotentMonoidBIT<T,m_T,e_T,N>::Set( const int& i , const T& n )
 {
 
@@ -155,7 +155,7 @@ void IdempotentMonoidBIT<T,m_T,e_T,N>::Set( const int& i , const T& n )
 
 }
 
-template <TEMPLETE_ARGUMENTS_FOR_IDEMPOTENT_MONOID_BIT>
+template <TEMPLATE_ARGUMENTS_FOR_IDEMPOTENT_MONOID_BIT>
 void IdempotentMonoidBIT<T,m_T,e_T,N>::Add( const int& i , const T& n ) 
 {
 
@@ -186,7 +186,7 @@ void IdempotentMonoidBIT<T,m_T,e_T,N>::Add( const int& i , const T& n )
 }
 
 
-template <TEMPLETE_ARGUMENTS_FOR_IDEMPOTENT_MONOID_BIT>
+template <TEMPLATE_ARGUMENTS_FOR_IDEMPOTENT_MONOID_BIT>
 void IdempotentMonoidBIT<T,m_T,e_T,N>::IntervalAdd( const int& i_start , const int& i_final , const T& n ) 
 {
 
