@@ -27,7 +27,7 @@ public:
 
   inline const T& operator[]( const int& i ) const;
   inline const T& Get( const int& i ) const;
-  T IntervalSum( const int& i_start , const int& i_final );
+  T IntervalProduct( const int& i_start , const int& i_final );
 
   void Set( const int& i , const T& n );
 
