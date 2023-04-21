@@ -1,4 +1,4 @@
-// c:/Users/user/Documents/Programming/Mathematics/SetTheory/DirectProduct/BIT/IntervalMaxBIT/Template/a.hpp
+// c:/Users/user/Documents/Programming/Mathematics/SetTheory/DirectProduct/AffineSpace/BIT/IntervalMaxBIT/Template/a.hpp
 
 #pragma once
 #include "a_Macro.hpp"
