@@ -22,10 +22,12 @@ public:
   inline constexpr SqrtDecomposition();
   inline constexpr SqrtDecomposition( const T ( &a )[N] );
 
+  inline constexpr const T& operator[]( const int& i ) const;
+  inline constexpr const T& Get( const int& i ) const;
+  inline constexpr T IntervalSum( const int& i_start , const int& i_final );
+
   inline constexpr void Set( const int& i , const T& n );
   inline constexpr void Add( const int& i , const T& n );
-
-  inline constexpr T IntervalSum( const int& i_start , const int& i_final );
   
 };
 
