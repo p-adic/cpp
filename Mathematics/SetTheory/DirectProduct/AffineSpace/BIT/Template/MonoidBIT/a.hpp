@@ -11,6 +11,9 @@
 // 区間積取得O(log_2 N)
 
 // 一点更新O((log_2 N)^2)
+// そのうちの区間積取得と一点更新は
+// M. Dima, R. Ceterchi, Efficient Range Minimum Queries using Binary Indexed Trees, Olympiads in Informatics, 2015, Vol. 9, 39--44
+// の手法を一般化することで実装
 template <TEMPLETE_ARGUMENTS_FOR_MONOID_BIT>
 class MonoidBIT
 {
