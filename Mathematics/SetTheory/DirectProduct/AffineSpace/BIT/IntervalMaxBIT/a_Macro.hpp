@@ -2,6 +2,15 @@
 
 #pragma once
 
+// 最大（最小）元による初期化O(N)
+// 配列による初期化O(N)
+
+// 一点取得O(1)
+// 区間max（min）取得O(log_2 N)
+
+// 一点更新O((log_2 N)^2)
+// max（min）による一点更新O(log_2 N)
+// max（min）による区間更新O(i_final-i_start+log_2 N)
 #define DECRALATION_OF_INTERVAL_MAX_BIT( MAX )				\
   template <typename T , int N>						\
   class Interval ## MAX ## BIT						\
@@ -18,10 +27,11 @@
 									\
     inline const T& operator[]( const int& i ) const;			\
     inline const T& Get( const int& i ) const;				\
-    void Set ## MAX( const int& i , const T& n );			\
-    void Set( const int& i , const T& n );				\
-									\
     T Interval ## MAX( const int& i_start , const int& i_final );	\
+									\
+    void Set( const int& i , const T& n );				\
+    void Set ## MAX( const int& i , const T& n );			\
+    void IntervalSet ## MAX( const int& i_start , const int& i_final , const T& n ); \
 									\
   };									\
 
@@ -78,33 +88,41 @@
 									\
   template <typename T , int N> inline const T& Interval ## MAX ## BIT<T,N>::operator[]( const int& i ) const { return m_a[i]; } \
   template <typename T , int N> inline const T& Interval ## MAX ## BIT<T,N>::Get( const int& i ) const { return m_a[i]; } \
+									\
   template <typename T , int N>						\
-  void Interval ## MAX ## BIT<T,N>::Set ## MAX( const int& i , const T& n ) \
+  T Interval ## MAX ## BIT<T,N>::Interval ## MAX( const int& i_start , const int& i_final ) \
   {									\
 									\
-    T& ai = m_a[i];							\
-    ai INEQUALITY n ? ai = n : ai;						\
-    int j = i + 1;							\
+    T answer = m_init;							\
+    const int j_min = i_start < 0 ? 1 : i_start + 1;			\
+    const int j_max = i_final < N ? i_final + 1 : N;			\
+    int j = j_min;							\
+    int j_next = j + ( j & - j );					\
 									\
-    while( j <= N ){							\
+    while( j_next <= j_max ){						\
 									\
-      T& ti = m_fenwick_0[j];						\
-      ti INEQUALITY n ? ti = n : ti;					\
-      j += ( j & -j );							\
-									\
-    }									\
-									\
-    j = i + 1;								\
-									\
-    while( j > 0 ){							\
-									\
-      T& ti = m_fenwick_1[j];						\
-      ti INEQUALITY n ? ti = n : ti;					\
-      j -= ( j & -j );							\
+      const T& tj = m_fenwick_1[j];					\
+      answer INEQUALITY tj ? answer = tj : answer;			\
+      j = j_next;							\
+      j_next += ( j & -j );						\
 									\
     }									\
 									\
-    return;								\
+    const T& a_centre = m_a[j-1];					\
+    ( j_min <= j_max && answer < a_centre ) ? answer = a_centre : answer; \
+    j = j_max;								\
+    j_next = j - ( j & - j );						\
+									\
+    while( j_next >= j_min ){						\
+									\
+      const T& tj = m_fenwick_0[j];					\
+      answer INEQUALITY tj ? answer = tj : answer;			\
+      j = j_next;							\
+      j_next -= ( j & -j );						\
+									\
+    }									\
+									\
+    return answer;							\
 									\
   }									\
 									\
@@ -114,7 +132,7 @@
 									\
     T& ai = m_a[i];							\
 									\
-    if( n INEQUALITY ai ){							\
+    if( n INEQUALITY ai ){						\
 									\
       int j = i + 1;							\
 									\
@@ -148,40 +166,67 @@
   }									\
 									\
   template <typename T , int N>						\
-  T Interval ## MAX ## BIT<T,N>::Interval ## MAX( const int& i_start , const int& i_final ) \
+  void Interval ## MAX ## BIT<T,N>::Set ## MAX( const int& i , const T& n ) \
   {									\
 									\
-    T answer = m_init;							\
-    const int j_min = i_start < 0 ? 1 : i_start + 1;			\
-    const int j_max = i_final < N ? i_final + 1 : N;			\
-    int j = j_min;							\
-    int j_next = j + ( j & - j );					\
+    T& ai = m_a[i];							\
+    ai INEQUALITY n ? ai = n : ai;					\
+    int j = i + 1;							\
 									\
-    while( j_next <= j_max ){						\
+    while( j <= N ){							\
 									\
-      const T& tj = m_fenwick_1[j];					\
-      answer INEQUALITY tj ? answer = tj : answer;			\
-      j = j_next;							\
-      j_next += ( j & -j );						\
-      									\
-    }									\
-									\
-    const T& a_centre = m_a[j-1];					\
-    ( j_min <= j_max && answer < a_centre ) ? answer = a_centre : answer; \
-    j = j_max;								\
-    j_next = j - ( j & - j );						\
-									\
-    while( j_next >= j_min ){						\
-									\
-      const T& tj = m_fenwick_0[j];					\
-      answer INEQUALITY tj ? answer = tj : answer;			\
-      j = j_next;							\
-      j_next -= ( j & -j );						\
+      T& ti = m_fenwick_0[j];						\
+      ti INEQUALITY n ? ti = n : ti;					\
+      j += ( j & -j );							\
 									\
     }									\
 									\
-    return answer;							\
+    j = i + 1;								\
 									\
+    while( j > 0 ){							\
+									\
+      T& ti = m_fenwick_1[j];						\
+      ti INEQUALITY n ? ti = n : ti;					\
+      j -= ( j & -j );							\
+									\
+    }									\
+									\
+    return;								\
+									\
+  }									\
+									\
+  template <typename T , int N>						\
+  void Interval ## MAX ## BIT<T,N>::IntervalSet ## MAX( const int& i_start , const int& i_final , const T& n ) \
+  {									\
+									\
+    const int j_min = max( i_start + 1 , 1 );				\
+    const int j_max = min( i_final + 1 , N );				\
+									\
+    if( j_min <= j_max ){						\
+									\
+      int j = j_min;							\
+									\
+      while( j - ( j & -j ) < j_max ){					\
+									\
+	T& tj = m_fenwick_0[j];						\
+	tj INEQUALITY n ? tj = n : tj;					\
+	j++;								\
+									\
+      }									\
+									\
+      j = j_max;							\
+									\
+      while( j + ( j & -j ) > j_min ){					\
+									\
+	T& tj = m_fenwick_0[j];						\
+	tj INEQUALITY n ? tj = n : tj;					\
+	j--;								\
+									\
+      }									\
+									\
+    }									\
+									\
+    return;								\
   }									\
 
 
