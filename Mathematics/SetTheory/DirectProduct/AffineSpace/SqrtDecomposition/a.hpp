@@ -8,7 +8,7 @@
 // T& T::operator=( const T& )
 // T& T::operator+=( const T& )
 // T& T::operator-=( const T& ) // ‚½‚¾‚µSet‚É‚Ì‚ÝŽg—p
-template <typename T , int N , int N_sqrt = ConstexprSqrt<N>{}.m_val >
+template <typename T , int N , int N_sqrt = SqrtCalculation<N>{}.m_val >
 class SqrtDecomposition
 {
 
