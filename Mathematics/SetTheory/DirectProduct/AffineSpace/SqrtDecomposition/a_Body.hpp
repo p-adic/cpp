@@ -22,7 +22,7 @@ template <typename T , int N , int N_sqrt> inline constexpr T SqrtDecomposition<
   const int i_1 = max( i_min , d_1 * N_sqrt );
   T answer{ 0 };
   
-  for( int i = i_start ; i < i_0 ; i++ ){
+  for( int i = i_min ; i < i_0 ; i++ ){
 
     answer += m_a[i];
 
@@ -34,7 +34,7 @@ template <typename T , int N , int N_sqrt> inline constexpr T SqrtDecomposition<
 
   }
 
-  for( int i = i_1 ; i <= i_final ; i++ ){
+  for( int i = i_1 ; i <= i_max ; i++ ){
 
     answer += m_a[i];
 
