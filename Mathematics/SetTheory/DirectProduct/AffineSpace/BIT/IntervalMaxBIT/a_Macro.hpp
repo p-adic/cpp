@@ -193,8 +193,8 @@
 									\
     while( j <= N ){							\
 									\
-      T& ti = m_fenwick_0[j];						\
-      ti INEQUALITY n ? ti = n : ti;					\
+      T& tj = m_fenwick_0[j];						\
+      tj INEQUALITY n ? tj = n : tj;					\
       j += ( j & -j );							\
 									\
     }									\
@@ -203,8 +203,8 @@
 									\
     while( j > 0 ){							\
 									\
-      T& ti = m_fenwick_1[j];						\
-      ti INEQUALITY n ? ti = n : ti;					\
+      T& tj = m_fenwick_1[j];						\
+      tj INEQUALITY n ? tj = n : tj;					\
       j -= ( j & -j );							\
 									\
     }									\
