@@ -1,4 +1,4 @@
-// c:/Users/user/Documents/Programming/Mathematics/SetTheory/DirectProduct/BIT/Template/MonoidBIT/a.hpp
+// c:/Users/user/Documents/Programming/Mathematics/SetTheory/DirectProduct/AffineSpace/BIT/Template/MonoidBIT/a.hpp
 
 #pragma once
 #include "a_Macro.hpp"
