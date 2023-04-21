@@ -22,7 +22,7 @@ template <TEMPLATE_ARGUMENTS_FOR_MONOID_SQRT_DECOMPOSITION> inline constexpr T M
   const int i_1 = max( i_min , d_1 * N_sqrt );
   T answer{ g_e };
   
-  for( int i = i_start ; i < i_0 ; i++ ){
+  for( int i = i_min ; i < i_0 ; i++ ){
 
     answer = m_T( answer , m_a[i] );
 
@@ -34,7 +34,7 @@ template <TEMPLATE_ARGUMENTS_FOR_MONOID_SQRT_DECOMPOSITION> inline constexpr T M
 
   }
 
-  for( int i = i_1 ; i <= i_final ; i++ ){
+  for( int i = i_1 ; i <= i_max ; i++ ){
 
     answer = m_T( answer , m_a[i] );
 
