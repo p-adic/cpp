@@ -3,7 +3,7 @@
 #pragma once
 #include "a.hpp"
 
-template <TEMPLATE_ARGUMENTS_FOR_MONOID_BIT> inline const T& AbstractBIT<T,m_T,e_T,N>::g_e = e_T();
+template <TEMPLATE_ARGUMENTS_FOR_MONOID_BIT> inline const T& MonoidBIT<T,m_T,e_T,N>::g_e = e_T();
 
 template <TEMPLATE_ARGUMENTS_FOR_MONOID_BIT> inline MonoidBIT<T,m_T,e_T,N>::MonoidBIT() : m_a() , m_fenwick_0() , m_fenwick_1()
 {
