@@ -14,8 +14,9 @@
 									\
   public:								\
     inline Interval ## MAX ## BIT( const T& n );			\
+    Interval ## MAX ## BIT( const T& n , const T ( &a )[N] );		\
 									\
-    inline const T& operator[]( const int& i ) const;				\
+    inline const T& operator[]( const int& i ) const;			\
     inline const T& Get( const int& i ) const;				\
     void Set ## MAX( const int& i , const T& n );			\
     void Set( const int& i , const T& n );				\
@@ -26,6 +27,54 @@
 
 #define DEFINITION_OF_INTERVAL_MAX_BIT( MAX , INEQUALITY , OP )		\
   template <typename T , int N> inline Interval ## MAX ## BIT<T,N>::Interval ## MAX ## BIT( const T& n ) : m_init( n ) , m_a() , m_fenwick_0() , m_fenwick_1() { for( int i = 0 ; i <= N ; i++ ){ m_fenwick_0[i] = m_fenwick_1[i] = m_init; } } \
+									\
+  template <typename T , int N>						\
+  Interval ## MAX ## BIT<T,N>::Interval ## MAX ## BIT( const T& n , const T ( &a )[N] ) : m_init( n ) , m_a() , m_fenwick_0() , m_fenwick_1() \
+  {									\
+									\
+    for( int i = 0 ; i < N ; i++ ){					\
+									\
+      m_a[i] = a[i];							\
+									\
+    }									\
+									\
+    for( int i = 0 ; i < N ; i++ ){					\
+									\
+      int j = i + 1;							\
+      T& fenwick_0i = m_fenwick_0[j];					\
+      fenwick_0i = a[i];						\
+      const int j_llim = j - ( j & -j );				\
+      j--;								\
+									\
+      while( j > j_llim ){						\
+									\
+	const T& tj = m_fenwick_0[j];					\
+	fenwick_0i INEQUALITY tj ? fenwick_0i = tj : fenwick_0i;	\
+	j -= ( j & -j );						\
+									\
+      }									\
+									\
+    }									\
+									\
+    for( int i = N - 1 ; i >= 0 ; i-- ){				\
+									\
+      int j = i + 1;							\
+      T& fenwick_1i = m_fenwick_1[j];					\
+      fenwick_1i = a[i];						\
+      const int j_ulim = min( j + ( j & -j ) , N + 1 );			\
+      j++;								\
+									\
+      while( j < j_ulim ){						\
+									\
+	const T& tj = m_fenwick_1[j];					\
+	fenwick_1i INEQUALITY tj ? fenwick_1i = tj : fenwick_1i;	\
+	j += ( j & -j );						\
+									\
+      }									\
+									\
+    }									\
+									\
+  }									\
 									\
   template <typename T , int N> inline const T& Interval ## MAX ## BIT<T,N>::operator[]( const int& i ) const { return m_a[i]; } \
   template <typename T , int N> inline const T& Interval ## MAX ## BIT<T,N>::Get( const int& i ) const { return m_a[i]; } \
