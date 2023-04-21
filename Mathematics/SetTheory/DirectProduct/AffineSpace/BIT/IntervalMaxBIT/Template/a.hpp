@@ -11,8 +11,8 @@
 // 区間和取得O(log_2 N)
 
 // 一点更新O((log_2 N)^2)
-// 一点加算O(log_2 N)
-// 区間加算O(i_final-i_start+log_2 N)
+// 一点加算O(log_2 N)（可換性と羃等性を用いる）
+// 区間加算O(i_final-i_start+log_2 N)（可換性と羃等性を用いる）
 template <TEMPLETE_ARGUMENTS_FOR_IDEMPOTENT_MONOID_BIT>
 class IdempotentMonoidBIT
 {
@@ -29,10 +29,10 @@ public:
 
   inline const T& operator[]( const int& i ) const;
   inline const T& Get( const int& i ) const;
-  T IntervalAdd( const int& i_start , const int& i_final );
+  T IntervalSum( const int& i_start , const int& i_final );
 
   void Set( const int& i , const T& n );
-  void SetAdd( const int& i , const T& n );
-  void IntervalSetAdd( const int& i_start , const int& i_final , const T& n ); 
+  void Add( const int& i , const T& n );
+  void IntervalAdd( const int& i_start , const int& i_final , const T& n ); 
 
 };
