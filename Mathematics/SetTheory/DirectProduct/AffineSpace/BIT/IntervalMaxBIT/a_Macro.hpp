@@ -219,6 +219,7 @@
 									\
     const int j_min = max( i_start + 1 , 1 );				\
     const int j_max = min( i_final + 1 , N );				\
+    \
     for( int i = j_min - 1 ; i < j_max ; i++ ){				\
 									\
       T& ai = m_a[i];							\
