@@ -10,10 +10,10 @@
 // 配列による初期化O(N)
 
 // 一点取得O(1)
-// 区間積取得O(N^{1/2})
+// m_Tに関する区間和取得O(N^{1/2})
 
 // 一点更新O(1)（可換性とi_Tを使う）
-// 乗法による一点更新O(1)（可換性を使う）
+// m_Tによる一点更新O(1)（可換性を使う）
 template <TEMPLATE_ARGUMENTS_FOR_ABSTRACT_SQRT_DECOMPOSITION = SqrtCalculation<N>{}.m_val >
 class AbstractSqrtDecomposition
 {
