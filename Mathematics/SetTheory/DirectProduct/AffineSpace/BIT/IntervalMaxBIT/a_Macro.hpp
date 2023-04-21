@@ -12,7 +12,7 @@
 // max（min）による一点更新O(log_2 N)
 // max（min）による区間更新O(i_final-i_start+log_2 N)
 
-// そのうちの区間max取得と一点更新は
+// そのうちの区間min取得と一点更新は
 // M. Dima, R. Ceterchi, Efficient Range Minimum Queries using Binary Indexed Trees, Olympiads in Informatics, 2015, Vol. 9, 39--44
 // の手法をもとに実装
 #define DECRALATION_OF_INTERVAL_MAX_BIT( MAX )				\
