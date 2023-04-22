@@ -1,9 +1,9 @@
-// c:/Users/user/Documents/Programming/Mathematics/SetTheory/DirectProduct/AffineSpace/BIT/HybridBIT/a.hpp
+// c:/Users/user/Documents/Programming/Mathematics/SetTheory/DirectProduct/AffineSpace/BIT/Hybrid/a.hpp
 
 #pragma once
 #include "../../BIT/a.hpp"
 
-//  InitialSegmentSum‚Å•‰‚Ì“ü—Í‚ğˆµ‚¤‚½‚ß‚Éuint‚Å‚Í‚È‚­int‚ğƒeƒ“ƒvƒŒ[ƒgˆø”‚É‚·‚éB
+//  InitialSegmentSumã§è² ã®å…¥åŠ›ã‚’æ‰±ã†ãŸã‚ã«uintã§ã¯ãªãintã‚’ãƒ†ãƒ³ãƒ—ãƒ¬ãƒ¼ãƒˆå¼•æ•°ã«ã™ã‚‹ã€‚
 template <typename T , int N>
 class HybridBIT :
   public BIT<T,N>
