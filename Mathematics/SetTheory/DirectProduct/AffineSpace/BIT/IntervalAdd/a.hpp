@@ -1,10 +1,10 @@
-// c:/Users/user/Documents/Programming/Mathematics/SetTheory/DirectProduct/AffineSpace/BIT/IntervalAddBIT/a.hpp
+// c:/Users/user/Documents/Programming/Mathematics/SetTheory/DirectProduct/AffineSpace/BIT/IntervalAdd/a.hpp
 
 #pragma once
 #include "../../BIT/a.hpp"
 
-// g—p‰‰ZF
-// T& T::operator=( const T& )iBIT‚»‚Ì‚à‚Ì‚Ég—pj
+// ä½¿ç”¨æ¼”ç®—ï¼š
+// T& T::operator=( const T& )ï¼ˆBITãã®ã‚‚ã®ã«ä½¿ç”¨ï¼‰
 // T& T::operator+=( const T& )
 // T& operator+( const T& , const T& )
 // T operator-( const T& )
@@ -13,9 +13,9 @@ template <typename T , int N>
 class IntervalAddBIT
 {
 private:
-  // •êŠÖ”‚Ì”÷•ª‚Ì•‰‚ÌŠK·”—ñi(i-1)a_{i-1} - ia_ij‚ÌŠÇ—
+  // æ¯é–¢æ•°ã®å¾®åˆ†ã®è² ã®éšå·®æ•°åˆ—ï¼ˆ(i-1)a_{i-1} - ia_iï¼‰ã®ç®¡ç†
   BIT<T,N> m_bit_0;
-  // ŠK·”—ñia_i - a_{i-1}j‚ÌŠÇ—
+  // éšå·®æ•°åˆ—ï¼ˆa_i - a_{i-1}ï¼‰ã®ç®¡ç†
   BIT<T,N> m_bit_1;
 
 public:
