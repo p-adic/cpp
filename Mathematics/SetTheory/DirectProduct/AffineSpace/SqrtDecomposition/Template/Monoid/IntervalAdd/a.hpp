@@ -13,9 +13,11 @@
 // m_Tによる一点更新O(1)（可換性を使う）
 // m_Tによる区間更新O(N^{1/2})（可換性を使う）
 
-// 区間和取得をO(N^{1/2})にすることも可能だが
-// 区間和取得をほとんど一点取得でしか用いない場合は
+// このデータ構造と通常の平方分割を２本組み合わせれば
+// 区間和取得をO(N^{1/2})にすることも可能だが、
+// 区間和取得を一点取得でしか用いない場合は
 // このままの方がm_Tによる区間更新が定数倍速い。
+
 template <TEMPLATE_ARGUMENTS_FOR_INTERVAL_ADD_SQRT_DECOMPOSITION = SqrtCalculation<N>{}.m_val >
 class IntervalAddSqrtDecomposition
 {
