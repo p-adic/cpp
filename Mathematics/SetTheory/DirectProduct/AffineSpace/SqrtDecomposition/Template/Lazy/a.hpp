@@ -1,6 +1,7 @@
 // c:/Users/user/Documents/Programming/Mathematics/SetTheory/DirectProduct/AffineSpace/SqrtDecomposition/Template/Lazy/a.hpp
 
 #pragma once
+#include "a_Macro.hpp"
 #include "../../Sqrt/a.hpp"
 
 // 可換モノイド(T,m_T:T^2->T,e_T:1->T)とT作用付き集合(U,o_U:T×U->U)と非負整数Nをパラメータとする。

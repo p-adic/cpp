@@ -13,12 +13,13 @@ template <TEMPLATE_ARGUMENTS_FOR_ABSTRACT_SQRT_DECOMPOSITION> inline constexpr c
 
 template <TEMPLATE_ARGUMENTS_FOR_ABSTRACT_SQRT_DECOMPOSITION> inline constexpr T AbstractSqrtDecomposition<T,m_T,e_T,i_T,N,N_sqrt>::IntervalSum( const int& i_start , const int& i_final )
 {
+
   const int i_min = max( i_start , 0 );
-  const int i_max = min( i_final , N - 1 );
+  const int i_ulim = min( i_final + 1 , N );
   const int d_0 = ( i_min + N_sqrt - 1 ) / N_sqrt;
-  const int d_1 = max( d_0 , ( i_max + 1 ) / N_sqrt );
-  const int i_0 = min( d_0 * N_sqrt - 1 , i_max ) ;
-  const int i_1 = max( i_min , d_1 * N_sqrt );
+  const int d_1 = max( d_0 , i_ulim / N_sqrt );
+  const int i_0 = min( d_0 * N_sqrt , i_ulim ) ;
+  const int i_1 = max( i_0 , d_1 * N_sqrt );
   T answer{ g_e };
   
   for( int i = i_min ; i < i_0 ; i++ ){
@@ -33,7 +34,7 @@ template <TEMPLATE_ARGUMENTS_FOR_ABSTRACT_SQRT_DECOMPOSITION> inline constexpr T
 
   }
 
-  for( int i = i_1 ; i <= i_max ; i++ ){
+  for( int i = i_1 ; i < i_ulim ; i++ ){
 
     answer = m_T( answer , m_a[i] );
 

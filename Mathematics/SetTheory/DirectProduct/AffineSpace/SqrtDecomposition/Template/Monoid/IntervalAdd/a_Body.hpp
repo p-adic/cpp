@@ -12,11 +12,11 @@ template <TEMPLATE_ARGUMENTS_FOR_INTERVAL_ADD_SQRT_DECOMPOSITION> inline constex
 {
 
   const int i_min = max( i_start , 0 );
-  const int i_max = min( i_final , N - 1 );
+  const int i_ulim = min( i_final + 1 , N );
   const int d_0 = ( i_min + N_sqrt - 1 ) / N_sqrt;
-  const int d_1 = max( d_0 , ( i_max + 1 ) / N_sqrt );
-  const int i_0 = min( d_0 * N_sqrt - 1 , i_max ) ;
-  const int i_1 = max( i_min , d_1 * N_sqrt );
+  const int d_1 = max( d_0 , i_ulim / N_sqrt );
+  const int i_0 = min( d_0 * N_sqrt , i_ulim ) ;
+  const int i_1 = max( i_0 , d_1 * N_sqrt );
   int i = i_min;
 
   while( i < i_0 ){
@@ -61,7 +61,7 @@ template <TEMPLATE_ARGUMENTS_FOR_INTERVAL_ADD_SQRT_DECOMPOSITION> inline constex
 
   }
 
-  while( i <= i_max ){
+  while( i < i_ulim ){
 
     answer = m_T( answer , m_a[i++] );
 
@@ -74,35 +74,39 @@ template <TEMPLATE_ARGUMENTS_FOR_INTERVAL_ADD_SQRT_DECOMPOSITION> inline constex
 template <TEMPLATE_ARGUMENTS_FOR_INTERVAL_ADD_SQRT_DECOMPOSITION> inline constexpr void IntervalAddSqrtDecomposition<T,m_T,e_T,N,N_sqrt>::Add( const int& i , const T& n ) { T& m_ai = m_a[i]; m_ai = m_T( m_ai , n ); }
 template <TEMPLATE_ARGUMENTS_FOR_INTERVAL_ADD_SQRT_DECOMPOSITION> inline constexpr void IntervalAddSqrtDecomposition<T,m_T,e_T,N,N_sqrt>::IntervalAdd( const int& i_start , const int& i_final , const T& n )
 {
-  
-  const int i_min = max( i_start , 0 );
-  const int i_max = min( i_final , N - 1 );
-  const int d_0 = ( i_min + N_sqrt - 1 ) / N_sqrt;
-  const int d_1 = max( d_0 , ( i_max + 1 ) / N_sqrt );
-  const int i_0 = min( d_0 * N_sqrt - 1 , i_max ) ;
-  const int i_1 = max( i_min , d_1 * N_sqrt );
-  
-  for( int i = i_min ; i < i_0 ; i++ ){
 
-    T& m_ai = m_a[i];
-    m_ai = m_T( m_ai , n );
+  if( n != g_e ){
+    
+    const int i_min = max( i_start , 0 );
+    const int i_max = min( i_final , N - 1 );
+    const int d_0 = ( i_min + N_sqrt - 1 ) / N_sqrt;
+    const int d_1 = max( d_0 , ( i_max + 1 ) / N_sqrt );
+    const int i_0 = min( d_0 * N_sqrt - 1 , i_max ) ;
+    const int i_1 = max( i_min , d_1 * N_sqrt );
+  
+    for( int i = i_min ; i < i_0 ; i++ ){
+
+      T& m_ai = m_a[i];
+      m_ai = m_T( m_ai , n );
+
+    }
+  
+    for( int d = d_0 ; d < d_1 ; d++ ){
+
+      T& m_bd = m_b[d];
+      m_bd = m_T( m_bd , n );
+
+    }
+
+    for( int i = i_1 ; i <= i_max ; i++ ){
+
+      T& m_ai = m_a[i];
+      m_ai = m_T( m_ai , n );
+
+    }
 
   }
   
-  for( int d = d_0 ; d < d_1 ; d++ ){
-
-    T& m_bd = m_b[d];
-    m_bd = m_T( m_bd , n );
-
-  }
-
-  for( int i = i_1 ; i <= i_max ; i++ ){
-
-    T& m_ai = m_a[i];
-    m_ai = m_T( m_ai , n );
-
-  }
-
   return;
   
 }
