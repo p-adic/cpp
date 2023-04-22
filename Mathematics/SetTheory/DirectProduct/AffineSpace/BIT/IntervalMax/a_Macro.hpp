@@ -1,20 +1,20 @@
-// c:/Users/user/Documents/Programming/Mathematics/SetTheory/DirectProduct/AffineSpace/BIT/IntervalMaxBIT/a_Macro.hpp
+// c:/Users/user/Documents/Programming/Mathematics/SetTheory/DirectProduct/AffineSpace/BIT/IntervalMax/a_Macro.hpp
 
 #pragma once
 
-// Å‘åiÅ¬jŒ³‚É‚æ‚é‰Šú‰»O(N)
-// ”z—ñ‚É‚æ‚é‰Šú‰»O(N)
+// æœ€å¤§ï¼ˆæœ€å°ï¼‰å…ƒã«ã‚ˆã‚‹åˆæœŸåŒ–O(N)
+// é…åˆ—ã«ã‚ˆã‚‹åˆæœŸåŒ–O(N)
 
-// ˆê“_æ“¾O(1)
-// ‹æŠÔmaximinjæ“¾O(log_2 N)
+// ä¸€ç‚¹å–å¾—O(1)
+// åŒºé–“maxï¼ˆminï¼‰å–å¾—O(log_2 N)
 
-// ˆê“_XVO((log_2 N)^2)
-// maximinj‚É‚æ‚éˆê“_XVO(log_2 N)
-// maximinj‚É‚æ‚é‹æŠÔXVO(i_final-i_start+log_2 N)
+// ä¸€ç‚¹æ›´æ–°O((log_2 N)^2)
+// maxï¼ˆminï¼‰ã«ã‚ˆã‚‹ä¸€ç‚¹æ›´æ–°O(log_2 N)
+// maxï¼ˆminï¼‰ã«ã‚ˆã‚‹åŒºé–“æ›´æ–°O(i_final-i_start+log_2 N)
 
-// ‚»‚Ì‚¤‚¿‚Ì‹æŠÔminæ“¾‚Æˆê“_XV‚Í
+// ãã®ã†ã¡ã®åŒºé–“minå–å¾—ã¨ä¸€ç‚¹æ›´æ–°ã¯
 // M. Dima, R. Ceterchi, Efficient Range Minimum Queries using Binary Indexed Trees, Olympiads in Informatics, 2015, Vol. 9, 39--44
-// ‚Ìè–@‚ğ‚à‚Æ‚ÉÀ‘•
+// ã®æ‰‹æ³•ã‚’ã‚‚ã¨ã«å®Ÿè£…
 #define DECRALATION_OF_INTERVAL_MAX_BIT( MAX )				\
   template <typename T , int N>						\
   class Interval ## MAX ## BIT						\
