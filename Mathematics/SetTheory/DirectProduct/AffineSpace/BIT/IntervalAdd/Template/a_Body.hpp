@@ -1,4 +1,4 @@
-// c:/Users/user/Documents/Programming/Mathematics/SetTheory/DirectProduct/AffineSpace/BIT/IntervalAddBIT/Template/a_Body.hpp
+// c:/Users/user/Documents/Programming/Mathematics/SetTheory/DirectProduct/AffineSpace/BIT/IntervalAdd/Template/a_Body.hpp
 
 #pragma once
 #include "a.hpp"
