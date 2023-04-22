@@ -1,22 +1,22 @@
-// c:/Users/user/Documents/Programming/Mathematics/SetTheory/DirectProduct/AffineSpace/BIT/IntervalMaxBIT/Template/a.hpp
+// c:/Users/user/Documents/Programming/Mathematics/SetTheory/DirectProduct/AffineSpace/BIT/IntervalMax/Template/a.hpp
 
 #pragma once
 #include "a_Macro.hpp"
 
-// ��㰓����m�C�h(T,m_T:T^2->T,e_T:1->T)�Ɣ񕉐���N���p�����[�^�Ƃ���B
-// �P�ʌ��ɂ�鏉����O(N)
-// �z��ɂ�鏉����O(N)
+// 可換羃等モノイド(T,m_T:T^2->T,e_T:1->T)と非負整数Nをパラメータとする。
+// 単位元による初期化O(N)
+// 配列による初期化O(N)
 
-// ��_�擾O(1)
-// ��Ԙa�擾O(log_2 N)
+// 一点取得O(1)
+// 区間和取得O(log_2 N)
 
-// ��_�X�VO((log_2 N)^2)
-// ��_���ZO(log_2 N)�i������㰓�����p����j
-// ��ԉ��ZO(i_final-i_start+log_2 N)�i������㰓�����p����j
+// 一点更新O((log_2 N)^2)
+// 一点加算O(log_2 N)（可換性と羃等性を用いる）
+// 区間加算O(i_final-i_start+log_2 N)（可換性と羃等性を用いる）
 
-// ���̂����̋�Ԙa�擾�ƈ�_�X�V��
+// そのうちの区間和取得と一点更新は
 // M. Dima, R. Ceterchi, Efficient Range Minimum Queries using Binary Indexed Trees, Olympiads in Informatics, 2015, Vol. 9, 39--44
-// �̎�@����ʂ̉�㰓����m�C�h�Ɋg�����邱�ƂŎ���
+// の手法を一般の可換羃等モノイドに拡張することで実装
 template <TEMPLATE_ARGUMENTS_FOR_IDEMPOTENT_MONOID_BIT>
 class IdempotentMonoidBIT
 {
