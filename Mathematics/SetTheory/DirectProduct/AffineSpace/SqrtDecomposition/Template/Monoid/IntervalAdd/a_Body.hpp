@@ -20,6 +20,66 @@ template <TEMPLATE_ARGUMENTS_FOR_INTERVAL_ADD_SQRT_DECOMPOSITION> inline constex
     answer = m_T( answer , i < N_m ? m_T( m_a[i] , m_b[i / N_sqrt] ) : m_a[i] );
 
   }
+
+
+
+
+
+  const int i_min = max( i_start , 0 );
+  const int i_max = min( i_final , N - 1 );
+  const int d_0 = ( i_min + N_sqrt - 1 ) / N_sqrt;
+  const int d_1 = max( d_0 , ( i_max + 1 ) / N_sqrt );
+  const int i_0 = min( d_0 * N_sqrt - 1 , i_max ) ;
+  const int i_1 = max( i_min , d_1 * N_sqrt );
+  int i = i_min;
+
+  while( i < i_0 ){
+
+    answer = m_T( answer , m_a[i++] );
+
+  }
+
+  if( d_0 > 0 ){
+
+    T power{ m_b[d_0 - 1] };
+    int exponent = i_0 - i_min;
+
+    while( exponent > 0 ){
+
+      ( exponent & 1 ) == 1 ? answer = m_T( answer , power ) : answer;
+      power = m_T( power , power );
+      exponent >>= 1;
+
+    }
+
+  }
+  
+  for( int d = d_0 ; d < d_1 ; d++ ){
+
+    for( int j = 0 ; j < N_sqrt ; j++ ){
+
+      answer = m_T( answer , m_a[i++] );
+
+    }
+
+    T power{ m_b[d] };
+    int exponent = N_sqrt;
+
+    while( exponent > 0 ){
+
+      ( exponent & 1 ) == 1 ? answer = m_T( answer , power ) : answer;
+      power = m_T( power , power );
+      exponent >>= 1;
+
+    }
+
+  }
+
+  while( i <= i_max ){
+
+    answer = m_T( answer , m_a[i++] );
+
+  }
   
   return answer;
 
@@ -57,6 +117,6 @@ template <TEMPLATE_ARGUMENTS_FOR_INTERVAL_ADD_SQRT_DECOMPOSITION> inline constex
 
   }
 
-  return answer;
+  return;
   
 }

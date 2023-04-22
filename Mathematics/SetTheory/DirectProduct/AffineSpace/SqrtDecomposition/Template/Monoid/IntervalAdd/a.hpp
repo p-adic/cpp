@@ -12,7 +12,7 @@
 // 乗法による一点更新O(1)（可換性を使う）
 // 乗法による区間更新O(N^{1/2})（可換性を使う）
 
-// 一点更新と区間積取得はなし
+// 一点更新はなし
 
 template <TEMPLATE_ARGUMENTS_FOR_INTERVAL_ADD_SQRT_DECOMPOSITION = SqrtCalculation<N>{}.m_val >
 class IntervalAddSqrtDecomposition
