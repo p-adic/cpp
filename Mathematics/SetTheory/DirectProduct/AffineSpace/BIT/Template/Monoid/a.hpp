@@ -1,19 +1,19 @@
-// c:/Users/user/Documents/Programming/Mathematics/SetTheory/DirectProduct/AffineSpace/BIT/Template/MonoidBIT/a.hpp
+// c:/Users/user/Documents/Programming/Mathematics/SetTheory/DirectProduct/AffineSpace/BIT/Template/Monoid/a.hpp
 
 #pragma once
 #include "a_Macro.hpp"
 
-// �i���Ƃ͌���Ȃ��j���m�C�h(T,m_T:T^2->T,e_T:1->T)�Ɣ񕉐���N���p�����[�^�Ƃ���B
-// �P�ʌ��ɂ�鏉����O(N)
-// �z��ɂ�鏉����O(N)
+// （可換とは限らない）モノイド(T,m_T:T^2->T,e_T:1->T)と非負整数Nをパラメータとする。
+// 単位元による初期化O(N)
+// 配列による初期化O(N)
 
-// ��_�擾O(1)
-// ��Ԑώ擾O(log_2 N)
+// 一点取得O(1)
+// 区間積取得O(log_2 N)
 
-// ��_�X�VO((log_2 N)^2)
-// ���̂����̋�Ԑώ擾�ƈ�_�X�V��
+// 一点更新O((log_2 N)^2)
+// そのうちの区間積取得と一点更新は
 // M. Dima, R. Ceterchi, Efficient Range Minimum Queries using Binary Indexed Trees, Olympiads in Informatics, 2015, Vol. 9, 39--44
-// �̎�@����ʂ̃��m�C�h�Ɋg�����邱�ƂŎ���
+// の手法を一般のモノイドに拡張することで実装
 template <TEMPLATE_ARGUMENTS_FOR_MONOID_BIT>
 class MonoidBIT
 {
