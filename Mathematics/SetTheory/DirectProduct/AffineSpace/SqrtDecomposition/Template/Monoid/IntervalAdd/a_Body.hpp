@@ -13,20 +13,6 @@ template <TEMPLATE_ARGUMENTS_FOR_INTERVAL_ADD_SQRT_DECOMPOSITION> inline constex
 
   const int i_min = max( i_start , 0 );
   const int i_max = min( i_final , N - 1 );
-  T answer{ g_e };
-
-  for( int i = i_min ; i <= i_max ; i++ ){
-
-    answer = m_T( answer , i < N_m ? m_T( m_a[i] , m_b[i / N_sqrt] ) : m_a[i] );
-
-  }
-
-
-
-
-
-  const int i_min = max( i_start , 0 );
-  const int i_max = min( i_final , N - 1 );
   const int d_0 = ( i_min + N_sqrt - 1 ) / N_sqrt;
   const int d_1 = max( d_0 , ( i_max + 1 ) / N_sqrt );
   const int i_0 = min( d_0 * N_sqrt - 1 , i_max ) ;
