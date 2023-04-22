@@ -3,14 +3,15 @@
 #pragma once
 #include "../Template/a.hpp"
 
-// æ¼”ç®—ãŒoperator+=ã§ãªã„å ´åˆã«ä½¿ç”¨
-template <TEMPLETE_ARGUMENTS_FOR_BIT>
+// ‰‰Z‚ªoperator+=‚Å‚È‚¢ê‡‚Ég—p
+// ‰ÂŠ·ŒQ(T,m_T:T^2->T,e_T:1->T,i_T:T->T)‚Æ”ñ•‰®”N‚ğƒpƒ‰ƒ[ƒ^‚Æ‚·‚éB
+template <TEMPLATE_ARGUMENTS_FOR_BIT>
 class AbstractIntervalAddBIT
 {
 private:
-  // æ¯é–¢æ•°ã®å¾®åˆ†ã®è² ã®éšå·®æ•°åˆ—ï¼ˆ(i-1)a_{i-1} - ia_iï¼‰ã®ç®¡ç†
+  // •êŠÖ”‚Ì”÷•ª‚Ì•‰‚ÌŠK·”—ñi(i-1)a_{i-1} - ia_ij‚ÌŠÇ—
   AbstractBIT<T,m_T,e_T,i_T,N> m_bit_0;
-  // éšå·®æ•°åˆ—ï¼ˆa_i - a_{i-1}ï¼‰ã®ç®¡ç†
+  // ŠK·”—ñia_i - a_{i-1}j‚ÌŠÇ—
   AbstractBIT<T,m_T,e_T,i_T,N> m_bit_1;
 
 public:
