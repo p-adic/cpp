@@ -11,7 +11,7 @@
 
 // 一点更新はなし
 // o_Uによる一点更新O(1)（可換性を使う）
-// o_Uによる区間更新O(N^{1/2})（可換性を使う）
+// o_Uによる区間更新O(min(i_final-i_start+1,N^{1/2}))（可換性を使う）
 
 template <TEMPLATE_ARGUMENTS_FOR_LAZY_SQRT_DECOMPOSITION = SqrtCalculation<N>{}.m_val >
 class LazySqrtDecomposition
