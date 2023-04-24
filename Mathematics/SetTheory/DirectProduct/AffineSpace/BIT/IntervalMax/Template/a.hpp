@@ -30,6 +30,7 @@ public:
 
   inline IdempotentMonoidBIT();
   inline IdempotentMonoidBIT( const T ( &a )[N] );
+  inline IdempotentMonoidBIT( T ( &&a )[N] );
 
   inline const T& operator[]( const int& i ) const;
   inline const T& Get( const int& i ) const;

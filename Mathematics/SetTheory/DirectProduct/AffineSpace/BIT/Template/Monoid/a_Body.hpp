@@ -5,26 +5,7 @@
 
 template <TEMPLATE_ARGUMENTS_FOR_MONOID_BIT> inline const T& MonoidBIT<T,m_T,e_T,N>::g_e = e_T();
 
-template <TEMPLATE_ARGUMENTS_FOR_MONOID_BIT> inline MonoidBIT<T,m_T,e_T,N>::MonoidBIT() : m_a() , m_fenwick_0() , m_fenwick_1()
-{
-
-  if( m_a[0] != g_e ){
-
-    for( int i = 0 ; i < N ; i++ ){
-
-      m_a[i] = g_e;
-
-    }
-
-    for( int j = 1 ; j <= N ; j++ ){
-
-      m_fenwick_0[j] = m_fenwick_1[j] = g_e;
-
-    }
-
-  }
-
-}
+template <TEMPLATE_ARGUMENTS_FOR_MONOID_BIT> inline MonoidBIT<T,m_T,e_T,N>::MonoidBIT() : m_a() , m_fenwick_0() , m_fenwick_1() { if( m_a[0] != g_e ){ for( int i = 0 ; i < N ; i++ ){ m_a[i] = g_e; } for( int j = 1 ; j <= N ; j++ ){ m_fenwick_0[j] = m_fenwick_1[j] = g_e; } } }
 
 template <TEMPLATE_ARGUMENTS_FOR_MONOID_BIT> inline MonoidBIT<T,m_T,e_T,N>::MonoidBIT( const T ( &a )[N] ) : m_init( n ) , m_a() , m_fenwick_0() , m_fenwick_1() 
 {
@@ -39,7 +20,7 @@ template <TEMPLATE_ARGUMENTS_FOR_MONOID_BIT> inline MonoidBIT<T,m_T,e_T,N>::Mono
 
     int j = i + 1;
     T& fenwick_0i = m_fenwick_0[j];
-    fenwick_0i = a[i];
+    fenwick_0i = m_a[i];
     const int j_llim = j - ( j & -j );
     j--;
 
@@ -56,7 +37,46 @@ template <TEMPLATE_ARGUMENTS_FOR_MONOID_BIT> inline MonoidBIT<T,m_T,e_T,N>::Mono
 
     int j = i + 1;
     T& fenwick_1i = m_fenwick_1[j];
-    fenwick_1i = a[i];
+    fenwick_1i = m_a[i];
+    const int j_ulim = min( j + ( j & -j ) , N + 1 );
+    j++;
+
+    while( j < j_ulim ){
+
+      fenwick_1i = m_T( fenwick_1i , m_fenwick_1[j] );
+      j += ( j & -j );
+
+    }
+
+  }
+
+}
+
+template <TEMPLATE_ARGUMENTS_FOR_MONOID_BIT> inline MonoidBIT<T,m_T,e_T,N>::MonoidBIT( T ( &&a )[N] ) : m_init( n ) , m_a( move( a ) ) , m_fenwick_0() , m_fenwick_1() 
+{
+
+  for( int i = 0 ; i < N ; i++ ){
+
+    int j = i + 1;
+    T& fenwick_0i = m_fenwick_0[j];
+    fenwick_0i = m_a[i];
+    const int j_llim = j - ( j & -j );
+    j--;
+
+    while( j > j_llim ){
+
+      fenwick_0i = m_T( m_fenwick_0[j] , fenwick_0i );
+      j -= ( j & -j );
+
+    }
+
+  }
+
+  for( int i = N - 1 ; i >= 0 ; i-- ){
+
+    int j = i + 1;
+    T& fenwick_1i = m_fenwick_1[j];
+    fenwick_1i = m_a[i];
     const int j_ulim = min( j + ( j & -j ) , N + 1 );
     j++;
 

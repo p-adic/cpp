@@ -27,6 +27,7 @@ public:
 
   inline MonoidBIT();
   inline MonoidBIT( const T ( &a )[N] );
+  inline MonoidBIT( T ( &&a )[N] );
 
   inline const T& operator[]( const int& i ) const;
   inline const T& Get( const int& i ) const;
