@@ -7,20 +7,7 @@
 
 template <TEMPLATE_ARGUMENTS_FOR_SEGMENT_TREE> inline const T& SegmentTree<T,m_T,e_T,N>::g_e = e_T();
 
-template <TEMPLATE_ARGUMENTS_FOR_SEGMENT_TREE> inline SegmentTree<T,m_T,e_T,N>::SegmentTree() : m_a()
-{
-
-  if( m_a[0] != g_e ){
-
-    for( int j = 1 ; j < g_power2 ; j++ ){
-
-      m_a[j] = g_e;
-
-    }
-
-  }
-
-}
+template <TEMPLATE_ARGUMENTS_FOR_SEGMENT_TREE> inline SegmentTree<T,m_T,e_T,N>::SegmentTree() : m_a() { if( m_a[0] != g_e ){ for( int j = 1 ; j < g_power2 ; j++ ){ m_a[j] = g_e; } } }
 
 template <TEMPLATE_ARGUMENTS_FOR_SEGMENT_TREE> inline SegmentTree<T,m_T,e_T,N>::SegmentTree( const T ( &a )[N] ) : m_a()
 {
@@ -37,9 +24,9 @@ template <TEMPLATE_ARGUMENTS_FOR_SEGMENT_TREE> inline SegmentTree<T,m_T,e_T,N>::
 
   }
 
-  for( int j = j_ulim - 1 ; j >= g_power ; j-- ){
+  for( int i = 0 ; i < N ; i++ ){
 
-    m_a[j] = a[j];
+    m_a[i | g_power] = a[i];
 
   }
 
