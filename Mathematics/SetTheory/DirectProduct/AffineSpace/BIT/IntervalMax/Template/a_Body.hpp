@@ -52,8 +52,10 @@ template <TEMPLATE_ARGUMENTS_FOR_IDEMPOTENT_MONOID_BIT> inline IdempotentMonoidB
 
 }
 
-template <TEMPLATE_ARGUMENTS_FOR_IDEMPOTENT_MONOID_BIT> inline IdempotentMonoidBIT<T,m_T,e_T,N>::IdempotentMonoidBIT( T ( &&a )[N] ) : m_init( n ) , m_a( move( a ) ) , m_fenwick_0() , m_fenwick_1() 
+template <TEMPLATE_ARGUMENTS_FOR_IDEMPOTENT_MONOID_BIT> inline IdempotentMonoidBIT<T,m_T,e_T,N>::IdempotentMonoidBIT( T ( &&a )[N] ) : m_init( n ) , m_a() , m_fenwick_0() , m_fenwick_1() 
 {
+
+  swap( m_a , a );
 
   for( int i = 0 ; i < N ; i++ ){
 

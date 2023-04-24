@@ -109,8 +109,10 @@
 									\
   }									\
 									\
-  template <typename T , int N> inline Interval ## MAX ## BIT<T,N>::Interval ## MAX ## BIT( const T& n , T ( &&a )[N] ) : m_init( n ) , m_a( move( a ) ) , m_fenwick_0() , m_fenwick_1() \
+  template <typename T , int N> inline Interval ## MAX ## BIT<T,N>::Interval ## MAX ## BIT( const T& n , T ( &&a )[N] ) : m_init( n ) , m_a() , m_fenwick_0() , m_fenwick_1() \
   {									\
+									\
+    swap( m_a , a );							\
 									\
     for( int i = 0 ; i < N ; i++ ){					\
 									\
