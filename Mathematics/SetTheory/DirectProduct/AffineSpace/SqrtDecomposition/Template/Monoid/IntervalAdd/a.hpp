@@ -29,6 +29,8 @@ private:
   static constexpr int N_m = N_d * N_sqrt;
 
 public:
+  static const T& g_e;
+  
   inline constexpr IntervalAddSqrtDecomposition();
   inline constexpr IntervalAddSqrtDecomposition( const T ( &a )[N] );
 

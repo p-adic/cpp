@@ -23,6 +23,8 @@ private:
   static constexpr int N_m = N_d * N_sqrt;
 
 public:
+  static const T& g_e;
+  
   inline constexpr MonoidSqrtDecomposition();
   inline constexpr MonoidSqrtDecomposition( const T ( &a )[N] );
 

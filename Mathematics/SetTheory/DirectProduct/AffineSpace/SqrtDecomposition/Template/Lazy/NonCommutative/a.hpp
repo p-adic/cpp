@@ -24,6 +24,8 @@ private:
   static constexpr int N_m = N_d * N_sqrt;
 
 public:
+  static const T& g_e;
+  
   inline constexpr NonCommutativeLazySqrtDecomposition( const U ( &a )[N] );
 
   inline constexpr U Get( const int& i ) const;

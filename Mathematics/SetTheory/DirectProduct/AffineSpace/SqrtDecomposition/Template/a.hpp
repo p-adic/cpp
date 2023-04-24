@@ -25,6 +25,8 @@ private:
   static constexpr int N_m = N_d * N_sqrt;
 
 public:
+  static const T& g_e;
+  
   inline constexpr AbstractSqrtDecomposition();
   inline constexpr AbstractSqrtDecomposition( const T ( &a )[N] );
 
