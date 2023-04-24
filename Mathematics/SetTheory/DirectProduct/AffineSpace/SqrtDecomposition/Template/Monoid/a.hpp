@@ -27,6 +27,7 @@ public:
   
   inline constexpr MonoidSqrtDecomposition();
   inline constexpr MonoidSqrtDecomposition( const T ( &a )[N] );
+  inline constexpr MonoidSqrtDecomposition( T ( &&a )[N] );
 
   inline constexpr const T& operator[]( const int& i ) const;
   inline constexpr const T& Get( const int& i ) const;

@@ -7,6 +7,7 @@
 
 template <typename T , int N , int N_sqrt> inline constexpr SqrtDecomposition<T,N,N_sqrt>::SqrtDecomposition() : m_a() , m_b() {}
 template <typename T , int N , int N_sqrt> inline constexpr SqrtDecomposition<T,N,N_sqrt>::SqrtDecomposition( const T ( &a )[N] ) : m_a() , m_b() { int i = 0; for( int d = 0 ; d < N_d ; d++ ){ T& m_bd = m_b[d]; for( int j = 0 ; j < N_sqrt ; j++ ){ m_bd += m_a[i] = a[i]; i++; } } while( i < N ){ m_a[i] = a[i]; i++; } }
+template <typename T , int N , int N_sqrt> inline constexpr SqrtDecomposition<T,N,N_sqrt>::SqrtDecomposition( T ( &&a )[N] ) : m_a( move( a ) ) , m_b() { int i = 0; for( int d = 0 ; d < N_d ; d++ ){ T& m_bd = m_b[d]; for( int j = 0 ; j < N_sqrt ; j++ ){ m_bd += m_a[i]; i++; } } }
 
 template <typename T , int N , int N_sqrt> inline constexpr const T& SqrtDecomposition<T,N,N_sqrt>::operator[]( const int& i ) const { return m_a[i]; }
 template <typename T , int N , int N_sqrt> inline constexpr const T& SqrtDecomposition<T,N,N_sqrt>::Get( const int& i ) const { return m_a[i]; }

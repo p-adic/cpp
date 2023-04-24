@@ -9,6 +9,7 @@ template <TEMPLATE_ARGUMENTS_FOR_MONOID_SQRT_DECOMPOSITION> const T& MonoidSqrtD
 
 template <TEMPLATE_ARGUMENTS_FOR_MONOID_SQRT_DECOMPOSITION> inline constexpr MonoidSqrtDecomposition<T,m_T,e_T,N,N_sqrt>::MonoidSqrtDecomposition() : m_a() , m_b() { if( m_a[0] != g_e ){ for( int d = 0 ; d < N_d ; d++ ){ m_b[d] = g_e; } for( int i = 0 ; i < N ; i++ ){ m_a[i] = g_e; } } }
 template <TEMPLATE_ARGUMENTS_FOR_MONOID_SQRT_DECOMPOSITION> inline constexpr MonoidSqrtDecomposition<T,m_T,e_T,N,N_sqrt>::MonoidSqrtDecomposition( const T ( &a )[N] ) : m_a() , m_b() { int i = 0; for( int d = 0 ; d < N_d ; d++ ){ T& m_bd = m_b[d] = g_e; for( int j = 0 ; j < N_sqrt ; j++ ){ m_bd = m_T( m_bd , m_a[i] = a[i] ); i++; } } while( i < N ){ m_a[i] = a[i]; i++; } }
+template <TEMPLATE_ARGUMENTS_FOR_MONOID_SQRT_DECOMPOSITION> inline constexpr MonoidSqrtDecomposition<T,m_T,e_T,N,N_sqrt>::MonoidSqrtDecomposition( T ( &&a )[N] ) : m_a( move( a ) ) , m_b() { int i = 0; for( int d = 0 ; d < N_d ; d++ ){ T& m_bd = m_b[d] = g_e; for( int j = 0 ; j < N_sqrt ; j++ ){ m_bd = m_T( m_bd , m_a[i++] ); } } }
 
 template <TEMPLATE_ARGUMENTS_FOR_MONOID_SQRT_DECOMPOSITION> inline constexpr const T& MonoidSqrtDecomposition<T,m_T,e_T,N,N_sqrt>::operator[]( const int& i ) const { return m_a[i]; }
 template <TEMPLATE_ARGUMENTS_FOR_MONOID_SQRT_DECOMPOSITION> inline constexpr const T& MonoidSqrtDecomposition<T,m_T,e_T,N,N_sqrt>::Get( const int& i ) const { return m_a[i]; }

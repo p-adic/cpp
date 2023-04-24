@@ -33,6 +33,7 @@ public:
   
   inline constexpr IntervalAddSqrtDecomposition();
   inline constexpr IntervalAddSqrtDecomposition( const T ( &a )[N] );
+  inline constexpr IntervalAddSqrtDecomposition( T ( &&a )[N] );
 
   inline constexpr T IntervalSum( const int& i_start , const int& i_final ) const;
 

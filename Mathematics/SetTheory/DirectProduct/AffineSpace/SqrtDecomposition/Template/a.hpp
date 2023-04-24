@@ -29,6 +29,7 @@ public:
   
   inline constexpr AbstractSqrtDecomposition();
   inline constexpr AbstractSqrtDecomposition( const T ( &a )[N] );
+  inline constexpr AbstractSqrtDecomposition( T ( &&a )[N] );
 
   inline constexpr const T& operator[]( const int& i ) const;
   inline constexpr const T& Get( const int& i ) const;

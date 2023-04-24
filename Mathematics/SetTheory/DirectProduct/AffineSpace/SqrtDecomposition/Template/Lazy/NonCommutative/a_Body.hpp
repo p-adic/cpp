@@ -8,6 +8,7 @@
 template <TEMPLATE_ARGUMENTS_FOR_LAZY_SQRT_DECOMPOSITION> const T& NonCommutativeLazySqrtDecomposition<T,m_T,e_T,U,o_U,N,N_sqrt>::g_e = e_T();
 
 template <TEMPLATE_ARGUMENTS_FOR_LAZY_SQRT_DECOMPOSITION> inline constexpr NonCommutativeLazySqrtDecomposition<T,m_T,e_T,U,o_U,N,N_sqrt>::NonCommutativeLazySqrtDecomposition( const U ( &a )[N] ) : m_a() , m_b() { if( m_b[0] != g_e ){ for( int d = 0 ; d < N_d ; d++ ){ m_b[d] = g_e; } } for( int i = 0 ; i < N ; i++ ){ m_a[i] = a[i]; } }
+template <TEMPLATE_ARGUMENTS_FOR_LAZY_SQRT_DECOMPOSITION> inline constexpr NonCommutativeLazySqrtDecomposition<T,m_T,e_T,U,o_U,N,N_sqrt>::NonCommutativeLazySqrtDecomposition( U ( &&a )[N] ) : m_a( move( a ) ) , m_b() { if( m_b[0] != g_e ){ for( int d = 0 ; d < N_d ; d++ ){ m_b[d] = g_e; } } }
 
 template <TEMPLATE_ARGUMENTS_FOR_LAZY_SQRT_DECOMPOSITION> inline constexpr U NonCommutativeLazySqrtDecomposition<T,m_T,e_T,U,o_U,N,N_sqrt>::Get( const int& i ) const { return i < N_m ? o_U( m_b[i/N_sqrt] , m_a[i] ) : m_a[i]; }
 

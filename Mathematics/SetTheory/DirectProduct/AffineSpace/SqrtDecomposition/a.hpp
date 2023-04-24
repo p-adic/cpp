@@ -21,6 +21,7 @@ private:
 public:
   inline constexpr SqrtDecomposition();
   inline constexpr SqrtDecomposition( const T ( &a )[N] );
+  inline constexpr SqrtDecomposition( T ( &&a )[N] );
 
   inline constexpr const T& operator[]( const int& i ) const;
   inline constexpr const T& Get( const int& i ) const;

@@ -9,6 +9,7 @@ template <TEMPLATE_ARGUMENTS_FOR_INTERVAL_ADD_SQRT_DECOMPOSITION> const T& Inter
 
 template <TEMPLATE_ARGUMENTS_FOR_INTERVAL_ADD_SQRT_DECOMPOSITION> inline constexpr IntervalAddSqrtDecomposition<T,m_T,e_T,N,N_sqrt>::IntervalAddSqrtDecomposition() : m_a() , m_b() { if( m_a[0] != g_e ){ for( int d = 0 ; d < N_d ; d++ ){ m_b[d] = g_e; } for( int i = 0 ; i < N ; i++ ){ m_a[i] = g_e; } } }
 template <TEMPLATE_ARGUMENTS_FOR_INTERVAL_ADD_SQRT_DECOMPOSITION> inline constexpr IntervalAddSqrtDecomposition<T,m_T,e_T,N,N_sqrt>::IntervalAddSqrtDecomposition( const T ( &a )[N] ) : m_a() , m_b() { int i = 0; for( int d = 0 ; d < N_d ; d++ ){ T& m_bd = m_b[d] = g_e; for( int j = 0 ; j < N_sqrt ; j++ ){ m_bd = m_T( m_bd , m_a[i] = a[i] ); i++; } } while( i < N ){ m_a[i] = a[i]; i++; } }
+template <TEMPLATE_ARGUMENTS_FOR_INTERVAL_ADD_SQRT_DECOMPOSITION> inline constexpr IntervalAddSqrtDecomposition<T,m_T,e_T,N,N_sqrt>::IntervalAddSqrtDecomposition( T ( &&a )[N] ) : m_a() , m_b() { int i = 0; for( int d = 0 ; d < N_d ; d++ ){ T& m_bd = m_b[d] = g_e; for( int j = 0 ; j < N_sqrt ; j++ ){ m_bd = m_T( m_bd , m_a[i++] ); } } }
 
 template <TEMPLATE_ARGUMENTS_FOR_INTERVAL_ADD_SQRT_DECOMPOSITION> inline constexpr T IntervalAddSqrtDecomposition<T,m_T,e_T,N,N_sqrt>::IntervalSum( const int& i_start , const int& i_final ) const
 {
