@@ -1,7 +1,7 @@
 // c:/Users/user/Documents/Programming/Mathematics/SetTheory/DirectProduct/AffineSpace/BIT/IntervalAdd/a.hpp
 
 #pragma once
-#include "../../BIT/a.hpp"
+#include "../BIT/a.hpp"
 
 // 使用演算：
 // T& T::operator=( const T& )（BITそのものに使用）
@@ -28,7 +28,7 @@ public:
   inline void Add( const int& i , const T& n );
   inline void IntervalAdd( const int& i_start , const int& i_final , const T& n );
 
-  inline T InitialSegmentSum( const int& i_final );
-  inline T IntervalSum( const int& i_start , const int& i_final );
+  inline T InitialSegmentSum( const int& i_final ) const;
+  inline T IntervalSum( const int& i_start , const int& i_final ) const;
   
 };

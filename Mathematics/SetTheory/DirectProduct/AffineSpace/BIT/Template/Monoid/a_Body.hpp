@@ -97,7 +97,7 @@ template <TEMPLATE_ARGUMENTS_FOR_MONOID_BIT> inline const T& MonoidBIT<T,m_T,e_T
 template <TEMPLATE_ARGUMENTS_FOR_MONOID_BIT> inline const T& MonoidBIT<T,m_T,e_T,N>::Get( const int& i ) const { return m_a[i]; } 
 
 template <TEMPLATE_ARGUMENTS_FOR_MONOID_BIT>
-T MonoidBIT<T,m_T,e_T,N>::IntervalProduct( const int& i_start , const int& i_final ) 
+T MonoidBIT<T,m_T,e_T,N>::IntervalProduct( const int& i_start , const int& i_final ) const 
 {
 
   const int j_min = i_start < 0 ? 1 : i_start + 1;

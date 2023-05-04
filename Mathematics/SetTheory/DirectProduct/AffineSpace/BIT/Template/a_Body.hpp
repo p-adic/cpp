@@ -51,7 +51,7 @@ void AbstractBIT<T,m_T,e_T,i_T,N>::Add( const int& i , const T& n )
 }
 
 template <TEMPLATE_ARGUMENTS_FOR_BIT> 
-T AbstractBIT<T,m_T,e_T,i_T,N>::InitialSegmentSum( const int& i_final )
+T AbstractBIT<T,m_T,e_T,i_T,N>::InitialSegmentSum( const int& i_final ) const
 {
 
   T sum = g_e;
@@ -68,5 +68,5 @@ T AbstractBIT<T,m_T,e_T,i_T,N>::InitialSegmentSum( const int& i_final )
   
 }
 
-template <TEMPLATE_ARGUMENTS_FOR_BIT> inline T AbstractBIT<T,m_T,e_T,i_T,N>::IntervalSum( const int& i_start , const int& i_final ) { return m_T( i_T( InitialSegmentSum( i_start - 1 ) ) , InitialSegmentSum( i_final ) ); }
+template <TEMPLATE_ARGUMENTS_FOR_BIT> inline T AbstractBIT<T,m_T,e_T,i_T,N>::IntervalSum( const int& i_start , const int& i_final ) const { return m_T( i_T( InitialSegmentSum( i_start - 1 ) ) , InitialSegmentSum( i_final ) ); }
 

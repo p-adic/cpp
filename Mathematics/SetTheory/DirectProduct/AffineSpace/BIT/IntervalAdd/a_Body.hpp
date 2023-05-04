@@ -3,7 +3,7 @@
 #pragma once
 #include "a.hpp"
 
-#include "../../BIT/a_Body.hpp"
+#include "../BIT/a_Body.hpp"
 
 template <typename T , int N> inline IntervalAddBIT<T,N>::IntervalAddBIT() : m_bit_0() , m_bit_1() {}
 template <typename T , int N> inline IntervalAddBIT<T,N>::IntervalAddBIT( const T ( & a )[N] ) : m_bit_0() , m_bit_1() { operator+=( a ); }
@@ -17,7 +17,7 @@ template <typename T , int N> inline void IntervalAddBIT<T,N>::Add( const int& i
 template <typename T , int N> inline void IntervalAddBIT<T,N>::IntervalAdd( const int& i_start , const int& i_final , const T& n ) { m_bit_0.Add( i_start , - ( i_start - 1 ) * n ); m_bit_0.Add( i_final + 1 , i_final * n ); m_bit_1.Add( i_start , n ); m_bit_1.Add( i_final + 1 , - n ); }
 
 
-template <typename T , int N> inline T IntervalAddBIT<T,N>::InitialSegmentSum( const int& i_final ) { return m_bit_0.InitialSegmentSum( i_final ) + i_final * m_bit_1.InitialSegmentSum( i_final ); }
+template <typename T , int N> inline T IntervalAddBIT<T,N>::InitialSegmentSum( const int& i_final ) const { return m_bit_0.InitialSegmentSum( i_final ) + i_final * m_bit_1.InitialSegmentSum( i_final ); }
 
-template <typename T , int N> inline T IntervalAddBIT<T,N>::IntervalSum( const int& i_start , const int& i_final ) { return InitialSegmentSum( i_final ) - InitialSegmentSum( i_start - 1 ); }
+template <typename T , int N> inline T IntervalAddBIT<T,N>::IntervalSum( const int& i_start , const int& i_final ) const { return InitialSegmentSum( i_final ) - InitialSegmentSum( i_start - 1 ); }
 

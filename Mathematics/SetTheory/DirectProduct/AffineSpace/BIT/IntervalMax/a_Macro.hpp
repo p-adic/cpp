@@ -32,7 +32,7 @@
 									\
     inline const T& operator[]( const int& i ) const;			\
     inline const T& Get( const int& i ) const;				\
-    T Interval ## MAX( const int& i_start , const int& i_final );	\
+    T Interval ## MAX( const int& i_start , const int& i_final ) const;	\
 									\
     void Set( const int& i , const T& n );				\
     void Set ## MAX( const int& i , const T& n );			\
@@ -156,7 +156,7 @@
   template <typename T , int N> inline const T& Interval ## MAX ## BIT<T,N>::Get( const int& i ) const { return m_a[i]; } \
 									\
   template <typename T , int N>						\
-  T Interval ## MAX ## BIT<T,N>::Interval ## MAX( const int& i_start , const int& i_final ) \
+  T Interval ## MAX ## BIT<T,N>::Interval ## MAX( const int& i_start , const int& i_final ) const \
   {									\
 									\
     T answer = m_init;							\

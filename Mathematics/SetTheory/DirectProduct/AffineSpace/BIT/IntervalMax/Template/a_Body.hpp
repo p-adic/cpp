@@ -97,7 +97,7 @@ template <TEMPLATE_ARGUMENTS_FOR_IDEMPOTENT_MONOID_BIT> inline const T& Idempote
 template <TEMPLATE_ARGUMENTS_FOR_IDEMPOTENT_MONOID_BIT> inline const T& IdempotentMonoidBIT<T,m_T,e_T,N>::Get( const int& i ) const { return m_a[i]; } 
 
 template <TEMPLATE_ARGUMENTS_FOR_IDEMPOTENT_MONOID_BIT>
-T IdempotentMonoidBIT<T,m_T,e_T,N>::IntervalSum( const int& i_start , const int& i_final ) 
+T IdempotentMonoidBIT<T,m_T,e_T,N>::IntervalSum( const int& i_start , const int& i_final ) const
 {
 
   const int j_min = i_start < 0 ? 1 : i_start + 1;

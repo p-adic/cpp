@@ -24,10 +24,10 @@ public:
   inline void Add( const int& i , const T& n );
   inline void IntervalAdd( const int& i_start , const int& i_final , const T& n );
 
-  inline T InitialSegmentSum( const int& i_final );
-  inline T IntervalSum( const int& i_start , const int& i_final );
+  inline T InitialSegmentSum( const int& i_final ) const;
+  inline T IntervalSum( const int& i_start , const int& i_final ) const;
 
 private:
-  inline T prod( const T& n , int exponent );
+  inline T prod( const T& n , int exponent ) const;
   
 };
