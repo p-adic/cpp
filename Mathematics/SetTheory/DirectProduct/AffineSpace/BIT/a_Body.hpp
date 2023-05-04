@@ -48,7 +48,7 @@ void BIT<T,N>::Add( const int& i , const T& n )
 }
 
 template <typename T , int N> 
-T BIT<T,N>::InitialSegmentSum( const int& i_final )
+T BIT<T,N>::InitialSegmentSum( const int& i_final ) const
 {
 
   T sum = 0;
@@ -65,5 +65,5 @@ T BIT<T,N>::InitialSegmentSum( const int& i_final )
   
 }
 
-template <typename T , int N> inline T BIT<T,N>::IntervalSum( const int& i_start , const int& i_final ) { return InitialSegmentSum( i_final ) - InitialSegmentSum( i_start - 1 ); }
+template <typename T , int N> inline T BIT<T,N>::IntervalSum( const int& i_start , const int& i_final ) const { return InitialSegmentSum( i_final ) - InitialSegmentSum( i_start - 1 ); }
 

@@ -23,8 +23,8 @@ public:
   inline BIT<T,N>& operator+=( const T ( & a )[N] );
   void Add( const int& i , const T& n );
 
-  T InitialSegmentSum( const int& i_final );
-  inline T IntervalSum( const int& i_start , const int& i_final );
+  T InitialSegmentSum( const int& i_final ) const;
+  inline T IntervalSum( const int& i_start , const int& i_final ) const;
   
 };
 
