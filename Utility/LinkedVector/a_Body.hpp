@@ -6,7 +6,7 @@
 #include "Entry/a_Body.hpp"
 
 template <typename T> inline LinkedVector<T>::LinkedVector() : m_entry( 1 ) , m_front_linked_entry( 0 ) , m_back_linked_entry( 0 ) , m_size_of_vector( 0 ) , m_size_of_link( 0 ) {}
-template <typename T> inline LinkedVector<T>::LinkedVector( const uint& max_size ) : m_entry() , m_front_linked_entry( 0 ) , m_back_linked_entry( 0 ) , m_size_of_vector( 0 ) , m_size_of_link( 0 ) { m_entry.reserve( max_size + 1 ); }
+template <typename T> inline LinkedVector<T>::LinkedVector( const uint& max_size ) : m_entry() , m_front_linked_entry( 0 ) , m_back_linked_entry( 0 ) , m_size_of_vector( 0 ) , m_size_of_link( 0 ) { m_entry.reserve( max_size + 1 ); m_entry.push_back( EntryOfLinkedVector<T>() ); }
 
 template <typename T> inline const T& LinkedVector<T>::operator[]( const uint& i ) const { return m_entry[i].m_t; }
 template <typename T> inline T& LinkedVector<T>::operator[]( const uint& i ) { return m_entry[i].m_t; }
