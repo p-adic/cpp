@@ -10,8 +10,9 @@ class UnionFindForest :
 {
 
 public:
+  // コンストラクタは領域を確保するだけなのでpush_RightMostで要素を追加する必要があることに注意。
   // EntryOfUnionFindForest<T>::m_nodeはVLSubTree<T>型でありポインタをメンバに持つため
-  // 予め最大要素数を固定しないといけない。
+  // 予め最大要素数max_sizeを固定しないといけない。
   inline UnionFindForest( const uint& max_size );
 
   // num番目のNodeをRootとする部分木を構築する。
