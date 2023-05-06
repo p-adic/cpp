@@ -14,6 +14,8 @@
 // 一点加算O(log_2 N)（可換性と羃等性を用いる）
 // 区間加算O(i_final-i_start+log_2 N)（可換性と羃等性を用いる）
 
+// tを吸収する（tに吸収される）要素の添字の最小値の二分探索O(log_2 N)
+
 // そのうちの区間和取得と一点更新は
 // M. Dima, R. Ceterchi, Efficient Range Minimum Queries using Binary Indexed Trees, Olympiads in Informatics, 2015, Vol. 9, 39--44
 // の手法を一般の可換羃等モノイドに拡張することで実装
@@ -38,6 +40,8 @@ public:
 
   void Set( const int& i , const T& n );
   void Add( const int& i , const T& n );
-  void IntervalAdd( const int& i_start , const int& i_final , const T& n ); 
+  void IntervalAdd( const int& i_start , const int& i_final , const T& n );
 
+  int BinarySearch( const T& t ) const;
+  
 };

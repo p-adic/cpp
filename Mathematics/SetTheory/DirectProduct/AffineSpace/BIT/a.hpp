@@ -2,12 +2,12 @@
 
 #pragma once
 
-
 // InitialSegmentSumで負の入力を扱うためにuintではなくintをテンプレート引数にする。
 // 使用演算：
 // T& T::operator=( const T& )
 // T& T::operator+=( const T& )
 // T operator-( const T& , const T& )（ただしIntervalSumを用いない場合は不要）
+// T operator<( const T& , const T& )（ただしBinarySearchを用いない場合は不要）
 template <typename T , int N>
 class BIT
 {
@@ -25,6 +25,10 @@ public:
 
   T InitialSegmentSum( const int& i_final ) const;
   inline T IntervalSum( const int& i_start , const int& i_final ) const;
+  
+  // operator+=の単位元T()より小さくない要素のみを成分に持つ場合のみサポート。
+  // InitialSegmentSum( i )がt以上となるiが存在する場合にその最小値を2進法で探索。
+  int BinarySearch( const T& t ) const;
   
 };
 

@@ -27,5 +27,10 @@ public:
 
   T InitialSegmentSum( const int& i_final ) const;
   inline T IntervalSum( const int& i_start , const int& i_final ) const;
+
+  // 順序群構造operator<( const T& , const T& )が定義されている時のみサポート。
+  // g_eより小さくない要素のみを成分に持つ場合のみサポート。
+  // InitialSegmentSum( i )がt以上となるiが存在する場合にその最小値を2進法で探索。
+  int BinarySearch( const T& t ) const;
   
 };

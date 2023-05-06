@@ -3,6 +3,8 @@
 #pragma once
 #include "a.hpp"
 
+#include "../../../SegmentTree/Power/a_Body.hpp"
+
 template <TEMPLATE_ARGUMENTS_FOR_IDEMPOTENT_MONOID_BIT> inline const T& AbstractBIT<T,m_T,e_T,N>::g_e = e_T();
 
 template <TEMPLATE_ARGUMENTS_FOR_IDEMPOTENT_MONOID_BIT> inline IdempotentMonoidBIT<T,m_T,e_T,N>::IdempotentMonoidBIT() : m_a() , m_fenwick_0() , m_fenwick_1() { if( m_a[0] != g_e ){ for( int i = 0 ; i < N ; i++ ){ m_a[i] = g_e; } for( int j = 1 ; j <= N ; j++ ){ m_fenwick_0[j] = m_fenwick_1[j] = g_e; } } }
@@ -260,4 +262,44 @@ void IdempotentMonoidBIT<T,m_T,e_T,N>::IntervalAdd( const int& i_start , const i
   }
 
   return;
+}
+
+template <TEMPLATE_ARGUMENTS_FOR_IDEMPOTENT_MONOID_BIT> inline int MonoidBIT<T,m_T,e_T,N>::BinarySearch( const T& t ) const
+{
+
+  int j = 0;
+  int power = PowerCalculation<N>.m_val;
+  T sum = g_e;
+  T sum_next = g_e;
+  
+  while( power > 0 ){
+
+    int j_next = j | power;
+
+    if( j_next < N ){
+      
+      sum_next = m_T( sum_next , m_fenwick[j_next] );
+
+      if( sum_next != m_T( sum_next , t ) ){
+	
+	sum = sum_next;
+	j = j_next;
+
+      } else {
+
+	sum_next = sum;
+	
+      }
+      
+    }
+    
+    power >>= 1;
+
+  }
+
+  // InitialSegmentSum( i )がt未満となるiが存在するならばjはその最大値に1を足したものとなり、
+  // InitialSegmentSum( i )がt未満となるiが存在しないならばj=0となり、
+  // いずれの場合もjはInitialSegmentSum( i )がt以上となる最小のiと等しい。
+  return j;
+
 }

@@ -3,6 +3,8 @@
 #pragma once
 #include "a.hpp"
 
+#include "../SegmentTree/Power/a_Body.hpp"
+
 template <typename T , int N> inline BIT<T,N>::BIT() : m_fenwick() {}
 template <typename T , int N>
 BIT<T,N>::BIT( const T ( & a )[N] ) : m_fenwick()
@@ -67,3 +69,42 @@ T BIT<T,N>::InitialSegmentSum( const int& i_final ) const
 
 template <typename T , int N> inline T BIT<T,N>::IntervalSum( const int& i_start , const int& i_final ) const { return InitialSegmentSum( i_final ) - InitialSegmentSum( i_start - 1 ); }
 
+template <typename T> inline int BIT<T>::BinarySearch( const T& t ) const
+{
+
+  int j = 0;
+  int power = PowerCalculation<N>.m_val;
+  T sum{};
+  T sum_next{};
+  
+  while( power > 0 ){
+
+    int j_next = j | power;
+
+    if( j_next < N ){
+      
+      sum_next += m_fenwick[j_next];
+
+      if( sum_next < t ){
+	
+	sum = sum_next;
+	j = j_next;
+
+      } else {
+
+	sum_next = sum;
+	
+      }
+      
+    }
+    
+    power >>= 1;
+
+  }
+
+  // InitialSegmentSum( i )がt未満となるiが存在するならばjはその最大値に1を足したものとなり、
+  // InitialSegmentSum( i )がt未満となるiが存在しないならばj=0となり、
+  // いずれの場合もjはInitialSegmentSum( i )がt以上となる最小のiと等しい。
+  return j;
+
+}

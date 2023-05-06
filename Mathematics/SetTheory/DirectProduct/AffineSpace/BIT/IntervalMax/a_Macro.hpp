@@ -12,6 +12,8 @@
 // max（min）による一点更新O(log_2 N)
 // max（min）による区間更新O(i_final-i_start+log_2 N)
 
+// t以上（以下）となる要素の添字の最小値の二分探索O(log_2 N)
+
 // そのうちの区間min取得と一点更新は
 // M. Dima, R. Ceterchi, Efficient Range Minimum Queries using Binary Indexed Trees, Olympiads in Informatics, 2015, Vol. 9, 39--44
 // の手法をもとに実装
@@ -37,6 +39,8 @@
     void Set( const int& i , const T& n );				\
     void Set ## MAX( const int& i , const T& n );			\
     void IntervalSet ## MAX( const int& i_start , const int& i_final , const T& n ); \
+									\
+    int BinarySearch( const T& t ) const;				\
 									\
   };									\
 
@@ -313,6 +317,45 @@
     }									\
 									\
     return;								\
+  }									\
+									\
+  template <typename T , int N>						\
+  void Interval ## MAX ## BIT<T,N> int BIT<T>::BinarySearch( const T& t ) const	\
+  {									\
+									\
+    int j = 0;								\
+    int power = PowerCalculation<N>.m_val;				\
+    T temp{};								\
+    T temp_next{};							\
+									\
+    while( power > 0 ){							\
+									\
+      int j_next = j | power;						\
+									\
+      if( j_next < m_N ){						\
+									\
+	const T& fenwick_j_next = m_fenwick[j_next];			\
+	temp_next INEQUALITY fenwick_j_next ? temp_next = fenwick_j_next : temp; \
+									\
+	if( temp_next INEQUALITY t ){					\
+									\
+	  temp = temp_next;						\
+	  j = j_next;							\
+									\
+	} else {							\
+									\
+	  temp_next = temp;						\
+									\
+	}								\
+									\
+      }									\
+									\
+      power >>= 1;							\
+									\
+    }									\
+									\
+    return j;								\
+									\
   }									\
 
 
