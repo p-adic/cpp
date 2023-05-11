@@ -17,7 +17,7 @@
 // 一点更新O(N^{1/2})（区間更新とオーダーは同じだが定数倍良い）
 // １つの代入値による区間更新O(N^{1/2})
 
-// o_Uによる一点更新はなし
+// o_Uによる一点更新はなし。
 // o_Uによる区間更新O(N^{1/2})
 template <TEMPLATE_ARGUMENTS_FOR_LAZY_SQRT_DECOMPOSITION = SqrtCalculation<N>{}.m_val >
 class LazySqrtDecomposition
