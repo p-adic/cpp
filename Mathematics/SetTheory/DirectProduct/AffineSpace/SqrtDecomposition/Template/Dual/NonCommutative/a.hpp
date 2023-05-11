@@ -9,28 +9,31 @@
 
 // 一点取得O(1)
 
-// 一点更新はなし
-// o_Uによる一点更新はo_Uによる区間更新で処理する（O(N^{1/2})）
+// 一点更新O(N^{1/2})（ただし状況次第でO(1)）
+// o_Uによる一点更新は通常の一点更新かo_Uによる区間更新で処理する（いずれもO(N^{1/2})）
 // o_Uによる区間更新O(N^{1/2})
 template <TEMPLATE_ARGUMENTS_FOR_DUAL_SQRT_DECOMPOSITION = SqrtCalculation<N>{}.m_val >
 class NonCommutativeDualSqrtDecomposition
 {
 
 private:
-  U m_a[N];
-  T m_b[N_sqrt];
-  static constexpr int N_d = N / N_sqrt;
-  static constexpr int N_m = N_d * N_sqrt;
+  static constexpr const int N_d = ( N + N_sqrt - 1 ) / N_sqrt;
+  static constexpr const int N_m = N_d * N_sqrt;
+  U m_a[N_m];
+  T m_b[N_d];
 
 public:
   static const T& g_e;
   
   inline constexpr NonCommutativeDualSqrtDecomposition( const U ( &a )[N] );
-  inline constexpr NonCommutativeDualSqrtDecomposition( U ( &&a )[N] );
 
   inline constexpr U Get( const int& i ) const;
+  inline constexpr void Set( const int& i , const U& u );
 
-  inline constexpr void IntervalAct( const int& i_start , const int& i_final , const T& n );
+  inline constexpr void IntervalAct( const int& i_start , const int& i_final , const T& t );
+  
+private:
+  inline constexpr void IntervalAct_Body( const int& i_min , const int& i_ulim , const T& t );
   
 };
 

@@ -23,11 +23,11 @@ class IntervalAddSqrtDecomposition
 {
 
 private:
-  T m_a[N];
-  T m_b[N_sqrt];
-  static constexpr int N_d = N / N_sqrt;
-  static constexpr int N_m = N_d * N_sqrt;
-
+  static constexpr const int N_d = ( N + N_sqrt - 1 ) / N_sqrt;
+  static constexpr const int N_m = N_d * N_sqrt;
+  T m_a[N_m];
+  T m_b[N_d];
+  
 public:
   static const T& g_e;
   
@@ -37,8 +37,8 @@ public:
 
   inline constexpr T IntervalSum( const int& i_start , const int& i_final ) const;
 
-  inline constexpr void Add( const int& i , const T& n );
-  inline constexpr void IntervalAdd( const int& i_start , const int& i_final , const T& n );
+  inline constexpr void Add( const int& i , const T& t );
+  inline constexpr void IntervalAdd( const int& i_start , const int& i_final , const T& t );
   
 };
 

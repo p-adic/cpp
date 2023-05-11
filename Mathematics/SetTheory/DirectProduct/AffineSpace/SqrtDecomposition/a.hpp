@@ -13,16 +13,13 @@ class SqrtDecomposition
 {
 
 private:
-  T m_a[N];
-  T m_b[N_sqrt];
-  static constexpr int N_d = N / N_sqrt;
-  static constexpr int N_m = N_d * N_sqrt;
+  static constexpr const int N_d = ( N + N_sqrt - 1 ) / N_sqrt;
+  T m_a[N_d * N_sqrt];
+  T m_b[N_d];
 
 public:
   inline constexpr SqrtDecomposition();
-  inline constexpr SqrtDecomposition( const T ( &a )[N] );
-  inline constexpr SqrtDecomposition( T ( &&a )[N] );
-
+ 
   inline constexpr const T& operator[]( const int& i ) const;
   inline constexpr const T& Get( const int& i ) const;
   inline constexpr T IntervalSum( const int& i_start , const int& i_final );

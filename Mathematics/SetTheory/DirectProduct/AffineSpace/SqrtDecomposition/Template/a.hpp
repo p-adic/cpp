@@ -7,7 +7,6 @@
 
 // 可換モノイド(T,m_T:T^2->T,e_T:1->T)と非負整数Nをパラメータとする。
 // 単位元による初期化O(N)
-// 配列による初期化O(N)
 
 // 一点取得O(1)
 // m_Tに関する区間和取得O(N^{1/2})
@@ -19,17 +18,15 @@ class AbstractSqrtDecomposition
 {
 
 private:
-  T m_a[N];
-  T m_b[N_sqrt];
-  static constexpr int N_d = N / N_sqrt;
-  static constexpr int N_m = N_d * N_sqrt;
-
+  static constexpr const int N_d = ( N + N_sqrt - 1 ) / N_sqrt;
+  static constexpr const int N_m = N_d * N_sqrt;
+  T m_a[N_m];
+  T m_b[N_d];
+  
 public:
   static const T& g_e;
   
   inline constexpr AbstractSqrtDecomposition();
-  inline constexpr AbstractSqrtDecomposition( const T ( &a )[N] );
-  inline constexpr AbstractSqrtDecomposition( T ( &&a )[N] );
 
   inline constexpr const T& operator[]( const int& i ) const;
   inline constexpr const T& Get( const int& i ) const;
