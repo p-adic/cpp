@@ -319,6 +319,7 @@ template <TEMPLATE_ARGUMENTS_FOR_LAZY_SQRT_DECOMPOSITION> inline constexpr void 
     for( int d = d_0 ; d < d_1 ; d++ ){
 
       U& m_bd = m_b[d];
+	// ‰ÂŠ·«‚ðŽg‚Á‚½B
       m_bd = m_U( m_bd , fold );
 
       if( m_suspended[d] ){
