@@ -368,7 +368,7 @@ template <TEMPLATE_ARGUMENTS_FOR_LAZY_SQRT_DECOMPOSITION> inline constexpr U Laz
 
     while( exponent > 0 ){
 
-      answer = ( exponent & 1 ) == 0 ? answer : m_U( answer , power );
+      ( exponent & 1 ) == 0 ? answer : answer = m_U( answer , power );
       power = m_U( power , power );
       exponent >>= 1;
 
