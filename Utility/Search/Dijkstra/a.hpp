@@ -22,4 +22,6 @@ public:
 // (T,m_T:T^2->T,e_T:1->T)がbool operator<(const T&,const T&)に関して
 // 順序モノイドでありdの値がe_T()以上である場合にのみサポート。
 template <typename T , T m_T(const T&,const T&) , const T& e_T() , int size_max>
+T Dijkstra( const T ( &d )[size_max][size_max] , const int& i_start , const int& i_final , const int& size , const T& weight_max );
+template <typename T , T m_T(const T&,const T&) , const T& e_T() , int size_max>
 T Dijkstra( const T ( &d )[size_max][size_max] , const int& i_start , const int& i_final , const int& size , const T& weight_max , list<int>& path );
