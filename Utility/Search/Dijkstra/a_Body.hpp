@@ -3,9 +3,6 @@
 #pragma once
 #include "a.hpp"
 
-#include "Header.hpp"
-#include "a_Body.hpp"
-
 template <typename T> inline PairForDijkstra<T>::PairForDijkstra( const T& t , const int& i ) : m_t( t ) , m_i( i ) {}
 template <typename T> inline void PairForDijkstra<T>::Set( const T& t ) { m_t = t; }
 template <typename T> inline const T& PairForDijkstra<T>::Get() const noexcept { return m_t; }

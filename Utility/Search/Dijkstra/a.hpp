@@ -1,6 +1,7 @@
 // c:/Users/user/Documents/Programming/Utility/Search/Dijkstra/a.hpp
 
 #pragma once
+#include "a_Macro.hpp"
 
 template <typename T>
 class PairForDijkstra
