@@ -2,8 +2,8 @@
 
 #pragma once
 
-// Reset‚Ím_found‚Æm_prev‚à‰Šú‰»
-// Shift‚Ím_found‚Æm_prev‚Í”ñ‰Šú‰»
+// Reset‚Ím_found‚Æm_prev‚ğ‰Šú‰»
+// Shift‚Ím_found‚Æm_prev‚ğ”ñ‰Šú‰»
 #define DECLARATION_OF_FIRST_SEARCH( BREADTH )				\
   template <int V_max,list<int> E(const int&)>				\
   class BREADTH ## FirstSearch						\
