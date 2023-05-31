@@ -14,6 +14,7 @@
     int m_init;								\
     list<int> m_next;							\
     bool m_found[V_max];						\
+    int m_prev[V_max];							\
 									\
   public:								\
     inline BREADTH ## FirstSearch( const int& V );			\
@@ -22,20 +23,22 @@
     inline void Reset( const int& init );				\
     inline void Shift( const int& init );				\
 									\
-									\
     bool& Found( const int& i );					\
+    const int& Prev( const int& i ) const;				\
+									\
     int Next();								\
 									\
   };									\
 
 #define DEFINITION_OF_FIRST_SEARCH( BREADTH , PUSH )			\
-  template <int V_max,list<int> E(const int&)> inline BREADTH ## FirstSearch<V_max,E>::BREADTH ## FirstSearch( const int& V ) : m_V( V ) , m_init() , m_next() , m_found() {} \
+  template <int V_max,list<int> E(const int&)> inline BREADTH ## FirstSearch<V_max,E>::BREADTH ## FirstSearch( const int& V ) : m_V( V ) , m_init() , m_next() , m_found() , m_prev() { for( int i = 0 ; i < V ; i++ ){ m_prev[i] = -1; } } \
   template <int V_max,list<int> E(const int&)> inline BREADTH ## FirstSearch<V_max,E>::BREADTH ## FirstSearch( const int& V , const int& init ) : BREADTH ## FirstSearch( V ) { m_init = init; m_next.push_back( m_init ); m_found[m_init] = true; } \
 									\
   template <int V_max,list<int> E(const int&)> inline void BREADTH ## FirstSearch<V_max,E>::Reset( const int& init ) { m_init = init; assert( m_init < m_V ); m_next.clear(); m_next.push_back( m_init ); for( int i = 0 ; i < m_V ; i++ ){ m_found[i] = i == m_init; } } \
   template <int V_max,list<int> E(const int&)> inline void BREADTH ## FirstSearch<V_max,E>::Shift( const int& init ) { m_init = init; assert( m_init < m_V ); m_next.clear(); if( ! m_found[m_init] ){ m_next.push_back( m_init ); m_found[m_init] = true;} } \
 									\
   template <int V_max,list<int> E(const int&)> inline bool& BREADTH ## FirstSearch<V_max,E>::Found( const int& i ) { assert( i < m_V ); return m_found[i]; } \
+  template <int V_max,list<int> E(const int&)> inline const int& BREADTH ## FirstSearch<V_max,E>::Prev( const int& i ) { assert( i < m_V ); return m_prev[i]; } \
 									\
   template <int V_max,list<int> E(const int&)>				\
   int BREADTH ## FirstSearch<V_max,E>::Next()				\
@@ -59,6 +62,7 @@
       if( ! found_i ){							\
 									\
 	m_next.PUSH( i );						\
+	m_prev[i] = i_curr;						\
 	found_i = true;							\
 									\
       }									\
