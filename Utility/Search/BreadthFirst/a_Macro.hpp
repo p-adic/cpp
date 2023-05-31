@@ -57,7 +57,7 @@
     for( auto itr = edge.begin() , end = edge.end() ; itr != end ; itr++ ){ \
 									\
       const int& i = *itr;						\
-      bool& found_i = Found( i );					\
+      bool& found_i = found( i );					\
 									\
       if( ! found_i ){							\
 									\
