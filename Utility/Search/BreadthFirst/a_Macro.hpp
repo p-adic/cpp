@@ -54,9 +54,9 @@
     m_next.pop_front();							\
     list<int> edge = E( i_curr );					\
 									\
-    for( auto itr = edge.begin() , end = edge.end() ; itr != end ; itr++ ){ \
+    while( ! edge.empty() ){						\
 									\
-      const int& i = *itr;						\
+      const int& i = edge.front();					\
       bool& found_i = found( i );					\
 									\
       if( ! found_i ){							\
@@ -66,6 +66,8 @@
 	found_i = true;							\
 									\
       }									\
+									\
+      edge.popfront();							\
 									\
     }									\
 									\
