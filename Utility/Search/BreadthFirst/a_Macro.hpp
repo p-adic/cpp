@@ -38,7 +38,7 @@
   template <int V_max,list<int> E(const int&)> inline void BREADTH ## FirstSearch<V_max,E>::Shift( const int& init ) { m_init = init; assert( m_init < m_V ); m_next.clear(); if( ! m_found[m_init] ){ m_next.push_back( m_init ); m_found[m_init] = true; } } \
 									\
   template <int V_max,list<int> E(const int&)> inline bool& BREADTH ## FirstSearch<V_max,E>::found( const int& i ) { assert( i < m_V ); return m_found[i]; } \
-  template <int V_max,list<int> E(const int&)> inline const int& BREADTH ## FirstSearch<V_max,E>::prev( const int& i ) { assert( i < m_V ); return m_prev[i]; } \
+  template <int V_max,list<int> E(const int&)> inline const int& BREADTH ## FirstSearch<V_max,E>::prev( const int& i ) const { assert( i < m_V ); return m_prev[i]; } \
 									\
   template <int V_max,list<int> E(const int&)>				\
   int BREADTH ## FirstSearch<V_max,E>::Next()				\
