@@ -5,14 +5,42 @@
 
 DECLARATION_OF_FIRST_SEARCH( Depth );
 
+// dfs.init()‚©‚ç‚Ì[‚³‚ğŒvZB
 template <int V_max,list<int> E(const int&)>
-void SetReversedVertex( DepthFirstSearch<V_max,E>& dfs , const int& V , int ( &reversed_vertex )[V_max] );
+void SetDepth( const DepthFirstSearch<V_max,E>& dfs , ( &depth )[V_max] );
 
-template <int V_max>
-void SetChildrenOfTree( const DepthFirstSearch<V_max,E>& dfs , const int& V , list<int> ( &edge )[V_max] );
+// dfs.init()‚©‚ç‚Ì[‚³—Dæ’Tõ‚É‚¨‚¢‚ÄŠeƒm[ƒh‚É‘Î‚µ‚»‚ê‚æ‚è‘O‚É’Tõ‚³‚ê‚é—×Úƒm[ƒh‚ğŒvZB
+template <int V_max,list<int> E(const int&)>
+void SetPrev( DepthFirstSearch<V_max,E>& dfs );
 
-template <int V_max>
-void SetHeightOfTree( const DepthFirstSearch<V_max,E>& dfs , const int& V  , const int ( &reversed_vertex )[V_max] , ( &height )[V_max] );
+// dfs.init()‚©‚ç‚Ì[‚³—Dæ’Tõ‚Ì’Tõ‡‚Ì‹t‡‚ğŒvZB
+template <int V_max,list<int> E(const int&)>
+void SetReversedVertex( DepthFirstSearch<V_max,E>& dfs , int ( &reversed_vertex )[V_max] );
 
+// dfs.SetPrev()‚©dfs.SetReversedVertex()‚ğŒÄ‚Ño‚µ‚Ä‚©‚ç‚Ì‚İg—p‰Â”\B
+// dfs.init()‚©‚ç‚Ì[‚³—Dæ’Tõ‚É‚¨‚¢‚ÄŠeƒm[ƒh‚É‘Î‚µ‚»‚ê‚æ‚èŒã‚É’Tõ‚³‚ê‚é—×Úƒm[ƒh‘S‚Ä‚ğŒvZB
 template <int V_max>
-void SetNumberOfChildrenOfTree( const DepthFirstSearch<V_max,E>& dfs , const int& V  , const int ( &reversed_vertex )[V_max] , ( &count )[V_max] );
+void SetChildren( const DepthFirstSearch<V_max,E>& dfs , list<int> ( &edge )[V_max] );
+
+// dfs.init()‚©‚ç‚Ì[‚³—Dæ’Tõ‚É‚¨‚¯‚é‚‚³‚ğŒvZB
+template <int V_max>
+void SetHeight( const DepthFirstSearch<V_max,E>& dfs  , const int ( &reversed_vertex )[V_max] , ( &height )[V_max] );
+
+// dfs.init()‚©‚ç‚Ì[‚³—Dæ’Tõ‚É‚¨‚¢‚ÄŠeƒm[ƒh‚É‘Î‚µ‚»‚ê‚æ‚èŒã‚É’Tõ‚³‚ê‚é—×Úƒm[ƒh‚ÌŒÂ”‚ğŒvZB
+template <int V_max>
+void SetNumberOfChildren( const DepthFirstSearch<V_max,E>& dfs  , const int ( &reversed_vertex )[V_max] , ( &count )[V_max] );
+
+// Šeƒm[ƒh‚Ì‚‚³ < 2^digit‚Ì‚Ì‚İƒTƒ|[ƒgB
+// dfs.init()‚©‚ç‚Ì[‚³—Dæ’Tõ‚É‚¨‚¢‚ÄŠeƒm[ƒh‚É‘Î‚µ‚»‚ê‚æ‚è‘O‚É’Tõ‚³‚ê‚é—×Úƒm[ƒhŒvZ‚Ì”½•œ‡¬‚ğ‘OŒvZB
+template <int V_max,list<int> E(const int&),int digit = 16>
+void SetDoublingAncestor( const DepthFirstSearch<V_max,E>& dfs , ( &doubling )[digit][V_max] );
+
+// Šeƒm[ƒh‚Ì‚‚³ < 2^digit‚Ì‚Ì‚İƒTƒ|[ƒgB
+// dfs.init()‚©‚ç‚Ì[‚³—Dæ’Tõ‚É‚¨‚¢‚Äƒm[ƒhi‚æ‚è‘O‚É’Tõ‚³‚ê‚é—×Úƒm[ƒhŒvZ‚ğn‰ñ”½•œ‡¬B
+template <int V_max,int digit = 16>
+void Ancestor( int i , int n , const ( &doubling )[digit][V_max] );
+
+// Šeƒm[ƒh‚Ì‚‚³ < 2^digit‚Ì‚Ì‚İƒTƒ|[ƒgB
+// dfs.init()‚©‚ç‚Ì[‚³—Dæ’Tõ‚É‚¨‚¢‚Äƒm[ƒhi,j‚É‘Î‚µ‚»‚ê‚æ‚è‘O‚É’Tõ‚³‚ê‚é—×Úƒm[ƒhŒvZ‚ğ”½•œ‡¬‚µ‚Ä“¾‚ç‚ê‚éƒm[ƒh‚Ì‚¤‚¿”½•œ‰ñ”‚ªÅ‚à­‚È‚¢‚à‚Ì‚ğŒvZB
+template <int V_max,list<int> E(const int&),int digit = 16>
+int LCA( const DepthFirstSearch<V_max,E>& dfs , int i , int j , const ( &doubling )[digit][V_max] , const ( &depth )[V_max] );
