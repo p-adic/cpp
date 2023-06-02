@@ -7,46 +7,58 @@
 									\
   for( int i = 0 ; i < size ; i++ ){					\
 									\
-    vertex.insert( PairForDijkstra<T>( i == i_start ? e_T() : weight_max , i ) ); \
+    vertex.insert( PairForDijkstra<T>( i == i_start ? e_T() : infty , i ) ); \
 									\
   }									\
 									\
-  T weight[size_max] = {};						\
+  T answer{};								\
   INITIALISE_PREV;							\
 									\
   while( ! vertex.empty() ){						\
 									\
-    auto itr = vertex.begin() , end = vertex.end();			\
-    PairForDijkstra<T> v = *itr;					\
+    auto itr = vertex.begin();						\
+    const PairForDijkstra<T> v = *itr;					\
     const T& t = v.Get();						\
     const int& i = v.index();						\
-    const T ( &di )[size_max] = d[i];					\
-    weight[i] = t;							\
 									\
     if( i == i_final ){							\
 									\
+      answer = t;							\
       break;								\
 									\
     }									\
 									\
     itr = vertex.erase( itr );						\
-    list<PairForDijkstra<T> > changed_vertex{};				\
 									\
-    while( itr != end ){						\
+    if( t != infty ){							\
 									\
-      const T& weight_curr = itr->Get();				\
-      const T weight_temp = m_T( t , di[itr->index()] );		\
+      auto end = vertex.end();						\
+      const T ( &di )[size_max] = d[i];					\
+      list<PairForDijkstra<T> > changed_vertex{};			\
 									\
-      if( weight_curr > weight_temp ){					\
+      while( itr != end ){						\
 									\
-	const int i_curr = itr->index();				\
-	SET_PREV;							\
-	itr = vertex.erase( itr );					\
-	changed_vertex.push_back( PairForDijkstra<T>( weight_temp , i_curr ) ); \
+	const int& j = itr->index();					\
+	const T& dij = di[j];						\
 									\
-      } else {								\
+	if( dij != infty ){						\
 									\
-	itr++;								\
+	  const T& weight_curr = itr->Get();				\
+	  const T weight_temp = m_T( t , dij );				\
+									\
+	  if( weight_curr == infty ? true : weight_curr > weight_temp ){ \
+									\
+	    SET_PREV;							\
+	    itr = vertex.erase( itr );					\
+	    changed_vertex.push_back( PairForDijkstra<T>( weight_temp , j ) ); \
+									\
+	  } else {							\
+									\
+	    itr++;							\
+									\
+	  }								\
+									\
+	}								\
 									\
       }									\
 									\

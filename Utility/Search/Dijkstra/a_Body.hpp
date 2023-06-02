@@ -10,19 +10,19 @@ template <typename T> inline const int& PairForDijkstra<T>::index() const noexce
 template <typename T> inline bool PairForDijkstra<T>::operator<( const PairForDijkstra& t ) const { return m_t < t.m_t ? true : t.m_t < m_t ? false : m_i < t.m_i; }
 
 template <typename T , T m_T(const T&,const T&) , const T& e_T() , int size_max>
-T Dijkstra( const T ( &d )[size_max][size_max] , const int& i_start , const int& i_final , const int& size , const T& weight_max )
+T Dijkstra( const T ( &d )[size_max][size_max] , const int& i_start , const int& i_final , const int& size , const T& infty )
 {
 
   DIJKSTRA_BODY( , );
-  return weight[ i_final ];
+  return answer;
   
 }
 
 template <typename T , T m_T(const T&,const T&) , const T& e_T() , int size_max>
-T Dijkstra( const T ( &d )[size_max][size_max] , const int& i_start , const int& i_final , const int& size , const T& weight_max , list<int>& path )
+T Dijkstra( const T ( &d )[size_max][size_max] , const int& i_start , const int& i_final , const int& size , const T& infty , list<int>& path )
 {
 
-  DIJKSTRA_BODY( int prev[size_max] = {} , prev[i_curr] = i );
+  DIJKSTRA_BODY( int prev[size_max] = {} , prev[j] = i );
 
   int i = i_final;
 
@@ -34,6 +34,6 @@ T Dijkstra( const T ( &d )[size_max][size_max] , const int& i_start , const int&
   }
 
   path.push_front( i_start );
-  return weight[ i_final ];
+  return answer;
   
 }
