@@ -19,15 +19,15 @@ void SetReversedVertex( DepthFirstSearch<V_max,E>& dfs , int ( &reversed_vertex 
 
 // dfs.SetPrev()かdfs.SetReversedVertex()を呼び出してからのみ使用可能。
 // dfs.init()からの深さ優先探索において各ノードに対しそれより後に探索される隣接ノード全てを計算。
-template <int V_max>
+template <int V_max,list<int> E(const int&)>
 void SetChildren( const DepthFirstSearch<V_max,E>& dfs , list<int> ( &edge )[V_max] );
 
 // dfs.init()からの深さ優先探索における高さを計算。
-template <int V_max>
+template <int V_max,list<int> E(const int&)>
 void SetHeight( const DepthFirstSearch<V_max,E>& dfs  , const int ( &reversed_vertex )[V_max] , ( &height )[V_max] );
 
 // dfs.init()からの深さ優先探索において各ノードに対しそれより後に探索される隣接ノードの個数を計算。
-template <int V_max>
+template <int V_max,list<int> E(const int&)>
 void SetNumberOfChildren( const DepthFirstSearch<V_max,E>& dfs  , const int ( &reversed_vertex )[V_max] , ( &count )[V_max] );
 
 // 各ノードの高さ < 2^digitの時のみサポート。

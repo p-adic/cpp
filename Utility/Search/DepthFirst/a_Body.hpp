@@ -90,7 +90,7 @@ void SetHeight( const DepthFirstSearch<V_max,E>& dfs  , const int ( &reversed_ve
 
 }
 
-template <int V_max>
+template <int V_max,list<int> E(const int&)>
 void SetNumberOfChildren( const DepthFirstSearch<V_max,E>& dfs  , const int ( &reversed_vertex )[V_max] , ( &count )[V_max] )
 {
 
