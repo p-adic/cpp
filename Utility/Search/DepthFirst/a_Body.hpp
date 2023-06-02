@@ -113,7 +113,7 @@ void SetNumberOfChildren( const DepthFirstSearch<V_max,E>& dfs  , const int ( &r
 }
 
 template <int V_max,list<int> E(const int&),int digit>
-void SetDoublingAncestor( const DepthFirstSearch<V_max,E>& dfs , ( &doubling )[digit][V_max] )
+void SetPrevDoubling( const DepthFirstSearch<V_max,E>& dfs , ( &doubling )[digit][V_max] )
 {
 
   const int& V = dfs.size();
@@ -168,7 +168,7 @@ void Ancestor( int i , int n , const ( &doubling )[digit][V_max] )
 }
 
 template <int V_max,list<int> E(const int&),int digit>
-int LCASearch( const DepthFirstSearch<V_max,E>& dfs , int i , int j , const ( &doubling )[digit][V_max] , const ( &depth )[V_max] )
+int LCA( const DepthFirstSearch<V_max,E>& dfs , int i , int j , const ( &doubling )[digit][V_max] , const ( &depth )[V_max] )
 {
 
     int diff = depth[i] - depth[j];
