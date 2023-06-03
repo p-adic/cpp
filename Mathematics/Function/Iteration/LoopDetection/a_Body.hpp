@@ -9,7 +9,7 @@ template <typename T, T f(const T&) , int length_max , T enum_T(const int&) , in
 template <typename T, T f(const T&) , int length_max> inline void LoopDetection<T,f,length_max>::SetInit( const T& init ) { assert( m_length == 0 ); m_value[0] = e_inv( t ); }
 
 template <typename T, T f(const T&) , int length_max>
-T LoopDetection<T,f,length_max>::IteratedComposition( const int& n );
+T LoopDetection<T,f,length_max>::IteratedComposition( const int& n )
 {
 
   if( n < m_length ){
