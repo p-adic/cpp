@@ -3,7 +3,7 @@
 #pragma once
 #include "a.hpp"
 
-template <typename T, T f(const T&) , int length_max> inline LoopDetection<T,f,length_max>::LoopDetection( const T& init ) : m_length() , m_value() , m_loop_start( -1 ) , m_memory() {); }
+template <typename T, T f(const T&) , int length_max> inline LoopDetection<T,f,length_max>::LoopDetection( const T& init ) : m_length() , m_value() , m_loop_start( -1 ) , m_memory() {}
 template <typename T, T f(const T&) , int length_max , T enum_T(const int&) , int enum_T_inv(const T&)> inline LoopDetection<T,f,length_max,enum_T,enum_T_inv>::LoopDetection() : LoopDetection() , m_value_inv() { for( int i = 0 ; i < length_max ; i++ ){ m_value_inv[i] = -1; } }
 
 template <typename T, T f(const T&) , int length_max> inline void LoopDetection<T,f,length_max>::SetInit( const T& init ) { assert( m_length == 0 ); m_value[0] = e_inv( t ); }
