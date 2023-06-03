@@ -2,13 +2,13 @@
 
 #pragma once
 
-template <typename T, T f(const T&) , int size>
+template <typename T, T f(const T&) , int length_max>
 class LoopDetection
 {
 
 private:
   int m_length;
-  int m_value[size];
+  int m_value[length_max];
   int m_loop_start;
   map<T,int> m_memory;
 
@@ -24,13 +24,13 @@ private:
 
 };
 
-template <typename T, T f(const T&) , int size , T enum_T(const int&) , int enum_T_inv(const T&)>
+template <typename T, T f(const T&) , int length_max , T enum_T(const int&) , int enum_T_inv(const T&)>
 class LoopDetection :
-  public LoopDetection<T,f,size>
+  public LoopDetection<T,f,length_max>
 {
 
 private:
-  int m_value_inv[size];
+  int m_value_inv[length_max];
   
 public:
   inline LoopDetection();
