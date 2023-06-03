@@ -3,7 +3,7 @@
 #pragma once
 
 template <typename T, T f(const T&) , int length_max>
-class LoopDetection
+class LoopDetectionBody
 {
 
 private:
@@ -24,9 +24,36 @@ private:
 
 };
 
+template <typename T, T f(const T&) , int length_max>
+class LoopDetection :
+  public LoopDetectionBody<T,f,length_max>
+{
+
+public:
+  inline LoopDetection();
+
+};
+
+template <int f(const int&) , int length_max>
+class LoopDetection
+{
+
+private:
+  int m_value_inv[length_max];
+  
+public:
+  inline LoopDetection();
+
+private:
+  inline T e( const int& i );
+  inline int e_inv( const T& t );
+  void SetValue( const Tnt& i );
+
+};
+
 template <typename T, T f(const T&) , int length_max , T enum_T(const int&) , int enum_T_inv(const T&)>
 class LoopDetection :
-  public LoopDetection<T,f,length_max>
+  public LoopDetectionBody<T,f,length_max>
 {
 
 private:
@@ -36,8 +63,8 @@ public:
   inline LoopDetection();
   
 private:
-  T e( const int& i );
-  int e_inv( const T& t );
+  inline T e( const int& i );
+  inline int e_inv( const T& t );
   void SetValue( const int& i );
 
 };

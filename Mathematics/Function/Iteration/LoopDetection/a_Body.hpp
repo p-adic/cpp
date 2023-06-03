@@ -3,13 +3,15 @@
 #pragma once
 #include "a.hpp"
 
-template <typename T, T f(const T&) , int length_max> inline LoopDetection<T,f,length_max>::LoopDetection( const T& init ) : m_length() , m_value() , m_loop_start( -1 ) , m_memory() {}
-template <typename T, T f(const T&) , int length_max , T enum_T(const int&) , int enum_T_inv(const T&)> inline LoopDetection<T,f,length_max,enum_T,enum_T_inv>::LoopDetection() : LoopDetection() , m_value_inv() { for( int i = 0 ; i < length_max ; i++ ){ m_value_inv[i] = -1; } }
+template <typename T, T f(const T&) , int length_max> inline LoopDetectionBody<T,f,length_max>::LoopDetectionBody( const T& init ) : m_length() , m_value() , m_loop_start( -1 ) , m_memory() {}
+template <typename T, T f(const T&) , int length_max> inline LoopDetection<T,f,length_max>::LoopDetection() : LoopDetectionBody<T,f,length_max>() {}
+template <int f(const int&) , int length_max> inline LoopDetection<f,length_max>::LoopDetection() : LoopDetectionBody<int,f,length_max>() , m_value_inv() { for( int i = 0 ; i < length_max ; i++ ){ m_value_inv[i] = -1; } }
+template <typename T, T f(const T&) , int length_max , T enum_T(const int&) , int enum_T_inv(const T&)> inline LoopDetection<T,f,length_max,enum_T,enum_T_inv>::LoopDetection() : LoopDetectionBody<T,f,length_max>() , m_value_inv() { for( int i = 0 ; i < length_max ; i++ ){ m_value_inv[i] = -1; } }
 
-template <typename T, T f(const T&) , int length_max> inline void LoopDetection<T,f,length_max>::SetInit( const T& init ) { assert( m_length == 0 ); m_value[0] = e_inv( t ); }
+template <typename T, T f(const T&) , int length_max> inline void LoopDetectionBody<T,f,length_max>::SetInit( const T& init ) { assert( m_length == 0 ); m_value[0] = e_inv( t ); }
 
 template <typename T, T f(const T&) , int length_max>
-T LoopDetection<T,f,length_max>::IteratedComposition( const int& n )
+T LoopDetectionBody<T,f,length_max>::IteratedComposition( const int& n )
 {
 
   if( n < m_length ){
@@ -31,7 +33,7 @@ T LoopDetection<T,f,length_max>::IteratedComposition( const int& n )
 
 
 template <typename T, T f(const T&) , int length_max>
-T LoopDetection<T,f,length_max>::e( const int& i )
+T LoopDetectionBody<T,f,length_max>::e( const int& i )
 {
   
   assert( i < m_length );
@@ -39,16 +41,11 @@ T LoopDetection<T,f,length_max>::e( const int& i )
 
 }
 
-template <typename T, T f(const T&) , int length_max , T enum_T(const int&) , int enum_T_inv(const T&)>
-T LoopDetection<T,f,length_max,enum_T,enum_T_inv>::e( const int& i )
-{
-  
-  return enum_T( i );
-
-}
+template <int f(const T&) , int length_max> inline int LoopDetection<int,f,length_max>::e( const int& i ) { return i; }
+template <typename T, T f(const T&) , int length_max , T enum_T(const int&) , int enum_T_inv(const T&)> inline T LoopDetection<T,f,length_max,enum_T,enum_T_inv>::e( const int& i ) { return enum_T( i ); }
 
 template <typename T, T f(const T&) , int length_max>
-int LoopDetection<T,f,length_max>::e_inv( const T& t )
+int LoopDetectionBody<T,f,length_max>::e_inv( const T& t )
 {
 
   if( m_memory.count( t ) == 0 ){
@@ -62,15 +59,35 @@ int LoopDetection<T,f,length_max>::e_inv( const T& t )
 
 }
 
-template <typename T, T f(const T&) , int length_max , T enum_T(const int&) , int enum_T_inv(const T&)>
-int LoopDetection<T,f,length_max,enum_T,enum_T_inv>::e_inv( const T& t )
+template <int f(const T&) , int length_max> inline int LoopDetection<int,f,length_max>::e( const int& t ) { return t; }
+template <typename T, T f(const T&) , int length_max , T enum_T(const int&) , int enum_T_inv(const T&)> inline int LoopDetection<T,f,length_max,enum_T,enum_T_inv>::e_inv( const T& t ) { return enum_T_inv( t ); }
+
+template <int f(const int&) , int length_max>
+void LoopDetectionBody<f,length_max>::SetValue( const int& i ) {}
+
+template <int f(const int&) , int length_max>
+void LoopDetection<f,length_max>::SetValue( const int& i )
 {
 
-  return enum_T_inv( t );
+  int& m_value_inv_i = m_value_inv[i];
+
+  if( m_value_inv_i != -1 ){
+
+    m_loop_start = m_value_inv_i;
+
+  } else {
+  
+    m_value[m_length] = i;
+    m_value_inv_i = m_length++;
+
+  }
+
+  return;
 
 }
 
-template <typename T, T f(const T&) , int length_max> void LoopDetection<T,f,length_max>::SetValue( const int& i )
+template <typename T, T f(const T&) , int length_max , T enum_T(const int&) , int enum_T_inv(const T&)>
+void LoopDetection<T,f,length_max,enum_T,enum_T_inv>::SetValue( const int& i )
 {
 
   int& m_value_inv_i = m_value_inv[i];
