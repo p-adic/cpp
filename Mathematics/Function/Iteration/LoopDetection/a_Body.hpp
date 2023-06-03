@@ -10,8 +10,8 @@ template <typename T, T f(const T&) , int length_max , T enum_T(const int&) , in
 
 template <typename T, T f(const T&) , int length_max> inline void LoopDetectionBody<T,f,length_max>::SetInit( const T& init ) { assert( m_length == 0 ); m_value[0] = e_inv( t ); }
 
-template <typename T, T f(const T&) , int length_max>
-T LoopDetectionBody<T,f,length_max>::IteratedComposition( const int& n )
+template <typename T, T f(const T&) , int length_max> template <typename INT>
+T LoopDetectionBody<T,f,length_max>::IteratedComposition( const INT& n )
 {
 
   if( n < m_length ){

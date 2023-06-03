@@ -18,7 +18,7 @@ public:
   inline DoublingBody( const int& size );
 
   // n < 2のdigit乗 の場合のみサポート
-  T IteratedComposition( T t , int n );
+  template <typename INT> T IteratedComposition( T t , INT n );
 
 private:
   virtual T e( const int& i );

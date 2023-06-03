@@ -8,8 +8,8 @@ template <typename T, T f(const T&) , int size_max , int digit> inline Doubling<
 template <int f(const int&) , int size_max , int digit> inline Doubling<f,size_max,digit>::Doubling( const int& size ) : DoublingBody<int,f,size_max,digit>( size ) {}
 template <typename T, T f(const T&) , int size_max , T enum_T(const int&) , int enum_T_inv(const T&) , int digit> inline Doubling<T,f,size_max,enum_T,enum_T_inv,digit>::Doubling( const int& size ) : DoublingBody<T,f,size_max,digit>( size ) {}
 
-template <typename T, T f(const T&) , int size_max , int digit>
-T DoublingBody<T,f,size_max,digit>::IteratedComposition( T t , int n )
+template <typename T, T f(const T&) , int size_max , int digit> template <typename INT>
+T DoublingBody<T,f,size_max,digit>::IteratedComposition( T t , INT n )
 {
   
   int d_lim = 0;

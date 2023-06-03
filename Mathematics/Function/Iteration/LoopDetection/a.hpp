@@ -15,7 +15,7 @@ private:
 public:
   inline LoopDetection();
   inline void SetInit( const T& init );
-  T IteratedComposition( const int& n );
+  template <typename INT> T IteratedComposition( const INT& n );
 
 private:
   virtual T e( const int& i );
