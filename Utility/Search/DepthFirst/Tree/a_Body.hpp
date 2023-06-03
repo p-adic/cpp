@@ -24,12 +24,17 @@ int DepthFirstSearchOnTree<V_max,E,digit>::Ancestor( int i , int n )
     SetDoubling();
 
   }
+
+  if( n >> digit > 0 ){
+
+    return root();
+
+  }
     
   int d = 0;
   
   while( n != 0 ){
 
-    assert( d < digit );
     ( ( n & 1 ) == 1 ) ? i = m_doubling[d++][i] : i;
     n >>= 1;
 
