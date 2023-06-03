@@ -2,7 +2,7 @@
 
 #pragma once
 
-template <typename T, T f(const T&) , int size_max , int digit = 64>
+template <typename T, T f(const T&) , int size_max , int digit>
 class DoublingBody
 {
 
