@@ -50,6 +50,8 @@ private:
   void SetWeight();
 
   // 各ノードの高さ < 2^digitの時のみサポート。
+  // LCA()を呼ぶ前にAncestor()経由で完全にダブリングを設定するため、
+  // 遅延評価する../../../../Mathematics/Function/Iteration/Doubling/のダブリングで代用しない。
   void SetDoubling();
 
 };

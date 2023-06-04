@@ -25,7 +25,7 @@ int DepthFirstSearchOnTree<V_max,E,digit>::Ancestor( int i , int n )
 
   }
 
-  if( n >> digit > 0 ){
+  if( ( n >> digit ) != 0 ){
 
     return root();
 
