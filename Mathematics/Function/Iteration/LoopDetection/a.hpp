@@ -1,8 +1,9 @@
 // c:/Users/user/Documents/Programming/Mathematics/Function/Iteration/LoopDetection/a.hpp
 
 #pragma once
+#include "a_Macro.hpp"
 
-template <typename T, T f(const T&) , int length_max>
+template <typename T , typename U , U f(const T&) , int length_max>
 class LoopDetectionBody
 {
 
@@ -13,7 +14,7 @@ private:
   map<T,int> m_memory;
 
 public:
-  inline LoopDetection();
+  template <SFINAE_FOR_LOOP_DETECTION_BODY( = nullptr )> inline LoopDetection();
   inline void SetInit( const T& init );
   template <typename INT> T IteratedComposition( const INT& n );
 
@@ -24,9 +25,9 @@ private:
 
 };
 
-template <typename T, T f(const T&) , int length_max>
+template <typename T , typename U , U f(const T&) , int length_max>
 class LoopDetection :
-  public LoopDetectionBody<T,f,length_max>
+  public LoopDetectionBody<T,U,f,length_max>
 {
 
 public:
@@ -35,7 +36,8 @@ public:
 };
 
 template <int f(const int&) , int length_max>
-class LoopDetection
+class LoopDetection :
+  public LoopDetectionBody<int,int,f,length_max>
 {
 
 private:
@@ -51,9 +53,9 @@ private:
 
 };
 
-template <typename T, T f(const T&) , int length_max , T enum_T(const int&) , int enum_T_inv(const T&)>
+template <typename T , typename U , U f(const T&) , int length_max , T enum_T(const int&) , int enum_T_inv(const T&)>
 class LoopDetection :
-  public LoopDetectionBody<T,f,length_max>
+  public LoopDetectionBody<T,U,f,length_max>
 {
 
 private:

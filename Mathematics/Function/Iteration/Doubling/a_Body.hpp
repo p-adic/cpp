@@ -3,13 +3,13 @@
 #pragma once
 #include "a.hpp"
 
-template <typename T, T f(const T&) , int size_max , int digit> inline DoublingBody<T,f,size_max,digit>::DoublingBody( const int& size ) : m_size( size ) , m_doubling() , m_length() , m_memory() {}
-template <typename T, T f(const T&) , int size_max , int digit> inline Doubling<T,f,size_max,digit>::Doubling( const int& size ) : DoublingBody<T,f,size_max,digit>( size ) {}
-template <int f(const int&) , int size_max , int digit> inline Doubling<f,size_max,digit>::Doubling( const int& size ) : DoublingBody<int,f,size_max,digit>( size ) {}
-template <typename T, T f(const T&) , int size_max , T enum_T(const int&) , int enum_T_inv(const T&) , int digit> inline Doubling<T,f,size_max,enum_T,enum_T_inv,digit>::Doubling( const int& size ) : DoublingBody<T,f,size_max,digit>( size ) {}
+template <typename T, typename U , U f(const T&) , int size_max , int digit> template <SFINAE_FOR_DOUBLING_BODY()> inline DoublingBody<T,U,f,size_max,digit>::DoublingBody( const int& size ) : m_size( size ) , m_doubling() , m_length() , m_memory() {}
+template <typename T, typename U , U f(const T&) , int size_max , int digit> inline Doubling<T,U,f,size_max,digit>::Doubling( const int& size ) : DoublingBody<T,U,f,size_max,digit>( size ) {}
+template <int f(const int&) , int size_max , int digit> inline Doubling<f,size_max,digit>::Doubling( const int& size ) : DoublingBody<int,int,f,size_max,digit>( size ) {}
+template <typename T, typename U , U f(const T&) , int size_max , T enum_T(const int&) , int enum_T_inv(const T&) , int digit> inline Doubling<T,U,f,size_max,enum_T,enum_T_inv,digit>::Doubling( const int& size ) : DoublingBody<T,U,f,size_max,digit>( size ) {}
 
-template <typename T, T f(const T&) , int size_max , int digit> template <typename INT>
-T DoublingBody<T,f,size_max,digit>::IteratedComposition( T t , INT n )
+template <typename T, typename U , U f(const T&) , int size_max , int digit> template <typename INT>
+T DoublingBody<T,U,f,size_max,digit>::IteratedComposition( T t , INT n )
 {
   
   int d_lim = 0;
@@ -65,8 +65,8 @@ T DoublingBody<T,f,size_max,digit>::IteratedComposition( T t , INT n )
 
 }
 
-template <typename T, T f(const T&) , int size_max , int digit>
-T DoublingBody<T,f,size_max,digit>::e( const int& i )
+template <typename T, typename U , U f(const T&) , int size_max , int digit>
+T DoublingBody<T,U,f,size_max,digit>::e( const int& i )
 {
   
   assert( i < m_length );
@@ -75,10 +75,10 @@ T DoublingBody<T,f,size_max,digit>::e( const int& i )
 }
 
 template <int f(const int&) , int size_max , int digit> inline int Doubling<f,size_max,digit>::e( const int& i ) { return i; }
-template <typename T, T f(const T&) , int size_max , T enum_T(const int&) , int enum_T_inv(const T&) , int digit> inline T Doubling<T,f,size_max,enum_T,enum_T_inv,digit>::e( const int& i ) { return enum_T( i ); }
+template <typename T, typename U , U f(const T&) , int size_max , T enum_T(const int&) , int enum_T_inv(const T&) , int digit> inline T Doubling<T,U,f,size_max,enum_T,enum_T_inv,digit>::e( const int& i ) { return enum_T( i ); }
 
-template <typename T, T f(const T&) , int size_max , int digit>
-int DoublingBody<T,f,size_max,digit>::e_inv( const T& t )
+template <typename T, typename U , U f(const T&) , int size_max , int digit>
+int DoublingBody<T,U,f,size_max,digit>::e_inv( const T& t )
 {
 
   if( m_memory.count( t ) == 0 ){
@@ -94,4 +94,4 @@ int DoublingBody<T,f,size_max,digit>::e_inv( const T& t )
 }
 
 template <int f(const int&) , int size_max , int digit> inline int Doubling<f,size_max,digit>::e_inv( const int& t ) { return i; }
-template <typename T, T f(const T&) , int size_max , T enum_T(const int&) , int enum_T_inv(const T&) , int digit> inline int Doubling<T,f,size_max,enum_T,enum_T_inv,digit>::e_inv( const T& t ) { return enum_T_inv( t ); }
+template <typename T, typename U , U f(const T&) , int size_max , T enum_T(const int&) , int enum_T_inv(const T&) , int digit> inline int Doubling<T,U,f,size_max,enum_T,enum_T_inv,digit>::e_inv( const T& t ) { return enum_T_inv( t ); }
