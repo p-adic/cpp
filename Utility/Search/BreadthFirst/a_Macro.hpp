@@ -31,6 +31,8 @@
     int Next();								\
 									\
   };									\
+									\
+  template <int V_max,list<int> E(const int&)> void SetConnectedComponent( const int& V , int ( &vertex )[V_max] , int& count ); \
 
 #define DEFINITION_OF_FIRST_SEARCH( BREADTH , PUSH )			\
   template <int V_max,list<int> E(const int&)> inline BREADTH ## FirstSearch<V_max,E>::BREADTH ## FirstSearch( const int& V ) : m_V( V ) , m_init() , m_next() , m_found() , m_prev() { for( int i = 0 ; i < m_V ; i++ ){ m_prev[i] = -1; } } \
@@ -71,11 +73,47 @@
 									\
       }									\
 									\
-      edge.popfront();							\
+      edge.pop_front();							\
 									\
     }									\
 									\
     return i_curr;							\
+									\
+  }									\
+									\
+  template <int V_max,list<int> E(const int&)> void SetConnectedComponent( const int& V , int ( &vertex )[V_max] , int& count ); \
+  {									\
+									\
+    BREADTH ## FirstSearch<V_max,E>::bfs{ V };				\
+    count = 0;								\
+									\
+    for( int i = 0 ; i < V ; i++ ){					\
+									\
+      vertex[i] = -1;							\
+									\
+    }									\
+									\
+    for( int i = 0 ; i < V ; i++ ){					\
+									\
+      if( vertex[i] == -1 ){						\
+									\
+	bfs.Shift( i );							\
+	int j = dfs.Next();						\
+									\
+	while( j != -1 ? vertex[j] == 0 : false ){			\
+									\
+	  vertex[j] = count;						\
+	  j = dfs.Next();						\
+									\
+	}								\
+									\
+	count++;							\
+									\
+      }									\
+									\
+    }									\
+									\
+    return;								\
 									\
   }									\
 
