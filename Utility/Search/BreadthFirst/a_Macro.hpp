@@ -81,7 +81,7 @@
 									\
   }									\
 									\
-  template <int V_max,list<int> E(const int&)> void SetConnectedComponent( const int& V , int ( &vertex )[V_max] , int& count ); \
+  template <int V_max,list<int> E(const int&)> void BREADTH ## FirstConnectedComponentSearch( const int& V , int ( &vertex )[V_max] , int& count ) \
   {									\
 									\
     BREADTH ## FirstSearch<V_max,E>::bfs{ V };				\
@@ -98,12 +98,12 @@
       if( vertex[i] == -1 ){						\
 									\
 	bfs.Shift( i );							\
-	int j = dfs.Next();						\
+	int j = bfs.Next();						\
 									\
 	while( j != -1 ? vertex[j] == 0 : false ){			\
 									\
 	  vertex[j] = count;						\
-	  j = dfs.Next();						\
+	  j = bfs.Next();						\
 									\
 	}								\
 									\
