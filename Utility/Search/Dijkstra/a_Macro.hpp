@@ -2,24 +2,25 @@
 
 #pragma once
 
-#define DIJKSTRA_BODY( INITIALISE_PREV , SET_PREV )			\
-  set<PairForDijkstra<T> > vertex{};					\
+#define DIJKSTRA_BODY( TYPE , UNIT , UPDATE , INITIALISE_PREV , SET_PREV ) \
+  set<pair<TYPE,int> > vertex{};					\
+  TYPE weight[size_max];						\
 									\
   for( int i = 0 ; i < size ; i++ ){					\
 									\
-    vertex.insert( PairForDijkstra<T>( i == i_start ? e_T() : infty , i ) ); \
+    vertex.insert( pair<TYPE,int>( weight[i] = ( i == i_start ? UNIT : infty ) , i ) ); \
 									\
   }									\
 									\
-  T answer{};								\
+  TYPE answer{};							\
   INITIALISE_PREV;							\
 									\
   while( ! vertex.empty() ){						\
 									\
-    auto itr = vertex.begin();						\
-    const PairForDijkstra<T> v = *itr;					\
-    const T& t = v.Get();						\
-    const int& i = v.index();						\
+    auto itr_vertex = vertex.begin();					\
+    const pair<TYPE,int> v = *itr_vertex;				\
+    const TYPE& t = v.first;						\
+    const int& i = v.second;						\
 									\
     if( i == i_final ){							\
 									\
@@ -28,33 +29,35 @@
 									\
     }									\
 									\
-    itr = vertex.erase( itr );						\
+    vertex.erase( itr_vertex );						\
 									\
     if( t != infty ){							\
 									\
-      auto end = vertex.end();						\
-      const T ( &di )[size_max] = d[i];					\
-      list<PairForDijkstra<T> > changed_vertex{};			\
+      const map<int,TYPE>& di = d[i];					\
+      list<pair<TYPE,int> > changed_vertex{};				\
 									\
-      while( itr != end ){						\
+      for( auto itr_di = di.begin() , end_di = di.end() ; itr_di != end_di ; itr_di++ ){ \
 									\
-	const int& j = itr->index();					\
-	const T& dij = di[j];						\
+	const int& j = itr_di->first;					\
+	const TYPE& dij = itr_di->second;				\
 									\
 	if( dij != infty ){						\
 									\
-	  const T& weight_curr = itr->Get();				\
-	  const T weight_temp = m_T( t , dij );				\
+	  TYPE& weight_j = weight[j];					\
+	  pair<TYPE,int> w{ weight_j , j };				\
 									\
-	  if( weight_curr == infty ? true : weight_curr > weight_temp ){ \
+	  if( vertex.count( w ) == 1 ){					\
 									\
-	    SET_PREV;							\
-	    itr = vertex.erase( itr );					\
-	    changed_vertex.push_back( PairForDijkstra<T>( weight_temp , j ) ); \
+	    const TYPE temp = UPDATE;					\
 									\
-	  } else {							\
+	    if( weight_j == infty ? true : weight_j > temp ){		\
 									\
-	    itr++;							\
+	      SET_PREV;							\
+	      vertex.erase( w );					\
+	      changed_vertex.push_back( pair<TYPE,int>( temp , j ) );	\
+	      weight_j = temp;						\
+									\
+	    }								\
 									\
 	  }								\
 									\
@@ -62,11 +65,11 @@
 									\
       }									\
 									\
-    }									\
+      for( auto itr_changed = changed_vertex.begin() , end_changed = changed_vertex.end() ; itr_changed != end_changed ; itr_changed++ ){ \
 									\
-    for( auto itr_changed = changed_vertex.begin() , end_changed = changed_vertex.end() ; itr_changed != end_changed ; itr_changed++ ){ \
+	vertex.insert( *itr_changed );					\
 									\
-      vertex.insert( *itr_changed );					\
+      }									\
 									\
     }									\
 									\
