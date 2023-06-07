@@ -10,7 +10,7 @@ class DoublingBody
 private:
   int m_length;
   map<T,int> m_memory;
-  T m_memory_inv[size_max];
+  vector<T> m_memory_inv;
   
 protected:
   int m_size;

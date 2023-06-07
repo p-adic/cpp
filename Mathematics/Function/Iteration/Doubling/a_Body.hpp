@@ -134,7 +134,7 @@ int DoublingBody<T,U,f,size_max,digit>::e_inv( const T& t )
   if( m_memory.count( t ) == 0 ){
 
     assert( m_length < m_size );
-    m_memory_inv[m_length] = t;
+    m_memory_inv.push_back( t );
     return m_memory[t] = m_length++;
 
   }
