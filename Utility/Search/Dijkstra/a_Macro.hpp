@@ -2,74 +2,72 @@
 
 #pragma once
 
-#define DIJKSTRA_BODY( TYPE , UNIT , UPDATE , INITIALISE_PREV , SET_PREV ) \
-  set<pair<TYPE,int> > vertex{};					\
-  TYPE weight[size_max];						\
+#define DIJKSTRA_BODY( INITIALISE_PREV , SET_PREV )			\
+  static const U& unit = Unit();						\
+  assert( unit != m_found && unit < m_infty );			\
+  U weight[size_max];							\
 									\
-  for( int i = 0 ; i < size ; i++ ){					\
+  for( int i = 0 ; i < m_size ; i++ ){					\
 									\
-    vertex.insert( pair<TYPE,int>( weight[i] = ( i == i_start ? UNIT : infty ) , i ) ); \
+    weight[i] = m_infty;							\
 									\
   }									\
 									\
-  TYPE answer{};							\
+  set<pair<U,int> > vertex{};						\
+  const int i_start = e_inv( t_start );					\
+  const int i_final = e_inv( t_final );					\
+  vertex.insert( pair<U,int>( weight[i_start] = unit , i_start ) );	\
   INITIALISE_PREV;							\
 									\
   while( ! vertex.empty() ){						\
 									\
     auto itr_vertex = vertex.begin();					\
-    const pair<TYPE,int> v = *itr_vertex;				\
-    const TYPE& t = v.first;						\
+    const pair<U,int> v = *itr_vertex;					\
     const int& i = v.second;						\
 									\
     if( i == i_final ){							\
 									\
-      answer = t;							\
       break;								\
 									\
     }									\
 									\
+    const U& u = v.first;						\
+    weight[i] = m_found;						\
     vertex.erase( itr_vertex );						\
+    const list<pair<T,U> > edge_i = E( e( i ) );			\
+    list<pair<U,int> > changed_vertex{};				\
 									\
-    if( t != infty ){							\
+    for( auto itr_edge_i = edge_i.begin() , end_edge_i = edge_i.end() ; itr_edge_i != end_edge_i ; itr_edge_i++ ){ \
 									\
-      const map<int,TYPE>& di = d[i];					\
-      list<pair<TYPE,int> > changed_vertex{};				\
+      const int& j = e_inv( itr_edge_i->first );					\
+      U& weight_j = weight[j];						\
 									\
-      for( auto itr_di = di.begin() , end_di = di.end() ; itr_di != end_di ; itr_di++ ){ \
+      if( weight_j != m_found ){					\
 									\
-	const int& j = itr_di->first;					\
-	const TYPE& dij = itr_di->second;				\
+	const U& edge_ij = itr_edge_i->second;				\
+	const U temp = Add( u , edge_ij );				\
+	assert( edge_ij != m_found && temp != m_found && !( temp < edge_ij ) && temp < m_infty ); \
 									\
-	if( dij != infty ){						\
+	if( weight_j > temp ){						\
 									\
-	  TYPE& weight_j = weight[j];					\
-	  pair<TYPE,int> w{ weight_j , j };				\
+	  if( weight_j != m_infty ){					\
 									\
-	  if( vertex.count( w ) == 1 ){					\
-									\
-	    const TYPE temp = UPDATE;					\
-									\
-	    if( weight_j == infty ? true : weight_j > temp ){		\
-									\
-	      SET_PREV;							\
-	      vertex.erase( w );					\
-	      changed_vertex.push_back( pair<TYPE,int>( temp , j ) );	\
-	      weight_j = temp;						\
-									\
-	    }								\
+	    vertex.erase( pair<U,int>( weight_j , j ) );		\
 									\
 	  }								\
+									\
+	  SET_PREV;							\
+	  changed_vertex.push_back( pair<U,int>( weight_j = temp , j ) ); \
 									\
 	}								\
 									\
       }									\
 									\
-      for( auto itr_changed = changed_vertex.begin() , end_changed = changed_vertex.end() ; itr_changed != end_changed ; itr_changed++ ){ \
+    }									\
 									\
-	vertex.insert( *itr_changed );					\
+    for( auto itr_changed = changed_vertex.begin() , end_changed = changed_vertex.end() ; itr_changed != end_changed ; itr_changed++ ){ \
 									\
-      }									\
+      vertex.insert( *itr_changed );					\
 									\
     }									\
 									\
