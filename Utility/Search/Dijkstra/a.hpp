@@ -23,7 +23,7 @@ public:
   
 private:
   virtual const U& Unit() const = 0;
-  virtual U Add( const U& , const U& ) const = 0;
+  virtual U Addition( const U& , const U& ) const = 0;
   virtual T e( const int& i );
   virtual int e_inv( const T& t );
   virtual void Reset();
@@ -44,7 +44,7 @@ public:
   
 private:
   inline const ll& Unit() const;
-  inline ll Add( const ll& , const ll& ) const;
+  inline ll Addition( const ll& , const ll& ) const;
   inline int e( const int& i );
   inline int e_inv( const int& t );
   inline void Reset();
@@ -67,7 +67,7 @@ public:
   
 private:
   inline const U& Unit() const;
-  inline U Add( const U& , const U& ) const;
+  inline U Addition( const U& , const U& ) const;
 
 };
 
@@ -88,7 +88,7 @@ public:
   
 private:
   inline const U& Unit() const;
-  inline U Add( const U& , const U& ) const;
+  inline U Addition( const U& , const U& ) const;
   inline T e( const int& i );
   inline int e_inv( const T& t );
   inline void Reset();

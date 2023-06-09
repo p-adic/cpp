@@ -45,7 +45,7 @@
       if( weight_j != m_found ){					\
 									\
 	const U& edge_ij = itr_edge_i->second;				\
-	const U temp = Add( u , edge_ij );				\
+	const U temp = Addition( u , edge_ij );				\
 	assert( edge_ij != m_found && temp != m_found && !( temp < edge_ij ) && temp < m_infty ); \
 									\
 	if( weight_j > temp ){						\
