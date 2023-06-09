@@ -3,6 +3,8 @@
 #pragma once
 #include "a.hpp"
 
+#include "Constexpr/a_Body.hpp"
+
 template <typename INT>
 const INT& GetPrime( const INT& i ) noexcept
 {
@@ -156,6 +158,54 @@ void SetPrimeFactorisation( const INT& n , vector<INT>& P , vector<INT>& exponen
   
 }
 
+template <typename INT , INT val_limit , int length_max>
+void SetPrimeFactorisation( const PrimeEnumeration<INT,val_limit,length_max>& prime , const INT& n , vector<INT>& P , vector<INT>& exponent )
+{
+
+  INT n_copy = n;
+  int i = 0;
+
+  while( i < prime.m_length ){
+
+    const INT& p = prime.m_val[i];
+
+    if( p * p > n_copy ){
+
+      break;
+      
+    }
+    
+    if( n_copy % p == 0 ){
+
+      P.push_back( p );
+      exponent.push_back( 1 );
+      INT& exponent_back = exponent.back();
+      n_copy /= p;
+    
+      while( n_copy % p == 0 ){
+
+	exponent_back++;
+	n_copy /= p;
+      
+      }
+
+    }
+    
+    i++;
+
+  }
+
+  if( n_copy != 1 ){
+
+    P.push_back( n_copy );
+    exponent.push_back( 1 );
+    
+  }
+  
+  return;
+
+}
+
 template <typename INT>
 void SetPrimeFactorisation( const INT& n , vector<INT>& P , vector<INT>& exponent , vector<INT>& P_power )
 {
@@ -185,6 +235,57 @@ void SetPrimeFactorisation( const INT& n , vector<INT>& P , vector<INT>& exponen
   p++;
 
   while( p * p <= n_copy ){
+
+    if( n_copy % p == 0 ){
+
+      P.push_back( p );
+      exponent.push_back( 1 );
+      P_power.push_back( p );
+      INT& exponent_back = exponent.back();
+      INT& P_power_back = P_power.back();
+      n_copy /= p;
+    
+      while( n_copy % p == 0 ){
+
+	exponent_back++;
+	P_power_back *= p;
+	n_copy /= p;
+      
+      }
+
+    }
+
+    p += 2;
+
+  }
+
+  if( n_copy != 1 ){
+
+    P.push_back( n_copy );
+    exponent.push_back( 1 );
+    
+  }
+  
+  return;
+
+}
+
+template <typename INT , INT val_limit , int length_max>
+void SetPrimeFactorisation( const PrimeEnumeration<INT,val_limit,length_max>& prime  const INT& n , vector<INT>& P , vector<INT>& exponent , vector<INT>& P_power )
+{
+
+  INT n_copy = n;
+  int i = 0;
+
+  while( i < prime.m_length ){
+
+    const INT& p = prime.m_val[i];
+
+    if( p * p > n_copy ){
+
+      break;
+      
+    }
 
     if( n_copy % p == 0 ){
 
