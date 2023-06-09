@@ -4,13 +4,14 @@
 #include "../a_Body.hpp"
 #include "../Constexpr/a_Body.hpp"
 
-template <typename INT> list<int> EnumerateDivisor( const INT& n ) noexcept
+template <typename INT>
+list<int> EnumerateDivisor( const INT& n ) noexcept
 {
 
-  vector<INT> prime{};
+  vector<INT> P{};
   vector<INT> exponent{};
-  SetPrimeFactorisation( i , prime , exponent );
-  const int length = prime.size();
+  SetPrimeFactorisation( i , P , exponent );
+  const int length = P.size();
   
   list<INT> divisor{};
   divisor.push_back( 1 );
@@ -18,14 +19,14 @@ template <typename INT> list<int> EnumerateDivisor( const INT& n ) noexcept
   
   for( int i = 0 ; i < length ; length++ ){
 
-    const INT& pi = prime[i];
-    const int& ei = exponent[i];
+    const INT& P_i = P[i];
+    const int& exponent_i = exponent[i];
     list<int> temp{};
     INT power = 1;
     
-    for( int e = 1 ; e <= ei ; e++ ){
+    for( int e = 1 ; e <= exponent_i ; e++ ){
 
-      power *= pi;
+      power *= P_i;
 
       for( auto itr = begin ; itr != end ; itr++ ){
 
@@ -48,58 +49,29 @@ template <typename INT> list<int> EnumerateDivisor( const INT& n ) noexcept
   
 }
 
-template <typename INT , INT val_limit , int length_max> list<int> EnumerateDivisor( const PrimeEnumeration<INT,val_limit,length_max>& prime , INT n ) noexcept
+template <typename INT , INT val_limit , int length_max>
+list<int> EnumerateDivisor( const PrimeEnumeration<INT,val_limit,length_max>& prime , INT n ) noexcept
 {
 
-  list<pair<INT,int> > factor{};
-
-  for( int i = 0 ; i < prime.m_length ; i++ ){
-
-    const INT& pi = prime.m_val[i];
-    int ei = 0;
-
-    while( n % pi == 0 ){
-
-      n /= pi;
-      ei++;
-
-    }
-
-    if( ei > 0 ){
-
-      factor.push_back( pair<INT,int>( pi , ei ) );
-
-    }
-    
-    if( n == 1 ){
-
-      break;
-
-    }
-
-  }
-
-  if( n > 1 ){
-
-    factor.push_back( pair<INT,int>( n , 1 ) );
-
-  }
+  vector<INT> P{};
+  vector<INT> exponent{};
+  SetPrimeFactorisation( prime , i , P , exponent );
+  const int length = P.size();
   
   list<INT> divisor{};
   divisor.push_back( 1 );
   auto begin = divisor.begin() , end = divisor.end();
   
-  while( ! factor.empty() ){
+  for( int i = 0 ; i < length ; length++ ){
 
-    pair<INT,int>& factor_curr = factor.front();
-    INT& pi = factor_curr.first;
-    int& ei = factor_curr.second;
+    const INT& P_i = P[i];
+    const int& exponent_i = exponent[i];
     list<int> temp{};
     INT power = 1;
     
-    for( int e = 1 ; e <= ei ; e++ ){
+    for( int e = 1 ; e <= exponent_i ; e++ ){
 
-      power *= pi;
+      power *= P_i;
 
       for( auto itr = begin ; itr != end ; itr++ ){
 
@@ -115,8 +87,6 @@ template <typename INT , INT val_limit , int length_max> list<int> EnumerateDivi
       temp.pop_front();
 
     }
-
-    factor.pop_front();
     
   }
 
