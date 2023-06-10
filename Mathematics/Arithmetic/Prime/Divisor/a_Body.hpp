@@ -10,7 +10,7 @@ list<int> EnumerateDivisor( const INT& n ) noexcept
 
   vector<INT> P{};
   vector<INT> exponent{};
-  SetPrimeFactorisation( i , P , exponent );
+  SetPrimeFactorisation( n , P , exponent );
   const int length = P.size();
   
   list<INT> divisor{};
@@ -55,7 +55,7 @@ list<int> EnumerateDivisor( const PrimeEnumeration<INT,val_limit,length_max>& pr
 
   vector<INT> P{};
   vector<INT> exponent{};
-  SetPrimeFactorisation( prime , i , P , exponent );
+  SetPrimeFactorisation( prime , n , P , exponent );
   const int length = P.size();
   
   list<INT> divisor{};
