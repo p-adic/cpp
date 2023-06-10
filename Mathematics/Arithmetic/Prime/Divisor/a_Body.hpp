@@ -93,3 +93,58 @@ list<int> EnumerateDivisor( const PrimeEnumeration<INT,val_limit,length_max>& pr
   return divisor;
 
 }
+
+template <typename INT> int MoeviusFunction( const INT& n ) noexcept
+{
+
+  vector<INT> P{};
+  vector<INT> exponent{};
+  SetPrimeFactorisation( n , P , exponent );
+  const int length = P.size();
+
+  for( int i = 0 ; i < length ; i++ ){
+
+    if( exponent[i] > 1 ){
+
+      return 0;
+
+    }
+
+  }
+
+  return length % 2 == 0 ? 1 : -1;
+
+}
+
+template <typename INT , INT val_limit , int length_max>
+int MoeviusFunction( const PrimeEnumeration<INT,val_limit,length_max>& prime , INT n ) noexcept
+{
+
+  int answer = 1;
+  int i = 0;
+
+  while( i < prime.m_length && n > 1 ){
+
+    const int& p = prime.m_val[i];
+
+    if( n % p == 0 ){
+
+      n /= p;
+
+      if( n % p == 0 ){
+
+	return 0;
+
+      }
+
+      answer *= -1;
+
+    }
+
+    i++;
+
+  }
+
+  return n == 1 ? answer : answer *= -1;
+
+}
