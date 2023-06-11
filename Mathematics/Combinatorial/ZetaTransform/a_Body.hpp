@@ -185,7 +185,7 @@ template <typename T , typename U , int size_max> inline const U& ZetaTransformB
 template <typename T , typename U , int size_max> template <typename S , T f_inv_max(const S&) , list<S> r(const S&)> inline U ZetaTransformBody<T,U,size_max>::InverseImageSum( const S& s ) { DEFINITION_OF_INVERSE_IMAGE_SUM_FOR_ZETA_TRANSFORM( Moevius ); }
 template <typename T , typename U , int size_max> template <typename S , T f_inv_max(const S&) , list<S> r(const S&) , int mu(const T&,const T&)> inline U ZetaTransformBody<T,U,size_max>::InverseImageSum( const S& s ) { DEFINITION_OF_INVERSE_IMAGE_SUM_FOR_ZETA_TRANSFORM( mu ); }
 
-template <typename T , typename U , int size_max> template <typename S , T f_inv_max(const S&)> inline const U& ZetaTransformBody<T,U,size_max>::IntervalInverseImageSum( const S& s ) { return m_val[e_inv( f_inv_max( s ) )]; }
+template <typename T , typename U , int size_max> template <typename S , T f_inv_max(const S&)> inline const U& ZetaTransformBody<T,U,size_max>::InitialSegmentInverseImageSum( const S& s ) { return m_val[e_inv( f_inv_max( s ) )]; }
 
 
 template <typename U , U a_U(const U&,const U&) , const U& z_U() , U m_U(const U&,const U&) , int size_max> inline void FastZetaTransform<U,a_U,z_U,m_U,size_max>::FastMoeviusTransform( U ( &a )[size_max] )

@@ -45,7 +45,7 @@ public:
   template <typename S , T f_inv_max(const S&) , list<S> r(const S&)> inline U InverseImageSum( const S& s );
   template <typename S , T f_inv_max(const S&) , list<S> r(const S&) , int mu(const T&,const T&)> inline U InverseImageSum( const S& s );
   // f( t ) <= sを満たすRの要素t全体を渡る総和取得。（結果的にrは使わないが要件上はrの存在が必要） 
-  template <typename S , T f_inv_max(const S&)> inline const U& IntervalInverseImageSum( const S& s );
+  template <typename S , T f_inv_max(const S&)> inline const U& InitialSegmentxInverseImageSum( const S& s );
 
   virtual T e( const int& i );
   virtual int e_inv( const T& t );
@@ -114,10 +114,10 @@ private:
 // (int,<)がjoin半束である場合の畳み込み乗法O(size)
 
 // 一点取得O(始切片(-∞,t]のサイズ×メビウス関数の計算量)
-// 区間和取得O(1)
+// 始切片和取得O(1)
 
 // 逆像和取得O(始切片(-∞,f_inv_max(r_max)]のサイズ×メビウス関数の計算量)
-// 区間逆像和取得O(1)
+// 始切片逆像和取得O(1)
 template <list<int> E(const int&) , list<int> E_inv(const int&) , int size_max>
 class ZetaTransform :
   public PartiallyOrderedSetForZetaTransform<int,E,E_inv,ll,size_max> ,
@@ -151,9 +151,9 @@ private:
 
 // 一点取得O(2^digit)（単位的環性を使う。愚直と同じオーダー）
 // 多点取得O(digit 2^digit)（単位的環性を使う）
-// 区間和取得O(1)（可換加法モノイド性を使う）
+// 始切片和取得O(1)（可換加法モノイド性を使う）
 // 逆像和取得O(始切片(-∞,f_inv_max(r_max)]のサイズ)（単位的環性を使う）
-// 区間逆像和取得O(1)（可換加法モノイド性を使う）
+// 始切片逆像和取得O(1)（可換加法モノイド性を使う）
 template <typename U , U a_U(const U&,const U&) , const U& z_U() , U m_U(const U&,const U&) , int size_max>
 class FastZetaTransform :
   public SemiRingForZetaTransform<int,U,a_U,z_U,m_U,size_max> ,
@@ -193,10 +193,10 @@ private:
 // (T,<)がjoin半束である場合の畳み込み乗法O(size)（半環性を使う）
 
 // 一点取得O(始切片(-∞,t]のサイズ×メビウス関数の計算量×log_2(size))（単位的環性を使う）
-// 区間和取得O(log_2(size))（可換加法モノイド性を使う）
+// 始切片和取得O(log_2(size))（可換加法モノイド性を使う）
 
 // 逆像和取得O(始切片(-∞,f_inv_max(r_max)]のサイズ×メビウス関数の計算量×log_2(size))（単位的環性を使う）
-// 区間逆像和取得O(log_2(size))（可換加法モノイド性を使う）
+// 始切片逆像和取得O(log_2(size))（可換加法モノイド性を使う）
 template <typename T , list<T> E(const T&) , list<T> E_inv(const T&) , typename U , U a_U(const U&,const U&) , const U& z_U() , U m_U(const U&,const U&) , int size_max>
 class MemorisationZetaTransform :
   public SemiRingForZetaTransform<T,U,a_U,z_U,m_U,size_max> ,
@@ -223,10 +223,10 @@ public:
 // (T,<)がjoin半束である場合の畳み込み乗法O(size)（半環性を使う）
 
 // 一点取得O(始切片(-∞,t]のサイズ×メビウス関数の計算量)（単位的環性を使う）
-// 区間和取得O(1)（可換加法モノイド性を使う）
+// 始切片和取得O(1)（可換加法モノイド性を使う）
 
 // 逆像和取得O(始切片(-∞,f_inv_max(r_max)]のサイズ×メビウス関数の計算量)（単位的環性を使う）
-// 区間逆像和取得O(1)（可換加法モノイド性を使う）
+// 始切片逆像和取得O(1)（可換加法モノイド性を使う）
 template <typename T , list<T> E(const T&) , list<T> E_inv(const T&) , typename U , U a_U(const U&,const U&) , const U& z_U() , U m_U(const U&,const U&) , int size_max , T enum_T(const int&) , int enum_T_inv(const T&)>
 class EnumerationZetaTransform :
   public SemiRingForZetaTransform<T,U,a_U,z_U,m_U,size_max> ,
