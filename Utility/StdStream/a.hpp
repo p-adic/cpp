@@ -11,7 +11,12 @@ class StdStream
 private:
   using CharT = char;
   using Traits = char_traits<CharT>;
-  static constexpr int g_length_lim = 1000000;
+  // èŒ³‚ÌŠÂ‹«‚¾‚Æg_length_lim = 1000000‚Å‚ÍTerminal‚ª‹­§I—¹‚·‚éB
+  #ifdef DEBUG
+    static constexpr int g_length_lim = 100000;
+  #else
+    static constexpr int g_length_lim = 1000000;
+  #endif
   static constexpr int g_length_max = g_length_lim - 1;
   static constexpr CharT g_space = ' ';
   static constexpr CharT g_new_line = '\n';
