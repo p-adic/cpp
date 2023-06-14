@@ -3,6 +3,7 @@
 #pragma once
 #include "a.hpp"
 
+// BinarySearchÇ…égÇ§ÅB
 #include "../../SegmentTree/Power/a_Body.hpp"
 
 DEFINITION_OF_INTERVAL_MAX_BIT( Max , < , max );

@@ -3,6 +3,7 @@
 #pragma once
 #include "a.hpp"
 
+// BinarySearchÇ…égÇ§ÅB
 #include "../../SegmentTree/Power/a_Body.hpp"
 
 template <TEMPLATE_ARGUMENTS_FOR_BIT> inline const T& AbstractBIT<T,m_T,e_T,i_T,N>::g_e = e_T();
@@ -30,6 +31,7 @@ AbstractBIT<T,m_T,e_T,i_T,N>::AbstractBIT( const T ( & a )[N] ) : m_fenwick()
 
 }
 
+template <TEMPLATE_ARGUMENTS_FOR_BIT> inline T AbstractBIT<T,m_T,e_T,i_T,N>::Get( const int& i ) const { return IntervalSum( i , i ); }
 template <TEMPLATE_ARGUMENTS_FOR_BIT> inline void AbstractBIT<T,m_T,e_T,i_T,N>::Set( const int& i , const T& n ) { Add( i , m_T( i_T( IntervalSum( i , i ) ) , n ) ); }
 
 template <TEMPLATE_ARGUMENTS_FOR_BIT> inline AbstractBIT<T,m_T,e_T,i_T,N>& AbstractBIT<T,m_T,e_T,i_T,N>::operator+=( const T ( & a )[N] ) { for( int i = 0 ; i < N ; i++ ){ Add( i , a[i] ); } return *this; }
@@ -73,7 +75,8 @@ T AbstractBIT<T,m_T,e_T,i_T,N>::InitialSegmentSum( const int& i_final ) const
 template <TEMPLATE_ARGUMENTS_FOR_BIT> inline T AbstractBIT<T,m_T,e_T,i_T,N>::IntervalSum( const int& i_start , const int& i_final ) const { return m_T( i_T( InitialSegmentSum( i_start - 1 ) ) , InitialSegmentSum( i_final ) ); }
 
 
-template <TEMPLATE_ARGUMENTS_FOR_BIT> inline int AbstractBIT<T,m_T,e_T,i_T,N>::BinarySearch( const T& t ) const
+template <TEMPLATE_ARGUMENTS_FOR_BIT>
+int AbstractBIT<T,m_T,e_T,i_T,N>::BinarySearch( const T& n ) const
 {
 
   int j = 0;
@@ -89,7 +92,7 @@ template <TEMPLATE_ARGUMENTS_FOR_BIT> inline int AbstractBIT<T,m_T,e_T,i_T,N>::B
       
       sum_next = m_T( sum_next , m_fenwick[j_next] );
 
-      if( sum_next < t ){
+      if( sum_next < n ){
 	
 	sum = sum_next;
 	j = j_next;
@@ -112,3 +115,5 @@ template <TEMPLATE_ARGUMENTS_FOR_BIT> inline int AbstractBIT<T,m_T,e_T,i_T,N>::B
   return j;
 
 }
+
+template <TEMPLATE_ARGUMENTS_FOR_BIT> inline int AbstractBIT<T,m_T,e_T,i_T,N>::BinarySearch( const int& i_start , const T& n ) const { return max( i_start , m_T( BinarySearch( InitialSegmentSum( i_start ) , n ) ) ); }

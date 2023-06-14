@@ -3,6 +3,7 @@
 #pragma once
 #include "a.hpp"
 
+// BinarySearchÇ…égÇ§ÅB
 #include "../../../SegmentTree/Power/a_Body.hpp"
 
 template <TEMPLATE_ARGUMENTS_FOR_MONOID_BIT> inline const T& MonoidBIT<T,m_T,e_T,N>::g_e = e_T();

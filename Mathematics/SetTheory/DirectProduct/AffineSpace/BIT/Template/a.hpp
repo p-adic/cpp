@@ -20,6 +20,8 @@ public:
   inline AbstractBIT();
   AbstractBIT( const T ( & a )[N] );
 
+  // const参照でないことに注意。
+  inline T Get( const int& i ) const;
   inline void Set( const int& i , const T& n );
 
   inline AbstractBIT<T,m_T,e_T,i_T,N>& operator+=( const T ( & a )[N] );
@@ -30,7 +32,9 @@ public:
 
   // 順序群構造operator<( const T& , const T& )が定義されている時のみサポート。
   // g_eより小さくない要素のみを成分に持つ場合のみサポート。
-  // InitialSegmentSum( i )がt以上となるiが存在する場合にその最小値を2進法で探索。
-  int BinarySearch( const T& t ) const;
+  // InitialSegmentSum( i )がn以上となるiが存在する場合にその最小値を2進法で探索。
+  int BinarySearch( const T& n ) const;
+  // IntervalSum( i_start , i )がt以上となるi_start以上のiが存在する場合にその最小値を2進法で探索。
+  inline int BinarySearch( const int& i_start , const T& n ) const;
   
 };

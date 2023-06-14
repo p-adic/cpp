@@ -1,7 +1,7 @@
 // c:/Users/user/Documents/Programming/Mathematics/SetTheory/DirectProduct/AffineSpace/BIT/IntervalAdd/Template/a.hpp
 
 #pragma once
-#include "../Template/a.hpp"
+#include "../../Template/a_Macro.hpp"
 
 // 演算がoperator+=でない場合に使用
 // 可換群(T,m_T:T^2->T,e_T:1->T,i_T:T->T)と非負整数Nをパラメータとする。
@@ -18,6 +18,8 @@ public:
   inline AbstractIntervalAddBIT();
   inline AbstractIntervalAddBIT( const T ( & a )[N] );
 
+  // const参照でないことに注意。
+  inline T Get( const int& i ) const;
   inline void Set( const int& i , const T& n );
 
   inline AbstractIntervalAddBIT<T,m_T,e_T,i_T,N>& operator+=( const T ( & a )[N] );

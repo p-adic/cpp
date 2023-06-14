@@ -40,7 +40,7 @@
     void Set ## MAX( const int& i , const T& n );			\
     void IntervalSet ## MAX( const int& i_start , const int& i_final , const T& n ); \
 									\
-    int BinarySearch( const T& t ) const;				\
+    int BinarySearch( const T& n ) const;				\
 									\
   };									\
 
@@ -320,7 +320,7 @@
   }									\
 									\
   template <typename T , int N>						\
-  void Interval ## MAX ## BIT<T,N> int BIT<T>::BinarySearch( const T& t ) const	\
+  void Interval ## MAX ## BIT<T,N> int BIT<T>::BinarySearch( const T& n ) const	\
   {									\
 									\
     int j = 0;								\
@@ -337,7 +337,7 @@
 	const T& fenwick_j_next = m_fenwick[j_next];			\
 	temp_next INEQUALITY fenwick_j_next ? temp_next = fenwick_j_next : temp; \
 									\
-	if( temp_next INEQUALITY t ){					\
+	if( temp_next INEQUALITY n ){					\
 									\
 	  temp = temp_next;						\
 	  j = j_next;							\

@@ -3,6 +3,7 @@
 #pragma once
 #include "a.hpp"
 
+// BinarySearch‚Ég‚¤B
 #include "../../../SegmentTree/Power/a_Body.hpp"
 
 template <TEMPLATE_ARGUMENTS_FOR_IDEMPOTENT_MONOID_BIT> inline const T& AbstractBIT<T,m_T,e_T,N>::g_e = e_T();
