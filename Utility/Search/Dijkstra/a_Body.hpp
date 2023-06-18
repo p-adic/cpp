@@ -38,13 +38,13 @@ U DijkstraBody<T,U,E,size_max>::Solve( const T& t_start , const T& t_final , lis
 
 }
 
-template <list<pair<int,ll> > E(const int&) , int size_max> inline ll Dijkstra<E,size_max>::Unit() const { static const ll unit = 0; return unit; }
-template <typename T , typename U , U m_U(const U&,const U&) , const U& e_U() , list<pair<T,U> > E(const T&) , int size_max> inline U MemorisationDijkstra<T,U,m_U,e_U,E,size_max>::Unit() const { return e_U(); }
-template <typename T , typename U , U m_U(const U&,const U&) , const U& e_U() , list<pair<T,U> > E(const T&) , int size_max , T enum_T(const int&) , int enum_T_inv(const T&)> inline U EnumerationDijkstra<T,U,m_U,e_U,E,size_max,enum_T,enum_T_inv>::Unit() const { return e_U(); }
+template <list<pair<int,ll> > E(const int&) , int size_max> inline const ll& Dijkstra<E,size_max>::Unit() const { static const ll unit = 0; return unit; }
+template <typename T , typename U , U m_U(const U&,const U&) , const U& e_U() , list<pair<T,U> > E(const T&) , int size_max> inline const U& MemorisationDijkstra<T,U,m_U,e_U,E,size_max>::Unit() const { return e_U(); }
+template <typename T , typename U , U m_U(const U&,const U&) , const U& e_U() , list<pair<T,U> > E(const T&) , int size_max , T enum_T(const int&) , int enum_T_inv(const T&)> inline const U& EnumerationDijkstra<T,U,m_U,e_U,E,size_max,enum_T,enum_T_inv>::Unit() const { return e_U(); }
 
-template <list<pair<int,ll> > E(const int&) , int size_max> inline const ll& Dijkstra<E,size_max>::Addition( const ll& u0 , const ll& u1 ) const { return u0 + u1; }
-template <typename T , typename U , U m_U(const U&,const U&) , const U& e_U() , list<pair<T,U> > E(const T&) , int size_max> inline const U& MemorisationDijkstra<T,U,m_U,e_U,E,size_max>::Addition( const U& u0 , const U& u1 ) const { return m_U( u0 , u1 ); }
-template <typename T , typename U , U m_U(const U&,const U&) , const U& e_U() , list<pair<T,U> > E(const T&) , int size_max , T enum_T(const int&) , int enum_T_inv(const T&)> inline const U& EnumerationDijkstra<T,U,m_U,e_U,E,size_max,enum_T,enum_T_inv>::Addition( const U& u0 , const U& u1 ) const { return m_U( u0 , u1 ); }
+template <list<pair<int,ll> > E(const int&) , int size_max> inline ll Dijkstra<E,size_max>::Addition( const ll& u0 , const ll& u1 ) const { return u0 + u1; }
+template <typename T , typename U , U m_U(const U&,const U&) , const U& e_U() , list<pair<T,U> > E(const T&) , int size_max> inline U MemorisationDijkstra<T,U,m_U,e_U,E,size_max>::Addition( const U& u0 , const U& u1 ) const { return m_U( u0 , u1 ); }
+template <typename T , typename U , U m_U(const U&,const U&) , const U& e_U() , list<pair<T,U> > E(const T&) , int size_max , T enum_T(const int&) , int enum_T_inv(const T&)> inline U EnumerationDijkstra<T,U,m_U,e_U,E,size_max,enum_T,enum_T_inv>::Addition( const U& u0 , const U& u1 ) const { return m_U( u0 , u1 ); }
 
 template <typename T , typename U , list<pair<T,U> > E(const T&) , int size_max>
 T DijkstraBody<T,U,E,size_max>::e( const int& i )
