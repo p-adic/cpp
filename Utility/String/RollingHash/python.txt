@@ -1,0 +1,24 @@
+O=ord
+r=99
+Q=10**9+7
+
+// 冪乗テーブルO(size log size)
+p=[pow(r,n,Q)for n in R(11**5)]
+p[-1]=pow(r,-1,Q)
+// 冪乗テーブルO(size)
+p=[1]
+for n in R(11**5):p+=[p[-1]*r%Q]
+p[-1]=pow(r,-1,Q)
+
+// ローリングハッシュ
+L=len(S)
+s=sum(O(S[i])*p[i]for i in R(L))%Q
+
+// sと等しい連続文字列の個数
+def C(t):
+	a=u=0
+	for i in R(len(t)):
+		if i<L:u=(u+O(t[i])*p[i])%Q
+		else:u=((u-O(t[i-L]))*p[-1]+O(t[i])*p[L-1])%Q
+		a+=u==t
+	return a
