@@ -2,6 +2,9 @@
 
 #pragma once
 
+// （多次元）数列に対するimos法
+// https://imoz.jp/algorithms/imos_method.html
+// を森上のモノイド値関数と羃等演算つき集合からの準同型の組に一般化したデータ構造。
 template <typename V , typename T , typename U , int size_max>
 class DifferenceSequenceBody
 {
