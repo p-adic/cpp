@@ -5,13 +5,13 @@
 
 // 演算がoperator+=でない場合に使用
 
-// 可換モノイド(T,m_T:T^2->T,e_T:1->T)と非負整数Nをパラメータとする。
+// 可換群(T,m_T:T^2->T,e_T:1->T,i_T:T->T)と非負整数Nをパラメータとする。
 // 単位元による初期化O(N)
 
 // 一点取得O(1)
 // m_Tに関する区間和取得O(N^{1/2})
 
-// 一点更新O(1)（可換性とi_Tを使う）
+// 一点更新O(1)（可換性と逆元を使う）
 // m_Tによる一点更新O(1)（可換性を使う）
 template <TEMPLATE_ARGUMENTS_FOR_ABSTRACT_SQRT_DECOMPOSITION = SqrtCalculation<N>{}.m_val >
 class AbstractSqrtDecomposition

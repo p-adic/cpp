@@ -47,4 +47,5 @@ template <TEMPLATE_ARGUMENTS_FOR_ABSTRACT_SQRT_DECOMPOSITION> inline constexpr T
 }
 
 template <TEMPLATE_ARGUMENTS_FOR_ABSTRACT_SQRT_DECOMPOSITION> inline constexpr void AbstractSqrtDecomposition<T,m_T,e_T,i_T,N,N_sqrt>::Set( const int& i , const T& t ) { T& m_ai = m_a[i]; T& m_bd = m_b[i / N_sqrt]; m_bd = m_T( m_bd , m_T( i_T( m_ai ) , t ) ); m_ai = n; }
+
 template <TEMPLATE_ARGUMENTS_FOR_ABSTRACT_SQRT_DECOMPOSITION> inline constexpr void AbstractSqrtDecomposition<T,m_T,e_T,i_T,N,N_sqrt>::Add( const int& i , const T& t ) { T& m_ai = m_a[i]; T& m_bd = m_b[i / N_sqrt]; m_bd = m_T( m_bd , t );  m_ai = m_T( m_ai , t ); }
