@@ -4,93 +4,65 @@
 #include "../a_Body.hpp"
 #include "../Constexpr/a_Body.hpp"
 
-template <typename INT>
-list<int> EnumerateDivisor( const INT& n ) noexcept
+template <typename INT> INT CountDivisor( const INT& n ) noexcept
 {
 
   vector<INT> P{};
   vector<INT> exponent{};
   SetPrimeFactorisation( n , P , exponent );
-  const int length = P.size();
-  
-  list<INT> divisor{};
-  divisor.push_back( 1 );
-  auto begin = divisor.begin() , end = divisor.end();
-  
-  for( int i = 0 ; i < length ; i++ ){
+  COUNT_DIVISOR;
 
-    const INT& P_i = P[i];
-    const int& exponent_i = exponent[i];
-    list<int> temp{};
-    INT power = 1;
-    
-    for( int e = 1 ; e <= exponent_i ; e++ ){
-
-      power *= P_i;
-
-      for( auto itr = begin ; itr != end ; itr++ ){
-
-	temp.push_back( *itr * power );
-
-      }
-      
-    }
-    
-    while( ! temp.empty() ){
-
-      divisor.push_back( temp.front() );
-      temp.pop_front();
-
-    }
-    
-  }
-
-  return divisor;
-  
 }
 
-template <typename INT , INT val_limit , int length_max>
-list<int> EnumerateDivisor( const PrimeEnumeration<INT,val_limit,length_max>& prime , INT n ) noexcept
+template <typename INT , INT val_limit , int length_max> INT CountDivisor( const PrimeEnumeration<INT,val_limit,length_max>& prime , INT n ) noexcept
 {
 
   vector<INT> P{};
   vector<INT> exponent{};
   SetPrimeFactorisation( prime , n , P , exponent );
-  const int length = P.size();
+  COUNT_DIVISOR;
+
+}
+
+template <typename INT>
+list<INT> EnumerateDivisor( const INT& n ) noexcept
+{
+
+  vector<INT> P{};
+  vector<INT> exponent{};
+  SetPrimeFactorisation( n , P , exponent );
+  ENUMERATE_DIVISOR;
+    
+}
+
+template <typename INT , INT val_limit , int length_max>
+list<INT> EnumerateDivisor( const PrimeEnumeration<INT,val_limit,length_max>& prime , INT n ) noexcept
+{
+
+  vector<INT> P{};
+  vector<INT> exponent{};
+  SetPrimeFactorisation( prime , n , P , exponent );
+  ENUMERATE_DIVISOR;
   
-  list<INT> divisor{};
-  divisor.push_back( 1 );
-  auto begin = divisor.begin() , end = divisor.end();
-  
-  for( int i = 0 ; i < length ; i++ ){
+}
 
-    const INT& P_i = P[i];
-    const int& exponent_i = exponent[i];
-    list<int> temp{};
-    INT power = 1;
-    
-    for( int e = 1 ; e <= exponent_i ; e++ ){
+template <int size_max>
+void MemoriseEnumerateDivisor( list<int> ( &memory )[size_max] ) noexcept
+{
 
-      power *= P_i;
+  for( int d = 1 ; d < size_max ; d++ ){
 
-      for( auto itr = begin ; itr != end ; itr++ ){
+    int n = 0;
 
-	temp.push_back( *itr * power );
+    while( ( n += d ) < size_max ){
 
-      }
-      
-    }
-    
-    while( ! temp.empty() ){
-
-      divisor.push_back( temp.front() );
-      temp.pop_front();
+      memory[n].push_back( d );
 
     }
-    
+
   }
 
-  return divisor;
+  return;
 
 }
 
@@ -125,13 +97,11 @@ int MoeviusFunction( const PrimeEnumeration<INT,val_limit,length_max>& prime , I
 
   while( i < prime.m_length && n > 1 ){
 
-    const int& p = prime.m_val[i];
+    const int& p = prime.m_val[i++];
 
     if( n % p == 0 ){
 
-      n /= p;
-
-      if( n % p == 0 ){
+      if( ( n /= p ) % p == 0 ){
 
 	return 0;
 
@@ -140,8 +110,6 @@ int MoeviusFunction( const PrimeEnumeration<INT,val_limit,length_max>& prime , I
       answer *= -1;
 
     }
-
-    i++;
 
   }
 
