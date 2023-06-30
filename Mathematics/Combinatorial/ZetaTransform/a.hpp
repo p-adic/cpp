@@ -3,6 +3,10 @@
 #pragma once
 #include "a_Macro.hpp"
 
+// TwoAryMoeviusFunctionに使用。
+#include "../../Arithmetic/Prime/Constexpr/a_Body.hpp"
+
+// Tの各要素tに対し、t以下の要素を渡る総和を管理。
 template <typename T , typename U , int size_max>
 class ZetaTransformBody
 {
@@ -45,7 +49,7 @@ public:
   template <typename S , T f_inv_max(const S&) , list<S> r(const S&)> inline U InverseImageSum( const S& s );
   template <typename S , T f_inv_max(const S&) , list<S> r(const S&) , int mu(const T&,const T&)> inline U InverseImageSum( const S& s );
   // f( t ) <= sを満たすRの要素t全体を渡る総和取得。（結果的にrは使わないが要件上はrの存在が必要） 
-  template <typename S , T f_inv_max(const S&)> inline const U& InitialSegmentxInverseImageSum( const S& s );
+  template <typename S , T f_inv_max(const S&)> inline const U& InitialSegmentInverseImageSum( const S& s );
 
   virtual T e( const int& i );
   virtual int e_inv( const T& t );
@@ -74,6 +78,7 @@ private:
 
 };
 
+// E_invはAdd（privateにはSup）にのみ使用。
 template <typename T , list<T> E(const T&) , list<T> E_inv(const T&) , typename U , int size_max>
 class PartiallyOrderedSetForZetaTransform :
   virtual public ZetaTransformBody<T,U,size_max>
@@ -102,7 +107,7 @@ private:
 
 // 入力の範囲内で要件
 // (1) Eがint上の半順序<のグラフでE_invが(int,>)のグラフである。
-// を満たす場合にのみ以下をサポート。
+// を満たす場合にのみ以下をサポート。ただしE_invはAdd（privateにはSup）にのみ使用。
 
 // 0による初期化O(size_max)
 // ゼータ変換前の配列による初期化O(始切片のサイズの総和)
@@ -182,7 +187,7 @@ private:
 // 入力の範囲内で要件
 // (1) EがT上の半順序<のグラフでE_invが(T,>)のグラフである。
 // (2) (U,a_U:U^2->U,z_U:1->U,m_U:U^2->U)が単位的環である。
-// を満たす場合にのみ以下をサポート。
+// を満たす場合にのみ以下をサポート。ただしE_invはAdd（privateにはSup）にのみ使用。
 
 // z_U()による初期化O(size_max)
 
@@ -212,7 +217,7 @@ public:
 // (1) EがT上の半順序<のグラフでE_invが(T,>)のグラフである。
 // (2) (U,a_U:U^2->U,z_U:1->U,m_U:U^2->U)が単位的環である。
 // (3) enum_T:int->Tとenum_T_inv:int->Tが互いに逆写像である。
-// を満たす場合にのみ以下をサポート。
+// を満たす場合にのみ以下をサポート。ただしE_invはAdd（privateにはSup）にのみ使用。
 
 // z_U()による初期化O(size_max)
 
@@ -242,5 +247,8 @@ private:
 
 };
 
-// 古典的なメビウス関数は../../Arithmetic/Prime/Divisor/a_Body.hppで定義
-
+// 古典的な１変数メビウス関数（../../Arithmetic/Prime/Divisor/a_Body.hpp）の２変数化。
+// 最初のみO(val_lim log val_lim)で後はO(1)。
+// t0 <= t1がt1 % t0 == 0で与えられる時にこのまま使える。
+// t0 <= t1がt0 % t1 == 0で与えられる時は変数を反対にする。
+template <typename INT , INT val_limit , int length_max> int TwoAryMoeviusFunction( const PrimeEnumeration<INT,val_limit,length_max> , const int& t0 , const int& t1 );
