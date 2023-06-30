@@ -10,23 +10,14 @@
 
 
 template <typename INT> inline INT EulerFunction( const INT& n ) { vector<INT> P{}; vector<INT> exponent{}; return EulerFunction( n , P , exponent ); }
+template <typename INT , INT val_limit , int length_max> inline INT EulerFunction( const PrimeEnumeration<INT,val_limit,length_max>& prime , const INT& n ) { vector<INT> P{}; vector<INT> exponent{}; return EulerFunction( prime , n , P , exponent ); }
 
 template <typename INT>
 INT EulerFunction( const INT& n , vector<INT>& P , vector<INT>& exponent )
 {
 
   SetPrimeFactorisation( n , P , exponent );
-  INT answer = n;
-  const INT size = P.size();
-
-  for( INT i = 0 ; i < size ; i++ ){
-
-    const INT& P_i = P[i];
-    answer -= answer / P_i;
-    
-  }
-
-  return answer;
+  EULER_FUNCTION;
 
 }
 
@@ -35,22 +26,59 @@ INT EulerFunction( const PrimeEnumeration<INT,val_limit,length_max>& prime , con
 {
 
   SetPrimeFactorisation( prime , n , P , exponent );
-  INT answer = n;
-  const INT size = P.size();
+  EULER_FUNCTION;
 
-  for( INT i = 0 ; i < size ; i++ ){
+}
 
-    const INT& P_i = P[i];
-    answer -= answer / P_i;
-    
+template <typename INT , INT val_limit , int length_max , int size , typename INT2>
+void MemoriseEulerFunction( const PrimeEnumeration<INT,val_limit,length_max>& prime , INT2 ( &memory )[size] )
+{
+
+  static INT quotient[size];
+  
+  for( int n = 1 ; n < size ; n++ ){
+
+    memory[n] = quotient[n] = n;
+
   }
 
-  return answer;
+  for( int i = 0 ; i < prime.m_length ; i++ ){
+    
+    const INT& p_i = prime.m_val[i];
+    int n = 0;
+
+    while( ( n += p_i ) < size ){
+
+      INT2& memory_n = memory[n];
+      INT& quotient_n = quotient[n];
+      memory_n -= memory_n / p_i;
+
+      while( ( quotient_n /= p_i ) % p_i == 0 ){}
+
+    }
+
+  }
+  
+  for( int n = val_limit ; n < size ; n++ ){
+
+    const INT& quotient_n = quotient[n];
+
+    if( quotient_n != 1 ){
+
+      INT2& memory_n = memory[n];
+      memory_n -= memory_n / quotient_n;
+      
+    }
+
+  }
+
+  return;
 
 }
 
 template <typename INT> inline INT CarmichaelFunction( const INT& n ) { vector<INT> P{}; vector<INT> exponent{}; vector<INT> P_power{}; return CarmichaelFunction( n , P , exponent , P_power ); }
-  
+template <typename INT , INT val_limit , int length_max> inline INT CarmichaelFunction( const PrimeEnumeration<INT,val_limit,length_max>& prime , const INT& n ) { vector<INT> P{}; vector<INT> exponent{}; vector<INT> P_power{}; return CarmichaelFunction( prime , n , P , exponent , P_power ); }
+
 template <typename INT>
 INT CarmichaelFunction( const INT& n , vector<INT>& P , vector<INT>& exponent , vector<INT>& P_power )
 {
@@ -59,18 +87,7 @@ INT CarmichaelFunction( const INT& n , vector<INT>& P , vector<INT>& exponent , 
   vector<INT> exponent{};
   vector<INT> P_power{};
   SetPrimeFactorisation( n , P , exponent , P_power );
-  INT answer = 1;
-  INT size = P.size();
-
-  for( INT i = 0 ; i < size ; i++ ){
-
-    const INT& P_i = P[i];
-    const INT& P_power_i = P_power[i];
-    answer = LCM( answer , ( P_power_i - P_power_i / P_i ) );
-    
-  }
-
-  return answer;
+  CARMICHAEL_FUNCTION;
 
 }
 
@@ -82,17 +99,6 @@ INT CarmichaelFunction( const PrimeEnumeration<INT,val_limit,length_max>& prime 
   vector<INT> exponent{};
   vector<INT> P_power{};
   SetPrimeFactorisation( prime , n , P , exponent , P_power );
-  INT answer = 1;
-  INT size = P.size();
-
-  for( INT i = 0 ; i < size ; i++ ){
-
-    const INT& P_i = P[i];
-    const INT& P_power_i = P_power[i];
-    answer = LCM( answer , ( P_power_i - P_power_i / P_i ) );
-    
-  }
-
-  return answer;
+  CARMICHAEL_FUNCTION;
 
 }
