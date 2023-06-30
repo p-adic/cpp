@@ -14,7 +14,7 @@ void StartWatch( const string& process_name )
 
   if( GetWatchCount() == 0 ){
 
-    if( process_name != "nothing" ){
+    if( process_name == "nothing" ){
 
       cout << count << ". Start counting execution time:" << endl;;
 
