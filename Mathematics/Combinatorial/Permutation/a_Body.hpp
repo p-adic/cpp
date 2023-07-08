@@ -3,10 +3,15 @@
 #pragma once
 #include "a.hpp"
 
+// InversionNumberに使う。
 #include "../../SetTheory/DirectProduct/AffineSpace/BIT/a_Body.hpp"
+// NextPermutationとPreviousPermutationに使う。
+#include <algorithm>
 
-template <int size_max> inline NextPermutation( int ( &P )[size_max] , const int& size ) {  return next_permutation( P , P + size ); }
-template <int size_max> inline PreviousPermutation( int ( &P )[size_max] , const int& size ) {  return prev_permutation( P , P + size ); }
+template <typename INT , int size_max> inline bool NextPermutation( INT ( &P )[size_max] , const int& size ) {  return next_permutation( P , P + size ); }
+template <typename INT> inline bool NextPermutation( vector<INT>& P ) {  return next_permutation( P.begin() , P.end() ); }
+template <typename INT , int size_max> inline bool PreviousPermutation( INT ( &P )[size_max] , const int& size ) {  return prev_permutation( P , P + size ); }
+template <typename INT> inline bool PreviousPermutation( vector<INT>& P ) {  return prev_permutation( P.begin() , P.end() ); }
 
 template <int size_max>
 long long InversionNumber( const int ( &P )[size_max] const int& size )
