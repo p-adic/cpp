@@ -11,4 +11,4 @@ template <typename INT , int size_max> inline bool PreviousPermutation( INT ( &P
 template <typename INT> inline bool PreviousPermutation( vector<INT>& P );
 
 // P‚Í0,...,size-1‚Ì‡—ñ
-template <int size_max> long long InversionNumber( const int ( &P )[size_max] const int& size );
+template <int size_max> ll InversionNumber( const int ( &P )[size_max] , const int& size );
