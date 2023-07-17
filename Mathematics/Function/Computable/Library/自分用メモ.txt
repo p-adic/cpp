@@ -1,0 +1,67 @@
+#pragma GCC optimize ( "O3" )
+#pragma GCC optimize( "unroll-loops" )
+#pragma GCC target ( "sse4.2,fma,avx2,popcnt,lzcnt,bmi2" )
+// 手元の環境ではこれでQpがコンパイル＆自然言語翻訳できる。
+#include "Mathematics/Function/Computable/a.hpp"
+// 上の代わりに下をincludeし"CONVERT_CPP(F,M);"を指定するとコンパイル＆c++翻訳できる。
+// #include "Mathematics/Function/Computable/Library/cpp/a.hpp"
+// 配布時は上記２つの代わりにそれぞれ以下のいずれかをincludeさせる。
+// #include "libqp.hpp"
+// #include "libqpc++.hpp"
+
+// c++に変換時はこれを用いる。
+// CONVERT_CPP(a.txt,APP);
+
+// ライブラリ作成手順：
+// libqpmacto.hppの作成
+// "libqpmacro.hpp"に
+// - "Utility/Macro_Macro.hpp"
+// - "Error/Position/a_Macro.hpp"
+// - "Error/MismatchType/a_Macro.hpp"
+// の内容をこの順に手動で追加。
+
+// qplib.hppの作成
+// - 適切にターゲットファイルをmakefileに指定し、リリースモードに設定する。（.oの作成準備）
+// - "Mathematics/Function/Computable/a.hpp"をincludeしてコンパイル。（.oの作成）
+// - make writeを実行。（"a.ii"にinclude展開後のファイルを展開）
+// - "a.ii"の編集：
+//   - 何故かl.57161から消えるLabeledList<T,Key1,Key2...>::SortKeyの宣言を手動で追加。
+//   - "# "始まりのコメントアウト行やmain関数を削除。namespace stdの削除は困難なので放置。
+//   - 展開されたdefineの復元のために
+//     - "libqpmacro.hpp"を冒頭にincludeしその下に
+//     - "Mathematics/Function/Computable/a_Macro.hpp"の内容を手動で追加する。
+// - "a.ii"を"libqp.hpp"にリネームし、includeして動作確認。
+
+// qplibc++.hppの作成
+// - "Mathematics/Function/Computable/Library/cpp/a.hpp"をincludeしてコンパイル。（.oの作成）
+// - make writeを実行。（"a.ii"にinclude展開後のファイルを展開）
+// - "a.ii"の編集：
+//   - 何故か消えるLabeledList<T,Key1,Key2...>::SortKeyの宣言を手動で追加。
+//   - "# "始まりのコメントアウト行やmain関数を削除。namespace stdの削除は困難なので放置。
+//   - 展開されたdefineの復元のために
+//     - "libqpmacro.hpp"を冒頭にincludeしその下に
+//     - "Mathematics/Function/Computable/Syntax/Translation/cpp/a_Macro.hpp"
+//       "Mathematics/Function/Computable/Syntax/Translation/cpp/Redef/a_Macro.hpp"
+//       の内容をこの順で手動で追加する。
+//     - __SYMBOL_OF_OFS_PREPARATION__の多重定義を解消するため、CONVERT_CPPで追加された
+//       ファイル末尾の定義実体を削除する。
+// - "a.ii"を"libqpc++.hpp"にリネームし、includeして動作確認。
+
+// qplib.aの作成
+// - ar rcs libqp.a ./Error/BreakPoint/a.o ./Error/FaultInCoding/a.o ./Error/IllegalAccess/a.o ./Error/IllegalCall/a.o ./Error/IllegalInput/a.o ./Error/MismatchType/a.o ./Error/Position/a.o ./Error/Warning/a.o ./Error/a.o ./Utility/FileStream/a.o ./Utility/String/a.o ./Utility/String/VLArray/a.o ./Utility/Time/a.o ./Mathematics/Function/Computable/Syntax/a.o ./Mathematics/Function/Computable/Syntax/Translation/a.o ./Mathematics/Function/Computable/Expression/Primitive/bool/a.o ./Mathematics/Function/Computable/Expression/Primitive/int/a.o ./Mathematics/Function/Computable/Expression/Primitive/string/a.o ./Mathematics/Function/Computable/Operator/Basic/bool/a.o ./Mathematics/Function/Computable/Type/a.o コマンドでlibqp.aファイルを作成。
+
+// ライブラリ圧縮フォルダの作成
+// - "libqpmacro.hpp"と"libqp.hpp"と"libqpc++.hpp"と"libqp.a"をzipファイルにまとめる。
+
+// 円滑なアップロード／ダウンロードのための.dファイルと.oファイルの削除
+// - cd Mathematics/Function/Computable を実行する。
+// - del /s *.o を実行する。
+// - del /s *.d を実行する。
+
+int main()
+{
+
+  USE( string , s1 );
+  return 0;
+
+}
