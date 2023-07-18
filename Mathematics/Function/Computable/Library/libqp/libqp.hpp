@@ -65,6 +65,7 @@
     MISMATCH( TYPE_NAME );			\
 						\
   }						\
+
 #define USE( TYPE_NAME , VARIABLE )					\
 									\
   static VariableSymbol<BaseTypeOf< TYPE_NAME >::type> CONNECT( CONNECT( __SYMBOL_OF_ , VARIABLE ) , __ ) = VariableSymbol<BaseTypeOf< TYPE_NAME >::type>( TO_STRING( VARIABLE ) , GetTypeName< TYPE_NAME >() ); \
@@ -73,6 +74,7 @@
 									\
   CHECK_VALID( TYPE_NAME )						\
 									\
+
 #define IMP( RET , FUNC , ... )						\
 									\
   static auto CONNECT( CONNECT( __SYMBOL_OF_ , FUNC ) , __ ) = OPERATOR_SYMBOL_CONSTRUCTOR( RET , FUNC , __VA_ARGS__ ); \
@@ -130,6 +132,7 @@
 #define IF( ... )				\
 						\
   IfLine( __VA_ARGS__ )				\
+
 #define PUT( ... ) PutLineOfComputableFunction( __VA_ARGS__ ) 
 #define UNIQUE_BODY( CHAR , VAR , BOUND , COND ) CHAR , WrappedType<remove_const<remove_reference<decltype( VAR )>::type>::type>( VAR ) , WrappedType<remove_const<remove_reference<decltype( BOUND )>::type>::type>( BOUND ) , WrappedType<ConditionOfComputableFunction>( COND ) 
 #define UNIQUE( VAR , BOUND , COND ) UNIQUE_BODY( UExistString() , VAR , BOUND , COND ) 
@@ -139,6 +142,7 @@
 #define EXIT					\
 						\
   LineOfDefinitionOfComputableFunction<void>()	\
+
 #define RETURN( X )				\
 						\
   ReturnLine( EXPRESSION( X ) )			\
