@@ -24,7 +24,7 @@ template <TEMPLATE_ARGUMENTS_FOR_DUAL_SQRT_DECOMPOSITION> inline constexpr void 
 
     if( m_bd != g_e ){
 
-      const i_min = d * N_sqrt;
+      const int ini_min = d * N_sqrt;
       IntervalAct_Body( i_min , i_min + N_sqrt , m_bd );
       m_bd = g_e;
 
