@@ -13,4 +13,7 @@ template <typename T , int size_max> inline const T& CoordinateCompress<T,size_m
 template <typename T , int size_max> inline int CoordinateCompress<T,size_max>::GetOrder( const T& t ) { if( ! m_compressed ){ Compress(); } return m_enum.count( t ) == 1 ? m_enum[t] : -1; }
 template <typename T , int size_max> inline const int& CoordinateCompress<T,size_max>::size() { return m_size; }
 
+template <typename T , int size_max> inline typename map<T,int>::iterator CoordinateCompress<T,size_max>::begin() { return m_enum.begin(); }
+template <typename T , int size_max> inline typename map<T,int>::iterator CoordinateCompress<T,size_max>::end() { return m_enum.end(); }
+
 template <typename T , int size_max> inline void CoordinateCompress<T,size_max>::Compress() { m_size = 0; for( auto itr = m_enum.begin() , end = m_enum.end() ; itr != end ; itr++ ){ m_a[m_size] = itr->first; itr->second = m_size++; } m_compressed = true; }

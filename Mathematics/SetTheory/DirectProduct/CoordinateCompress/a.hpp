@@ -24,6 +24,9 @@ public:
   inline int GetOrder( const T& t );
   inline const int& size();
 
+  inline typename map<T,int>::iterator begin();
+  inline typename map<T,int>::iterator end();
+
 private:
   inline void Compress();
   
