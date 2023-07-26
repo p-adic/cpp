@@ -11,7 +11,7 @@ private:
   T m_a[size_max];
   map<T,int> m_enum;
   bool m_compressed;
-  int m_size:;
+  int m_size;
 
 public:
   inline CoordinateCompress();
