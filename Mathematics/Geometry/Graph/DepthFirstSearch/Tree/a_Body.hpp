@@ -34,6 +34,8 @@ template <int V_max,list<int> E(const int&),int digit> inline const int& DepthFi
 template <int V_max,list<int> E(const int&),int digit> inline const int& DepthFirstSearchOnTree<V_max,E,digit>::Height( const int& i ) { if( ! m_set_height ){ SetHeight(); } return m_height[i]; }
 template <int V_max,list<int> E(const int&),int digit> inline const int& DepthFirstSearchOnTree<V_max,E,digit>::Weight( const int& i ) { if( ! m_set_weight ){ SetWeight(); } return m_weight[i]; }
 
+template <int V_max,list<int> E(const int&),int digit> inline const int& DepthFirstSearchOnTree<V_max,E,digit>::Node( const int& i , const bool& reversed ) const { return m_reversed[reversed ? i : DepthFirstSearch<V_max,E>::m_V - 1 - i]; }
+
 template <int V_max,list<int> E(const int&),int digit>
 int DepthFirstSearchOnTree<V_max,E,digit>::Ancestor( int i , int n )
 {

@@ -34,12 +34,15 @@ public:
   inline void Reset( const int& init ) = delete;
   inline void Shift( const int& init ) = delete;
 
-  inline const int& Root() const const;
+  inline const int& Root() const;
   inline const int& Parent( const int& i ) const;
   inline const list<int>& Children( const int& i );
   inline const int& Depth( const int& i ) const;
   inline const int& Height( const int& i );
   inline const int& Weight( const int& i );
+
+  // 探索順にノードを番号づける。
+  inline const int& Node( const int& i , const bool& reversed = false ) const;
 
   // 各ノードの高さ < 2^digitの時のみサポート。
   int Ancestor( int i , int n );
