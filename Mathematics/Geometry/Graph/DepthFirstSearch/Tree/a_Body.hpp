@@ -373,13 +373,6 @@ void DepthFirstSearchOnTree<V_max,E,digit>::RerootingDP( T ( &d )[V_max] )
 
     }
 
-    // for( int m = 0 ; m < size_i ; m++ ){
-
-    //   T& right_sum_im = right_sum_i[m];
-    //   right_sum_im = m_T( right_sum_im , rest_i );
-
-    // }
-    
   }
 
   for( int i = 0 ; i < V ; i++ ){
