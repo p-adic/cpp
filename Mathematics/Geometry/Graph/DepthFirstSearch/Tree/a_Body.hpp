@@ -29,12 +29,13 @@ template <int V_max,list<int> E(const int&),int digit> inline DepthFirstSearchOn
 template <int V_max,list<int> E(const int&),int digit> inline const int& DepthFirstSearchOnTree<V_max,E,digit>::Root() const { return DepthFirstSearch<V_max,E>::init(); }
 
 template <int V_max,list<int> E(const int&),int digit> inline const int& DepthFirstSearchOnTree<V_max,E,digit>::Parent( const int& i ) const { return DepthFirstSearch<V_max,E>::prev( i ); }
-template <int V_max,list<int> E(const int&),int digit> inline const list<int>& DepthFirstSearchOnTree<V_max,E,digit>::Children( const int& i ) { if( ! m_set_children ){ SetChildren(); } return m_children[i]; }
+template <int V_max,list<int> E(const int&),int digit> inline const vector<int>& DepthFirstSearchOnTree<V_max,E,digit>::Children( const int& i ) { if( ! m_set_children ){ SetChildren(); } return m_children[i]; }
 template <int V_max,list<int> E(const int&),int digit> inline const int& DepthFirstSearchOnTree<V_max,E,digit>::Depth( const int& i ) const { return m_depth[i]; }
 template <int V_max,list<int> E(const int&),int digit> inline const int& DepthFirstSearchOnTree<V_max,E,digit>::Height( const int& i ) { if( ! m_set_height ){ SetHeight(); } return m_height[i]; }
 template <int V_max,list<int> E(const int&),int digit> inline const int& DepthFirstSearchOnTree<V_max,E,digit>::Weight( const int& i ) { if( ! m_set_weight ){ SetWeight(); } return m_weight[i]; }
 
-template <int V_max,list<int> E(const int&),int digit> inline const int& DepthFirstSearchOnTree<V_max,E,digit>::Node( const int& i , const bool& reversed ) const { return m_reversed[reversed ? i : DepthFirstSearch<V_max,E>::m_V - 1 - i]; }
+template <int V_max,list<int> E(const int&),int digit> inline const int& DepthFirstSearchOnTree<V_max,E,digit>::NodeNumber( const int& i , const bool& reversed ) const { return m_reversed[reversed ? i : DepthFirstSearch<V_max,E>::size() - 1 - i]; }
+template <int V_max,list<int> E(const int&),int digit> inline const int& DepthFirstSearchOnTree<V_max,E,digit>::ChildrenNumber( const int& i ) { if( ! m_set_children ){ SetChildren(); } return m_children_num[i]; }
 
 template <int V_max,list<int> E(const int&),int digit>
 int DepthFirstSearchOnTree<V_max,E,digit>::Ancestor( int i , int n )
@@ -184,11 +185,17 @@ void DepthFirstSearchOnTree<V_max,E,digit>::SetChildren()
   
   for( int i = 0 ; i < V ; i++ ){
 
-    const int& parent_i = Parent( i );
+    const int& j = Parent( i );
 
-    if( parent_i != -1 ){
+    if( j == -1 ){
 
-      m_children[parent_i].push_back( i );
+      m_children_num[i] = -1;
+
+    } else {
+      
+      vector<int>& m_children_j = m_children[j];
+      m_children_num[i] = m_children_j.size();
+      m_children_j.push_back( i );
 
     }
 
@@ -289,3 +296,99 @@ void DepthFirstSearchOnTree<V_max,E,digit>::SetDoubling()
 
 }
 
+template <int V_max,list<int> E(const int&),int digit> template <typename T , T m_T(const T&,const T&) ,const T& e_T() , T f(const T&,const int&)>
+void DepthFirstSearchOnTree<V_max,E,digit>::RerootingDP( T ( &d )[V_max] )
+{
+
+  if( ! m_set_children ){
+
+    SetChildren();
+
+  }
+  
+  const int& V = DepthFirstSearch<V_max,E>::size();
+  const T& e = e_T();
+  vector<T> children_value[V_max] = {};
+  vector<T> left_sum[V_max] = {};
+  vector<T> right_sum[V_max] = {};
+  
+  for( int i = 0 ; i < V ; i++ ){
+    
+    children_value[i].resize( m_children[i].size() );
+
+  }
+  
+  for( int n = 0 ; n < V ; n++ ){
+    
+    const int& i = NodeNumber( n , true );
+    const vector<T>& children_value_i = children_value[i];
+    const int size_i = children_value_i.size();
+
+    T temp = e;
+    vector<T>& left_sum_i = left_sum[i];
+    left_sum_i.reserve( size_i + 1 );
+    left_sum_i.push_back( temp );
+    
+    for( int m = 0 ; m < size_i ; m++ ){
+
+      left_sum_i.push_back( temp = m_T( temp , children_value_i[m] ) );
+
+    }
+    
+    const int& j = Parent( i );
+
+    if( j != -1 ){
+      
+      children_value[j][m_children_num[i]] = f( temp , i );
+
+    }
+
+    temp = e;
+    vector<T>& right_sum_i = right_sum[i];
+    right_sum_i.resize( size_i );
+
+    for( int m = 1 ; m <= size_i ; m++ ){
+
+      right_sum_i[ size_i - m ] = temp;
+      temp = m_T( children_value_i[size_i - m] , temp );
+
+    }
+
+  }
+
+  for( int n = 1 ; n < V ; n++ ){
+    
+    const int& i = NodeNumber( n );
+    const int& j = Parent( i );
+    const int& k = ChildrenNumber( i );
+    vector<T>& left_sum_i = left_sum[i];
+    vector<T>& right_sum_i = right_sum[i];
+    const int size_i = right_sum_i.size();
+    const T rest_i = f( m_T( left_sum[j][k] , right_sum[j][k] ) , j );
+    
+    for( int m = 0 ; m <= size_i ; m++ ){
+
+      T& left_sum_im = left_sum_i[m];
+      left_sum_im = m_T( rest_i , left_sum_im );
+
+    }
+
+    // for( int m = 0 ; m < size_i ; m++ ){
+
+    //   T& right_sum_im = right_sum_i[m];
+    //   right_sum_im = m_T( right_sum_im , rest_i );
+
+    // }
+    
+  }
+
+  for( int i = 0 ; i < V ; i++ ){
+
+    d[i] = f( left_sum[i].back() , i );
+
+  }
+
+  return;
+
+}
+  
