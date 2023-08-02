@@ -3,13 +3,13 @@
 #pragma once
 
 #define DIJKSTRA_BODY( INITIALISE_PREV , SET_PREV )			\
-  static const U& unit = Unit();						\
-  assert( unit != m_found && unit < m_infty );			\
+  static const U& unit = Unit();					\
+  assert( unit != m_found && unit < m_infty );				\
   U weight[size_max];							\
 									\
   for( int i = 0 ; i < m_size ; i++ ){					\
 									\
-    weight[i] = m_infty;							\
+    weight[i] = m_infty;						\
 									\
   }									\
 									\

@@ -18,6 +18,7 @@ private:
   
 public:
   inline DijkstraBody( const int& size , const U& infty , const U& found );
+  // Œo˜H‚ª‘¶İ‚µ‚È‚¢ê‡‚Ì•Ô‚è’l‚Ím_infty
   U Solve( const T& t_start , const T& t_final );
   U Solve( const T& t_start , const T& t_final , list<T>& path );
   

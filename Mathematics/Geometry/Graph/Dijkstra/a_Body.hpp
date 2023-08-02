@@ -4,7 +4,7 @@
 #include "a.hpp"
 
 template <typename T , typename U , list<pair<T,U> > E(const T&) , int size_max> inline DijkstraBody<T,U,E,size_max>::DijkstraBody( const int& size , const U& infty , const U& found ) : m_size( size ) , m_infty( infty ) , m_found( found ) , m_length() , m_memory() , m_memory_inv() {}
-template <list<pair<int,ll> > E(const int&) , int size_max> inline Dijkstra<E,size_max>::Dijkstra( const int& size ) : DijkstraBody<int,ll,E,size_max>( size , 92233720368547758077 , -1 ) {}
+template <list<pair<int,ll> > E(const int&) , int size_max> inline Dijkstra<E,size_max>::Dijkstra( const int& size ) : DijkstraBody<int,ll,E,size_max>( size , 9223372036854775807 , 1 ) {}
 template <typename T , typename U , U m_U(const U&,const U&) , const U& e_U() , list<pair<T,U> > E(const T&) , int size_max> inline MemorisationDijkstra<T,U,m_U,e_U,E,size_max>::MemorisationDijkstra( const int& size , const U& infty , const U& found ) : DijkstraBody<T,U,E,size_max>( size , infty , found ) {}
 template <typename T , typename U , U m_U(const U&,const U&) , const U& e_U() , list<pair<T,U> > E(const T&) , int size_max , T enum_T(const int&) , int enum_T_inv(const T&)> inline EnumerationDijkstra<T,U,m_U,e_U,E,size_max,enum_T,enum_T_inv>::EnumerationDijkstra( const int& size , const U& infty , const U& found ) : DijkstraBody<T,U,E,size_max>( size , infty , found ) {}
 
