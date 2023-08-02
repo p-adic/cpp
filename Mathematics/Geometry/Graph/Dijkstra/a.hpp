@@ -21,6 +21,8 @@ public:
   // Œo˜H‚ª‘¶İ‚µ‚È‚¢ê‡‚Ì•Ô‚è’l‚Ím_infty
   U Solve( const T& t_start , const T& t_final );
   U Solve( const T& t_start , const T& t_final , list<T>& path );
+
+  const U& Infty() const;
   
 private:
   virtual const U& Unit() const = 0;

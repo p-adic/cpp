@@ -38,6 +38,8 @@ U DijkstraBody<T,U,E,size_max>::Solve( const T& t_start , const T& t_final , lis
 
 }
 
+template <typename T , typename U , list<pair<T,U> > E(const T&) , int size_max> const U& DijkstraBody::Infty() const { return m_infty; }
+
 template <list<pair<int,ll> > E(const int&) , int size_max> inline const ll& Dijkstra<E,size_max>::Unit() const { static const ll unit = 0; return unit; }
 template <typename T , typename U , U m_U(const U&,const U&) , const U& e_U() , list<pair<T,U> > E(const T&) , int size_max> inline const U& MemorisationDijkstra<T,U,m_U,e_U,E,size_max>::Unit() const { return e_U(); }
 template <typename T , typename U , U m_U(const U&,const U&) , const U& e_U() , list<pair<T,U> > E(const T&) , int size_max , T enum_T(const int&) , int enum_T_inv(const T&)> inline const U& EnumerationDijkstra<T,U,m_U,e_U,E,size_max,enum_T,enum_T_inv>::Unit() const { return e_U(); }
