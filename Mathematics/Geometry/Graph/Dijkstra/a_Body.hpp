@@ -38,7 +38,7 @@ U DijkstraBody<T,U,E,size_max>::Solve( const T& t_start , const T& t_final , lis
 
 }
 
-template <typename T , typename U , list<pair<T,U> > E(const T&) , int size_max> const U& DijkstraBody::Infty() const { return m_infty; }
+template <typename T , typename U , list<pair<T,U> > E(const T&) , int size_max> const U& DijkstraBody<T,U,E,size_max>::Infty() const { return m_infty; }
 
 template <list<pair<int,ll> > E(const int&) , int size_max> inline const ll& Dijkstra<E,size_max>::Unit() const { static const ll unit = 0; return unit; }
 template <typename T , typename U , U m_U(const U&,const U&) , const U& e_U() , list<pair<T,U> > E(const T&) , int size_max> inline const U& MemorisationDijkstra<T,U,m_U,e_U,E,size_max>::Unit() const { return e_U(); }
