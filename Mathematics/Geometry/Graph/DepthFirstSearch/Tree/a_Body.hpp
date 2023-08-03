@@ -296,6 +296,47 @@ void DepthFirstSearchOnTree<V_max,E,digit>::SetDoubling()
 
 }
 
+template <int V_max,list<int> E(const int&),int digit> template <typename T , T m_T(const T&,const T&)>
+T DepthFirstSearchOnTree<V_max,E,digit>::RootingDP( const T ( &a )[V_max] )
+{
+
+  if( ! m_set_children ){
+
+    SetChildren();
+
+  }
+  
+  const int& V = DepthFirstSearch<V_max,E>::size();
+  list<T> children_value[V_max] = {};
+  T temp;
+  
+  for( int n = 0 ; n < V ; n++ ){
+    
+    const int& i = NodeNumber( n , true );
+    list<T>& children_value_i = children_value[i];
+    temp = a[i];
+    
+    while( !children_value_i.empty() ){
+
+      temp = m_T( temp , children_value_i.front() );
+      children_value_i.pop_front();
+
+    }
+    
+    const int& j = Parent( i );
+
+    if( j != -1 ){
+
+      children_value[j].push_back( temp );
+
+    }
+
+  }
+
+  return temp;
+
+}
+  
 template <int V_max,list<int> E(const int&),int digit> template <typename T , T m_T(const T&,const T&) ,const T& e_T() , T f(const T&,const int&)>
 void DepthFirstSearchOnTree<V_max,E,digit>::RerootingDP( T ( &d )[V_max] )
 {

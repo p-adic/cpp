@@ -53,6 +53,12 @@ public:
   int LCA( int i , int j );
   int LCA( int i , int j , int& i_prev , int& j_prev );
 
+  // (T,m_T:T^2->T)が入力の範囲内で要件
+  // - Tの任意の要素t0,t1,t2に対しm_T(m_T(t0,t1),t_2)=m_T(m_T(t0,t2),t_1)である。
+  // を満たす場合にのみサポート。
+  // dp[j] = jの子ノードkを渡るm_T(-,dp[k])のa[j]への適用結果
+  // を満たす配列dpの根での値dp[m_init]をO(m_V)で求める。
+  template <typename T , T m_T(const T&,const T&)> T RootingDP( const ( &a )[V_max] );
   // (T,m_T:T^2->T,e_T:1->T)が可換モノイドの場合のみサポート。
   // dp[i][j] = f(iを根とみなした時のjの子ノードkを渡るdp[i][k]のm_Tに関する積,j)
   // を満たす二重配列dpの対角成分dp[i][i]をO(m_V)で求めてdに格納する。
