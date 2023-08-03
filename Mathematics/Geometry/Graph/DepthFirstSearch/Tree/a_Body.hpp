@@ -6,21 +6,14 @@
 #include "../a_Body.hpp"
 
 template <int V_max,list<int> E(const int&),int digit> inline DepthFirstSearchOnTree<V_max,E,digit>::DepthFirstSearchOnTree( const int& V , const int& root ) :
-  DepthFirstSearch<V_max,E>( V , root ) , m_reversed() , m_children() , m_set_children() , m_depth() , m_height() , m_set_height() , m_weight() , m_set_weight() , m_doubling() , m_set_doubling()
+  DepthFirstSearch<V_max,E>( V , root ) , m_reversed() , m_children() , m_set_children() , m_depth() , m_set_depth , m_height() , m_set_height() , m_weight() , m_set_weight() , m_doubling() , m_set_doubling()
 {
 
   int n = DepthFirstSearch<V_max,E>::size();
   
   while( --n >= 0 ){
     
-    const int& i = m_reversed[n] = DepthFirstSearch<V_max,E>::Next();
-    const int& j = Parent( i );
-
-    if( j != -1 ){
-
-      m_depth[i] = m_depth[j] + 1;
-
-    }
+    m_reversed[n] = DepthFirstSearch<V_max,E>::Next();
 
   }
 
@@ -30,7 +23,7 @@ template <int V_max,list<int> E(const int&),int digit> inline const int& DepthFi
 
 template <int V_max,list<int> E(const int&),int digit> inline const int& DepthFirstSearchOnTree<V_max,E,digit>::Parent( const int& i ) const { return DepthFirstSearch<V_max,E>::prev( i ); }
 template <int V_max,list<int> E(const int&),int digit> inline const vector<int>& DepthFirstSearchOnTree<V_max,E,digit>::Children( const int& i ) { if( ! m_set_children ){ SetChildren(); } return m_children[i]; }
-template <int V_max,list<int> E(const int&),int digit> inline const int& DepthFirstSearchOnTree<V_max,E,digit>::Depth( const int& i ) const { return m_depth[i]; }
+template <int V_max,list<int> E(const int&),int digit> inline const int& DepthFirstSearchOnTree<V_max,E,digit>::Depth( const int& i ) const { if( ! m_set_depth ){ SetDepth(); } return m_depth[i]; }
 template <int V_max,list<int> E(const int&),int digit> inline const int& DepthFirstSearchOnTree<V_max,E,digit>::Height( const int& i ) { if( ! m_set_height ){ SetHeight(); } return m_height[i]; }
 template <int V_max,list<int> E(const int&),int digit> inline const int& DepthFirstSearchOnTree<V_max,E,digit>::Weight( const int& i ) { if( ! m_set_weight ){ SetWeight(); } return m_weight[i]; }
 
@@ -182,6 +175,8 @@ void DepthFirstSearchOnTree<V_max,E,digit>::SetChildren()
   assert( !m_set_children );
   m_set_children = true;
   const int& V = DepthFirstSearch<V_max,E>::size();
+  m_children.resize( V );
+  m_children_num.resize( V );
   
   for( int i = 0 ; i < V ; i++ ){
 
@@ -206,12 +201,39 @@ void DepthFirstSearchOnTree<V_max,E,digit>::SetChildren()
 }
 
 template <int V_max,list<int> E(const int&),int digit>
+void DepthFirstSearchOnTree<V_max,E,digit>::SetDepth()
+{
+
+  assert( !m_set_depth );
+  m_set_depth = true;
+  const int& V = DepthFirstSearch<V_max,E>::size();
+  m_depth.resize( V );
+  
+  for( int i = 0 ; i < V ; i++ ){
+
+    const int& reversed_i = m_reversed[i];
+    const int& parent_i = Parent( reversed_i );
+
+    if( parent_i != -1 ){
+
+      m_depth[i] += m_depth[parent_i] + 1;
+
+    }
+
+  }
+
+  return;
+
+}
+
+template <int V_max,list<int> E(const int&),int digit>
 void DepthFirstSearchOnTree<V_max,E,digit>::SetHeight()
 {
 
   assert( !m_set_height );
   m_set_height = true;
   const int& V = DepthFirstSearch<V_max,E>::size();
+  m_height.resize( V );
   
   for( int i = 0 ; i < V ; i++ ){
 
@@ -239,6 +261,7 @@ void DepthFirstSearchOnTree<V_max,E,digit>::SetWeight()
   assert( !m_set_weight );
   m_set_weight = true;
   const int& V = DepthFirstSearch<V_max,E>::size();
+  m_weight.resize( V );
   
   for( int i = 0 ; i < V ; i++ ){
 
@@ -267,12 +290,13 @@ void DepthFirstSearchOnTree<V_max,E,digit>::SetDoubling()
   
   {
     
-    int ( &doubling_0 )[V_max] = m_doubling[0];
+    vector<int>& doubling_0 = m_doubling[0];
+    doubling_0.reserve( V );
     const int& r = Root();
 
     for( int i = 0 ; i < V ; i++ ){
 
-      doubling_0[i] = Parent( i );
+      doubling_0.push_back( Parent( i ) );
 
     }
 
@@ -280,13 +304,14 @@ void DepthFirstSearchOnTree<V_max,E,digit>::SetDoubling()
   
   for( int d = 1 ; d < digit ; d++ ){
 
-    int ( &doubling_d )[V_max] = m_doubling[d];
-    int ( &doubling_d_minus )[V_max] = m_doubling[d-1];
+    vector<int>& doubling_d = m_doubling[d];
+    vector<int>& doubling_d_minus = m_doubling[d-1];
+    doubling_d.reserve( V );
 
     for( int i = 0 ; i < V ; i++ ){
 
       const int& doubling_d_minus_i = doubling_d_minus[i];
-      doubling_d[i] = doubling_d_minus_i == -1 ? -1 : doubling_d_minus[doubling_d_minus_i];
+      doubling_d.push_back( doubling_d_minus_i == -1 ? -1 : doubling_d_minus[doubling_d_minus_i] );
 
     }
 

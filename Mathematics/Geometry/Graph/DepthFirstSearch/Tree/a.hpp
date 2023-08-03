@@ -13,22 +13,22 @@ class DepthFirstSearchOnTree :
 {
 
 private:
-  // メモリが厳しい場合、以下で不要なものを消す。
   int m_reversed[V_max];
 
-  vector<int> m_children[V_max];
-  int m_children_num[V_max];
+  vector<vector<int> > m_children;
+  vector<int> m_children_num;
   bool m_set_children;
 
-  int m_depth[V_max];
+  vector<int> m_depth;
+  bool m_set_depth;
 
-  int m_height[V_max];
+  vector<int> m_height;
   bool m_set_height;
 
-  int m_weight[V_max];
+  vector<int> m_weight;
   bool m_set_weight;
 
-  int m_doubling[digit][V_max];
+  vector<int> m_doubling[digit];
   bool m_set_doubling;
 
 public:
@@ -66,6 +66,7 @@ public:
   
 private:
   void SetChildren();
+  void SetDepth();
   void SetHeight();
   void SetWeight();
 
