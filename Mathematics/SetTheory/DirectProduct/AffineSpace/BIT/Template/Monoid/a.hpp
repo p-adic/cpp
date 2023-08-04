@@ -34,6 +34,7 @@ public:
   T IntervalProduct( const int& i_start , const int& i_final ) const;
 
   void Set( const int& i , const T& n );
+  void Set( T ( &&a )[N] );
 
   // 順序モノイド構造operator<( const T& , const T& )が定義されている時のみサポート。
   // g_eより小さくない要素のみを成分に持つ場合のみサポート。

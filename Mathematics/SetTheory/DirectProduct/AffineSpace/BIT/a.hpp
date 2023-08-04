@@ -1,8 +1,9 @@
 // c:/Users/user/Documents/Programming/Mathematics/SetTheory/DirectProduct/AffineSpace/BIT/a.hpp
 
 #pragma once
-
+// 配列の各要素がint型の範疇でも総和がそうでない場合はTをint型にすると正しく動作しないことに注意。
 // InitialSegmentSumで負の入力を扱うためにuintではなくintをテンプレート引数にする。
+
 // 使用演算：
 // T& T::operator=( const T& )
 // T& T::operator+=( const T& )
@@ -21,6 +22,7 @@ public:
   // const参照でないことに注意。
   inline T Get( const int& i ) const;
   inline void Set( const int& i , const T& n );
+  inline void Set( const T ( & a )[N] );
 
   inline BIT<T,N>& operator+=( const T ( & a )[N] );
   void Add( const int& i , const T& n );

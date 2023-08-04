@@ -4,10 +4,11 @@
 #include "a.hpp"
 
 template <TEMPLATE_ARGUMENTS_FOR_BIT> inline AbstractIntervalAddBIT<T,m_T,e_T,i_T,N>::AbstractIntervalAddBIT() : m_bit_0() , m_bit_1() {}
-template <TEMPLATE_ARGUMENTS_FOR_BIT> inline AbstractIntervalAddBIT<T,m_T,e_T,i_T,N>::AbstractIntervalAddBIT( const T ( & a )[N] ) : m_bit_0() , m_bit_1() { operator+=( a ); }
+template <TEMPLATE_ARGUMENTS_FOR_BIT> inline AbstractIntervalAddBIT<T,m_T,e_T,i_T,N>::AbstractIntervalAddBIT( const T ( &a )[N] ) : m_bit_0() , m_bit_1() { operator+=( a ); }
 
 template <TEMPLATE_ARGUMENTS_FOR_BIT> inline T AbstractIntervalAddBIT<T,m_T,e_T,i_T,N>::Get( const int& i ) const { return IntervalSum( i , i ); }
 template <TEMPLATE_ARGUMENTS_FOR_BIT> inline void AbstractIntervalAddBIT<T,m_T,e_T,i_T,N>::Set( const int& i , const T& n ) { Add( i , m_T( i_T( IntervalSum( i , i ) ) , n ) ); }
+template <TEMPLATE_ARGUMENTS_FOR_BIT> inline void AbstractIntervalAddBIT<T,m_T,e_T,i_T,N>::Set( const T ( &a )[N] ) { AbstractIntervalAddBIT<T,m_T,e_T,i_T,N> a_copy( a ); swap( m_bit_0 , a_copy.m_bit_0 ); swap( m_bit_1 , a_copy.m_bit_1 ); }
 
 template <TEMPLATE_ARGUMENTS_FOR_BIT> inline AbstractIntervalAddBIT<T,m_T,e_T,i_T,N>& AbstractIntervalAddBIT<T,m_T,e_T,i_T,N>::operator+=( const T ( & a )[N] ) { for( int i = 0 ; i < N ; i++ ){ Add( i , a[i] ); } return *this; }
 

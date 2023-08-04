@@ -10,7 +10,7 @@ template <TEMPLATE_ARGUMENTS_FOR_MONOID_BIT> inline const T& MonoidBIT<T,m_T,e_T
 
 template <TEMPLATE_ARGUMENTS_FOR_MONOID_BIT> inline MonoidBIT<T,m_T,e_T,N>::MonoidBIT() : m_a() , m_fenwick_0() , m_fenwick_1() { if( m_a[0] != g_e ){ for( int i = 0 ; i < N ; i++ ){ m_a[i] = g_e; } for( int j = 1 ; j <= N ; j++ ){ m_fenwick_0[j] = m_fenwick_1[j] = g_e; } } }
 
-template <TEMPLATE_ARGUMENTS_FOR_MONOID_BIT> inline MonoidBIT<T,m_T,e_T,N>::MonoidBIT( const T ( &a )[N] ) : m_init( n ) , m_a() , m_fenwick_0() , m_fenwick_1() 
+template <TEMPLATE_ARGUMENTS_FOR_MONOID_BIT> inline MonoidBIT<T,m_T,e_T,N>::MonoidBIT( const T ( &a )[N] ) : m_a() , m_fenwick_0() , m_fenwick_1() 
 {
 
   for( int i = 0 ; i < N ; i++ ){
@@ -55,7 +55,7 @@ template <TEMPLATE_ARGUMENTS_FOR_MONOID_BIT> inline MonoidBIT<T,m_T,e_T,N>::Mono
 
 }
 
-template <TEMPLATE_ARGUMENTS_FOR_MONOID_BIT> inline MonoidBIT<T,m_T,e_T,N>::MonoidBIT( T ( &&a )[N] ) : m_init( n ) , m_a() , m_fenwick_0() , m_fenwick_1() 
+template <TEMPLATE_ARGUMENTS_FOR_MONOID_BIT> inline MonoidBIT<T,m_T,e_T,N>::MonoidBIT( T ( &&a )[N] ) : m_a() , m_fenwick_0() , m_fenwick_1() 
 {
 
   swap( m_a , a );
@@ -176,6 +176,18 @@ void MonoidBIT<T,m_T,e_T,N>::Set( const int& i , const T& n )
 
   }
 
+  return;
+
+}
+
+template <TEMPLATE_ARGUMENTS_FOR_MONOID_BIT>
+void MonoidBIT<T,m_T,e_T,N>::Set( T ( &&a )[N] )
+{
+
+  MonoidBIT<T,m_T,e_T,N> a_copy{ move( a ) };
+  swap( m_a , a_copy.m_a );
+  swap( m_fenwick_0 , a_copy.m_fenwick_0 );
+  swap( m_fenwick_1 , a_copy.m_fenwick_1 );
   return;
 
 }

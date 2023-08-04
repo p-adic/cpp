@@ -20,11 +20,12 @@ private:
 
 public:
   inline IntervalAddBIT();
-  inline IntervalAddBIT( const T ( & a )[N] );
+  inline IntervalAddBIT( const T ( &a )[N] );
 
   // const参照でないことに注意。
   inline T Get( const int& i ) const;
   inline void Set( const int& i , const T& n );
+  inline void Set( const T ( &a )[N] );
 
   inline IntervalAddBIT<T,N>& operator+=( const T ( & a )[N] );
   inline void Add( const int& i , const T& n );

@@ -39,6 +39,7 @@ public:
   T IntervalSum( const int& i_start , const int& i_final ) const;
 
   void Set( const int& i , const T& n );
+  void Set( T ( &&a )[N] );
   void Add( const int& i , const T& n );
   void IntervalAdd( const int& i_start , const int& i_final , const T& n );
 

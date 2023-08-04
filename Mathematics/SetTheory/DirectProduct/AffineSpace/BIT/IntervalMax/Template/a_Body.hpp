@@ -181,6 +181,19 @@ void IdempotentMonoidBIT<T,m_T,e_T,N>::Set( const int& i , const T& n )
 }
 
 template <TEMPLATE_ARGUMENTS_FOR_IDEMPOTENT_MONOID_BIT>
+void IdempotentMonoidBIT<T,m_T,e_T,N>::Set( T ( &&a )[N] )
+{
+
+  IdempotentMonoidBIT<T,m_T,e_T,N> a_copy{ a };
+  swap( m_a , a_copy.m_a );
+  swap( m_fenwick_0 , a_copy.m_fenwick_0 );
+  swap( m_fenwick_1 , a_copy.m_fenwick_1 );
+  return;
+
+}
+
+
+template <TEMPLATE_ARGUMENTS_FOR_IDEMPOTENT_MONOID_BIT>
 void IdempotentMonoidBIT<T,m_T,e_T,N>::Add( const int& i , const T& n ) 
 {
 

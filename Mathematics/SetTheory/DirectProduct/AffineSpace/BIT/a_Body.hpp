@@ -31,6 +31,7 @@ BIT<T,N>::BIT( const T ( & a )[N] ) : m_fenwick()
 
 template <typename T , int N> inline T BIT<T,N>::Get( const int& i ) const { return IntervalSum( i , i ); }
 template <typename T , int N> inline void BIT<T,N>::Set( const int& i , const T& n ) { Add( i , n - IntervalSum( i , i ) ); }
+template <typename T , int N> inline void BIT<T,N>::Set( const T ( & a )[N] ) { BIT<T,N> a_copy{ a }; swap( m_fenwick , a_copy.m_fenwick ); }
 
 template <typename T , int N> inline BIT<T,N>& BIT<T,N>::operator+=( const T ( & a )[N] ) { for( int i = 0 ; i < N ; i++ ){ Add( i , a[i] ); } return *this; }
 
@@ -70,6 +71,7 @@ T BIT<T,N>::InitialSegmentSum( const int& i_final ) const
 }
 
 template <typename T , int N> inline T BIT<T,N>::IntervalSum( const int& i_start , const int& i_final ) const { return InitialSegmentSum( i_final ) - InitialSegmentSum( i_start - 1 ); }
+
 
 template <typename T , int N>
 int BIT<T,N>::BinarySearch( const T& n ) const
