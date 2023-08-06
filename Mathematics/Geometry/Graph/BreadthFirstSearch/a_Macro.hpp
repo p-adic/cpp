@@ -4,6 +4,7 @@
 
 // Resetはm_foundとm_prevを初期化
 // Shiftはm_foundとm_prevを非初期化
+// Breadth/DepthFirstConnectedComponentSearchは無向グラフの連結成分を色分け＆数え上げ
 #define DECLARATION_OF_FIRST_SEARCH( BREADTH )				\
   template <int V_max>							\
   class BREADTH ## FirstSearch_Body					\
@@ -49,7 +50,7 @@
 									\
   };									\
 									\
-  template <int V_max,list<int> E(const int&)> void BREADTH ## FirstConnectedComponent( const int& V , int ( &vertex )[V_max] , int& count ); \
+  template <int V_max,list<int> E(const int&)> void BREADTH ## FirstConnectedComponentSearch( const int& V , int ( &vertex )[V_max] , int& count ); \
 
 #define DEFINITION_OF_FIRST_SEARCH( BREADTH , PUSH )			\
   template <int V_max> inline BREADTH ## FirstSearch_Body<V_max>::BREADTH ## FirstSearch_Body( const int& V ) : m_V( V ) , m_init() , m_next() , m_found() , m_prev() { assert( m_V <= V_max ); for( int i = 0 ; i < m_V ; i++ ){ m_prev[i] = -1; } } \
@@ -120,7 +121,7 @@
 	bfs.Shift( i );							\
 	int j = bfs.Next();						\
 									\
-	while( j != -1 ? vertex[j] == 0 : false ){			\
+	while( j != -1 ? vertex[j] == -1 : false ){			\
 									\
 	  vertex[j] = count;						\
 	  j = bfs.Next();						\
