@@ -44,9 +44,9 @@ template <typename T , T m_T(const T&,const T&), T i_T(const T&) , list<int> E(c
 template <typename T , T m_T(const T&,const T&), T i_T(const T&) , int size_max> inline  T CumulativeProd_Body<T,m_T,i_T,size_max>::PathProd( const int& i , const int& j ) { const int k = LCA( i , j ); return m_T( m_T( m_a_reverse[i] , i_T( m_a[k] ) ) , k == 0 ? m_a[j] : m_T( i_T( m_a[Parent( k ) ] ) , m_a[j] )); }
 
 
-template <typename T , T m_T(const T&,const T&), T i_T(const T&) , int size_max> inline CumulativeProd<T,m_T,i_T,size_max>::Parent( const int& i ) { return i - 1; }
-template <typename T , T m_T(const T&,const T&), T i_T(const T&) , list<int> E(const int&) , int size_max , int digit> inline CumulativeProdOnTree<T,m_T,i_T,E,size_max,digit>::Parent( const int& i ) { return m_dfst.Parent( i ); }
+template <typename T , T m_T(const T&,const T&), T i_T(const T&) , int size_max> inline int CumulativeProd<T,m_T,i_T,size_max>::Parent( const int& i ) { return i - 1; }
+template <typename T , T m_T(const T&,const T&), T i_T(const T&) , list<int> E(const int&) , int size_max , int digit> inline int CumulativeProdOnTree<T,m_T,i_T,E,size_max,digit>::Parent( const int& i ) { return m_dfst.Parent( i ); }
 
 
-template <typename T , T m_T(const T&,const T&), T i_T(const T&) , int size_max> inline CumulativeProd<T,m_T,i_T,size_max>::LCA( const int& i , const int& j ) { return min( i , j ); }
-template <typename T , T m_T(const T&,const T&), T i_T(const T&) , list<int> E(const int&) , int size_max , int digit> inline CumulativeProdOnTree<T,m_T,i_T,E,size_max,digit>::LCA( const int& i , const int& j ) { return m_dfst.LCA( i , j ); }
+template <typename T , T m_T(const T&,const T&), T i_T(const T&) , int size_max> inline int CumulativeProd<T,m_T,i_T,size_max>::LCA( const int& i , const int& j ) { return min( i , j ); }
+template <typename T , T m_T(const T&,const T&), T i_T(const T&) , list<int> E(const int&) , int size_max , int digit> inline int CumulativeProdOnTree<T,m_T,i_T,E,size_max,digit>::LCA( const int& i , const int& j ) { return m_dfst.LCA( i , j ); }

@@ -31,6 +31,7 @@ private:
 // ’Êí‚Ì”z—ñã‚Ì—İÏÏB
 template <typename T , T m_T(const T&,const T&), T i_T(const T&) , int size_max>
 class CumulativeProd
+  public CumulativeProd_Body<T,m_T,i_T,size_max>
 {
 
 public:
@@ -54,6 +55,7 @@ private:
 // 2^18 = 262144
 template <typename T , T m_T(const T&,const T&), T i_T(const T&) , list<int> E(const int&) , int size_max , int digit>
 class CumulativeProdOnTree
+  public CumulativeProd_Body<T,m_T,i_T,size_max>
 {
 
 private:
