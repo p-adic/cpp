@@ -15,10 +15,10 @@ private:
   
 protected:
   ErrorType() noexcept;
-  virtual ~ErrorType();
 
 public:
   ErrorType( const ErrorType& ) noexcept;
+  virtual ~ErrorType();
 
 };
 
