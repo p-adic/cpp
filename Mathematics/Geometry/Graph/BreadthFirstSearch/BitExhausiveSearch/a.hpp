@@ -14,6 +14,7 @@ private:
   static map<int,int> g_v;
   
 public:
+  // Vは最大の集合に対応する整数+1（非負整数nの羃集合全体なら1<<n）
   inline BitExhausiveSearch( const int& V );
   
   inline list<int> UnreachedAdjacentSupsetOf( const int& t ) noexcept;
@@ -27,7 +28,6 @@ public:
 
   static inline list<int> AdjacentSubsetOf( const int& t ) noexcept;
   static inline list<int> ProperSubsetOf( const int& t ) noexcept;
-
 
   static inline const int& ValuationOf( const int& t ) noexcept;
 

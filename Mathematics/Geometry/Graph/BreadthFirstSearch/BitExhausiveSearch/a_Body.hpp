@@ -7,7 +7,7 @@
 
 template <int digit> map<int,int> BitExhausiveSearch<digit>::g_v{};
 
-template <int digit> inline BitExhausiveSearch<digit>::BitExhausiveSearch( const int& V ) : BASE_FOR_BIT_EXHAUSIVE_SEARCH( V , 0 ) {}
+template <int digit> inline BitExhausiveSearch<digit>::BitExhausiveSearch( const int& V ) : BASE_FOR_BIT_EXHAUSIVE_SEARCH( V , 0 ) { assert( ( V >> digit ) <= 1 ); }
 
 template <int digit> inline list<int> BitExhausiveSearch<digit>::UnreachedAdjacentSupsetOf( const int& t ) noexcept { return e( t ); }
 template <int digit> inline list<int> BitExhausiveSearch<digit>::e( const int& t ) { DEFINITION_OF_ADJACENT_SET( ~t , | , BASE_FOR_BIT_EXHAUSIVE_SEARCH::m_V , if( ! BASE_FOR_BIT_EXHAUSIVE_SEARCH::found( t_next ) ){ answer.push_back( t_next ); } ); }
