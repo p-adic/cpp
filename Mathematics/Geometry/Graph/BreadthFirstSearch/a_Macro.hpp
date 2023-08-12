@@ -5,6 +5,9 @@
 // Resetはm_foundとm_prevを初期化
 // Shiftはm_foundとm_prevを非初期化
 // Breadth/DepthFirstConnectedComponentSearchは無向グラフの連結成分を色分け＆数え上げ
+
+// Next()の反復でm_initから到達可能な頂点を全探索。
+// 計算量O((m_initの連結成分)+(m_initの連結成分におけるEのサイズの合計))
 #define DECLARATION_OF_FIRST_SEARCH( BREADTH )				\
   template <int V_max>							\
   class BREADTH ## FirstSearch_Body					\
