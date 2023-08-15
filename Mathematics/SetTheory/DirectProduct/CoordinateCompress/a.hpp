@@ -3,12 +3,12 @@
 #pragma once
 #include <map>
 
-template <typename T , int size_max>
+template <typename T>
 class CoordinateCompress
 {
 
 private:
-  T m_a[size_max];
+  vector<T> m_a;
   map<T,int> m_enum;
   bool m_compressed;
   int m_size;
@@ -16,8 +16,10 @@ private:
 public:
   inline CoordinateCompress();
   template <typename U , int length_max> inline CoordinateCompress( const U ( &a )[length_max] , const int& length );
+  template <typename U> inline CoordinateCompress( const vector<U>& a );
 
   template <typename U , int length_max> inline void Insert( const U ( &a )[length_max] , const int& length );
+  template <typename U> inline void Insert( const vector<U>& a );
 
   inline const T& GetSmallest( const int& i = 0 );
   inline const T& GetLargest( const int& i = 0 );
