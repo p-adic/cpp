@@ -18,6 +18,7 @@ public:
   template <typename U , int length_max> inline CoordinateCompress( const U ( &a )[length_max] , const int& length );
   template <typename U> inline CoordinateCompress( const vector<U>& a );
 
+  inline void Insert( const T& t );
   template <typename U , int length_max> inline void Insert( const U ( &a )[length_max] , const int& length );
   template <typename U> inline void Insert( const vector<U>& a );
 
