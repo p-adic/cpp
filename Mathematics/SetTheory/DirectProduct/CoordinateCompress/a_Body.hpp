@@ -4,12 +4,12 @@
 #include "a.hpp"
 
 template <typename T> inline CoordinateCompress<T>::CoordinateCompress() : m_a() , m_enum() , m_compressed() , m_size() {}
-template <typename T> template <typename U , int length_max> inline CoordinateCompress<T>::CoordinateCompress( const U ( &a )[length_max] , const int& length ) : CoordinateCompress() { Insert( a , length ); }
-template <typename T> template <typename U> inline CoordinateCompress<T>::CoordinateCompress( const vector<U>& a ) : CoordinateCompress() { Insert( a ); }
+template <typename T> template <typename U , int length_max> inline CoordinateCompress<T>::CoordinateCompress( const U ( &a )[length_max] , const int& length ) : CoordinateCompress() { insert( a , length ); }
+template <typename T> template <typename U> inline CoordinateCompress<T>::CoordinateCompress( const vector<U>& a ) : CoordinateCompress() { insert( a ); }
 
-template <typename T> inline void CoordinateCompress<T>::Insert( const T& t ) { m_enum[t]; m_size = m_enum.size(); m_compressed = false; }
-template <typename T> template <typename U , int length_max> inline void CoordinateCompress<T>::Insert( const U ( &a )[length_max] , const int& length ) { assert( length <= length_max ); if( length > 0 ){ for( int i = 0 ; i < length ; i++ ){ m_enum[ a[i] ]; } m_size = m_enum.size(); m_compressed = false; } }
-template <typename T> template <typename U> inline void CoordinateCompress<T>::Insert( const vector<U>& a ) { const int length = a.size(); if( length > 0 ){ for( int i = 0 ; i < length ; i++ ){ m_enum[ a[i] ]; } m_size = m_enum.size(); m_compressed = false; } }
+template <typename T> inline void CoordinateCompress<T>::insert( const T& t ) { m_enum[t]; m_size = m_enum.size(); m_compressed = false; }
+template <typename T> template <typename U , int length_max> inline void CoordinateCompress<T>::insert( const U ( &a )[length_max] , const int& length ) { assert( length <= length_max ); if( length > 0 ){ for( int i = 0 ; i < length ; i++ ){ m_enum[ a[i] ]; } m_size = m_enum.size(); m_compressed = false; } }
+template <typename T> template <typename U> inline void CoordinateCompress<T>::insert( const vector<U>& a ) { const int length = a.size(); if( length > 0 ){ for( int i = 0 ; i < length ; i++ ){ m_enum[ a[i] ]; } m_size = m_enum.size(); m_compressed = false; } }
 
 template <typename T> inline const T& CoordinateCompress<T>::GetSmallest( const int& i ) { if( ! m_compressed ){ Compress(); } assert( i < m_size ); return m_a[i]; }
 template <typename T> inline const T& CoordinateCompress<T>::GetLargest( const int& i ) { if( ! m_compressed ){ Compress(); } assert( i < m_size ); return m_a[m_size - i - 1]; }

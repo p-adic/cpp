@@ -3,6 +3,8 @@
 #pragma once
 #include <map>
 
+// verify: https://yukicoder.me/submissions/904160
+
 template <typename T>
 class CoordinateCompress
 {
@@ -18,9 +20,9 @@ public:
   template <typename U , int length_max> inline CoordinateCompress( const U ( &a )[length_max] , const int& length );
   template <typename U> inline CoordinateCompress( const vector<U>& a );
 
-  inline void Insert( const T& t );
-  template <typename U , int length_max> inline void Insert( const U ( &a )[length_max] , const int& length );
-  template <typename U> inline void Insert( const vector<U>& a );
+  inline void insert( const T& t );
+  template <typename U , int length_max> inline void insert( const U ( &a )[length_max] , const int& length );
+  template <typename U> inline void insert( const vector<U>& a );
 
   inline const T& GetSmallest( const int& i = 0 );
   inline const T& GetLargest( const int& i = 0 );
