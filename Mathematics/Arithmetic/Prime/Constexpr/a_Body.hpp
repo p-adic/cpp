@@ -3,28 +3,41 @@
 #pragma once
 #include "a.hpp"
 
-template <typename INT , INT val_limit , int length_max>
-inline constexpr PrimeEnumeration<INT,val_limit,length_max>::PrimeEnumeration() : m_val() , m_length( 0 )
+template <typename INT , INT val_limit , int length_max> inline constexpr PrimeEnumeration<INT,val_limit,length_max>::PrimeEnumeration() : m_is_composite() , m_val() , m_length( 0 )
 {
-
-  bool is_comp[val_limit] = {};
 
   for( INT i = 2 ; i < val_limit ; i++ ){
 
-    if( is_comp[i] == false ){
+    if( ! m_is_composite[i] ){
 
       INT j = i;
 
       while( ( j += i ) < val_limit ){
 
-	is_comp[j] = true;
+	m_is_composite[j] = true;
 
       }
 
       m_val[m_length++] = i;
+
+      if( m_length >= length_max ){
+
+	break;
+	
+      }
 
     }
 
   }
 
 }
+
+template <typename INT , INT val_limit , int length_max> inline constexpr const INT& PrimeEnumeration<INT,val_limit,length_max>::Get( const int& n ) const { assert( n < m_length ); return m_val[n]; }
+template <typename INT , INT val_limit , int length_max> inline constexpr const bool& PrimeEnumeration<INT,val_limit,length_max>::IsComposite( const int& i ) const { assert( i < val_limit ); return m_is_composite[i]; }
+template <typename INT , INT val_limit , int length_max> inline constexpr const int& PrimeEnumeration<INT,val_limit,length_max>::length() const noexcept { return m_length; }
+
+template <typename INT , INT val_limit , int length_max> inline constexpr PrimeCounting<INT,val_limit,length_max>::PrimeCounting( const PrimeEnumeration<INT,val_limit,length_max>& pe ) : m_val{ 0 , 0 } { int temp = 0; for( int i = 2 ; i < val_limit ; i++ ){ m_val[i] = pe.IsComposite( i ) ? temp : ++temp; } }
+
+template <typename INT , INT val_limit , int length_max> inline constexpr const int& PrimeCounting<INT,val_limit,length_max>::Pi( const int& i ) const { assert( i < val_limit ); return m_val[i]; }
+
+
