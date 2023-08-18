@@ -180,12 +180,10 @@ void SetPrimeFactorisation( const PrimeEnumeration<INT,val_limit,length_max>& pr
       P.push_back( p );
       exponent.push_back( 1 );
       INT& exponent_back = exponent.back();
-      n_copy /= p;
     
-      while( n_copy % p == 0 ){
+      while( ( n_copy /= p ) % p == 0 ){
 
 	exponent_back++;
-	n_copy /= p;
       
       }
 
@@ -314,6 +312,7 @@ void SetPrimeFactorisation( const PrimeEnumeration<INT,val_limit,length_max>& pr
 
     P.push_back( n_copy );
     exponent.push_back( 1 );
+    P_power.push_back( n_copy );
     
   }
   
