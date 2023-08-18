@@ -3,6 +3,7 @@
 #pragma once
 #include "a_Macro.hpp"
 
+// メモリが不足する場合はEの定義を前計算しないでその都度計算させること。
 template <typename T , typename U , list<pair<T,U> > E(const T&) , int size_max>
 class DijkstraBody
 {
@@ -72,7 +73,7 @@ class MemorisationDijkstra :
 {
 
 public:
-  inline MemorisationDijkstra( const int& size , const U& infty = 2147483647 , const U& found = -1 );
+  inline MemorisationDijkstra( const int& size , const U& infty = 9223372036854775807 , const U& found = -1 );
   
 private:
   inline const U& Unit() const;
@@ -96,7 +97,7 @@ class EnumerationDijkstra :
 {
 
 public:
-  inline EnumerationDijkstra( const int& size , const U& infty = 2147483647 , const U& found = -1 );
+  inline EnumerationDijkstra( const int& size , const U& infty = 9223372036854775807 , const U& found = -1 );
   
 private:
   inline const U& Unit() const;
