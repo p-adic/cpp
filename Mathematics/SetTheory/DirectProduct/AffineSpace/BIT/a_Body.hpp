@@ -6,10 +6,12 @@
 // BinarySearchÇ…égÇ§ÅB
 #include "../SegmentTree/Power/a_Body.hpp"
 
-template <typename T , int N> inline BIT<T,N>::BIT() : m_fenwick() {}
+template <typename T , int N> inline BIT<T,N>::BIT() : m_fenwick() { static_assert( ! is_same<T,int>::value ); }
 template <typename T , int N>
 BIT<T,N>::BIT( const T ( & a )[N] ) : m_fenwick()
 {
+
+  static_assert( ! is_same<T,int>::value );
 
   for( int j = 1 ; j <= N ; j++ ){
 
