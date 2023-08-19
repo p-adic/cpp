@@ -3,6 +3,8 @@
 #pragma once
 #include "a_Macro.hpp"
 
+// verify: https://yukicoder.me/submissions/882687
+
 // メモリが不足する場合はEの定義を前計算しないでその都度計算させること。
 template <typename T , typename U , list<pair<T,U> > E(const T&) , int size_max>
 class DijkstraBody
