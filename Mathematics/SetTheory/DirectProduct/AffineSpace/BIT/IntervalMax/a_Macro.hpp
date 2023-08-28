@@ -277,9 +277,7 @@
     return;								\
 									\
   }									\
-
-
-#define DEFINITION_OF_BINARY_SEARCH_FOR_INTERVAL_MAX_BIT( MAX , INEQUALITY ) \
+									\
   template <typename T , int N>						\
   void Interval ## MAX ## BIT<T,N>::IntervalSet ## MAX( const int& i_start , const int& i_final , const T& n ) \
   {									\
@@ -333,7 +331,8 @@
 									\
     return;								\
   }									\
-									\
+
+#define DEFINITION_OF_BINARY_SEARCH_FOR_INTERVAL_MAX_BIT( MAX , INEQUALITY ) \
   template <typename T , int N>						\
   void Interval ## MAX ## BIT<T,N> int BIT<T>::BinarySearch( const T& n ) const	\
   {									\
