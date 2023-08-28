@@ -166,7 +166,7 @@
     }									\
 									\
     const T& a_centre = m_a[j-1];					\
-    ( j_min <= j_max && answer < a_centre ) ? answer = a_centre : answer; \
+    ( j_min <= j_max && answer INEQUALITY a_centre ) ? answer = a_centre : answer; \
     j = j_max;								\
     j_next = j - ( j & - j );						\
 									\
