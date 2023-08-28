@@ -13,7 +13,7 @@
     T m_fenwick_1[N + 1];						\
 									\
   public:								\
-    inline Interval ## MAX ## BIT( const T& n );			\
+    inline Interval ## MAX ## BIT( const T& n = T() );			\
     inline Interval ## MAX ## BIT( const T& n , const T ( &a )[N] );	\
     inline Interval ## MAX ## BIT( const T& n , T ( &&a )[N] );		\
 									\
@@ -22,6 +22,7 @@
     T Interval ## MAX( const int& i_start , const int& i_final ) const;	\
 									\
     void Set( const int& i , const T& n );				\
+    void Set( const T& n );						\
     void Set( const T& n , T ( &&a )[N] );				\
     void Set ## MAX( const int& i , const T& n );			\
     void IntervalSet ## MAX( const int& i_start , const int& i_final , const T& n ); \
@@ -217,6 +218,19 @@
       Set ## MAX( i , n );						\
     }									\
 									\
+    return;								\
+									\
+  }									\
+									\
+  template <typename T , int N>						\
+  void Interval ## MAX ## BIT<T,N>::Set( const T& n )			\
+  {									\
+									\
+    Interval ## MAX ## BIT<T,N> a_copy{ n };				\
+    swap( m_init , a_copy.m_init );					\
+    swap( m_a , a_copy.m_a );						\
+    swap( m_fenwick_0 , a_copy.m_fenwick_0 );				\
+    swap( m_fenwick_1 , a_copy.m_fenwick_1 );				\
     return;								\
 									\
   }									\
