@@ -3,6 +3,15 @@
 #pragma once
 #include "a_Macro.hpp"
 
+// verify: https://yukicoder.me/submissions/909162
+
+// 写像f:T->Uとcast U->Tの合成のループ検出を行う。
+// fとcastの合成の像の要素数がlength_max以下の場合にのみサポート。
+
+// 反復合成O(loop_start+(n-loop_start)%loop_length)
+// 像の要素数取得O(1)（ただしループ検出前の時のみO(loop_start+loop_length)）
+// ループ始点取得O(1)（ただしループ検出前の時のみO(loop_start+loop_length)）
+// ループ長取得O(1)（ただしループ検出前の時のみO(loop_start+loop_length)）
 template <typename T , typename U , U f(const T&) , int length_max>
 class LoopDetectionBody
 {
@@ -22,13 +31,16 @@ public:
   template <SFINAE_FOR_LOOP_DETECTION_BODY( = nullptr )> inline LoopDetectionBody( const T& init );
   template <typename INT> T IteratedComposition( const INT& n );
 
-  inline const int& GetLength() const noexcept;
-  inline const int& GetLoopStart() const noexcept;
-  inline const int& GetLoopLength() const noexcept;
-  void SearchLoopStart();
+  // 像の要素数取得
+  inline const int& GetLength() noexcept;
+  // ループ始点取得
+  inline const int& GetLoopStart() noexcept;
+  // ループ長取得
+  inline const int& GetLoopLength() noexcept;
   
 private:
   inline void SetInit();
+  void SearchLoop();
   virtual T e( const int& i );
   virtual int e_inv( const T& t );
   virtual void SetValue( const int& i );

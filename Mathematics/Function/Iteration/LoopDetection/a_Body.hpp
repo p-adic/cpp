@@ -35,18 +35,20 @@ T LoopDetectionBody<T,U,f,length_max>::IteratedComposition( const INT& n )
 
 }
 
-template <typename T , typename U , U f(const T&) , int length_max> inline const int& LoopDetectionBody<T,U,f,length_max>::GetLength() const noexcept { return m_length; }
-template <typename T , typename U , U f(const T&) , int length_max> inline const int& LoopDetectionBody<T,U,f,length_max>::GetLoopStart() const noexcept { return m_loop_start; }
-template <typename T , typename U , U f(const T&) , int length_max> inline const int& LoopDetectionBody<T,U,f,length_max>::GetLoopLength() const noexcept { return m_loop_length; }
+template <typename T , typename U , U f(const T&) , int length_max> inline const int& LoopDetectionBody<T,U,f,length_max>::GetLength() noexcept { if( m_loop_length == -1 ){ SearchLoop(); } return m_length; }
+template <typename T , typename U , U f(const T&) , int length_max> inline const int& LoopDetectionBody<T,U,f,length_max>::GetLoopStart() noexcept { if( m_loop_start == -1 ){ SearchLoop(); } return m_loop_start; }
+template <typename T , typename U , U f(const T&) , int length_max> inline const int& LoopDetectionBody<T,U,f,length_max>::GetLoopLength() noexcept { if( m_loop_length == -1 ){ SearchLoop(); } return m_loop_length; }
+
+template <typename T , typename U , U f(const T&) , int length_max> inline void LoopDetectionBody<T,U,f,length_max>::SetInit() { assert( m_length == 0 ); SetValue( e_inv( m_init ) ); }
 
 template <typename T , typename U , U f(const T&) , int length_max>
-void LoopDetectionBody<T,U,f,length_max>::SearchLoopStart()
+void LoopDetectionBody<T,U,f,length_max>::SearchLoop()
 {
 
-  assert( m_loop_start == -1 );
+  assert( m_loop_length == -1 );
   int n = 0;
   
-  while( m_loop_start == -1 ){
+  while( m_loop_length == -1 ){
 
     IteratedComposition( n++ );
     
@@ -55,8 +57,6 @@ void LoopDetectionBody<T,U,f,length_max>::SearchLoopStart()
   return;
 
 }
-
-template <typename T , typename U , U f(const T&) , int length_max> inline void LoopDetectionBody<T,U,f,length_max>::SetInit() { assert( m_length == 0 ); SetValue( e_inv( m_init ) ); }
 
 template <typename T , typename U , U f(const T&) , int length_max>
 T LoopDetectionBody<T,U,f,length_max>::e( const int& i )
