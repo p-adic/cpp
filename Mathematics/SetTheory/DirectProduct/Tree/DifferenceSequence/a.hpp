@@ -2,9 +2,10 @@
 
 #pragma once
 
-// （多次元）数列に対するimos法
+// 数列に対するimos法
 // https://imoz.jp/algorithms/imos_method.html
-// を森上のモノイド値関数と羃等演算つき集合からの準同型の組に一般化したデータ構造。
+// を森V上のモノイドT値関数と羃等演算つき集合Uからの準同型Actionの組(T,U,Action)
+// に一般化したデータ構造。
 template <typename V , typename T , typename U , int size_max>
 class DifferenceSequenceBody
 {
@@ -25,7 +26,7 @@ public:
   // 作用の遅延評価を解消せずに元々の値を参照する。
   inline U& Ref( const V& v );
 
-  // vでの値にnを遅延評価せずに加算する。
+  // vでの値にuを遅延評価せずに加算する。
   inline void Add( const V& v , const U& u );
 
   // 要件
@@ -35,7 +36,7 @@ public:
   // 条件
   // (1) v_startからvへの有向パスが存在する。
   // (2) v_finalのいずれの要素からもvへの有向パスが存在しない。
-  // を満たすVの各要素vに対し、vでの値にnを遅延評価で加算する。
+  // を満たすVの各要素vに対し、vでの値にuを遅延評価で加算する。
   void SubTreeAdd( const V& v_start , const list<V>& v_final , const U& u );
 
   inline DifferenceSequenceBody<V,T,U,size_max>& operator+=( const DifferenceSequenceBody<V,T,U,size_max>& a );
@@ -54,6 +55,9 @@ private:
   virtual T& Action( const U& u , T& t ) const = 0;
 
 };
+
+
+// 通常の配列上の階差数列。
 
 // 入力の範囲内で要件
 // (6) (T,operator+:T^2->T,T(),operator-:T->T)は可換群である。
@@ -77,8 +81,8 @@ class DifferenceSequence :
 
 public:
   inline DifferenceSequence( const int& size );
-  inline DifferenceSequence( const int& size , const T ( &a )[size_max] );
-  inline DifferenceSequence( const int& size , T ( &&a )[size_max] );
+  inline DifferenceSequence( const T ( &a )[size_max] , const int& size );
+  inline DifferenceSequence( T ( &&a )[size_max] , const int& size );
 
   inline void InitialSegmentAdd( const int& v_start , const T& u );
   inline void FinalSegmentAdd( const int& v_final , const T& u );
@@ -97,6 +101,9 @@ private:
 
 };
 
+
+// 森上の階差数列。
+
 // 入力の範囲内で要件
 // (1) グラフ(V,E)は有向グラフとして各連結成分が根つき木である。
 // (2) (V,E)の各辺v0->v1に対しv0 = E_inv(v1)が成り立つ。
@@ -106,7 +113,7 @@ private:
 // (6) (T,m_T:T^2->T,e_T:1->T)は可換モノイドである。
 // (7) (U,inv_U:U->U)は羃等演算つき集合である。
 // (8) o_U:U×T->Tは(U,inv_U)から(T,m_T,e_T)の可逆元全体の群への準同型とm_Tの合成である。
-// が成り立つ場合にのみサポート。
+// が成り立つ場合にのみサポート。（例えばTが可換群でU=Tでo_UがただのTの演算）
 
 // e_T()による初期化O(size_max)
 
@@ -133,21 +140,5 @@ private:
   inline T& Addition( const T& t0 , T& t1 ) const;
   inline U Inverse( const U& u ) const;
   inline T& Action( const U& u , T& t ) const;
-
-};
-
-template <typename T , int size_max>
-class MultiDimensionalDifferenceSequence :
-  public DifferenceSequence<T,size_max>
-{
-
-public:
-  inline MultiDimensionalDifferenceSequence( const int& size );
-
-  template <typename... Args> inline void IntervalAdd( const int& v_start , const int& v_final , const Args&... args );
-  template <typename... Args> inline void IntervalSubtract( const int& v_start , const int& v_final , const Args&... args );
-
-private:
-  inline T Inverse( const T& u ) const = delete;
 
 };

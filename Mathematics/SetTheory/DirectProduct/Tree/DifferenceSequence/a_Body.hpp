@@ -24,7 +24,7 @@ template <typename T , int size_max> inline DifferenceSequence<T,size_max>::Diff
 
 }
 
-template <typename T , int size_max> inline DifferenceSequence<T,size_max>::DifferenceSequence( const int& size , const T ( &a )[size_max] ) :
+template <typename T , int size_max> inline DifferenceSequence<T,size_max>::DifferenceSequence( const T ( &a )[size_max] , const int& size ) :
   DifferenceSequenceBody<int,T,T,size_max>( size )
 {
 
@@ -50,7 +50,7 @@ template <typename T , int size_max> inline DifferenceSequence<T,size_max>::Diff
   
 }
 
-template <typename T , int size_max> inline DifferenceSequence<T,size_max>::DifferenceSequence( const int& size , T ( &&a )[size_max] ) :
+template <typename T , int size_max> inline DifferenceSequence<T,size_max>::DifferenceSequence( T ( &&a )[size_max] , const int& size ) :
   DifferenceSequenceBody<int,T,T,size_max>( size )
 {
 
@@ -88,9 +88,6 @@ template <typename V , list<V> E(const V&) , V E_inv(const V&) , V enum_V(const 
   }
 
 }
-
-template <typename T , int size_max> inline MultiDimensionalDifferenceSequence<T,size_max>::MultiDimensionalDifferenceSequence( const int& size ) :
-  DifferenceSequence<T,size_max>( size ) {}
 
 template <typename V , typename T , typename U , int size_max> inline void DifferenceSequenceBody<V,T,U,size_max>::Set( const V& v , const U& u ) { Update(); m_a[e_inv(v)] = u; }
 template <typename V , typename T , typename U , int size_max> inline const U& DifferenceSequenceBody<V,T,U,size_max>::Get( const V& v ) { Update(); return m_a[e_inv(v)]; }
@@ -131,10 +128,8 @@ void DifferenceSequenceBody<V,T,U,size_max>::SubTreeAdd( const V& v_start , cons
 template <typename T , int size_max> inline void DifferenceSequence<T,size_max>::InitialSegmentAdd( const int& v_start , const T& u ) { SubTreeAdd( v_start , {} , u ); }
 template <typename T , int size_max> inline void DifferenceSequence<T,size_max>::FinalSegmentAdd( const int& v_final , const T& u ) { IntervalAdd( 0 , v_final , u ); }
 template <typename T , int size_max> inline void DifferenceSequence<T,size_max>::IntervalAdd( const int& v_start , const int& v_final , const T& u ) { SubTreeAdd( v_start , { v_final } , u ); }
-template <typename T , int size_max> template <typename... Args> inline void MultiDimensionalDifferenceSequence<T,size_max>::IntervalAdd( const int& v_start , const int& v_final , const Args&... args ) { using base = DifferenceSequence<T,size_max>; base::m_a[v_start].IntervalAdd( args... ); int w = v_final + 1; if( w < base::m_size ){ base::m_a[w].IntervalSubtract( args... ); } }
 
 template <typename T , int size_max> inline void DifferenceSequence<T,size_max>::IntervalSubtract( const int& v_start , const int& v_final , const T& u ) { SubTreeAdd( v_start , { v_final } , -u ); }
-template <typename T , int size_max> template <typename... Args> inline void MultiDimensionalDifferenceSequence<T,size_max>::IntervalSubtract( const int& v_start , const int& v_final , const Args&... args ) { using base = DifferenceSequence<T,size_max>; base::m_a[v_start].IntervalSubtract( args... ); int w = v_final + 1; if( w < base::m_size ){ base::m_a[w].IntervalAdd( args... ); } }
 
 
 template <typename V , typename T , typename U , int size_max>
