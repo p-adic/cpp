@@ -11,13 +11,13 @@ void AutoCheck( bool& auto_checked )
   vector<string> problems{};
   int problems_size = 0;
   ASK_NUMBER(
-	     "提出用ファイルを実行する。" ,
-	     "提出済みファイルをデバッグする。" ,
-	     "ライブラリーを探索する。"
+	     "��o�p�t�@�C�������s����B" ,
+	     "��o�ς݃t�@�C�����f�o�b�O����B" ,
+	     "���C�u�����[��T������B"
 	     );
   if( num == num_temp++ ){
     auto_checked = false;
-    CERR( "提出用ファイルを実行します。" );
+    CERR( "��o�p�t�@�C�������s���܂��B" );
   } else if( num == num_temp++ ){
     CALL_AC( DebugHint );
   } else if( num == num_temp++ ){
@@ -25,66 +25,69 @@ void AutoCheck( bool& auto_checked )
   }
   CERR( "" );
 }
+
 AC( DebugHint )
 {
   ASK_NUMBER(
-	     "WAのデバッグ" ,
-	     "REのデバッグ" ,
-	     "TLEのデバッグ" ,
-	     "MLEのデバッグ"
+	     "WA�̃f�o�b�O" ,
+	     "RE�̃f�o�b�O" ,
+	     "TLE�̃f�o�b�O" ,
+	     "MLE�̃f�o�b�O"
 	     );
   if( num == num_temp++ ){
-    CERR( "- operator<<()をint型に適用していませんか？" );
-    CERR( "- イベント管理にsetを使っていませんか？" );
-    CERR( "  - keyに狭義全順序を用いる場合、" );
-    CERR( "    - 同一keyの処理を同時に行うならばmapを検討しましょう。" );
-    CERR( "    - 同一keyの処理を同時に行わないならばmultisetを検討しましょう。" );
-    CERR( "  - keyに狭義全順序の積順序を用いる場合、mapの入れ子を検討しましょう。" );
-    CERR( "- 動的計画法においてindexのswapやmodを用いてメモリ削減を行う場合、" );
-    CERR( "  各ループの最初にdpテーブルの初期化をし忘れていませんか？" );
-    CERR( "- 番兵の設定忘れか設定ミスをしていませんか？" );
-    CERR( "- マルチテストケースで配列にstaticをつけて値が持ち越されていませんか？" );
-    CERR( "- cLay使用畤にsetmod以前に10^9+7より大きい値を代入していませんか？" );
+    CERR( "- operator<<()��int�^�ɓK�p���Ă��܂��񂩁H" );
+    CERR( "- �C�x���g�Ǘ���set���g���Ă��܂��񂩁H" );
+    CERR( "  - key�ɋ��`�S������p����ꍇ�A" );
+    CERR( "    - ����key�̏����𓯎��ɍs���Ȃ��map���������܂��傤�B" );
+    CERR( "    - ����key�̏����𓯎��ɍs��Ȃ��Ȃ��multiset���������܂��傤�B" );
+    CERR( "  - key�ɋ��`�S�����̐Ϗ�����p����ꍇ�Amap�̓���q���������܂��傤�B" );
+    CERR( "- ���I�v��@�ɂ�����index��swap��mod��p���ă������팸���s���ꍇ�A" );
+    CERR( "  �e���[�v�̍ŏ���dp�e�[�u���̏����������Y��Ă��܂��񂩁H" );
+    CERR( "- �ԕ��̐ݒ�Y�ꂩ�ݒ�~�X�����Ă��܂��񂩁H" );
+    CERR( "- �}���`�e�X�g�P�[�X�Ŕz���static�����Ēl�������z����Ă��܂��񂩁H" );
+    CERR( "- cLay�g�p�^��setmod�ȑO��10^9+7���傫���l�������Ă��܂��񂩁H" );
     CERR( "" );
-    CERR( "原因に心当たりがない場合はランダムテストを検討しましょう。" );
+    CERR( "�����ɐS�����肪�Ȃ��ꍇ�̓����_���e�X�g���������܂��傤�B" );
   } else if( num == num_temp++ ){
-    CERR( "- 制約を間違えてassertしていませんか？" );
-    CERR( "- 配列外参照していませんか？" );
-    CERR( "  - 座標圧縮畤に圧縮前の添字操作と圧縮後の添字操作を混同していませんか？" );
-    CERR( "  - グラフや座標圧縮の操作で存在しない座標-1の場合分けを忘れていませんか？" );
-    CERR( "- 二分探索マクロで探索値が存在しない場合を回避し忘れていませんか？" );
-    CERR( "- イテレータを範囲外まで--/++していませんか？" );
-    CERR( "- 0で割っていませんか？" );
+    CERR( "- ������ԈႦ��assert���Ă��܂��񂩁H" );
+    CERR( "- �z��O�Q�Ƃ��Ă��܂��񂩁H" );
+    CERR( "  - ���W���k�^�Ɉ��k�O�̓Y������ƈ��k��̓Y��������������Ă��܂��񂩁H" );
+    CERR( "  - �O���t����W���k�̑���ő��݂��Ȃ����W-1�̏ꍇ������Y��Ă��܂��񂩁H" );
+    CERR( "- �񕪒T���}�N���ŒT���l�����݂��Ȃ��ꍇ��������Y��Ă��܂��񂩁H" );
+    CERR( "- �C�e���[�^��͈͊O�܂�--/++���Ă��܂��񂩁H" );
+    CERR( "- multiset��count���g���Ă��܂��񂩁H" );
+    CERR( "- 0�Ŋ����Ă��܂��񂩁H" );
   } else if( num == num_temp++ ){
-    CERR( "- マルチテストケースでデータ構造の初期化が反復されていませんか？" );
-    CERR( "- whileループで添字等の更新忘れによる無限ループはありませんか？" );
-    CERR( "- 重過ぎる定数倍を考慮し忘れてませんか？" );
-    CERR( "  - bool値の処理はbit演算による並列化を検討しましょう。" );
-    CERR( "  - 変数の和や積に上限があるグリッド問題は動的配列を検討しましょう。" );
-    CERR( "- リアクティブ問題でflushと改行をし忘れていませんか？" );
+    CERR( "- �}���`�e�X�g�P�[�X�Ńf�[�^�\���̏���������������Ă��܂��񂩁H" );
+    CERR( "- while���[�v�œY�����̍X�V�Y��ɂ�閳�����[�v�͂���܂��񂩁H" );
+    CERR( "- �d�߂���萔�{���l�����Y��Ă܂��񂩁H" );
+    CERR( "  - bool�l�̏�����bit���Z�ɂ����񉻂��������܂��傤�B" );
+    CERR( "  - �ϐ��̘a��ςɏ��������O���b�h���͓��I�z����������܂��傤�B" );
+    CERR( "- ���A�N�e�B�u����flush�Ɖ��s�����Y��Ă��܂��񂩁H" );
   } else if( num == num_temp++ ){
-    CERR( "- グラフで辺を持ち過ぎていませんか？" );
-    CERR( "- （多重）配列でサイズが10^6を大幅に上回ってませんか？" );
-    CERR( "  - データ構造は座標圧縮を検討しましょう。" );
-    CERR( "  - 動的計画法は初期化忘れに注意して添字のswapやmodを検討しましょう。" );
-    CERR( "- Python使用畤に変数名の重複による型エラーが起きてませんか？" );
-    CERR( "  - rangeのRと[L,R)のRの重複は後者に[l,r)を用いて解消しましょう。" );
-    CERR( "  - 素数のPと順列のPの重複は後者にAやQを用いて解消しましょう。" );
-    CERR( "- Python使用畤に桁数が大きくなり過ぎていませんか？" );
+    CERR( "- �O���t�ŕӂ������߂��Ă��܂��񂩁H" );
+    CERR( "- �i���d�j�z��ŃT�C�Y��10^6��啝�ɏ����Ă܂��񂩁H" );
+    CERR( "  - �f�[�^�\���͍��W���k���������܂��傤�B" );
+    CERR( "  - ���I�v��@�͏������Y��ɒ��ӂ��ēY����swap��mod���������܂��傤�B" );
+    CERR( "- Python�g�p�^�ɕϐ����̏d���ɂ��^�G���[���N���Ă܂��񂩁H" );
+    CERR( "  - range��R��[L,R)��R�̏d���͌�҂�[l,r)��p���ĉ������܂��傤�B" );
+    CERR( "  - �f����P�Ə����P�̏d���͌�҂�A��Q��p���ĉ������܂��傤�B" );
+    CERR( "- Python�g�p�^�Ɍ������傫���Ȃ�߂��Ă��܂��񂩁H" );
   }
   CERR( "" );
-  CERR( "提出済みファイルのデバッグは以上です。終了します。" );
+  CERR( "��o�ς݃t�@�C���̃f�o�b�O�͈ȏ�ł��B�I�����܂��B" );
 }
+
 AC( LibrarySearch )
 {
   ASK_NUMBER(
-	     "明示式の計算問題" ,
-	     "最大／最小化問題" ,
-	     "数え上げ問題" ,
-	     "求解問題" ,
-	     "クエリ処理問題" ,
-	     "真偽判定問題" ,
-	     "構築問題"
+	     "�������̌v�Z���" ,
+	     "�ő�^�ŏ������" ,
+	     "�����グ���" ,
+	     "������" ,
+	     "�N�G���������" ,
+	     "�^�U������" ,
+	     "�\�z���"
 	     );
   if( num == num_temp++ ){
     CALL_AC( ExplicitExpression );
@@ -101,32 +104,33 @@ AC( LibrarySearch )
   } else if( num == num_temp++ ){
     CALL_AC( Construction );
   }
-  ASK_YES_NO( "マルチテストケースですか？" );
+  ASK_YES_NO( "�}���`�e�X�g�P�[�X�ł����H" );
   if( reply == "y" ){
-    CERR( "テストケースを跨ぐ前計算が可能か否かを優先的に考察しましょう。" );
+    CERR( "�e�X�g�P�[�X���ׂ��O�v�Z���\���ۂ���D��I�ɍl�@���܂��傤�B" );
     CERR( "" );
-    CERR( "テストケース全体でのNの総和に直接上限が与えられている問題では、" );
-    CERR( "ライブラリーの使用時は配列の初期化が各テストケースに必要となる場合に" );
-    CERR( "TLEとなる可能性が高いです。" );
-    CERR( "- 動的配列への置き換え" );
-    CERR( "- 座標圧縮" );
+    CERR( "�e�X�g�P�[�X�S�̂ł�N�̑��a�ɒ��ڏ�����^�����Ă�����ł́A" );
+    CERR( "���C�u�����[�̎g�p���͔z��̏��������e�e�X�g�P�[�X�ɕK�v�ƂȂ�ꍇ��" );
+    CERR( "TLE�ƂȂ�\���������ł��B" );
+    CERR( "- ���I�z��ւ̒u������" );
+    CERR( "- ���W���k" );
     CERR( "  \\Mathematics\\SetTheory\\DirectProduct\\CoordinateCompress" );
-    CERR( "を検討しましょう。" );
+    CERR( "���������܂��傤�B" );
     CERR( "" );
   }
-  CERR( "ライブラリー探索は以上です。終了します。" );
+  CERR( "���C�u�����[�T���͈ȏ�ł��B�I�����܂��B" );
 }
+
 AC( ExplicitExpression )
 {
   ASK_NUMBER(
-	     "１変数関数／数列の計算問題" ,
-	     "配列上の関数の総和の計算問題" ,
-	     "順列上の関数の計算問題" ,
-	     "木上の関数の総和の計算問題" ,
-	     "木以外のグラフ上の関数の計算問題" ,
-	     "序数の計算問題" ,
-	     "確率／期待値の計算問題" ,
-	     "その他の明示式の計算問題"
+	     "�P�ϐ��֐��^����̌v�Z���" ,
+	     "�z���̊֐��̑��a�̌v�Z���" ,
+	     "�����̊֐��̌v�Z���" ,
+	     "�؏�̊֐��̑��a�̌v�Z���" ,
+	     "�؈ȊO�̃O���t��̊֐��̌v�Z���" ,
+	     "�����̌v�Z���" ,
+	     "�m���^���Ғl�̌v�Z���" ,
+	     "���̑��̖������̌v�Z���"
 	     );
   if( num == num_temp++ ){
     CALL_AC( ExplicitExpressionUnary );
@@ -146,12 +150,13 @@ AC( ExplicitExpression )
     CALL_AC( ExplicitExpressionOther );
   }
 }
+
 AC( ExplicitExpressionUnary )
 {
   ASK_NUMBER(
-	     "線形漸化式の問題" ,
-	     "１変数関数の反復合成の問題" ,
-	     "その他の１変数関数の計算問題"
+	     "���`�Q�����̖��" ,
+	     "�P�ϐ��֐��̔��������̖��" ,
+	     "���̑��̂P�ϐ��֐��̌v�Z���"
 	     );
   if( num == num_temp++ ){
     CALL_AC( ExplicitExpressionUnaryLinearRecursion );
@@ -160,195 +165,207 @@ AC( ExplicitExpressionUnary )
   } else if( num == num_temp++ ){
     CALL_AC( ExplicitExpressionUnaryOther );
   }
-  CERR( "を検討しましょう。" );
+  CERR( "���������܂��傤�B" );
 }
+
 AC( ExplicitExpressionUnaryLinearRecursion )
 {
-  CERR( "L項間線形漸化式a_n=sum(i,0,L){c_i a_{n-L+i}}が与えられているとします。" );
+  CERR( "L���Ԑ��`�Q����a_n=sum(i,0,L){c_i a_{n-L+i}}���^�����Ă���Ƃ��܂��B" );
   CERR( "" );
-  CERR( "適宜Z/B Zの型" );
+  CERR( "�K�XZ/B Z�̌^" );
   CERR( "\\Mathematics\\Arithmetic\\Mod\\ConstexprModulo" );
   CERR( "\\Mathematics\\Arithmetic\\Mod\\QuotientRing" );
-  CERR( "を用いて" );
-  CERR( "- O(LN)が間に合いそうならば直近L+1項をメモ化する動的計画法" );
-  CERR( "- O(L^2 log N)が間に合いそうならば行列累乗" );
+  CERR( "��p����" );
+  CERR( "- O(LN)���Ԃɍ��������Ȃ�Β���L+1�������������铮�I�v��@" );
+  CERR( "- O(L^2 log N)���Ԃɍ��������Ȃ�΍s��ݏ�" );
   CERR( "  \\Mathematics\\LinearAlgebra" );
-  CERR( "- 係数列(c_i)_iが定数列でO(N log N)が間に合いそうならば区間加算BIT" );
+  CERR( "- �W����(c_i)_i���萔���O(N log N)���Ԃɍ��������Ȃ�΋�ԉ��ZBIT" );
   CERR( "  \\Mathematics\\SetTheory\\DirectProduct\\AffineSpace\\BIT\\IntervalAddo" );
-  CERR( "- 係数列(c_i)_iが単調でD階差分が定数列でO((N+L)D)が間に合いそうならば" );
-  CERR( "  「係数列のd階Δ^d(c_i)_i差分と(a_i)_{i=n-L+d+1}^{n}の内積dp[n][d]」" );
-  CERR( "  を管理する動的計画法" );
+  CERR( "- �W����(c_i)_i���P����D�K�������萔���O((N+L)D)���Ԃɍ��������Ȃ��" );
+  CERR( "  �u�W�����d�K��^d(c_i)_i������(a_i)_{i=n-L+d+1}^{n}�̓���dp[n][d]�v" );
+  CERR( "  ���Ǘ����铮�I�v��@" );
 }
+
 AC( ExplicitExpressionUnaryIteration )
 {
-  CERR( "定義域の要素数N、テストケース数T、反復回数の上限Kとします。" );
-  CERR( "- O((N + T)log_2 K)が通りそうならばダブリング" );
+  CERR( "��`��̗v�f��N�A�e�X�g�P�[�X��T�A�����񐔂̏��K�Ƃ��܂��B" );
+  CERR( "- O((N + T)log_2 K)���ʂ肻���Ȃ�΃_�u�����O" );
   CERR( "  \\Mathematics\\Function\\Iteration\\Doubling" );
-  CERR( "- O(TN)が通りそうならばループ検出" );
+  CERR( "- O(TN)���ʂ肻���Ȃ�΃��[�v���o" );
   CERR( "  \\Mathematics\\Function\\Iteration\\LoopDetection" );
-  CERR( "- O(N)すら通らなさそうならば関数の規則性を見付けるための実験" );
+  CERR( "- O(N)����ʂ�Ȃ������Ȃ�Ί֐��̋K���������t���邽�߂̎���" );
 }
+
 AC( ExplicitExpressionUnaryOther )
 {
-  CERR( "まずは小さい入力の場合を愚直に計算し、OEISで検索しましょう。" );
+  CERR( "�܂��͏��������͂̏ꍇ���𒼂Ɍv�Z���AOEIS�Ō������܂��傤�B" );
   CERR( "https://oeis.org/?language=japanese" );
   CERR( "" );
-  CERR( "次に出力の定義と等価な式を考察しましょう。" );
-  CERR( "- 単調ならば、冪乗や階乗" );
-  CERR( "- 定義にp進法が使われていれば、各種探索アルゴリズム" );
-  CERR( "- 入力が素数に近い場合に規則性があれば、p進付値、p進法、" );
-  CERR( "  オイラー関数、約数の個数など" );
-  CERR( "を検討しましょう。" );
+  CERR( "���ɏo�͂̒�`�Ɠ����Ȏ����l�@���܂��傤�B" );
+  CERR( "- �P���Ȃ�΁A�p���K��" );
+  CERR( "- ��`��p�i�@���g���Ă���΁A�e��T���A���S���Y��" );
+  CERR( "- ���͂��f���ɋ߂��ꍇ�ɋK����������΁Ap�i�t�l�Ap�i�@�A" );
+  CERR( "  �I�C���[�֐��A�񐔂̌��Ȃ�" );
+  CERR( "���������܂��傤�B" );
   CERR( "" );
-  CERR( "前計算の候補としては" );
-  CERR( "- 素数列挙" );
-  CERR( "- １つまたは複数の整数の約数列挙" );
-  CERR( "- オイラー関数の値の列挙" );
-  CERR( "- サブゴールとなる関係式を満たす解の列挙" );
+  CERR( "�O�v�Z�̌��Ƃ��Ă�" );
+  CERR( "- �f����" );
+  CERR( "- �P�܂��͕����̐����̖񐔗�" );
+  CERR( "- �I�C���[�֐��̒l�̗�" );
+  CERR( "- �T�u�S�[���ƂȂ�֌W���𖞂������̗�" );
 }
+
 AC( ExplicitExpressionArraySum )
 {
   ASK_NUMBER(
-	     "成分を受け取る関数の総和の計算問題" ,
-	     "部分列を受け取る関数の総和の計算問題"
+	     "�������󂯎��֐��̑��a�̌v�Z���" ,
+	     "��������󂯎��֐��̑��a�̌v�Z���"
 	     );
   if( num == num_temp++ ){
-    CERR( "成分を受け取る関数fが与えられているとします。" );
-    CERR( "fが一次式の場合、実質内積と定数の和となります。" );
-    CERR( "内積は片方の添え字を反転させることで畳み込みに帰着させることができます。" );
-    CERR( "配列への操作がシフトである場合は繰り返し内積を求めることになるので、" );
-    CERR( "適当な法での高速フーリエ変換" );
+    CERR( "�������󂯎��֐�f���^�����Ă���Ƃ��܂��B" );
+    CERR( "f���ꎟ���̏ꍇ�A�������ςƒ萔�̘a�ƂȂ�܂��B" );
+    CERR( "���ς͕Е��̓Y�����𔽓]�����邱�Ƃŏ�ݍ��݂ɋA�������邱�Ƃ��ł��܂��B" );
+    CERR( "�z��ւ̑��삪�V�t�g�ł���ꍇ�͌J��Ԃ����ς����߂邱�ƂɂȂ�̂ŁA" );
+    CERR( "�K���Ȗ@�ł̍����t�[���G�ϊ�" );
     CERR( "\\Mathematics\\Arithmetic\\Mod" );
     CERR( "\\Mathematics\\Polynoial" );
-    CERR( "を検討しましょう。" );
+    CERR( "���������܂��傤�B" );
   } else if( num == num_temp++ ){
     ASK_NUMBER(
-	       "連続部分列への分割に関する関数の総和の計算問題" ,
-	       "連続とは限らない部分列への分割に関する関数の総和の計算問題"
+	       "�A��������ւ̕����Ɋւ���֐��̑��a�̌v�Z���" ,
+	       "�A���Ƃ͌���Ȃ�������ւ̕����Ɋւ���֐��̑��a�̌v�Z���"
 	       );
     if( num == num_temp++ ){
-      CERR( "配列の添字集合は全順序集合なので、木の分割の問題に一般化されます。" );
+      CERR( "�z��̓Y���W���͑S�����W���Ȃ̂ŁA�؂̕����̖��Ɉ�ʉ�����܂��B" );
       CALL_AC( ExplicitExpressionFunctionOnTree );
       CERR( "" );
-      CERR( "更にfが部分列の長さに関する再帰的な構造を持つ場合、全ての連続部分列に" );
-      CERR( "対しfの値を前計算することを検討しましょう。" );
+      CERR( "�X��f��������̒����Ɋւ���ċA�I�ȍ\�������ꍇ�A�S�Ă̘A���������" );
+      CERR( "�΂�f�̒l��O�v�Z���邱�Ƃ��������܂��傤�B" );
     } else if( num == num_temp++ ){
-      CERR( "配列の並び換えによって答えが変わらないので、適切にソートしてから" );
-      CERR( "計算することを検討しましょう。" );
+      CERR( "�z��̕��ъ����ɂ���ē������ς��Ȃ��̂ŁA�K�؂Ƀ\�[�g���Ă���" );
+      CERR( "�v�Z���邱�Ƃ��������܂��傤�B" );
     }
   }
   CERR( "" );
-  CERR( "入力が大きい場合と小さい場合で解法を変える考察を忘れないようにしましょう。" );
+  CERR( "���͂��傫���ꍇ�Ə������ꍇ�ŉ�@��ς���l�@��Y��Ȃ��悤�ɂ��܂��傤�B" );
 }
+
 AC( ExplicitExpressionFunctionOnPermutation )
 {
-  CERR( "- 符号そのものの計算問題は" );
-  CERR( "  - O(N log_2 N)やO(N^2)が間に合いそうなら転倒数の計算" );
-  CERR( "  - O(N log_2 N)が間に合わなさそうなら互換表示（O(N)）" );
-  CERR( "- 符号と何かの積の和は行列式に帰着させ、" );
-  CERR( "  - 行列式そのものなら行基本変形（O(N^3)）" );
-  CERR( "  - 余因子展開の途中の値が必要ならメモ化再帰（O(N 2^N)）" );
-  CERR( "を検討しましょう。" );
+  CERR( "- �������̂��̂̌v�Z����" );
+  CERR( "  - O(N log_2 N)��O(N^2)���Ԃɍ��������Ȃ�]�|���̌v�Z" );
+  CERR( "  - O(N log_2 N)���Ԃɍ���Ȃ������Ȃ�݊��\���iO(N)�j" );
+  CERR( "- �����Ɖ����̐ς̘a�͍s�񎮂ɋA�������A" );
+  CERR( "  - �s�񎮂��̂��̂Ȃ�s��{�ό`�iO(N^3)�j" );
+  CERR( "  - �]���q�W�J�̓r���̒l���K�v�Ȃ烁�����ċA�iO(N 2^N)�j" );
+  CERR( "���������܂��傤�B" );
   CERR( "" );
-  CERR( "１つの順列の転倒数は、" );
-  CERR( "- O(N^2)が通りそうならば愚直な二重ループ" );
-  CERR( "- O(N log_2 N)が通りそうならば可換群BIT" );
+  CERR( "�P�̏���̓]�|���́A" );
+  CERR( "- O(N^2)���ʂ肻���Ȃ�΋𒼂ȓ�d���[�v" );
+  CERR( "- O(N log_2 N)���ʂ肻���Ȃ�Ή��QBIT" );
   CERR( "  \\Mathematics\\Combinatorial\\Permutation" );
   CERR( "  \\Mathematics\\SetTheory\\DirectProduct\\AffineSpace\\BIT" );
-  CERR( "で計算しましょう。" );
+  CERR( "�Ōv�Z���܂��傤�B" );
   CERR( "" );
-  CERR( "条件を満たす順列全体をわたる転倒数の総和／期待値は、" );
-  CERR( "各i<jごとにそこで転倒が生じる順列の個数を計算し、その総和／期待値を" );
-  CERR( "取りましょう。条件が良ければ、転倒が生じる順列の個数は転倒が生じるとは" );
-  CERR( "限らない順列の個数の半分となります。" );
+  CERR( "�����𖞂�������S�̂��킽��]�|���̑��a�^���Ғl�́A" );
+  CERR( "�ei<j���Ƃɂ����œ]�|�������鏇��̌����v�Z���A���̑��a�^���Ғl��" );
+  CERR( "���܂��傤�B�������ǂ���΁A�]�|�������鏇��̌��͓]�|��������Ƃ�" );
+  CERR( "����Ȃ�����̌��̔����ƂȂ�܂��B" );
 }
+
 AC( ExplicitExpressionFunctionOnTree )
 {
   CALL_AC( FunctionOnTree );
   CERR( "" );
-  CERR( "部分木に関する良い遷移関係を探し、（全方位）木DP" );
+  CERR( "�����؂Ɋւ���ǂ��J�ڊ֌W��T���A�i�S���ʁj��DP" );
   CERR( "\\Mathematics\\Geometry\\Graph\\DepthFirstSearch\\Tree" );
-  CERR( "を検討しましょう。" );
-  ASK_YES_NO( "fがbit演算である問題ですか？" );
+  CERR( "���������܂��傤�B" );
+  ASK_YES_NO( "f��bit���Z�ł�����ł����H" );
   if( reply == "y" ){
-    CERR( "「Tの各ノードvを根とする部分木でのj桁目のbit状態sの個数dp[v][s][j]」" );
-    CERR( "を管理するv,s,jに関する動的計画法を検討しましょう。" );
-    CERR( "これはTが全順序集合でbit演算が1種類なら" );
-    CERR( "「第i成分で切った部分列でのj桁目のbitがs（=0,1）である個数dp[i][s][j]」" );
-    CERR( "を管理することに他なりません。" );
+    CERR( "�uT�̊e�m�[�hv�����Ƃ��镔���؂ł�j���ڂ�bit���s�̌�dp[v][s][j]�v" );
+    CERR( "���Ǘ�����v,s,j�Ɋւ��铮�I�v��@���������܂��傤�B" );
+    CERR( "�����T���S�����W����bit���Z��1��ނȂ�" );
+    CERR( "�u��i�����Ő؂���������ł�j���ڂ�bit��s�i=0,1�j�ł����dp[i][s][j]�v" );
+    CERR( "���Ǘ����邱�Ƃɑ��Ȃ�܂���B" );
   }
 }
+
 AC( FunctionOnTree )
 {
-  CERR( "木を受け取る関数fが与えられているとします。" );
+  CERR( "�؂��󂯎��֐�f���^�����Ă���Ƃ��܂��B" );
   CERR( "" );
-  CERR( "木Tの分割Pに対し、Pの各成分pを渡るf(p)の総和をF(P)と置きます。" );
-  CERR( "Tに根を固定し、深さ優先探索でTの頂点にラベルづけをします。" );
+  CERR( "��T�̕���P�ɑ΂��AP�̊e����p��n��f(p)�̑��a��F(P)�ƒu���܂��B" );
+  CERR( "T�ɍ����Œ肵�A�[���D��T����T�̒��_�Ƀ��x���Â������܂��B" );
   CERR( "" );
-  CERR( "Pの各成分pに対しpの各頂点のラベルの最小値をD(p)と置き、" );
-  CERR( "Dについて昇順にPを並べます。" );
+  CERR( "P�̊e����p�ɑ΂�p�̊e���_�̃��x���̍ŏ��l��D(p)�ƒu���A" );
+  CERR( "D�ɂ��ď�����P����ׂ܂��B" );
   CERR( "" );
-  CERR( "Pの末尾成分pを削除した分割P'が元の木からpを削除した木の分割であり" );
-  CERR( "F(P)=F(P')+f(p)と表せることに注意しましょう。" );
+  CERR( "P�̖�������p���폜��������P'�����̖؂���p���폜�����؂̕����ł���" );
+  CERR( "F(P)=F(P')+f(p)�ƕ\���邱�Ƃɒ��ӂ��܂��傤�B" );
 }
+
 AC( ExplicitExpressionFunctionOnNonTreeGraph )
 {
-  CERR( "- 部分集合上の関数の計算問題は" );
-  CERR( "  - O(N 2^N)が間に合いそうなら高速ゼータ変換／メビウス変換" );
+  CERR( "- �����W����̊֐��̌v�Z����" );
+  CERR( "  - O(N 2^N)���Ԃɍ��������Ȃ獂���[�[�^�ϊ��^���r�E�X�ϊ�" );
   CERR( "    \\Mathematics\\Combinatorial\\ZetaTransform" );
-  CERR( "  - O(N^2)が間に合いそうで要素数にのみ依存するならマーラー変換" );
+  CERR( "  - O(N^2)���Ԃɍ��������ŗv�f���ɂ݈̂ˑ�����Ȃ�}�[���[�ϊ�" );
   CERR( "    \\Mathematics\\Combinatorial\\ZetaTransform\\MahlerTransform" );
-  CERR( "- その他の順序集合上の関数の計算問題はゼータ変換／メビウス変換" );
+  CERR( "- ���̑��̏����W����̊֐��̌v�Z���̓[�[�^�ϊ��^���r�E�X�ϊ�" );
   CERR( "  \\Mathematics\\Combinatorial\\ZetaTransform" );
-  CERR( "を検討しましょう。" );
+  CERR( "���������܂��傤�B" );
 }
+
 AC( ExplicitExpressionOrder )
 {
-  CERR( "集合Sを何らかの順序でソートした配列aに関する問題で、" );
-  CERR( "- 与えられた要素sが下から何番目かを答える場合は、" );
-  CERR( "  - 各iごとにa[i]が求められるならば、iに関する二分探索" );
-  CERR( "  - そうでないならば、s未満の項の数え上げ" );
-  CERR( "- 与えられたiに対するa[i]を答える場合は、" );
-  CERR( "  Sの各要素sごとにs未満の項を数え上げてsに関する二分探索" );
-  CERR( "を検討しましょう。" );
+  CERR( "�W��S�����炩�̏����Ń\�[�g�����z��a�Ɋւ�����ŁA" );
+  CERR( "- �^����ꂽ�v�fs�������牽�Ԗڂ��𓚂���ꍇ�́A" );
+  CERR( "  - �ei���Ƃ�a[i]�����߂���Ȃ�΁Ai�Ɋւ���񕪒T��" );
+  CERR( "  - �����łȂ��Ȃ�΁As�����̍��̐����グ" );
+  CERR( "- �^����ꂽi�ɑ΂���a[i]�𓚂���ꍇ�́A" );
+  CERR( "  S�̊e�v�fs���Ƃ�s�����̍��𐔂��グ��s�Ɋւ���񕪒T��" );
+  CERR( "���������܂��傤�B" );
   CERR( "" );
-  CERR( "辞書式順序でs未満の項の数え上げをする際は、" );
-  CERR( "「sとd文字目で初めてズレるl文字の項の総数count[d][l]」" );
-  CERR( "のdとlをわたる総和を求めましょう。" );
+  CERR( "������������s�����̍��̐����グ������ۂ́A" );
+  CERR( "�us��d�����ڂŏ��߂ăY����l�����̍��̑���count[d][l]�v" );
+  CERR( "��d��l���킽�鑍�a�����߂܂��傤�B" );
 }
+
 AC( ExplicitExpressionProbability )
 {
-  CERR( "- 確率計算は" );
-  CERR( "  - 余事象や包除原理（高速ゼータ変換／メビウス変換）" );;
+  CERR( "- �m���v�Z��" );
+  CERR( "  - �]���ۂ������i�����[�[�^�ϊ��^���r�E�X�ϊ��j" );;
   CERR( "    \\Mathematics\\Combinatorial\\ZetaTransform" );
-  CERR( "  - 同様に確からしい事象の特定" );
-  CERR( "  - ベイズの定理" );
-  CERR( "- 期待値計算は" );
-  CERR( "  - 上記方法での確率計算" );
-  CERR( "  - 対象を独立な和で表して線形性" );
-  CERR( "を検討しましょう。" );
+  CERR( "  - ���l�Ɋm���炵�����ۂ̓���" );
+  CERR( "  - �x�C�Y�̒藝" );
+  CERR( "- ���Ғl�v�Z��" );
+  CERR( "  - ��L���@�ł̊m���v�Z" );
+  CERR( "  - �Ώۂ�Ɨ��Șa�ŕ\���Đ��`��" );
+  CERR( "���������܂��傤�B" );
 }
+
 AC( ExplicitExpressionOther )
 {
-  CERR( "- 出力の定義と等価な式への変形" );
-  CERR( "  - 和の順序交換" );
-  CERR( "  - 同じ値になる項の纏め上げ" );
-  CERR( "  - 二項展開や積の和典型などの組み合わせ論的解釈" );
+  CERR( "- �o�͂̒�`�Ɠ����Ȏ��ւ̕ό`" );
+  CERR( "  - �a�̏�������" );
+  CERR( "  - �����l�ɂȂ鍀�̓Z�ߏグ" );
+  CERR( "  - �񍀓W�J��ς̘a�T�^�Ȃǂ̑g�ݍ��킹�_�I����" );
   CERR( "    https://ei1333.hateblo.jp/entry/2021/07/30/144201" );
-  CERR( "- 和の動く範囲の差分に注目した動的計画法" );
-  CERR( "を検討しましょう。" );
+  CERR( "- �a�̓����͈͂̍����ɒ��ڂ������I�v��@" );
+  CERR( "���������܂��傤�B" );
 }
+
 AC( Maximisation )
 {
   ASK_NUMBER(
-	     "低次元アフィン空間上の関数の最大／最小化問題" ,
-	     "配列上の関数の最大／最小化問題" ,
-	     "配列の隣接成分間関係式を満たす部分列の最長化問題" ,
-	     "木上の関数の最大／最小化問題" ,
-	     "移動コスト最小化問題" ,
-	     "文字列のマッチングに関する最大／最長化問題" ,
-	     "最大二部マッチング問題" ,
-	     "確率／期待値の最大化問題"
+	     "�᎟���A�t�B����ԏ�̊֐��̍ő�^�ŏ������" ,
+	     "�z���̊֐��̍ő�^�ŏ������" ,
+	     "�z��̗אڐ����Ԋ֌W���𖞂���������̍Œ������" ,
+	     "�؏�̊֐��̍ő�^�ŏ������" ,
+	     "�ړ��R�X�g�ŏ������" ,
+	     "������̃}�b�`���O�Ɋւ���ő�^�Œ������" ,
+	     "�ő�񕔃}�b�`���O���" ,
+	     "�m���^���Ғl�̍ő剻���"
 	     );
   if( num == num_temp++ ){
     CALL_AC( MaximisationFunctionOnAffineSpace );
@@ -368,37 +385,39 @@ AC( Maximisation )
     CALL_AC( MaximisationProbability );
   }
 }
+
 AC( MaximisationFunctionOnAffineSpace )
 {
   ASK_NUMBER(
-	     "凸関数の最小／最大化問題" ,
-	     "可微分関数の最小／最大化問題" ,
-	     "絶対値の最小／最大化問題"
+	     "�ʊ֐��̍ŏ��^�ő剻���" ,
+	     "�����֐��̍ŏ��^�ő剻���" ,
+	     "��Βl�̍ŏ��^�ő剻���"
 	     );
   if( num == num_temp++ ){
-    CERR( "三分探索を検討しましょう。" );
+    CERR( "�O���T�����������܂��傤�B" );
   } else if( num == num_temp++ ){
-    CERR( "ニュートン法を検討しましょう。" );
+    CERR( "�j���[�g���@���������܂��傤�B" );
   } else if( num == num_temp++ ){
-    CERR( "符号を用いて絶対値を外しましょう。" );
-    CERR( "- 単調な式に帰着できる場合、二分探索" );
-    CERR( "- 最大化問題の場合、符号パターンの全探策" );
-    CERR( "- マンハッタン距離などは一次変換" );
-    CERR( "を検討しましょう。" );
+    CERR( "������p���Đ�Βl���O���܂��傤�B" );
+    CERR( "- �P���Ȏ��ɋA���ł���ꍇ�A�񕪒T��" );
+    CERR( "- �ő剻���̏ꍇ�A�����p�^�[���̑S�T��" );
+    CERR( "- �}���n�b�^�������Ȃǂ͈ꎟ�ϊ�" );
+    CERR( "���������܂��傤�B" );
   }
   CERR( "" );
-  CERR( "複数のパラメータを決定すべき場合は、サブゴールの式の値を決め打ちましょう。" );
+  CERR( "�����̃p�����[�^�����肷�ׂ��ꍇ�́A�T�u�S�[���̎��̒l�����ߑł��܂��傤�B" );
 }
+
 AC( MaximisationFunctionOnArray )
 {
   ASK_NUMBER(
-	     "問題文または入力で与えられる１つの配列に関する問題" ,
-	     "条件を満たす任意の配列に関する問題"
+	     "��蕶�܂��͓��͂ŗ^������P�̔z��Ɋւ�����" ,
+	     "�����𖞂����C�ӂ̔z��Ɋւ�����"
 	     );
   if( num == num_temp++ ){
     ASK_NUMBER(
-	       "成分を受け取る関数の部分和の最大化問題" ,
-	       "配列の変更と配列を受け取る関数の合成の最大化問題"
+	       "�������󂯎��֐��̕����a�̍ő剻���" ,
+	       "�z��̕ύX�Ɣz����󂯎��֐��̍����̍ő剻���"
 	       );
     if( num == num_temp++ ){
       CALL_AC( MaximisationSubArraySum );
@@ -406,149 +425,158 @@ AC( MaximisationFunctionOnArray )
       CALL_AC( MaximisationArrayFunction );
     }
   } else if( num == num_temp++ ){
-    CERR( "- 取り得る値が少なく関数が長さに関して再帰的構造を持つ場合は、" );
-    CERR( "  「長さiの時に可能な値全体または一部の集合dp[i]」" );
-    CERR( "  を管理するiに関する動的計画法" );
-    CERR( "- 「v以上の値を取り得るか否か」が判定可能である時は" );
-    CERR( "  vに関する二分探索" );
-    CERR( "を検討しましょう。" );
+    CERR( "- ��蓾��l�����Ȃ��֐��������Ɋւ��čċA�I�\�������ꍇ�́A" );
+    CERR( "  �u����i�̎��ɉ\�Ȓl�S�̂܂��͈ꕔ�̏W��dp[i]�v" );
+    CERR( "  ���Ǘ�����i�Ɋւ��铮�I�v��@" );
+    CERR( "- �uv�ȏ�̒l����蓾�邩�ۂ��v������\�ł��鎞��" );
+    CERR( "  v�Ɋւ���񕪒T��" );
+    CERR( "���������܂��傤�B" );
   }
 }
+
 AC( MaximisationSubArraySum )
 {
-  CERR( "項数N、選択回数上限M、価値（和を取る値）上限Vとします。" );
+  CERR( "����N�A�I���񐔏��M�A���l�i�a�����l�j���V�Ƃ��܂��B" );
   ASK_NUMBER(
-	     "各選択のコスト上限が存在しないか一定の問題" ,
-	     "選択ごとにコストの上限が異なる問題"
+	     "�e�I���̃R�X�g��������݂��Ȃ������̖��" ,
+	     "�I�����ƂɃR�X�g�̏�����قȂ���"
 	     );
   if( num == num_temp++ ){
-    CERR( "各選択のコスト上限が存在する場合、その上限以下の項だけを考えましょう。" );
-    CERR( "コストの総和上限Cとします。C=∞ならば通常のナップサック問題と" );
-    CERR( "同様の動的計画法で良いので、以下C<∞の場合を考えます。" );
-    CERR( "- O(2^N)が通りそうならば愚直に全探策" );
-    CERR( "- O(N 2^{N/2})が通りそうならば半分全列挙" );
-    CERR( "- コストと価値が等しくO(NV)が通りそうならば[C-V,C+V]での実現可能性を" );
-    CERR( "  遷移する動的計画法" );
+    CERR( "�e�I���̃R�X�g��������݂���ꍇ�A���̏���ȉ��̍��������l���܂��傤�B" );
+    CERR( "�R�X�g�̑��a���C�Ƃ��܂��BC=���Ȃ�Βʏ�̃i�b�v�T�b�N����" );
+    CERR( "���l�̓��I�v��@�ŗǂ��̂ŁA�ȉ�C<���̏ꍇ���l���܂��B" );
+    CERR( "- O(2^N)���ʂ肻���Ȃ�΋𒼂ɑS�T��" );
+    CERR( "- O(N 2^{N/2})���ʂ肻���Ȃ�Δ����S��" );
+    CERR( "- �R�X�g�Ɖ��l��������O(NV)���ʂ肻���Ȃ��[C-V,C+V]�ł̎����\����" );
+    CERR( "  �J�ڂ��铮�I�v��@" );
     CERR( "  https://stackoverflow.com/a/18949218" );
-    CERR( "- コストと価値が等しくO((N+C)log_2 C)が通りそうならば" );
-    CERR( "  適当な法での畳み込み（確率的解法）" );
+    CERR( "- �R�X�g�Ɖ��l��������O((N+C)log_2 C)���ʂ肻���Ȃ��" );
+    CERR( "  �K���Ȗ@�ł̏�ݍ��݁i�m���I��@�j" );
     CERR( "  \\Mathematics\\Polynomial" );
-    CERR( "- コストと価値が等しくなくO(C^2)が通りそうならば" );
-    CERR( "  「コストcの項の価値の最大値v[c]」" );
-    CERR( "  を前計算し" );
-    CERR( "  「コストの総和がc以下の時の価値の最大値dp[c]」" );
-    CERR( "  を管理するcに関する動的計画法" );
-    CERR( "を検討しましょう。" );
+    CERR( "- �R�X�g�Ɖ��l���������Ȃ�O(C^2)���ʂ肻���Ȃ��" );
+    CERR( "  �u�R�X�gc�̍��̉��l�̍ő�lv[c]�v" );
+    CERR( "  ��O�v�Z��" );
+    CERR( "  �u�R�X�g�̑��a��c�ȉ��̎��̉��l�̍ő�ldp[c]�v" );
+    CERR( "  ���Ǘ�����c�Ɋւ��铮�I�v��@" );
+    CERR( "���������܂��傤�B" );
   } else if( num == num_temp++ ){
-    CERR( "コストの次元をK<=2、n項目のコストをC_nとし、" );
-    CERR( "m選択目ではC_n[k_m]<=D_mを満たす項nを選べるとします。" );
+    CERR( "�R�X�g�̎�����K<=2�An���ڂ̃R�X�g��C_n�Ƃ��A" );
+    CERR( "m�I��ڂł�C_n[k_m]<=D_m�𖞂�����n��I�ׂ�Ƃ��܂��B" );
     CERR( "" );
-    CERR( "項{C_n,n}と選択{k_m,D_m}をそれぞれ辞書式順序でソートし、" );
-    CERR( "以下の手順で選択を昇順に決定していきましょう。" );
-    CERR( "- K=1の場合、各選択では可能な選択の中で最大のものを採用しましょう。" );
-    CERR( "- K=2の場合、各選択では可能な選択の{第2成分,項番号}をsetで管理しつつ" );
-    CERR( "  その中で最大のものを採用しましょう。" );
+    CERR( "��{C_n,n}�ƑI��{k_m,D_m}�����ꂼ�ꎫ���������Ń\�[�g���A" );
+    CERR( "�ȉ��̎菇�őI���������Ɍ��肵�Ă����܂��傤�B" );
+    CERR( "- K=1�̏ꍇ�A�e�I���ł͉\�ȑI���̒��ōő�̂��̂��̗p���܂��傤�B" );
+    CERR( "- K=2�̏ꍇ�A�e�I���ł͉\�ȑI����{��2����,���ԍ�}��set�ŊǗ�����" );
+    CERR( "  ���̒��ōő�̂��̂��̗p���܂��傤�B" );
   }
 }
+
 AC( MaximisationArrayFunction )
 {
-  CERR( "配列を受け取る関数Fが与えられているとします。与えられた配列Aに" );
-  CERR( "何らかの処理をして得られる配列Bに対するF(B)の最大化問題は、" );
-  CERR( "最大化すべき式のサブゴールfに表れる項xのうち決め打ちやすいものを探しましょう。" );
-  CERR( "- 配列の長さをiで打ち切った時のxの候補数をX(i)" );
-  CERR( "- 配列の長さをiで打ち切ってxを決め打った時の配列の長さi+1でのxの候補数をdX(i)" );
-  CERR( "と置きます。" );
-  CERR( "- O(sum_i X(i) dX(i))が通りそうでfがxからO(1)で計算できるならば、" );
-  CERR( "  iとxに関する動的計画法" );
-  CERR( "- O(N log_2 X(N))が通りそうで" );
-  CERR( "  - fがxからO(N)で計算できxに関して単調ならば、xの二分探索" );
-  CERR( "  - fがxからO(N/x)で計算できるならば、xの全探索" );
-  CERR( "- O(N log_2 N)が通りそうでxを並び替えるとfがxからO(log_2 N)で計算できるならば、" );
-  CERR( "  優先度つきキューなどでのxの管理" );
-  CERR( "を検討しましょう。" );
+  CERR( "�z����󂯎��֐�F���^�����Ă���Ƃ��܂��B�^����ꂽ�z��A��" );
+  CERR( "���炩�̏��������ē�����z��B�ɑ΂���F(B)�̍ő剻���́A" );
+  CERR( "�ő剻���ׂ����̃T�u�S�[��f�ɕ\��鍀x�̂������ߑł��₷�����̂�T���܂��傤�B" );
+  CERR( "- �z��̒�����i�őł��؂�������x�̌�␔��X(i)" );
+  CERR( "- �z��̒�����i�őł��؂���x�����ߑł������̔z��̒���i+1�ł�x�̌�␔��dX(i)" );
+  CERR( "�ƒu���܂��B" );
+  CERR( "- O(sum_i X(i) dX(i))���ʂ肻����f��x����O(1)�Ōv�Z�ł���Ȃ�΁A" );
+  CERR( "  i��x�Ɋւ��铮�I�v��@" );
+  CERR( "- O(N log_2 X(N))���ʂ肻����" );
+  CERR( "  - f��x����O(N)�Ōv�Z�ł�x�Ɋւ��ĒP���Ȃ�΁Ax�̓񕪒T��" );
+  CERR( "  - f��x����O(N/x)�Ōv�Z�ł���Ȃ�΁Ax�̑S�T��" );
+  CERR( "- O(N log_2 N)���ʂ肻����x����ёւ����f��x����O(log_2 N)�Ōv�Z�ł���Ȃ�΁A" );
+  CERR( "  �D��x���L���[�Ȃǂł�x�̊Ǘ�" );
+  CERR( "���������܂��傤�B" );
 }
+
 AC( MaximisationArrayLength )
 {
-  CERR( "全順序か疎な半順序かで効率的な実装が違います。" );
-  CERR( "- 全順序ならば、条件を満たす部分列の長さの最大値をインデックスに持つ" );
-  CERR( "  配列を用いて、それらの部分列の末尾である項を記録すること" );
+  CERR( "�S�������a�Ȕ��������Ō����I�Ȏ������Ⴂ�܂��B" );
+  CERR( "- �S�����Ȃ�΁A�����𖞂���������̒����̍ő�l���C���f�b�N�X�Ɏ���" );
+  CERR( "  �z���p���āA�����̕�����̖����ł��鍀���L�^���邱��" );
   CERR( "  \\Mathematics\\Combinatorial\\Counting\\IncreasingSubsequence" );
-  CERR( "- 疎な半順序ならば、条件を満たす部分列の末尾をインデックスに持つ" );
-  CERR( "  連想配列を用いて、それら部分列の長さの最大値を記録すること" );
+  CERR( "- �a�Ȕ������Ȃ�΁A�����𖞂���������̖������C���f�b�N�X�Ɏ���" );
+  CERR( "  �A�z�z���p���āA����畔����̒����̍ő�l���L�^���邱��" );
   CERR( "  \\Mathematics\\Combinatorial\\Counting\\IncreasingSubsequence\\Subwalk" );
-  CERR( "を検討しましょう。" );
+  CERR( "���������܂��傤�B" );
 }
+
 AC( MaximisationFunctionOnTree )
 {
   CALL_AC( FunctionOnTree );
-  CERR( "「第i頂点までで切った時のF(P)たちの最大値dp[i]」" );
-  CERR( "を管理するiに関する動的計画法（O(N^2×fの計算量)）" );
-  CERR( "を検討しましょう。" );
+  CERR( "�u��i���_�܂łŐ؂�������F(P)�����̍ő�ldp[i]�v" );
+  CERR( "���Ǘ�����i�Ɋւ��铮�I�v��@�iO(N^2�~f�̌v�Z��)�j" );
+  CERR( "���������܂��傤�B" );
 }
+
 AC( MinimisationMovingCost )
 {
   ASK_NUMBER(
-	     "２点最小コスト移動（迷路）問題" ,
-	     "多点最小コスト移動（スタンプラリー）問題"
+	     "�Q�_�ŏ��R�X�g�ړ��i���H�j���" ,
+	     "���_�ŏ��R�X�g�ړ��i�X�^���v�����[�j���"
 	     );
   if( num == num_temp++ ){
-    CERR( "特定の経路を進むと思い込んで考察漏れをする可能性があります。" );
-    CERR( "なるべく全ての経路を許した探索アルゴリズムを適用した方が無難です。" );
-    CERR( "- 特定の２点のみを考える場合、BFSやDijkstra" );
+    CERR( "����̌o�H��i�ނƎv������ōl�@�R�������\��������܂��B" );
+    CERR( "�Ȃ�ׂ��S�Ă̌o�H���������T���A���S���Y����K�p������������ł��B" );
+    CERR( "- ����̂Q�_�݂̂��l����ꍇ�ABFS��Dijkstra" );
     CERR( "  \\Mathematics\\Geometry\\Graph\\BreadthFirst" );
     CERR( "  \\Mathematics\\Geometry\\Graph\\Dijkstra" );
-    CERR( "- 全ての２点の組み合わせを考える場合、" );
-    CERR( "  - 一般のモノイド演算を考えておりO(V^3)が通りそうならば、FloydWarshall" );
+    CERR( "- �S�Ă̂Q�_�̑g�ݍ��킹���l����ꍇ�A" );
+    CERR( "  - ��ʂ̃��m�C�h���Z���l���Ă���O(V^3)���ʂ肻���Ȃ�΁AFloydWarshall" );
     CERR( "    \\Mathematics\\Geometry\\Graph\\FloydWarshall" );
-    CERR( "  - max演算を考えておりO(E(log_2 E + α(V)))が通りそうならば、UnionFind" );
+    CERR( "  - max���Z���l���Ă���O(E(log_2 E + ��(V)))���ʂ肻���Ȃ�΁AUnionFind" );
     CERR( "    \\Utility\\VLTree\\UnionFindForest" );
-    CERR( "を検討しましょう。" );
+    CERR( "���������܂��傤�B" );
     CERR( "" );
-    CERR( "点の座標と最小化すべきコスト以外の数値変化がある場合、最小コスト移動における" );
-    CERR( "その数値の動く範囲を絞って点の座標との組を頂点とするグラフを検討しましょう。" );
+    CERR( "�_�̍��W�ƍŏ������ׂ��R�X�g�ȊO�̐��l�ω�������ꍇ�A�ŏ��R�X�g�ړ��ɂ�����" );
+    CERR( "���̐��l�̓����͈͂��i���ē_�̍��W�Ƃ̑g�𒸓_�Ƃ���O���t���������܂��傤�B" );
   } else if( num == num_temp++ ){
-    CERR( "HeldKarpや、移動方法を分類するパラメータの全探策などを検討しましょう。" );
+    CERR( "HeldKarp��A�ړ����@�𕪗ނ���p�����[�^�̑S�T��Ȃǂ��������܂��傤�B" );
   }
 }
+
 AC( MaximisationStringMatching )
 {
-  CERR( "基本的には丁寧にループを回して解きましょう。" );
-  CERR( "- 比較対象が少ない場合、前または後ろから順に探索（貪欲法／動的計画法）" );
-  CERR( "- ワイルドカードを含む場合、" );
-  CERR( "  - 前または後ろから順に場合分けをしてO(N)で処理できるか" );
-  CERR( "  - 可能な代入方法を絞り込んでO(N)種類に落せるか" );
-  CERR( "- 比較回数が多い場合、ローリングハッシュ" );
+  CERR( "��{�I�ɂ͒��J�Ƀ��[�v���񂵂ĉ����܂��傤�B" );
+  CERR( "- ��r�Ώۂ����Ȃ��ꍇ�A�O�܂��͌�납�珇�ɒT���i�×~�@�^���I�v��@�j" );
+  CERR( "- ���C���h�J�[�h���܂ޏꍇ�A" );
+  CERR( "  - �O�܂��͌�납�珇�ɏꍇ����������O(N)�ŏ����ł��邩" );
+  CERR( "  - �\�ȑ�����@���i�荞���O(N)��ނɗ����邩" );
+  CERR( "- ��r�񐔂������ꍇ�A���[�����O�n�b�V��" );
   CERR( "  \\Utility\\String\\RollingHash" );
-  CERR( "- 部分回文の最長化をする場合、尺取り法による前計算" );
+  CERR( "- �����񕶂̍Œ���������ꍇ�A�ڎ��@�ɂ��O�v�Z" );
   CERR( "  \\Utility\\String\\Palindrome" );
-  CERR( "- マッチングする部分文字列の最長化をする場合、Zアルゴリズム" );
+  CERR( "- �}�b�`���O���镔��������̍Œ���������ꍇ�AZ�A���S���Y��" );
   CERR( "  \\Utility\\String\\Z-Algorithm" );
-  CERR( "- マッチングする文字数の最大化をする場合、文字の種類分の{0,1}値配列に" );
-  CERR( "  分けて内積の最大化（添え字を反転させて適当な法での畳み込み）" );
+  CERR( "- �}�b�`���O���镶�����̍ő剻������ꍇ�A�����̎�ޕ���{0,1}�l�z���" );
+  CERR( "  �����ē��ς̍ő剻�i�Y�����𔽓]�����ēK���Ȗ@�ł̏�ݍ��݁j" );
   CERR( "  \\Mathematics\\Arithmetic\\Mod" );
   CERR( "  \\Mathematics\\Polynomial" );
-  CERR( "を検討しましょう。" );
+  CERR( "���������܂��傤�B" );
 }
+
 AC( MaximisationBipartiteMatching )
 {
-  CERR( "HopcroftKarpや最大流" );
+  CERR( "HopcroftKarp��ő嗬" );
   CERR( "\\Mathematics\\Geometry\\Graph\\HopcroftKarp" );
-  CERR( "を検討しましょう。" );
+  CERR( "���������܂��傤�B" );
 }
+
 AC( MaximisationProbability )
 {
-  CERR( "操作／戦略を選んで確率／期待値を最大化する場合、" );
-  CERR( "被操作対象や可能な操作／戦略のデータなどを状態として定式化し、" );
-  CERR( "「sを経由する場合の確率／期待値の最大値dp[s]」" );
-  CERR( "を管理するsに関する動的計画法を検討しましょう。" );
+  CERR( "����^�헪��I��Ŋm���^���Ғl���ő剻����ꍇ�A" );
+  CERR( "�푀��Ώۂ�\�ȑ���^�헪�̃f�[�^�Ȃǂ���ԂƂ��Ē莮�����A" );
+  CERR( "�us���o�R����ꍇ�̊m���^���Ғl�̍ő�ldp[s]�v" );
+  CERR( "���Ǘ�����s�Ɋւ��铮�I�v��@���������܂��傤�B" );
 }
+
 AC( Counting )
 {
   ASK_NUMBER(
-	     "固定長変数関数で与えられる明示式の数え上げ問題" ,
-	     "配列に関する数え上げ問題" ,
-	     "分割に関する数え上げ問題" ,
-	     "文字列の数え上げ問題"
+	     "�Œ蒷�ϐ��֐��ŗ^�����閾�����̐����グ���" ,
+	     "�z��Ɋւ��鐔���グ���" ,
+	     "�����Ɋւ��鐔���グ���" ,
+	     "������̐����グ���"
 	     );
   if( num == num_temp++ ){
     CALL_AC( CountingExplicitExpression );
@@ -560,18 +588,20 @@ AC( Counting )
     CALL_AC( CountingString );
   }
 }
+
 AC( CountingExplicitExpression )
 {
-  CERR( "- 変数の対称性があれば大小関係を制限した全探策" );
-  CERR( "- 何らかの約数となるなど動く範囲が狭い変数があればそれらを決め打った全探策" );
-  CERR( "- 多変数の合成関数で表せる場合は半分全列挙" );
-  CERR( "を検討しましょう。" );
+  CERR( "- �ϐ��̑Ώ̐�������Α召�֌W�𐧌������S�T��" );
+  CERR( "- ���炩�̖񐔂ƂȂ�ȂǓ����͈͂������ϐ�������΂��������ߑł����S�T��" );
+  CERR( "- ���ϐ��̍����֐��ŕ\����ꍇ�͔����S��" );
+  CERR( "���������܂��傤�B" );
 }
+
 AC( CountingArray )
 {
   ASK_NUMBER(
-	     "問題文または入力で与えられる１つの配列に関する問題" ,
-	     "条件を満たす任意の配列に関する問題"
+	     "��蕶�܂��͓��͂ŗ^������P�̔z��Ɋւ�����" ,
+	     "�����𖞂����C�ӂ̔z��Ɋւ�����"
 	     );
   if( num == num_temp++ ){
     CALL_AC( CountingSubArray );
@@ -579,12 +609,13 @@ AC( CountingArray )
     CALL_AC( CountingArbitraryArray );
   }
 }
+
 AC( CountingSubArray )
 {
   ASK_NUMBER(
-	     "配列の成分を受け取る関数の部分和を固定した部分列の数え上げ問題" ,
-	     "配列の隣接成分間関係式を満たす部分列の数え上げ問題" ,
-	     "配列の部分列から取得位置情報を落とした配列の数え上げ問題"
+	     "�z��̐������󂯎��֐��̕����a���Œ肵��������̐����グ���" ,
+	     "�z��̗אڐ����Ԋ֌W���𖞂���������̐����グ���" ,
+	     "�z��̕����񂩂�擾�ʒu���𗎂Ƃ����z��̐����グ���"
 	     );
   if( num == num_temp++ ){
     CALL_AC( CountingSumFixedSubArray );
@@ -594,39 +625,41 @@ AC( CountingSubArray )
     CALL_AC( CountingSubArrayImage );
   }
 }
+
 AC( CountingSumFixedSubArray )
 {
-  CERR( "項数N、コストの総和の上限Cとします。" );
-  CERR( "- コストと価値が異なりO(2^N)が通りそうならば愚直な２変数多項式乗算" );
-  CERR( "- コストと価値が等しくO(2^N)が通りそうならば愚直な１変数多項式乗算" );
-  CERR( "- コストと価値が等しくO(2^{N/2}N)が通りそうならば半分ずつ多項式乗算を" );
-  CERR( "  して最後にそれらの積の１係数のみの計算" );
-  CERR( "- コストと価値が等しくCが10^5オーダーで法が与えられていてO((N+C)log_2 C)が" );
-  CERR( "  通りそうならば適当な法での高速フーリエ変換" );
+  CERR( "����N�A�R�X�g�̑��a�̏��C�Ƃ��܂��B" );
+  CERR( "- �R�X�g�Ɖ��l���قȂ�O(2^N)���ʂ肻���Ȃ�΋𒼂ȂQ�ϐ���������Z" );
+  CERR( "- �R�X�g�Ɖ��l��������O(2^N)���ʂ肻���Ȃ�΋𒼂ȂP�ϐ���������Z" );
+  CERR( "- �R�X�g�Ɖ��l��������O(2^{N/2}N)���ʂ肻���Ȃ�Δ�������������Z��" );
+  CERR( "  ���čŌ�ɂ����̐ς̂P�W���݂̂̌v�Z" );
+  CERR( "- �R�X�g�Ɖ��l��������C��10^5�I�[�_�[�Ŗ@���^�����Ă���O((N+C)log_2 C)��" );
+  CERR( "  �ʂ肻���Ȃ�ΓK���Ȗ@�ł̍����t�[���G�ϊ�" );
   CERR( "  \\Mathematics\\Arithmetic\\Mod" );
   CERR( "  \\Mathematics\\Polynomial" );
-  CERR( "を検討しましょう。" );
+  CERR( "���������܂��傤�B" );
 }
+
 AC( CountingRestrctedSubArray )
 {
   ASK_NUMBER(
-	     "連続部分列の数え上げ問題" ,
-	     "連続とは限らない部分列の数え上げ問題" ,
-	     "部分順列（部分列の並び換え）の数え上げ問題"
+	     "�A��������̐����グ���" ,
+	     "�A���Ƃ͌���Ȃ�������̐����グ���" ,
+	     "��������i������̕��ъ����j�̐����グ���"
 	     );
-  CERR( "長さNの配列Aと、L+n<=N+1を満たす整数n,Lと" );
-  CERR( "- 整数iに関する条件Q(i)" );
-  CERR( "- 各0<=l<Lに対するn-tuple(b_0,...,b_{n-1})に関する条件R_l(b_0,...,b_{n-1})" );
-  CERR( "が与えられているとし、配列Bの条件P(B)を" );
-  CERR( "「Bの長さ|B|がQ(|B|)かつ|B|<L+nを満たし、かつ任意の0<=l<=|B|-nに対し" );
-  CERR( "　R_l(B_l,...,B_{l+n-1})が成り立つ。」" );
-  CERR( "の論理積として定めます。" );
+  CERR( "����N�̔z��A�ƁAL+n<=N+1�𖞂�������n,L��" );
+  CERR( "- ����i�Ɋւ������Q(i)" );
+  CERR( "- �e0<=l<L�ɑ΂���n-tuple(b_0,...,b_{n-1})�Ɋւ������R_l(b_0,...,b_{n-1})" );
+  CERR( "���^�����Ă���Ƃ��A�z��B�̏���P(B)��" );
+  CERR( "�uB�̒���|B|��Q(|B|)����|B|<L+n�𖞂����A���C�ӂ�0<=l<=|B|-n�ɑ΂�" );
+  CERR( "�@R_l(B_l,...,B_{l+n-1})�����藧�B�v" );
+  CERR( "�̘_���ςƂ��Ē�߂܂��B" );
   CERR( "" );
-  CERR( "例えば山型の部分列の数え上げ問題ではN>=3かつ(n,L)=(2,2)で" );
-  CERR( "- Q(i)=「i=3」" );
-  CERR( "- R_0(b_0,b_1)=「b_0<b_1」" );
-  CERR( "- R_1(b_0,b_1)=「b_0>b_1」" );
-  CERR( "と表されます。" );
+  CERR( "�Ⴆ�ΎR�^�̕�����̐����グ���ł�N>=3����(n,L)=(2,2)��" );
+  CERR( "- Q(i)=�ui=3�v" );
+  CERR( "- R_0(b_0,b_1)=�ub_0<b_1�v" );
+  CERR( "- R_1(b_0,b_1)=�ub_0>b_1�v" );
+  CERR( "�ƕ\����܂��B" );
   CERR( "" );
   if( num == num_temp++ ){
     CALL_AC( CountingRestrctedContinuousSubArray );
@@ -635,132 +668,142 @@ AC( CountingRestrctedSubArray )
   } else if( num == num_temp++ ){
     CALL_AC( CountingRestrctedSubPermutation );
   }
-  CERR( "を検討しましょう。" );
+  CERR( "���������܂��傤�B" );
   CERR( "" );
-  CERR( "特にR_l(B)たちがgcdやmaxなどの羃等演算に関する等式で与えられる場合は、" );
-  CERR( "不等式の方が扱いやすいのでゼータ変換／メビウス変換" );
+  CERR( "����R_l(B)������gcd��max�Ȃǂ�㰓����Z�Ɋւ��铙���ŗ^������ꍇ�́A" );
+  CERR( "�s�����̕��������₷���̂Ń[�[�^�ϊ��^���r�E�X�ϊ�" );
   CERR( "\\Mathematics\\Combinatorial\\ZetaTransform" );
-  CERR( "を検討しましょう。" );
+  CERR( "���������܂��傤�B" );
 }
+
 AC( CountingRestrctedContinuousSubArray )
 {
-  CERR( "P(B)を満たすAの連続部分列Bの数え上げは、" );
-  CERR( "- R_lたちがlに依存しないならば尺取り法O(N)" );
-  CERR( "- R_lたちがlに依存する場合、" );
-  CERR( "  - O(N^2)が通りそうなら左端を固定した愚直探索" );
-  CERR( "  - O(N^2)が通らなさそうならR_lたちの読み替え" );
-  CERR( "を検討しましょう。" );
+  CERR( "P(B)�𖞂���A�̘A��������B�̐����グ�́A" );
+  CERR( "- R_l������l�Ɉˑ����Ȃ��Ȃ�Ύڎ��@O(N)" );
+  CERR( "- R_l������l�Ɉˑ�����ꍇ�A" );
+  CERR( "  - O(N^2)���ʂ肻���Ȃ獶�[���Œ肵���𒼒T��" );
+  CERR( "  - O(N^2)���ʂ�Ȃ������Ȃ�R_l�����̓ǂݑւ�" );
+  CERR( "���������܂��傤�B" );
 }
+
 AC( CountingRestrctedDiscontinuousSubArray )
 {
-  CERR( "P(B)を満たすAの連続とは限らない部分列Bの数え上げは、" );
-  CERR( "- n-1<=i<=max{j<=N|Q(j)}を満たす各i" );
-  CERR( "- (0,1,...,N-1)の長さn-1の各部分列s" );
-  CERR( "に対する" );
-  CERR( "「長さiで、任意の0<=l<=i-nに対しR_l(B)を満たし、" );
-  CERR( "　末尾n-1項がsに対応するAの部分列Bの個数dp[i][s]」" );
-  CERR( "を管理するi,sに関する動的計画法" );
+  CERR( "P(B)�𖞂���A�̘A���Ƃ͌���Ȃ�������B�̐����グ�́A" );
+  CERR( "- n-1<=i<=max{j<=N|Q(j)}�𖞂����ei" );
+  CERR( "- (0,1,...,N-1)�̒���n-1�̊e������s" );
+  CERR( "�ɑ΂���" );
+  CERR( "�u����i�ŁA�C�ӂ�0<=l<=i-n�ɑ΂�R_l(B)�𖞂����A" );
+  CERR( "�@����n-1����s�ɑΉ�����A�̕�����B�̌�dp[i][s]�v" );
+  CERR( "���Ǘ�����i,s�Ɋւ��铮�I�v��@" );
   CERR( "\\Mathematics\\Combinatorial\\Counting\\IncreasingSubsequence" );
   CERR( "\\Mathematics\\Combinatorial\\Counting\\IncreasingSubsequence\\Subwalk" );
-  CERR( "を検討しましょう。" );
+  CERR( "���������܂��傤�B" );
 }
+
 AC( CountingRestrctedSubPermutation )
 {
-  CERR( "P(B)を満たすAの部分順列Bの数え上げは、" );
-  CERR( "- n-1<=|S|<=max{j<=N|Q(j)}を満たす(0,1,...,N-1)の部分集合S" );
-  CERR( "- Sの長さn-1の各部分順列s" );
-  CERR( "に対する" );
-  CERR( "「任意の0<=l<=|S|-nに対しR_l(B)を満たし、末尾n-1項がsに対応し、」" );
-  CERR( "　全体がSに対応するAの部分順列Bの個数dp[S][s]」" );
-  CERR( "を管理するS,sに関する動的計画法を検討しましょう。" );
+  CERR( "P(B)�𖞂���A�̕�������B�̐����グ�́A" );
+  CERR( "- n-1<=|S|<=max{j<=N|Q(j)}�𖞂���(0,1,...,N-1)�̕����W��S" );
+  CERR( "- S�̒���n-1�̊e��������s" );
+  CERR( "�ɑ΂���" );
+  CERR( "�u�C�ӂ�0<=l<=|S|-n�ɑ΂�R_l(B)�𖞂����A����n-1����s�ɑΉ����A�v" );
+  CERR( "�@�S�̂�S�ɑΉ�����A�̕�������B�̌�dp[S][s]�v" );
+  CERR( "���Ǘ�����S,s�Ɋւ��铮�I�v��@���������܂��傤�B" );
   CERR( "" );
-  CERR( "sの網羅は[0,N)^{n-1}の全探策でもS内の順列探索と定数倍しか変わらないので" );
-  CERR( "実装の速さを優先しましょう。" );
+  CERR( "s�̖ԗ���[0,N)^{n-1}�̑S�T��ł�S���̏���T���ƒ萔�{�����ς��Ȃ��̂�" );
+  CERR( "�����̑�����D�悵�܂��傤�B" );
   CERR( "" );
-  CERR( "Nが小さい場合は概算値" );
-  CERR( "7! ≒ 5×10^3" );
-  CERR( "8! ≒ 4×10^4" );
-  CERR( "9! ≒ 4×10^5" );
-  CERR( "10! ≒ 4×10^6" );
-  CERR( "11! ≒ 4×10^7" );
-  CERR( "12! ≒ 5×10^8" );
-  CERR( "を参考に順列の全列挙" );
+  CERR( "N���������ꍇ�͊T�Z�l" );
+  CERR( "7! �� 5�~10^3" );
+  CERR( "8! �� 4�~10^4" );
+  CERR( "9! �� 4�~10^5" );
+  CERR( "10! �� 4�~10^6" );
+  CERR( "11! �� 4�~10^7" );
+  CERR( "12! �� 5�~10^8" );
+  CERR( "���Q�l�ɏ���̑S��" );
   CERR( "\\Mathematics\\Combinatorial\\Permutation" );
-  CERR( "を検討しましょう。" );
+  CERR( "���������܂��傤�B" );
 }
+
 AC( CountingArbitraryArray )
 {
   ASK_NUMBER(
-	     "配列を受け取る関数の値の数え上げ問題" ,
-	     "隣接成分間関係式を満たす配列の数え上げ問題"
+	     "�z����󂯎��֐��̒l�̐����グ���" ,
+	     "�אڐ����Ԋ֌W���𖞂����z��̐����グ���"
 	     );
   if( num == num_temp++ ){
-    CERR( "- 配列の種類が少ない場合は、全ての配列に対する関数の値の前計算" );
-    CERR( "- 取り得る値が少なく関数が長さに関して再帰的構造を持つ場合は、" );
-    CERR( "  「長さiの時に値vである配列の総数dp[i][v]」" );
-    CERR( "  を管理するi,vに関する動的計画法" );
+    CERR( "- �z��̎�ނ����Ȃ��ꍇ�́A�S�Ă̔z��ɑ΂���֐��̒l�̑O�v�Z" );
+    CERR( "- ��蓾��l�����Ȃ��֐��������Ɋւ��čċA�I�\�������ꍇ�́A" );
+    CERR( "  �u����i�̎��ɒlv�ł���z��̑���dp[i][v]�v" );
+    CERR( "  ���Ǘ�����i,v�Ɋւ��铮�I�v��@" );
   } else if( num == num_temp++ ){
-    CERR( "- いくつかの条件の重ね合わせの時は包除原理" );
-    CERR( "- 全順序の場合は数の分割方法などへの翻訳" );
-    CERR( "- 疎な半順序の場合はグラフの前計算" );
+    CERR( "- �������̏����̏d�ˍ��킹�̎��͕����" );
+    CERR( "- �S�����̏ꍇ�͐��̕������@�Ȃǂւ̖|��" );
+    CERR( "- �a�Ȕ������̏ꍇ�̓O���t�̑O�v�Z" );
   }
-  CERR( "を検討しましょう。" );
+  CERR( "���������܂��傤�B" );
 }
+
 AC( CountingSubArrayImage )
 {
-  CERR( "入力で与えられる配列をAと置きます。" );
-  CERR( "配列として等しいAの部分列のうち辞書式順序最小のものを数え上げる" );
-  CERR( "部分列DPを検討しましょう。具体的には" );
-  CERR( "「末尾が第i成分由来で辞書順最小なAの部分列の個数dp[i]」" );
-  CERR( "「s=A[j]を満たすj<iの最大値last[i][s]」" );
-  CERR( "の２つを管理するiに関する動的計画法を検討しましょう。" );
+  CERR( "���͂ŗ^������z���A�ƒu���܂��B" );
+  CERR( "�z��Ƃ��ē�����A�̕�����̂��������������ŏ��̂��̂𐔂��グ��" );
+  CERR( "������DP���������܂��傤�B��̓I�ɂ�" );
+  CERR( "�u��������i�����R���Ŏ������ŏ���A�̕�����̌�dp[i]�v" );
+  CERR( "�us=A[j]�𖞂���j<i�̍ő�llast[i][s]�v" );
+  CERR( "�̂Q���Ǘ�����i�Ɋւ��铮�I�v��@���������܂��傤�B" );
 }
+
 AC( CountingPartitionOfTree )
 {
   CALL_AC( FunctionOnTree );
   CERR( "" );
-  CERR( "F(P)が固定された時のPの数え上げ問題は" );
-  CERR( "「第i成分までで切った時のF(P)=vを満たすPの個数dp[i][v]」" );
-  CERR( "を管理するi,vに関する動的計画法（O(N^2 v_max×fの計算量)）" );
-  CERR( "を検討しましょう。" );
+  CERR( "F(P)���Œ肳�ꂽ����P�̐����グ����" );
+  CERR( "�u��i�����܂łŐ؂�������F(P)=v�𖞂���P�̌�dp[i][v]�v" );
+  CERR( "���Ǘ�����i,v�Ɋւ��铮�I�v��@�iO(N^2 v_max�~f�̌v�Z��)�j" );
+  CERR( "���������܂��傤�B" );
 }
+
 AC( CountingString )
 {
   ASK_NUMBER(
-	     "部分文字列から取得位置情報を落とした文字列全体の数え上げ問題" ,
-	     "マッチングに関する性質を満たす部分文字列の数え上げ問題"
+	     "���������񂩂�擾�ʒu���𗎂Ƃ���������S�̂̐����グ���" ,
+	     "�}�b�`���O�Ɋւ��鐫���𖞂�������������̐����グ���"
 	     );
   if( num == num_temp++ ){
-    CERR( "文字列を文字の配列とみなすことで、配列の問題に帰着させることができます。" );
+    CERR( "������𕶎��̔z��Ƃ݂Ȃ����ƂŁA�z��̖��ɋA�������邱�Ƃ��ł��܂��B" );
     CALL_AC( CountingSubArrayImage );
   } else if( num == num_temp++ ){
     CALL_AC( CountingMatchingSubString );
   }
 }
+
 AC( CountingMatchingSubString )
 {
-  CERR( "- 自分とマッチングする部分文字列の数え上げ問題はZアルゴリズム" );
+  CERR( "- �����ƃ}�b�`���O���镔��������̐����グ����Z�A���S���Y��" );
   CERR( "  \\Utility\\String\\Z-Algorithm" );
-  CERR( "- 回文である部分文字列の数え上げ問題は" );
-  CERR( "  - O(N^2)が通る場合、尺取り法による前計算" );
+  CERR( "- �񕶂ł��镔��������̐����グ����" );
+  CERR( "  - O(N^2)���ʂ�ꍇ�A�ڎ��@�ɂ��O�v�Z" );
   CERR( "    \\Utility\\String\\Palindrome" );
-  CERR( "  - O(N^2)が通らない場合、Manacherのアルゴリズムやローリングハッシュで前計算" );
+  CERR( "  - O(N^2)���ʂ�Ȃ��ꍇ�AManacher�̃A���S���Y���⃍�[�����O�n�b�V���őO�v�Z" );
   CERR( "    https://snuke.hatenablog.com/entry/2014/12/02/235837" );
   CERR( "    \\Utility\\String\\RollingHash" );
-  CERR( "を検討しましょう。" );
+  CERR( "���������܂��傤�B" );
 }
+
 AC( Solving )
 {
-  CERR( "- 単調関数は二分探索" );
-  CERR( "- 可微分関数はニュートン法" );
-  CERR( "- 一次関数は掃き出し法" );
-  CERR( "を検討しましょう。" );
+  CERR( "- �P���֐��͓񕪒T��" );
+  CERR( "- �����֐��̓j���[�g���@" );
+  CERR( "- �ꎟ�֐��͑|���o���@" );
+  CERR( "���������܂��傤�B" );
 }
+
 AC( Query )
 {
   ASK_NUMBER(
-	     "配列の問題" ,
-	     "グラフの問題"
+	     "�z��̖��" ,
+	     "�O���t�̖��"
 	     );
   if( num == num_temp++ ){
     CALL_AC( QueryArray );
@@ -768,104 +811,107 @@ AC( Query )
     CALL_AC( QueryGraph );
   }
 }
+
 AC( QueryArray )
 {
   ASK_NUMBER(
-	     "可換群構造+を使う問題" ,
-	     "可換羃等モノイド構造∨を使う問題" ,
-	     "モノイド構造*を使う問題" ,
-	     "非結合的マグマ構造*を使う問題" ,
-	     "集合へのマグマ作用(*,\\cdot)を使う問題" ,
-	     "モノイドへのマグマ作用(+,\\cdot)を使う問題" ,
-	     "一次関数とのmaxを取った値を使う問題" ,
-	     "定数とのmaxを取った値の区間和取得を使う問題"
+	     "���Q�\��+���g�����" ,
+	     "��㰓����m�C�h�\���ɂ��g�����" ,
+	     "���m�C�h�\��*���g�����" ,
+	     "�񌋍��I�}�O�}�\��*���g�����" ,
+	     "�W���ւ̃}�O�}��p(*,\\cdot)���g�����" ,
+	     "���m�C�h�ւ̃}�O�}��p(+,\\cdot)���g�����" ,
+	     "�ꎟ�֐��Ƃ�max��������l���g�����" ,
+	     "�萔�Ƃ�max��������l�̋�Ԙa�擾���g�����"
 	     );
   if( num == num_temp++ ){
-    CERR( "- 区間加算／区間取得が必要ならば可換群BIT" );
+    CERR( "- ��ԉ��Z�^��Ԏ擾���K�v�Ȃ�Ή��QBIT" );
     CERR( "  \\Mathematics\\SetTheory\\DirectProduct\\AffineSpace\\BIT\\Template" );
-    CERR( "- 一点代入／一点加算／区間取得が必要ならば可換群平方分割" );
+    CERR( "- ��_����^��_���Z�^��Ԏ擾���K�v�Ȃ�Ή��Q��������" );
     CERR( "  \\Mathematics\\SetTheory\\DirectProduct\\AffineSpace\\SqrtDecomposition\\Template" );
-    CERR( "- 区間以外の領域で加算／全更新後の一点取得が必要ならば階差数列" );
+    CERR( "- ��ԈȊO�̗̈�ŉ��Z�^�S�X�V��̈�_�擾���K�v�Ȃ�ΊK������" );
     CERR( "  \\Mathematics\\SetTheory\\DirectProduct\\Tree\\DifferenceSeqeuence" );
-    CERR( "を検討しましょう。" );
+    CERR( "���������܂��傤�B" );
   } else if( num == num_temp++ ){
-    CERR( "- 一点代入／区間加算／一点取得／区間取得が必要ならば可換羃等モノイドBIT" );
+    CERR( "- ��_����^��ԉ��Z�^��_�擾�^��Ԏ擾���K�v�Ȃ�Ή�㰓����m�C�hBIT" );
     CERR( "  \\Mathematics\\SetTheory\\DirectProduct\\AffineSpace\\BIT\\IntervalMax\\Template" );
-    CERR( "を検討しましょう。" );
+    CERR( "���������܂��傤�B" );
   } else if( num == num_temp++ ){
-    CERR( "- 一点代入／区間取得が必要ならばモノイドBIT" );
+    CERR( "- ��_����^��Ԏ擾���K�v�Ȃ�΃��m�C�hBIT" );
     CERR( "  \\Mathematics\\SetTheory\\DirectProduct\\AffineSpace\\BIT\\Template\\Monoid" );
-    CERR( "- 一点加算／区間加算／一点取得／区間取得が必要ならばモノイド平方分割" );
+    CERR( "- ��_���Z�^��ԉ��Z�^��_�擾�^��Ԏ擾���K�v�Ȃ�΃��m�C�h��������" );
     CERR( "  \\Mathematics\\SetTheory\\DirectProduct\\AffineSpace\\SqrtDecomposition\\Template\\Monoid" );
-    CERR( "- 一点代入／一点取得／区間取得が必要ならばモノイドセグメント木" );
+    CERR( "- ��_����^��_�擾�^��Ԏ擾���K�v�Ȃ�΃��m�C�h�Z�O�����g��" );
     CERR( "  \\Mathematics\\SetTheory\\DirectProduct\\AffineSpace\\SegmentTree" );
-    CERR( "を検討しましょう。" );
+    CERR( "���������܂��傤�B" );
   } else if( num == num_temp++ ){
-    CERR( "- 写像のコード化" );
+    CERR( "- �ʑ��̃R�[�h��" );
     CERR( "  \\Mathematics\\Function\\Encoder" );
-    CERR( "によりモノイドに帰着させることを検討しましょう。" );
+    CERR( "�ɂ�胂�m�C�h�ɋA�������邱�Ƃ��������܂��傤�B" );
   } else if( num == num_temp++ ){
-    CERR( "- 一点作用／区間作用／一点取得が必要ならば双対平方分割" );
+    CERR( "- ��_��p�^��ԍ�p�^��_�擾���K�v�Ȃ�Αo�Ε�������" );
     CERR( "  \\Mathematics\\SetTheory\\DirectProduct\\AffineSpace\\SqrtDecomposition\\Template\\Dual" );
-    CERR( "を検討しましょう。" );
+    CERR( "���������܂��傤�B" );
   } else if( num == num_temp++ ){
-    CERR( "- 区間代入／区間作用／区間加算／一点取得／区間取得が必要な場合は遅延評価平方分割" );
+    CERR( "- ��ԑ���^��ԍ�p�^��ԉ��Z�^��_�擾�^��Ԏ擾���K�v�ȏꍇ�͒x���]����������" );
     CERR( "  \\Mathematics\\SetTheory\\DirectProduct\\AffineSpace\\SqrtDecomposition\\Template\\LazyEvaluation" );
-    CERR( "を検討しましょう。" );
+    CERR( "���������܂��傤�B" );
   } else if( num == num_temp++ ){
-    CERR( "- 一次関数による全体max更新／一点取得が必要な場合はConvex Hull Trick" );
+    CERR( "- �ꎟ�֐��ɂ��S��max�X�V�^��_�擾���K�v�ȏꍇ��Convex Hull Trick" );
     CERR( "  \\Mathematics\\Function\\MaxLinearFunction" );
-    CERR( "を検討しましょう。" );
+    CERR( "���������܂��傤�B" );
   } else if( num == num_temp++ ){
-    CERR( "maxで全体更新でなく区間更新をする場合の汎用的な解法は分かりません。" );
-    CERR( "例えば区間が包含について単調でmaxを取る値も単調であれば全体更新と" );
-    CERR( "同様の処理ができます。状況に応じた考察をしましょう。" );
+    CERR( "max�őS�̍X�V�łȂ���ԍX�V������ꍇ�̔ėp�I�ȉ�@�͕�����܂���B" );
+    CERR( "�Ⴆ�΋�Ԃ���܂ɂ��ĒP����max�����l���P���ł���ΑS�̍X�V��" );
+    CERR( "���l�̏������ł��܂��B�󋵂ɉ������l�@�����܂��傤�B" );
     CERR( "" );
-    CERR( "maxで全体更新をする場合、maxを取る値は単調である場合に帰着できます。" );
-    CERR( "maxで全体更新をしない場合、つまりただmaxの区間和を処理するだけの場合、" );
-    CERR( "クエリの順番を入れ替えることができるので、単調な全体更新に帰着できます。" );
-    CERR( "従って以下では単調な全体更新の問題を考えます。" );
+    CERR( "max�őS�̍X�V������ꍇ�Amax�����l�͒P���ł���ꍇ�ɋA���ł��܂��B" );
+    CERR( "max�őS�̍X�V�����Ȃ��ꍇ�A�܂肽��max�̋�Ԙa���������邾���̏ꍇ�A" );
+    CERR( "�N�G���̏��Ԃ����ւ��邱�Ƃ��ł���̂ŁA�P���ȑS�̍X�V�ɋA���ł��܂��B" );
+    CERR( "�]���Ĉȉ��ł͒P���ȑS�̍X�V�̖����l���܂��B" );
     CERR( "" );
-    CERR( "maxを取る定数を変数化し、元の値との大小を表す{0,1}値の係数を考えます。" );
-    CERR( "すると区間作用前後の値は統一的にその係数と変数を使って表せます。" );
-    CERR( "配列の各成分の係数の値が変化するイベントとクエリをソートして管理し、" );
-    CERR( "クエリがイベントを跨ぐたびに係数を更新することを検討しましょう。" );
+    CERR( "max�����萔��ϐ������A���̒l�Ƃ̑召��\��{0,1}�l�̌W�����l���܂��B" );
+    CERR( "����Ƌ�ԍ�p�O��̒l�͓���I�ɂ��̌W���ƕϐ����g���ĕ\���܂��B" );
+    CERR( "�z��̊e�����̌W���̒l���ω�����C�x���g�ƃN�G�����\�[�g���ĊǗ����A" );
+    CERR( "�N�G�����C�x���g���ׂ����тɌW�����X�V���邱�Ƃ��������܂��傤�B" );
     CERR( "" );
-    CERR( "例えばクエリB_qに対するmax(A_i,B_q)の区間和は、" );
-    CERR( "- 優先度つきキューA'={(A_i,i)|i}（構築O(N log N)）" );
-    CERR( "- (B_q,q)_qをソートしたB'（構築O(Q log Q)）" );
-    CERR( "- 長さNの数列C=(0,...,0)（構築O(N)）" );
-    CERR( "を用意し、B'を前から探索して順に各クエリ(B_q,q)を処理します。" );
-    CERR( "具体的にはA'を前から探索して順にA_i<B_qとなる各iに対し" );
-    CERR( "- A'から(A_i,i)を削除（クエリ合計O(N)）" );
-    CERR( "- A_iを0に更新（クエリ合計O(N log N)）" );
-    CERR( "- C_iを1に更新（各クエリO(log N)）" );
-    CERR( "- A+C×B_qの区間和取得（各クエリO(log N)）" );
-    CERR( "とすれば合計O((N + Q)log N + Q log Q)で処理できます。" );
+    CERR( "�Ⴆ�΃N�G��B_q�ɑ΂���max(A_i,B_q)�̋�Ԙa�́A" );
+    CERR( "- �D��x���L���[A'={(A_i,i)|i}�i�\�zO(N log N)�j" );
+    CERR( "- (B_q,q)_q���\�[�g����B'�i�\�zO(Q log Q)�j" );
+    CERR( "- ����N�̐���C=(0,...,0)�i�\�zO(N)�j" );
+    CERR( "��p�ӂ��AB'��O����T�����ď��Ɋe�N�G��(B_q,q)���������܂��B" );
+    CERR( "��̓I�ɂ�A'��O����T�����ď���A_i<B_q�ƂȂ�ei�ɑ΂�" );
+    CERR( "- A'����(A_i,i)���폜�i�N�G�����vO(N)�j" );
+    CERR( "- A_i��0�ɍX�V�i�N�G�����vO(N log N)�j" );
+    CERR( "- C_i��1�ɍX�V�i�e�N�G��O(log N)�j" );
+    CERR( "- A+C�~B_q�̋�Ԙa�擾�i�e�N�G��O(log N)�j" );
+    CERR( "�Ƃ���΍��vO((N + Q)log N + Q log Q)�ŏ����ł��܂��B" );
   }
 }
+
 AC( QueryGraph )
 {
-  ASK_YES_NO( "代数構造を扱う問題ですか？" );
+  ASK_YES_NO( "�㐔�\�����������ł����H" );
   if( reply == "yes" ){
-    CERR( "- 可換群構造に関する加算／全更新後の一点取得が必要ならば階差数列" );
+    CERR( "- ���Q�\���Ɋւ�����Z�^�S�X�V��̈�_�擾���K�v�Ȃ�ΊK������" );
     CERR( "  \\Mathematics\\SetTheory\\DirectProduct\\Tree\\DifferenceSeqeuence" );
   } else {
-    CERR( "深さ優先探索や動的木やUnionFind" );
+    CERR( "�[���D��T���⓮�I�؂�UnionFind" );
     CERR( "\\Mathematics\\Geometry\\Graph\\DepthFirst\\Tree" );
     CERR( "\\Utility\\VLTree" );
     CERR( "\\Utility\\VLTree\\UnionFndForest" );
   }
-  CERR( "を検討しましょう。" );  
+  CERR( "���������܂��傤�B" );  
 }
+
 AC( Decision )
 {
   ASK_NUMBER(
-	     "0次連結性判定問題" ,
-	     "高次連結性判定問題" ,
-	     "勝敗判定問題" ,
-	     "到達可能性問題" ,
-	     "充足可能性問題"
+	     "0���A����������" ,
+	     "�����A����������" ,
+	     "���s������" ,
+	     "���B�\�����" ,
+	     "�[���\�����"
 	     );
   if( num == num_temp++ ){
     CALL_AC( DecisionConnectedness );
@@ -879,74 +925,80 @@ AC( Decision )
     CALL_AC( DecisionSatisfiability );
   }
 }
+
 AC( DecisionConnectedness )
 {
-  CERR( "幅優先探索やUnionFind" );
+  CERR( "���D��T����UnionFind" );
   CERR( "\\Mathematics\\Geometry\\Graph\\BreadthFirst" );
   CERR( "\\Utility\\VLTree\\UnionFindForest" );
-  CERR( "を検討しましょう。" );
+  CERR( "���������܂��傤�B" );
   CERR( "" );
 }
+
 AC( DecisionHigherConnectedness )
 {
-  CERR( "- 強連結性判定は深さ優先探索" );
+  CERR( "- ���A��������͐[���D��T��" );
   CERR( "  \\Mathematics\\Geometry\\Graph\\DepthFirst" );
-  CERR( "- 高次ホモロジー計算は適当な法での掃き出し法" );
-  CERR( "を検討しましょう。" );
+  CERR( "- �����z�����W�[�v�Z�͓K���Ȗ@�ł̑|���o���@" );
+  CERR( "���������܂��傤�B" );
 }
+
 AC( DecisionGame )
 {
-  CERR( "ゲームの和に分解できる場合は最小単位で考察をし、グランディ数を実装しましょう。" );
-  CERR( "これ以上分解できないゲームには整礎構造を探し、順序数の小さい順に実験をしましょう。" );
+  CERR( "�Q�[���̘a�ɕ����ł���ꍇ�͍ŏ��P�ʂōl�@�����A�O�����f�B�����������܂��傤�B" );
+  CERR( "����ȏ㕪���ł��Ȃ��Q�[���ɂ͐��b�\����T���A�������̏��������Ɏ��������܂��傤�B" );
 }
+
 AC( DecisionAccessibility )
 {
-  ASK_YES_NO( "矩形領域の到達可能性問題ですか？" );
+  ASK_YES_NO( "��`�̈�̓��B�\�����ł����H" );
   if( reply == "yes" ){
-    CERR( "迷路の攻略可能性は" );
-    CERR( "- スタートとゴールが同一の弧状連結成分に属すこと" );
-    CERR( "- スタートとゴールを分断する壁のパスの非存在性" );
-    CERR( "などに翻訳しグラフ上の最小コスト移動問題に帰着させましょう。" );
+    CERR( "���H�̍U���\����" );
+    CERR( "- �X�^�[�g�ƃS�[��������̌ʏ�A�������ɑ�������" );
+    CERR( "- �X�^�[�g�ƃS�[���𕪒f����ǂ̃p�X�̔񑶍ݐ�" );
+    CERR( "�Ȃǂɖ|�󂵃O���t��̍ŏ��R�X�g�ړ����ɋA�������܂��傤�B" );
   } else {
-    CERR( "適切なグラフ上の最小コスト移動問題に帰着させましょう。" );
+    CERR( "�K�؂ȃO���t��̍ŏ��R�X�g�ړ����ɋA�������܂��傤�B" );
     CALL_AC( MinimisationMovingCost );
   }
   CERR( "" );
 }
+
 AC( DecisionSatisfiability )
 {
   ASK_NUMBER(
-	     "命題論理の充足性判定問題" ,
-	     "二部グラフの充足可能性問題"
+	     "����_���̏[����������" ,
+	     "�񕔃O���t�̏[���\�����"
 	     );
   if( num == num_temp++ ){
-    CERR( "各命題変数の真理値を頂点とするグラフを考え連結性判定に帰着させて" );
+    CERR( "�e����ϐ��̐^���l�𒸓_�Ƃ���O���t���l���A��������ɋA��������" );
     CALL_AC( DecisionConnectedness );
     CERR( "" );
-    CERR( "区間処理による真理値更新は各種代数的データ構造を用いましょう。" );
+    CERR( "��ԏ����ɂ��^���l�X�V�͊e��㐔�I�f�[�^�\����p���܂��傤�B" );
     AC( QueryArray );
   } else if( num == num_temp++ ){
-    CERR( "完全二部マッチング判定は最大二部マッチングに帰着させて" );
+    CERR( "���S�񕔃}�b�`���O����͍ő�񕔃}�b�`���O�ɋA��������" );
     AC( MaximisationBipartiteMatching );
   }
 }
+
 AC( Construction )
 {
   ASK_NUMBER(
-	     "数や配列や文字列の構築" ,
-	     "経路の構築" ,
-	     "戦略の構築" ,
-	     "ソースコードの構築"
+	     "����z��╶����̍\�z" ,
+	     "�o�H�̍\�z" ,
+	     "�헪�̍\�z" ,
+	     "�\�[�X�R�[�h�̍\�z"
 	     );
   if( num == num_temp++ ){
-    CERR( "p進法や階差数列を検討しましょう。" );
+    CERR( "p�i�@��K��������������܂��傤�B" );
   } else if( num == num_temp++ ){
-    CERR( "可能な経路の定めるグラフの問題に帰着させましょう。" );
+    CERR( "�\�Ȍo�H�̒�߂�O���t�̖��ɋA�������܂��傤�B" );
     CALL_AC( DecisionAccessibility );
   } else if( num == num_temp++ ){
-    CERR( "ゲームの問題に帰着させましょう。" );
+    CERR( "�Q�[���̖��ɋA�������܂��傤�B" );
     CALL_AC( DecisionGame );
   } else if( num == num_temp++ ){
-    CERR( "正解を出力をするソースコードを提出しましょう。" );
+    CERR( "�������o�͂�����\�[�X�R�[�h���o���܂��傤�B" );
   }
 }
