@@ -3,14 +3,13 @@
 #pragma once
 
 #define CERR( MESSAGE ) cerr << MESSAGE << endl;
-#define FOR( VAR , INITIAL , FINAL_PLUS_ONE ) for( TYPE_OF( FINAL_PLUS_ONE ) VAR = INITIAL ; VAR < FINAL_PLUS_ONE ; VAR ++ )
 
 #define ASK_NUMBER( ... )						\
   CERR( "" );								\
   CERR( "‰½”Ô‚ð‘I‘ð‚µ‚Ü‚·‚©H" );					\
   problems = { __VA_ARGS__ };						\
   problems_size = problems.size();					\
-  FOR( i , 0 , problems_size ){						\
+  for( int i = 0 ; i < problems_size ; i++ ){				\
     CERR( i << ": " << problems[i] );					\
   }									\
   cin >> num;								\
