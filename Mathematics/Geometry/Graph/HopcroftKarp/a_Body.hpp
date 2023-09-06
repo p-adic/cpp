@@ -49,7 +49,7 @@ list<pair<int,int> > HopcroftKarp<S_max,T_max>::Solve( const int& S , const int&
   BreadthFirstSearch<1 + S_max + T_max , Edge> bfs{ 1 + g_S + g_T };
   bool chosen_source[S_max] = {};
   bool chosen_target[T_max] = {};
-  map<int.bool> chosen_edge[S_max] = {};
+  map<int,bool> chosen_edge[S_max] = {};
   int depth[1 + S_max + T_max] = {};
   int depth_min = -1;
   int root[S_max + T_max] = {};
