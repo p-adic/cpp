@@ -130,6 +130,7 @@ AC( ExplicitExpression )
 	     "木以外のグラフ上の関数の計算問題" ,
 	     "序数の計算問題" ,
 	     "確率／期待値の計算問題" ,
+	     "操作回数の計算問題" ,
 	     "その他の明示式の計算問題"
 	     );
   if( num == num_temp++ ){
@@ -146,6 +147,8 @@ AC( ExplicitExpression )
     CALL_AC( ExplicitExpressionOrder );
   } else if( num == num_temp++ ){
     CALL_AC( ExplicitExpressionProbability );
+  } else if( num == num_temp++ ){
+    CALL_AC( ExplicitExpressionCountingOperation );
   } else if( num == num_temp++ ){
     CALL_AC( ExplicitExpressionOther );
   }
@@ -344,6 +347,12 @@ AC( ExplicitExpressionProbability )
   CERR( "を検討しましょう。" );
 }
 
+AC( ExplicitExpressionCountingOperation )
+{
+  CERR( "操作回数を求める際は、操作列を「一斉に処理できる区間」いくつかに分割し、" );
+  CERR( "それぞれの区間での処理を計算することを検討しましょう。" );
+}
+
 AC( ExplicitExpressionOther )
 {
   CERR( "- 出力の定義と等価な式への変形" );
@@ -365,7 +374,8 @@ AC( Maximisation )
 	     "移動コスト最小化問題" ,
 	     "文字列のマッチングに関する最大／最長化問題" ,
 	     "最大二部マッチング問題" ,
-	     "確率／期待値の最大化問題"
+	     "確率／期待値の最大化問題" ,
+	     "操作回数の最小化問題"
 	     );
   if( num == num_temp++ ){
     CALL_AC( MaximisationFunctionOnAffineSpace );
@@ -383,6 +393,8 @@ AC( Maximisation )
     CALL_AC( MaximisationBipartiteMatching );
   } else if( num == num_temp++ ){
     CALL_AC( MaximisationProbability );
+  } else if( num == num_temp++ ){
+    CALL_AC( ExplicitExpressionCountingOperation );
   }
 }
 
@@ -576,7 +588,8 @@ AC( Counting )
 	     "固定長変数関数で与えられる明示式の数え上げ問題" ,
 	     "配列に関する数え上げ問題" ,
 	     "分割に関する数え上げ問題" ,
-	     "文字列の数え上げ問題"
+	     "文字列の数え上げ問題" ,
+	     "操作回数の計算問題"
 	     );
   if( num == num_temp++ ){
     CALL_AC( CountingExplicitExpression );
@@ -586,6 +599,8 @@ AC( Counting )
     CALL_AC( CountingPartitionOfTree );
   } else if( num == num_temp++ ){
     CALL_AC( CountingString );
+  } else if( num == num_temp++ ){
+    CALL_AC( ExplicitExpressionCountingOperation );
   }
 }
 
@@ -802,13 +817,16 @@ AC( Solving )
 AC( Query )
 {
   ASK_NUMBER(
-	     "配列の問題" ,
-	     "グラフの問題"
+	     "配列の範囲更新／取得クエリ問題" ,
+	     "グラフの範囲更新／取得クエリ問題" ,
+	     "配列やグラフの時系列更新／取得クエリ問題"
 	     );
   if( num == num_temp++ ){
     CALL_AC( QueryArray );
   } else if( num == num_temp++ ){
     CALL_AC( QueryGraph );
+  } else if( num == num_temp++ ){
+    CALL_AC( QueryTime );
   }
 }
 
@@ -825,12 +843,14 @@ AC( QueryArray )
 	     "定数とのmaxを取った値の区間和取得を使う問題"
 	     );
   if( num == num_temp++ ){
+    CERR( "- 加算／全更新後の一点取得のみが必要ならば階差数列" );
+    CERR( "  \\Mathematics\\SetTheory\\DirectProduct\\Tree\\DifferenceSeqeuence" );
+    CERR( "- 加算／全更新なしで区間取得のみが必要ならば累積積" );
+    CERR( "  \\Mathematics\\SetTheory\\DirectProduct\\Tree\\CumulativeProd" );
     CERR( "- 区間加算／区間取得が必要ならば可換群BIT" );
     CERR( "  \\Mathematics\\SetTheory\\DirectProduct\\AffineSpace\\BIT\\Template" );
     CERR( "- 一点代入／一点加算／区間取得が必要ならば可換群平方分割" );
     CERR( "  \\Mathematics\\SetTheory\\DirectProduct\\AffineSpace\\SqrtDecomposition\\Template" );
-    CERR( "- 区間以外の領域で加算／全更新後の一点取得が必要ならば階差数列" );
-    CERR( "  \\Mathematics\\SetTheory\\DirectProduct\\Tree\\DifferenceSeqeuence" );
     CERR( "を検討しましょう。" );
   } else if( num == num_temp++ ){
     CERR( "- 一点代入／区間加算／一点取得／区間取得が必要ならば可換羃等モノイドBIT" );
@@ -902,6 +922,21 @@ AC( QueryGraph )
     CERR( "\\Utility\\VLTree\\UnionFndForest" );
   }
   CERR( "を検討しましょう。" );  
+}
+
+AC( QueryTime )
+{
+  CERR( "第i成分が変化し続ける区間たちの個数をIと置きます。" );
+  CERR( "各区間を更に変化の仕方の違いで細分したものの個数をJと置きます。" );
+  CERR( "- JがO(N)ならば各細分での変化量を求めましょう。" );
+  CERR( "- JがO(N)でなくIがO(N)ならば各区間での変化量を求めましょう。" );
+  CERR( "変化量の計算は" );
+  CERR( "- 階差数列や累積和やBIT" );
+  CERR( "  \\Mathematics\\SetTheory\\DirectProduct\\Tree\\DifferenceSeqeuence" );
+  CERR( "  \\Mathematics\\SetTheory\\DirectProduct\\Tree\\CumulativeProd" );
+  CERR( "  \\Mathematics\\SetTheory\\DirectProduct\\AffineSpace\\BIT" );
+  CERR( "- イベントソート" );
+  CERR( "を検討しましょう。" );
 }
 
 AC( Decision )
