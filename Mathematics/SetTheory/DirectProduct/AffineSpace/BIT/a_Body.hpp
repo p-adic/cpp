@@ -4,7 +4,7 @@
 #include "a.hpp"
 
 // BinarySearchÇ…égÇ§ÅB
-#include "../SegmentTree/Power/a_Body.hpp"
+#include "../../../../Arithmetic/Power/Constexpr/a_Body.hpp"
 
 template <typename T , int N> inline BIT<T,N>::BIT() : m_fenwick() { static_assert( ! is_same<T,int>::value ); }
 template <typename T , int N>
@@ -80,7 +80,7 @@ int BIT<T,N>::BinarySearch( const T& n ) const
 {
 
   int j = 0;
-  int power = PowerCalculation<N>.m_val;
+  int power = PowerInverse_constexpr<N>.m_val;
   T sum{};
   T sum_next{};
   
