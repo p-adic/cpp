@@ -338,7 +338,7 @@
   {									\
 									\
     int j = 0;								\
-    int power = PowerInverse_constexpr<N>.m_val;				\
+    int power = PowerInverse_constexpr<N>().m_val;				\
     T temp{};								\
     T temp_next{};							\
 									\
