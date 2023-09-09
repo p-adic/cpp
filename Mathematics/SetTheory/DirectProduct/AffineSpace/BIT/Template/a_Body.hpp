@@ -4,7 +4,7 @@
 #include "a.hpp"
 
 // BinarySearchÇ…égÇ§ÅB
-#include "../../SegmentTree/Power/a_Body.hpp"
+#include "../../../../../Arithmetic/Power/Constexpr/a_Body.hpp"
 
 template <TEMPLATE_ARGUMENTS_FOR_BIT> inline const T& AbstractBIT<T,m_T,e_T,i_T,N>::g_e = e_T();
 
@@ -80,7 +80,7 @@ int AbstractBIT<T,m_T,e_T,i_T,N>::BinarySearch( const T& n ) const
 {
 
   int j = 0;
-  int power = PowerCalculation<N>.m_val;
+  int power = PowerInverse_constexpr<N>.m_val;
   T sum = g_e;
   T sum_next = g_e;
   
