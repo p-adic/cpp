@@ -80,7 +80,7 @@ int BIT<T,N>::BinarySearch( const T& n ) const
 {
 
   int j = 0;
-  int power = PowerInverse_constexpr<N>.m_val;
+  int power = PowerInverse_constexpr<N>().m_val;
   T sum{};
   T sum_next{};
   
