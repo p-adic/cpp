@@ -196,7 +196,7 @@ template <TEMPLATE_ARGUMENTS_FOR_MONOID_BIT> inline int MonoidBIT<T,m_T,e_T,i_T,
 {
 
   int j = 0;
-  int power = PowerInverse_constexpr<N>.m_val;
+  int power = PowerInverse_constexpr<N>().m_val;
   T sum = g_e;
   T sum_next = g_e;
   
