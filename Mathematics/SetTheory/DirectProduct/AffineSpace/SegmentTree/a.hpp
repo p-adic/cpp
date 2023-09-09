@@ -3,7 +3,7 @@
 #pragma once
 #include "a_Macro.hpp"
 
-#include "Power/a.hpp"
+#include "../../../../Arithmetic/Power/Constexpr/a.hpp"
 
 // （可換とは限らない）モノイド(T,m_T:T^2->T,e_T:1->T)と非負整数Nをパラメータとする。
 // 単位元による初期化O(N)
@@ -17,7 +17,7 @@ template <TEMPLATE_ARGUMENTS_FOR_SEGMENT_TREE>
 class SegmentTree
 {
 private:
-  static constexpr const int g_power = ConstexprPower<N>{}.m_val;
+  static constexpr const int g_power = PowerInverse_constexpr<N>{}.m_val;
   static constexpr const int g_power2 = g_power << 1;
   T m_a[g_power2];
 

@@ -3,7 +3,7 @@
 #pragma once
 #include "a.hpp"
 
-#include "Power/a_Body.hpp"
+#include "../../../../Arithmetic/Power/Constexpr/a_Body.hpp"
 
 template <TEMPLATE_ARGUMENTS_FOR_SEGMENT_TREE> inline const T& SegmentTree<T,m_T,e_T,N>::g_e = e_T();
 
@@ -39,8 +39,8 @@ template <TEMPLATE_ARGUMENTS_FOR_SEGMENT_TREE> inline SegmentTree<T,m_T,e_T,N>::
 
 }
 
-template <TEMPLATE_ARGUMENTS_FOR_SEGMENT_TREE> inline const T& SegmentTree<T,m_T,e_T,N>::operator[]( const int& i ) const { return m_a[g_power + i]; } 
-template <TEMPLATE_ARGUMENTS_FOR_SEGMENT_TREE> inline const T& SegmentTree<T,m_T,e_T,N>::Get( const int& i ) const { return m_a[g_power + i]; } 
+template <TEMPLATE_ARGUMENTS_FOR_SEGMENT_TREE> inline const T& SegmentTree<T,m_T,e_T,N>::operator[]( const int& i ) const { return m_a[g_power + i]; }
+template <TEMPLATE_ARGUMENTS_FOR_SEGMENT_TREE> inline const T& SegmentTree<T,m_T,e_T,N>::Get( const int& i ) const { return m_a[g_power + i]; }
 
 template <TEMPLATE_ARGUMENTS_FOR_SEGMENT_TREE>
 T SegmentTree<T,m_T,e_T,N>::IntervalProduct( const int& i_start , const int& i_final ) 
