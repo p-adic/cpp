@@ -49,6 +49,7 @@ AC( Solving );
 AC( Query );
 AC( QueryArray );
 AC( QueryGraph );
+AC( QueryGrid );
 AC( QueryTime );
 AC( Decision );
 AC( DecisionConnectedness );

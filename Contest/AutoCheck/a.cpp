@@ -819,12 +819,15 @@ AC( Query )
   ASK_NUMBER(
 	     "配列の範囲更新／取得クエリ問題" ,
 	     "グラフの範囲更新／取得クエリ問題" ,
-	     "配列やグラフの時系列更新／取得クエリ問題"
+	     "グリッドの範囲更新／取得クエリ問題" ,
+	     "時系列更新／取得クエリ問題"
 	     );
   if( num == num_temp++ ){
     CALL_AC( QueryArray );
   } else if( num == num_temp++ ){
     CALL_AC( QueryGraph );
+  } else if( num == num_temp++ ){
+    CALL_AC( QueryGrid );
   } else if( num == num_temp++ ){
     CALL_AC( QueryTime );
   }
@@ -913,8 +916,10 @@ AC( QueryGraph )
 {
   ASK_YES_NO( "代数構造を扱う問題ですか？" );
   if( reply == "yes" ){
-    CERR( "- 可換群構造に関する加算／全更新後の一点取得が必要ならば階差数列" );
+    CERR( "- 可換群構造に関する加算／全更新後の一点取得のみが必要ならば階差数列" );
     CERR( "  \\Mathematics\\SetTheory\\DirectProduct\\Tree\\DifferenceSeqeuence" );
+    CERR( "- 木上で可換モノイド構造に関する再帰が必要ならば全域木DP" );
+    CERR( "  \\Mathematics\\Geometry\\Graph\\DepthFirst\\Tree" );
   } else {
     CERR( "深さ優先探索や動的木やUnionFind" );
     CERR( "\\Mathematics\\Geometry\\Graph\\DepthFirst\\Tree" );
@@ -922,6 +927,18 @@ AC( QueryGraph )
     CERR( "\\Utility\\VLTree\\UnionFndForest" );
   }
   CERR( "を検討しましょう。" );  
+}
+
+AC( QueryGrid )
+{
+  CERR( "- 可換群構造に関する加算／全更新後の一点取得のみが必要ならば二次元階差数列" );
+  CERR( "  \\Mathematics\\SetTheory\\DirectProduct\\Tree\\DifferenceSeqeuence\\TwoDimentioal" );
+  CERR( "- 可換群構造に関する加算／全更新なしの区間取得のみが必要ならば二次元累積和" );
+  CERR( "  \\Mathematics\\SetTheory\\DirectProduct\\Tree\\CulmulativeProd\\TwoDimentioal" );
+  CERR( "- 可換群構造に関する加算／全更新後の区間取得が必要ならば二次元階差数列／累積和の併用" );
+  CERR( "  \\Mathematics\\SetTheory\\DirectProduct\\Tree\\DifferenceSeqeuence\\TwoDimentioal" );
+  CERR( "  \\Mathematics\\SetTheory\\DirectProduct\\Tree\\CulmulativeProd\\TwoDimentioal" );
+  CERR( "を検討しましょう。" );
 }
 
 AC( QueryTime )
