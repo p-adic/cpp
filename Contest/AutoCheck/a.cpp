@@ -173,7 +173,9 @@ AC( ExplicitExpressionUnary )
 
 AC( ExplicitExpressionUnaryLinearRecursion )
 {
-  CERR( "L項間線形漸化式a_n=sum(i,0,L){c_i a_{n-L+i}}が与えられているとします。" );
+  CERR( "L項間線形漸化式" );
+  CERR( "a_n = sum(i,0,L){c_i a_{n-L+i}} (n>=L)" );
+  CERR( "第N項a_Nを法Bで求めます。" );
   CERR( "" );
   CERR( "適宜Z/B Zの型" );
   CERR( "\\Mathematics\\Arithmetic\\Mod\\ConstexprModulo" );
@@ -182,7 +184,10 @@ AC( ExplicitExpressionUnaryLinearRecursion )
   CERR( "- O(LN)が間に合いそうならば直近L+1項をメモ化する動的計画法" );
   CERR( "- O(L^2 log N)が間に合いそうならば行列累乗" );
   CERR( "  \\Mathematics\\LinearAlgebra" );
-  CERR( "- 係数列(c_i)_iが定数列でO(N log N)が間に合いそうならば区間加算BIT" );
+  CERR( "- B=998244353かつ初項L項も漸化式を満たしかつO(N log N)が間に合いそうならば" );
+  CERR( "  1/(1-sum(i,0,L){c_i x^i})のN次係数の高速フーリエ変換による計算" );
+  CERR( "  \\Mathematics\\Polynomial\\Mod" );
+  CERR( "- 係数列(c_i)_iが周期Pを持ちO(PN log N)が間に合いそうならばP個の区間加算BIT" );
   CERR( "  \\Mathematics\\SetTheory\\DirectProduct\\AffineSpace\\BIT\\IntervalAddo" );
   CERR( "- 係数列(c_i)_iが単調でD階差分が定数列でO((N+L)D)が間に合いそうならば" );
   CERR( "  「係数列のd階Δ^d(c_i)_i差分と(a_i)_{i=n-L+d+1}^{n}の内積dp[n][d]」" );
@@ -585,10 +590,11 @@ AC( MaximisationProbability )
 AC( Counting )
 {
   ASK_NUMBER(
-	     "固定長変数関数で与えられる明示式の数え上げ問題" ,
-	     "配列に関する数え上げ問題" ,
+	     "固定長変数関数で与えられる明示式の値の数え上げ問題" ,
+	     "配列の部分列に関する数え上げ問題" ,
 	     "分割に関する数え上げ問題" ,
 	     "文字列の数え上げ問題" ,
+	     "戦略の数え上げ問題" ,
 	     "操作回数の計算問題"
 	     );
   if( num == num_temp++ ){
@@ -599,6 +605,8 @@ AC( Counting )
     CALL_AC( CountingPartitionOfTree );
   } else if( num == num_temp++ ){
     CALL_AC( CountingString );
+  } else if( num == num_temp++ ){
+    CALL_AC( CountingStrategy );
   } else if( num == num_temp++ ){
     CALL_AC( ExplicitExpressionCountingOperation );
   }
@@ -806,6 +814,23 @@ AC( CountingMatchingSubString )
   CERR( "を検討しましょう。" );
 }
 
+AC( CountingStrategy )
+{
+  CERR( "- 半順序集合上の移動経路の数え上げ問題は" );
+  CERR( "  「各点iへの移動経路の個数dp[i]」" );
+  CERR( "  を管理するiに関する動的計画法" );
+  CERR( "- 操作する対象の選択方法の数え上げ問題は" );
+  CERR( "  操作対象を各非負整数iで適切に番号付けて" );
+  CERR( "  「i以下の番号の対象のみを考えた時の選択方法の個数dp[i]」" );
+  CERR( "  を管理するiに関する動的計画法" );
+  CERR( "を検討しましょう。" );
+  ASK_YES_NO( "線形漸化式に帰着されますか？" );
+  if( reply == "y" ){
+    CALL_AC( ExplicitExpressionUnaryLinearRecursion );
+    CERR( "を検討しましょう。" );
+  }
+}
+
 AC( Solving )
 {
   CERR( "- 単調関数は二分探索" );
@@ -959,11 +984,12 @@ AC( QueryTime )
 AC( Decision )
 {
   ASK_NUMBER(
-	     "0次連結性判定問題" ,
-	     "高次連結性判定問題" ,
-	     "勝敗判定問題" ,
+	     "0次連結性問題" ,
+	     "高次連結性問題" ,
+	     "必勝性問題" ,
 	     "到達可能性問題" ,
-	     "充足可能性問題"
+	     "充足可能性問題" ,
+	     "表記可能性問題"
 	     );
   if( num == num_temp++ ){
     CALL_AC( DecisionConnectedness );
@@ -975,6 +1001,8 @@ AC( Decision )
     CALL_AC( DecisionAccessibility );
   } else if( num == num_temp++ ){
     CALL_AC( DecisionSatisfiability );
+  } else if( num == num_temp++ ){
+    CALL_AC( DecisionPresentability );
   }
 }
 
@@ -1034,13 +1062,24 @@ AC( DecisionSatisfiability )
   }
 }
 
+AC( DecisionPresentability )
+{
+  CERR( "数列や文字列を使って特定の数や文字を表現できるかの判定は" );
+  CERR( "「第i成分／文字までで打ち切った時に表現できるもの全体の集合dp[i]」" );
+  CERR( "を管理するiに関する動的計画法を検討しましょう。" );
+  CERR( "" );
+  CERR( "関数や演算への適用がある場合は適宜部分表現／文字列の情報も" );
+  CERR( "持たせて動的計画法を検討しましょう。" );
+}
+
 AC( Construction )
 {
   ASK_NUMBER(
 	     "数や配列や文字列の構築" ,
 	     "経路の構築" ,
 	     "戦略の構築" ,
-	     "ソースコードの構築"
+	     "ソースコードの構築" ,
+	     "表現可能性の判定"
 	     );
   if( num == num_temp++ ){
     CERR( "p進法や階差数列を検討しましょう。" );
@@ -1052,5 +1091,7 @@ AC( Construction )
     CALL_AC( DecisionGame );
   } else if( num == num_temp++ ){
     CERR( "正解を出力をするソースコードを提出しましょう。" );
+  } else if( num == num_temp++ ){
+    CALL_AC( DecisionPresentability );
   }
 }
