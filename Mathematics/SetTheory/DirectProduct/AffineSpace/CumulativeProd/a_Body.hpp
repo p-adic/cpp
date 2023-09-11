@@ -41,6 +41,71 @@ template <typename T , T m_T(const T&,const T&) , const T& e_T() , T i_T(const T
 
 }
 
-template <typename T , T m_T(const T&,const T&) , T i_T(const T&) , int size_max> inline int CumulativeProd<T,m_T,e_T,i_T,size_max>::Parent( const int& i ) { return i - 1; }
+template <typename T , T m_T(const T&,const T&) , const T& e_T() , T i_T(const T&) , int size_max> ll CumulativeProd<T,m_T,e_T,i_T,size_max>::CountUnitProdRange()
+{
+
+  using base = CumulativeProd_Body<T,m_T,i_T,size_max>;
+  map<T,ll> f{};
+  f[e_T()]++;
+
+  for( int i = 0 ; i < base::m_size ; i++ ){
+
+    f[base::m_a[i]]++;
+
+  }
+
+  ll answer = 0;
+
+  for( auto itr_f = f.begin() , end_f = f.end() ; itr_f != end_f ; itr_f++ ){
+
+    const ll& num = itr_f->second;
+    answer += num * ( num - 1 ) / 2;
+
+  }
+
+  return answer;
+
+}
+
+template <typename T , T m_T(const T&,const T&) , const T& e_T() , T i_T(const T&) , int size_max> list<pair<int,int> > CumulativeProd<T,m_T,e_T,i_T,size_max>::UnitProdRange()
+{
+
+  using base = CumulativeProd_Body<T,m_T,i_T,size_max>;
+  map<T,list<int> > f{};
+  f[e_T()].push_back( -1 );
+
+  for( int i = 0 ; i < base::m_size ; i++ ){
+
+    f[base::m_a[i]].push_back( i );
+
+  }
+
+  list<pair<int,int> > answer{};
+
+  for( auto itr_f = f.begin() , end_f = f.end() ; itr_f != end_f ; itr_f++ ){
+
+    const auto& a = itr_f->second;
+
+    for( auto itr_a_L = a.begin() , end_a = a.end() ; itr_a_L != end_a ; itr_a_L++ ){
+
+      const int i = *itr_a_L + 1;
+      auto itr_a_R = itr_a_R;
+      itr_a_R++;
+
+      while( itr_a_R != end_a ){
+
+	answer.push_back( i , *itr_a_R );
+
+      }
+
+    }
+
+  }
+
+  return answer;
+
+}
+
+template <typename T , T m_T(const T&,const T&) , const T& e_T() , T i_T(const T&) , int size_max> inline int CumulativeProd<T,m_T,e_T,i_T,size_max>::Parent( const int& i ) { return i - 1; }
 
 template <typename T , T m_T(const T&,const T&) , const T& e_T() , T i_T(const T&) , int size_max> inline int CumulativeProd<T,m_T,e_T,i_T,size_max>::LCA( const int& i , const int& j ) { return min( i , j ); }
