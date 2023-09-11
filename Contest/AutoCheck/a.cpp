@@ -892,9 +892,9 @@ AC( QueryArray )
 	     );
   if( num == num_temp++ ){
     CERR( "- 加算／全更新後の一点取得のみが必要ならば階差数列" );
-    CERR( "  \\Mathematics\\SetTheory\\DirectProduct\\Tree\\DifferenceSeqeuence" );
+    CERR( "  \\Mathematics\\SetTheory\\DirectProduct\\AfineSpace\\DifferenceSeqeuence" );
     CERR( "- 加算／全更新なしで区間取得のみが必要ならば累積積" );
-    CERR( "  \\Mathematics\\SetTheory\\DirectProduct\\Tree\\CumulativeProd" );
+    CERR( "  \\Mathematics\\SetTheory\\DirectProduct\\AfineSpace\\CumulativeProd" );
     CERR( "- 区間加算／区間取得が必要ならば可換群BIT" );
     CERR( "  \\Mathematics\\SetTheory\\DirectProduct\\AffineSpace\\BIT\\Template" );
     CERR( "- 一点代入／一点加算／区間取得が必要ならば可換群平方分割" );
@@ -962,7 +962,7 @@ AC( QueryGraph )
   ASK_YES_NO( "代数構造を扱う問題ですか？" );
   if( reply == "yes" ){
     CERR( "- 可換群構造に関する加算／全更新後の一点取得のみが必要ならば階差数列" );
-    CERR( "  \\Mathematics\\SetTheory\\DirectProduct\\Tree\\DifferenceSeqeuence" );
+    CERR( "  \\Mathematics\\SetTheory\\DirectProduct\\AfineSpace\\DifferenceSeqeuence\Tree" );
     CERR( "- 木上で可換モノイド構造に関する再帰が必要ならば全域木DP" );
     CERR( "  \\Mathematics\\Geometry\\Graph\\DepthFirst\\Tree" );
   } else {
@@ -977,12 +977,12 @@ AC( QueryGraph )
 AC( QueryGrid )
 {
   CERR( "- 可換群構造に関する加算／全更新後の一点取得のみが必要ならば二次元階差数列" );
-  CERR( "  \\Mathematics\\SetTheory\\DirectProduct\\Tree\\DifferenceSeqeuence\\TwoDimentioal" );
+  CERR( "  \\Mathematics\\SetTheory\\DirectProduct\\AfineSpace\\DifferenceSeqeuence\\TwoDimentioal" );
   CERR( "- 可換群構造に関する加算／全更新なしの区間取得のみが必要ならば二次元累積和" );
-  CERR( "  \\Mathematics\\SetTheory\\DirectProduct\\Tree\\CulmulativeProd\\TwoDimentioal" );
+  CERR( "  \\Mathematics\\SetTheory\\DirectProduct\\AfineSpace\\CulmulativeProd\\TwoDimentioal" );
   CERR( "- 可換群構造に関する加算／全更新後の区間取得が必要ならば二次元階差数列／累積和の併用" );
-  CERR( "  \\Mathematics\\SetTheory\\DirectProduct\\Tree\\DifferenceSeqeuence\\TwoDimentioal" );
-  CERR( "  \\Mathematics\\SetTheory\\DirectProduct\\Tree\\CulmulativeProd\\TwoDimentioal" );
+  CERR( "  \\Mathematics\\SetTheory\\DirectProduct\\AfineSpace\\DifferenceSeqeuence\\TwoDimentioal" );
+  CERR( "  \\Mathematics\\SetTheory\\DirectProduct\\AfineSpace\\CulmulativeProd\\TwoDimentioal" );
   CERR( "を検討しましょう。" );
 }
 
@@ -994,8 +994,8 @@ AC( QueryTime )
   CERR( "- JがO(N)でなくIがO(N)ならば各区間での変化量を求めましょう。" );
   CERR( "変化量の計算は" );
   CERR( "- 階差数列や累積和やBIT" );
-  CERR( "  \\Mathematics\\SetTheory\\DirectProduct\\Tree\\DifferenceSeqeuence" );
-  CERR( "  \\Mathematics\\SetTheory\\DirectProduct\\Tree\\CumulativeProd" );
+  CERR( "  \\Mathematics\\SetTheory\\DirectProduct\\AfineSpace\\DifferenceSeqeuence" );
+  CERR( "  \\Mathematics\\SetTheory\\DirectProduct\\AfineSpace\\CumulativeProd" );
   CERR( "  \\Mathematics\\SetTheory\\DirectProduct\\AffineSpace\\BIT" );
   CERR( "- イベントソート" );
   CERR( "を検討しましょう。" );
