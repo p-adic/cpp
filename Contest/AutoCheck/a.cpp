@@ -188,7 +188,6 @@ AC( ExplicitExpressionUnary )
   } else if( num == num_temp++ ){
     CALL_AC( ExplicitExpressionUnaryOther );
   }
-  CERR( "を検討しましょう。" );
 }
 
 AC( ExplicitExpressionUnaryLinearRecursion )
@@ -212,6 +211,7 @@ AC( ExplicitExpressionUnaryLinearRecursion )
   CERR( "- 係数列(c_i)_iが単調でD階差分が定数列でO((N+L)D)が間に合いそうならば" );
   CERR( "  「係数列のd階Δ^d(c_i)_i差分と(a_i)_{i=n-L+d+1}^{n}の内積dp[n][d]」" );
   CERR( "  を管理する動的計画法" );
+  CERR( "を検討しましょう。" );
 }
 
 AC( ExplicitExpressionUnaryIteration )
@@ -222,6 +222,7 @@ AC( ExplicitExpressionUnaryIteration )
   CERR( "- O(TN)が通りそうならばループ検出" );
   CERR( "  \\Mathematics\\Function\\Iteration\\LoopDetection" );
   CERR( "- O(N)すら通らなさそうならば関数の規則性を見付けるための実験" );
+  CERR( "を検討しましょう。" );
 }
 
 AC( ExplicitExpressionUnaryOther )
@@ -237,10 +238,13 @@ AC( ExplicitExpressionUnaryOther )
   CERR( "を検討しましょう。" );
   CERR( "" );
   CERR( "前計算の候補としては" );
+  CERR( "- 階乗／逆元／場合の数" );
   CERR( "- 素数列挙" );
   CERR( "- １つまたは複数の整数の約数列挙" );
   CERR( "- オイラー関数の値の列挙" );
   CERR( "- サブゴールとなる関係式を満たす解の列挙" );
+  CERR( "があります。再帰的な前計算が可能な場合、適宜バケット分割して" );
+  CERR( "ソースコードに埋め込むことで高速化することを検討しましょう。" );
 }
 
 AC( ExplicitExpressionArraySum )
@@ -618,7 +622,8 @@ AC( Counting )
 	     "分割に関する数え上げ問題" ,
 	     "文字列の数え上げ問題" ,
 	     "戦略の数え上げ問題" ,
-	     "操作回数の計算問題"
+	     "操作回数の計算問題" ,
+	     "カタラン数の計算問題"
 	     );
   if( num == num_temp++ ){
     CALL_AC( CountingExplicitExpression );
@@ -630,6 +635,8 @@ AC( Counting )
     CALL_AC( CountingString );
   } else if( num == num_temp++ ){
     CALL_AC( CountingStrategy );
+  } else if( num == num_temp++ ){
+    CALL_AC( CountingParenthesisSequence );
   } else if( num == num_temp++ ){
     CALL_AC( ExplicitExpressionCountingOperation );
   }
@@ -870,6 +877,21 @@ AC( CountingStrategy )
     CALL_AC( ExplicitExpressionUnaryLinearRecursion );
     CERR( "を検討しましょう。" );
   }
+}
+
+AC( CountingParenthesisSequence )
+{
+  CERR( "第nカタラン数Cnは(2n)!/(n+1)!n!です。" );
+  CERR( "- n対のカッコ列であって全てのカッコが閉じたもの" );
+  CERR( "- 2n成分の総和が0で左端からの始端和が非負な±1列" );
+  CERR( "- nノードの二分木" );
+  CERR( "- n×n格子で左下から右上まで対角線を跨がず最初に右へ行く最短経路" );
+  CERR( "- 2×nの標準ヤング図形（行／列ともに狭義単調増大になるような番号づけ）" );
+  CERR( "- 円上のn頂点の多角形分割" );
+  CERR( "- 円上のn+2角形の三角形分割" );
+  CERR( "- 円上の2n頂点の非交差かつ次数2な無向辺の張り方" );
+  CERR( "の数え上げなどがCnと一致します。" );
+  CERR( "https://en.wikipedia.org/wiki/Catalan_number#Applications_in_combinatorics" );
 }
 
 AC( Solving )
