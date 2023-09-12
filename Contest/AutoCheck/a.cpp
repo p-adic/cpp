@@ -346,15 +346,18 @@ AC( ExplicitExpressionFunctionOnNonTreeGraph )
 
 AC( ExplicitExpressionOrder )
 {
-  CERR( "集合Sを何らかの順序でソートした配列aに関する問題で、" );
+  CERR( "集合Sを何らかの順序でソートした配列aに関する問題を考えます。" );
   CERR( "- 与えられた要素sが下から何番目かを答える場合は、" );
   CERR( "  - 各iごとにa[i]が求められるならば、iに関する二分探索" );
   CERR( "  - そうでないならば、s未満の項の数え上げ" );
   CERR( "- 与えられたiに対するa[i]を答える場合は、" );
   CERR( "  Sの各要素sごとにs未満の項を数え上げてsに関する二分探索" );
+  CERR( "- 与えられたiに対するa[0],...,a[i]を全て答える場合は、" );
+  CERR( "  - a[i]が求まるならば、a[i]以下の項を全列挙" );
+  CERR( "  - Sがソートした配列M個の和集合ならば、M個のpriority_queueでイベントソート" );
   CERR( "を検討しましょう。" );
   CERR( "" );
-  CERR( "辞書式順序でs未満の項の数え上げをする際は、" );
+  CERR( "特に辞書式順序でs未満の項の数え上げをする際は、" );
   CERR( "「sとd文字目で初めてズレるl文字の項の総数count[d][l]」" );
   CERR( "のdとlをわたる総和を求めましょう。" );
 }
@@ -610,7 +613,7 @@ AC( MaximisationProbability )
 AC( Counting )
 {
   ASK_NUMBER(
-	     "固定長変数関数で与えられる明示式の値の数え上げ問題" ,
+	     "固定長変数関数の逆像の数え上げ問題" ,
 	     "配列の部分列に関する数え上げ問題" ,
 	     "分割に関する数え上げ問題" ,
 	     "文字列の数え上げ問題" ,
@@ -671,15 +674,34 @@ AC( CountingSubArray )
 
 AC( CountingSumFixedSubArray )
 {
-  CERR( "項数N、コストの総和の上限Cとします。" );
-  CERR( "- コストと価値が異なりO(2^N)が通りそうならば愚直な２変数多項式乗算" );
-  CERR( "- コストと価値が等しくO(2^N)が通りそうならば愚直な１変数多項式乗算" );
-  CERR( "- コストと価値が等しくO(2^{N/2}N)が通りそうならば半分ずつ多項式乗算を" );
-  CERR( "  して最後にそれらの積の１係数のみの計算" );
-  CERR( "- コストと価値が等しくCが10^5オーダーで法が与えられていてO((N+C)log_2 C)が" );
-  CERR( "  通りそうならば適当な法での高速フーリエ変換" );
-  CERR( "  \\Mathematics\\Arithmetic\\Mod" );
-  CERR( "  \\Mathematics\\Polynomial" );
+  CERR( "和を取る値を価値と呼ぶことにします。" );
+  CERR( "配列の項数N、第i成分の価値A_i、価値の総和v、vの上限Vとします。" );
+  CERR( "{0,...,N-1}の部分集合Iであって、" );
+  CERR( "- sum(i in I){A_i} = v" );
+  CERR( "- その他の条件" );
+  CERR( "を満たすものの数え上げを考えます。" );
+  ASK_NUMBER(
+	     "Iにコスト制約がある場合" ,
+	     "Iが連続部分列に限られる場合" ,
+	     "Iに追加の制約がない場合"
+	     );
+  if( num == num_temp++ ){
+    CERR( "O(2^N)が通りそうならば価値とコストを次数とする愚直な２変数多項式乗算" );
+    CERR( "  \\Mathematics\\Polynomial\\Multivariable" );
+  } else if( num == num_temp++ ){
+    CERR( "- O(N^2)が通りそうならば累積和で差の取得" );
+    CERR( "- O(N log_2 N)が通りそうでv=0に固定ならば累積和でCountUnitProdRange" );
+    CERR( "  \\Mathematics\\SetTheory\\DirectProduct\\AffineSpace\\CumulativeProd" );
+    
+  } else if( num == num_temp++ ){
+    CERR( "- O(2^N)が通りそうならば愚直な１変数多項式乗算" );
+    CERR( "- O(2^{N/2}N)が通りそうでvが１つの値に固定ならば半分ずつ多項式乗算をして" );
+    CERR( "  最後にそれらの積のv次係数のみの計算" );
+    CERR( "- O((N+V)log_2 V)が通りそうでVが10^5オーダーで" );
+    CERR( "  プロス素数Pを法とするならば法Pでの高速フーリエ変換" );
+    CERR( "  \\Mathematics\\Arithmetic\\Mod" );
+    CERR( "  \\Mathematics\\Polynomial" );
+  }
   CERR( "を検討しましょう。" );
 }
 
@@ -1018,7 +1040,7 @@ AC( QueryTimeMax )
   CERR( "各qごとに、以下の処理を行います：" );
   CERR( "- M < M_qならば、以下の処理を行う：" );
   CERR( "  - MをM_qに変更する。" );
-  CERR( "  - A'の先頭(x,i)がx < M_qを満たす限り以下の処理を繰り返す：" );
+  CERR( "  - A'の先頭(x,i)がx < Mを満たす限り以下の処理を繰り返す：" );
   CERR( "    - a_iを区間演算の単位元に変更する。（クエリ合計O(N log N)）" );
   CERR( "    - B_iを1に変更する。（クエリ合計O(N log N)）" );
   CERR( "    - A'から(x,i)を削除する。（クエリ合計O(N log N)）" );
