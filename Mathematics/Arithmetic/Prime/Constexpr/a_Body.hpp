@@ -36,8 +36,4 @@ template <typename INT , INT val_limit , int length_max> inline constexpr const 
 template <typename INT , INT val_limit , int length_max> inline constexpr const bool& PrimeEnumeration<INT,val_limit,length_max>::IsComposite( const int& i ) const { assert( i < val_limit ); return m_is_composite[i]; }
 template <typename INT , INT val_limit , int length_max> inline constexpr const int& PrimeEnumeration<INT,val_limit,length_max>::length() const noexcept { return m_length; }
 
-template <typename INT , INT val_limit , int length_max> inline constexpr PrimeCounting<INT,val_limit,length_max>::PrimeCounting( const PrimeEnumeration<INT,val_limit,length_max>& pe ) : m_val{ 0 , 0 } { int temp = 0; for( int i = 2 ; i < val_limit ; i++ ){ m_val[i] = pe.IsComposite( i ) ? temp : ++temp; } }
-
-template <typename INT , INT val_limit , int length_max> inline constexpr const int& PrimeCounting<INT,val_limit,length_max>::Pi( const int& i ) const { assert( i < val_limit ); return m_val[i]; }
-
 
