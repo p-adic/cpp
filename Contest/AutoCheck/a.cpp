@@ -948,7 +948,7 @@ AC( QueryGraph )
   ASK_YES_NO( "代数構造を扱う問題ですか？" );
   if( reply == "yes" ){
     CERR( "- 可換群構造に関する加算／全更新後の一点取得のみが必要ならば階差数列" );
-    CERR( "  \\Mathematics\\SetTheory\\DirectProduct\\AfineSpace\\DifferenceSeqeuence\Tree" );
+    CERR( "  \\Mathematics\\SetTheory\\DirectProduct\\AfineSpace\\DifferenceSeqeuence\\Tree" );
     CERR( "- 木上で可換モノイド構造に関する再帰が必要ならば全域木DP" );
     CERR( "  \\Mathematics\\Geometry\\Graph\\DepthFirst\\Tree" );
   } else {
