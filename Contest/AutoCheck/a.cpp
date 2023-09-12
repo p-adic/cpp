@@ -865,7 +865,9 @@ AC( Query )
 	     "配列の範囲更新／取得クエリ問題" ,
 	     "グラフの範囲更新／取得クエリ問題" ,
 	     "グリッドの範囲更新／取得クエリ問題" ,
-	     "時系列更新／取得クエリ問題"
+	     "文字列の範囲更新／比較クエリ問題" ,
+	     "集合の範囲更新／比較クエリ問題" ,
+	     "時系列データのクエリ問題"
 	     );
   if( num == num_temp++ ){
     CALL_AC( QueryArray );
@@ -873,6 +875,10 @@ AC( Query )
     CALL_AC( QueryGraph );
   } else if( num == num_temp++ ){
     CALL_AC( QueryGrid );
+  } else if( num == num_temp++ ){
+    CALL_AC( QueryString );
+  } else if( num == num_temp++ ){
+    CALL_AC( QuerySet );
   } else if( num == num_temp++ ){
     CALL_AC( QueryTime );
   }
@@ -888,7 +894,7 @@ AC( QueryArray )
 	     "集合へのマグマ作用(*,\\cdot)を使う問題" ,
 	     "モノイドへのマグマ作用(+,\\cdot)を使う問題" ,
 	     "一次関数とのmaxを取った値を使う問題" ,
-	     "定数とのmaxを取った値の区間和取得を使う問題"
+	     "定数とのmaxを取った値の区間演算取得を使う問題"
 	     );
   if( num == num_temp++ ){
     CERR( "- 加算／全更新後の一点取得のみが必要ならば階差数列" );
@@ -929,31 +935,11 @@ AC( QueryArray )
     CERR( "  \\Mathematics\\Function\\MaxLinearFunction" );
     CERR( "を検討しましょう。" );
   } else if( num == num_temp++ ){
-    CERR( "maxで全体更新でなく区間更新をする場合の汎用的な解法は分かりません。" );
-    CERR( "例えば区間が包含について単調でmaxを取る値も単調であれば全体更新と" );
-    CERR( "同様の処理ができます。状況に応じた考察をしましょう。" );
+    CERR( "maxで全体更新をしない場合、つまりただ配列と定数のmaxの区間演算を処理するだけの場合、" );
+    CERR( "クエリの順番を入れ替えることができるので、全体更新をする場合に帰着できます。" );
+    CERR( "従って以下では全体更新の問題を考えます。" );
     CERR( "" );
-    CERR( "maxで全体更新をする場合、maxを取る値は単調である場合に帰着できます。" );
-    CERR( "maxで全体更新をしない場合、つまりただmaxの区間和を処理するだけの場合、" );
-    CERR( "クエリの順番を入れ替えることができるので、単調な全体更新に帰着できます。" );
-    CERR( "従って以下では単調な全体更新の問題を考えます。" );
-    CERR( "" );
-    CERR( "maxを取る定数を変数化し、元の値との大小を表す{0,1}値の係数を考えます。" );
-    CERR( "すると区間作用前後の値は統一的にその係数と変数を使って表せます。" );
-    CERR( "配列の各成分の係数の値が変化するイベントとクエリをソートして管理し、" );
-    CERR( "クエリがイベントを跨ぐたびに係数を更新することを検討しましょう。" );
-    CERR( "" );
-    CERR( "例えばクエリB_qに対するmax(A_i,B_q)の区間和は、" );
-    CERR( "- 優先度つきキューA'={(A_i,i)|i}（構築O(N log N)）" );
-    CERR( "- (B_q,q)_qをソートしたB'（構築O(Q log Q)）" );
-    CERR( "- 長さNの数列C=(0,...,0)（構築O(N)）" );
-    CERR( "を用意し、B'を前から探索して順に各クエリ(B_q,q)を処理します。" );
-    CERR( "具体的にはA'を前から探索して順にA_i<B_qとなる各iに対し" );
-    CERR( "- A'から(A_i,i)を削除（クエリ合計O(N)）" );
-    CERR( "- A_iを0に更新（クエリ合計O(N log N)）" );
-    CERR( "- C_iを1に更新（各クエリO(log N)）" );
-    CERR( "- A+C×B_qの区間和取得（各クエリO(log N)）" );
-    CERR( "とすれば合計O((N + Q)log N + Q log Q)で処理できます。" );
+    AC( QueryTimeMax );
   }
 }
 
@@ -986,7 +972,64 @@ AC( QueryGrid )
   CERR( "を検討しましょう。" );
 }
 
+AC( QueryString )
+{
+  CERR( "文字列の一点更新（一文字更新／結合）／比較はローリングハッシュ" );
+  CERR( "\\Utility\\String\\RollingHash" );
+  CERR( "を検討しましょう。さらに文字列の範囲更新が必要な場合は" );
+  CERR( "- 固定位置の文字のシフトによる一文字更新ならば加算更新" );
+  CERR( "- 結合ならば加算更新と乗算による作用更新" );
+  CERR( "に対応するデータ構造との併用を検討しましょう。" );
+}
+
+AC( QuerySet )
+{
+  CERR( "集合の一点更新（一要素更新／対称差）／比較はゾブリストハッシュ" );
+  CERR( "\\Utility\\Set\\ZobristHash" );
+  CERR( "を検討しましょう。さらに集合の範囲更新が必要な場合は" );
+  CERR( "- 固定要素の有無の反転による一点更新" );
+  CERR( "- 対称差" );
+  CERR( "ともに加算更新に対応するデータ構造との併用を検討しましょう。" );
+}
+
 AC( QueryTime )
+{
+  ASK_NUMBER(
+	     "maxによる全体の時系列更新" ,
+	     "その他の時系列更新"
+	     );
+  if( num == num_temp++ ){
+    CALL_AC( QueryTimeMax );
+  } else {
+    CALL_AC( QueryTimeOther );
+  }
+}
+
+AC( QueryTimeMax )
+{
+  CERR( "与えられた配列を(A_i)_i、クエリで全体max更新を取る値を(M_q)_q、" );
+  CERR( "クエリで区間演算を取る範囲を(S_q)_q、と置きます。" );
+  CERR( "- (A_i)_iで初期化された配列(a_i)_i（説明の都合だけの用途。実際は(A_i)_iを使う）" );
+  CERR( "- (A_i,i)_iをソートした配列A'（構築O(N log N)）" );
+  CERR( "- 0で初期化された{0,1}値配列(B_i)_i（構築O(N)）" );
+  CERR( "- (A_i)_iと(M_q)_qの最小値より小さい値で初期化された整数変数M" );
+  CERR( "を用意します。" );
+  CERR( "" );
+  CERR( "各qごとに、以下の処理を行います：" );
+  CERR( "- M < M_qならば、以下の処理を行う：" );
+  CERR( "  - MをM_qに変更する。" );
+  CERR( "  - A'の先頭(x,i)がx < M_qを満たす限り以下の処理を繰り返す：" );
+  CERR( "    - a_iを区間演算の単位元に変更する。（クエリ合計O(N log N)）" );
+  CERR( "    - B_iを1に変更する。（クエリ合計O(N log N)）" );
+  CERR( "    - A'から(x,i)を削除する。（クエリ合計O(N log N)）" );
+  CERR( "- 各i in Sに対するmax(A_i,M)を" );
+  CERR( "  - 区間和が必要ならばa_i+B_i*M" );
+  CERR( "  - 区間積が必要ならばa_i*M^{B_i}" );
+  CERR( "  に読み替えて区間演算をデータ構造で処理する。（各クエリO(log N)）" );
+  CERR( "これにより合計O((N + Q)log N + Q log Q)で処理できます。" );
+}
+
+AC( QueryTimeOther )
 {
   CERR( "第i成分が変化し続ける区間たちの個数をIと置きます。" );
   CERR( "各区間を更に変化の仕方の違いで細分したものの個数をJと置きます。" );
@@ -1009,6 +1052,7 @@ AC( Decision )
 	     "必勝性問題" ,
 	     "到達可能性問題" ,
 	     "充足可能性問題" ,
+	     "一致判定問題" ,
 	     "表記可能性問題"
 	     );
   if( num == num_temp++ ){
@@ -1021,6 +1065,8 @@ AC( Decision )
     CALL_AC( DecisionAccessibility );
   } else if( num == num_temp++ ){
     CALL_AC( DecisionSatisfiability );
+  } else if( num == num_temp++ ){
+    CALL_AC( DecisionCoincidence );
   } else if( num == num_temp++ ){
     CALL_AC( DecisionPresentability );
   }
@@ -1080,6 +1126,21 @@ AC( DecisionSatisfiability )
     CERR( "完全二部マッチング判定は最大二部マッチングに帰着させて" );
     AC( MaximisationBipartiteMatching );
   }
+}
+
+AC( DecisionCoincidence )
+{
+  CERR( "- 文字列の一致判定はローリングハッシュ" );
+  CERR( "  \\Utility\\String\\RollingHash" );
+  CERR( "- 部分文字列との一致判定はZアルゴリズム" );
+  CERR( "  \\Utility\\String\\Z-Algorithm" );
+  CERR( "- 集合の一致判定はゾブリストハッシュ" );
+  CERR( "  \\Utility\\Set\\ZobristHash" );
+  CERR( "- 多重集合の一致判定は重複度とpairにして集合の一致判定に帰着" );
+  CERR( "- 配列の並び換えによる一致判定は" );
+  CERR( "  - 各前処理O(長さlog長さ)が間に合いそうならばソートからの文字列一致判定に帰着" );
+  CERR( "  - 各前処理O(長さlog文字種類数)が間に合いそうならば多重集合の一致判定に帰着" );
+  CERR( "を検討しましょう。" );
 }
 
 AC( DecisionPresentability )
