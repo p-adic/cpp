@@ -692,7 +692,6 @@ AC( CountingSumFixedSubArray )
     CERR( "- O(N^2)‚ª’Ê‚è‚»‚¤‚È‚ç‚Î—İÏ˜a‚Å·‚Ìæ“¾" );
     CERR( "- O(N log_2 N)‚ª’Ê‚è‚»‚¤‚Åv=0‚ÉŒÅ’è‚È‚ç‚Î—İÏ˜a‚ÅCountUnitProdRange" );
     CERR( "  \\Mathematics\\SetTheory\\DirectProduct\\AffineSpace\\CumulativeProd" );
-    
   } else if( num == num_temp++ ){
     CERR( "- O(2^N)‚ª’Ê‚è‚»‚¤‚È‚ç‚Î‹ğ’¼‚È‚P•Ï”‘½€®æZ" );
     CERR( "- O(2^{N/2}N)‚ª’Ê‚è‚»‚¤‚Åv‚ª‚P‚Â‚Ì’l‚ÉŒÅ’è‚È‚ç‚Î”¼•ª‚¸‚Â‘½€®æZ‚ğ‚µ‚Ä" );
