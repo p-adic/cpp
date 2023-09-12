@@ -1008,7 +1008,7 @@ AC( QueryTime )
 AC( QueryTimeMax )
 {
   CERR( "与えられた配列を(A_i)_i、クエリで全体max更新を取る値を(M_q)_q、" );
-  CERR( "クエリで区間演算を取る範囲を(S_q)_q、と置きます。" );
+  CERR( "クエリで区間演算を取る範囲を(I_q)_q、と置きます。" );
   CERR( "- (A_i)_iで初期化された配列(a_i)_i（説明の都合。実際は(A_i)_iを使う）" );
   CERR( "- (A_i,i)_iをソートした配列A'（構築O(N log N)）" );
   CERR( "- 0で初期化された{0,1}値配列(B_i)_i（構築O(N)）" );
@@ -1025,8 +1025,8 @@ AC( QueryTimeMax )
   CERR( "- 各i in Sに対するmax(A_i,M)を" );
   CERR( "  - 区間和が必要ならばa_i+B_i*M" );
   CERR( "  - 区間積が必要ならばa_i*M^{B_i}" );
-  CERR( "  に読み替えて区間演算をデータ構造で処理する。（各クエリO(log N)）" );
-  CERR( "これにより合計O((N + Q)log N + Q log Q)で処理できます。" );
+  CERR( "  に読み替えてI_qでの区間演算取得をする。（各クエリO(log N)）" );
+  CERR( "これにより合計O((N + Q)log N)で処理できます。" );
 }
 
 AC( QueryTimeOther )
