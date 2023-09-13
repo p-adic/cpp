@@ -56,7 +56,7 @@ template <INT_TYPE_FOR_MOD M> inline constexpr Montgomery<M>& Montgomery<M>::Inv
 
 template <INT_TYPE_FOR_MOD M> template <typename T> inline constexpr Montgomery<M>& Montgomery<M>::PositivePower( T&& exponent ) noexcept { Montgomery<M> power{ *this }; ( --exponent ) %= ConstantsForMod<M>::g_M_minus_2; while( exponent != 0 ){ ( exponent & 1 ) == 1 ? operator*=( power ) : *this; exponent >>= 1; power *= power; } return *this; }
 
-template <INT_TYPE_FOR_MOD M> template <typename T> inline constexpr Montgomery<M>& Montgomery<M>::NonNegativePower( T&& exponent ) noexcept { return exponent == 0 ? Ref( Mod<M>::m_n = 1 ) : PositivePower( forward<T>( exponent ) ); }
+template <INT_TYPE_FOR_MOD M> template <typename T> inline constexpr Montgomery<M>& Montgomery<M>::NonNegativePower( T&& exponent ) noexcept { return exponent == 0 ? Ref( Mod<M>::m_n = ConstantsForMod<M>::g_Montgomery_base_mod ) : PositivePower( forward<T>( exponent ) ); }
 
 template <INT_TYPE_FOR_MOD M> template <typename T> inline constexpr Montgomery<M>& Montgomery<M>::Power( T&& exponent ) { bool neg = exponent < 0; assert( !( neg && Mod<M>::m_n == 0 ) ); return neg ? PositivePower( forward<T>( exponent *= ConstantsForMod<M>::g_M_minus_2_neg ) ) : NonNegativePower( forward<T>( exponent ) ); }
 
