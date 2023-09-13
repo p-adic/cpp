@@ -5,6 +5,11 @@
 
 #include "a_Alias.hpp"
 
+// 非常によくバグるので、更新したら必ずverifyすること！
+// verify:
+// https://judge.yosupo.jp/submission/150497
+// https://yukicoder.me/submissions/892588
+
 // ここをtempate <typename INT , INT M>などにしてしまうとoperator+などを呼び出す際に型推論に失敗する。整数型を変えたい時はINT_TYPE_FOR_MODの型エイリアスを変更する。
 template <INT_TYPE_FOR_MOD M>
 class Mod
@@ -58,6 +63,7 @@ public:
   inline constexpr Mod<M>& Halve() noexcept;
   // Mが素数である場合のみサポート。
   inline Mod<M>& Invert();
+  // exponentがuniversal referenceであることに注意。
   template <typename T> inline constexpr Mod<M>& PositivePower( T&& exponent ) noexcept;
   template <typename T> inline constexpr Mod<M>& NonNegativePower( T&& exponent ) noexcept;
   // Mが素数であるかexponent>=0である場合にのみサポート。
