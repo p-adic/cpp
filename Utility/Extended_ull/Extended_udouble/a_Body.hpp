@@ -3,6 +3,7 @@
 #pragma once
 #include "a.hpp"
 
+#include "Constant/a_Body.hpp"
 #include "../a_Body.hpp"
 
 template <typename UINT , int digit> inline constexpr Extended_udouble<UINT,digit>::Extended_udouble( const UINT& n , const int& exponent ) noexcept : m_n( n ) , m_exponent( exponent ) {}
