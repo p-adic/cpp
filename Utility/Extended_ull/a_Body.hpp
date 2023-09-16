@@ -6,14 +6,16 @@
 #include "Constant/a_Body.hpp"
 
 
-template <typename UINT , int digit> inline constexpr Extended_ull<UINT,digit>::Extended_ull( const UINT& n0 ,  const UINT& n1 ) noexcept : m_n{ n0 , n1 } {}
+template <typename UINT , int digit> inline constexpr Extended_ull<UINT,digit>::Extended_ull() noexcept : m_n() {}
+template <typename UINT , int digit> template <SFINAE_FOR_EXTENDED_ULL()> inline constexpr Extended_ull<UINT,digit>::Extended_ull( T n0 ) noexcept : m_n{ UINT( n0 ) , UINT( 0 ) } {}
+template <typename UINT , int digit> template <SFINAE_FOR_EXTENDED_ULL()> inline constexpr Extended_ull<UINT,digit>::Extended_ull( T n0 , T n1 ) noexcept : m_n{ UINT( n0 ) , UINT( n1 ) } {}
 template <typename UINT , int digit> inline constexpr Extended_ull<UINT,digit>::Extended_ull( const UINT ( &n )[2] ) noexcept : m_n{ n[0] , n[1] } {}
 template <typename UINT , int digit> inline constexpr Extended_ull<UINT,digit>::Extended_ull( UINT ( &&n )[2] ) noexcept : m_n{ move( n[0] ) , move( n[1] ) } {}
 template <typename UINT , int digit> inline constexpr Extended_ull<UINT,digit>::Extended_ull( const Extended_ull<UINT,digit>& n ) noexcept : m_n{ n.m_n[0] , n.m_n[1] } {}
 template <typename UINT , int digit> inline constexpr Extended_ull<UINT,digit>::Extended_ull( Extended_ull<UINT,digit>&& n ) noexcept : m_n{ move( n.m_n[0] ) , move( n.m_n[1] ) } {}
 
 template <typename UINT , int digit> inline constexpr Extended_ull<UINT,digit>& Extended_ull<UINT,digit>::operator=( const Extended_ull<UINT,digit>& n ) noexcept { m_n[0] = n.m_n[0]; m_n[1] = n.m_n[1]; return *this; }
-template <typename UINT , int digit> inline constexpr Extended_ull<UINT,digit>& Extended_ull<UINT,digit>::operator=( Extended_ull<UINT,digit>&& n ) noexcept { swap( m_n , n.m_n ); return *this; }
+template <typename UINT , int digit> inline constexpr Extended_ull<UINT,digit>& Extended_ull<UINT,digit>::operator=( Extended_ull<UINT,digit>&& n ) noexcept { m_n[0] = move( n.m_n[0] ); m_n[1] = move( n.m_n[1] ); return *this; }
 template <typename UINT , int digit> inline constexpr Extended_ull<UINT,digit>& Extended_ull<UINT,digit>::operator+=( const Extended_ull<UINT,digit>& n ) noexcept { return operator=( operator+( n ) ); }
 template <typename UINT , int digit> inline constexpr Extended_ull<UINT,digit>& Extended_ull<UINT,digit>::operator-=( const Extended_ull<UINT,digit>& n ) noexcept { return operator=( operator-( n ) ); }
 template <typename UINT , int digit> inline constexpr Extended_ull<UINT,digit>& Extended_ull<UINT,digit>::operator*=( const Extended_ull<UINT,digit>& n ) noexcept { return operator=( operator*( n ) ); }
@@ -166,6 +168,50 @@ template <typename UINT , int digit> inline constexpr Extended_ull<UINT,digit> E
 
 }
 
+template <typename UINT , int digit> inline constexpr void Extended_ull<UINT,digit>::swap( Extended_ull<UINT,digit>& n0 , Extended_ull<UINT,digit>& n1 ) noexcept { swap( n0.m_n , n1.m_n ); }
+
+template <typename UINT , int digit> inline constexpr void swap( Extended_ull<UINT,digit>& n0 , Extended_ull<UINT,digit>& n1 ) noexcept { Extended_ull<UINT,digit>::swap( n0 , n1 ); }
+
+
+template <typename ULL> inline ULL stoeull( string s )
+{
+
+  if constexpr ( is_same<ULL,ull>::value ){
+
+      return stoull( s );
+
+    } else {
+
+    using UINT = typename ULL::base;
+    static vector<UINT> ten_power = { 1 };
+    static int length = 1;
+    const int size = s.size();
+    const int size_half0 = size / 2;
+    const int size_half1 = size - size_half0;
+
+    while( size_half0 >= length ){
+
+      ten_power.push_back( ten_power.back() * 10 );
+      length++;
+
+    }
+    
+    return size_half0 > 0 ? ULL::Prod( stoeull<UINT>( s.substr( 0 , size_half1 ) ) , ten_power[size_half0] ) + stoeull<UINT>( s.substr( size_half1 ) ) : ULL( stoeull<UINT>( move( s ) ) );
+
+  }
+
+}
+
+template <typename UINT , int digit , class Traits> inline basic_istream<char,Traits>& operator>>( basic_istream<char,Traits>& is , Extended_ull<UINT,digit>& n )
+{
+
+  string temp;
+  is >> temp;
+  n = stoeull<Extended_ull<UINT,digit> >( move( temp ) );
+  return is;
+
+}
+
 template <typename UINT , int digit> inline string to_string( Extended_ull<UINT,digit> n )
 {
 
@@ -200,5 +246,5 @@ template <typename UINT , int digit> inline string to_string( Extended_ull<UINT,
 
 }
 
-template <typename UINT , int digit , class Traits> inline basic_ostream<char,Traits>& operator<<( basic_ostream<char,Traits>& os , const Extended_ull<UINT,digit>& n ) { return os << to_striing( n ); }
+template <typename UINT , int digit , class Traits> inline basic_ostream<char,Traits>& operator<<( basic_ostream<char,Traits>& os , const Extended_ull<UINT,digit>& n ) { return os << to_string( n ); }
 
