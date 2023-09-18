@@ -1,10 +1,10 @@
-// c:/Users/user/Documents/Programming/Contest/WriteInSamples/a.cpp
+// c:/Users/user/Documents/Programming/Contest/Problem/WriteInSamples/a.cpp
 
-#include "../Header.hpp"
+#include "../../Header.hpp"
 #include "a_Body.hpp"
 
-#include "../../Utility/FileStream/a_Body.hpp"
-#include "../../Utility/Time/a_Body.hpp"
+#include "../../../Utility/FileStream/a_Body.hpp"
+#include "../../../Utility/Time/a_Body.hpp"
 
 void WriteInSamples( const string& directory_name , VLArray<string>& file_names )
 {
@@ -12,19 +12,19 @@ void WriteInSamples( const string& directory_name , VLArray<string>& file_names 
   ifstream ifs_output_list;
   ifstream ifs_output_list_copy;
   ifstream ifs_input_list;
-  const string output_file_list_name = "/" + directory_name + "/ã‚µãƒ³ãƒ—ãƒ«å‡ºåŠ›/ä¸€è¦§.txt";
-  const string input_file_list_name = "/" + directory_name + "/ã‚µãƒ³ãƒ—ãƒ«å…¥åŠ›/ä¸€è¦§.txt";
+  const string output_file_list_name = "/" + directory_name + "/ƒTƒ“ƒvƒ‹o—Í/ˆê——.txt";
+  const string input_file_list_name = "/" + directory_name + "/ƒTƒ“ƒvƒ‹“ü—Í/ˆê——.txt";
   SEARCH_SAMPLE_LIST_DIRECTORY( ifs , ios::in , WRITE_IN_MESSAGE_FOR_SEARCH_SAMPLE_LIST_DIRECTORY );
   
   if ( ! ifs_output_list ) {
 
-    cout << "ã‚µãƒ³ãƒ—ãƒ«å‡ºåŠ›ä¸€è¦§ãƒ•ã‚¡ã‚¤ãƒ«ãƒ‡ã‚£ãƒ¬ã‚¯ãƒˆãƒª: " << star + directory_name + "/ã‚µãƒ³ãƒ—ãƒ«å‡ºåŠ›/" << endl;
-    cout << "ã‚µãƒ³ãƒ—ãƒ«å‡ºåŠ›ä¸€è¦§ãƒ•ã‚¡ã‚¤ãƒ«ãŒé–‹ã‘ã¾ã›ã‚“ã§ã—ãŸã€‚" << endl;
+    cout << "ƒTƒ“ƒvƒ‹o—Íˆê——ƒtƒ@ƒCƒ‹ƒfƒBƒŒƒNƒgƒŠ: " << star + directory_name + "/ƒTƒ“ƒvƒ‹o—Í/" << endl;
+    cout << "ƒTƒ“ƒvƒ‹o—Íˆê——ƒtƒ@ƒCƒ‹‚ªŠJ‚¯‚Ü‚¹‚ñ‚Å‚µ‚½B" << endl;
     return;
 
   }
 
-  StartWatch( "ä¸€è¦§ãƒ•ã‚¡ã‚¤ãƒ«èª­ã¿è¾¼ã¿" );
+  StartWatch( "ˆê——ƒtƒ@ƒCƒ‹“Ç‚İ‚İ" );
   VLArray<string> input_samples{};
   VLArray<string> output_samples{};
   string s_current;
@@ -34,7 +34,7 @@ void WriteInSamples( const string& directory_name , VLArray<string>& file_names 
 
   if( with_output ){
 
-    cout << "å‡ºåŠ›ãƒ•ã‚¡ã‚¤ãƒ«ãŒç©ºã§ãªã„ã®ã§å…¥åŠ›ãƒ•ã‚¡ã‚¤ãƒ«ã¨å‡ºåŠ›ãƒ•ã‚¡ã‚¤ãƒ«ä¸¡æ–¹ã®æ›¸ãè¾¼ã¿ã‚’ã—ã¾ã™ã€‚" << endl;
+    cout << "o—Íƒtƒ@ƒCƒ‹‚ª‹ó‚Å‚È‚¢‚Ì‚Å“ü—Íƒtƒ@ƒCƒ‹‚Æo—Íƒtƒ@ƒCƒ‹—¼•û‚Ì‘‚«‚İ‚ğ‚µ‚Ü‚·B" << endl;
     bool searching_input = true;
 
     while( ! ifs_output_list.eof() ){
@@ -95,7 +95,7 @@ void WriteInSamples( const string& directory_name , VLArray<string>& file_names 
 
   } else {
 
-    cout << "å‡ºåŠ›ãƒ•ã‚¡ã‚¤ãƒ«ãŒç©ºãªã®ã§å…¥åŠ›ãƒ•ã‚¡ã‚¤ãƒ«ã®ã¿ã®æ›¸ãè¾¼ã¿ã‚’ã—ã¾ã™ã€‚" << endl;
+    cout << "o—Íƒtƒ@ƒCƒ‹‚ª‹ó‚È‚Ì‚Å“ü—Íƒtƒ@ƒCƒ‹‚Ì‚İ‚Ì‘‚«‚İ‚ğ‚µ‚Ü‚·B" << endl;
 
     while( ! ifs_input_list.eof() ){
     
@@ -121,7 +121,7 @@ void WriteInSamples( const string& directory_name , VLArray<string>& file_names 
 
       if( s_sum != "" ){
 
-	  PushBackSample( input_samples , s_sum );
+	PushBackSample( input_samples , s_sum );
 
       }
 
@@ -130,7 +130,7 @@ void WriteInSamples( const string& directory_name , VLArray<string>& file_names 
   }
 
   StopWatch();
-  cout << "èª­ã¿è¾¼ã¿ãŒå®Œäº†ã—ã¾ã—ãŸã€‚" << endl;
+  cout << "“Ç‚İ‚İ‚ªŠ®—¹‚µ‚Ü‚µ‚½B" << endl;
 
   const uint& input_sample_size = input_samples.size();
   const uint& output_sample_size = output_samples.size();
@@ -140,17 +140,17 @@ void WriteInSamples( const string& directory_name , VLArray<string>& file_names 
 
     if( input_sample_size < output_sample_size ){
 
-      cout << "å…¥åŠ›ã‚µãƒ³ãƒ—ãƒ«æ•°ãŒä¸è¶³ã—ã¦ã„ã¾ã™ã€‚å‡ºåŠ›ã‚µãƒ³ãƒ—ãƒ«ãƒ•ã‚¡ã‚¤ãƒ«ã®æœ«å°¾ã«ä½™è¨ˆãªç©ºè¡ŒãŒãªã„ã“ã¨ã‚„ã€å‡ºåŠ›ãƒ•ã‚¡ã‚¤ãƒ«ã®å‰Šé™¤ã—å¿˜ã‚ŒãŒãªã„ã‹ã‚’ç¢ºèªã—ã¦ãã ã•ã„ã€‚" << endl;
+      cout << "“ü—ÍƒTƒ“ƒvƒ‹”‚ª•s‘«‚µ‚Ä‚¢‚Ü‚·Bo—ÍƒTƒ“ƒvƒ‹ƒtƒ@ƒCƒ‹‚Ì––”ö‚É—]Œv‚È‹ós‚ª‚È‚¢‚±‚Æ‚âAo—Íƒtƒ@ƒCƒ‹‚Ìíœ‚µ–Y‚ê‚ª‚È‚¢‚©‚ğŠm”F‚µ‚Ä‚­‚¾‚³‚¢B" << endl;
       cout << "input_sample_size: " << input_sample_size << endl;
       cout << "output_sample_size: " << output_sample_size << endl;
-      cout << "ã©ã®ãƒ•ã‚¡ã‚¤ãƒ«ãŒæ¬ ã‘ã¦ã„ã‚‹ã‹ã®æƒ…å ±ã‚’å¾—ã‚‹ãŸã‚ã«ã“ã®ã‚¨ãƒ©ãƒ¼ã‚’ç„¡è¦–ã—ã¦ç¶šè¡Œã—ã¾ã™ã€‚" << endl;
+      cout << "‚Ç‚Ìƒtƒ@ƒCƒ‹‚ªŒ‡‚¯‚Ä‚¢‚é‚©‚Ìî•ñ‚ğ“¾‚é‚½‚ß‚É‚±‚ÌƒGƒ‰[‚ğ–³‹‚µ‚Ä‘±s‚µ‚Ü‚·B" << endl;
 
     } else if(  input_sample_size > output_sample_size ){
 
-      cout << "å‡ºåŠ›ã‚µãƒ³ãƒ—ãƒ«æ•°ãŒä¸è¶³ã—ã¦ã„ã¾ã™ã€‚å‡ºåŠ›ã‚µãƒ³ãƒ—ãƒ«ãƒ•ã‚¡ã‚¤ãƒ«ã®æœ«å°¾ã«å¿…è¦ãªç©ºè¡ŒãŒè¶³ã‚Šã¦ã„ã‚‹ã“ã¨ã‚„ã€å‡ºåŠ›ãƒ•ã‚¡ã‚¤ãƒ«ã®å‰Šé™¤ã—å¿˜ã‚ŒãŒãªã„ã‹ã‚’ç¢ºèªã—ã¦ãã ã•ã„ã€‚" << endl;
+      cout << "o—ÍƒTƒ“ƒvƒ‹”‚ª•s‘«‚µ‚Ä‚¢‚Ü‚·Bo—ÍƒTƒ“ƒvƒ‹ƒtƒ@ƒCƒ‹‚Ì––”ö‚É•K—v‚È‹ós‚ª‘«‚è‚Ä‚¢‚é‚±‚Æ‚âAo—Íƒtƒ@ƒCƒ‹‚Ìíœ‚µ–Y‚ê‚ª‚È‚¢‚©‚ğŠm”F‚µ‚Ä‚­‚¾‚³‚¢B" << endl;
       cout << "input_sample_size: " << input_sample_size << endl;
       cout << "output_sample_size: " << output_sample_size << endl;
-      cout << "ã©ã®ãƒ•ã‚¡ã‚¤ãƒ«ãŒæ¬ ã‘ã¦ã„ã‚‹ã‹ã®æƒ…å ±ã‚’å¾—ã‚‹ãŸã‚ã«ã“ã®ã‚¨ãƒ©ãƒ¼ã‚’ç„¡è¦–ã—ã¦ç¶šè¡Œã—ã¾ã™ã€‚" << endl;
+      cout << "‚Ç‚Ìƒtƒ@ƒCƒ‹‚ªŒ‡‚¯‚Ä‚¢‚é‚©‚Ìî•ñ‚ğ“¾‚é‚½‚ß‚É‚±‚ÌƒGƒ‰[‚ğ–³‹‚µ‚Ä‘±s‚µ‚Ü‚·B" << endl;
 
     }
 
@@ -158,17 +158,17 @@ void WriteInSamples( const string& directory_name , VLArray<string>& file_names 
 
   if( input_sample_size < file_name_size ){
 
-    cout << "å…¥åŠ›ã‚µãƒ³ãƒ—ãƒ«æ•°ãŒä¸è¶³ã—ã¦ã„ã¾ã™ã€‚ãƒ•ã‚¡ã‚¤ãƒ«æ•°ã‚’é–“é•ãˆã¦ã„ãªã„ã“ã¨ã‚„ã€å‡ºåŠ›ãƒ•ã‚¡ã‚¤ãƒ«ã®å‰Šé™¤ã—å¿˜ã‚ŒãŒãªã„ã‹ã‚’ç¢ºèªã—ã¦ãã ã•ã„ã€‚" << endl;
+    cout << "“ü—ÍƒTƒ“ƒvƒ‹”‚ª•s‘«‚µ‚Ä‚¢‚Ü‚·Bƒtƒ@ƒCƒ‹”‚ğŠÔˆá‚¦‚Ä‚¢‚È‚¢‚±‚Æ‚âAo—Íƒtƒ@ƒCƒ‹‚Ìíœ‚µ–Y‚ê‚ª‚È‚¢‚©‚ğŠm”F‚µ‚Ä‚­‚¾‚³‚¢B" << endl;
     cout << "input_sample_size: " << input_sample_size << endl;
     cout << "file_name_size: " << file_name_size << endl;
-    cout << "ã©ã®ãƒ•ã‚¡ã‚¤ãƒ«ãŒæ¬ ã‘ã¦ã„ã‚‹ã‹ã®æƒ…å ±ã‚’å¾—ã‚‹ãŸã‚ã«ã“ã®ã‚¨ãƒ©ãƒ¼ã‚’ç„¡è¦–ã—ã¦ç¶šè¡Œã—ã¾ã™ã€‚" << endl;
+    cout << "‚Ç‚Ìƒtƒ@ƒCƒ‹‚ªŒ‡‚¯‚Ä‚¢‚é‚©‚Ìî•ñ‚ğ“¾‚é‚½‚ß‚É‚±‚ÌƒGƒ‰[‚ğ–³‹‚µ‚Ä‘±s‚µ‚Ü‚·B" << endl;
 
   } else if(  input_sample_size > file_name_size ){
 
-    cout << "ãƒ•ã‚¡ã‚¤ãƒ«æ•°ãŒä¸è¶³ã—ã¦ã„ã¾ã™ã€‚ãƒ•ã‚¡ã‚¤ãƒ«æ•°ã‚’é–“é•ãˆã¦ã„ãªã„ã“ã¨ã‚„ã€å‡ºåŠ›ãƒ•ã‚¡ã‚¤ãƒ«ã®å‰Šé™¤ã—å¿˜ã‚ŒãŒãªã„ã‹ã‚’ç¢ºèªã—ã¦ãã ã•ã„ã€‚" << endl;
+    cout << "ƒtƒ@ƒCƒ‹”‚ª•s‘«‚µ‚Ä‚¢‚Ü‚·Bƒtƒ@ƒCƒ‹”‚ğŠÔˆá‚¦‚Ä‚¢‚È‚¢‚±‚Æ‚âAo—Íƒtƒ@ƒCƒ‹‚Ìíœ‚µ–Y‚ê‚ª‚È‚¢‚©‚ğŠm”F‚µ‚Ä‚­‚¾‚³‚¢B" << endl;
     cout << "input_sample_size: " << input_sample_size << endl;
     cout << "file_name_size: " << file_name_size << endl;
-    cout << "ã©ã®ãƒ•ã‚¡ã‚¤ãƒ«ãŒæ¬ ã‘ã¦ã„ã‚‹ã‹ã®æƒ…å ±ã‚’å¾—ã‚‹ãŸã‚ã«ã“ã®ã‚¨ãƒ©ãƒ¼ã‚’ç„¡è¦–ã—ã¦ç¶šè¡Œã—ã¾ã™ã€‚" << endl;
+    cout << "‚Ç‚Ìƒtƒ@ƒCƒ‹‚ªŒ‡‚¯‚Ä‚¢‚é‚©‚Ìî•ñ‚ğ“¾‚é‚½‚ß‚É‚±‚ÌƒGƒ‰[‚ğ–³‹‚µ‚Ä‘±s‚µ‚Ü‚·B" << endl;
 
     for( uint i = file_name_size ; i < input_sample_size ; i++ ){
 
@@ -182,33 +182,33 @@ void WriteInSamples( const string& directory_name , VLArray<string>& file_names 
   
   string input_file_name;
   string output_file_name;
-  const string file_name_list_file_name = star + directory_name + "/ã‚µãƒ³ãƒ—ãƒ«å‡ºåŠ›/ãƒ•ã‚¡ã‚¤ãƒ«å.txt";
+  const string file_name_list_file_name = star + directory_name + "/ƒTƒ“ƒvƒ‹o—Í/ƒtƒ@ƒCƒ‹–¼.txt";
   DeleteContents( file_name_list_file_name );
   
   auto itr_input_sample = input_samples.begin();
   auto itr_output_sample = output_samples.begin();
 
-  StartWatch( "ä¸€è¦§ãƒ•ã‚¡ã‚¤ãƒ«æ›¸ãå‡ºã—" );
+  StartWatch( "ˆê——ƒtƒ@ƒCƒ‹‘‚«o‚µ" );
 
   for( uint i = 0 ; i < input_sample_size ; i++ ){
 
     if( *itr_file == "" ){
 
-      cout << "ç©ºç™½ã®ãƒ•ã‚¡ã‚¤ãƒ«åã‚’ç„¡è¦–ã—ã¾ã—ãŸã€‚å‡ºåŠ›ä¸€è¦§ã«å®Ÿéš›ã®ãƒ•ã‚¡ã‚¤ãƒ«åã‚ˆã‚Šå¤šãã®ã‚µãƒ³ãƒ—ãƒ«ãŒå«ã¾ã‚Œã¦ã„ãªã„ã“ã¨ã‚’ç¢ºèªã—ã¦ãã ã•ã„ã€‚" << endl;
+      cout << "‹ó”’‚Ìƒtƒ@ƒCƒ‹–¼‚ğ–³‹‚µ‚Ü‚µ‚½Bo—Íˆê——‚ÉÀÛ‚Ìƒtƒ@ƒCƒ‹–¼‚æ‚è‘½‚­‚ÌƒTƒ“ƒvƒ‹‚ªŠÜ‚Ü‚ê‚Ä‚¢‚È‚¢‚±‚Æ‚ğŠm”F‚µ‚Ä‚­‚¾‚³‚¢B" << endl;
       cout << "input_sample_size: " << input_sample_size << endl;
       cout << "file_name_size: " << file_name_size << endl;
       return;
 
     }
 
-    input_file_name = star + directory_name + "/ã‚µãƒ³ãƒ—ãƒ«å…¥åŠ›/" + *itr_file + ".txt";
+    input_file_name = star + directory_name + "/ƒTƒ“ƒvƒ‹“ü—Í/" + *itr_file + ".txt";
     DeleteContents( input_file_name );
     WriteIn( input_file_name , *itr_input_sample );
     itr_input_sample++;
 
     if( with_output ){
 
-      output_file_name = star + directory_name + "/ã‚µãƒ³ãƒ—ãƒ«å‡ºåŠ›/" + *itr_file + ".txt";
+      output_file_name = star + directory_name + "/ƒTƒ“ƒvƒ‹o—Í/" + *itr_file + ".txt";
       DeleteContents( output_file_name );
       WriteIn( output_file_name , *itr_output_sample );
       itr_output_sample++;
@@ -221,7 +221,74 @@ void WriteInSamples( const string& directory_name , VLArray<string>& file_names 
   }
 
   StopWatch();
-  cout << "æ›¸ãè¾¼ã¿ãŒå®Œäº†ã—ã¾ã—ãŸã€‚" << endl;
+  cout << "‘‚«‚İ‚ªŠ®—¹‚µ‚Ü‚µ‚½B" << endl;
+  return;
+
+}
+
+void WriteInSamples( const string& directory_name )
+{
+
+  cout << "ŒÂX‚ÌƒTƒ“ƒvƒ‹‚ğŠi”[‚·‚éƒtƒ@ƒCƒ‹‚ğì¬‚µ‚Ü‚·B" << endl;
+  VLArray<string> file_prefix;;
+  VLArray<int> file_num;
+  WriteInSamples_Body( file_prefix , file_num );
+  const int prefix_size = file_prefix.size();
+  const int num_size = file_num.size();
+ 
+  if( prefix_size != num_size ){
+
+    cout << "ƒtƒ@ƒCƒ‹Ú“ª«‚Ì”‚ª‚ ‚Á‚Ä‚¢‚Ü‚¹‚ñB" << endl;
+    cout << "file_prefix.size(): " << prefix_size << endl;
+    cout << "file_num.size(): " << num_size << endl;
+    cout << "ƒtƒ@ƒCƒ‹Ú“ª«‚ÌƒRƒƒ“ƒgƒAƒEƒg‚ğŠÔˆá‚Á‚Ä‚¢‚é‰Â”\«‚ª‚ ‚é‚½‚ßA‘‚«‚İ‚ğI—¹‚µ‚Ü‚·B" << endl;
+    return;
+    
+  }
+  
+  VLArray<string> file_names{};
+
+  for( int i = 0 ; i < prefix_size ; i++ ){
+
+    const string& prefix = file_prefix[i];
+    const int& num = file_num[i];
+
+    for( int j = 0 ; j < num ; j++ ){
+
+      file_names.push_back( prefix + to_string( j + 100 ).substr( 1 ) );
+
+    }
+
+    cout << prefix << "00 ` " << to_string( num - 1 + 100 ).substr( 1 ) << "\n";
+
+  }
+
+  string reply = "";
+
+  while( reply != "y" && reply != "n" ){
+
+    cout << "ã‹L‚Ìƒtƒ@ƒCƒ‹\¬‚Å³‚µ‚¢‚Å‚·‚©H[y/n]" << endl;
+
+    cin >> reply;
+
+    if( reply != "y" && reply != "n" ){
+
+      cout << "‰ñ“š‚Í[y/n]‚Ì‚¢‚¸‚ê‚©‚Å‚¨Šè‚¢‚µ‚Ü‚·B" << endl;
+
+    }
+
+  }
+
+  if( reply == "y" ){
+
+    WriteInSamples( directory_name , file_names );
+
+  } else {
+
+    cout << "’†’f‚µ‚Ü‚·B" << endl;
+
+  }
+
   return;
 
 }
