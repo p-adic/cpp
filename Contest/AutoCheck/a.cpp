@@ -36,6 +36,7 @@ AC( DebugHint )
 	     );
   if( num == num_temp++ ){
     CERR( "- operator<<()をint型に適用していませんか？" );
+    CERR( "- operator>>()が64周期であることを忘れていませんか？" );
     CERR( "- イベント管理にsetを使っていませんか？" );
     CERR( "  - keyに狭義全順序を用いる場合、" );
     CERR( "    - 同一keyの処理を同時に行うならばmapを検討しましょう。" );
@@ -53,6 +54,7 @@ AC( DebugHint )
     CERR( "原因に心当たりがない場合はランダムテストを検討しましょう。" );
   } else if( num == num_temp++ ){
     CERR( "- 制約を間違えてassertしていませんか？" );
+    CERR( "- 手元の環境ではDEXPRで設定した値が小さくなることを忘れていませんか？" );
     CERR( "- 配列外参照していませんか？" );
     CERR( "  - 座標圧縮畤に圧縮前の添字操作と圧縮後の添字操作を混同していませんか？" );
     CERR( "  - グラフや座標圧縮の操作で存在しない座標-1の場合分けを忘れていませんか？" );
@@ -144,7 +146,7 @@ AC( ExplicitExpression )
 {
   ASK_NUMBER(
 	     "１変数関数／数列の計算問題" ,
-	     "配列上の関数の総和の計算問題" ,
+	     "配列に関する関数の総和の計算問題" ,
 	     "順列上の関数の計算問題" ,
 	     "木上の関数の総和の計算問題" ,
 	     "木以外のグラフ上の関数の計算問題" ,
@@ -237,21 +239,22 @@ AC( ExplicitExpressionUnaryOther )
   CERR( "  オイラー関数、約数の個数など" );
   CERR( "を検討しましょう。" );
   CERR( "" );
-  CERR( "前計算の候補としては" );
+  CERR( "そして前計算を試みましょう。候補としては" );
   CERR( "- 階乗／逆元／場合の数" );
   CERR( "- 素数列挙" );
   CERR( "- １つまたは複数の整数の約数列挙" );
   CERR( "- オイラー関数の値の列挙" );
   CERR( "- サブゴールとなる関係式を満たす解の列挙" );
-  CERR( "があります。再帰的な前計算が可能な場合、適宜バケット分割して" );
-  CERR( "ソースコードに埋め込むことで高速化することを検討しましょう。" );
+  CERR( "があります。特に漸化式による前計算が可能な場合、法または周期を" );
+  CERR( "バケット分割してソースコードに埋め込む高速化を検討しましょう。" );
 }
 
 AC( ExplicitExpressionArraySum )
 {
   ASK_NUMBER(
-	     "成分を受け取る関数の総和の計算問題" ,
-	     "部分列を受け取る関数の総和の計算問題"
+	     "１つの配列の成分を受け取る関数の総和の計算問題" ,
+	     "１つの配列の部分列を受け取る関数の総和の計算問題" ,
+	     "配列を受け取る関数の総和の計算問題"
 	     );
   if( num == num_temp++ ){
     CERR( "成分を受け取る関数fが与えられているとします。" );
@@ -277,32 +280,50 @@ AC( ExplicitExpressionArraySum )
       CERR( "配列の並び換えによって答えが変わらないので、適切にソートしてから" );
       CERR( "計算することを検討しましょう。" );
     }
+  } else if( num == num_temp++ ){
+    CALL_AC( ExplicitExpressionArrayCombinatorial );
   }
   CERR( "" );
-  CERR( "入力が大きい場合と小さい場合で解法を変える考察を忘れないようにしましょう。" );
+  CERR( "Nが大きい場合と小さい場合で解法を変える考察を忘れないようにしましょう。" );
+}
+
+AC( ExplicitExpressionArrayCombinatorial )
+{
+  CERR( "二項展開や積の和典型などの組み合わせ論的解釈" );
+  CERR( "https://ei1333.hateblo.jp/entry/2021/07/30/144201" );
+  CERR( "https://ladywingclover.hatenablog.com/entry/2022/11/24/084524" );
+  CERR( "を検討しましょう。" );
 }
 
 AC( ExplicitExpressionFunctionOnPermutation )
 {
-  CERR( "- 符号そのものの計算問題は" );
-  CERR( "  - O(N log_2 N)やO(N^2)が間に合いそうなら転倒数の計算" );
-  CERR( "  - O(N log_2 N)が間に合わなさそうなら互換表示（O(N)）" );
-  CERR( "- 符号と何かの積の和は行列式に帰着させ、" );
-  CERR( "  - 行列式そのものなら行基本変形（O(N^3)）" );
-  CERR( "  - 余因子展開の途中の値が必要ならメモ化再帰（O(N 2^N)）" );
-  CERR( "を検討しましょう。" );
-  CERR( "" );
-  CERR( "１つの順列の転倒数は、" );
-  CERR( "- O(N^2)が通りそうならば愚直な二重ループ" );
-  CERR( "- O(N log_2 N)が通りそうならば可換群BIT" );
-  CERR( "  \\Mathematics\\Combinatorial\\Permutation" );
-  CERR( "  \\Mathematics\\SetTheory\\DirectProduct\\AffineSpace\\BIT" );
-  CERR( "で計算しましょう。" );
-  CERR( "" );
-  CERR( "条件を満たす順列全体をわたる転倒数の総和／期待値は、" );
-  CERR( "各i<jごとにそこで転倒が生じる順列の個数を計算し、その総和／期待値を" );
-  CERR( "取りましょう。条件が良ければ、転倒が生じる順列の個数は転倒が生じるとは" );
-  CERR( "限らない順列の個数の半分となります。" );
+  ASK_NUMBER(
+	     "１つの順列に関する値の計算問題" ,
+	     "順列を受け取る関数の総和の計算問題"
+	     );
+  if( num == num_temp++ ){
+    CERR( "- 符号そのものの計算問題は" );
+    CERR( "  - O(N log_2 N)やO(N^2)が間に合いそうなら転倒数の計算" );
+    CERR( "  - O(N log_2 N)が間に合わなさそうなら互換表示（O(N)）" );
+    CERR( "- 符号と何かの積の和は行列式に帰着させ、" );
+    CERR( "  - 行列式そのものなら行基本変形（O(N^3)）" );
+    CERR( "  - 余因子展開の途中の値が必要ならメモ化再帰（O(N 2^N)）" );
+    CERR( "を検討しましょう。" );
+    CERR( "" );
+    CERR( "転倒数は" );
+    CERR( "- O(N^2)が通りそうならば愚直な二重ループ" );
+    CERR( "- O(N log_2 N)が通りそうならば可換群BIT" );
+    CERR( "  \\Mathematics\\Combinatorial\\Permutation" );
+    CERR( "  \\Mathematics\\SetTheory\\DirectProduct\\AffineSpace\\BIT" );
+    CERR( "で計算しましょう。" );
+  } else if( num == num_temp++ ){
+    CALL_AC( ExplicitExpressionArrayCombinatorial );
+    CERR( "" );
+    CERR( "条件を満たす順列全体をわたる転倒数の総和／期待値は、" );
+    CERR( "各i<jごとにそこで転倒が生じる順列の個数を計算し、その総和／期待値を" );
+    CERR( "取りましょう。条件が良ければ、転倒が生じる順列の個数は転倒が生じるとは" );
+    CERR( "限らない順列の個数の半分となります。" );
+  }
 }
 
 AC( ExplicitExpressionFunctionOnTree )
@@ -390,8 +411,6 @@ AC( ExplicitExpressionOther )
   CERR( "- 出力の定義と等価な式への変形" );
   CERR( "  - 和の順序交換" );
   CERR( "  - 同じ値になる項の纏め上げ" );
-  CERR( "  - 二項展開や積の和典型などの組み合わせ論的解釈" );
-  CERR( "    https://ei1333.hateblo.jp/entry/2021/07/30/144201" );
   CERR( "- 和の動く範囲の差分に注目した動的計画法" );
   CERR( "を検討しましょう。" );
 }
@@ -480,30 +499,20 @@ AC( MaximisationFunctionOnArray )
 
 AC( MaximisationSubArraySum )
 {
-  CERR( "項数N、選択回数上限M、価値（和を取る値）上限Vとします。" );
+
+  CERR( "和を取る値を価値と呼ぶことにします。" );
+  CERR( "配列の項数N、第i成分の価値A_i、価値の総和v、vの上限Vとします。" );
+  CERR( "{0,...,N-1}の部分集合Iであって、" );
+  CERR( "- sum(i in I){A_i} = v" );
+  CERR( "- その他の条件" );
+  CERR( "を満たすものの数え上げを考えます。" );
   ASK_NUMBER(
-	     "各選択のコスト上限が存在しないか一定の問題" ,
-	     "選択ごとにコストの上限が異なる問題"
+	     "Iにコスト制約があり重複した選択を許す場合" ,
+	     "Iにコスト制約があり重複した選択を許さない場合" ,
+	     "Iに追加の制約がない場合"
 	     );
   if( num == num_temp++ ){
     CERR( "各選択のコスト上限が存在する場合、その上限以下の項だけを考えましょう。" );
-    CERR( "コストの総和上限Cとします。C=∞ならば通常のナップサック問題と" );
-    CERR( "同様の動的計画法で良いので、以下C<∞の場合を考えます。" );
-    CERR( "- O(2^N)が通りそうならば愚直に全探策" );
-    CERR( "- O(N 2^{N/2})が通りそうならば半分全列挙" );
-    CERR( "- コストと価値が等しくO(NV)が通りそうならば[C-V,C+V]での実現可能性を" );
-    CERR( "  遷移する動的計画法" );
-    CERR( "  https://stackoverflow.com/a/18949218" );
-    CERR( "- コストと価値が等しくO((N+C)log_2 C)が通りそうならば" );
-    CERR( "  適当な法での畳み込み（確率的解法）" );
-    CERR( "  \\Mathematics\\Polynomial" );
-    CERR( "- コストと価値が等しくなくO(C^2)が通りそうならば" );
-    CERR( "  「コストcの項の価値の最大値v[c]」" );
-    CERR( "  を前計算し" );
-    CERR( "  「コストの総和がc以下の時の価値の最大値dp[c]」" );
-    CERR( "  を管理するcに関する動的計画法" );
-    CERR( "を検討しましょう。" );
-  } else if( num == num_temp++ ){
     CERR( "コストの次元をK<=2、n項目のコストをC_nとし、" );
     CERR( "m選択目ではC_n[k_m]<=D_mを満たす項nを選べるとします。" );
     CERR( "" );
@@ -512,6 +521,27 @@ AC( MaximisationSubArraySum )
     CERR( "- K=1の場合、各選択では可能な選択の中で最大のものを採用しましょう。" );
     CERR( "- K=2の場合、各選択では可能な選択の{第2成分,項番号}をsetで管理しつつ" );
     CERR( "  その中で最大のものを採用しましょう。" );
+  } else if( num == num_temp++ ){
+    CERR( "各選択のコスト上限が存在する場合、その上限以下の項だけを考えましょう。" );
+    CERR( "コストの総和上限C<∞とします。" );
+    CERR( "- O(C^2)が通りそうならば" );
+    CERR( "  「コストcの項の価値の最大値v[c]」" );
+    CERR( "  を前計算し" );
+    CERR( "  「コストの総和がc以下の時の価値の最大値dp[c]」" );
+    CERR( "  を管理するcに関する動的計画法" );
+    CERR( "を検討しましょう。" );
+  } else if( num == num_temp++ ){
+    CERR( "- O(2^N)が通りそうならば愚直に全探策" );
+    CERR( "- O(N 2^{N/2})が通りそうならば半分全列挙" );
+    CERR( "- O(NV)が通りそうならば[v-V,v+V]での実現可能性を" );
+    CERR( "  遷移する動的計画法" );
+    CERR( "  https://stackoverflow.com/a/18949218" );
+    CERR( "- O((N+V)log_2 V)が通りそうでVが10^5オーダーで" );
+    CERR( "  プロス素数Pを法とするならば法Pでの高速フーリエ変換による" );
+    CERR( "  exp(logの総和)計算" );
+    CERR( "  \\Mathematics\\Arithmetic\\Mod" );
+    CERR( "  \\Mathematics\\Polynomial" );
+    CERR( "を検討しましょう。" );
   }
 }
 
@@ -562,13 +592,15 @@ AC( MinimisationMovingCost )
   if( num == num_temp++ ){
     CERR( "特定の経路を進むと思い込んで考察漏れをする可能性があります。" );
     CERR( "なるべく全ての経路を許した探索アルゴリズムを適用した方が無難です。" );
-    CERR( "- 特定の２点のみを考える場合、BFSやDijkstra" );
+    CERR( "- 特定の２点のみを考える場合、幅優先探索やダイクストラ法" );
     CERR( "  \\Mathematics\\Geometry\\Graph\\BreadthFirst" );
     CERR( "  \\Mathematics\\Geometry\\Graph\\Dijkstra" );
     CERR( "- 全ての２点の組み合わせを考える場合、" );
-    CERR( "  - 一般のモノイド演算を考えておりO(V^3)が通りそうならば、FloydWarshall" );
+    CERR( "  - 一般のモノイド演算を考えておりO(V^3)が通りそうならば、" );
+    CERR( "    ワーシャルフロイド法" );
     CERR( "    \\Mathematics\\Geometry\\Graph\\FloydWarshall" );
-    CERR( "  - max演算を考えておりO(E(log_2 E + α(V)))が通りそうならば、UnionFind" );
+    CERR( "  - max演算を考えておりO(E(log_2 E + α(V)))が通りそうならば、" );
+    CERR( "    素集合データ構造" );
     CERR( "    \\Utility\\VLTree\\UnionFindForest" );
     CERR( "を検討しましょう。" );
     CERR( "" );
@@ -601,7 +633,7 @@ AC( MaximisationStringMatching )
 
 AC( MaximisationBipartiteMatching )
 {
-  CERR( "HopcroftKarpや最大流" );
+  CERR( "ホップクロフトカープ法や最大流" );
   CERR( "\\Mathematics\\Geometry\\Graph\\HopcroftKarp" );
   CERR( "を検討しましょう。" );
 }
@@ -618,9 +650,10 @@ AC( Counting )
 {
   ASK_NUMBER(
 	     "固定長変数関数の逆像の数え上げ問題" ,
-	     "配列の部分列に関する数え上げ問題" ,
-	     "分割に関する数え上げ問題" ,
-	     "文字列の数え上げ問題" ,
+	     "条件を満たす配列の数え上げ問題" ,
+	     "与えられた配列の部分列の数え上げ問題" ,
+	     "与えられた文字列の部分文字列の数え上げ問題" ,
+	     "与えられた木の分割の数え上げ問題" ,
 	     "戦略の数え上げ問題" ,
 	     "操作回数の計算問題" ,
 	     "カタラン数の計算問題"
@@ -630,9 +663,11 @@ AC( Counting )
   } else if( num == num_temp++ ){
     CALL_AC( CountingArray );
   } else if( num == num_temp++ ){
-    CALL_AC( CountingPartitionOfTree );
+    CALL_AC( CountingSubArray );
   } else if( num == num_temp++ ){
-    CALL_AC( CountingString );
+    CALL_AC( CountingSubString );
+  } else if( num == num_temp++ ){
+    CALL_AC( CountingPartitionOfTree );
   } else if( num == num_temp++ ){
     CALL_AC( CountingStrategy );
   } else if( num == num_temp++ ){
@@ -646,21 +681,27 @@ AC( CountingExplicitExpression )
 {
   CERR( "- 変数の対称性があれば大小関係を制限した全探策" );
   CERR( "- 何らかの約数となるなど動く範囲が狭い変数があればそれらを決め打った全探策" );
-  CERR( "- 多変数の合成関数で表せる場合は半分全列挙" );
+  CERR( "- f(g(x),g(y),...)の形はf,g別々に前計算" );
   CERR( "を検討しましょう。" );
 }
 
 AC( CountingArray )
 {
   ASK_NUMBER(
-	     "問題文または入力で与えられる１つの配列に関する問題" ,
-	     "条件を満たす任意の配列に関する問題"
+	     "配列を受け取る関数の値が固定された配列の数え上げ問題" ,
+	     "隣接成分間関係式を満たす配列の数え上げ問題"
 	     );
   if( num == num_temp++ ){
-    CALL_AC( CountingSubArray );
+    CERR( "- 配列の種類が少ない場合は、全ての配列に対する関数の値の前計算" );
+    CERR( "- 取り得る値が少なく関数が長さに関して再帰的構造を持つ場合は、" );
+    CERR( "  「長さiの時に値vである配列の総数dp[i][v]」" );
+    CERR( "  を管理するi,vに関する動的計画法" );
   } else if( num == num_temp++ ){
-    CALL_AC( CountingArbitraryArray );
+    CERR( "- いくつかの条件の重ね合わせの時は包除原理" );
+    CERR( "- 全順序の場合は数の分割方法などへの翻訳" );
+    CERR( "- 疎な半順序の場合はグラフの前計算" );
   }
+  CERR( "を検討しましょう。" );
 }
 
 AC( CountingSubArray )
@@ -675,7 +716,7 @@ AC( CountingSubArray )
   } else if( num == num_temp++ ){
     CALL_AC( CountingRestrctedSubArray );
   } else if( num == num_temp++ ){
-    CALL_AC( CountingSubArrayImage );
+    CALL_AC( CountingSubArrayImageArray );
   }
 }
 
@@ -704,7 +745,8 @@ AC( CountingSumFixedSubArray )
     CERR( "- O(2^{N/2}N)が通りそうでvが１つの値に固定ならば半分ずつ多項式乗算をして" );
     CERR( "  最後にそれらの積のv次係数のみの計算" );
     CERR( "- O((N+V)log_2 V)が通りそうでVが10^5オーダーで" );
-    CERR( "  プロス素数Pを法とするならば法Pでの高速フーリエ変換" );
+    CERR( "  プロス素数Pを法とするならば法Pでの高速フーリエ変換による" );
+    CERR( "  exp(logの総和)計算" );
     CERR( "  \\Mathematics\\Arithmetic\\Mod" );
     CERR( "  \\Mathematics\\Polynomial" );
   }
@@ -796,26 +838,7 @@ AC( CountingRestrctedSubPermutation )
   CERR( "を検討しましょう。" );
 }
 
-AC( CountingArbitraryArray )
-{
-  ASK_NUMBER(
-	     "配列を受け取る関数の値の数え上げ問題" ,
-	     "隣接成分間関係式を満たす配列の数え上げ問題"
-	     );
-  if( num == num_temp++ ){
-    CERR( "- 配列の種類が少ない場合は、全ての配列に対する関数の値の前計算" );
-    CERR( "- 取り得る値が少なく関数が長さに関して再帰的構造を持つ場合は、" );
-    CERR( "  「長さiの時に値vである配列の総数dp[i][v]」" );
-    CERR( "  を管理するi,vに関する動的計画法" );
-  } else if( num == num_temp++ ){
-    CERR( "- いくつかの条件の重ね合わせの時は包除原理" );
-    CERR( "- 全順序の場合は数の分割方法などへの翻訳" );
-    CERR( "- 疎な半順序の場合はグラフの前計算" );
-  }
-  CERR( "を検討しましょう。" );
-}
-
-AC( CountingSubArrayImage )
+AC( CountingSubArrayImageArray )
 {
   CERR( "入力で与えられる配列をAと置きます。" );
   CERR( "配列として等しいAの部分列のうち辞書式順序最小のものを数え上げる" );
@@ -825,17 +848,7 @@ AC( CountingSubArrayImage )
   CERR( "の２つを管理するiに関する動的計画法を検討しましょう。" );
 }
 
-AC( CountingPartitionOfTree )
-{
-  CALL_AC( FunctionOnTree );
-  CERR( "" );
-  CERR( "F(P)が固定された時のPの数え上げ問題は" );
-  CERR( "「第i成分までで切った時のF(P)=vを満たすPの個数dp[i][v]」" );
-  CERR( "を管理するi,vに関する動的計画法（O(N^2 v_max×fの計算量)）" );
-  CERR( "を検討しましょう。" );
-}
-
-AC( CountingString )
+AC( CountingSubString )
 {
   ASK_NUMBER(
 	     "部分文字列から取得位置情報を落とした文字列全体の数え上げ問題" ,
@@ -843,7 +856,7 @@ AC( CountingString )
 	     );
   if( num == num_temp++ ){
     CERR( "文字列を文字の配列とみなすことで、配列の問題に帰着させることができます。" );
-    CALL_AC( CountingSubArrayImage );
+    CALL_AC( CountingSubArrayImageArray );
   } else if( num == num_temp++ ){
     CALL_AC( CountingMatchingSubString );
   }
@@ -859,6 +872,16 @@ AC( CountingMatchingSubString )
   CERR( "  - O(N^2)が通らない場合、Manacherのアルゴリズムやローリングハッシュで前計算" );
   CERR( "    https://snuke.hatenablog.com/entry/2014/12/02/235837" );
   CERR( "    \\Utility\\String\\RollingHash" );
+  CERR( "を検討しましょう。" );
+}
+
+AC( CountingPartitionOfTree )
+{
+  CALL_AC( FunctionOnTree );
+  CERR( "" );
+  CERR( "F(P)が固定された時のPの数え上げ問題は" );
+  CERR( "「第i成分までで切った時のF(P)=vを満たすPの個数dp[i][v]」" );
+  CERR( "を管理するi,vに関する動的計画法（O(N^2 v_max×fの計算量)）" );
   CERR( "を検討しましょう。" );
 }
 
@@ -899,6 +922,7 @@ AC( Solving )
   CERR( "- 単調関数は二分探索" );
   CERR( "- 可微分関数はニュートン法" );
   CERR( "- 一次関数は掃き出し法" );
+  CERR( "- f(g(x),g(y),...)の形はf,g別々に前計算" );
   CERR( "を検討しましょう。" );
 }
 
@@ -1136,19 +1160,36 @@ AC( DecisionGame )
 {
   CERR( "ゲームの和に分解できる場合は最小単位で考察をし、グランディ数を実装しましょう。" );
   CERR( "これ以上分解できないゲームには整礎構造を探し、順序数の小さい順に実験をしましょう。" );
+  CERR( "必勝戦略の構築では" );
+  CERR( "- 何らかの不変量を保つ戦略" );
+  CERR( "- 何らかの二部マッチングを実現する戦略" );
+  CERR( "を検討しましょう。" );
 }
 
 AC( DecisionAccessibility )
 {
-  ASK_YES_NO( "矩形領域の到達可能性問題ですか？" );
-  if( reply == "yes" ){
+  CERR( "移動の前後で変化しない値がある場合、その値が等しい点に絞って考えましょう。" );
+  ASK_NUMBER(
+	     "矩形領域の到達可能性（迷路）問題" ,
+	     "グラフ上の到達可能性問題" ,
+	     "全点網羅可能性問題"
+	     );
+  if( num == num_temp++ ){
     CERR( "迷路の攻略可能性は" );
     CERR( "- スタートとゴールが同一の弧状連結成分に属すこと" );
     CERR( "- スタートとゴールを分断する壁のパスの非存在性" );
     CERR( "などに翻訳しグラフ上の最小コスト移動問題に帰着させましょう。" );
-  } else {
-    CERR( "適切なグラフ上の最小コスト移動問題に帰着させましょう。" );
     CALL_AC( MinimisationMovingCost );
+  } else if( num == num_temp++ ){
+    CERR( "グラフ上の最小コスト移動問題に帰着させましょう。" );
+    CALL_AC( MinimisationMovingCost );
+  } else if( num == num_temp++ ){
+    CERR( "移動の前後で変化しない値がある場合、その値が等しい点に絞って考えましょう。" );
+    CERR( "- 領域と移動に対称性があるならば、タイリングとマッチング" );
+    CERR( "  \\Mathematics\\Geometry\\Graph\\HopcroftKarp" );
+    CERR( "- O(N^3)が通りそうで再来訪を許容するならば、ワーシャルフロイド法" );
+    CERR( "  \\Mathematics\\Geometry\\Graph\\FloydWarshall" );
+    CERR( "を検討しましょう。" );
   }
   CERR( "" );
 }
