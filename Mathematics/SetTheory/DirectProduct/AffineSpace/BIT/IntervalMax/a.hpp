@@ -18,5 +18,5 @@
 // そのうちの区間min取得と一点更新は
 // M. Dima, R. Ceterchi, Efficient Range Minimum Queries using Binary Indexed Trees, Olympiads in Informatics, 2015, Vol. 9, 39--44
 // の手法をもとに実装
-DECRALATION_OF_INTERVAL_MAX_BIT( Max );
-DECRALATION_OF_INTERVAL_MAX_BIT( Min );
+DECLARATION_OF_INTERVAL_MAX_BIT( Max );
+DECLARATION_OF_INTERVAL_MAX_BIT( Min );

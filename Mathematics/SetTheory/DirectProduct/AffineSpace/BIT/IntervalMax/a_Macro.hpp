@@ -2,7 +2,7 @@
 
 #pragma once
 
-#define DECRALATION_OF_INTERVAL_MAX_BIT( MAX )				\
+#define DECLARATION_OF_INTERVAL_MAX_BIT( MAX )				\
   template <typename T , int N>						\
   class Interval ## MAX ## BIT						\
   {									\
