@@ -4,7 +4,7 @@
 #include "a.hpp"
 
 // BinarySearchÇ…égÇ§ÅB
-#include "../../../../Arithmetic/Power/Constexpr/a_Body.hpp"
+#include "../../../../Arithmetic/Power/Constexpr/Inverse/a_Body.hpp"
 
 template <typename T , int N> inline BIT<T,N>::BIT() : m_fenwick() { static_assert( ! is_same<T,int>::value ); }
 template <typename T , int N>
