@@ -109,9 +109,10 @@ int BIT<T,N>::BinarySearch( const T& n ) const
 
   }
 
-  // InitialSegmentSum( i )がt未満となるiが存在するならばjはその最大値に1を足したものとなり、
-  // InitialSegmentSum( i )がt未満となるiが存在しないならばj=0となり、
-  // いずれの場合もjはInitialSegmentSum( i )がt以上となる最小のiと等しい。
+  // InitialSegmentSum( i )がn未満となるiが存在するならばjはその最大値に1を足したものとなり、
+  // InitialSegmentSum( i )がn未満となるiが存在しないならばj=0となり、
+  // いずれの場合もInitialSegmentSum( i )がt以上となるiが存在するならば
+  // jはそのような最小のiと等しい。
   return j;
 
 }
