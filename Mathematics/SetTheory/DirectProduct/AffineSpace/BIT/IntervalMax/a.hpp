@@ -13,7 +13,8 @@
 // max（min）による一点更新O(log_2 N)
 // max（min）による区間更新O(i_final-i_start+log_2 N)
 
-// t以上（以下）となる要素の添字の最小値の二分探索O(log_2 N)
+// n以上（以下）となる要素の添字の最小値の二分探索O(log_2 N)
+// （存在しない場合はN以上の最小の2羃×2-1を返すので、N以上であることで判定可能）
 
 // そのうちの区間min取得と一点更新は
 // M. Dima, R. Ceterchi, Efficient Range Minimum Queries using Binary Indexed Trees, Olympiads in Informatics, 2015, Vol. 9, 39--44
