@@ -5,6 +5,8 @@
 // 2^16 = 65536
 // 2^17 = 131072
 // 2^18 = 262144
+
+// N以上である最小の2羃をコンパイル時計算する。
 template <int N>
 class PowerInverse_constexpr
 {
