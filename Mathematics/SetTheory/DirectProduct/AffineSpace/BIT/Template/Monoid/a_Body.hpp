@@ -4,7 +4,7 @@
 #include "a.hpp"
 
 // BinarySearchÇ…égÇ§ÅB
-#include "../../../../../../Arithmetic/Power/Constexpr/a_Body.hpp"
+#include "../../../../../../Arithmetic/Power/Constexpr/Inverse/a_Body.hpp"
 
 template <TEMPLATE_ARGUMENTS_FOR_MONOID_BIT> inline const T& MonoidBIT<T,m_T,e_T,N>::g_e = e_T();
 
