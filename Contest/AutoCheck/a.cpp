@@ -371,20 +371,29 @@ AC( ExplicitExpressionFunctionOnNonTreeGraph )
 
 AC( ExplicitExpressionOrder )
 {
-  CERR( "集合Sを何らかの順序でソートした配列aに関する問題を考えます。" );
-  CERR( "- 与えられた要素sが下から何番目かを答える場合は、" );
-  CERR( "  - 各iごとにa[i]が求められるならば、iに関する二分探索" );
-  CERR( "  - そうでないならば、s未満の項の数え上げ" );
-  CERR( "- 与えられたiに対するa[i]を答える場合は、" );
-  CERR( "  Sの各要素sごとにs未満の項を数え上げてsに関する二分探索" );
-  CERR( "- 与えられたiに対するa[0],...,a[i]を全て答える場合は、" );
-  CERR( "  - a[i]が求まるならば、a[i]以下の項を全列挙" );
-  CERR( "  - Sがソートした配列M個の和集合ならば、M個のpriority_queueでイベントソート" );
-  CERR( "を検討しましょう。" );
-  CERR( "" );
-  CERR( "特に辞書式順序でs未満の項の数え上げをする際は、" );
-  CERR( "「sとd文字目で初めてズレるl文字の項の総数count[d][l]」" );
-  CERR( "のdとlをわたる総和を求めましょう。" );
+  ASK_NUMBER(
+	     "与えられた順序集合に関する問題"
+	     "順序集合を更新する問題"
+	     };
+      
+  if( num == num_temp++ ){
+    CERR( "集合Sを何らかの順序でソートした配列aに関する問題を考えます。" );
+    CERR( "- 与えられた要素sが下から何番目かを答える場合は、" );
+    CERR( "  - 各iごとにa[i]が求められるならば、iに関する二分探索" );
+    CERR( "  - そうでないならば、s未満の項の数え上げ" );
+    CERR( "- 与えられたiに対するa[i]を答える場合は、" );
+    CERR( "  Sの各要素sごとにs未満の項を数え上げてsに関する二分探索" );
+    CERR( "- 与えられたiに対するa[0],...,a[i]を全て答える場合は、" );
+    CERR( "  - a[i]が求まるならば、a[i]以下の項を全列挙" );
+    CERR( "  - Sがソートした配列M個の和集合ならば、M個のpriority_queueでイベントソート" );
+    CERR( "を検討しましょう。" );
+    CERR( "" );
+    CERR( "特に辞書式順序でs未満の項の数え上げをする際は、" );
+    CERR( "「sとd文字目で初めてズレるl文字の項の総数count[d][l]」" );
+    CERR( "のdとlをわたる総和を求めましょう。" );
+  } else if( num == num_temp++ ){
+    AC( QueryArrayOrder );
+  }
 }
 
 AC( ExplicitExpressionProbability )
@@ -696,6 +705,8 @@ AC( CountingArray )
     CERR( "- 取り得る値が少なく関数が長さに関して再帰的構造を持つ場合は、" );
     CERR( "  「長さiの時に値vである配列の総数dp[i][v]」" );
     CERR( "  を管理するi,vに関する動的計画法" );
+    CERR( "- 関数が区間和などデータ構造で計算できる場合は、" );
+    CERR( "  データ構造に翻訳した上での数え上げ" );
   } else if( num == num_temp++ ){
     CERR( "- いくつかの条件の重ね合わせの時は包除原理" );
     CERR( "- 全順序の場合は数の分割方法などへの翻訳" );
@@ -960,54 +971,115 @@ AC( QueryArray )
 	     "非結合的マグマ構造*を使う問題" ,
 	     "集合へのマグマ作用(*,\\cdot)を使う問題" ,
 	     "モノイドへのマグマ作用(+,\\cdot)を使う問題" ,
+	     "序数を扱う問題" ,
 	     "一次関数とのmaxを取った値を使う問題" ,
 	     "定数とのmaxを取った値の区間演算取得を使う問題"
 	     );
   if( num == num_temp++ ){
-    CERR( "- 加算／全更新後の一点取得のみが必要ならば階差数列" );
-    CERR( "  \\Mathematics\\SetTheory\\DirectProduct\\AfineSpace\\DifferenceSeqeuence" );
-    CERR( "- 加算／全更新なしで区間取得のみが必要ならば累積積" );
-    CERR( "  \\Mathematics\\SetTheory\\DirectProduct\\AfineSpace\\CumulativeProd" );
-    CERR( "- 区間加算／区間取得が必要ならば可換群BIT" );
-    CERR( "  \\Mathematics\\SetTheory\\DirectProduct\\AffineSpace\\BIT\\Template" );
-    CERR( "- 一点代入／一点加算／区間取得が必要ならば可換群平方分割" );
-    CERR( "  \\Mathematics\\SetTheory\\DirectProduct\\AffineSpace\\SqrtDecomposition\\Template" );
-    CERR( "を検討しましょう。" );
+    CALL_AC( QueryArrayAbelianGroup );
   } else if( num == num_temp++ ){
-    CERR( "- 一点代入／区間加算／一点取得／区間取得が必要ならば可換羃等モノイドBIT" );
-    CERR( "  \\Mathematics\\SetTheory\\DirectProduct\\AffineSpace\\BIT\\IntervalMax\\Template" );
-    CERR( "を検討しましょう。" );
+    CALL_AC( QueryArrayCommutativeIdempotentMonoid );
   } else if( num == num_temp++ ){
-    CERR( "- 一点代入／区間取得が必要ならばモノイドBIT" );
-    CERR( "  \\Mathematics\\SetTheory\\DirectProduct\\AffineSpace\\BIT\\Template\\Monoid" );
-    CERR( "- 一点加算／区間加算／一点取得／区間取得が必要ならばモノイド平方分割" );
-    CERR( "  \\Mathematics\\SetTheory\\DirectProduct\\AffineSpace\\SqrtDecomposition\\Template\\Monoid" );
-    CERR( "- 一点代入／一点取得／区間取得が必要ならばモノイドセグメント木" );
-    CERR( "  \\Mathematics\\SetTheory\\DirectProduct\\AffineSpace\\SegmentTree" );
-    CERR( "を検討しましょう。" );
+    CALL_AC( QueryArrayMonoid );
   } else if( num == num_temp++ ){
-    CERR( "- 写像のコード化" );
-    CERR( "  \\Mathematics\\Function\\Encoder" );
-    CERR( "によりモノイドに帰着させることを検討しましょう。" );
+    CALL_AC( QueryArrayNonAssociativeMagma );
   } else if( num == num_temp++ ){
-    CERR( "- 一点作用／区間作用／一点取得が必要ならば双対平方分割" );
-    CERR( "  \\Mathematics\\SetTheory\\DirectProduct\\AffineSpace\\SqrtDecomposition\\Template\\Dual" );
-    CERR( "を検討しましょう。" );
+    CALL_AC( QueryArrayMagmaSet );
   } else if( num == num_temp++ ){
-    CERR( "- 区間代入／区間作用／区間加算／一点取得／区間取得が必要な場合は遅延評価平方分割" );
-    CERR( "  \\Mathematics\\SetTheory\\DirectProduct\\AffineSpace\\SqrtDecomposition\\Template\\LazyEvaluation" );
-    CERR( "を検討しましょう。" );
+    CALL_AC( QueryArrayMagmaMonoid );
   } else if( num == num_temp++ ){
-    CERR( "- 一次関数による全体max更新／一点取得が必要な場合はConvex Hull Trick" );
-    CERR( "  \\Mathematics\\Function\\MaxLinearFunction" );
-    CERR( "を検討しましょう。" );
+    CALL_AC( QueryArrayOrder );
   } else if( num == num_temp++ ){
-    CERR( "maxで全体更新をしない場合、つまりただ配列と定数のmaxの区間演算を" );
-    CERR( "処理するだけの場合、クエリの順番を入れ替えることで全体更新をする場合に" );
-    CERR( "帰着できます。従って以下では全体更新の問題を考えます。" );
-    CERR( "" );
-    CALL_AC( QueryTimeMax );
+    CALL_AC( QueryArrayMaxLinearFunction );
+  } else if( num == num_temp++ ){
+    CALL_AC( QueryArrayMaxConstant );
   }
+}
+
+AC( QueryArrayAbelianGroup )
+{
+  CERR( "- 加算／全更新後の一点取得のみが必要ならば階差数列" );
+  CERR( "  \\Mathematics\\SetTheory\\DirectProduct\\AfineSpace\\DifferenceSeqeuence" );
+  CERR( "- 加算／全更新なしで区間取得のみが必要ならば累積積" );
+  CERR( "  \\Mathematics\\SetTheory\\DirectProduct\\AfineSpace\\CumulativeProd" );
+  CERR( "- 区間加算／区間取得が必要ならば通常のBITや可換群BIT" );
+  CERR( "  \\Mathematics\\SetTheory\\DirectProduct\\AffineSpace\\BIT" );
+  CERR( "  \\Mathematics\\SetTheory\\DirectProduct\\AffineSpace\\BIT\\Template" );
+  CERR( "- 一点代入／一点加算／区間取得が必要ならば可換群平方分割" );
+  CERR( "  \\Mathematics\\SetTheory\\DirectProduct\\AffineSpace\\SqrtDecomposition\\Template" );
+  CERR( "を検討しましょう。" );
+}
+
+AC( QueryArrayCommutativeIdempotentMonoid )
+{
+  CERR( "- 一点代入／区間加算／一点取得／区間取得が必要ならば区間maxBITや可換羃等モノイドBIT" );
+  CERR( "  \\Mathematics\\SetTheory\\DirectProduct\\AffineSpace\\BIT\\IntervalMax" );
+  CERR( "  \\Mathematics\\SetTheory\\DirectProduct\\AffineSpace\\BIT\\IntervalMax\\Template" );
+  CERR( "を検討しましょう。" );
+}
+
+AC( QueryArrayMonoid )
+{
+  CERR( "- 一点代入／区間取得が必要ならばモノイドBIT" );
+  CERR( "  \\Mathematics\\SetTheory\\DirectProduct\\AffineSpace\\BIT\\Template\\Monoid" );
+  CERR( "- 一点加算／区間加算／一点取得／区間取得が必要ならばモノイド平方分割" );
+  CERR( "  \\Mathematics\\SetTheory\\DirectProduct\\AffineSpace\\SqrtDecomposition\\Template\\Monoid" );
+  CERR( "- 一点代入／一点取得／区間取得が必要ならばモノイドセグメント木" );
+  CERR( "  \\Mathematics\\SetTheory\\DirectProduct\\AffineSpace\\SegmentTree" );
+  CERR( "を検討しましょう。" );
+}
+
+AC( QueryArrayNonAssociativeMagma )
+{
+  CERR( "- 写像のコード化によるモノイドへの帰着" );
+  CERR( "  \\Mathematics\\Function\\Encoder" );
+  CERR( "を検討しましょう。" );
+  CERR( "" );
+  CERR( "モノイドに対しては" );
+  CALL_AC( QueryArrayMonoid );
+}
+
+AC( QueryArrayMagmaSet )
+{
+  CERR( "- 一点作用／区間作用／一点取得が必要ならば双対平方分割" );
+  CERR( "  \\Mathematics\\SetTheory\\DirectProduct\\AffineSpace\\SqrtDecomposition\\Template\\Dual" );
+  CERR( "を検討しましょう。" );
+}
+
+AC( QueryArrayMagmaMonoid )
+{
+  CERR( "- 区間代入／区間作用／区間加算／一点取得／区間取得が必要な場合は遅延評価平方分割" );
+  CERR( "  \\Mathematics\\SetTheory\\DirectProduct\\AffineSpace\\SqrtDecomposition\\Template\\LazyEvaluation" );
+  CERR( "を検討しましょう。" );
+}
+
+AC( QueryArrayOrder )
+{
+  CERR( "- 一点代入／一点序数取得／全体での序数を実現する点の取得が必要ならば通常のBITで像を管理し" );
+  CERR( "  \\Mathematics\\SetTheory\\DirectProduct\\AffineSpace\\BIT" );
+  CERR( "  - 一点序数取得は平面走査" );
+  CERR( "  - 全体での序数を実現する点の取得は平面走査＋二分探索" );
+  CERR( "- 一点加算／区間での序数を実現する点の取得が必要ならば区間maxBITや可換羃等モノイドBITで" );
+  CERR( "  区間最大／最小値＋二分探索で区間を分割" );
+  CERR( "  \\Mathematics\\SetTheory\\DirectProduct\\AffineSpace\\BIT\\IntervalMax" );
+  CERR( "  \\Mathematics\\SetTheory\\DirectProduct\\AffineSpace\\BIT\\IntervalMax\\Template" );
+  CERR( "を検討しましょう。" );
+}
+
+AC( QueryArrayMaxLinearFunction )
+{
+  CERR( "- 一次関数による全体max更新／一点取得が必要な場合はConvex Hull Trick" );
+  CERR( "  \\Mathematics\\Function\\MaxLinearFunction" );
+  CERR( "を検討しましょう。" );
+}
+
+AC( QueryArrayMaxConstant )
+{
+  CERR( "maxで全体更新をしない場合、つまりただ配列と定数のmaxの区間演算を" );
+  CERR( "処理するだけの場合、クエリの順番を入れ替えることで全体更新をする場合に" );
+  CERR( "帰着できます。従って以下では全体更新の問題を考えます。" );
+  CERR( "" );
+  CALL_AC( QueryTimeMax );
 }
 
 AC( QueryGraph )
