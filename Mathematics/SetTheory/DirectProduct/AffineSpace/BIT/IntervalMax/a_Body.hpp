@@ -4,7 +4,7 @@
 #include "a.hpp"
 
 // BinarySearchÇ…égÇ§ÅB
-#include "../../../../../Arithmetic/Power/Constexpr/a_Body.hpp"
+#include "../../../../../Arithmetic/Power/Constexpr/Inverse/a_Body.hpp"
 
 DEFINITION_OF_INTERVAL_MAX_BIT( Max , < , max );
 DEFINITION_OF_INTERVAL_MAX_BIT( Min , > , min );
