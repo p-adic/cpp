@@ -65,7 +65,7 @@ AC( QueryString );
 AC( QuerySet );
 AC( QueryTime );
 AC( QueryTimeMax );
-AC( QueryTimeOther );
+AC( QueryTimeAddition );
 AC( Decision );
 AC( DecisionConnectedness );
 AC( DecisionHigherConnectedness );
