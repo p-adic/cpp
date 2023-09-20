@@ -2,7 +2,7 @@
 // verify:
 // https://judge.yosupo.jp/submission/150497
 // https://yukicoder.me/submissions/892588
-// https://yukicoder.me/submissions/914264
+// https://yukicoder.me/submissions/914268
 
 // PW系の引数はuniversal referenceであることに注意。
 // SIMD使用時は./SIMD/compress.txtを追加する。

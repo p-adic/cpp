@@ -9,7 +9,7 @@
 // verify:
 // https://judge.yosupo.jp/submission/150497
 // https://yukicoder.me/submissions/892588
-// https://yukicoder.me/submissions/914264
+// https://yukicoder.me/submissions/914268
 
 // ここをtempate <typename INT , INT M>などにしてしまうとoperator+などを呼び出す際に型推論に失敗する。整数型を変えたい時はINT_TYPE_FOR_MODの型エイリアスを変更する。
 template <INT_TYPE_FOR_MOD M>
