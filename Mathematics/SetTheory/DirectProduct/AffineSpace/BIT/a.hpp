@@ -17,12 +17,13 @@ private:
 
 public:
   inline BIT();
-  BIT( const T ( & a )[N] );
+  BIT( const T ( &a )[N] );
 
   // const参照でないことに注意。
   inline T Get( const int& i ) const;
   inline void Set( const int& i , const T& n );
-  inline void Set( const T ( & a )[N] );
+  inline void Set( const T ( &a )[N] );
+  inline void Initialise();
 
   inline BIT<T,N>& operator+=( const T ( & a )[N] );
   // 0<=i<Nの場合は第i成分にnを足し、そうでない場合は何もしない。

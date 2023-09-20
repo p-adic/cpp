@@ -22,8 +22,9 @@ public:
   inline T Get( const int& i ) const;
   inline void Set( const int& i , const T& n );
   inline void Set( const T ( &a )[N] );
+  inline void Initialise();
 
-  inline AbstractIntervalAddBIT<T,m_T,e_T,i_T,N>& operator+=( const T ( & a )[N] );
+  inline AbstractIntervalAddBIT<T,m_T,e_T,i_T,N>& operator+=( const T ( &a )[N] );
   inline void Add( const int& i , const T& n );
   inline void IntervalAdd( const int& i_start , const int& i_final , const T& n );
 

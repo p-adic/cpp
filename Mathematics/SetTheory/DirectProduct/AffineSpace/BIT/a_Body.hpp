@@ -8,7 +8,7 @@
 
 template <typename T , int N> inline BIT<T,N>::BIT() : m_fenwick() { static_assert( ! is_same<T,int>::value ); }
 template <typename T , int N>
-BIT<T,N>::BIT( const T ( & a )[N] ) : m_fenwick()
+BIT<T,N>::BIT( const T ( &a )[N] ) : m_fenwick()
 {
 
   static_assert( ! is_same<T,int>::value );
@@ -33,9 +33,10 @@ BIT<T,N>::BIT( const T ( & a )[N] ) : m_fenwick()
 
 template <typename T , int N> inline T BIT<T,N>::Get( const int& i ) const { return IntervalSum( i , i ); }
 template <typename T , int N> inline void BIT<T,N>::Set( const int& i , const T& n ) { Add( i , n - IntervalSum( i , i ) ); }
-template <typename T , int N> inline void BIT<T,N>::Set( const T ( & a )[N] ) { BIT<T,N> a_copy{ a }; swap( m_fenwick , a_copy.m_fenwick ); }
+template <typename T , int N> inline void BIT<T,N>::Set( const T ( &a )[N] ) { BIT<T,N> a_copy{ a }; swap( m_fenwick , a_copy.m_fenwick ); }
+template <typename T , int N> inline void BIT<T,N>::Initialise() { for( int j = 1 ; j <= N ; j++ ){ m_fenwick[i] = 0; } }
 
-template <typename T , int N> inline BIT<T,N>& BIT<T,N>::operator+=( const T ( & a )[N] ) { for( int i = 0 ; i < N ; i++ ){ Add( i , a[i] ); } return *this; }
+template <typename T , int N> inline BIT<T,N>& BIT<T,N>::operator+=( const T ( &a )[N] ) { for( int i = 0 ; i < N ; i++ ){ Add( i , a[i] ); } return *this; }
 
 template <typename T , int N>
 void BIT<T,N>::Add( const int& i , const T& n )

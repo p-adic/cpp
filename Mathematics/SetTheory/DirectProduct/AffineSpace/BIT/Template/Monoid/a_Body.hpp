@@ -192,6 +192,8 @@ void MonoidBIT<T,m_T,e_T,N>::Set( T ( &&a )[N] )
 
 }
 
+template <TEMPLATE_ARGUMENTS_FOR_MONOID_BIT> inline void MonoidBIT<T,m_T,e_T,N>::Initialise() { for( int i = 0 ; i < N ; i++ ){ m_a[i] = m_fenwick_0[i+1] = m_fenwick_1[i+1] = g_e; } }
+
 template <TEMPLATE_ARGUMENTS_FOR_MONOID_BIT> inline int MonoidBIT<T,m_T,e_T,i_T,N>::BinarySearch( const T& t ) const
 {
 

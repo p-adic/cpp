@@ -24,6 +24,7 @@ public:
   inline T Get( const int& i ) const;
   inline void Set( const int& i , const T& n );
   inline void Set( const T ( &a )[N] );
+  inline void Initialise();
 
   inline AbstractBIT<T,m_T,e_T,i_T,N>& operator+=( const T ( & a )[N] );
   void Add( const int& i , const T& n );

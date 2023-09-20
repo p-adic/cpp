@@ -33,6 +33,7 @@ template <TEMPLATE_ARGUMENTS_FOR_BIT> inline AbstractBIT<T,m_T,e_T,i_T,N>::Abstr
 template <TEMPLATE_ARGUMENTS_FOR_BIT> inline T AbstractBIT<T,m_T,e_T,i_T,N>::Get( const int& i ) const { return IntervalSum( i , i ); }
 template <TEMPLATE_ARGUMENTS_FOR_BIT> inline void AbstractBIT<T,m_T,e_T,i_T,N>::Set( const int& i , const T& n ) { Add( i , m_T( i_T( IntervalSum( i , i ) ) , n ) ); }
 template <TEMPLATE_ARGUMENTS_FOR_BIT> inline void AbstractBIT<T,m_T,e_T,i_T,N>::Set( const T ( &a )[N] ) { AbstractBIT<T,m_T,e_T,i_T,N> a_copy{ a }; swap( m_fenwick , a_copy.m_fenwick ); }
+template <TEMPLATE_ARGUMENTS_FOR_BIT> inline void AbstractBIT<T,m_T,e_T,i_T,N>::Initialise() { for( int j = 1 ; j <= N ; j++ ){ m_fenwick[i] = 0; } }
 
 template <TEMPLATE_ARGUMENTS_FOR_BIT> inline AbstractBIT<T,m_T,e_T,i_T,N>& AbstractBIT<T,m_T,e_T,i_T,N>::operator+=( const T ( & a )[N] ) { for( int i = 0 ; i < N ; i++ ){ Add( i , a[i] ); } return *this; }
 

@@ -8,7 +8,7 @@
 
 template <TEMPLATE_ARGUMENTS_FOR_IDEMPOTENT_MONOID_BIT> inline const T& AbstractBIT<T,m_T,e_T,N>::g_e = e_T();
 
-template <TEMPLATE_ARGUMENTS_FOR_IDEMPOTENT_MONOID_BIT> inline IdempotentMonoidBIT<T,m_T,e_T,N>::IdempotentMonoidBIT() : m_a() , m_fenwick_0() , m_fenwick_1() { if( m_a[0] != g_e ){ for( int i = 0 ; i < N ; i++ ){ m_a[i] = g_e; } for( int j = 1 ; j <= N ; j++ ){ m_fenwick_0[j] = m_fenwick_1[j] = g_e; } } }
+template <TEMPLATE_ARGUMENTS_FOR_IDEMPOTENT_MONOID_BIT> inline IdempotentMonoidBIT<T,m_T,e_T,N>::IdempotentMonoidBIT() : m_a() , m_fenwick_0() , m_fenwick_1() { if( m_a[0] != g_e ){ for( int i = 0 ; i < N ; i++ ){ m_a[i] = m_fenwick_0[i+1] = m_fenwick_1[i+1] = g_e; } } }
 
 template <TEMPLATE_ARGUMENTS_FOR_IDEMPOTENT_MONOID_BIT> inline IdempotentMonoidBIT<T,m_T,e_T,N>::IdempotentMonoidBIT( const T ( &a )[N] ) : m_init( n ) , m_a() , m_fenwick_0() , m_fenwick_1() 
 {
@@ -191,6 +191,8 @@ void IdempotentMonoidBIT<T,m_T,e_T,N>::Set( T ( &&a )[N] )
   return;
 
 }
+
+template <TEMPLATE_ARGUMENTS_FOR_IDEMPOTENT_MONOID_BIT> inline void IdempotentMonoidBIT<T,m_T,e_T,N>::Initialise() { for( int i = 0 ; i < N ; i++ ){ m_a[i] = m_fenwick_0[i+1] = m_fenwick_1[i+1] = g_e; } }
 
 
 template <TEMPLATE_ARGUMENTS_FOR_IDEMPOTENT_MONOID_BIT>

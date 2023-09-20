@@ -11,8 +11,9 @@ template <typename T , int N> inline IntervalAddBIT<T,N>::IntervalAddBIT( const 
 template <typename T , int N> inline T IntervalAddBIT<T,N>::Get( const int& i ) const { return IntervalSum( i , i ); }
 template <typename T , int N> inline void IntervalAddBIT<T,N>::Set( const int& i , const T& n ) { Add( i , n - IntervalSum( i , i ) ); }
 template <typename T , int N> inline void IntervalAddBIT<T,N>::Set( const T ( &a )[N] ) { IntervalAddBIT<T,N> a_copy{ a }; swap( m_bit_0 , a_copy.m_bit_0 ); swap( m_bit_1 , a_copy.m_bit_1 ); }
+template <typename T , int N> inline void IntervalAddBIT<T,N>::Initialise() { m_bit_0.Initialise(); m_bit_1.Initialise(); }
 
-template <typename T , int N> inline IntervalAddBIT<T,N>& IntervalAddBIT<T,N>::operator+=( const T ( & a )[N] ) { for( int i = 0 ; i < N ; i++ ){ Add( i , a[i] ); } return *this; }
+template <typename T , int N> inline IntervalAddBIT<T,N>& IntervalAddBIT<T,N>::operator+=( const T ( &a )[N] ) { for( int i = 0 ; i < N ; i++ ){ Add( i , a[i] ); } return *this; }
 
 template <typename T , int N> inline void IntervalAddBIT<T,N>::Add( const int& i , const T& n ) { IntervalAdd( i , i , n ); }
 

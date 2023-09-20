@@ -22,10 +22,10 @@
     T Interval ## MAX( const int& i_start , const int& i_final ) const;	\
 									\
     void Set( const int& i , const T& n );				\
-    void Set( const T& n );						\
     void Set( const T& n , T ( &&a )[N] );				\
     void Set ## MAX( const int& i , const T& n );			\
     void IntervalSet ## MAX( const int& i_start , const int& i_final , const T& n ); \
+    void Initialise( const T& n );					\
 									\
     int BinarySearch( const T& n ) const;				\
 									\
@@ -40,13 +40,8 @@
 									\
       for( int i = 0 ; i < N ; i++ ){					\
 									\
-	m_a[i] = m_init;						\
+	m_a[i] = m_fenwick_0[i+1] = m_fenwick_1[i+1] = m_init;		\
 									\
-      }									\
-									\
-      for( int j = 1 ; j <= N ; j++ ){					\
-									\
-	m_fenwick_0[j] = m_fenwick_1[j] = m_init;			\
       }									\
 									\
     }									\
@@ -223,19 +218,6 @@
   }									\
 									\
   template <typename T , int N>						\
-  void Interval ## MAX ## BIT<T,N>::Set( const T& n )			\
-  {									\
-									\
-    Interval ## MAX ## BIT<T,N> a_copy{ n };				\
-    swap( m_init , a_copy.m_init );					\
-    swap( m_a , a_copy.m_a );						\
-    swap( m_fenwick_0 , a_copy.m_fenwick_0 );				\
-    swap( m_fenwick_1 , a_copy.m_fenwick_1 );				\
-    return;								\
-									\
-  }									\
-									\
-  template <typename T , int N>						\
   void Interval ## MAX ## BIT<T,N>::Set( const T& n , T ( &&a )[N] )	\
   {									\
 									\
@@ -330,6 +312,21 @@
     }									\
 									\
     return;								\
+  }									\
+									\
+  template <typename T , int N>						\
+  void Interval ## MAX ## BIT<T,N>::Initialise( const T& n )		\
+  {									\
+									\
+    m_init = n;								\
+									\
+    for( int i = 0 ; i < N ; i++ ){					\
+									\
+      m_a[i] = m_fenwick_0[i+1] = m_fenwick_1[i+1] = m_init;		\
+    }									\
+									\
+    return;								\
+									\
   }									\
 
 #define DEFINITION_OF_BINARY_SEARCH_FOR_INTERVAL_MAX_BIT( MAX , INEQUALITY ) \
