@@ -66,6 +66,8 @@ public:
   static inline const Montgomery<M>& Factorial( const INT_TYPE_FOR_MOD& n ) noexcept;
   // Mが素数かつn < g_memory_lengthである場合のみサポート。
   static inline const Montgomery<M>& FactorialInverse( const INT_TYPE_FOR_MOD& n ) noexcept;
+  // Mが素数かつn < g_memory_lengthである場合のみサポート。
+  static inline Montgomery<M> Combination( const INT_TYPE_FOR_MOD& n , const INT_TYPE_FOR_MOD& i ) noexcept;
 
   static inline const Montgomery<M>& zero() noexcept;
   static inline const Montgomery<M>& one() noexcept;
