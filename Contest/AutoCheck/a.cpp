@@ -372,10 +372,9 @@ AC( ExplicitExpressionFunctionOnNonTreeGraph )
 AC( ExplicitExpressionOrder )
 {
   ASK_NUMBER(
-	     "与えられた順序集合に関する問題"
+	     "与えられた順序集合に関する問題" ,
 	     "順序集合を更新する問題"
-	     };
-      
+	     );
   if( num == num_temp++ ){
     CERR( "集合Sを何らかの順序でソートした配列aに関する問題を考えます。" );
     CERR( "- 与えられた要素sが下から何番目かを答える場合は、" );
