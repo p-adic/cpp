@@ -3,7 +3,9 @@
 #pragma once
 #include "a_Macro.hpp"
 
-// verify: https://yukicoder.me/submissions/913505
+// verify:
+// https://yukicoder.me/submissions/913505
+// https://atcoder.jp/contests/abc169/submissions/45772162
 
 template <typename UINT , int digit>
 class Extended_ull
@@ -73,8 +75,6 @@ public:
 
 };
 
-#include a_alias.hpp
-
 template <typename UINT , int digit> inline constexpr void swap( Extended_ull<UINT,digit>& n0 , Extended_ull<UINT,digit>& n1 ) noexcept;
 
 // ULL = ull‚ÌAó‚¯æ‚èãŒÀ‚Í2^64 - 1 = 18446744073709551615 à 1.8~10^19
@@ -87,3 +87,4 @@ template <typename UINT , int digit , class Traits> inline basic_istream<char,Tr
 template <typename UINT , int digit> inline string to_string( Extended_ull<UINT,digit> n );
 template <typename UINT , int digit , class Traits> inline basic_ostream<char,Traits>& operator<<( basic_ostream<char,Traits>& os , const Extended_ull<UINT,digit>& n );
 
+#include a_alias.hpp
