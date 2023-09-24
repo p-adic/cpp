@@ -10,6 +10,7 @@ AC( ExplicitExpression );
 AC( ExplicitExpressionUnary );
 AC( ExplicitExpressionUnaryLinearRecursion );
 AC( ExplicitExpressionUnaryIteration );
+AC( ExplicitExpressionBitwiseFunction );
 AC( ExplicitExpressionUnaryOther );
 AC( ExplicitExpressionArraySum );
 AC( ExplicitExpressionArrayCombinatorial );

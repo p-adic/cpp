@@ -44,6 +44,7 @@ AC( DebugHint )
     CERR( "  - keyに狭義全順序の積順序を用いる場合、mapの入れ子を検討しましょう。" );
     CERR( "- 動的計画法においてindexのswapやmodを用いてメモリ削減を行う場合、" );
     CERR( "  各ループの最初にdpテーブルの初期化をし忘れていませんか？" );
+    CERR( "- 変数名の衝突した局所変数による秘匿化を受けていませんか？" );
     CERR( "- 誤差評価をし忘れていませんか？" );
     CERR( "  - 整数型へのキャスト時の切り捨てが適切かを確認しましょう。" );
     CERR( "  - 二分探索等で厳密値を扱う時は代数方程式を解いて誤差を消しましょう。" );
@@ -51,8 +52,13 @@ AC( DebugHint )
     CERR( "- 番兵の設定忘れか設定ミスをしていませんか？" );
     CERR( "- マルチテストケースで配列にstaticをつけて値が持ち越されていませんか？" );
     CERR( "- cLay使用畤にsetmod以前に10^9+7より大きい値を代入していませんか？" );
+    CERR( "  #define MD 998244353 などを用いましょう。" );
     CERR( "" );
     CERR( "原因に心当たりがない場合はランダムテストを検討しましょう。" );
+    CERR( "ランダムテストで引っ掛らない場合は大きな入力値でのみ起こるバグ" );
+    CERR( "- 型の指定ミス" );
+    CERR( "- 64bit型のオーバーフロー" );
+    CERR( "を疑いましょう。" );
   } else if( num == num_temp++ ){
     CERR( "- 制約を間違えてassertしていませんか？" );
     CERR( "- 手元の環境ではDEXPRで設定した値が小さくなることを忘れていませんか？" );
@@ -180,14 +186,17 @@ AC( ExplicitExpression )
 AC( ExplicitExpressionUnary )
 {
   ASK_NUMBER(
-	     "線形漸化式の問題" ,
-	     "１変数関数の反復合成の問題" ,
+	     "線形漸化式の計算問題" ,
+	     "１変数関数の反復合成の計算問題" ,
+	     "bit関数と他の関数の合成の計算問題" ,
 	     "その他の１変数関数の計算問題"
 	     );
   if( num == num_temp++ ){
     CALL_AC( ExplicitExpressionUnaryLinearRecursion );
   } else if( num == num_temp++ ){
     CALL_AC( ExplicitExpressionUnaryIteration );
+  } else if( num == num_temp++ ){
+    CALL_AC( ExplicitExpressionBitwiseFunction );
   } else if( num == num_temp++ ){
     CALL_AC( ExplicitExpressionUnaryOther );
   }
@@ -226,6 +235,45 @@ AC( ExplicitExpressionUnaryIteration )
   CERR( "  \\Mathematics\\Function\\Iteration\\LoopDetection" );
   CERR( "- O(N)すら通らなさそうならば関数の規則性を見付けるための実験" );
   CERR( "を検討しましょう。" );
+}
+
+AC( ExplicitExpressionBitwiseFunction )
+{
+  CERR( "(M,*)を可換モノイドとします。写像f:N^n->(M,*)がbit準同型とは" );
+  CERR( "- (a&b)==0を満たす任意のa,bに対しf(a|b)=f(a)*f(b)" );
+  CERR( "を満たすということとします。" );
+  CERR( "" );
+  CERR( "例えば" );
+  CERR( "- 恒等写像:N->(N,+)" );
+  CERR( "- 恒等写像:N->(N,|)" );
+  CERR( "- 恒等写像:N->(N,^)" );
+  CERR( "- 固定の元との2項bit演算:N->(N,+)" );
+  CERR( "- 二進法表記:N->(N^{oplus N},+)" );
+  CERR( "- 二進法の桁和:N->(N,+)" );
+  CERR( "- 二進法表記と加法的準同型の合成:N->(Z,+)" );
+  CERR( "- 二進法表記と乗法的準同型の合成:N->(Z,*)" );
+  CERR( "- ２つのbit関数f,g:N->(M,*)の各点積fg:N->(M,*)" );
+  CERR( "- ２つのbit関数f,g:N->(M,*)の直積の積f*g:N^2->(M,*)" );
+  CERR( "- (M,*)が群である場合のbit関数f:N->(M,*)と逆元の合成" );
+  CERR( "などがbit準同型です。" );
+  ASK_NUMBER(
+	     "(Z,+)へのbit準同型" ,
+	     "(Z,*)へのbit準同型の線形和"
+	     );
+  if( num == num_temp++ ){
+    CERR( "ノード数nの根付き木上の関数tと引数2のbit演算otimesに対し、" );
+    CERR( "多引数化otimes:N^n->Nとbit準同型f:N->(Z,+)の合成に" );
+    CERR( "tを代入した値をf(t)と略記します。" );
+    CERR( "" );
+    CALL_AC( FunctionOnTree );
+    CERR( "" );
+    CALL_AC( ExplicitExpressionBitFunctionOnTree );
+  } else if( num == num_temp++ ){
+    CERR( "N^nの部分集合Sとbit準同型f:N^n->(Z,*)に対し、" );
+    CERR( "Sの要素aをわたるf(a)の総和は、aの各成分をbitに分解して" );
+    CERR( "f(a)を積で表示し、その途中までの積の総和を管理する" );
+    CERR( "桁DPを検討しましょう。" );
+  }
 }
 
 AC( ExplicitExpressionUnaryOther )
@@ -329,25 +377,31 @@ AC( ExplicitExpressionFunctionOnPermutation )
 
 AC( ExplicitExpressionFunctionOnTree )
 {
+  CERR( "木を受け取る関数fが与えられているとします。" );
+  CERR( "" );
   CALL_AC( FunctionOnTree );
   CERR( "" );
   CERR( "部分木に関する良い遷移関係を探し、（全方位）木DP" );
   CERR( "\\Mathematics\\Geometry\\Graph\\DepthFirstSearch\\Tree" );
   CERR( "を検討しましょう。" );
-  ASK_YES_NO( "fがbit演算である問題ですか？" );
+  ASK_YES_NO( "fがbit演算の多引数化である問題ですか？" );
   if( reply == "y" ){
-    CERR( "「Tの各ノードvを根とする部分木でのj桁目のbit状態sの個数dp[v][s][j]」" );
-    CERR( "を管理するv,s,jに関する動的計画法を検討しましょう。" );
-    CERR( "これはTが全順序集合でbit演算が1種類なら" );
-    CERR( "「第i成分で切った部分列でのj桁目のbitがs（=0,1）である個数dp[i][s][j]」" );
-    CERR( "を管理することに他なりません。" );
+    CALL_AC( ExplicitExpressionBitFunctionOnTree );
   }
+}
+
+AC( ExplicitExpressionBitFunctionOnTree )
+{
+  CERR( "「Tの各ノードvを根とする部分木でのj桁目のbit状態sの個数dp[v][s][j]」" );
+  CERR( "を管理するv,s,jに関する動的計画法を検討しましょう。" );
+  CERR( "" );
+  CERR( "これはTが{0,1,...,N-1}に通常の順序の逆順序を入れたものである場合は" );
+  CERR( "「第i成分で切った部分列でのj桁目のbitがs（=0,1）である個数dp[i][s][j]」" );
+  CERR( "を管理することに他なりません。" );
 }
 
 AC( FunctionOnTree )
 {
-  CERR( "木を受け取る関数fが与えられているとします。" );
-  CERR( "" );
   CERR( "木Tの分割Pに対し、Pの各成分pを渡るf(p)の総和をF(P)と置きます。" );
   CERR( "Tに根を固定し、深さ優先探索でTの頂点にラベルづけをします。" );
   CERR( "" );
@@ -586,6 +640,8 @@ AC( MaximisationArrayLength )
 
 AC( MaximisationFunctionOnTree )
 {
+  CERR( "木を受け取る関数fが与えられているとします。" );
+  CERR( "" );
   CALL_AC( FunctionOnTree );
   CERR( "「第i頂点までで切った時のF(P)たちの最大値dp[i]」" );
   CERR( "を管理するiに関する動的計画法（O(N^2×fの計算量)）" );
@@ -888,6 +944,8 @@ AC( CountingMatchingSubString )
 
 AC( CountingPartitionOfTree )
 {
+  CERR( "木を受け取る関数fが与えられているとします。" );
+  CERR( "" );
   CALL_AC( FunctionOnTree );
   CERR( "" );
   CERR( "F(P)が固定された時のPの数え上げ問題は" );
