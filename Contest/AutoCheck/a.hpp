@@ -16,6 +16,7 @@ AC( ExplicitExpressionArraySum );
 AC( ExplicitExpressionArrayCombinatorial );
 AC( ExplicitExpressionFunctionOnPermutation );
 AC( ExplicitExpressionFunctionOnTree );
+AC( ExplicitExpressionBitFunctionOnTree );
 AC( FunctionOnTree );
 AC( ExplicitExpressionFunctionOnNonTreeGraph );
 AC( ExplicitExpressionOrder );
