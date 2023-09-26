@@ -2,7 +2,7 @@
 
 #pragma once
 
-#define DEFINITION_BODY_OF_PARTIAL_SPECIALISATION_OF_POLYNOMIAL( TYPE , ARG , RHS ) \
+#define DEFINITION_BODY_OF_PARTIAL_SPECIALISATION_OF_MULTIPLICATION_OF_POLYNOMIAL_PROTH_MOD( TYPE , ARG , RHS ) \
   template <>								\
   Polynomial<TYPE>& Polynomial<TYPE>::operator*=( ARG f )		\
   {									\
@@ -23,9 +23,11 @@
   }									\
   
 
-#define DEFINITION_OF_PARTIAL_SPECIALISATION_OF_POLYNOMIAL( TYPE )	\
-  DEFINITION_BODY_OF_PARTIAL_SPECIALISATION_OF_POLYNOMIAL( TYPE , const Polynomial<TYPE>& , this == &f ? this_copy : f ); \
-  DEFINITION_BODY_OF_PARTIAL_SPECIALISATION_OF_POLYNOMIAL( TYPE , Polynomial<TYPE>&& , move( f ) ); \
+#define DEFINITION_OF_PARTIAL_SPECIALISATION_OF_MULTIPLICATION_OF_POLYNOMIAL_PROTH_MOD( MOD )	\
+  DEFINITION_BODY_OF_PARTIAL_SPECIALISATION_OF_MULTIPLICATION_OF_POLYNOMIAL_PROTH_MOD( Mod<MOD> , const Polynomial<Mod<MOD> >& , this == &f ? this_copy : f ); \
+  DEFINITION_BODY_OF_PARTIAL_SPECIALISATION_OF_MULTIPLICATION_OF_POLYNOMIAL_PROTH_MOD( Mod<MOD> , Polynomial<Mod<MOD> >&& , move( f ) ); \
+  DEFINITION_BODY_OF_PARTIAL_SPECIALISATION_OF_MULTIPLICATION_OF_POLYNOMIAL_PROTH_MOD( Montgomery<MOD> , const Polynomial<Montgomery<MOD> >& , this == &f ? this_copy : f ); \
+  DEFINITION_BODY_OF_PARTIAL_SPECIALISATION_OF_MULTIPLICATION_OF_POLYNOMIAL_PROTH_MOD( Montgomery<MOD> , Polynomial<Montgomery<MOD> >&& , move( f ) ); \
 
 #define RETURN_ZERO_FOR_MULTIPLICATION_FOR_TRUNCATED_POLYNOMIAL_IF( CONDITION )	\
   if( CONDITION ){							\
@@ -405,4 +407,97 @@
 									\
   }									\
 									\
+
+#define DEFINITION_BODY_OF_PARTIAL_SPECIALISATION_OF_MULTIPLICATION_OF_POLYNOMIAL_ARBITRARY_MOD( TYPE , ARG ) \
+  template <>								\
+  Polynomial<TYPE>& Polynomial<TYPE>::operator*=( ARG f )		\
+  {									\
+									\
+    if( m_size != 0 ){							\
+									\
+      if( f.m_size == 0 ){						\
+									\
+	m_f.clear();							\
+	m_size = 0;							\
+									\
+      } else {								\
+									\
+	constexpr INT_TYPE_FOR_MOD P0 = 167772161;			\
+	constexpr INT_TYPE_FOR_MOD P1 = 469762049;			\
+	constexpr INT_TYPE_FOR_MOD P2 = 998244353;			\
+	using M0 = Montgomery<P0>;					\
+	using M1 = Montgomery<P1>;					\
+	using M2 = Montgomery<P2>;					\
+	vector<M0> v0{};						\
+	vector<M1> v1{};						\
+	vector<M2> v2{};						\
+	v0.reserve( m_size );						\
+	v1.reserve( m_size );						\
+	v1.reserve( m_size );						\
+									\
+	for( uint d = 0 ; d < m_size ; d++ ){				\
+									\
+	  v0.push_back( m_f[d].Represent() );				\
+	  v1.push_back( m_f[d].Represent() );				\
+	  v2.push_back( m_f[d].Represent() );				\
+									\
+	}								\
+									\
+	vector<M0> w0{};						\
+	vector<M1> w1{};						\
+	vector<M2> w2{};						\
+	w0.reserve( f.m_size );						\
+	w1.reserve( f.m_size );						\
+	w1.reserve( f.m_size );						\
+									\
+	for( uint d = 0 ; d < f.m_size ; d++ ){				\
+									\
+	  w0.push_back( f.m_f[d].Represent() );				\
+	  w1.push_back( f.m_f[d].Represent() );				\
+	  w2.push_back( f.m_f[d].Represent() );				\
+									\
+	}								\
+									\
+	m_size += f.m_size - 1;						\
+	TruncatedPolynomial<M0> this_copy0{ m_size , move( v0 ) };	\
+	TruncatedPolynomial<M1> this_copy1{ m_size , move( v1 ) };	\
+	TruncatedPolynomial<M2> this_copy2{ m_size , move( v2 ) };	\
+	TruncatedPolynomial<M0> f_copy0{ f.m_size , move( w0 ) };	\
+	TruncatedPolynomial<M1> f_copy1{ f.m_size , move( w1 ) };	\
+	TruncatedPolynomial<M2> f_copy2{ f.m_size , move( w2 ) };	\
+	this_copy0 *= f_copy0;						\
+	this_copy1 *= f_copy1;						\
+	this_copy2 *= f_copy2;						\
+	m_f.clear();							\
+	m_f.reserve( m_size );						\
+	constexpr TYPE P0_mod_M = TYPE( P0 );				\
+	constexpr TYPE P01_mod_M = TYPE( P0 * P1 );			\
+	constexpr M1 P0_mod_P1_inv = M1::Derepresent( 104391568 );	\
+	constexpr M2 P0_mod_P2 = M2::Derepresent( P0 );	\
+	constexpr M2 P01_mod_P2_inv = M2::Derepresent( 575867115 );	\
+									\
+	for( uint d = 0 ; d < m_size ; d++ ){				\
+									\
+	  const INT_TYPE_FOR_MOD c0 = this_copy0[d].Represent();	\
+	  const INT_TYPE_FOR_MOD c1 = ( ( this_copy1[d] -= c0 ) *= P0_mod_P1_inv ).Represent(); \
+	  const INT_TYPE_FOR_MOD c2 = ( ( this_copy2[d] -= P0_mod_P2 * c1 + c0 ) *= P01_mod_P2_inv ).Represent(); \
+	  m_f.push_back( P01_mod_M * c2 + P0_mod_M * c1 + c0 );		\
+									\
+	}								\
+									\
+	RemoveRedundantZero();						\
+									\
+      }									\
+									\
+    }									\
+									\
+    return *this;							\
+									\
+  }									\
+
+#define DEFINITION_OF_PARTIAL_SPECIALISATION_OF_MULTIPLICATION_OF_POLYNOMIAL_ARBITRARY_MOD( MOD ) \
+  DEFINITION_BODY_OF_PARTIAL_SPECIALISATION_OF_MULTIPLICATION_OF_POLYNOMIAL_ARBITRARY_MOD( Mod<MOD> , const Polynomial<Mod<MOD> >& ); \
+  DEFINITION_BODY_OF_PARTIAL_SPECIALISATION_OF_MULTIPLICATION_OF_POLYNOMIAL_ARBITRARY_MOD( Mod<MOD> , Polynomial<Mod<MOD> >&& ); \
+  DEFINITION_BODY_OF_PARTIAL_SPECIALISATION_OF_MULTIPLICATION_OF_POLYNOMIAL_ARBITRARY_MOD( Montgomery<MOD> , const Polynomial<Montgomery<MOD> >& ); \
+  DEFINITION_BODY_OF_PARTIAL_SPECIALISATION_OF_MULTIPLICATION_OF_POLYNOMIAL_ARBITRARY_MOD( Montgomery<MOD> , Polynomial<Montgomery<MOD> >&& ); \
 
