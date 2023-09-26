@@ -7,12 +7,14 @@
 #include "../../Arithmetic/Power/Constexpr/a_Body.hpp"
 
 
+// 998244353 = 2^{23} * 7 * 17 + 1
 // 167772161 = 2^{25} * 5 + 1
 // 469762049 = 2^{26} * 7 + 1
-// 998244353 = 2^{23} * 7 * 17 + 1
-PARTIAL_SPECIALISATION_FOR_FFT( 167772161 , 26 , 4 , 2 , 83886081 );
-PARTIAL_SPECIALISATION_FOR_FFT( 469762049 , 27 , 4 , 13 , 144542169 );
+// 754974721 = 2^{24} * 3^2 * 5 + 1
 PARTIAL_SPECIALISATION_FOR_FFT( 998244353 , 24 , 4 , 31 , 128805723 );
+PARTIAL_SPECIALISATION_FOR_FFT( 167772161 , 26 , 4 , 17 , 29606852 );
+PARTIAL_SPECIALISATION_FOR_FFT( 469762049 , 27 , 4 , 30 , 15658735 );
+PARTIAL_SPECIALISATION_FOR_FFT( 754974721 , 25 , 4 , 362 , 415027540 );
 
 template <typename T> inline void FFT( vector<T>& f , const uint& N_input_start , const uint& N_input_lim , const uint& two_power , const uint& exponent ) { CooleyTukey<T>( f , N_input_start , N_input_lim , 0 , two_power , two_power , exponent , PrimitiveRootOfTwoForFFT<T>() ); }
 template <typename T> inline void FFT( vector<T>& f , const uint& N_input_start , const uint& N_input_lim , const uint& N_output_start , const uint& N_output_lim , const uint& two_power , const uint& exponent ) { CooleyTukey<T>( f , N_input_start , N_input_lim , N_output_start , N_output_lim , two_power , exponent , PrimitiveRootOfTwoForFFT<T>() ); }
