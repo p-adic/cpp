@@ -1,5 +1,10 @@
 // c:/Users/user/Documents/Programming/Mathematics/Polynomial/a.hpp
 
+// 非常によくバグるので、更新したら必ずverifyすること！
+// verify:
+// https://yukicoder.me/submissions/892588
+// https://yukicoder.me/submissions/916072
+
 #pragma once
 #include <vector>
 

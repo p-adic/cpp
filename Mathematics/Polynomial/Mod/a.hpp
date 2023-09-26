@@ -21,6 +21,7 @@ class TruncatedPolynomial :
   friend TruncatedPolynomial<T> TruncatedIntegral<T>( const TruncatedPolynomial<T>& f , const uint& N_output_start );
   
 private:
+  // mod X^{m_N}‚ÅŒvZ‚·‚éB
   // m_N == 0‚Å‚à“®‚­‚ªA‚»‚Ìê‡‚Ím_size == 1‚Ì‚Ém_size <= m_N‚ª¬‚è—§‚½‚È‚­‚È‚é‚±‚Æ‚É’ˆÓ
   uint m_N;
   
