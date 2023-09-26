@@ -3,7 +3,7 @@
 #pragma once
 #include "a.hpp"
 
-#include "TruncatedPolynomial/a_Body.hpp"
+#include "Mod/a_Body.hpp"
 
 template <typename T> inline Polynomial<T>::Polynomial() : m_f() , m_size( 0 ) {}
 template <typename T> inline Polynomial<T>::Polynomial( const T& t ) : Polynomial() { if( t != const_zero() ){ operator[]( 0 ) = t; } }
