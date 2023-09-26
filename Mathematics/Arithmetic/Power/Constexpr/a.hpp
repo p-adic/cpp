@@ -2,11 +2,18 @@
 
 #pragma once
 
-template <typename T , uint exponent_lim>
+// verify: https://yukicoder.me/submissions/915732
+
+template <typename T , int exponent_lim>
 class Power_constexpr
 {
-public:
+private:
   T m_val[exponent_lim];
+
+public:
   inline constexpr Power_constexpr( const T& t , const T& init = T( 1 ) );
+
+  inline constexpr const T& operator[]( const int& i ) const;
+  inline constexpr const T ( &Get() const )[exponent_lim];
   
 };
