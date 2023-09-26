@@ -1,5 +1,6 @@
 // ../Arithmetic/Mod/compress.txt が必要。
-// PW_CEは最新版（羃を前計算）ではなく簡易版（2羃羃を前計算）を使用。（更新時に注意）
+// PW_CEはPower_constexpr最新版（羃を前計算）ではなく
+// PowerPower_constexpr簡易版（2羃羃を前計算）を使用。（更新時に注意）
 
 // 非常によくバグるので、更新したら必ずverifyすること！
 // verify:
