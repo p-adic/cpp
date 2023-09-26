@@ -2,8 +2,11 @@
 
 #pragma once
 #include "a.hpp"
+
+// ññîˆÇ…include
+// #include "../a_Body.hpp"
 #include "../Constant/a_Body.hpp"
-#include "../Function/Residue/a_Body.hpp"
+#include "../../Function/Residue/a_Body.hpp"
 // 0èúéZópÇÃó·äO
 #include "../../../../../Error/IllegalInput/a_Body.hpp"
 
@@ -81,10 +84,13 @@ template <INT_TYPE_FOR_MOD M> inline constexpr Montgomery<M> Half( const Montgom
 
 template <INT_TYPE_FOR_MOD M> inline constexpr Montgomery<M> Inverse( const Montgomery<M>& n ) { return move( Montgomery<M>( n ).Invert() ); }
 
-template <INT_TYPE_FOR_MOD M , typename T> inline constexpr Montgomery<M> Power( const Montgomery<M>& n , const T& exponent ) { return move( Montgomery<M>( n ).Power( T( exponent ) ) ); }
+template <INT_TYPE_FOR_MOD M , typename T> inline constexpr Montgomery<M> Power( Montgomery<M> n , T exponent ) { return move( n.Power( exponent ) ); }
 
 template <INT_TYPE_FOR_MOD M> inline constexpr void swap( Montgomery<M>& n0 , Montgomery<M>& n1 ) noexcept { n0.swap( n1 ); }
 
 template <INT_TYPE_FOR_MOD M> inline string to_string( const Montgomery<M>& n ) noexcept { return to_string( n.Represent() ) + " + MZ"; }
 
 template<INT_TYPE_FOR_MOD M , class Traits> inline basic_ostream<char,Traits>& operator<<( basic_ostream<char,Traits>& os , const Montgomery<M>& n ) { return os << n.Represent(); }
+
+#include "../a_Body.hpp"
+

@@ -3,12 +3,14 @@
 #pragma once
 
 template <INT_TYPE_FOR_MOD M> class Mod;
+template <INT_TYPE_FOR_MOD M> class Montgomery;
 
 template <INT_TYPE_FOR_MOD M>
 class ConstantsForMod
 {
 
   friend class Mod<M>;
+  friend class Montgomery<M>;
   
 private:
   ConstantsForMod() = delete;

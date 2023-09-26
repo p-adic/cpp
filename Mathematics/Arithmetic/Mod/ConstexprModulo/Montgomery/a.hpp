@@ -11,6 +11,8 @@ class Montgomery :
   public Mod<M>
 {
 
+  friend class Mod<M>;
+  
 public:
   inline constexpr Montgomery() noexcept;
   inline constexpr Montgomery( const Montgomery<M>& n ) noexcept;
