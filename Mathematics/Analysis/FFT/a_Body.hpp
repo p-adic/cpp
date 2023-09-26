@@ -4,7 +4,7 @@
 #include "a.hpp"
 
 #include "../../Arithmetic/Mod/ConstexprModulo/Montgomery/a_Body.hpp"
-#include "../../Arithmetic/Power/Constexpr/a_Body.hpp"
+#include "../../Arithmetic/Power/Constexpr/PowerPower/a_Body.hpp"
 
 
 // 998244353 = 2^{23} * 7 * 17 + 1
