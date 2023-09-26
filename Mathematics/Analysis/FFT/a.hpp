@@ -1,10 +1,12 @@
 // c:/Users/user/Documents/Programming/Mathematics/Analysis/FFT/a.hpp
 
 #pragma once
+#include "a_Macro.hpp"
+
 #include <vector>
 
-template <typename T> inline constexpr const uint LimitOfPowerForFFT{};
-template <typename T> inline constexpr const uint BorderForFFT{};
+template <typename T> inline constexpr const uint LimitOfPowerForFFT;
+template <typename T> inline constexpr const uint BorderForFFT;
 
 template <typename T> inline const T ( &PrimitiveRootOfTwoForFFT() noexcept )[LimitOfPowerForFFT<T>];
 template <typename T> inline const T ( &InversePrimitiveRootOfTwoForFFT() noexcept )[LimitOfPowerForFFT<T>];

@@ -3,99 +3,16 @@
 #pragma once
 #include "a.hpp"
 
-#include "../../Arithmetic/Mod/a_Body.hpp"
+#include "../../Arithmetic/Mod/ConstexprModulo/Montgomery/a_Body.hpp"
+#include "../../Arithmetic/Power/Constexpr/a_Body.hpp"
 
-// 以下は"../../Arithmetic/Mod/a_Alias.hpp"内で
-// using INT_TYPE_FOR_MOD = long long int;
-// を選択している場合にのみ有効。
-template <> inline constexpr const uint LimitOfPowerForFFT<Mod<998244353> > = 24;
 
-// template <> inline constexpr const uint BorderForFFT<Mod<998244353> > = 0; // 1.960 -- 2.014
-// template <> inline constexpr const uint BorderForFFT<Mod<998244353> > = 1; // 1.845 -- 1.994
-// template <> inline constexpr const uint BorderForFFT<Mod<998244353> > = 2; // 1.802 -- 1.809
-// template <> inline constexpr const uint BorderForFFT<Mod<998244353> > = 3; // 1.699 -- 1.746
-
-// ２つのアルゴリズムの最適分岐
-template <> inline constexpr const uint BorderForFFT<Mod<998244353> > = 4; // 1.694 -- 1.744
-
-// template <> inline constexpr const uint BorderForFFT<Mod<998244353> > = 5; // 1.805 -- 1.920
-// template <> inline constexpr const uint BorderForFFT<Mod<998244353> > = 6; // 2.237 -- 2.249
-// template <> inline constexpr const uint BorderForFFT<Mod<998244353> > = 7; // 3.195 -- 3.214
-// template <> inline constexpr const uint BorderForFFT<Mod<998244353> > = 8; // 5.249 -- 5.518
-
-template <> inline const Mod<998244353> ( &PrimitiveRootOfTwoForFFT() noexcept )[LimitOfPowerForFFT<Mod<998244353> >]
-{
-
-  static const Mod<998244353> PRT[ LimitOfPowerForFFT<Mod<998244353> > ] =
-    {
-      
-      Mod<998244353>( 1 ) ,
-      Mod<998244353>( 998244352 ) ,
-      Mod<998244353>( 911660635 ) ,
-      Mod<998244353>( 625715529 ) ,
-      Mod<998244353>( 373294451 ) ,
-      Mod<998244353>( 827987769 ) ,
-      Mod<998244353>( 280333251 ) ,
-      Mod<998244353>( 581015842 ) ,
-      Mod<998244353>( 628092333 ) ,
-      Mod<998244353>( 300892551 ) ,
-      Mod<998244353>( 586046298 ) ,
-      Mod<998244353>( 615001099 ) ,
-      Mod<998244353>( 318017948 ) ,
-      Mod<998244353>( 64341522 ) ,
-      Mod<998244353>( 106061068 ) ,
-      Mod<998244353>( 304605202 ) ,
-      Mod<998244353>( 631920086 ) ,
-      Mod<998244353>( 857779016 ) ,
-      Mod<998244353>( 841431251 ) ,
-      Mod<998244353>( 805775211 ) ,
-      Mod<998244353>( 390359979 ) ,
-      Mod<998244353>( 923521 ) ,
-      Mod<998244353>( 961 ) ,
-      Mod<998244353>( 31 )
-
-    };
-
-  return PRT;
-
-}
-
-template <> inline const Mod<998244353> ( &InversePrimitiveRootOfTwoForFFT() noexcept )[LimitOfPowerForFFT<Mod<998244353> >]
-{
-
-  static const Mod<998244353> PRT[ LimitOfPowerForFFT<Mod<998244353> > ] =
-    {
-      
-      Mod<998244353>( 1 ) ,
-      Mod<998244353>( 998244352 ) ,
-      Mod<998244353>( 86583718 ) ,
-      Mod<998244353>( 488723995 ) ,
-      Mod<998244353>( 369330050 ) ,
-      Mod<998244353>( 543653592 ) ,
-      Mod<998244353>( 382946991 ) ,
-      Mod<998244353>( 844956623 ) ,
-      Mod<998244353>( 91420391 ) ,
-      Mod<998244353>( 433414612 ) ,
-      Mod<998244353>( 288894979 ) ,
-      Mod<998244353>( 260490556 ) ,
-      Mod<998244353>( 857007890 ) ,
-      Mod<998244353>( 736054570 ) ,
-      Mod<998244353>( 474649464 ) ,
-      Mod<998244353>( 948509906 ) ,
-      Mod<998244353>( 114942468 ) ,
-      Mod<998244353>( 962405921 ) ,
-      Mod<998244353>( 667573957 ) ,
-      Mod<998244353>( 46809892 ) ,
-      Mod<998244353>( 304321983 ) ,
-      Mod<998244353>( 30429817 ) ,
-      Mod<998244353>( 293967900 ) ,
-      Mod<998244353>( 128805723 )
-
-    };
-
-  return PRT;
-
-}
+// 167772161 = 2^{25} * 5 + 1
+// 469762049 = 2^{26} * 7 + 1
+// 998244353 = 2^{23} * 7 * 17 + 1
+PARTIAL_SPECIALISATION_FOR_FFT( 167772161 , 26 , 4 , 2 , 83886081 );
+PARTIAL_SPECIALISATION_FOR_FFT( 469762049 , 27 , 4 , 13 , 144542169 );
+PARTIAL_SPECIALISATION_FOR_FFT( 998244353 , 24 , 4 , 31 , 128805723 );
 
 template <typename T> inline void FFT( vector<T>& f , const uint& N_input_start , const uint& N_input_lim , const uint& two_power , const uint& exponent ) { CooleyTukey<T>( f , N_input_start , N_input_lim , 0 , two_power , two_power , exponent , PrimitiveRootOfTwoForFFT<T>() ); }
 template <typename T> inline void FFT( vector<T>& f , const uint& N_input_start , const uint& N_input_lim , const uint& N_output_start , const uint& N_output_lim , const uint& two_power , const uint& exponent ) { CooleyTukey<T>( f , N_input_start , N_input_lim , N_output_start , N_output_lim , two_power , exponent , PrimitiveRootOfTwoForFFT<T>() ); }
@@ -208,8 +125,8 @@ void CooleyTukey( vector<T>& f , const uint& N_input_start , const uint& N_input
       while( j < j_lim ){
 
 	j_butterfly = j + two_power_curr;
-	T& f_j = f[j];
-	T& f_j_butterfly = f[j_butterfly];
+	T& f_j = f[j + N_input_start];
+	T& f_j_butterfly = f[j_butterfly + N_input_start];
 	diff = f_j - f_j_butterfly;
 	f_j += f_j_butterfly;
 	f_j_butterfly = zeta * diff;
