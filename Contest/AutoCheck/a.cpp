@@ -3,7 +3,7 @@
 #include "../Header.hpp"
 #include "a_Body.hpp"
 
-void AutoCheck( bool& auto_checked )
+void AutoCheck( int& auto_checked )
 {
   int num = 0;
   int num_temp = 0;
@@ -13,15 +13,21 @@ void AutoCheck( bool& auto_checked )
   ASK_NUMBER(
 	     "提出用ファイルを実行する。" ,
 	     "提出済みファイルをデバッグする。" ,
-	     "ライブラリーを探索する。"
+	     "ライブラリーを探索する。" ,
+	     "愚直解で実験する。" ,
+	     "愚直解と提出用ファイルを比較する。"
 	     );
+  auto_checked = num;
   if( num == num_temp++ ){
-    auto_checked = false;
     CERR( "提出用ファイルを実行します。" );
   } else if( num == num_temp++ ){
     CALL_AC( DebugHint );
   } else if( num == num_temp++ ){
     CALL_AC( LibrarySearch );
+  } else if( num == num_temp++ ){
+    CERR( "愚直解で実験します。" );
+  } else if( num == num_temp++ ){
+    CERR( "愚直解と提出用ファイルを比較します。" );
   }
   CERR( "" );
 }
@@ -49,16 +55,19 @@ AC( DebugHint )
     CERR( "- 誤差評価をし忘れていませんか？" );
     CERR( "  - 整数型へのキャスト時の切り捨てが適切かを確認しましょう。" );
     CERR( "  - 二分探索等で厳密値を扱う時は代数方程式を解いて誤差を消しましょう。" );
-    CERR( "- []やsortの範囲を間違えてメモリが破壊されていませんか？" );
     CERR( "- 番兵の設定忘れか設定ミスをしていませんか？" );
     CERR( "- マルチテストケースで配列にstaticをつけて値が持ち越されていませんか？" );
     CERR( "- cLay使用畤にsetmod以前に10^9+7より大きい値を代入していませんか？" );
     CERR( "  #define MD 998244353 などを用いましょう。" );
     CERR( "" );
     CERR( "原因に心当たりがない場合はランダムテストを検討しましょう。" );
-    CERR( "ランダムテストで引っ掛らない場合は大きな入力値でのみ起こるバグ" );
-    CERR( "- 型の指定ミス" );
-    CERR( "- 64bit型のオーバーフロー" );
+    CERR( "ランダムテストで引っ掛らない場合は" );
+    CERR( "- 大きな入力値でのみ起こるバグ" );
+    CERR( "  - 型の指定ミス" );
+    CERR( "  - 64bit型のオーバーフロー" );
+    CERR( "- メモリの破壊によって起こる環境依存のバグ" );
+    CERR( "  - []やsortの範囲指定ミス" );
+    CERR( "  - 二重配列で[i][j]と[j][i]の書き間違い" );
     CERR( "を疑いましょう。" );
   } else if( num == num_temp++ ){
     CERR( "- 制約を間違えてassertしていませんか？" );
@@ -664,9 +673,7 @@ AC( MinimisationMovingCost )
 	     "多点最小コスト移動（スタンプラリー）問題"
 	     );
   if( num == num_temp++ ){
-    CERR( "特定の経路を進むと思い込んで考察漏れをする可能性があります。" );
-    CERR( "なるべく全ての経路を許した探索アルゴリズムを適用した方が無難です。" );
-    CERR( "- 特定の２点のみを考える場合、幅優先探索やダイクストラ法" );
+    CERR( "- 特定の２点のみを考える場合、幅優先探索や01幅優先探索やダイクストラ法" );
     CERR( "  \\Mathematics\\Geometry\\Graph\\BreadthFirst" );
     CERR( "  \\Mathematics\\Geometry\\Graph\\Dijkstra" );
     CERR( "- 全ての２点の組み合わせを考える場合、" );
@@ -680,6 +687,11 @@ AC( MinimisationMovingCost )
     CERR( "" );
     CERR( "点の座標と最小化すべきコスト以外の数値変化がある場合、最小コスト移動における" );
     CERR( "その数値の動く範囲を絞って点の座標との組を頂点とするグラフを検討しましょう。" );
+    CERR( "" );
+    CERR( "辺集合Eが大き過ぎる場合、十分小さい部分集合E'であって条件" );
+    CERR( "「任意の経路pに対し、E'に属す辺のみを通るある経路p'が存在して、" );
+    CERR( "  pのコスト>=p'コストである」" );
+    CERR( " を満たすものを探すことを検討しましょう。" );
   } else if( num == num_temp++ ){
     CERR( "HeldKarpや、移動方法を分類するパラメータの全探策などを検討しましょう。" );
   }
