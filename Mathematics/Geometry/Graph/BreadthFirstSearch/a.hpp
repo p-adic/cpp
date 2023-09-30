@@ -1,5 +1,7 @@
 // c:/Users/user/Documents/Programming/Mathematics/Geometry/Graph/BreadthFirstSearch/a.hpp
 
+// verify: https://yukicoder.me/submissions/915732
+
 #pragma once
 #include "a_Macro.hpp"
 

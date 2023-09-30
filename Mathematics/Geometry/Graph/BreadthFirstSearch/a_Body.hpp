@@ -6,10 +6,10 @@
 DEFINITION_OF_FIRST_SEARCH( Breadth , push_back );
 
 template <int V_max,list<int> E(const int&)>
-void SetDepth_Body( BreadthFirstSearch<V_max,E>& bfs , const int& V , const int& init , int ( &depth )[V_max] )
+void SetDepth_Body( BreadthFirstSearch<V_max,E>& bfs , const int& V , int ( &depth )[V_max] )
 {
 
-  for( int i = 1 ; i < V ; i++ ){
+  for( int i = 0 ; i < V ; i++ ){
 
     depth[i] = -1;
 
@@ -33,7 +33,7 @@ void SetDepth( const int& V , const int& init , int ( &depth )[V_max] )
 {
 
   BreadthFirstSearch<V_max,E> bfs{ V , init };
-  SetDepth_Body( bfs , V , init , depth );
+  SetDepth_Body( bfs , V , depth );
   return;
   
 }
@@ -43,7 +43,7 @@ void SetDepth( BreadthFirstSearch<V_max,E>& bfs , const int& V , const int& init
 {
 
   bfs.Reset( init );
-  SetDepth_Body( bfs , V , init , depth );
+  SetDepth_Body( bfs , V , depth );
   return;
 
 }

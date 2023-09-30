@@ -45,7 +45,6 @@
   {									\
 									\
   public:								\
-									\
     template<typename... Args> inline BREADTH ## FirstSearch( const Args&... args ); \
 									\
   private:								\
@@ -53,7 +52,7 @@
 									\
   };									\
 									\
-  template <int V_max,list<int> E(const int&)> void BREADTH ## FirstConnectedComponentSearch( const int& V , int ( &vertex )[V_max] , int& count ); \
+  template <int V_max,list<int> E(const int&)> void BREADTH ## FirstConnectedComponentSearch( const int& V , int ( &cc_numx )[V_max] , int& count ); \
 
 #define DEFINITION_OF_FIRST_SEARCH( BREADTH , PUSH )			\
   template <int V_max> inline BREADTH ## FirstSearch_Body<V_max>::BREADTH ## FirstSearch_Body( const int& V ) : m_V( V ) , m_init() , m_next() , m_found() , m_prev() { assert( m_V <= V_max ); for( int i = 0 ; i < m_V ; i++ ){ m_prev[i] = -1; } } \
@@ -85,7 +84,7 @@
     while( ! edge.empty() ){						\
 									\
       const int& i = edge.front();					\
-      bool& found_i = found( i );					\
+      bool& found_i = m_found[i];					\
 									\
       if( ! found_i ){							\
 									\
@@ -103,9 +102,9 @@
 									\
   }									\
 									\
-  template <int V_max,list<int> E(const int&)> inline list <int> BREADTH ## FirstSearch<V_max,E>::e( const int& t ) { return E( t ); } \
+  template <int V_max,list<int> E(const int&)> inline list<int> BREADTH ## FirstSearch<V_max,E>::e( const int& t ) { return E( t ); } \
 									\
-  template <int V_max,list<int> E(const int&)> void BREADTH ## FirstConnectedComponentSearch( const int& V , int ( &vertex )[V_max] , int& count ) \
+  template <int V_max,list<int> E(const int&)> void BREADTH ## FirstConnectedComponentSearch( const int& V , int ( &cc_num )[V_max] , int& count ) \
   {									\
 									\
     BREADTH ## FirstSearch<V_max,E> bfs{ V };				\
@@ -113,20 +112,20 @@
 									\
     for( int i = 0 ; i < V ; i++ ){					\
 									\
-      vertex[i] = -1;							\
+      cc_num[i] = -1;							\
 									\
     }									\
 									\
     for( int i = 0 ; i < V ; i++ ){					\
 									\
-      if( vertex[i] == -1 ){						\
+      if( cc_num[i] == -1 ){						\
 									\
 	bfs.Shift( i );							\
 	int j = bfs.Next();						\
 									\
-	while( j != -1 ? vertex[j] == -1 : false ){			\
+	while( j != -1 ? cc_num[j] == -1 : false ){			\
 									\
-	  vertex[j] = count;						\
+	  cc_num[j] = count;						\
 	  j = bfs.Next();						\
 									\
 	}								\
