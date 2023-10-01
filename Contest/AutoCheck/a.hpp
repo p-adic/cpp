@@ -3,7 +3,7 @@
 #pragma once
 #include "a_Macro.hpp"
 
-void AutoCheck( int& auto_checked );
+void AutoCheck( int& exec_mode );
 AC( DebugHint );
 AC( LibrarySearch );
 AC( ExplicitExpression );

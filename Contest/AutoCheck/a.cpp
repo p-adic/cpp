@@ -3,7 +3,7 @@
 #include "../Header.hpp"
 #include "a_Body.hpp"
 
-void AutoCheck( int& auto_checked )
+void AutoCheck( int& exec_mode )
 {
   int num = 0;
   int num_temp = 0;
@@ -15,9 +15,10 @@ void AutoCheck( int& auto_checked )
 	     "提出済みファイルをデバッグする。" ,
 	     "ライブラリーを探索する。" ,
 	     "愚直解で実験する。" ,
-	     "愚直解と提出用ファイルを比較する。"
+	     "愚直解と提出用ファイルを入力の小さいテストケースで比較する。" ,
+	     "愚直解と提出用ファイルをランダムテストで比較する。"
 	     );
-  auto_checked = num;
+  exec_mode = num;
   if( num == num_temp++ ){
     CERR( "提出用ファイルを実行します。" );
   } else if( num == num_temp++ ){
@@ -27,7 +28,9 @@ void AutoCheck( int& auto_checked )
   } else if( num == num_temp++ ){
     CERR( "愚直解で実験します。" );
   } else if( num == num_temp++ ){
-    CERR( "愚直解と提出用ファイルを比較します。" );
+    CERR( "愚直解と提出用ファイルを入力の小さいテストケースで比較します。" );
+  } else if( num == num_temp++ ){
+    CERR( "愚直解と提出用ファイルをランダムテストで比較します。" );
   }
   CERR( "" );
 }
