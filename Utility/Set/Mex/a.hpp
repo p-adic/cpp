@@ -22,4 +22,4 @@ public:
 };
 
 template <typename T , template <typename...> typename V , V<T> E(const T&)>
-const int& GrundyNumber( const T& t );
+const int& GrundyNumber( const T& t , const bool& reset = false );

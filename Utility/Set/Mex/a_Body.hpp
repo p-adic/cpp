@@ -10,10 +10,16 @@ inline void MexSet::insert( const int& i ) { assert( i >= 0 ); if( i < m_QuerySi
 inline const int& MexSet::Get() const noexcept { return m_mex; }
 
 template <typename T , template <typename...> typename V , V<T> E(const T&)>
-const int& GrundyNumber( const T& t )
+const int& GrundyNumber( const T& t , const bool& reset )
 {
 
   static map<T,int> g{};
+
+  if( reset ){
+
+    g.clear();
+
+  }
 
   if( g.count( t ) == 1 ){
 
@@ -26,7 +32,7 @@ const int& GrundyNumber( const T& t )
 
   for( auto itr = next.begin() , end = next.end() ; itr != end ; itr++ ){
 
-    mex.insert( *itr );
+    mex.insert( GrundyNumber( *itr ) );
 
   }
 
