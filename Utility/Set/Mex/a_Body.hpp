@@ -28,11 +28,11 @@ const int& GrundyNumber( const T& t , const bool& reset )
   }
 
   auto next = E( t );
-  MexSet mex{ next.size() };
+  MexSet mex{ int( next.size() ) };
 
   for( auto itr = next.begin() , end = next.end() ; itr != end ; itr++ ){
 
-    mex.insert( GrundyNumber( *itr ) );
+    mex.insert( GrundyNumber<T,V,E>( *itr ) );
 
   }
 
