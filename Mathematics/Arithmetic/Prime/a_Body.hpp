@@ -100,18 +100,18 @@ const INT& GetPrimeBounded( const INT& i )
 
 }
 
-template <typename INT>
-void SetPrimeFactorisation( const INT& n , vector<INT>& P , vector<INT>& exponent )
+template <typename INT1 , typename INT2 , typename INT3>
+void SetPrimeFactorisation( const INT1& n , vector<INT2>& P , vector<INT3>& exponent )
 {
 
-  INT n_copy = n;
-  INT p = 2;
+  INT1 n_copy = n;
+  INT2 p = 2;
 
   if( n_copy % p == 0 ){
 
     P.push_back( p );
     exponent.push_back( 1 );
-    INT& exponent_back = exponent.back();
+    INT3& exponent_back = exponent.back();
     n_copy /= p;
     
     while( n_copy % p == 0 ){
@@ -131,7 +131,7 @@ void SetPrimeFactorisation( const INT& n , vector<INT>& P , vector<INT>& exponen
 
       P.push_back( p );
       exponent.push_back( 1 );
-      INT& exponent_back = exponent.back();
+      INT3& exponent_back = exponent.back();
       n_copy /= p;
     
       while( n_copy % p == 0 ){
@@ -158,16 +158,16 @@ void SetPrimeFactorisation( const INT& n , vector<INT>& P , vector<INT>& exponen
   
 }
 
-template <typename INT , INT val_limit , int length_max>
-void SetPrimeFactorisation( const PrimeEnumeration<INT,val_limit,length_max>& prime , const INT& n , vector<INT>& P , vector<INT>& exponent )
+template <typename INT , INT val_limit , int length_max , typename INT1 , typename INT2 , typename INT3>
+void SetPrimeFactorisation( const PrimeEnumeration<INT,val_limit,length_max>& prime , const INT1& n , vector<INT2>& P , vector<INT3>& exponent )
 {
 
-  INT n_copy = n;
+  INT1 n_copy = n;
   int i = 0;
 
   while( i < prime.m_length ){
 
-    const INT& p = prime.m_val[i];
+    const INT2& p = prime[i];
 
     if( p * p > n_copy ){
 
@@ -179,7 +179,7 @@ void SetPrimeFactorisation( const PrimeEnumeration<INT,val_limit,length_max>& pr
 
       P.push_back( p );
       exponent.push_back( 1 );
-      INT& exponent_back = exponent.back();
+      INT3& exponent_back = exponent.back();
     
       while( ( n_copy /= p ) % p == 0 ){
 
@@ -204,20 +204,20 @@ void SetPrimeFactorisation( const PrimeEnumeration<INT,val_limit,length_max>& pr
 
 }
 
-template <typename INT>
-void SetPrimeFactorisation( const INT& n , vector<INT>& P , vector<INT>& exponent , vector<INT>& P_power )
+template <typename INT1 , typename INT2 , typename INT3 , typename INT4>
+void SetPrimeFactorisation( const INT1& n , vector<INT2>& P , vector<INT3>& exponent , vector<INT4>& P_power )
 {
 
-  INT n_copy = n;
-  INT p = 2;
+  INT1 n_copy = n;
+  INT2 p = 2;
 
   if( n_copy % p == 0 ){
 
     P.push_back( p );
     exponent.push_back( 1 );
     P_power.push_back( p );
-    INT& exponent_back = exponent.back();
-    INT& P_power_back = P_power.back();
+    INT3& exponent_back = exponent.back();
+    INT4& P_power_back = P_power.back();
     n_copy /= p;
     
     while( n_copy % p == 0 ){
@@ -239,8 +239,8 @@ void SetPrimeFactorisation( const INT& n , vector<INT>& P , vector<INT>& exponen
       P.push_back( p );
       exponent.push_back( 1 );
       P_power.push_back( p );
-      INT& exponent_back = exponent.back();
-      INT& P_power_back = P_power.back();
+      INT3& exponent_back = exponent.back();
+      INT4& P_power_back = P_power.back();
       n_copy /= p;
     
       while( n_copy % p == 0 ){
@@ -268,16 +268,16 @@ void SetPrimeFactorisation( const INT& n , vector<INT>& P , vector<INT>& exponen
 
 }
 
-template <typename INT , INT val_limit , int length_max>
-void SetPrimeFactorisation( const PrimeEnumeration<INT,val_limit,length_max>& prime  const INT& n , vector<INT>& P , vector<INT>& exponent , vector<INT>& P_power )
+template <typename INT , INT val_limit , int length_max , typename INT1 , typename INT2 , typename INT3 , typename INT4>
+void SetPrimeFactorisation( const PrimeEnumeration<INT,val_limit,length_max>& prime  const INT1& n , vector<INT2>& P , vector<INT3>& exponent , vector<INT4>& P_power )
 {
 
-  INT n_copy = n;
+  INT1 n_copy = n;
   int i = 0;
 
   while( i < prime.m_length ){
 
-    const INT& p = prime.m_val[i];
+    const INT2& p = prime[i];
 
     if( p * p > n_copy ){
 
@@ -290,8 +290,8 @@ void SetPrimeFactorisation( const PrimeEnumeration<INT,val_limit,length_max>& pr
       P.push_back( p );
       exponent.push_back( 1 );
       P_power.push_back( p );
-      INT& exponent_back = exponent.back();
-      INT& P_power_back = P_power.back();
+      INT3& exponent_back = exponent.back();
+      INT4& P_power_back = P_power.back();
       n_copy /= p;
     
       while( n_copy % p == 0 ){
@@ -320,18 +320,18 @@ void SetPrimeFactorisation( const PrimeEnumeration<INT,val_limit,length_max>& pr
 
 }
 
-template <typename INT , INT N>
-void SetPrimeFactorisationBounded( const INT& n , INT ( &P )[N] , INT ( &exponent )[N] )
+template <typename INT1 , typename INT2 , typename INT3 , int N>
+void SetPrimeFactorisationBounded( const INT1& n , INT2 ( &P )[N] , INT3 ( &exponent )[N] )
 {
 
-  INT n_copy = n;
-  INT p = 2;
-  INT L = 0;
+  INT1 n_copy = n;
+  INT2 p = 2;
+  int L = 0;
 
   if( n_copy % p == 0 ){
 
     P[L] = p;
-    INT& exponent_back = exponent[L];
+    INT3& exponent_back = exponent[L];
     exponent_back = 1;
     n_copy /= p;
     L++;
@@ -352,7 +352,7 @@ void SetPrimeFactorisationBounded( const INT& n , INT ( &P )[N] , INT ( &exponen
     if( n_copy % p == 0 ){
 
       P[L] = p;
-      INT& exponent_back = exponent[L];
+      INT3& exponent_back = exponent[L];
       exponent_back = 1;
       n_copy /= p;
       L++;
@@ -374,19 +374,19 @@ void SetPrimeFactorisationBounded( const INT& n , INT ( &P )[N] , INT ( &exponen
 
 }
 
-template <typename INT , INT N>
-void SetPrimeFactorisationBounded( const INT& n , INT ( &P )[N] , INT ( &exponent )[N] , INT ( &P_power )[N] )
+template <typename INT1 , typename INT2 , typename INT3 , typename INT4 , int N>
+void SetPrimeFactorisationBounded( const INT1& n , INT2 ( &P )[N] , INT3 ( &exponent )[N] , INT4 ( &P_power )[N] )
 {
   
-  INT n_copy = n;
-  INT p = 2;
-  INT L = 0;
+  INT1 n_copy = n;
+  INT2 p = 2;
+  int L = 0;
 
   if( n_copy % p == 0 ){
 
     P[L] = p;
-    INT& exponent_back = exponent[L];
-    INT& P_power_back = P_power[L];
+    INT3& exponent_back = exponent[L];
+    INT4& P_power_back = P_power[L];
     exponent_back = 1;
     P_power_back = p;
     n_copy /= p;
@@ -409,8 +409,8 @@ void SetPrimeFactorisationBounded( const INT& n , INT ( &P )[N] , INT ( &exponen
     if( n_copy % p == 0 ){
 
       P[L] = p;
-      INT& exponent_back = exponent[L];
-      INT& P_power_back = P_power[L];
+      INT3& exponent_back = exponent[L];
+      INT4& P_power_back = P_power[L];
       exponent_back = 1;
       P_power_back = p;
       n_copy /= p;

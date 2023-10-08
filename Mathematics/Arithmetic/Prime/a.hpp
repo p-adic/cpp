@@ -12,18 +12,18 @@ template <typename INT> const INT& GetPrime( const INT& i ) noexcept;
 template <typename INT , INT N> const INT& GetPrimeBounded( const INT& i );
 
 // 非負整数nの素因数をPに格納し、素因数の指数をexponentに格納する。
-template <typename INT> void SetPrimeFactorisation( const INT& n , vector<INT>& P , vector<INT>& exponent );
-// n < val_limitの2乗 の時のみサポート。
-template <typename INT , INT val_limit , int length_max> void SetPrimeFactorisation( const PrimeEnumeration<INT,val_limit,length_max>& prime , const INT& n , vector<INT>& P , vector<INT>& exponent );
+template <typename INT1 , typename INT2 , typename INT3> void SetPrimeFactorisation( const INT1& n , vector<INT2>& P , vector<INT3>& exponent );
+// sqrt( n )以下の最大の素数 < val_limit の時のみサポート。
+template <typename INT , INT val_limit , int length_max , typename INT1 , typename INT2 , typename INT3> void SetPrimeFactorisation( const PrimeEnumeration<INT,val_limit,length_max>& prime , const INT1& n , vector<INT2>& P , vector<INT3>& exponent );
 
 // 非負整数nの素因数をPに格納し、素因数の指数をexponentに格納し、素因数の指数乗をP_powerに格納する。
-template <typename INT> void SetPrimeFactorisation( const INT& n , vector<INT>& P , vector<INT>& exponent , vector<INT>& P_power );
-// n < val_limitの2乗 の時のみサポート。
-template <typename INT , INT val_limit , int length_max> void SetPrimeFactorisation( const PrimeEnumeration<INT,val_limit,length_max>& prime  const INT& n , vector<INT>& P , vector<INT>& exponent , vector<INT>& P_power );
+template <typename INT1 , typename INT2 , typename INT3 , typename INT4> void SetPrimeFactorisation( const INT1& n , vector<INT2>& P , vector<INT3>& exponent , vector<INT4>& P_power );
+// sqrt( n )以下の最大の素数 < val_limit の時のみサポート。
+template <typename INT , INT val_limit , int length_max , typename INT1 , typename INT2 , typename INT3> void SetPrimeFactorisation( const PrimeEnumeration<INT,val_limit,length_max>& prime  const INT1& n , vector<INT2>& P , vector<INT3>& exponent , vector<INT4>& P_power );
 
 // 素因数を高々N個しか持たない非負整数nの素因数をPに格納し、素因数の指数をexponentに格納する。
-template <typename INT , INT N> void SetPrimeFactorisationBounded( const INT& n , INT ( &P )[N] , INT ( &exponent )[N] );
+template <typename INT1 , typename INT2 , typename INT3 , int N> void SetPrimeFactorisationBounded( const INT1& n , INT2 ( &P )[N] , INT3 ( &exponent )[N] );
 // 素因数を高々N個しか持たない非負整数nの素因数をPに格納し、素因数の指数をexponentに格納し、素因数の指数乗をP_powerに格納する。
-template <typename INT , INT N> void SetPrimeFactorisationBounded( const INT& n , INT ( &P )[N] , INT ( &exponent )[N] , INT ( &P_power )[N] );
+template <typename INT1 , typename INT2 , typename INT3 , typename INT4 , int N> void SetPrimeFactorisationBounded( const INT1& n , INT2 ( &P )[N] , INT3 ( &exponent )[N] , INT4 ( &P_power )[N] );
 
-// GCDやLCMは../Mod/CRT/a_Body.hppで定義
+// GCDやLCMはDivisor/GCD/a_Body.hppで定義
