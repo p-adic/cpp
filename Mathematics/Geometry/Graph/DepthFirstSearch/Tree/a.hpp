@@ -49,21 +49,29 @@ public:
   inline const int& ChildrenNumber( const int& i );  
 
   // 各ノードの高さ < 2^digitの場合のみサポート。
+  // n階の親Parent^n( i )を返す。
   int Ancestor( int i , int n );
   int LCA( int i , int j );
+  // LCAからi,j側に進める場合に進んだ先の頂点のラベルをi_prev,j_prevに格納する。
   int LCA( int i , int j , int& i_prev , int& j_prev );
 
   // (T,m_T:T^2->T)が入力の範囲内で要件
-  // - Tの任意の要素t0,t1,t2に対しm_T(m_T(t0,t1),t_2)=m_T(m_T(t0,t2),t_1)である。
+  // - Tの任意の要素t1,t2,t3に対しm_T(m_T(t1,t2),t3)=m_T(m_T(t1,t3),t2)である。
   // を満たす場合にのみサポート。
   // dp[j] = jの子ノードkを渡るm_T(-,dp[k])のa[j]への適用結果
   // を満たす配列dpの根での値dp[m_init]をO(m_V)で求める。
   template <typename T , T m_T(const T&,const T&)> T RootingDP( const ( &a )[V_max] );
-  // (T,m_T:T^2->T,e_T:1->T)が可換モノイドの場合のみサポート。
+
+  // (T,m_T:T^2->T,e_T:1->T)が入力の範囲内で要件
+  // (1) (T,m_T:T^2->T,e_T:1->T)が単位的マグマである
+  // (2) 任意の非負整数n,iとTの要素のみからなる任意の長さnの任意の列(t1,...,tn)と
+  //     その並び換え(s1,...,sn)に対し
+  //     f(m_T(...m_T(t1,t2),...tn),i)=f(m_T(...m_T(s1,s2),...sn),i)である。
+  // を満たす場合のみサポート。
   // dp[i][j] = f(iを根とみなした時のjの子ノードkを渡るdp[i][k]のm_Tに関する積,j)
   // を満たす二重配列dpの対角成分dp[i][i]をO(m_V)で求めてdに格納する。
   template <typename T , T m_T(const T&,const T&) ,const T& e_T() , T f(const T&,const int&)> void RerootingDP( T ( &d )[V_max] );
-  
+
 private:
   void SetChildren();
   void SetDepth();
