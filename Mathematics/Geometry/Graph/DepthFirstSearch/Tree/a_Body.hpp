@@ -333,15 +333,17 @@ T DepthFirstSearchOnTree<V_max,E,digit>::RootingDP()
   
   const int& V = DepthFirstSearch<V_max,E>::size();
   list<T> children_value[V_max] = {};
+  T temp;
   
   for( int n = 0 ; n < V ; n++ ){
     
     const int& i = NodeNumber( n , true );
     const int& j = Parent( i );
+    temp = f( children_value[i] , i )
 
     if( j != -1 ){
 
-      children_value[j].push_back( f( children_value[i] , i ) );
+      children_value[j].push_back( temp );
 
     }
 

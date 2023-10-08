@@ -3,6 +3,8 @@
 #pragma once
 #include "../a.hpp"
 
+// verify:https://yukicoder.me/submissions/919091
+
 // digitはAncestorとLCAにのみ使用。普段は0で良い。
 // 2^16 = 65536
 // 2^17 = 131072
