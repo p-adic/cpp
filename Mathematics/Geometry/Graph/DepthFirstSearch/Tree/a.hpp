@@ -55,12 +55,13 @@ public:
   // LCAからi,j側に進める場合に進んだ先の頂点のラベルをi_prev,j_prevに格納する。
   int LCA( int i , int j , int& i_prev , int& j_prev );
 
-  // (T,m_T:T^2->T)が入力の範囲内で要件
-  // - Tの任意の要素t1,t2,t3に対しm_T(m_T(t1,t2),t3)=m_T(m_T(t1,t3),t2)である。
-  // を満たす場合にのみサポート。
-  // dp[j] = jの子ノードkを渡るm_T(-,dp[k])のa[j]への適用結果
+  // 入力の範囲内で要件
+  // (2) 任意の非負整数n,iとTの要素のみからなる任意の長さnの任意の列(t1,...,tn)と
+  //     その並び換え(s1,...,sn)に対しf((t1,...,tn),i)=f((s1,...,sn),i)である。
+  // を満たす場合のみサポート。
+  // dp[j] = f(jの子ノードkを渡るdp[k]の列,j)
   // を満たす配列dpの根での値dp[m_init]をO(m_V)で求める。
-  template <typename T , T m_T(const T&,const T&)> T RootingDP( const ( &a )[V_max] );
+  template <typename T , T f(const list<T>&,const int&)> T RootingDP();
 
   // (T,m_T:T^2->T,e_T:1->T)が入力の範囲内で要件
   // (1) (T,m_T:T^2->T,e_T:1->T)がモノイドである
