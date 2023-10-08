@@ -63,7 +63,7 @@ public:
   template <typename T , T m_T(const T&,const T&)> T RootingDP( const ( &a )[V_max] );
 
   // (T,m_T:T^2->T,e_T:1->T)が入力の範囲内で要件
-  // (1) (T,m_T:T^2->T,e_T:1->T)が単位的マグマである
+  // (1) (T,m_T:T^2->T,e_T:1->T)がモノイドである
   // (2) 任意の非負整数n,iとTの要素のみからなる任意の長さnの任意の列(t1,...,tn)と
   //     その並び換え(s1,...,sn)に対し
   //     f(m_T(...m_T(t1,t2),...tn),i)=f(m_T(...m_T(s1,s2),...sn),i)である。
