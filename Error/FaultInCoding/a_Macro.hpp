@@ -6,9 +6,7 @@
 
 #ifdef DEBUG
 
-  #define ERR_CODE \
-    BREAK; \
-    ThrowFaultInCoding( POSITION ) 
+  #define ERR_CODE BREAK( "ERR_CODE" ); ThrowFaultInCoding( POSITION ) 
 
 #else
 
