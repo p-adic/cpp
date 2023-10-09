@@ -4,4 +4,4 @@
 #include "../a_Macro.hpp"
 
 void ExecuteSolution( const string& directory_name );
-int ExecuteSolution_Body();
+void ExecuteSolution_Body();
