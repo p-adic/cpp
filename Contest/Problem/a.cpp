@@ -1,4 +1,4 @@
-// ì–â—p
+// ä½œå•ç”¨
 #include "../Header.hpp"
 #include "a_Body.hpp"
 
@@ -6,12 +6,12 @@
 
 int main()
 {
-  const string directory_name = "–â‘è–¼‚ğ‚±‚±‚É“ü‚ê‚é";
-  COUT( "‚Ç‚ê‚ğ‘I‘ğ‚µ‚Ü‚·‚©H" );
-  COUT( "0:" , directory_name , "‚Ì‘z’è‰ğ‚ğÀs‚·‚éB" );
-  COUT( "1:" , directory_name , "‚ÌƒTƒ“ƒvƒ‹‚ğ¶¬‚·‚éB" );
-  COUT( "2:" , directory_name , "‚ÌƒTƒ“ƒvƒ‹‚ğŠi”[‚·‚éƒtƒ@ƒCƒ‹‚ğì¬‚·‚éB" );
-  COUT( "3:" , directory_name , "‚ÌƒTƒ“ƒvƒ‹‚ÌƒtƒH[ƒ}ƒbƒg‚ğ•ÏX‚·‚éB" );
+  const string directory_name = "å•é¡Œåã‚’ã“ã“ã«å…¥ã‚Œã‚‹";
+  COUT( "ã©ã‚Œã‚’é¸æŠã—ã¾ã™ã‹ï¼Ÿ" );
+  COUT( "0:" , directory_name , "ã®æƒ³å®šè§£ã‚’å®Ÿè¡Œã™ã‚‹ã€‚" );
+  COUT( "1:" , directory_name , "ã®ã‚µãƒ³ãƒ—ãƒ«ã‚’ç”Ÿæˆã™ã‚‹ã€‚" );
+  COUT( "2:" , directory_name , "ã®ã‚µãƒ³ãƒ—ãƒ«ã‚’æ ¼ç´ã™ã‚‹ãƒ•ã‚¡ã‚¤ãƒ«ã‚’ä½œæˆã™ã‚‹ã€‚" );
+  COUT( "3:" , directory_name , "ã®ã‚µãƒ³ãƒ—ãƒ«ã®ãƒ•ã‚©ãƒ¼ãƒãƒƒãƒˆã‚’å¤‰æ›´ã™ã‚‹ã€‚" );
   CIN_ASSERT( branch , 0 , 3 );
   int branch_temp = 0;
   if( branch == branch_temp++ ){
@@ -26,14 +26,16 @@ int main()
   QUIT;
 }
 
-int MAIN()
+inline void Solve()
 {
-  // ‘z’è‰ğ‚ğ‚±‚±‚É“ü‚ê‚éB
+  // æƒ³å®šè§£ã‚’ã“ã“ã«å…¥ã‚Œã‚‹ã€‚
 }
+
+REPEAT_MAIN(1);
 
 void GenerateSamples_Body( ofstream& ofs_input_list )
 {
-  // ƒWƒFƒlƒŒ[ƒ^ƒR[ƒh‚ğ‚±‚±‚É“ü‚ê‚éB
+  // ã‚¸ã‚§ãƒãƒ¬ãƒ¼ã‚¿ã‚³ãƒ¼ãƒ‰ã‚’ã“ã“ã«å…¥ã‚Œã‚‹ã€‚
 }
 
 void WriteInSamples_Body( VLArray<string>& file_prefix , VLArray<int>& file_num )
@@ -51,16 +53,16 @@ void WriteInSamples_Body( VLArray<string>& file_prefix , VLArray<int>& file_num 
   return;
 }
 
-// o—Íˆê——ƒtƒ@ƒCƒ‹‚ª‚ ‚éê‡A‚»‚ê‚ğíœ‚µ‚È‚¢‚Æ³‚µ‚­ƒtƒ@ƒCƒ‹‘‚«‚İ‚ª‚Å‚«‚È‚¢‚±‚Æ‚É’ˆÓB
+// å‡ºåŠ›ä¸€è¦§ãƒ•ã‚¡ã‚¤ãƒ«ãŒã‚ã‚‹å ´åˆã€ãã‚Œã‚’å‰Šé™¤ã—ãªã„ã¨æ­£ã—ããƒ•ã‚¡ã‚¤ãƒ«æ›¸ãè¾¼ã¿ãŒã§ããªã„ã“ã¨ã«æ³¨æ„ã€‚
 void RearrangeSamples_Body( ifstream& ifs_input_list , ofstream& ofs_input_list )
 {
   REPEAT( 28 ){
-    // ƒtƒH[ƒ}ƒbƒg•ÏXƒR[ƒh‚ğ‚±‚±‚É“ü‚ê‚éB
+    // ãƒ•ã‚©ãƒ¼ãƒãƒƒãƒˆå¤‰æ›´ã‚³ãƒ¼ãƒ‰ã‚’ã“ã“ã«å…¥ã‚Œã‚‹ã€‚
     OFS( "" );
   }
   IFS( string , check_redundant );
   assert( check_redundant == "" );
   assert( ! ifs_input_list );
-  cout << "‘‚«‚İ‚ªŠ®—¹‚µ‚Ü‚µ‚½B" << endl;
+  cout << "æ›¸ãè¾¼ã¿ãŒå®Œäº†ã—ã¾ã—ãŸã€‚" << endl;
   return;
 }
