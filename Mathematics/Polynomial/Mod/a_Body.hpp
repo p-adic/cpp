@@ -128,7 +128,7 @@ template <typename T>
 TruncatedPolynomial<T>& TruncatedPolynomial<T>::operator*=( const Polynomial<T>& f )
 {
 
-  DEFINITION_OF_MULTIPLICATION_FOR_TRUNCATED_POLYNOMIAL( RETURN_ZERO_FOR_MULTIPLICATION_FOR_TRUNCATED_POLYNOMIAL_IF( f.Polynomial<T>::m_size == 0 ) , , RETURN_ZERO_FOR_MULTIPLICATION_FOR_TRUNCATED_POLYNOMIAL_IF( searching ) , RETURN_ZERO_FOR_MULTIPLICATION_FOR_TRUNCATED_POLYNOMIAL_IF( N_input_start_0_start_1 >= m_N ) , return *this , MULTIPLICATION , Polynomial<T>::m_f , 0 , );
+  DEFINITION_OF_MULTIPLICATION_FOR_TRUNCATED_POLYNOMIAL( RETURN_ZERO_FOR_MULTIPLICATION_FOR_TRUNCATED_POLYNOMIAL_IF( f.Polynomial<T>::m_size == 0 ) , , RETURN_ZERO_FOR_MULTIPLICATION_FOR_TRUNCATED_POLYNOMIAL_IF( searching ) , RETURN_ZERO_FOR_MULTIPLICATION_FOR_TRUNCATED_POLYNOMIAL_IF( N_input_start_0_start_1 >= m_N ) , return *this , MULTIPLICATION , Polynomial<T>::m_f[j] , 0 , );
 
 }
 
@@ -170,7 +170,7 @@ template <typename T>
 TruncatedPolynomial<T>& TruncatedPolynomial<T>::FFT_TruncatedMultiplication( Polynomial<T>&& f , const uint& N_output_start , const uint& N_output_lim )
 {
 
-  DEFINITION_OF_FFT_MULTIPLICATION_FOR_TRUNCATED_POLYNOMIAL( , return *this , , RETURN_ZERO_FOR_MULTIPLICATION_FOR_TRUNCATED_POLYNOMIAL_IF( N_input_start_0_start_1 >= N_output_lim_fixed ) , return *this , return *this , MULTIPLICATION , Polynomial<T>::m_f , N_output_start , N_output_start < N_input_start_0_start_1 ? 0 : N_output_start - N_input_start_0_start_1 , if( N_output_lim_fixed > N_output_lim ){ N_output_lim_fixed = N_output_lim; } , vector<T>& f0 = Polynomial<T>::m_f , N_input_start_0 , N_input_max_0 + 1 , vector<T>&& f1 = move( f.Polynomial<T>::m_f ) , N_input_start_1 , N_input_max_1 + 1 , f0 , f0.reserve( product_length ) , 0 , f1[N_input_start_0_start_1 + i] = f0[N_input_start_0 + i] * f1[N_input_start_1 + i] , for( uint i = N_input_start_0 ; i < N_input_start_0_start_1 ; i++ ){ f0[i] = 0; } Polynomial<T>::m_size = f0.size(); SetTruncation( m_N ); );
+  DEFINITION_OF_FFT_MULTIPLICATION_FOR_TRUNCATED_POLYNOMIAL( , return *this , , RETURN_ZERO_FOR_MULTIPLICATION_FOR_TRUNCATED_POLYNOMIAL_IF( N_input_start_0_start_1 >= N_output_lim_fixed ) , return *this , return *this , MULTIPLICATION , Polynomial<T>::m_f[j] , N_output_start , N_output_start < N_input_start_0_start_1 ? 0 : N_output_start - N_input_start_0_start_1 , if( N_output_lim_fixed > N_output_lim ){ N_output_lim_fixed = N_output_lim; } , vector<T>& f0 = Polynomial<T>::m_f , N_input_start_0 , N_input_max_0 + 1 , vector<T>&& f1 = move( f.Polynomial<T>::m_f ) , N_input_start_1 , N_input_max_1 + 1 , f0 , f0.reserve( product_length ) , 0 , f1[N_input_start_0_start_1 + i] = f0[N_input_start_0 + i] * f1[N_input_start_1 + i] , for( uint i = N_input_start_0 ; i < N_input_start_0_start_1 ; i++ ){ f0[i] = 0; } Polynomial<T>::m_size = f0.size(); SetTruncation( m_N ); );
   
 }
 
@@ -338,6 +338,13 @@ DEFINITION_OF_PARTIAL_SPECIALISATION_OF_MULTIPLICATION_OF_POLYNOMIAL_PROTH_MOD( 
 DEFINITION_OF_PARTIAL_SPECIALISATION_OF_MULTIPLICATION_OF_POLYNOMIAL_PROTH_MOD( 754974721 , 754237441 );
 
 // プロス素数以外の法で畳み込みをFFTで計算したい場合、このマクロで完全特殊化する。
+// - 2663300644以下の法で高々8388607次以下の多項式の積（高々16777214次）
+// - 2^{32}    未満の法で高々6451200次以下の多項式の積（高々12902400次）
+// が計算可能。一般には
+// - 0以上31以下の整数を係数に持つ高々10^6次の多項式の積は998244353を法とする。
+// - 0以上10^6以下の整数を係数に持つ高々10^6次の多項式の積はガーナーのアルゴリズムで
+//   最後に法を取らないように変更する。
+// など、このマクロそのものを使わない方法も検討。
 DEFINITION_OF_PARTIAL_SPECIALISATION_OF_MULTIPLICATION_OF_POLYNOMIAL_ARBITRARY_MOD( 1000000007 );
 
 #include "../a_Body.hpp"
