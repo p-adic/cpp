@@ -9,10 +9,7 @@ using ll = long long;
 using ull = unsigned long long;
 using ld = long double;
 using lld = __float128;
-#define SIGNAL signal( SIGABRT , &AlertAbort );
-#define REPEAT_MAIN( BOUND ) START_MAIN; CEXPR( int , bound_test_case_num , BOUND ); int test_case_num = 1; if constexpr( bound_test_case_num > 1 ){ SET_ASSERT( test_case_num , 1 , bound_test_case_num ); } FINISH_MAIN
-#define START_MAIN void ExecuteSolutionBody(){ SIGNAL
-#define FINISH_MAIN DEXPR( int , bound_test_case_num , BOUND , min( BOUND , 100 ) ); int test_case_num = 1; if constexpr( bound_test_case_num > 1 ){ SET_ASSERT( test_case_num , 1 , bound_test_case_num ); } REPEAT( test_case_num ){ if constexpr( bound_test_case_num > 1 ){ CERR( "testcase " , VARIABLE_FOR_REPEAT_test_case_num , ":" ); } Solve(); CERR( "" ); } }
+#define REPEAT_MAIN( BOUND ) void ExecuteSolution_Body(){ signal( SIGABRT , &AlertAbort ); CEXPR( int , bound_test_case_num , BOUND ); int test_case_num = 1; if constexpr( bound_test_case_num > 1 ){ SET_ASSERT( test_case_num , 1 , bound_test_case_num ); } REPEAT( test_case_num ){ if constexpr( bound_test_case_num > 1 ){ CERR( "testcase " , VARIABLE_FOR_REPEAT_test_case_num , ":" ); } Solve(); CERR( "" ); } }
 #define START_WATCH chrono::system_clock::time_point watch = chrono::system_clock::now()
 #define CURRENT_TIME static_cast<double>( chrono::duration_cast<chrono::microseconds>( chrono::system_clock::now() - watch ).count() / 1000.0 )
 #define CHECK_WATCH( TL_MS ) ( CURRENT_TIME < TL_MS - 100.0 )
@@ -43,7 +40,7 @@ using lld = __float128;
 #define COUT_ITR( A ) OUTPUT_ITR( cout , A ) << endl
 #define RETURN( ... ) COUT( __VA_ARGS_ ); QUIT
 
-// ˆ³k—p
+// Ë†Â³Âkâ€”p
 #define TE template
 #define TY typename
 #define US using
