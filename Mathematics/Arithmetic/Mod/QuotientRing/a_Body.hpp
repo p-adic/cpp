@@ -20,7 +20,7 @@ template <typename INT> inline const INT& QuotientRing<INT>::GetModulo() const n
 template <typename INT> inline bool QuotientRing<INT>::Equal( const QuotientRing<INT>& n0 , const QuotientRing<INT>& n1 ) noexcept { return n0.m_n == n1.m_n && n0.m_p_M == n1.m_p_M; }
 
 template <typename INT> template <typename T>
-QuotientRing<INT> QuotientRing<INT>::Power( const QuotientRing<INT>& n , const T& exponent )
+QuotientRing<INT> QuotientRing<INT>::Power( const QuotientRing<INT>& n , T exponent )
 {
 
   QuotientRing<INT> answer{ 1 , n.m_p_M };
@@ -50,4 +50,4 @@ template <typename INT , typename T> inline QuotientRing<INT> operator+( const Q
 template <typename INT , typename T> inline QuotientRing<INT> operator-( const QuotientRing<INT>& n0 , const T& n1 ) noexcept { return QuotientRing<INT>( n0 ).operator-=( n1 ); }
 template <typename INT , typename T> inline QuotientRing<INT> operator*( const QuotientRing<INT>& n0 , const T& n1 ) noexcept { return QuotientRing<INT>( n0 ).operator*=( n1 ); }
 
-template <typename INT , typename T> inline QuotientRing<INT> Power( const QuotientRing<INT>& n , const T& exponent ) { return QuotientRing<INT>::template Power<T>( n , exponent ); }
+template <typename INT , typename T> inline QuotientRing<INT> Power( const QuotientRing<INT>& n , T exponent ) { return QuotientRing<INT>::template Power<T>( n , exponent ); }

@@ -29,7 +29,7 @@ public:
   // m_n‚Ì³•‰‚âm_p_M‚Ìˆê’v‚İ‚Ì“™†B
   static inline bool Equal( const QuotientRing<INT>& n0 , const QuotientRing<INT>& n1 ) noexcept;
 
-  template <typename T> static QuotientRing<INT> Power( const QuotientRing<INT>& n , const T& exponent );
+  template <typename T> static QuotientRing<INT> Power( const QuotientRing<INT>& n , T exponent );
   
 };
 
@@ -40,4 +40,4 @@ template <typename INT , typename T> inline QuotientRing<INT> operator+( const Q
 template <typename INT , typename T> inline QuotientRing<INT> operator-( const QuotientRing<INT>& n0 , const T& n1 ) noexcept;
 template <typename INT , typename T> inline QuotientRing<INT> operator*( const QuotientRing<INT>& n0 , const T& n1 ) noexcept;
 
-template <typename INT , typename T> inline QuotientRing<INT> Power( const QuotientRing<INT>& n , const T& exponent );
+template <typename INT , typename T> inline QuotientRing<INT> Power( const QuotientRing<INT>& n , T exponent );
