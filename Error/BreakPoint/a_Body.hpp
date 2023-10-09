@@ -17,7 +17,7 @@ inline const uint& FlagCounter::i1() const noexcept { return m_i1; }
 
 inline const bool& FlagCounter::IsActive() const noexcept { return m_b; }
 
-inline void BreakPoint( const char* const FILE , const int& LINE , const char* const FUNC ) noexcept {}
+template <typename... ARGS> inline void BreakPoint( const char* const FILE , const int& LINE , const char* const FUNC , const ARGS&... args ) noexcept {}
 
 template <typename... ARGS>
 void CountCall( const char* const FILE , const int& LINE , const char* const FUNC , const uint& i0 , const uint& i1 , const ARGS&... i2 ) noexcept
