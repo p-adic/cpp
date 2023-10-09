@@ -19,10 +19,6 @@ template <class Traits , typename Arg1 , typename Arg2 , typename... ARGS> inlin
 
 // 算術用関数
 template <typename T> inline T Residue( const T& a , const T& p ){ return a >= 0 ? a % p : p - 1 - ( ( - ( a + 1 ) ) % p ); }
-inline ll MIN( const ll& a , const ll& b ){ return min( a , b ); }
-inline ull MIN( const ull& a , const ull& b ){ return min( a , b ); }
-inline ll MAX( const ll& a , const ll& b ){ return max( a , b ); }
-inline ull MAX( const ull& a , const ull& b ){ return max( a , b ); }
 
 #define POWER( ANSWER , ARGUMENT , EXPONENT )				\
   static_assert( ! is_same<TYPE_OF( ARGUMENT ),int>::value && ! is_same<TYPE_OF( ARGUMENT ),uint>::value ); \
@@ -127,13 +123,15 @@ template <typename T> inline typename set<T>::iterator MinimumGeq( set<T>& S , c
 template <typename T> inline typename set<T>::iterator MinimumGt( set<T>& S , const T& t ) { return S.upper_bound( t ); }
 
 // データ構造用関数
-template <typename T> inline T add( const T& t0 , const T& t1 ) { return t0 + t1; }
-template <typename T> inline T xor_add( const T& t0 , const T& t1 ){ return t0 ^ t1; }
-template <typename T> inline T multiply( const T& t0 , const T& t1 ) { return t0 * t1; }
-template <typename T> inline const T& zero() { static const T z = 0; return z; }
-template <typename T> inline const T& one() { static const T o = 1; return o; }\
-template <typename T> inline T add_inv( const T& t ) { return -t; }
-template <typename T> inline T id( const T& v ) { return v; }
+template <typename T> inline T Add( const T& t0 , const T& t1 ) { return t0 + t1; }
+template <typename T> inline T XorAdd( const T& t0 , const T& t1 ){ return t0 ^ t1; }
+template <typename T> inline T Multiply( const T& t0 , const T& t1 ) { return t0 * t1; }
+template <typename T> inline const T& Zero() { static const T z = 0; return z; }
+template <typename T> inline const T& One() { static const T o = 1; return o; }\
+template <typename T> inline T AddInv( const T& t ) { return -t; }
+template <typename T> inline T Id( const T& v ) { return v; }
+template <typename T> inline T Min( const T& a , const T& b ){ return a < b ? a : b; }
+template <typename T> inline T Max( const T& a , const T& b ){ return a < b ? b : a; }
 
 // グリッド問題用関数
 int H , W , H_minus , W_minus , HW;
