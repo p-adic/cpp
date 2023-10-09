@@ -4,13 +4,8 @@
 
 #ifdef DEBUG
 
-  #define WARNING( body ) \
-    BREAK; \
-    IndicateWarning( POSITION , body ) 
-
-  #define MESSAGE( body ) \
-    BREAK; \
-    IndicateMessage( POSITION , body ) 
+  #define WARNING( body ) BREAK( "WARNING" , body ); IndicateWarning( POSITION , body ) 
+  #define MESSAGE( body ) BREAK( "MESSAGE" , body ); IndicateMessage( POSITION , body ) 
 
 #else
 
