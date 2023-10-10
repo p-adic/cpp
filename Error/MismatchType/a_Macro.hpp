@@ -5,9 +5,7 @@
 
 #ifdef DEBUG
 
-  #define MISMATCH( ... ) \
-    BREAK; \
-    ThrowMismatchType< __VA_ARGS__ >( POSITION ) 
+  #define MISMATCH( ... ) BREAK( "MISMATC" , TO_STRING( __VA_ARGS__ ) ); ThrowMismatchType< __VA_ARGS__ >( POSITION ) 
 
 #else
 
