@@ -1,7 +1,7 @@
 // c:/Users/user/Documents/Programming/Mathematics/Function/Computable/Operator/Relation/a_Macro.hpp
 
 #pragma once
-#include "../../../../../Utility/Macro.hpp"
+#include "../../../../../Utility/String/a_Macro.hpp"
 
 
 // 2-ary
