@@ -13,4 +13,4 @@ template <class Traits , typename Arg , typename... ARGS> inline basic_istream<c
 template <class Traits , typename Arg> inline basic_ostream<char,Traits>& VariadicCout( basic_ostream<char,Traits>& os , const Arg& arg ) { return os << arg; }
 template <class Traits , typename Arg1 , typename Arg2 , typename... ARGS> inline basic_ostream<char,Traits>& VariadicCout( basic_ostream<char,Traits>& os , const Arg1& arg1 , const Arg2& arg2 , const ARGS&... args ) { return VariadicCout( os << arg1 << " " , arg2 , args... ); }
 
-template <class Traits> inline basic_istream<char,Traits>& operator<<( basic_istream<char,Traits>& is , const type_info& type ) noexcept { return is << to_string( type ); }
+template <class Traits> inline basic_ostream<char,Traits>& operator<<( basic_ostream<char,Traits>& is , const type_info& type ) noexcept { return is << to_string( type ); }
