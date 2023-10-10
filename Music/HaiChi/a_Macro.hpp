@@ -1,7 +1,7 @@
 // c:/Users/user/Documents/Programming/Music/HaiChi/a_Macro.hpp
 
 #pragma once
-#include "../../Utility/Macro_Macro.hpp"
+#include "../../Utility/String/a_Macro.hpp"
 
 #define DEFINITION_OF_NOTE_NUMBER( ONMEI , OCTAVE )			\
 									\
