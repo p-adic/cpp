@@ -13,6 +13,7 @@ inline string to_string( const string& s ) noexcept;
 inline string to_string( const char* const & s ) noexcept;
 inline string to_string( char* const & s ) noexcept;
 inline string to_string( const bool& ) noexcept;
+template <template <typename...> typename V , typename T> inline string to_string( const V<T>& a );
 
 // to_string( typeid( T ) )‚Å"T"‚ğo—Í
 string to_string( const type_info& ) noexcept;
@@ -33,10 +34,10 @@ template <typename... T0> auto to_string() noexcept -> typename enable_if< less_
 
 int to_int( const string& s );
 
-bool CheckEmpty( const string& ) noexcept;
-// ‘SŠp‚É‘Î‰
-bool CheckContain( const string& , const string& );
-bool CheckContainInt( const string& );
+bool CheckEmpty( const string& s ) noexcept;
+// ‘SŠp‚É‘Î‰i‹°‚ç‚­string::npos != s0.find( s1 )‚Å‚à–â‘è‚È‚¢‚ª”O‚Ì‚½‚ßj
+bool CheckContain( const string& s0 , const string& s1 );
+bool CheckContainInt( const string& s );
 
 bool Equal( const char* const& c0 , const char* const& c1 );
 
