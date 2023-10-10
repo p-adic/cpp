@@ -16,8 +16,10 @@ template <typename T> inline T* IteratorOfVLArray<T>::operator->() const { retur
 
 template <typename T> inline IteratorOfVLArray<T>& IteratorOfVLArray<T>::operator=( const IteratorOfVLArray<T>& itr ) noexcept { m_p = itr.m_p; return *this; }
 
-template <typename T> inline void IteratorOfVLArray<T>::operator++( int ){ m_p = m_p->m_next; }
-template <typename T> inline void IteratorOfVLArray<T>::operator--( int ){ m_p = m_p->m_prev; }
+template <typename T> inline IteratorOfVLArray<T> IteratorOfVLArray<T>::operator++( int ){ IteratorOfVLArray<T> copy = *this; m_p = m_p->m_next; return copy; }
+template <typename T> inline IteratorOfVLArray<T> IteratorOfVLArray<T>::operator--( int ){ IteratorOfVLArray<T> copy = *this; m_p = m_p->m_prev; return copy; }
+template <typename T> inline IteratorOfVLArray<T> IteratorOfVLArray<T>::operator++(){ m_p = m_p->m_next; return *this; }
+template <typename T> inline IteratorOfVLArray<T> IteratorOfVLArray<T>::operator--(){ m_p = m_p->m_prev; return *this; }
 
 // ConstIteratorOfVLArray
 template <typename T> inline ConstIteratorOfVLArray<T>::ConstIteratorOfVLArray( EntryOfVLArray<T>* const& p ) noexcept : m_p( p ) {}
@@ -32,8 +34,10 @@ template <typename T> inline ConstIteratorOfVLArray<T>& ConstIteratorOfVLArray<T
 template <typename T>
 ConstIteratorOfVLArray<T>& ConstIteratorOfVLArray<T>::operator=( const IteratorOfVLArray<T>& itr ) noexcept { m_p = itr.m_p; return *this; }
 
-template <typename T> inline void ConstIteratorOfVLArray<T>::operator++( int ) { m_p = m_p->m_next; }
-template <typename T> inline void ConstIteratorOfVLArray<T>::operator--( int ) { m_p = m_p->m_prev; }
+template <typename T> inline ConstIteratorOfVLArray<T> ConstIteratorOfVLArray<T>::operator++( int ) { ConstIteratorOfVLArray<T> copy = *this; m_p = m_p->m_next; return copy; }
+template <typename T> inline ConstIteratorOfVLArray<T> ConstIteratorOfVLArray<T>::operator--( int ) { ConstIteratorOfVLArray<T> copy = *this; m_p = m_p->m_prev; return copy; }
+template <typename T> inline ConstIteratorOfVLArray<T>& ConstIteratorOfVLArray<T>::operator++() { m_p = m_p->m_next; return *this; }
+template <typename T> inline ConstIteratorOfVLArray<T>& ConstIteratorOfVLArray<T>::operator--() { m_p = m_p->m_prev; return *this; }
 
 template <typename T> inline bool ConstIteratorOfVLArray<T>::Equal( const IteratorOfVLArray<T>& itr0 , const IteratorOfVLArray<T>& itr1 ) noexcept { return itr0.m_p == itr1.m_p; }
 template <typename T> inline bool ConstIteratorOfVLArray<T>::Equal( const ConstIteratorOfVLArray<T>& itr0 , const IteratorOfVLArray<T>& itr1 ) noexcept { return itr0.m_p == itr1.m_p; }

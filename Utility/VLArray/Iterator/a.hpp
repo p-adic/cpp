@@ -25,8 +25,10 @@ public:
   inline T& operator*() const;
   inline T* operator->() const;
   inline IteratorOfVLArray<T>& operator=( const IteratorOfVLArray<T>& ) noexcept;
-  inline void operator++( int );
-  inline void operator--( int );
+  inline IteratorOfVLArray<T> operator++( int );
+  inline IteratorOfVLArray<T> operator--( int );
+  inline IteratorOfVLArray<T>& operator++();
+  inline IteratorOfVLArray<T>& operator--();
 
 };
 
@@ -48,8 +50,10 @@ public:
   inline const T* operator->() const;
   inline ConstIteratorOfVLArray<T>& operator=( const ConstIteratorOfVLArray<T>& ) noexcept;
   inline ConstIteratorOfVLArray<T>& operator=( const IteratorOfVLArray<T>& ) noexcept;
-  inline void operator++( int );
-  inline void operator--( int );
+  inline ConstIteratorOfVLArray<T> operator++( int );
+  inline ConstIteratorOfVLArray<T> operator--( int );
+  inline ConstIteratorOfVLArray<T>& operator++();
+  inline ConstIteratorOfVLArray<T>& operator--();
   
   static inline bool Equal( const IteratorOfVLArray<T>& , const IteratorOfVLArray<T>& ) noexcept;
   static inline bool Equal( const ConstIteratorOfVLArray<T>& , const IteratorOfVLArray<T>& ) noexcept;
