@@ -8,9 +8,7 @@
 
 #ifdef DEBUG
 
-  #define ERR_INPUT( ... ) \
-    BREAK; \
-    ThrowIllegalInput( POSITION , ARGUMENTS( __VA_ARGS__ ) ) 
+  #define ERR_INPUT( ... ) BREAK( "ERR_INPUT" , __VA_ARGS__ ); ThrowIllegalInput( POSITION , ARGUMENTS( __VA_ARGS__ ) ) 
 
 #else
 
