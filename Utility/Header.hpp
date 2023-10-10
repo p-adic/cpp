@@ -1,10 +1,12 @@
 // Header.hpp
 
 #pragma once
+#include "Macro.hpp"
 
-#include <iostream>
 #include <list>
 #include <string>
 
 using namespace std;
 using uint = unsigned int;
+
+#include "StdStream/a_Body.hpp"
