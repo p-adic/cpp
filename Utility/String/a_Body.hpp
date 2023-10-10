@@ -11,7 +11,8 @@ inline string to_string( const string& s ) noexcept { return s; }
 inline string to_string( const char* const & s ) noexcept { return s; }
 inline string to_string( char* const & s ) noexcept { return s; }
 inline string to_string( const bool& b ) noexcept { return b ? "true" : "false"; }
-template <template <typename...> typename V , typename T> inline string to_string( const V<T>& a ) { string answer{}; auto itr = a.begin() , end = a.end(); while( itr != end ){ answer += to_string( *itr ); if( ++itr != end ){ answer += " "; } } return answer; }
+template <template <typename...> typename V , typename T> inline string to_string( const V<T>& a ) { string answer = "("; auto itr = a.begin() , end = a.end(); while( itr != end ){ answer += to_string( *itr ); answer += ",)"[++itr == end]; } return answer; }
+template <typename ARG1 , typename ARG2 , typename... ARGS> inline string to_string( const ARG1& arg1 , const ARG2& arg2 , const ARGS&... args ) { return to_string( arg1 ) + "," + to_string( arg2 , args... ); }
 
 // 例外を送出するようなメンバ関数Displayを実装してはならない。
 DECLARATION_OF_MEMBER_CONST_TRUE( to_string ) noexcept

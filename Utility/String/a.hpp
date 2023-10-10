@@ -14,6 +14,7 @@ inline string to_string( const char* const & s ) noexcept;
 inline string to_string( char* const & s ) noexcept;
 inline string to_string( const bool& ) noexcept;
 template <template <typename...> typename V , typename T> inline string to_string( const V<T>& a );
+template <typename ARG1 , typename ARG2 , typename... ARGS> inline string to_string( const ARG1& arg1 , const ARG2& arg2 , const ARGS&... args );
 
 // to_string( typeid( T ) )Ç≈"T"ÇèoóÕ
 string to_string( const type_info& ) noexcept;
