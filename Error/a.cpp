@@ -16,7 +16,7 @@ ErrorType::ErrorType() noexcept :
   static uint count = 0;
   m_count = count;  
   count++;
-  BREAK( "Constructor of ErrorType" , m_count , m_number );
+  BREAK( "Constructor of ErrorType" , m_count , *m_number );
   
 }
 
