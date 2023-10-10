@@ -2,6 +2,7 @@
 
 #pragma once
 #include "a.hpp"
+#include "../../Utility/StdStream/a_Body.hpp"
 
 inline FlagCounter::FlagCounter( const uint& i0 , const uint& i1 ) noexcept :
   m_i0( i0 ) ,
