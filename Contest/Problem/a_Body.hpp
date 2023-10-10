@@ -9,14 +9,6 @@
 #include "WriteInSamples/a_Body.hpp"
 
 
-// ì¸èoóÕópä÷êî
-template <class Traits> inline basic_istream<char,Traits>& VariadicCin( basic_istream<char,Traits>& is ) { return is; }
-template <class Traits , typename Arg , typename... ARGS> inline basic_istream<char,Traits>& VariadicCin( basic_istream<char,Traits>& is , Arg& arg , ARGS&... args ) { return VariadicCin( is >> arg , args... ); }
-template <class Traits> inline basic_istream<char,Traits>& VariadicGetline( basic_istream<char,Traits>& is , const char& separator ) { return is; }
-template <class Traits , typename Arg , typename... ARGS> inline basic_istream<char,Traits>& VariadicGetline( basic_istream<char,Traits>& is , const char& separator , Arg& arg , ARGS&... args ) { return VariadicGetline( getline( is , arg , separator ) , separator , args... ); }
-template <class Traits , typename Arg> inline basic_ostream<char,Traits>& VariadicCout( basic_ostream<char,Traits>& os , const Arg& arg ) { return os << arg; }
-template <class Traits , typename Arg1 , typename Arg2 , typename... ARGS> inline basic_ostream<char,Traits>& VariadicCout( basic_ostream<char,Traits>& os , const Arg1& arg1 , const Arg2& arg2 , const ARGS&... args ) { return VariadicCout( os << arg1 << " " , arg2 , args... ); }
-
 // éZèpópä÷êî
 template <typename T> inline T Residue( const T& a , const T& p ){ return a >= 0 ? a % p : p - 1 - ( ( - ( a + 1 ) ) % p ); }
 
@@ -50,9 +42,9 @@ template <typename T> inline T Residue( const T& a , const T& p ){ return a >= 0
   }									\
 
 #define FACTORIAL_MOD( ANSWER , ANSWER_INV , INVERSE , MAX_INDEX , CONSTEXPR_LENGTH , MODULO ) \
-  static ll ANSWER[CONSTEXPR_LENGTH];					\
-  static ll ANSWER_INV[CONSTEXPR_LENGTH];				\
-  static ll INVERSE[CONSTEXPR_LENGTH];					\
+  ll ANSWER[CONSTEXPR_LENGTH];						\
+  ll ANSWER_INV[CONSTEXPR_LENGTH];					\
+  ll INVERSE[CONSTEXPR_LENGTH];						\
   {									\
     ll VARIABLE_FOR_PRODUCT_FOR_FACTORIAL = 1;				\
     ANSWER[0] = VARIABLE_FOR_PRODUCT_FOR_FACTORIAL;			\
