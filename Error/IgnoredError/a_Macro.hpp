@@ -6,9 +6,7 @@
 
 #ifdef DEBUG
 
-  #define IGNORED_ERR( ... ) \
-    BREAK; \
-    IndicateIgnoredError( POSITION , ARGUMENTS( __VA_ARGS__ ) ) 
+  #define IGNORED_ERR( ... ) BREAK( "IGNORED_ERR" , __VA_ARGS__ ); IndicateIgnoredError( POSITION , ARGUMENTS( __VA_ARGS__ ) ) 
 
 #else
 
