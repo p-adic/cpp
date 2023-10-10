@@ -14,10 +14,9 @@ ErrorType::ErrorType() noexcept :
 {
 
   static uint count = 0;
-
-  m_count += count;  
+  m_count = count;  
   count++;
-  BREAK;
+  BREAK( "Constructor of ErrorType" , m_count , m_number );
   
 }
 
