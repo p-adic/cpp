@@ -5,9 +5,7 @@
 
 #ifdef DEBUG
 
-  #define ERR_CALL \
-    BREAK; \
-    IndicateIllegalCall( POSITION ) 
+  #define ERR_CALL BREAK( "ERR_CALL" ); IndicateIllegalCall( POSITION ) 
 
 #else
 
