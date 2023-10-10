@@ -4,6 +4,7 @@
 #include "BreakPoint/a_Macro.hpp"
 #include "Position/a_Macro.hpp"
 #include "../Utility/GlobalVariable/a_Macro.hpp"
+#include "../Utility/String/a_Macro.hpp"
 
 #define g_OCCURRENCE_OF_ERR ( *GLOBAL_VARIABLE( bool , OCCURRENCE_OF_ERR , false ) ) 
 #define g_ALLIANCE_OF_OVERLAPPING ( *GLOBAL_VARIABLE( bool , ALLIANCE_OF_OVERLAPPING , false ) ) 

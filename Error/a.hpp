@@ -32,4 +32,3 @@ template <typename Variable_Names , typename... Args> void IndicateError( const 
 #include "Position/a.hpp"
 #include "Warning/a.hpp"
 #include "../Utility/GlobalVariable/a.hpp"
-#include "../Utility/Macro.hpp"
