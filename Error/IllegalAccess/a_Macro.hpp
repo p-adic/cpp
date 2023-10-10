@@ -8,9 +8,7 @@
 
 #ifdef DEBUG
 
-  #define UNINITIALISED( ... ) \
-    BREAK; \
-    IndicateUninitialisedAccess( POSITION , ARGUMENTS( __VA_ARGS__ ) ) 
+  #define UNINITIALISED( ... ) BREAK( "UNINITIALISED" , __VA_ARGS__ ); IndicateUninitialisedAccess( POSITION , ARGUMENTS( __VA_ARGS__ ) ) 
 
 #else
 
