@@ -1,7 +1,7 @@
-// c:/Users/user/Documents/Programming/Music/OnMei/Pitch/OnDo/Settouji/a_Macro.hpp
+// c:/Users/user/Documents/Programming/Music/OnMei/Pitch/OnDo/SetTouji/a_Macro.hpp
 
 #pragma once
-#include "../../../../../Utility/Macro.hpp"
+#include "../../../../../Utility/String/a_Macro.hpp"
 
 #define DEFINITION_OF_SETTOUJI_OF_ONDO( SETTOUJI )		\
   const SetTouJiOfOnDo& SetTouJiOfOnDo:: SETTOUJI () noexcept	\
