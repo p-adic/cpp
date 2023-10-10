@@ -25,6 +25,7 @@ public:
   
 };
 
+inline void B( const char* const FILE , const int& LINE , const char* const FUNC ) noexcept;
 template <typename... ARGS> inline void BreakPoint( const char* const FILE , const int& LINE , const char* const FUNC , const ARGS&... args ) noexcept;
 
 void CountCall( const char* const FILE , const int& LINE , const char* const FUNC , const uint& i0 = 0 ) noexcept;
