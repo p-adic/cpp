@@ -6,9 +6,7 @@
 
 #ifdef DEBUG
 
-  #define ERR_UNKNOWN( ... ) \
-    BREAK; \
-    ThrowUnknownError( POSITION , ARGUMENTS( __VA_ARGS__ ) ) 
+  #define ERR_UNKNOWN( ... ) BREAK( "ERR_UNKNOWN" , __VA_ARGS__ ); ThrowUnknownError( POSITION , ARGUMENTS( __VA_ARGS__ ) ) 
 
 #else
 
