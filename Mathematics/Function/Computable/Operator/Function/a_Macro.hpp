@@ -1,7 +1,7 @@
 // c:/Users/user/Documents/Programming/Mathematics/Function/Computable/Operator/Function/a_Macro.hpp
 
 #pragma once
-#include "../../../../../Utility/Macro.hpp"
+#include "../../../../../Utility/String/a_Macro.hpp"
 
 #define DECLARATION_OF_FUNCTION_SYMBOL( RET , FUNC )			\
 									\
