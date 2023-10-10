@@ -3,18 +3,11 @@
 #pragma once
 #include "a.hpp"
 
-int StdStream::g_length = 0;
-int StdStream::g_head = 0;
-basic_streambuf<StdStream::CharT>::int_type StdStream::g_code = 0;
-StdStream::CharT StdStream::g_c = StdStream::g_space;
-StdStream::CharT StdStream::g_buffer[StdStream::g_length_lim] = {};
+template <class Traits> inline basic_istream<char,Traits>& VariadicCin( basic_istream<char,Traits>& is ) { return is; }
+template <class Traits , typename Arg , typename... ARGS> inline basic_istream<char,Traits>& VariadicCin( basic_istream<char,Traits>& is , Arg& arg , ARGS&... args ) { return VariadicCin( is >> arg , args... ); }
 
-inline void StdStream::Load() { g_length = read( 0 , g_buffer , g_length_max ); g_head = -1; g_c = g_space; }
-inline void StdStream::ShiftHead() { if( ++g_head == g_length ){ Load(); ++g_head; } ReadHead(); }
-inline void StdStream::ReadHead() { g_c = ( g_head == g_length ) ? g_new_line : g_buffer[g_head]; }
+template <class Traits> inline basic_istream<char,Traits>& VariadicGetline( basic_istream<char,Traits>& is , const char& separator ) { return is; }
+template <class Traits , typename Arg , typename... ARGS> inline basic_istream<char,Traits>& VariadicGetline( basic_istream<char,Traits>& is , const char& separator , Arg& arg , ARGS&... args ) { return VariadicGetline( getline( is , arg , separator ) , separator , args... ); }
 
-DEFINITION_OF_SCAN_FOR_SIGNED_INT_TYPE( int );
-DEFINITION_OF_SCAN_FOR_SIGNED_INT_TYPE( ll );
-DEFINITION_OF_SCAN_FOR_UNSIGNED_INT_TYPE( uint );
-DEFINITION_OF_SCAN_FOR_UNSIGNED_INT_TYPE( ull );
-DEFINITION_OF_SCAN_FOR_STRING_TYPE( string );
+template <class Traits , typename Arg> inline basic_ostream<char,Traits>& VariadicCout( basic_ostream<char,Traits>& os , const Arg& arg ) { return os << arg; }
+template <class Traits , typename Arg1 , typename Arg2 , typename... ARGS> inline basic_ostream<char,Traits>& VariadicCout( basic_ostream<char,Traits>& os , const Arg1& arg1 , const Arg2& arg2 , const ARGS&... args ) { return VariadicCout( os << arg1 << " " , arg2 , args... ); }

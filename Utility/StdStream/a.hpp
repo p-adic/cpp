@@ -1,46 +1,13 @@
 // c:/Users/user/Documents/Programming/Utility/StdStream/a.hpp
 
 #pragma once
-#include "a_Macro.hpp"
+#include <iostream>
 
-#include <unistd.h>
+template <class Traits> inline basic_istream<char,Traits>& VariadicCin( basic_istream<char,Traits>& is );
+template <class Traits , typename Arg , typename... ARGS> inline basic_istream<char,Traits>& VariadicCin( basic_istream<char,Traits>& is , Arg& arg , ARGS&... args );
 
-class StdStream
-{
+template <class Traits> inline basic_istream<char,Traits>& VariadicGetline( basic_istream<char,Traits>& is , const char& separator );
+template <class Traits , typename Arg , typename... ARGS> inline basic_istream<char,Traits>& VariadicGetline( basic_istream<char,Traits>& is , const char& separator , Arg& arg , ARGS&... args );
 
-private:
-  using CharT = char;
-  using Traits = char_traits<CharT>;
-  // 手元の環境だとg_length_lim = 1000000ではTerminalが強制終了する。
-  #ifdef DEBUG
-    static constexpr int g_length_lim = 100000;
-  #else
-    static constexpr int g_length_lim = 1000000;
-  #endif
-  static constexpr int g_length_max = g_length_lim - 1;
-  static constexpr CharT g_space = ' ';
-  static constexpr CharT g_new_line = '\n';
-  static constexpr CharT g_minus = '-';
-  static constexpr CharT g_zero = '0';
-
-  static int g_length;
-  static int g_head;
-  static basic_streambuf<CharT>::int_type g_code;
-  static CharT g_c;
-  static CharT g_buffer[g_length_lim];
-  
-public:
-  StdStream() = delete;
-  DECLARATION_OF_SCAN( int );
-  DECLARATION_OF_SCAN( uint );
-  DECLARATION_OF_SCAN( ll );
-  DECLARATION_OF_SCAN( ull );
-  DECLARATION_OF_SCAN( string );
-  
-private:
-  // basic_istream::read()からtry/catchブロックやiostateの更新を削除したread関数
-  static inline void Load();
-  static inline void ShiftHead();
-  static inline void ReadHead();
-
-};
+template <class Traits , typename Arg> inline basic_ostream<char,Traits>& VariadicCout( basic_ostream<char,Traits>& os , const Arg& arg );
+template <class Traits , typename Arg1 , typename Arg2 , typename... ARGS> inline basic_ostream<char,Traits>& VariadicCout( basic_ostream<char,Traits>& os , const Arg1& arg1 , const Arg2& arg2 , const ARGS&... args );
