@@ -1,7 +1,7 @@
 // c:/Users/user/Documents/Programming/Utility/GlobalVariable/a_Macro.hpp
 
 #pragma once
-#include "../Macro_Macro.hpp"
+#include "../String/a_Macro.hpp"
 
 // __VA_ARGS__ Ç…ÇÕ ARGUMENTS Ç© FUNCTION_NAME , ARGUMENTS Çë„ì¸Ç∑ÇÈÅB
 #define GLOBAL_CONSTANT( TYPENAME , CONSTANT_NAME , ... ) ( to_GlobalConstant< TYPENAME >( TO_STRING( CONSTANT_NAME ) , __VA_ARGS__ ) ) 
