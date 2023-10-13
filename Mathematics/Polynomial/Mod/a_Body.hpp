@@ -248,7 +248,7 @@ template <typename T> inline TruncatedPolynomial<T> TruncatedPolynomial<T>::oper
 
     for( uint n = k ; n <= n_max ; n++ ){
 
-      answer_h[n] += k == 0 ? n == 0 ? m_f[d] : T{} : m_f[d] * f_power[k][n];
+      answer_h[n] += k == 0 ? n == 0 ? Polynomial<T>::m_f[d] : T{} : Polynomial<T>::m_f[d] * f_power[k][n];
 
     }
     
