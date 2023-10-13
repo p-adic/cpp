@@ -110,6 +110,9 @@ public:
 
   inline TruncatedPolynomial<T> operator-() const;
 
+  // çáê¨
+  inline TruncatedPolynomial<T> operator()( const TruncatedPolynomial<T>& t ) const;
+
   inline void SetTruncation( const uint& N ) noexcept;
   inline const uint& GetTruncation() const noexcept;
 
