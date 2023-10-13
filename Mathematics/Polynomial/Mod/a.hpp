@@ -111,7 +111,7 @@ public:
   inline TruncatedPolynomial<T> operator-() const;
 
   // çáê¨
-  inline TruncatedPolynomial<T> operator()( const TruncatedPolynomial<T>& t ) const;
+  inline TruncatedPolynomial<T> operator()( const TruncatedPolynomial<T>& f ) const;
 
   inline void SetTruncation( const uint& N ) noexcept;
   inline const uint& GetTruncation() const noexcept;
@@ -123,7 +123,7 @@ public:
 
 };
 
-template <typename T> inline constexpr const uint FFT_Multiplication_border_0;
+template <typename T> inline constexpr const uint FFT_Multiplication_border_0 = 17;
 template <typename T> inline constexpr const uint FFT_Multiplication_border_1;
 template <typename T> inline constexpr const uint FFT_Multiplication_border_1_2;
 template <typename T> inline constexpr const uint FFT_Multiplication_border_1_2_exponent;

@@ -206,7 +206,7 @@ template <typename T> inline TruncatedPolynomial<T>& TruncatedPolynomial<T>::ope
 
 template <typename T> inline TruncatedPolynomial<T> TruncatedPolynomial<T>::operator-() const { return move( TruncatedPolynomial<T>( m_N ) -= *this ); }
 
-template <typename T> inline TruncatedPolynomial<T> TruncatedPolynomial<T>::operator()( const TruncatedPolynomial<T>& t ) const
+template <typename T> inline TruncatedPolynomial<T> TruncatedPolynomial<T>::operator()( const TruncatedPolynomial<T>& f ) const
 {
 
   assert( m_N > 0 );
