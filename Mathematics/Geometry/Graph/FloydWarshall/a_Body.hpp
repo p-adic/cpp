@@ -3,7 +3,7 @@
 #pragma once
 #include "a.hpp"
 
-template <typename T , T m_T(const T&,const T&) , const T& e_T() , int size_max>
+template <typename T , T m_T(const T&,const T&) , const T& e_T() , T A_T(const T&,const T&) , int size_max>
 void FloydWarshall( const T ( &d )[size_max][size_max] , T ( &weight )[size_max][size_max] , const int& size , const T& infty )
 {
 
@@ -39,12 +39,7 @@ void FloydWarshall( const T ( &d )[size_max][size_max] , T ( &weight )[size_max]
 
 	    T& weight_ij = weight_i[j];
 	    const T weight_curr = m_T( weight_ik , weight_kj );
-
-	    if( weight_ij == infty ? true : weight_ij > weight_curr ){
-
-	      weight_ij = weight_curr;
-
-	    }
+	    weight_ij = weight_ij == infty ? weight_curr : A_T( weight_ij , weight_curr );
 
 	  }
 
