@@ -17,7 +17,7 @@
 // (5) inftyが<=に関してe_T()以上の項size_max個以下のm_Tに関する積で表せない。
 // が成り立つ場合にのみサポート。
 
-// ただしinftyが<=から定まる場合、(3)は
+// ただし<=が等号つき全順序である場合、(3)は
 // (3)' m_Tが<=に関する順序モノイド演算、つまり
 //     - Tの任意の要素s,t,uに対しs<=tならば
 //       - m_T(u,s) <= m_T(u,t) 
@@ -48,3 +48,4 @@ void FloydWarshall( const T ( &d )[size_max][size_max] , T ( &weight )[size_max]
 // 固定した最短経路i->jで経由する１点があればその値、なければ-1を格納。
 template <typename T , T m_T(const T&,const T&) , const T& e_T() , int size_max>
 void FloydWarshall( const T ( &d )[size_max][size_max] , T ( &weight )[size_max][size_max] , const int& size , const T& infty , int ( &path )[size_max][size_max] );
+
