@@ -13,7 +13,7 @@
 //       - m_T(u,A_T(s,t)) = A_T(m_T(u,s),m_T(u,t)) 
 //       - m_T(A_T(s,t),u) = A_T(m_T(s,u),m_T(t,u))
 //     である。
-// (4) inftyでないdの値が生成する部分半群はnon-negative、つまり
+// (4) inftyでないdの値はnon-negative、つまり
 //     - Tの任意の要素sとinftyでないdの任意の値tに対し
 //       - s<=m_T(s,t) 
 //       - s<=m_T(t,s)
@@ -44,7 +44,7 @@ void FloydWarshall( const T ( &d )[size_max][size_max] , T ( &weight )[size_max]
 //       - m_T(u,s) <= m_T(u,t) 
 //       - m_T(s,u) <= m_T(t,u)
 //     である。
-// (4) inftyでないdの値が生成する部分半群はnon-negative、つまり
+// (4) inftyでないdの値はnon-negative、つまり
 //     - Tの任意の要素sとinftyでないdの任意の値tに対し
 //       - s<=m_T(s,t) 
 //       - s<=m_T(t,s)
