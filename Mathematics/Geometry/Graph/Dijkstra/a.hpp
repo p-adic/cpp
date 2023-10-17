@@ -44,8 +44,8 @@ private:
 
 // 単一始点単一終点最短経路探索／経路復元なしO((size+|E|)log size)
 // 単一始点単一終点最短経路探索／経路復元ありO((size+|E|)log size)
-// 単一始点全点最短経路探索／経路復元なしO((size+|E|)log size)
-// 単一始点全点最短経路探索／経路復元ありO(size^2 + |E| log size)
+// 単一始点全終点最短経路探索／経路復元なしO((size+|E|)log size)
+// 単一始点全終点最短経路探索／経路復元ありO(size^2 + |E| log size)
 template <list<pair<int,ll> > E(const int&) , int size_max>
 class Dijkstra :
   public DijkstraBody<int,ll,E,size_max>
@@ -64,7 +64,7 @@ private:
 };
 
 // 入力の範囲内で要件
-// (1) Eの値の各成分の第2成分がe_T()以上である。
+// (1) Eの値の各成分の第2成分がe_U()以上である。
 // (2) inftyがEの値の各成分の第2成分size_max個以下の和で表せるいかなる項よりも大きい。
 // (3) foundがEの値の各成分の第2成分size_max個以下の和で表せず、inftyとも異なる。
 // (4) (U,m_U:U^2->U,e_U:1->U)がbool operator<(const U&,const U&)に関して全順序モノイドである。
@@ -73,8 +73,8 @@ private:
 
 // 単一始点単一終点最短経路探索／経路復元なしO((size+|E|)(log size)^2)
 // 単一始点単一終点最短経路探索／経路復元ありO((size+|E|)(log size)^2)
-// 単一始点全点最短経路探索／経路復元なしO((size+|E|)(log size)^2)
-// 単一始点全点最短経路探索／経路復元ありO(size^2 log size + |E|(log size)^2)
+// 単一始点全終点最短経路探索／経路復元なしO((size+|E|)(log size)^2)
+// 単一始点全終点最短経路探索／経路復元ありO(size^2 log size + |E|(log size)^2)
 template <typename T , typename U , U m_U(const U&,const U&) , const U& e_U() , list<pair<T,U> > E(const T&) , int size_max>
 class MemorisationDijkstra :
   public DijkstraBody<T,U,E,size_max>
@@ -98,7 +98,7 @@ private:
 };
 
 // 入力の範囲内で要件
-// (1) Eの値の各成分の第2成分がe_T()以上である。
+// (1) Eの値の各成分の第2成分がe_U()以上である。
 // (2) inftyがEの値の各成分の第2成分size_max個以下の和で表せるいかなる項よりも大きい。
 // (3) foundがEの値の各成分の第2成分size_max個以下の和で表せず、inftyとも異なる。
 // (4) (U,m_U:U^2->U,e_U:1->U)がbool operator<(const U&,const U&)に関して全順序モノイドである。
@@ -108,8 +108,8 @@ private:
 
 // 単一始点単一終点最短経路探索／経路復元なしO((size+|E|)log size)
 // 単一始点単一終点最短経路探索／経路復元ありO((size+|E|)log size)
-// 単一始点全点最短経路探索／経路復元なしO((size+|E|)log size)
-// 単一始点全点最短経路探索／経路復元ありO(size^2 + |E| log size)
+// 単一始点全終点最短経路探索／経路復元なしO((size+|E|)log size)
+// 単一始点全終点最短経路探索／経路復元ありO(size^2 + |E| log size)
 template <typename T , typename U , U m_U(const U&,const U&) , const U& e_U() , list<pair<T,U> > E(const T&) , int size_max , T enum_T(const int&) , int enum_T_inv(const T&)>
 class EnumerationDijkstra :
   public DijkstraBody<T,U,E,size_max>
