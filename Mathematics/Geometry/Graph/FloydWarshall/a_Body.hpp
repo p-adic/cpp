@@ -3,7 +3,7 @@
 #pragma once
 #include "a.hpp"
 
-template <typename T , T m_T(const T&,const T&) , const T& e_T() , T A_T(const T&,const T&) , int size_max>
+template <typename T , T m_T(const T&,const T&) , T A_T(const T&,const T&) , int size_max>
 void FloydWarshall( const T ( &d )[size_max][size_max] , T ( &weight )[size_max][size_max] , const int& size , const T& infty )
 {
 
@@ -29,13 +29,13 @@ void FloydWarshall( const T ( &d )[size_max][size_max] , T ( &weight )[size_max]
       T ( &weight_i )[size_max] = weight[i];
       const T& weight_ik = weight_i[k];
     
-      if( weight_ik != infty ){
+      if( i != k && weight_ik != infty ){
 	
 	for( int j = 0 ; j < size ; j++ ){
 
 	  const T& weight_kj = weight_k[j];
 
-	  if( weight_kj != infty ){
+	  if( i != j && k != j && weight_kj != infty ){
 
 	    T& weight_ij = weight_i[j];
 	    const T weight_curr = m_T( weight_ik , weight_kj );
@@ -55,7 +55,7 @@ void FloydWarshall( const T ( &d )[size_max][size_max] , T ( &weight )[size_max]
 
 }
 
-template <typename T , T m_T(const T&,const T&) , const T& e_T() , int size_max>
+template <typename T , T m_T(const T&,const T&) , int size_max>
 void FloydWarshall( const T ( &d )[size_max][size_max] , T ( &weight )[size_max][size_max] , const int& size , const T& infty , int ( &path )[size_max][size_max] )
 {
 
@@ -84,13 +84,13 @@ void FloydWarshall( const T ( &d )[size_max][size_max] , T ( &weight )[size_max]
       T ( &path_i )[size_max] = path[i];
       const T& weight_ik = weight_i[k];
     
-      if( weight_ik != infty ){
+      if( i != k && weight_ik != infty ){
 	
 	for( int j = 0 ; j < size ; j++ ){
 
 	  const T& weight_kj = weight_k[j];
 
-	  if( weight_kj != infty ){
+	  if( i != j && k != j && weight_kj != infty ){
 
 	    T& weight_ij = weight_i[j];
 	    const T weight_curr = m_T( weight_ik , weight_kj );
@@ -115,3 +115,5 @@ void FloydWarshall( const T ( &d )[size_max][size_max] , T ( &weight )[size_max]
   return;
 
 }
+
+
