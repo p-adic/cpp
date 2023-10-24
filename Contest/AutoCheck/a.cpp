@@ -46,7 +46,10 @@ AC( DebugHint )
 	     );
   if( num == num_temp++ ){
     CERR( "- operator<<()をint型に適用していませんか？" );
-    CERR( "- operator>>()が64周期であることを忘れていませんか？" );
+    CERR( "- 実行時計算のシフト演算子が64周期であることを忘れていませんか？" );
+    CERR( "  - 例えば1LL<<-1は-2^{63}になります。" );
+    CERR( "  - 例えば1024>>65は512になります。" );
+    CERR( "  - コンパイル時計算はそうではないようです。" );
     CERR( "- イベント管理にsetを使っていませんか？" );
     CERR( "  - keyに狭義全順序を用いる場合、" );
     CERR( "    - 同一keyの処理を同時に行うならばmapを検討しましょう。" );
@@ -84,11 +87,19 @@ AC( DebugHint )
     CERR( "- 0で割っていませんか？" );
   } else if( num == num_temp++ ){
     CERR( "- マルチテストケースでデータ構造の初期化が反復されていませんか？" );
+    CERR( "  - 動的配列への置き換え" );
+    CERR( "  - 座標圧縮" );
+    CERR( "    \\Mathematics\\SetTheory\\DirectProduct\\CoordinateCompress" );
+    CERR( "  を検討しましょう。" );
     CERR( "- whileループで添字等の更新忘れによる無限ループはありませんか？" );
     CERR( "- cerrの消し忘れはありませんか？" );
     CERR( "- 重過ぎる定数倍を考慮し忘れてませんか？" );
-    CERR( "  - bool値の処理はbit演算による並列化を検討しましょう。" );
-    CERR( "  - 変数の和や積に上限があるグリッド問題は動的配列を検討しましょう。" );
+    CERR( "  - bool値の処理はbit演算による並列化" );
+    CERR( "  - 変数の和や積に上限があるグリッド問題は動的配列" );
+    CERR( "  を検討しましょう。" );
+    CERR( "- 前計算できる処理を繰り返してませんか？" );
+    CERR( "  - 各(i,j)ごとにS_ijを構築する代わりに各iごとにS_iを構築してS_iとS_jで" );
+    CERR( "    S_ijをO(1)で構築することを検討しましょう。" );
     CERR( "- リアクティブ問題でflushと改行をし忘れていませんか？" );
     CERR( "- 構築可能性の判定問題であれば、時間を計測して打ち切りましょう。" );
   } else if( num == num_temp++ ){
@@ -109,9 +120,13 @@ AC( DebugHint )
     CERR( "      重い処理でも再帰した方がメモリ節約できるかもしれません。" );
     CERR( "    - 例えば毎回10^5オーダーの配列を構築する再帰でも最大再帰深度が10程度なら" );
     CERR( "      再帰した方がメモリ上の変数の個数を10^6オーダーで抑えられます。" );
-    CERR( "- BFS／DFSの選択を誤っていませんか？" );
-    CERR( "  - 出次数が大きい場合、BFSではMLEするかもしれません。" );
-    CERR( "  - 出次数が1の頂点が多い場合、DFSではMLEするかもしれません。" );
+    CERR( "- 幅／深さ優先探索の選択を誤っていませんか？" );
+    CERR( "  - 出次数が大きい場合、幅優先探索ではMLEするかもしれません。" );
+    CERR( "  - 出次数が1の頂点が多い場合、深さ優先探索ではMLEするかもしれません。" );
+    CERR( "- 実行時計算のシフト演算子が64周期であることを忘れていませんか？" );
+    CERR( "  - 例えば1LL<<-1は-2^{63}になります。" );
+    CERR( "  - 例えば1024>>65は512になります。" );
+    CERR( "  - コンパイル時計算はそうではないようです。" );
     CERR( "- Python使用畤に変数名の重複による型エラーが起きてませんか？" );
     CERR( "  - rangeのRと[L,R)のRの重複は後者に[l,r)を用いて解消しましょう。" );
     CERR( "  - 素数のPと順列のPの重複は後者にAやQを用いて解消しましょう。" );
@@ -181,6 +196,7 @@ AC( ExplicitExpression )
 	     "序数の計算問題" ,
 	     "確率／期待値の計算問題" ,
 	     "操作回数の計算問題" ,
+	     "面積の計算問題" ,
 	     "その他の明示式の計算問題"
 	     );
   if( num == num_temp++ ){
@@ -199,6 +215,8 @@ AC( ExplicitExpression )
     CALL_AC( ExplicitExpressionProbability );
   } else if( num == num_temp++ ){
     CALL_AC( ExplicitExpressionCountingOperation );
+  } else if( num == num_temp++ ){
+    CALL_AC( ExplicitExpressionArea );
   } else if( num == num_temp++ ){
     CALL_AC( ExplicitExpressionOther );
   }
@@ -442,6 +460,14 @@ AC( ExplicitExpressionFunctionOnNonTreeGraph )
   CERR( "    \\Mathematics\\Combinatorial\\ZetaTransform\\MahlerTransform" );
   CERR( "- その他の順序集合上の関数の計算問題はゼータ変換／メビウス変換" );
   CERR( "  \\Mathematics\\Combinatorial\\ZetaTransform" );
+  CERR( "- 辺に重みが付けられたグラフ上の２点を結ぶ経路（もしくは頂点の重複のない経路）P" );
+  CERR( "  全体をわたってPに沿った辺の重みの総乗f(P)を考えf(P)の下限を計算する問題は" );
+  CERR( "  - 重みが「単位元が最小元である等号つき全順序モノイドM個の直積」に値を持ち" );
+  CERR( "    O(M(V+E)log V)が間に合いそうならば各直積成分に対するダイクストラ法" );
+  CERR( "    \\Mathematics\\Geometry\\Graph\\Dijkstra" );
+  CERR( "  - 重みが「単位元が最小元であるmeet半束モノイド」に値を持ち" );
+  CERR( "    O(V^3)が間に合いそうならばワーシャルフロイド法" );
+  CERR( "    \\Mathematics\\Geometry\\Graph\\FloydWarshall" );
   CERR( "を検討しましょう。" );
 }
 
@@ -490,6 +516,19 @@ AC( ExplicitExpressionCountingOperation )
   CERR( "それぞれの区間での処理を計算することを検討しましょう。" );
 }
 
+AC( ExplicitExpressionArea )
+{
+  CERR( "- 三角形の面積は外積" );
+  CERR( "  Mathematics\\Geometry\\AffineSpace" );
+  CERR( "- 格子点を頂点に持つ多角形の面積はピックの定理" );
+  CERR( "  https://en.wikipedia.org/wiki/Pick%27s_theorem" );
+  CERR( "- 関数のグラフで囲まれた領域の面積は積分" );
+  CERR( "  - 原始関数による計算" );
+  CERR( "  - 区分求積法" );
+  CERR( "  - モンテカルロ法" );
+  CERR( "を検討しましょう。" );
+}
+
 AC( ExplicitExpressionOther )
 {
   CERR( "- 出力の定義と等価な式への変形" );
@@ -510,7 +549,8 @@ AC( Maximisation )
 	     "文字列のマッチングに関する最大／最長化問題" ,
 	     "最大二部マッチング問題" ,
 	     "確率／期待値の最大化問題" ,
-	     "操作回数の最小化問題"
+	     "操作回数の最小化問題" ,
+	     "最大化戦略の構築問題"
 	     );
   if( num == num_temp++ ){
     CALL_AC( MaximisationFunctionOnAffineSpace );
@@ -530,6 +570,8 @@ AC( Maximisation )
     CALL_AC( MaximisationProbability );
   } else if( num == num_temp++ ){
     CALL_AC( ExplicitExpressionCountingOperation );
+  } else if( num == num_temp++ ){
+    CALL_AC( ConstructionMaximisation );
   }
 }
 
@@ -676,20 +718,32 @@ AC( MinimisationMovingCost )
 	     "多点最小コスト移動（スタンプラリー）問題"
 	     );
   if( num == num_temp++ ){
-    CERR( "- 特定の２点のみを考える場合、幅優先探索や01幅優先探索やダイクストラ法" );
-    CERR( "  \\Mathematics\\Geometry\\Graph\\BreadthFirst" );
-    CERR( "  \\Mathematics\\Geometry\\Graph\\Dijkstra" );
+    CERR( "- 特定の２点のみを考える場合、" );
+    CERR( "  - コストがなくO(V+E)が通りそうならば幅優先探索" );
+    CERR( "    \\Mathematics\\Geometry\\Graph\\BreadthFirst" );
+    CERR( "  - コストが0か1でO(V+E)が通りそうならば01幅優先探索" );
+    CERR( "    \\Mathematics\\Geometry\\Graph\\BreadthFirst\\ZeroOne" );
+    CERR( "  - コスト総和上限をCとしO((V+E)C)が間に合いそうならば" );
+    CERR( "    コストも状態に含めたグラフ上での幅優先探索" );
+    CERR( "    \\Mathematics\\Geometry\\Graph\\BreadthFirst" );
+    CERR( "  - その他O((V+E)log_2 E)が間に合いそうならばダイクストラ法" );
+    CERR( "    \\Mathematics\\Geometry\\Graph\\Dijkstra" );
     CERR( "- 全ての２点の組み合わせを考える場合、" );
-    CERR( "  - 一般のモノイド演算を考えておりO(V^3)が通りそうならば、" );
+    CERR( "  - max演算を考えておりO(E(log_2 E + α(V)))が通りそうならば、" );
+    CERR( "    重みで辺をソートして素集合データ構造" );
+    CERR( "    \\Utility\\VLTree\\UnionFindForest" );
+    CERR( "  - その他のモノイド演算を考えておりO(V^3)が通りそうならば、" );
     CERR( "    ワーシャルフロイド法" );
     CERR( "    \\Mathematics\\Geometry\\Graph\\FloydWarshall" );
-    CERR( "  - max演算を考えておりO(E(log_2 E + α(V)))が通りそうならば、" );
-    CERR( "    素集合データ構造" );
-    CERR( "    \\Utility\\VLTree\\UnionFindForest" );
     CERR( "を検討しましょう。" );
     CERR( "" );
-    CERR( "点の座標と最小化すべきコスト以外の数値変化がある場合、最小コスト移動における" );
-    CERR( "その数値の動く範囲を絞って点の座標との組を頂点とするグラフを検討しましょう。" );
+    CERR( "点の座標と最小化すべきコスト以外の数値xに変化がある場合、最小コスト移動において" );
+    CERR( "xの動く範囲を絞って点の座標とxの組を頂点とするグラフを考えましょう。" );
+    CERR( "" );
+    CERR( "重みが辺ではなく頂点についている場合" );
+    CERR( "- 羃等モノイドならば特に頂点は追加せず" );
+    CERR( "- 羃等でない可換モノイドならば重みが単位元である始点と終点を追加して" );
+    CERR( "各辺の重みを両端の重みに演算を適用したもので定義しましょう。" );
     CERR( "" );
     CERR( "辺集合Eが大き過ぎる場合、十分小さい部分集合E'であって条件" );
     CERR( "「任意の経路pに対し、E'に属す辺のみを通るある経路p'が存在して、" );
@@ -1407,12 +1461,19 @@ AC( DecisionPresentability )
 
 AC( Construction )
 {
+  CERR( "存在定理に帰着できる問題は構成的証明を実装しましょう。" );
+  CERR( "リアクティブ問題で質問をする際は" );
+  CERR( "- 何らかの順序における極大元に触れる聞き方" );
+  CERR( "- なるべく多くの数値に依存する情報に触れる聞き方" );
+  CERR( "- N^2個の数値に対するO(N)回の質問では対角線に触れる聞き方" );
+  CERR( "を検討しましょう。" );
   ASK_NUMBER(
 	     "数や配列や文字列の構築" ,
 	     "経路の構築" ,
-	     "戦略の構築" ,
-	     "ソースコードの構築" ,
-	     "表現可能性の判定"
+	     "必勝戦略の構築" ,
+	     "最大化戦略の構築" ,
+	     "表現可能性の判定" ,
+	     "ソースコードの構築"
 	     );
   if( num == num_temp++ ){
     CERR( "p進法や階差数列を検討しましょう。" );
@@ -1423,8 +1484,16 @@ AC( Construction )
     CERR( "ゲームの問題に帰着させましょう。" );
     CALL_AC( DecisionGame );
   } else if( num == num_temp++ ){
-    CERR( "正解を出力をするソースコードを提出しましょう。" );
+    CALL_AC( ConstructionMaximisation );
   } else if( num == num_temp++ ){
     CALL_AC( DecisionPresentability );
+  } else if( num == num_temp++ ){
+    CERR( "正解を出力をするソースコードを提出しましょう。" );
   }
+}
+
+AC( ConstructionMaximisation )
+{
+  CERR( "戦略の整礎な変形手順であって点数を落さないものを探し、" );
+  CERR( "その変形を完全に行って得られる戦略のみに絞って考えましょう。" );
 }

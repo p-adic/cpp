@@ -22,6 +22,7 @@ AC( ExplicitExpressionFunctionOnNonTreeGraph );
 AC( ExplicitExpressionOrder );
 AC( ExplicitExpressionProbability );
 AC( ExplicitExpressionCountingOperation );
+AC( ExplicitExpressionArea );
 AC( ExplicitExpressionOther );
 AC( Maximisation );
 AC( MaximisationFunctionOnAffineSpace );
@@ -77,3 +78,5 @@ AC( DecisionSatisfiability );
 AC( DecisionCoincidence );
 AC( DecisionPresentability );
 AC( Construction );
+AC( ConstructionMaximisation );
+
