@@ -798,6 +798,7 @@ AC( Counting )
 	     "与えられた文字列の部分文字列の数え上げ問題" ,
 	     "与えられた木の分割の数え上げ問題" ,
 	     "戦略の数え上げ問題" ,
+	     "経路の数え上げ問題" ,
 	     "操作回数の計算問題" ,
 	     "カタラン数の計算問題"
 	     );
@@ -813,6 +814,8 @@ AC( Counting )
     CALL_AC( CountingPartitionOfTree );
   } else if( num == num_temp++ ){
     CALL_AC( CountingStrategy );
+  } else if( num == num_temp++ ){
+    CALL_AC( CountingPath );
   } else if( num == num_temp++ ){
     CALL_AC( CountingParenthesisSequence );
   } else if( num == num_temp++ ){
@@ -1046,6 +1049,30 @@ AC( CountingStrategy )
   if( reply == "y" ){
     CALL_AC( ExplicitExpressionUnaryLinearRecursion );
     CERR( "を検討しましょう。" );
+  }
+}
+
+AC( CountingPath )
+{
+  ASK_NUMBER(
+	     "格子点上の経路の数え上げ" ,
+	     "一般のグラフ上の経路の数え上げ" ,
+	     );
+  if( num == num_temp++ ){
+    CERR( "始点から各点への経路数に関する漸化式を立式しましょう。" );
+    CERR( "例えばパスカルの三角形上の経路数は、そのままパスカルの三角形で与えられます。" );
+    CERR( "- 経路数がある不変量にのみ依存する場合、不変量ごとに管理して計算量を削減" );
+    CERR( "- 領域に対称性がある場合、始点からある点pへの経路数とpの対称点から終点への経路数" );
+    CERR( "  の間の関係式を立式" );
+    CERR( "を検討しましょう。" );
+    CERR( "" );
+    CERR( "適宜カタラン数との関係も検討しましょう。" );
+    CALL_AC( CountingParenthesisSequence );
+  } else if( num == num_temp++ ){
+    CERR( "ループの不能な有向グラフは整礎なので、各点pごとに" );
+    CERR( "-「pが探索されたか」を表すbool値配列" );
+    CERR( "-「pへの辺を持つ未探索点の個数」を表す配列" );
+    CERR( "を管理し毎回後者を全探策することでO(|V|^2+|E|)で全ての点を探索できます。" );
   }
 }
 
@@ -1381,10 +1408,19 @@ AC( DecisionGame )
 {
   CERR( "ゲームの和に分解できる場合は最小単位で考察をし、グランディ数を実装しましょう。" );
   CERR( "これ以上分解できないゲームには整礎構造を探し、順序数の小さい順に実験をしましょう。" );
-  CERR( "必勝戦略の構築では" );
-  CERR( "- 何らかの不変量を保つ戦略" );
-  CERR( "- 何らかの二部マッチングを実現する戦略" );
-  CERR( "を検討しましょう。" );
+  ASK_NUMBER(
+	     "操作の継続を目指すゲーム" ,
+	     "得点の大小を競うゲーム"
+	     );
+  if( num == num_temp++ ){
+    CERR( "必勝戦略の構築では" );
+    CERR( "- 敗北状態を回避するための、何らかの不変量を保つ戦略" );
+    CERR( "- 手詰まりを回避するための、を何らかの二部マッチングを実現する戦略" );
+    CERR( "を検討しましょう。" );
+  } else if( num == num_temp++ ){
+    CERR( "２プレイヤーの得点差を１つの点数とみなし、その最大化を行いましょう。" );
+    CALL_AC( ConstructionMaximisation );
+  }
 }
 
 AC( DecisionAccessibility )
@@ -1494,6 +1530,6 @@ AC( Construction )
 
 AC( ConstructionMaximisation )
 {
-  CERR( "戦略の整礎な変形手順であって点数を落さないものを探し、" );
+  CERR( "点数の最大化のためには、戦略の整礎な変形手順であって点数を落さないものを探し" );
   CERR( "その変形を完全に行って得られる戦略のみに絞って考えましょう。" );
 }

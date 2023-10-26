@@ -49,6 +49,7 @@ AC( CountingSubString );
 AC( CountingMatchingSubString );
 AC( CountingPartitionOfTree );
 AC( CountingStrategy );
+AC( CountingPath );
 AC( CountingParenthesisSequence );
 AC( Solving );
 AC( Query );
