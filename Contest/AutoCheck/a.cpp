@@ -827,7 +827,11 @@ AC( CountingExplicitExpression )
 {
   CERR( "- 変数の対称性があれば大小関係を制限した全探策" );
   CERR( "- 何らかの約数となるなど動く範囲が狭い変数があればそれらを決め打った全探策" );
-  CERR( "- f(g(x),g(y),...)の形はf,g別々に前計算" );
+  CERR( "- f(g(x),g(y))の形はf,g別々に前計算で半分全列挙" );
+  CERR( "  ただし|dom(g)| = N、max im(g) = Mとして" );
+  CERR( "  - O(N log_2 N)が間に合いそうならばmap iterator + map::lower_bound" );
+  CERR( "  - O(N)が間に合いそうならばunordered_map iterator + unordered_map::[]" );
+  CERR( "  - O(M+N)が間に合いそうならば配列全探策 + 配列::[]" );
   CERR( "を検討しましょう。" );
 }
 
@@ -1266,9 +1270,9 @@ AC( QueryGrid )
 {
   CERR( "- 可換群構造に関する加算／全更新後の一点取得のみが必要ならば二次元階差数列" );
   CERR( "  \\Mathematics\\SetTheory\\DirectProduct\\AfineSpace\\DifferenceSeqeuence\\TwoDimentioal" );
-  CERR( "- 可換群構造に関する加算／全更新なしの区間取得のみが必要ならば二次元累積和" );
+  CERR( "- 可換群構造に関する加算／全更新なしの矩形取得のみが必要ならば二次元累積和" );
   CERR( "  \\Mathematics\\SetTheory\\DirectProduct\\AfineSpace\\CulmulativeProd\\TwoDimentioal" );
-  CERR( "- 可換群構造に関する加算／全更新後の区間取得が必要ならば二次元階差数列／累積和の併用" );
+  CERR( "- 可換群構造に関する加算／全更新後の矩形取得が必要ならば二次元階差数列／累積和の併用" );
   CERR( "  \\Mathematics\\SetTheory\\DirectProduct\\AfineSpace\\DifferenceSeqeuence\\TwoDimentioal" );
   CERR( "  \\Mathematics\\SetTheory\\DirectProduct\\AfineSpace\\CulmulativeProd\\TwoDimentioal" );
   CERR( "を検討しましょう。" );
