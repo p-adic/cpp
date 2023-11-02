@@ -12,6 +12,7 @@ void AutoCheck( int& exec_mode )
   int problems_size = 0;
   ASK_NUMBER(
 	     "提出用ファイルを実行する。" ,
+	     "サンプルの合わないファイルをデバッグする。" ,
 	     "提出済みファイルをデバッグする。" ,
 	     "ライブラリーを探索する。" ,
 	     "愚直解で実験する。" ,
@@ -21,6 +22,8 @@ void AutoCheck( int& exec_mode )
   exec_mode = num;
   if( num == num_temp++ ){
     CERR( "提出用ファイルを実行します。" );
+  } else if( num == num_temp++ ){
+    CALL_AC( DebugHintWA );
   } else if( num == num_temp++ ){
     CALL_AC( DebugHint );
   } else if( num == num_temp++ ){
@@ -45,36 +48,7 @@ AC( DebugHint )
 	     "CEのデバッグ"
 	     );
   if( num == num_temp++ ){
-    CERR( "- operator<<()をint型に適用していませんか？" );
-    CERR( "- 実行時計算のシフト演算子が64周期であることを忘れていませんか？" );
-    CERR( "  - 例えば1LL<<-1は-2^{63}になります。" );
-    CERR( "  - 例えば1024>>65は512になります。" );
-    CERR( "  - コンパイル時計算はそうではないようです。" );
-    CERR( "- イベント管理にsetを使っていませんか？" );
-    CERR( "  - keyに狭義全順序を用いる場合、" );
-    CERR( "    - 同一keyの処理を同時に行うならばmapを検討しましょう。" );
-    CERR( "    - 同一keyの処理を同時に行わないならばmultisetを検討しましょう。" );
-    CERR( "  - keyに狭義全順序の積順序を用いる場合、mapの入れ子を検討しましょう。" );
-    CERR( "- 動的計画法においてindexのswapやmodを用いてメモリ削減を行う場合、" );
-    CERR( "  各ループの最初にdpテーブルの初期化をし忘れていませんか？" );
-    CERR( "- 変数名の衝突した局所変数による秘匿化を受けていませんか？" );
-    CERR( "- 誤差評価をし忘れていませんか？" );
-    CERR( "  - 整数型へのキャスト時の切り捨てが適切かを確認しましょう。" );
-    CERR( "  - 二分探索等で厳密値を扱う時は代数方程式を解いて誤差を消しましょう。" );
-    CERR( "- 番兵の設定忘れか設定ミスをしていませんか？" );
-    CERR( "- マルチテストケースで配列にstaticをつけて値が持ち越されていませんか？" );
-    CERR( "- cLay使用畤にsetmod以前に10^9+7より大きい値を代入していませんか？" );
-    CERR( "  #define MD 998244353 などを用いましょう。" );
-    CERR( "" );
-    CERR( "原因に心当たりがない場合はランダムテストを検討しましょう。" );
-    CERR( "ランダムテストで引っ掛らない場合は" );
-    CERR( "- 大きな入力値でのみ起こるバグ" );
-    CERR( "  - 型の指定ミス" );
-    CERR( "  - 64bit型のオーバーフロー" );
-    CERR( "- メモリの破壊によって起こる環境依存のバグ" );
-    CERR( "  - []やsortの範囲指定ミス" );
-    CERR( "  - 二重配列で[i][j]と[j][i]の書き間違い" );
-    CERR( "を疑いましょう。" );
+    CALL_AC( DebugHintWA );
   } else if( num == num_temp++ ){
     CERR( "- 制約を間違えてassertしていませんか？" );
     CERR( "- 手元の環境ではDEXPRで設定した値が小さくなることを忘れていませんか？" );
@@ -143,6 +117,45 @@ AC( DebugHint )
   CERR( "提出済みファイルのデバッグは以上です。終了します。" );
 }
 
+AC( DebugHintWA )
+{
+  CERR( "- operator<<()をint型に適用していませんか？" );
+  CERR( "- 実行時計算のシフト演算子が64周期であることを忘れていませんか？" );
+  CERR( "  - 例えば1LL<<-1は-2^{63}になります。" );
+  CERR( "  - 例えば1024>>65は512になります。" );
+  CERR( "  - コンパイル時計算はそうではないようです。" );
+  CERR( "- イベント管理にsetを使っていませんか？" );
+  CERR( "  - keyに狭義全順序を用いる場合、" );
+  CERR( "    - 同一keyの処理を同時に行うならばmapを検討しましょう。" );
+  CERR( "    - 同一keyの処理を同時に行わないならばmultisetを検討しましょう。" );
+  CERR( "  - keyに狭義全順序の積順序を用いる場合、mapの入れ子を検討しましょう。" );
+  CERR( "- 動的計画法においてindexのswapやmodを用いてメモリ削減を行う場合、" );
+  CERR( "  各ループの最初にdpテーブルの初期化をし忘れていませんか？" );
+  CERR( "- 変数名の衝突した局所変数による秘匿化を受けていませんか？" );
+  CERR( "- 誤差評価をし忘れていませんか？" );
+  CERR( "  - 整数型へのキャスト時の切り捨てが適切かを確認しましょう。" );
+  CERR( "  - 二分探索等で厳密値を扱う時は代数方程式を解いて誤差を消しましょう。" );
+  CERR( "- 番兵などによる例外処理のミスをしていませんか？" );
+  CERR( "  - 単なる定数倍高速化を目的とする例外処理は削除して試してみましょう。" );
+  CERR( "  - 実装の高速化を目的とする例外処理は削除せず正当性の証明を再確認しましょう。" );
+  CERR( "- 面積計算で格子点の個数と長さを混同していませんか？" );
+  CERR( "  - 領域を管理する際は「右下の単位矩形が塗られるか」の情報を各格子点に乗せましょう。" );
+  CERR( "  - 座標圧縮する際は「塗る領域の端点」を±1せずに管理しましょう。" );
+  CERR( "- マルチテストケースで配列にstaticをつけて値が持ち越されていませんか？" );
+  CERR( "- cLay使用畤にsetmod以前に10^9+7より大きい値を代入していませんか？" );
+  CERR( "  #define MD 998244353 などを用いましょう。" );
+  CERR( "" );
+  CERR( "原因に心当たりがない場合はランダムテストを検討しましょう。" );
+  CERR( "ランダムテストで引っ掛らない場合は" );
+  CERR( "- 大きな入力値でのみ起こるバグ" );
+  CERR( "  - 型の指定ミス" );
+  CERR( "  - 64bit型のオーバーフロー" );
+  CERR( "- メモリの破壊によって起こる環境依存のバグ" );
+  CERR( "  - []やsortの範囲指定ミス" );
+  CERR( "  - 二重配列で[i][j]と[j][i]の書き間違い" );
+  CERR( "を疑いましょう。" );
+}
+
 AC( LibrarySearch )
 {
   ASK_NUMBER(
@@ -189,7 +202,7 @@ AC( ExplicitExpression )
 {
   ASK_NUMBER(
 	     "１変数関数／数列の計算問題" ,
-	     "配列に関する関数の総和の計算問題" ,
+	     "配列を用いた関数の総和の計算問題" ,
 	     "順列上の関数の計算問題" ,
 	     "木上の関数の総和の計算問題" ,
 	     "木以外のグラフ上の関数の計算問題" ,
@@ -197,7 +210,6 @@ AC( ExplicitExpression )
 	     "確率／期待値の計算問題" ,
 	     "操作回数の計算問題" ,
 	     "面積の計算問題" ,
-	     "その他の明示式の計算問題"
 	     );
   if( num == num_temp++ ){
     CALL_AC( ExplicitExpressionUnary );
@@ -217,8 +229,6 @@ AC( ExplicitExpression )
     CALL_AC( ExplicitExpressionCountingOperation );
   } else if( num == num_temp++ ){
     CALL_AC( ExplicitExpressionArea );
-  } else if( num == num_temp++ ){
-    CALL_AC( ExplicitExpressionOther );
   }
 }
 
@@ -340,18 +350,24 @@ AC( ExplicitExpressionUnaryOther )
 AC( ExplicitExpressionArraySum )
 {
   ASK_NUMBER(
-	     "１つの配列の成分を受け取る関数の総和の計算問題" ,
+	     "１つの配列の成分と位置を受け取る関数の総和の計算問題" ,
 	     "１つの配列の部分列を受け取る関数の総和の計算問題" ,
 	     "配列を受け取る関数の総和の計算問題"
 	     );
   if( num == num_temp++ ){
-    CERR( "成分を受け取る関数fが与えられているとします。" );
-    CERR( "fが一次式の場合、実質内積と定数の和となります。" );
-    CERR( "内積は片方の添え字を反転させることで畳み込みに帰着させることができます。" );
-    CERR( "配列への操作がシフトである場合は繰り返し内積を求めることになるので、" );
-    CERR( "適当な法での高速フーリエ変換" );
-    CERR( "\\Mathematics\\Arithmetic\\Mod" );
-    CERR( "\\Mathematics\\Polynoial" );
+    CERR( "- 和の順序交換" );
+    CERR( "- 同じ値になる項の纏め上げ" );
+    CERR( "- 2変数関数fと数列(a_i)_iが与えられ、sum_i f(a_i,i)を求める場合、" );
+    CERR( "  f(x,i)=sum_k b_{i,k} g_k(x)と表示できれば" );
+    CERR( "  (b_{i,k})_iと(g_k(a_i))_iの内積の総和に帰着されます。" );
+    CERR( "  内積は片方の添え字を反転させることで畳み込みに帰着させることができます。" );
+    CERR( "  配列への操作がシフトである場合は繰り返し内積を求めることになるので、" );
+    CERR( "  適当な法での高速フーリエ変換" );
+    CERR( "  \\Mathematics\\Arithmetic\\Mod" );
+    CERR( "  \\Mathematics\\Polynoial" );
+    CERR( "- 2変数関数fと数列(a_i)_iが与えられ、sum_{i,j} f(a_i,a_j)を求める場合、" );
+    CERR( "  f(x,y)=sum_k g_k(x) h_k(y)と表示できれば" );
+    CERR( "  (g_k(a_i))_iの累積和と(h_k(a_j))_jの積の総和に帰着されます。" );
     CERR( "を検討しましょう。" );
   } else if( num == num_temp++ ){
     ASK_NUMBER(
@@ -526,15 +542,6 @@ AC( ExplicitExpressionArea )
   CERR( "  - 原始関数による計算" );
   CERR( "  - 区分求積法" );
   CERR( "  - モンテカルロ法" );
-  CERR( "を検討しましょう。" );
-}
-
-AC( ExplicitExpressionOther )
-{
-  CERR( "- 出力の定義と等価な式への変形" );
-  CERR( "  - 和の順序交換" );
-  CERR( "  - 同じ値になる項の纏め上げ" );
-  CERR( "- 和の動く範囲の差分に注目した動的計画法" );
   CERR( "を検討しましょう。" );
 }
 
@@ -832,6 +839,8 @@ AC( CountingExplicitExpression )
   CERR( "  - O(N log_2 N)が間に合いそうならばmap iterator + map::lower_bound" );
   CERR( "  - O(N)が間に合いそうならばunordered_map iterator + unordered_map::[]" );
   CERR( "  - O(M+N)が間に合いそうならば配列全探策 + 配列::[]" );
+  CERR( "  - x,yに制限h(x)<h(y)がある場合はh(x)の上限cについてループして" );
+  CERR( "    g(x)の集合を更新していき、それと並行してyをc<h(y)の範囲で全探索" );
   CERR( "を検討しましょう。" );
 }
 

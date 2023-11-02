@@ -4,6 +4,7 @@
 #include "a_Macro.hpp"
 
 void AutoCheck( int& exec_mode );
+AC( DebugHintWA );
 AC( DebugHint );
 AC( LibrarySearch );
 AC( ExplicitExpression );
@@ -23,7 +24,6 @@ AC( ExplicitExpressionOrder );
 AC( ExplicitExpressionProbability );
 AC( ExplicitExpressionCountingOperation );
 AC( ExplicitExpressionArea );
-AC( ExplicitExpressionOther );
 AC( Maximisation );
 AC( MaximisationFunctionOnAffineSpace );
 AC( MaximisationFunctionOnArray );
