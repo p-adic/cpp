@@ -3,7 +3,9 @@
 #pragma once
 #include <map>
 
-// verify: https://yukicoder.me/submissions/904160
+// verify:
+// https://yukicoder.me/submissions/904160
+// https://yukicoder.me/submissions/924803
 
 template <typename T>
 class CoordinateCompress
@@ -24,6 +26,7 @@ public:
   template <typename U , int length_max> inline void insert( const U ( &a )[length_max] , const int& length );
   template <typename U> inline void insert( const vector<U>& a );
 
+  inline const T& operator[]( const int& i );
   inline const T& GetSmallest( const int& i = 0 );
   inline const T& GetLargest( const int& i = 0 );
   inline int GetOrder( const T& t );

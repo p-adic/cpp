@@ -11,6 +11,7 @@ template <typename T> inline void CoordinateCompress<T>::insert( const T& t ) { 
 template <typename T> template <typename U , int length_max> inline void CoordinateCompress<T>::insert( const U ( &a )[length_max] , const int& length ) { assert( length <= length_max ); if( length > 0 ){ for( int i = 0 ; i < length ; i++ ){ m_enum[ a[i] ]; } m_size = m_enum.size(); m_compressed = false; } }
 template <typename T> template <typename U> inline void CoordinateCompress<T>::insert( const vector<U>& a ) { const int length = a.size(); if( length > 0 ){ for( int i = 0 ; i < length ; i++ ){ m_enum[ a[i] ]; } m_size = m_enum.size(); m_compressed = false; } }
 
+template <typename T> inline const T& CoordinateCompress<T>::operator[]( const int& i ) { return GetSmallest( i ); }
 template <typename T> inline const T& CoordinateCompress<T>::GetSmallest( const int& i ) { if( ! m_compressed ){ Compress(); } assert( i < m_size ); return m_a[i]; }
 template <typename T> inline const T& CoordinateCompress<T>::GetLargest( const int& i ) { if( ! m_compressed ){ Compress(); } assert( i < m_size ); return m_a[m_size - i - 1]; }
 template <typename T> inline int CoordinateCompress<T>::GetOrder( const T& t ) { if( ! m_compressed ){ Compress(); } return m_enum.count( t ) == 1 ? m_enum[t] : -1; }
