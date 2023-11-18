@@ -721,44 +721,54 @@ AC( MaximisationFunctionOnTree )
 AC( MinimisationMovingCost )
 {
   ASK_NUMBER(
-	     "２点最小コスト移動（迷路）問題" ,
-	     "多点最小コスト移動（スタンプラリー）問題"
+	     "１始点多終点最小コスト移動（迷路）問題" ,
+	     "多始点多終点最小コスト移動（被覆）問題" ,
+	     "１始点多経由点最小コスト移動（スタンプラリー）問題"
 	     );
   if( num == num_temp++ ){
-    CERR( "- 特定の２点のみを考える場合、" );
-    CERR( "  - コストがなくO(V+E)が通りそうならば幅優先探索" );
-    CERR( "    \\Mathematics\\Geometry\\Graph\\BreadthFirst" );
-    CERR( "  - コストが0か1でO(V+E)が通りそうならば01幅優先探索" );
-    CERR( "    \\Mathematics\\Geometry\\Graph\\BreadthFirst\\ZeroOne" );
-    CERR( "  - コスト総和上限をCとしO((V+E)C)が間に合いそうならば" );
-    CERR( "    コストも状態に含めたグラフ上での幅優先探索" );
-    CERR( "    \\Mathematics\\Geometry\\Graph\\BreadthFirst" );
-    CERR( "  - その他O((V+E)log_2 E)が間に合いそうならばダイクストラ法" );
-    CERR( "    \\Mathematics\\Geometry\\Graph\\Dijkstra" );
-    CERR( "- 全ての２点の組み合わせを考える場合、" );
-    CERR( "  - max演算を考えておりO(E(log_2 E + α(V)))が通りそうならば、" );
-    CERR( "    重みで辺をソートして素集合データ構造" );
-    CERR( "    \\Utility\\VLTree\\UnionFindForest" );
-    CERR( "  - その他のモノイド演算を考えておりO(V^3)が通りそうならば、" );
-    CERR( "    ワーシャルフロイド法" );
-    CERR( "    \\Mathematics\\Geometry\\Graph\\FloydWarshall" );
-    CERR( "を検討しましょう。" );
-    CERR( "" );
-    CERR( "点の座標と最小化すべきコスト以外の数値xに変化がある場合、最小コスト移動において" );
-    CERR( "xの動く範囲を絞って点の座標とxの組を頂点とするグラフを考えましょう。" );
-    CERR( "" );
-    CERR( "重みが辺ではなく頂点についている場合" );
-    CERR( "- 羃等モノイドならば特に頂点は追加せず" );
-    CERR( "- 羃等でない可換モノイドならば重みが単位元である始点と終点を追加して" );
-    CERR( "各辺の重みを両端の重みに演算を適用したもので定義しましょう。" );
-    CERR( "" );
-    CERR( "辺集合Eが大き過ぎる場合、十分小さい部分集合E'であって条件" );
-    CERR( "「任意の経路pに対し、E'に属す辺のみを通るある経路p'が存在して、" );
-    CERR( "  pのコスト>=p'コストである」" );
-    CERR( " を満たすものを探すことを検討しましょう。" );
+    CERR( "- コストがなくO(V+E)が通りそうならば幅優先探索" );
+    CERR( "  \\Mathematics\\Geometry\\Graph\\BreadthFirst" );
+    CERR( "- コストが0か1でO(V+E)が通りそうならば01幅優先探索" );
+    CERR( "  \\Mathematics\\Geometry\\Graph\\BreadthFirst\\ZeroOne" );
+    CERR( "- コスト総和上限をCとしO((V+E)C)が間に合いそうならば" );
+    CERR( "  コストも状態に含めたグラフ上での幅優先探索" );
+    CERR( "  \\Mathematics\\Geometry\\Graph\\BreadthFirst" );
+    CERR( "- O((V+E)log_2 E)が間に合いそうならばダイクストラ法" );
+    CERR( "  \\Mathematics\\Geometry\\Graph\\Dijkstra" );
   } else if( num == num_temp++ ){
-    CERR( "HeldKarpや、移動方法を分類するパラメータの全探策などを検討しましょう。" );
+    CERR( "- コストがなくO(V+E)が通りそうならば、多点幅優先探索か" );
+    CERR( "  頂点を１つ追加し各始点に辺を張ったグラフ上での幅優先探索" );
+    CERR( "  \\Mathematics\\Geometry\\Graph\\BreadthFirst" );
+    CERR( "- コストが0か1でO(V+E)が通りそうならば、多点01幅優先探索" );
+    CERR( "  頂点を１つ追加し各始点に辺を張ったグラフ上での01幅優先探索" );
+    CERR( "  \\Mathematics\\Geometry\\Graph\\BreadthFirst\\ZeroOne" );
+    CERR( "- max演算を考えておりO(E(log_2 E + α(V)))が通りそうならば、" );
+    CERR( "  重みで辺をソートして素集合データ構造" );
+    CERR( "  \\Utility\\VLTree\\UnionFindForest" );
+    CERR( "- O((V+E)log_2 E)が通りそうならば、" );
+    CERR( "  頂点を１つ追加し各始点に辺を張ったグラフ上でのダイクストラ法" );
+    CERR( "  \\Mathematics\\Geometry\\Graph\\Dijkstra" );
+    CERR( "- O(V^3)が通りそうならば、" );
+    CERR( "  ワーシャルフロイド法" );
+    CERR( "  \\Mathematics\\Geometry\\Graph\\FloydWarshall" );
+  } else if( num == num_temp++ ){
+    CERR( "- HeldKarp法" );
+    CERR( "- 移動方法を分類するパラメータの全探策" );
   }
+  CERR( "を検討しましょう。" );
+  CERR( "" );
+  CERR( "点の座標と最小化すべきコスト以外の数値xに変化がある場合、最小コスト移動において" );
+  CERR( "xの動く範囲を絞って点の座標とxの組を頂点とするグラフを考えましょう。" );
+  CERR( "" );
+  CERR( "重みが辺ではなく頂点についている場合" );
+  CERR( "- 羃等モノイドならば特に頂点は追加せず" );
+  CERR( "- 羃等でない可換モノイドならば重みが単位元である始点と終点を追加して" );
+  CERR( "各辺の重みを両端の重みに演算を適用したもので定義しましょう。" );
+  CERR( "" );
+  CERR( "辺集合Eが大き過ぎる場合、十分小さい部分集合E'であって条件" );
+  CERR( "「任意の経路pに対し、E'に属す辺のみを通るある経路p'が存在して、" );
+  CERR( "  pのコスト>=p'コストである」" );
+  CERR( " を満たすものを探すことを検討しましょう。" );
 }
 
 AC( MaximisationStringMatching )
