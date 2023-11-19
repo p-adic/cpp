@@ -494,22 +494,42 @@ AC( ExplicitExpressionOrder )
 	     "順序集合を更新する問題"
 	     );
   if( num == num_temp++ ){
-    CERR( "集合Sを何らかの順序でソートした配列aに関する問題を考えます。" );
-    CERR( "- 与えられた要素sが下から何番目かを答える場合は、" );
-    CERR( "  - 各iごとにa[i]が求められるならば、iに関する二分探索" );
-    CERR( "  - そうでないならば、s未満の項の数え上げ" );
-    CERR( "- 与えられたiに対するa[i]を答える場合は、" );
-    CERR( "  Sの各要素sごとにs未満の項を数え上げてsに関する二分探索" );
-    CERR( "- 与えられたiに対するa[0],...,a[i]を全て答える場合は、" );
-    CERR( "  - a[i]が求まるならば、a[i]以下の項を全列挙" );
-    CERR( "  - Sがソートした配列M個の和集合ならば、M個のpriority_queueでイベントソート" );
-    CERR( "を検討しましょう。" );
+    CERR( "多重集合Sを何らかの順序でソートした配列aに関する問題を考えます。" );
+    ASK_NUMBER(
+	       "与えられた要素sに対しs=a[i]を満たすiを求める問題" ,
+	       "与えられたiに対するa[i]を求める問題" ,
+	       "与えられたiに対するa[0],...,a[i]を全て求める問題"
+	       );
+    if( num == num_temp++ ){
+      ASK_YES_NO( "各iごとにa[i]が高速に求められる問題ですか？" );
+      if( reply == "y" ){
+	CERR( "iに関する二分探索を検討しましょう。" );
+      } else {
+	CERR( "s未満のSの項の数え上げを検討しましょう。" );
+	ASK_YES_NO( "Sが固定長変数関数の像で与えられますか？" );
+	if( reply == "y" ){
+	  CERR( "固定長変数関数の逆像の数え上げ問題は、" );
+	  CALL_AC( CountingExplicitExpression );
+	}
+      }
+    } else if( num == num_temp++ ){
+      CERR( "Sの各要素sごとにs未満のSの項を数え上げてsに関する二分探索を検討しましょう。" );
+      ASK_YES_NO( "Sが固定長変数関数の像で与えられますか？" );
+      if( reply == "y" ){
+	CERR( "固定長変数関数の逆像の数え上げ問題は、" );
+	CALL_AC( CountingExplicitExpression );
+      }
+    } else if( num == num_temp++ ){
+      CERR( "- 各iごとにa[i]が高速に求められるならば、a[i]以下のSの要素の全列挙を検討しましょう。" );
+      CERR( "- Sが多重集合M個の和集合であるならば、各多重集合をソートしてM個のpriority_queueでイベントソート" );
+      CERR( "を検討しましょう。" );
+    }
     CERR( "" );
     CERR( "特に辞書式順序でs未満の項の数え上げをする際は、" );
     CERR( "「sとd文字目で初めてズレるl文字の項の総数count[d][l]」" );
     CERR( "のdとlをわたる総和を求めましょう。" );
   } else if( num == num_temp++ ){
-    AC( QueryArrayOrder );
+    CALL_AC( QueryArrayOrder );
   }
 }
 
@@ -844,13 +864,21 @@ AC( CountingExplicitExpression )
 {
   CERR( "- 変数の対称性があれば大小関係を制限した全探策" );
   CERR( "- 何らかの約数となるなど動く範囲が狭い変数があればそれらを決め打った全探策" );
-  CERR( "- f(g(x),g(y))の形はf,g別々に前計算で半分全列挙" );
-  CERR( "  ただし|dom(g)| = N、max im(g) = Mとして" );
-  CERR( "  - O(N log_2 N)が間に合いそうならばmap iterator + map::lower_bound" );
-  CERR( "  - O(N)が間に合いそうならばunordered_map iterator + unordered_map::[]" );
-  CERR( "  - O(M+N)が間に合いそうならば配列全探策 + 配列::[]" );
-  CERR( "  - x,yに制限h(x)<h(y)がある場合はh(x)の上限cについてループして" );
-  CERR( "    g(x)の集合を更新していき、それと並行してyをc<h(y)の範囲で全探索" );
+  CERR( "- f(g(x),g(y))=kの形は" );
+  CERR( "  - まず各b in im(g)に対しf(a,b) = kを満たすa in im(g)全体を前計算する。" );
+  CERR( "  - 次に|dom(g)| = N、max im(g) = Mとしてim(g)を多重集合として" );
+  CERR( "    - O(N log_2 N)が間に合いそうならばmap iterator + map::lower_bound" );
+  CERR( "    - O(N)が間に合いそうならばunordered_map iterator + unordered_map::[]" );
+  CERR( "    - O(M+N)が間に合いそうならば配列全探策 + 配列::[]" );
+  CERR( "    - x,yに制限h(x)<h(y)がある場合はh(x)の上限cについてループして" );
+  CERR( "      g(x)の集合を更新していき、それと並行してyをc<h(y)の範囲で全探索" );
+  CERR( "    により管理する。" );
+  CERR( "  - 最後に各yごとにf(a,g(y)) = kを満たす各a in im(g)に対しa = g(x)を満たす" );
+  CERR( "    xをim(g)の多重集合構造を使って数え上げる。" );
+  CERR( "- f(g(x),g(y))<=kの形でfとgが単調増加する時は" );
+  CERR( "  - まず各b in im(g)に対しf(a,b) <= kを満たすaの上限を二分探索で前計算する。" );
+  CERR( "  - 次にそうして得られる各aに対しg(x)<=aを満たすxの上限を二分探索で前計算する。" );
+  CERR( "  - 最後に各yごとにb = g(y)に対する前計算結果の総和を求める。" );
   CERR( "を検討しましょう。" );
 }
 
