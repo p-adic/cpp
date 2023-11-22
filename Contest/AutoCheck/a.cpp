@@ -571,6 +571,7 @@ AC( Maximisation )
 	     "低次元アフィン空間上の関数の最大／最小化問題" ,
 	     "配列上の関数の最大／最小化問題" ,
 	     "配列の隣接成分間関係式を満たす部分列の最長化問題" ,
+	     "集合の部分集合の最大化問題" ,
 	     "木上の関数の最大／最小化問題" ,
 	     "移動コスト最小化問題" ,
 	     "文字列のマッチングに関する最大／最長化問題" ,
@@ -585,6 +586,8 @@ AC( Maximisation )
     CALL_AC( MaximisationFunctionOnArray );
   } else if( num == num_temp++ ){
     CALL_AC( MaximisationArrayLength );
+  } else if( num == num_temp++ ){
+    CALL_AC( MaximisationSubsetSize );
   } else if( num == num_temp++ ){
     CALL_AC( MaximisationFunctionOnTree );
   } else if( num == num_temp++ ){
@@ -728,6 +731,25 @@ AC( MaximisationArrayLength )
   CERR( "を検討しましょう。" );
 }
 
+AC( MaximisationSubsetSize )
+{
+  CERR( "与えられた集合のサイズをNと置きます。" );
+  CERR( "- O(2^N)が間に合いそうならば、bit全探策" );
+  CERR( "  \\Mathematics\\Geometry\\Graph\\BreadthFirstSearch\\BitExhausiveSearch" );
+  CERR( "- O(N2^N)が間に合いそうならば、部分集合の包含対のbit全探策" );
+  CERR( "  \\Mathematics\\Geometry\\Graph\\BreadthFirstSearch\\BitExhausiveSearch" );
+  CERR( "- 極大鎖の計算ならば、後続関数を定義し、極大元から後続関数の逆像のグラフの深さ計算" );
+  CERR( "- 極大反鎖の計算ならば、" );
+  CERR( "  - Dilworthの定理の証明に基く構築" );
+  CERR( "    https://en.wikipedia.org/wiki/Dilworth%27s_theorem#Inductive_proof" );
+  CERR( "  - 後続関数を定義し、後続に関する二分探索" );
+  CERR( "- 完全代表系の計算ならば、幅優先探索やUnionFindによる連結成分計算" );
+  CERR( "  \\Mathematics\\Geometry\\Graph\\BreadthFirst" );
+  CERR( "  \\Utility\\VLTree\\UnionFindForest" );
+  CERR( "  " );
+  CERR( "を検討しましょう。" );
+}
+
 AC( MaximisationFunctionOnTree )
 {
   CERR( "木を受け取る関数fが与えられているとします。" );
@@ -830,10 +852,12 @@ AC( Counting )
 {
   ASK_NUMBER(
 	     "固定長変数関数の逆像の数え上げ問題" ,
-	     "条件を満たす配列の数え上げ問題" ,
+	     "条件を満たす配列／文字列の数え上げ問題" ,
+	     "条件を満たすグラフの数え上げ問題" ,
 	     "与えられた配列の部分列の数え上げ問題" ,
 	     "与えられた文字列の部分文字列の数え上げ問題" ,
 	     "与えられた木の分割の数え上げ問題" ,
+	     "与えられた集合の部分集合の数え上げ問題" ,
 	     "戦略／操作方法の数え上げ問題" ,
 	     "経路の数え上げ問題" ,
 	     "操作回数の計算問題" ,
@@ -844,11 +868,15 @@ AC( Counting )
   } else if( num == num_temp++ ){
     CALL_AC( CountingArray );
   } else if( num == num_temp++ ){
+    CALL_AC( CountingGraph );
+  } else if( num == num_temp++ ){
     CALL_AC( CountingSubArray );
   } else if( num == num_temp++ ){
     CALL_AC( CountingSubString );
   } else if( num == num_temp++ ){
     CALL_AC( CountingPartitionOfTree );
+  } else if( num == num_temp++ ){
+    CALL_AC( CountingSubset );
   } else if( num == num_temp++ ){
     CALL_AC( CountingStrategy );
   } else if( num == num_temp++ ){
@@ -886,7 +914,8 @@ AC( CountingArray )
 {
   ASK_NUMBER(
 	     "配列を受け取る関数の値が固定された配列の数え上げ問題" ,
-	     "隣接成分間関係式を満たす配列の数え上げ問題"
+	     "隣接成分間関係式を満たす配列の数え上げ問題" ,
+	     "その他の関係式を満たす配列の数え上げ問題"
 	     );
   if( num == num_temp++ ){
     CERR( "- 配列の種類が少ない場合は、全ての配列に対する関数の値の前計算" );
@@ -895,6 +924,7 @@ AC( CountingArray )
     CERR( "  を管理するi,vに関する動的計画法" );
     CERR( "- 関数が区間和などデータ構造で計算できる場合は、" );
     CERR( "  データ構造に翻訳した上での数え上げ" );
+    CERR( "を検討しましょう。" );
   } else if( num == num_temp++ ){
     CERR( "- 半順序での単調性の場合、" );
     CERR( "  - 全順序ならば、数の分割方法などへの翻訳" );
@@ -902,7 +932,24 @@ AC( CountingArray )
     CERR( "- その他の条件の場合は動的計画法で、" );
     CERR( "  - 禁止条件の時は余事象を引く更新" );
     CERR( "  - 複数条件の時は包除原理による更新" );
+    CERR( "を検討しましょう。" );
+  } else if( num == num_temp++ ){
+    ASK_NUMBER( "配列への格納順が関係ありますか？" );
+    if( reply == "y" ){
+      CERR( "半順序を構成しグラフの数え上げに帰着することを検討しましょう。" );
+      CALL_AC( CountingGraph );
+    } else {
+      CERR( "（多重）集合やソートされた配列の数え上げに帰着することを検討しましょう。" );
+      CALL_AC( CountingSubset );
+    }
   }
+}
+
+AC( CountingGraph )
+{
+  CERR( "- 木はケーリーの公式やその亜種" );
+  CERR( "  https://oeis.org/A000272" );
+  CERR( "- なもりグラフはサイクルとそれ以外への分割" );
   CERR( "を検討しましょう。" );
 }
 
@@ -911,12 +958,15 @@ AC( CountingSubArray )
   ASK_NUMBER(
 	     "配列の成分を受け取る関数の部分和を固定した部分列の数え上げ問題" ,
 	     "配列の隣接成分間関係式を満たす部分列の数え上げ問題" ,
+	     "配列のその他の関係式を満たす部分列の数え上げ問題" ,
 	     "配列の部分列から取得位置情報を落とした配列の数え上げ問題"
 	     );
   if( num == num_temp++ ){
     CALL_AC( CountingSumFixedSubArray );
   } else if( num == num_temp++ ){
     CALL_AC( CountingRestrctedSubArray );
+  } else if( num == num_temp++ ){
+    CALL_AC( CountingGeneralRelationSubArray );
   } else if( num == num_temp++ ){
     CALL_AC( CountingSubArrayImageArray );
   }
@@ -1040,6 +1090,18 @@ AC( CountingRestrctedSubPermutation )
   CERR( "を検討しましょう。" );
 }
 
+AC( CountingGeneralRelationSubArray )
+{
+  ASK_NUMBER( "配列への格納順が関係ありますか？" );
+  if( reply == "y" ){
+    CERR( "半順序を構成しグラフの数え上げに帰着することを検討しましょう。" );
+    CALL_AC( CountingGraph );
+  } else {
+    CERR( "（多重）集合やソートされた配列の数え上げに帰着することを検討しましょう。" );
+    CALL_AC( CountingSubset );
+  }
+}
+
 AC( CountingSubArrayImageArray )
 {
   CERR( "入力で与えられる配列をAと置きます。" );
@@ -1086,6 +1148,16 @@ AC( CountingPartitionOfTree )
   CERR( "F(P)が固定された時のPの数え上げ問題は" );
   CERR( "「第i成分までで切った時のF(P)=vを満たすPの個数dp[i][v]」" );
   CERR( "を管理するi,vに関する動的計画法（O(N^2 v_max×fの計算量)）" );
+  CERR( "を検討しましょう。" );
+}
+
+AC( CountingSubset )
+{
+  CERR( "与えられた集合のサイズをNと置きます。" );
+  CERR( "- O(2^N)が間に合いそうならば、bit全探策" );
+  CERR( "  \\Mathematics\\Geometry\\Graph\\BreadthFirstSearch\\BitExhausiveSearch" );
+  CERR( "- O(N2^N)が間に合いそうならば、部分集合の包含対のbit全探策" );
+  CERR( "  \\Mathematics\\Geometry\\Graph\\BreadthFirstSearch\\BitExhausiveSearch" );
   CERR( "を検討しましょう。" );
 }
 
