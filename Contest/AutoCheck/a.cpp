@@ -3,7 +3,7 @@
 #include "../Header.hpp"
 #include "a_Body.hpp"
 
-void AutoCheck( int& exec_mode )
+void AutoCheck( int& exec_mode , const bool& use_getline )
 {
   int num = 0;
   int num_temp = 0;
@@ -580,8 +580,7 @@ AC( Maximisation )
 	     "文字列のマッチングに関する最大／最長化問題" ,
 	     "最大二部マッチング問題" ,
 	     "確率／期待値の最大化問題" ,
-	     "操作回数の最小化問題" ,
-	     "最大化戦略の構築問題"
+	     "操作回数の最小化問題"
 	     );
   if( num == num_temp++ ){
     CALL_AC( MaximisationFunctionOnAffineSpace );
@@ -603,8 +602,6 @@ AC( Maximisation )
     CALL_AC( MaximisationProbability );
   } else if( num == num_temp++ ){
     CALL_AC( ExplicitExpressionCountingOperation );
-  } else if( num == num_temp++ ){
-    CALL_AC( ConstructionMaximisation );
   }
 }
 
@@ -658,7 +655,6 @@ AC( MaximisationFunctionOnArray )
 
 AC( MaximisationSubArraySum )
 {
-
   CERR( "和を取る値を価値と呼ぶことにします。" );
   CERR( "配列の項数N、第i成分の価値A_i、価値の総和v、vの上限Vとします。" );
   CERR( "{0,...,N-1}の部分集合Iであって、" );
@@ -749,7 +745,7 @@ AC( MaximisationSubsetSize )
   CERR( "- 完全代表系の計算ならば、幅優先探索やUnionFindによる連結成分計算" );
   CERR( "  \\Mathematics\\Geometry\\Graph\\BreadthFirst" );
   CERR( "  \\Utility\\VLTree\\UnionFindForest" );
-  CERR( "  " );
+  CERR( "- 半開区間の極大排他的集合ならば、区間スケジューリング" );
   CERR( "を検討しましょう。" );
 }
 
@@ -1668,6 +1664,8 @@ AC( Construction )
 
 AC( ConstructionMaximisation )
 {
-  CERR( "点数の最大化のためには、戦略の整礎な変形手順であって点数を落さないものを探し" );
-  CERR( "その変形を完全に行って得られる戦略のみに絞って考えましょう。" );
+  CERR( "操作ごとに決まる値を最大化するためには、操作の整礎な変形手順であって" );
+  CERR( "値を減らさないものを探し、その変形を完全に行って得られる操作のみに" );
+  CERR( "絞って考えましょう。" );
+  CALL_AC( Maximisation );
 }
