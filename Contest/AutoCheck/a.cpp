@@ -636,9 +636,14 @@ AC( MaximisationFunctionOnArray )
   if( num == num_temp++ ){
     ASK_NUMBER(
 	       "成分を受け取る関数の部分和の最大化問題" ,
+	       "成分を受け取る関数の部分和と補部分和の差の最小化問題" ,
 	       "配列の変更と配列を受け取る関数の合成の最大化問題"
 	       );
     if( num == num_temp++ ){
+      CALL_AC( MaximisationSubArraySum );
+    } else if( num == num_temp++ ){
+      CERR( "部分和と総和の半分の差の最小化を行いましょう。" )
+      CERR( "これは小さい方を考えることで上限付き部分和の最大化問題となります。" )
       CALL_AC( MaximisationSubArraySum );
     } else if( num == num_temp++ ){
       CALL_AC( MaximisationArrayFunction );
@@ -656,14 +661,15 @@ AC( MaximisationFunctionOnArray )
 AC( MaximisationSubArraySum )
 {
   CERR( "和を取る値を価値と呼ぶことにします。" );
-  CERR( "配列の項数N、第i成分の価値A_i、価値の総和v、vの上限Vとします。" );
+  CERR( "配列の項数N、第i成分の価値A_i、価値の総和の上限Vとします。" );
   CERR( "{0,...,N-1}の部分集合Iであって、" );
   CERR( "- sum(i in I){A_i} = v" );
   CERR( "- その他の条件" );
-  CERR( "を満たすものの数え上げを考えます。" );
+  CERR( "を満たすものが存在するv <= Vの最大化を考えます。" );
   ASK_NUMBER(
 	     "Iにコスト制約があり重複した選択を許す場合" ,
 	     "Iにコスト制約があり重複した選択を許さない場合" ,
+	     "Iが固定長の区間である場合" ,
 	     "Iに追加の制約がない場合"
 	     );
   if( num == num_temp++ ){
@@ -685,6 +691,8 @@ AC( MaximisationSubArraySum )
     CERR( "  「コストの総和がc以下の時の価値の最大値dp[c]」" );
     CERR( "  を管理するcに関する動的計画法" );
     CERR( "を検討しましょう。" );
+  } else if( num == num_temp++ ){
+    CERR( "区間をスライドしていき、両端の更新値を用いて最大値を管理しましょう。" );
   } else if( num == num_temp++ ){
     CERR( "- O(2^N)が通りそうならば愚直に全探策" );
     CERR( "- O(N 2^{N/2})が通りそうならば半分全列挙" );
