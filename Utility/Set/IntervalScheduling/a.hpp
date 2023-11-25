@@ -4,6 +4,12 @@
 
 // verify: https://yukicoder.me/submissions/931520
 
+// ‹æŠÔ’Ç‰ÁO(log m_size)
+// ‹æŠÔíœO(log m_size)
+// æ“ª‹æŠÔæ“¾O(1)
+// Œã‘±‹æŠÔæ“¾O(log m_size)
+// ‘SŒã‘±‹æŠÔæ“¾O(m_size)
+// Å‘½”r‘¼“I‹æŠÔ—ñæ“¾O(m_size)
 template <typename T>
 class IntervalScheduling
 {
