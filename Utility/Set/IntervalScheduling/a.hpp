@@ -4,6 +4,11 @@
 
 // verify: https://yukicoder.me/submissions/931520
 
+// 入力の範囲内で要件
+// (1) bool operator<=(const T&,const T&)が全順序である。
+// (2) bool operator<(const T&,const T&)が<=に付随する狭義全順序である。
+// を満たす場合にのみサポート。
+
 // 区間追加O(log m_size)
 // 区間削除O(log m_size)
 // 先頭区間取得O(1)
