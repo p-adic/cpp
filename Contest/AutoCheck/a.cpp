@@ -66,6 +66,7 @@ AC( DebugHint )
     CERR( "    \\Mathematics\\SetTheory\\DirectProduct\\CoordinateCompress" );
     CERR( "  を検討しましょう。" );
     CERR( "- whileループで添字等の更新忘れによる無限ループはありませんか？" );
+    CERR( "- DEXPR使用時に手元とオンライン環境で実行時間が変わることを失念していませんか？" );
     CERR( "- cerrの消し忘れはありませんか？" );
     CERR( "- 重過ぎる定数倍を考慮し忘れてませんか？" );
     CERR( "  - bool値の処理はbit演算による並列化" );
@@ -899,6 +900,10 @@ AC( CountingExplicitExpression )
 {
   CERR( "- 変数の対称性があれば大小関係を制限した全探策" );
   CERR( "- 何らかの約数となるなど動く範囲が狭い変数があればそれらを決め打った全探策" );
+  CERR( "- 半順序集合への写像の逆像ならばゼータ変換／メビウス変換" );
+  CERR( "  \\Mathematics\\Combinatorial\\ZetaTransform" );
+  CERR( "- gcd(n,x)=1かつ1<=x<=nを満たすxの数え上げはオイラー関数" );
+  CERR( "  \\Mathematics\\Arithmetic\\Mod\\Function\\Euler" );
   CERR( "- f(g(x),g(y))=kの形は" );
   CERR( "  - まず各b in im(g)に対しf(a,b) = kを満たすa in im(g)全体を前計算する。" );
   CERR( "  - 次に|dom(g)| = N、max im(g) = Mとしてim(g)を多重集合として" );
@@ -1390,7 +1395,7 @@ AC( QueryArrayMaxConstant )
 AC( QueryGraph )
 {
   ASK_YES_NO( "代数構造を扱う問題ですか？" );
-  if( reply == "yes" ){
+  if( reply == "y" ){
     CERR( "- 可換群構造に関する加算／全更新後の一点取得のみが必要ならば階差数列" );
     CERR( "  \\Mathematics\\SetTheory\\DirectProduct\\AfineSpace\\DifferenceSeqeuence\\Tree" );
     CERR( "- 木上で可換モノイド構造に関する再帰が必要ならば全域木DP" );
@@ -1555,9 +1560,15 @@ AC( DecisionGame )
 	     "得点の大小を競うゲーム"
 	     );
   if( num == num_temp++ ){
-    CERR( "必勝戦略の構築では" );
-    CERR( "- 敗北状態を回避するための、何らかの不変量を保つ戦略" );
-    CERR( "- 手詰まりを回避するための、を何らかの二部マッチングを実現する戦略" );
+    CERR( "- 状態数や遷移回数上限は少ないならば、ゲーム和の最小単位でグランディ数の計算" );
+    CERR( "  \\Utility\\Set\\Mex" );
+    CERR( "- ２回の操作で保てる不変量があるならば、敗北状態の不変量を回避する戦略" );
+    CERR( "- 操作を実現する二部マッチングがあるならば、ミラー戦略" );
+    CERR( "- 先手しか可能でない遷移であって他のどの遷移へも経由できるものがあるならば、" );
+    CERR( "  strategy-stealing argument" );
+    CERR( "  https://en.wikipedia.org/wiki/Strategy-stealing_argument" );
+    CERR( "- 整合的な整礎構造があるならば、対応する順序数の小さい順に実験" );
+    CERR( "- 整合的な全順序構造があるならば、勝敗を区間で管理" );
     CERR( "を検討しましょう。" );
   } else if( num == num_temp++ ){
     CERR( "２プレイヤーの得点差を１つの点数とみなし、その最大化を行いましょう。" );
