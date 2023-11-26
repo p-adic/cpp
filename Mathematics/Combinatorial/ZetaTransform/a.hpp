@@ -3,9 +3,6 @@
 #pragma once
 #include "a_Macro.hpp"
 
-// TwoAryMoeviusFunctionに使用。
-#include "../../Arithmetic/Prime/Constexpr/a_Body.hpp"
-
 // Tの各要素tに対し、t以下の要素を渡る総和を管理。
 template <typename T , typename U , int size_max>
 class ZetaTransformBody
@@ -33,7 +30,7 @@ public:
   // 子クラスの半順序のメビウス関数のデフォルトの再帰式を使うため、
   // 再帰深度が浅い場合にしか使えない。
   inline U Get( const T& t );
-  // muは子クラスの半順序のメビウス関数。
+  // muは子クラスの半順序メビウス関数のユーザー定義版。
   template <int mu(const T&,const T&)> inline U Get( const T& t );
   inline const U& InitialSegmentSum( const T& t );
 
@@ -46,8 +43,12 @@ public:
   // を満たすfが存在する場合にのみ以下の２つをサポート。
 
   // f( t ) = sを満たすRの要素t全体を渡る総和取得。
+  // 子クラスの半順序のメビウス関数のデフォルトの再帰式を使うため、
+  // 再帰深度が浅い場合にしか使えない。
   template <typename S , T f_inv_max(const S&) , list<S> r(const S&)> inline U InverseImageSum( const S& s );
+  // muは子クラスの半順序メビウス関数のユーザー定義版。
   template <typename S , T f_inv_max(const S&) , list<S> r(const S&) , int mu(const T&,const T&)> inline U InverseImageSum( const S& s );
+
   // f( t ) <= sを満たすRの要素t全体を渡る総和取得。（結果的にrは使わないが要件上はrの存在が必要） 
   template <typename S , T f_inv_max(const S&)> inline const U& InitialSegmentInverseImageSum( const S& s );
 
@@ -110,7 +111,8 @@ private:
 // を満たす場合にのみ以下をサポート。ただしE_invはAdd（privateにはSup）にのみ使用。
 
 // 0による初期化O(size_max)
-// ゼータ変換前の配列による初期化O(始切片のサイズの総和)
+// ゼータ変換前の配列による初期化O(size_max+始切片のサイズの総和)
+// ゼータ変換後の配列による初期化O(size_max)
 
 // 一点加算O(終切片[t,∞)のサイズ)
 // 全体加算O(size)
@@ -131,7 +133,7 @@ class ZetaTransform :
 
 public:
   inline ZetaTransform( const int& size );
-  inline ZetaTransform( const int& size , const ll ( &a )[size_max] );
+  inline ZetaTransform( const int& size , const ll ( &a )[size_max] , const bool& transformed );
 
 private:
   inline const ll& Zero() const;
@@ -146,7 +148,8 @@ private:
 // を満たす場合にのみ以下をサポート。
 
 // z_U()による初期化O(size_max)
-// ゼータ変換前の配列による初期化O(digit 2^digit)（可換加法モノイド性を使う）
+// ゼータ変換前の配列による初期化O(size_max + digit 2^digit)（可換加法モノイド性を使う）
+// ゼータ変換後の配列による初期化O(size_max)
 
 // 一点加算O(2^digit)（可換加法モノイド性を使う）
 // 全体加算O(2^digit)（可換加法モノイド性だけでも実装できるが単位的半環性を使う）
@@ -170,7 +173,7 @@ private:
   
 public:
   inline FastZetaTransform( const int& digit );
-  inline FastZetaTransform( const int& digit , const U ( &a )[size_max] );
+  inline FastZetaTransform( const int& digit , const U ( &a )[size_max] , const bool& transformed );
 
   inline FastZetaTransform<U,a_U,z_U,m_U,size_max>& operator+=( const FastZetaTransform<U,a_U,z_U,m_U,size_max>& a );
   inline FastZetaTransform<U,a_U,z_U,m_U,size_max>& operator*=( const FastZetaTransform<U,a_U,z_U,m_U,size_max>& a );
@@ -246,9 +249,3 @@ private:
   inline int e_inv( const T& t );
 
 };
-
-// 古典的な１変数メビウス関数（../../Arithmetic/Prime/Divisor/a_Body.hpp）の２変数化。
-// 最初のみO(val_lim log val_lim)で後はO(1)。
-// t0 <= t1がt1 % t0 == 0で与えられる時にこのまま使える。
-// t0 <= t1がt0 % t1 == 0で与えられる時は変数を反対にする。
-template <typename INT , INT val_limit , int length_max> int TwoAryMoeviusFunction( const PrimeEnumeration<INT,val_limit,length_max> , const int& t0 , const int& t1 );
