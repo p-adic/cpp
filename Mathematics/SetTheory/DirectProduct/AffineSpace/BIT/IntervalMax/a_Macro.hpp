@@ -191,7 +191,7 @@
       while( j <= N ){							\
 									\
 	const int lsb = ( j & -j );					\
-	m_fenwick_0[j] = OP( OP( Interval ## MAX( j - lsb + 1 , i - 1 ) , n ) , Interval ## MAX( i + 1 , j ) ); \
+	m_fenwick_0[j] = OP( OP( Interval ## MAX( j - lsb , i - 1 ) , n ) , Interval ## MAX( i + 1 , j - 1 ) ); \
 	j += lsb;							\
 									\
       }									\
@@ -201,7 +201,7 @@
       while( j > 0 ){							\
 									\
 	const int lsb = ( j & -j );					\
-	m_fenwick_0[j] = OP( OP( Interval ## MAX( j , i - 1 ) , n ) , Interval ## MAX( i + 1 , j + lsb - 1 ) ); \
+	m_fenwick_1[j] = OP( OP( Interval ## MAX( j - 1  , i - 1 ) , n ) , Interval ## MAX( i + 1 , j + lsb - 2 ) ); \
 	j -= lsb;							\
 									\
       }									\
@@ -211,6 +211,7 @@
     } else {								\
 									\
       Set ## MAX( i , n );						\
+									\
     }									\
 									\
     return;								\
