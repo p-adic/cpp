@@ -109,6 +109,7 @@ T MonoidBIT<T,m_T,e_T,N>::IntervalProduct( const int& i_start , const int& i_fin
   if( j_min > j_max ){
 
     return g_e;
+    
   }
     
   T answer1 = g_e;
@@ -123,7 +124,7 @@ T MonoidBIT<T,m_T,e_T,N>::IntervalProduct( const int& i_start , const int& i_fin
 
   }
 
-  answer1 = m_T( answer1 , m_a[j-1] ); 
+  answer1 = m_T( answer1 , m_a[j-1] );
   T answer0 = g_e;
   j = j_max;
   j_next = j - ( j & -j );
@@ -145,37 +146,27 @@ void MonoidBIT<T,m_T,e_T,N>::Set( const int& i , const T& n )
 {
 
   T& ai = m_a[i];
+  int j = i + 1;
 
-  if( n == m_T( ai , n ) ){
+  while( j <= N ){
 
-    Add( i , n );
-
-  } else {
-  
-    int j = i + 1;
-
-    while( j <= N ){
-
-      const int lsb = ( j & -j );
-      m_fenwick_0[j] = m_T( m_T( IntervalProduct( j - lsb + 1 , i - 1 ) , n ) , IntervalProduct( i + 1 , j ) ); 
-      j += lsb;
-
-    }
-
-    j = i + 1;
-
-    while( j > 0 ){
-
-      const int lsb = ( j & -j );
-      m_fenwick_0[j] = m_T( m_T( IntervalProduct( j , i - 1 ) , n ) , IntervalProduct( i + 1 , j + lsb - 1 ) ); 
-      j -= lsb;
-
-    }
-
-    ai = n;
+    const int lsb = ( j & -j );
+    m_fenwick_0[j] = m_T( m_T( IntervalProduct( j - lsb , i - 1 ) , n ) , IntervalProduct( i + 1 , j - 1 ) ); 
+    j += lsb;
 
   }
 
+  j = i + 1;
+
+  while( j > 0 ){
+
+    const int lsb = ( j & -j );
+    m_fenwick_1[j] = m_T( m_T( IntervalProduct( j - 1 , i - 1 ) , n ) , IntervalProduct( i + 1 , j + lsb - 2 ) ); 
+    j -= lsb;
+
+  }
+
+  ai = n;
   return;
 
 }
