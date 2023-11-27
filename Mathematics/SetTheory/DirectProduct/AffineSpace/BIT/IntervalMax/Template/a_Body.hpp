@@ -157,7 +157,7 @@ void IdempotentMonoidBIT<T,m_T,e_T,N>::Set( const int& i , const T& n )
     while( j <= N ){
 
       const int lsb = ( j & -j );
-      m_fenwick_0[j] = m_T( m_T( IntervalSum( j - lsb + 1 , i - 1 ) , n ) , IntervalSum( i + 1 , j ) ); 
+      m_fenwick_0[j] = m_T( m_T( IntervalSum( j - lsb , i - 1 ) , n ) , IntervalSum( i + 1 , j - 1 ) ); 
       j += lsb;
 
     }
@@ -167,7 +167,7 @@ void IdempotentMonoidBIT<T,m_T,e_T,N>::Set( const int& i , const T& n )
     while( j > 0 ){
 
       const int lsb = ( j & -j );
-      m_fenwick_0[j] = m_T( m_T( IntervalSum( j , i - 1 ) , n ) , IntervalSum( i + 1 , j + lsb - 1 ) ); 
+      m_fenwick_0[j] = m_T( m_T( IntervalSum( j - 1 , i - 1 ) , n ) , IntervalSum( i + 1 , j + lsb - 2 ) ); 
       j -= lsb;
 
     }
