@@ -3,7 +3,9 @@
 #pragma once
 #include "a_Macro.hpp"
 
-#include "../../../../Arithmetic/Power/Constexpr/a.hpp"
+#include "../../../../Arithmetic/Power/Constexpr/Inverse/a.hpp"
+
+// verify: https://yukicoder.me/submissions/932066
 
 // （可換とは限らない）モノイド(T,m_T:T^2->T,e_T:1->T)と非負整数Nをパラメータとする。
 // 単位元による初期化O(N)
@@ -12,7 +14,7 @@
 // 一点取得O(1)
 // 区間積取得O(log_2 N)
 
-// 一点更新O((log_2 N)^2)
+// 一点更新O(log_2 N)
 template <TEMPLATE_ARGUMENTS_FOR_SEGMENT_TREE>
 class SegmentTree
 {

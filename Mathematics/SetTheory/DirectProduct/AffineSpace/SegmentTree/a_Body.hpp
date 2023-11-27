@@ -3,7 +3,7 @@
 #pragma once
 #include "a.hpp"
 
-#include "../../../../Arithmetic/Power/Constexpr/a_Body.hpp"
+#include "../../../../Arithmetic/Power/Constexpr/Inverse/a_Body.hpp"
 
 template <TEMPLATE_ARGUMENTS_FOR_SEGMENT_TREE> inline const T& SegmentTree<T,m_T,e_T,N>::g_e = e_T();
 
@@ -71,7 +71,7 @@ void SegmentTree<T,m_T,e_T,N>::Set( const int& i , const T& n )
   int j = g_power + i;
   m_a[j] = n;
   
-  while( ( j <<= 1 ) >= 1 ){
+  while( ( j >>= 1 ) >= 1 ){
     
     int j2 = j << 1;
     m_a[j] = m_T( m_a[j2] , m_a[j2+1] );
