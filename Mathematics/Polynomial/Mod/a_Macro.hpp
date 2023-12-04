@@ -326,8 +326,8 @@
 									\
   }									\
 									\
-  const uint N_output_start_shifted = N_OUTPUT_START_SHIFTED;		\
   const uint N_output_lim_shifted = N_output_lim_fixed - N_input_start_0_start_1; \
+  const uint N_output_start_shifted = min( N_output_lim_shifted , N_OUTPUT_START_SHIFTED ); \
   IFFT<T>( VECTOR_FOR_IFFT , N_input_start_0_start_1 , product_length , N_output_start_shifted , N_output_lim_shifted , two_power , two_power_inv , exponent ); \
   SET_ANSWER;								\
   RETURN_LINE_5;							\
@@ -376,9 +376,13 @@
 #define DEFINITION_OF_PARTIAL_SPECIALISATION_OF_MULTIPLICATION_OF_TRUNCATED_POLYNOMIAL( TYPE , BORDER_0 , BORDER_1 , BORDER_1_2 , BORDER_1_2_EXPONENT , BORDER_1_2_INV ) \
   template <> constexpr const uint FFT_Multiplication_border_0< TYPE > = BORDER_0; \
   template <> constexpr const uint FFT_Multiplication_border_1< TYPE > = BORDER_1; \
+  static_assert( FFT_Multiplication_border_0< TYPE > <= FFT_Multiplication_border_1< TYPE > ); \
   template <> constexpr const uint FFT_Multiplication_border_1_2< TYPE > = BORDER_1_2; \
+  static_assert( FFT_Multiplication_border_1< TYPE > < FFT_Multiplication_border_1_2< TYPE > && FFT_Multiplication_border_1_2< TYPE > <= FFT_Multiplication_border_1< TYPE > * 2 ); \
   template <> constexpr const uint FFT_Multiplication_border_1_2_exponent< TYPE > = BORDER_1_2_EXPONENT; \
+  static_assert( FFT_Multiplication_border_1_2< TYPE > == 1 << FFT_Multiplication_border_1_2_exponent< TYPE > ); \
   template <> constexpr const uint FFT_Multiplication_border_1_2_inv< TYPE > = BORDER_1_2_INV; \
+  static_assert( ( TYPE ::DeRepresent( FFT_Multiplication_border_1_2< TYPE > ) *= TYPE ::DeRepresent( FFT_Multiplication_border_1_2_inv< TYPE > ) ) == TYPE ::DeRepresent( 1 ) ); \
   template <> inline TruncatedPolynomial< TYPE >& TruncatedPolynomial< TYPE >::operator*=( const Polynomial< TYPE >& f ) { return TruncatedPolynomial< TYPE >::FFT_Multiplication( f ); } \
   template <> inline TruncatedPolynomial< TYPE >& TruncatedPolynomial< TYPE >::operator*=( Polynomial< TYPE >&& f ) { return TruncatedPolynomial< TYPE >::FFT_Multiplication( move( f ) ); } \
 									\
@@ -501,7 +505,6 @@
   }									\
 
 #define DEFINITION_OF_PARTIAL_SPECIALISATION_OF_MULTIPLICATION_OF_POLYNOMIAL_ARBITRARY_MOD( MOD ) \
-   static_assert( ( Mod<MOD>( 1024 ) *= Mod<MOD>( BORDER_1_2_INV ) ) == Mod<MOD>::Derepresent( 1 ) );
   DEFINITION_BODY_OF_PARTIAL_SPECIALISATION_OF_MULTIPLICATION_OF_POLYNOMIAL_ARBITRARY_MOD( Mod<MOD> , const Polynomial<Mod<MOD> >& ); \
   DEFINITION_BODY_OF_PARTIAL_SPECIALISATION_OF_MULTIPLICATION_OF_POLYNOMIAL_ARBITRARY_MOD( Mod<MOD> , Polynomial<Mod<MOD> >&& ); \
   DEFINITION_BODY_OF_PARTIAL_SPECIALISATION_OF_MULTIPLICATION_OF_POLYNOMIAL_ARBITRARY_MOD( Montgomery<MOD> , const Polynomial<Montgomery<MOD> >& ); \
