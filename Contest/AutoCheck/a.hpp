@@ -3,7 +3,7 @@
 #pragma once
 #include "a_Macro.hpp"
 
-void AutoCheck( int& exec_mode );
+void AutoCheck( int& exec_mode , const bool& use_getline );
 AC( DebugHintWA );
 AC( DebugHint );
 AC( LibrarySearch );
@@ -50,10 +50,12 @@ AC( CountingGeneralRelationSubArray );
 AC( CountingSubArrayImageArray );
 AC( CountingSubString );
 AC( CountingMatchingSubString );
+AC( CountingShapedSubString );
 AC( CountingPartitionOfTree );
 AC( CountingSubset );
 AC( CountingStrategy );
 AC( CountingPath );
+AC( CountingYoundDiagram );
 AC( CountingParenthesisSequence );
 AC( Solving );
 AC( Query );

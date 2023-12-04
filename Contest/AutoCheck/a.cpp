@@ -76,6 +76,7 @@ AC( DebugHint )
     CERR( "  - 各(i,j)ごとにS_ijを構築する代わりに各iごとにS_iを構築してS_iとS_jで" );
     CERR( "    S_ijをO(1)で構築することを検討しましょう。" );
     CERR( "- リアクティブ問題でflushと改行をし忘れていませんか？" );
+    CERR( "- gccのvariadic arrayのバグの可能性がありませんか？" );
     CERR( "- 構築可能性の判定問題であれば、時間を計測して打ち切りましょう。" );
   } else if( num == num_temp++ ){
     CERR( "- グラフで辺を持ち過ぎていませんか？" );
@@ -132,6 +133,9 @@ AC( DebugHintWA )
   CERR( "  - keyに狭義全順序の積順序を用いる場合、mapの入れ子を検討しましょう。" );
   CERR( "- 動的計画法においてindexのswapやmodを用いてメモリ削減を行う場合、" );
   CERR( "  各ループの最初にdpテーブルの初期化をし忘れていませんか？" );
+  CERR( "- 数え上げや存在判定において、探すべき対象に課されている条件を忘れていませんか？" );
+  CERR( "  - 三角形を探す代わりに成立条件３つを満たしていない３点を探していませんか？" );
+  CERR( "  - 要素数Kの部分集合を探す代わりに部分集合全体を探していませんか？" );
   CERR( "- 変数名の衝突した局所変数による秘匿化を受けていませんか？" );
   CERR( "- 誤差評価をし忘れていませんか？" );
   CERR( "  - 整数型へのキャスト時の切り捨てが適切かを確認しましょう。" );
@@ -143,6 +147,7 @@ AC( DebugHintWA )
   CERR( "  - 領域を管理する際は「右下の単位矩形が塗られるか」の情報を各格子点に乗せましょう。" );
   CERR( "  - 座標圧縮する際は「塗る領域の端点」を±1せずに管理しましょう。" );
   CERR( "- 複雑な処理をmain関数内に書き過ぎていませんか？" );
+  CERR( "  - 複数回用いる意味のあるexpressionは変数で置きましょう。" );
   CERR( "  - バグの検証の難しい処理は関数化しましょう。" );
   CERR( "  - 関数化された処理は、そこだけをテストしてみましょう。" );
   CERR( "- マルチテストケースで配列にstaticをつけて値が持ち越されていませんか？" );
@@ -868,8 +873,9 @@ AC( Counting )
 	     "与えられた集合の部分集合の数え上げ問題" ,
 	     "戦略／操作方法の数え上げ問題" ,
 	     "経路の数え上げ問題" ,
-	     "操作回数の計算問題" ,
-	     "カタラン数の計算問題"
+	     "ヤング図形の数え上げ問題" ,
+	     "カタラン数の計算問題" ,
+	     "操作回数の計算問題"
 	     );
   if( num == num_temp++ ){
     CALL_AC( CountingExplicitExpression );
@@ -889,6 +895,8 @@ AC( Counting )
     CALL_AC( CountingStrategy );
   } else if( num == num_temp++ ){
     CALL_AC( CountingPath );
+  } else if( num == num_temp++ ){
+    CALL_AC( CountingYoundDiagram );
   } else if( num == num_temp++ ){
     CALL_AC( CountingParenthesisSequence );
   } else if( num == num_temp++ ){
@@ -1100,6 +1108,9 @@ AC( CountingRestrctedSubPermutation )
   CERR( "を参考に順列の全列挙" );
   CERR( "\\Mathematics\\Combinatorial\\Permutation" );
   CERR( "を検討しましょう。" );
+  CERR( "" );
+  CERR( "適宜ヤング図形との関係も検討しましょう。" );
+  CALL_AC( CountingYoundDiagram );
 }
 
 AC( CountingGeneralRelationSubArray )
@@ -1128,13 +1139,16 @@ AC( CountingSubString )
 {
   ASK_NUMBER(
 	     "部分文字列から取得位置情報を落とした文字列全体の数え上げ問題" ,
-	     "マッチングに関する性質を満たす部分文字列の数え上げ問題"
+	     "文字列一致に関する性質を満たす部分文字列の数え上げ問題" ,
+	     "文字配置に関する性質を満たす部分文字列の数え上げ問題"
 	     );
   if( num == num_temp++ ){
     CERR( "文字列を文字の配列とみなすことで、配列の問題に帰着させることができます。" );
     CALL_AC( CountingSubArrayImageArray );
   } else if( num == num_temp++ ){
     CALL_AC( CountingMatchingSubString );
+  } else if( num == num_temp++ ){
+    CALL_AC( CountingShapedSubString );
   }
 }
 
@@ -1143,12 +1157,33 @@ AC( CountingMatchingSubString )
   CERR( "- 自分とマッチングする部分文字列の数え上げ問題はZアルゴリズム" );
   CERR( "  \\Utility\\String\\Z-Algorithm" );
   CERR( "- 回文である部分文字列の数え上げ問題は" );
-  CERR( "  - O(N^2)が通る場合、尺取り法による前計算" );
+  CERR( "  - O(N^2)が通りそうならば、尺取り法による前計算" );
   CERR( "    \\Utility\\String\\Palindrome" );
-  CERR( "  - O(N^2)が通らない場合、Manacherのアルゴリズムやローリングハッシュで前計算" );
+  CERR( "  - O(N^2)が通らなさそうならば、Manacherのアルゴリズムや" );
+  CERR( "    ローリングハッシュで前計算" );
   CERR( "    https://snuke.hatenablog.com/entry/2014/12/02/235837" );
   CERR( "    \\Utility\\String\\RollingHash" );
   CERR( "を検討しましょう。" );
+}
+
+AC( CountingShapedSubString )
+{
+  CERR( "ABC（３文字が異なる）やAAB（先頭２文字が一致し３文字目が異なる）など" );
+  CERR( "文字配置が指定された長さLの部分文字列の数え上げは" );
+  CERR( "- O(26^L N)が通りそうならば山型配列と同様に" );
+  CERR( "  「i文字目までに長さL以下の各文字列sが部分文字列として出現する個数dp[i][s]」" );
+  CERR( "  を管理するiに関する動的計画法" );
+  CERR( "- O(L 26^L log_2 N)が通りそうならば" );
+  CERR( "  「各2羃区間Iに長さL以下の各文字列sが部分文字列として出現する個数dp[I][s]」" );
+  CERR( "  を管理するIに関する分割統治法" );
+  CERR( "を検討しましょう。" );
+  CERR( "" );
+  CERR( "分割統治法で用いるdp[I]は文字列全体のなすモノイドのモノイド環を" );
+  CERR( "文字列配置の不適切な文字列やなくても復元可能な文字列全体の生成するイデアルで" );
+  CERR( "割って得られる非可換環の空文字列係数が1であるもの全体のなす非可換乗法モノイドに" );
+  CERR( "値を取るため、非可換モノイドで抽象化可能なBITやセグメント木を用いることも可能です。" );
+  CERR( "\\Mathematics\\SetTheory\\DirectProduct\\AffineSpace\\BIT\\Template\\Monoid\\a.hpp" );
+  CERR( "\\Mathematics\\SetTheory\\DirectProduct\\AffineSpace\\SegmentTree\\a.hpp" );
 }
 
 AC( CountingPartitionOfTree )
@@ -1165,12 +1200,18 @@ AC( CountingPartitionOfTree )
 
 AC( CountingSubset )
 {
-  CERR( "与えられた集合のサイズをNと置きます。" );
-  CERR( "- O(2^N)が間に合いそうならば、bit全探策" );
-  CERR( "  \\Mathematics\\Geometry\\Graph\\BreadthFirstSearch\\BitExhausiveSearch" );
-  CERR( "- O(N2^N)が間に合いそうならば、部分集合の包含対のbit全探策" );
-  CERR( "  \\Mathematics\\Geometry\\Graph\\BreadthFirstSearch\\BitExhausiveSearch" );
-  CERR( "を検討しましょう。" );
+  ASK_YES_NO( "要素を受け取る関数の部分和を固定した部分集合の数え上げ問題ですか？" );
+  if( reply == "y" ){
+    CERR( "要素に番号を振り、集合を配列とみなして部分和問題に帰着させましょう。" );
+    CALL_AC( CountingSumFixedSubArray );
+  } else {
+    CERR( "与えられた集合のサイズをNと置きます。" );
+    CERR( "- O(2^N)が間に合いそうならば、bit全探策" );
+    CERR( "  \\Mathematics\\Geometry\\Graph\\BreadthFirstSearch\\BitExhausiveSearch" );
+    CERR( "- O(N2^N)が間に合いそうならば、部分集合の包含対のbit全探策" );
+    CERR( "  \\Mathematics\\Geometry\\Graph\\BreadthFirstSearch\\BitExhausiveSearch" );
+    CERR( "を検討しましょう。" );
+  };
 }
 
 AC( CountingStrategy )
@@ -1213,7 +1254,8 @@ AC( CountingPath )
     CERR( "  の間の関係式を立式" );
     CERR( "を検討しましょう。" );
     CERR( "" );
-    CERR( "適宜カタラン数との関係も検討しましょう。" );
+    CERR( "適宜カタラン数やヤング図形との関係も検討しましょう。" );
+    CALL_AC( CountingYoundDiagram );
     CALL_AC( CountingParenthesisSequence );
   } else if( num == num_temp++ ){
     CERR( "ループの不能な有向グラフは整礎なので、各点pごとに" );
@@ -1223,6 +1265,16 @@ AC( CountingPath )
   }
 }
 
+AC( CountingYoundDiagram )
+{
+  CERR( "標準ヤングタブローの個数はフック長公式で計算できます。")
+  CERR( "- 2×nの標準ヤングタブローと第nカタラン数の関係" );
+  CERR( "- RS対応（型の等しいヤングタブローと順列の対応）" );
+  CERR( "  https://en.wikipedia.org/wiki/Robinson%E2%80%93Schensted_correspondence" );
+  CERR( "- 半標準ヤングタブローと非交叉なパスの組との対応" );
+  CERR( "を検討しましょう。")
+}
+
 AC( CountingParenthesisSequence )
 {
   CERR( "第nカタラン数Cnは(2n)!/(n+1)!n!です。" );
@@ -1230,7 +1282,7 @@ AC( CountingParenthesisSequence )
   CERR( "- 2n成分の総和が0で左端からの始端和が非負な±1列" );
   CERR( "- nノードの二分木" );
   CERR( "- n×n格子で左下から右上まで対角線を跨がず最初に右へ行く最短経路" );
-  CERR( "- 2×nの標準ヤング図形（行／列ともに狭義単調増大になるような番号づけ）" );
+  CERR( "- 2×nの標準ヤングタブロー（行／列ともに狭義単調増大になるような番号づけ）" );
   CERR( "- 円上のn頂点の多角形分割" );
   CERR( "- 円上のn+2角形の三角形分割" );
   CERR( "- 円上の2n頂点の非交差かつ次数2な無向辺の張り方" );
