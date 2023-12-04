@@ -3,6 +3,8 @@
 #pragma once
 #include "../a.hpp"
 
+// verify:https://yukicoder.me/submissions/935998
+
 template <typename T , template <typename...> typename V1 , template <typename...> typename V2> inline void SetMultipointEvaluation( const Polynomial<T>& f , const V1<T>& point , V2<T>& answer );
 
 template <typename T , template <typename...> typename V1 , template <typename...> typename V2 , template <typename...> typename V3>
