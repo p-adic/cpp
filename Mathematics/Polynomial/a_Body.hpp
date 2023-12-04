@@ -376,6 +376,35 @@ T& Prod( V<T>& f )
 
 }
 
+template <typename T> inline Polynomial<T> Differential( const Polynomial<T>& f ) { return Differential<T>( f , 1 ); }
+
+template <typename T>
+Polynomial<T> Differential( const uint& n , const Polynomial<T>& f )
+{
+
+  const uint& size = f.size();
+
+  if( size < n ){
+
+    return Polynomial<T>::zero();
+
+  }
+
+  vector<T> df( size - n );
+  T coef = T::Factorial( n );
+  uint i = n;
+
+  while( i < size ){
+
+    df[i - n] = f[i] * coef;
+    i++;
+    ( coef *= i ) /= ( i - n );
+
+  }
+
+  return Polynomial<T>( move( df ) );
+
+}
 
 // à»â∫TruncatedPolynomial<T>ÇégópÅB
 template <typename T> inline Polynomial<T>& Polynomial<T>::operator/=( const Polynomial<T>& f ) { return m_size < f.m_size ? *this : operator=( Quotient( *this , f ) ); }
@@ -386,7 +415,7 @@ Polynomial<T> Polynomial<T>::Quotient( const Polynomial<T>& f0 , const Polynomia
 
   if( f0.m_size < f1.m_size ){
 
-    return f0;
+    return Polynomial<T>::zero();
 
   }
 
@@ -398,14 +427,7 @@ Polynomial<T> Polynomial<T>::Quotient( const Polynomial<T>& f0 , const Polynomia
 
   const uint f0_transpose_size = f0.m_size - f1.m_size + 1;
   const uint f1_transpose_size = f0_transpose_size < f1.m_size ? f0_transpose_size : f1.m_size;
-  return TransposeQuotient( f0 , f0_transpose_size , Inverse( TruncatedPolynomial<T>( f0_transpose_size , Transpose( f1 , f1_transpose_size ) ) ) , f1.m_size );
-
-}
-
-template <typename T>
-Polynomial<T> Polynomial<T>::TransposeQuotient( const Polynomial<T>& f0 , const uint& f0_transpose_size , const Polynomial<T>& f1_transpose_inverse , const uint& f1_size )
-{
-
+  const TruncatedPolynomial<T> f1_transpose_inverse = Inverse( TruncatedPolynomial<T>( f0_transpose_size , Transpose( f1 , f1_transpose_size ) ) ):
   TruncatedPolynomial<T> f0_transpose{ f0_transpose_size , Transpose( f0 , f0_transpose_size ) };
   f0_transpose *= f1_transpose_inverse;
 

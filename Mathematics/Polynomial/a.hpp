@@ -3,7 +3,8 @@
 // 非常によくバグるので、更新したら必ずverifyすること！
 // verify:
 // https://yukicoder.me/submissions/892588
-// https://yukicoder.me/submissions/916072
+// https://yukicoder.me/submissions/919378
+// https://judge.yosupo.jp/submission/175535
 
 #pragma once
 #include <vector>
@@ -12,11 +13,18 @@
 
 template <typename T> class TruncatedPolynomial;
 
+template <typename T> TruncatedPolynomial<T> Differential( const uint& n , const TruncatedPolynomial<T>& f );
+template <typename T> TruncatedPolynomial<T> TruncatedDifferential( const TruncatedPolynomial<T>& f , const uint& N_output_start_plus_one );
+template <typename T> TruncatedPolynomial<T> TruncatedIntegral( const TruncatedPolynomial<T>& f , const uint& N_output_start );
+
 template <typename T>
 class Polynomial
 {
 
   friend class TruncatedPolynomial<T>;
+  friend TruncatedPolynomial<T> Differential<T>( const uint& n , const TruncatedPolynomial<T>& f );
+  friend TruncatedPolynomial<T> TruncatedDifferential<T>( const TruncatedPolynomial<T>& f , const uint& N_output_start_plus_one );
+  friend TruncatedPolynomial<T> TruncatedIntegral<T>( const TruncatedPolynomial<T>& f , const uint& N_output_start );
 
 protected:
   vector<T> m_f;
@@ -77,7 +85,6 @@ public:
   inline string Display() const noexcept;
 
   static Polynomial<T> Quotient( const Polynomial<T>& f0 , const Polynomial<T>& f1 );
-  static Polynomial<T> TransposeQuotient( const Polynomial<T>& f0 , const uint& f0_transpose_size , const Polynomial<T>& f1_transpose_inverse , const uint& f1_size );
   static Polynomial<T> Transpose( const Polynomial<T>& f , const uint& f_transpose_size );
 
   static inline const Polynomial<T>& zero();
@@ -106,3 +113,7 @@ template <typename T> inline Polynomial<T> operator<<( const Polynomial<T>& f , 
 // V<T>はeraseを持つ必要がある。
 template <typename T , template <typename...> typename V>
 T& Prod( V<T>& f );
+
+template <typename T> inline Polynomial<T> Differential( const Polynomial<T>& f );
+
+template <typename T> Polynomial<T> Differential( const uint& n , const Polynomial<T>& f );
