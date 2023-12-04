@@ -1,5 +1,11 @@
 // c:/Users/user/Documents/Programming/Mathematics/Analysis/FFT/a.hpp
 
+// 非常によくバグるので、更新したら必ずverifyすること！
+// verify:
+// https://yukicoder.me/submissions/892588
+// https://yukicoder.me/submissions/919378
+// https://judge.yosupo.jp/submission/175409
+
 #pragma once
 #include "a_Macro.hpp"
 
@@ -28,7 +34,7 @@ template <typename T> inline void FFT( vector<T>& f , const uint& N_input_start 
 // (f[N_input_start],...,f[N_input_lim - 1],0,...)
 // を高速フーリエ変換したものをgと置き、
 // fの係数列を長さN_input_start + N_output_limの配列
-// (f[0],...,f[N_input_start - 1],N_output_shift個の0,g[N_output_start],...,g[N_output_lim])
+// (f[0],...,f[N_input_start - 1],N_output_start個の0,g[N_output_start],...,g[N_output_lim])
 // に置き換える。
 template <typename T> inline void FFT( vector<T>& f , const uint& N_input_start , const uint& N_input_lim , const uint& N_output_start , const uint& N_output_lim , const uint& two_power , const uint& exponent );
 
@@ -36,7 +42,7 @@ template <typename T> inline void FFT( vector<T>& f , const uint& N_input_start 
 // (f[N_input_start],...,f[N_input_lim - 1],0,...)
 // を逆高速フーリエ変換したものをgと置き、
 // fの係数列を長さN_input_start + two_powerの配列
-// (f[0],...,f[N_input_start - 1],,g[0],...,g[two_power - 1])
+// (f[0],...,f[N_input_start - 1],g[0],...,g[two_power - 1])
 // に置き換える。
 template <typename T> inline void IFFT( vector<T>& f , const uint& N_input_start , const uint& N_input_lim , const uint& two_power , const T& two_power_inv , const uint& exponent );
 
@@ -44,7 +50,7 @@ template <typename T> inline void IFFT( vector<T>& f , const uint& N_input_start
 // (f[N_input_start],...,f[N_input_lim - 1],0,...)
 // を逆高速フーリエ変換したものをgと置き、
 // fの係数列を長さN_input_start + N_output_limの配列
-// (f[0],...,f[N_input_start - 1],N_output_shift個の0,g[N_output_start],...,g[N_output_lim])
+// (f[0],...,f[N_input_start - 1],N_output_start個の0,g[N_output_start],...,g[N_output_lim])
 // に置き換える。
 template <typename T> inline void IFFT( vector<T>& f , const uint& N_input_start , const uint& N_input_lim , const uint& N_output_start , const uint& N_output_lim , const uint& two_power , const T& two_power_inv , const uint& exponent );
 

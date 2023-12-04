@@ -27,7 +27,7 @@ template <typename T>
 void CooleyTukey( vector<T>& f , const uint& N_input_start , const uint& N_input_lim , const uint& N_output_start , const uint& N_output_lim , const uint& two_power , const uint& exponent , const T ( &PRT )[LimitOfPowerForFFT<T>] )
 {
 
-  const uint length = two_power + N_input_start;
+  const uint length = two_power + N_input_start + N_output_start;
   f.reserve( length );
 
   while( f.size() < length ){
@@ -153,7 +153,13 @@ void CooleyTukey( vector<T>& f , const uint& N_input_start , const uint& N_input
     f.pop_back();
     
   }
-  
+
+  for( uint i = 0 ; i < N_output_start ; i++ ){
+
+    f[N_input_start + i] = 0;
+    
+  }
+
   return;
 
 }
