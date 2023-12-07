@@ -1,0 +1,28 @@
+# PartitionOfUnity(p,q,u,v)
+# u,vに単位の分割（p*u+q*v=gcd(p,q)）を格納
+
+b,c=[p,q],[[1,0],[0,1]]
+i=p<q
+j=1-i
+while b[j]:
+	d=b[i]//b[j]
+	c[i][i]-=d*c[j][i]
+	c[i][j]-=d*c[j][j]
+	b[i]-=d*b[j]
+	i,j=j,i
+u,v=c[i][0],c[i][1]
+
+# ChineseRemainderTheorem(p,s,q,t)
+# gにgcd(p,q)、aに解（a≡s (mod p), a≡t (mod q)）を格納
+
+b,c=[p,q],[[1,0],[0,1]]
+i=p<q
+j=1-i
+while b[j]:
+	d=b[i]//b[j]
+	c[i][i]-=d*c[j][i]
+	c[i][j]-=d*c[j][j]
+	b[i]-=d*b[j]
+	i,j=j,i
+g=b[i]
+a=s%g+t//g*p*c[i][0]+s//g*q*c[i][1]if s%g==t%g else -1
