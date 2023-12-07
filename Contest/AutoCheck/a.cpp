@@ -218,7 +218,8 @@ AC( ExplicitExpression )
 	     "序数の計算問題" ,
 	     "確率／期待値の計算問題" ,
 	     "操作回数の計算問題" ,
-	     "面積の計算問題" ,
+	     "augmentationや畳み込みの計算問題" ,
+	     "面積の計算問題"
 	     );
   if( num == num_temp++ ){
     CALL_AC( ExplicitExpressionUnary );
@@ -236,6 +237,8 @@ AC( ExplicitExpression )
     CALL_AC( ExplicitExpressionProbability );
   } else if( num == num_temp++ ){
     CALL_AC( ExplicitExpressionCountingOperation );
+  } else if( num == num_temp++ ){
+    CALL_AC( ExplicitExpressionConvolution );
   } else if( num == num_temp++ ){
     CALL_AC( ExplicitExpressionArea );
   }
@@ -561,6 +564,51 @@ AC( ExplicitExpressionCountingOperation )
   CERR( "それぞれの区間での処理を計算することを検討しましょう。" );
 }
 
+AC( ExplicitExpressionConvolution )
+{
+  ASK_NUMBER(
+	     "多項式に関する計算" ,
+	     "cup/capに関する計算"
+	     "gcd/lcmに関する計算"
+	     "その他のjoin半束上の計算"
+	     );
+  if( num == num_temp++ ){
+    CERR( "- 次数の大きな多項式と小さな多項式の積は愚直乗算" );
+    CERR( "  Mathematics\\Polynomial\\a.hpp" );
+    CERR( "- 通常の積は高速フーリエ変換と中国剰余定理" );
+    CERR( "  Mathematics\\Analysis\\FFT" );
+    CERR( "- 冪乗の積は高速フーリエ変換とexpとlog" );
+    CERR( "  Mathematics\\Analysis\\FFT" );
+  } else if( num == num_temp++ ){
+    CERR( "- 部分集合の各部分集合を渡るaugmentationは高速ゼータ変換" );
+    CERR( "  Mathematics\\Combinatorial\\ZetaTransform" );
+    CERR( "- 関数値が要素数に依存する場合の畳み込みは高速ゼータ変換／高速メビウス変換" );
+    CERR( "  Mathematics\\Combinatorial\\ZetaTransform" );
+    CERR( "- 関数値が要素数に依存しない場合の畳み込みはマーラー変換" );
+    CERR( "  Mathematics\\Combinatorial\\ZetaTransform\\MahlerTransform" );
+  } else if( num == num_temp++ ){
+    CERR( "- Nの各約数を渡るaugmentationは約数列挙で総和計算" );
+    CERR( "  Mathematics\\Arithmetic\\Prime\\Divisor" );
+    CERR( "- [1,N]上の関数の畳み込みは約数ゼータ変換／約数メビウス変換" );
+    CERR( "  Mathematics\\Combinatorial\\ZetaTransform" );
+    CERR( "  Mathematics\\Combinatorial\\ZetaTransform\\Divisor" );
+    CERR( "- Nの約数上の関数の畳み込みはNを素因数分解した上で約数ゼータ変換の" );
+    CERR( "  N/無閉包数での値のみを式変形で計算し各点乗算をして" );
+    CERR( "  無閉包数の素因数の個数を使ったメビウス関数で高速メビウス変換の計算" );
+    CERR( "  Mathematics\\Arithmetic\\Prime\\Divisor" );
+  } else if( num == num_temp++ ){
+    CERR( "- 要素sの終切片でのaugmentationは隣接代数上のゼータ変換" );
+    CERR( "  Mathematics\\Combinatorial\\ZetaTransform" );
+    CERR( "- joinに関する畳み込みは隣接代数上のゼータ変換／メビウス変換" );
+    CERR( "  Mathematics\\Combinatorial\\ZetaTransform" );
+  }
+  CERR( "を検討しましょう。" );
+  CERR( "" );
+  CERR( "複数回の乗算は分割統治" );
+  CERR( "Mathematics\\Arithmetic\\a.hpp" );
+
+}
+
 AC( ExplicitExpressionArea )
 {
   CERR( "- 三角形の面積は外積" );
@@ -777,35 +825,17 @@ AC( MinimisationMovingCost )
 {
   ASK_NUMBER(
 	     "１始点多終点最小コスト移動（迷路）問題" ,
-	     "多始点多終点最小コスト移動（被覆）問題" ,
+	     "多始点１終点最小コスト移動（競争）問題" ,
+	     "多始点多終点最小コスト移動（開被覆）問題" ,
 	     "１始点多経由点最小コスト移動（スタンプラリー）問題"
 	     );
   if( num == num_temp++ ){
-    CERR( "- コストがなくO(V+E)が通りそうならば幅優先探索" );
-    CERR( "  \\Mathematics\\Geometry\\Graph\\BreadthFirst" );
-    CERR( "- コストが0か1でO(V+E)が通りそうならば01幅優先探索" );
-    CERR( "  \\Mathematics\\Geometry\\Graph\\BreadthFirst\\ZeroOne" );
-    CERR( "- コスト総和上限をCとしO((V+E)C)が間に合いそうならば" );
-    CERR( "  コストも状態に含めたグラフ上での幅優先探索" );
-    CERR( "  \\Mathematics\\Geometry\\Graph\\BreadthFirst" );
-    CERR( "- O((V+E)log_2 E)が間に合いそうならばダイクストラ法" );
-    CERR( "  \\Mathematics\\Geometry\\Graph\\Dijkstra" );
+    CALL_AC( MinimisationSolvingMaze );
   } else if( num == num_temp++ ){
-    CERR( "- コストがなくO(V+E)が通りそうならば、多点幅優先探索か" );
-    CERR( "  頂点を１つ追加し各始点に辺を張ったグラフ上での幅優先探索" );
-    CERR( "  \\Mathematics\\Geometry\\Graph\\BreadthFirst" );
-    CERR( "- コストが0か1でO(V+E)が通りそうならば、多点01幅優先探索" );
-    CERR( "  頂点を１つ追加し各始点に辺を張ったグラフ上での01幅優先探索" );
-    CERR( "  \\Mathematics\\Geometry\\Graph\\BreadthFirst\\ZeroOne" );
-    CERR( "- max演算を考えておりO(E(log_2 E + α(V)))が通りそうならば、" );
-    CERR( "  重みで辺をソートして素集合データ構造" );
-    CERR( "  \\Utility\\VLTree\\UnionFindForest" );
-    CERR( "- O((V+E)log_2 E)が通りそうならば、" );
-    CERR( "  頂点を１つ追加し各始点に辺を張ったグラフ上でのダイクストラ法" );
-    CERR( "  \\Mathematics\\Geometry\\Graph\\Dijkstra" );
-    CERR( "- O(V^3)が通りそうならば、" );
-    CERR( "  ワーシャルフロイド法" );
-    CERR( "  \\Mathematics\\Geometry\\Graph\\FloydWarshall" );
+    CERR( "辺を逆にすることで１始点多終点最小コスト移動（迷路）問題に帰着されます。" );
+    CALL_AC( MinimisationSolvingMaze );
+  } else if( num == num_temp++ ){
+    CALL_AC( MinimisationSolvingOpenCovering );
   } else if( num == num_temp++ ){
     CERR( "- HeldKarp法" );
     CERR( "- 移動方法を分類するパラメータの全探策" );
@@ -824,6 +854,38 @@ AC( MinimisationMovingCost )
   CERR( "「任意の経路pに対し、E'に属す辺のみを通るある経路p'が存在して、" );
   CERR( "  pのコスト>=p'コストである」" );
   CERR( " を満たすものを探すことを検討しましょう。" );
+}
+
+AC( MinimisationSolvingMaze )
+{
+  CERR( "- コストがなくO(V+E)が通りそうならば幅優先探索" );
+  CERR( "  \\Mathematics\\Geometry\\Graph\\BreadthFirst" );
+  CERR( "- コストが0か1でO(V+E)が通りそうならば01幅優先探索" );
+  CERR( "  \\Mathematics\\Geometry\\Graph\\BreadthFirst\\ZeroOne" );
+  CERR( "- コスト総和上限をCとしO((V+E)C)が間に合いそうならば" );
+  CERR( "  コストも状態に含めたグラフ上での幅優先探索" );
+  CERR( "  \\Mathematics\\Geometry\\Graph\\BreadthFirst" );
+  CERR( "- O((V+E)log_2 E)が間に合いそうならばダイクストラ法" );
+  CERR( "  \\Mathematics\\Geometry\\Graph\\Dijkstra" );
+}
+
+AC( MinimisationSolvingOpenCovering )
+{
+  CERR( "- コストがなくO(V+E)が通りそうならば、多点幅優先探索か" );
+  CERR( "  頂点を１つ追加し各始点に辺を張ったグラフ上での幅優先探索" );
+  CERR( "  \\Mathematics\\Geometry\\Graph\\BreadthFirst" );
+  CERR( "- コストが0か1でO(V+E)が通りそうならば、多点01幅優先探索" );
+  CERR( "  頂点を１つ追加し各始点に辺を張ったグラフ上での01幅優先探索" );
+  CERR( "  \\Mathematics\\Geometry\\Graph\\BreadthFirst\\ZeroOne" );
+  CERR( "- max演算を考えておりO(E(log_2 E + α(V)))が通りそうならば、" );
+  CERR( "  重みで辺をソートして素集合データ構造" );
+  CERR( "  \\Utility\\VLTree\\UnionFindForest" );
+  CERR( "- O((V+E)log_2 E)が通りそうならば、" );
+  CERR( "  頂点を１つ追加し各始点に辺を張ったグラフ上でのダイクストラ法" );
+  CERR( "  \\Mathematics\\Geometry\\Graph\\Dijkstra" );
+  CERR( "- O(V^3)が通りそうならば、" );
+  CERR( "  ワーシャルフロイド法" );
+  CERR( "  \\Mathematics\\Geometry\\Graph\\FloydWarshall" );
 }
 
 AC( MaximisationStringMatching )
