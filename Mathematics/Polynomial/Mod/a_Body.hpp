@@ -14,16 +14,16 @@ Polynomial<T> ModularInverse( Polynomial<T> f , Polynomial<T> g )
   Polynomial<T> coeff_g{ Polynomial<T>::zero() };
   f %= g;
 
-  while( f.size() > 1 ){
+  while( f.size() > 1u ){
 
     const uint& f_size = f.size();
     const uint& g_size = g.size();
+    const uint& coeff_f_size = coeff_f.size();
 
     while( f_size <= g_size ){
       
       auto diff = g_size - f_size;
       T& r = g[g_size - 1] /= f[f_size - 1];
-      const uint& coeff_f_size = coeff_f.size();
     
       for( uint d = 0 ; d < coeff_f_size ; d++ ){
 
@@ -47,7 +47,7 @@ Polynomial<T> ModularInverse( Polynomial<T> f , Polynomial<T> g )
 
   }
 
-  assert( coeff_g.size() == 1u );
+  assert( f.size() == 1u );
   const T& one = Polynomial<T>::const_one();
   const uint& coeff_f_size = coeff_f.size();
   const T r = one / f[0];
