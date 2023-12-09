@@ -9,7 +9,7 @@ class BernulliNumberCalculator
 {
 
 private:
-  // Bernulli”B_0=1, B_1=1/2, B_2=1/6, ..., B_{length-1}‚ğŠi”[‚·‚éB
+  // Bernulli”B_0=1, B_1=-1/2, B_2=1/6, ..., B_{length-1}‚ğŠi”[‚·‚éB
   T m_val[length];
 
 public:
