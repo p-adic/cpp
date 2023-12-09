@@ -555,6 +555,9 @@ AC( ExplicitExpressionProbability )
   CERR( "- 期待値計算は" );
   CERR( "  - 上記方法での確率計算" );
   CERR( "  - 対象を独立な和で表して線形性" );
+  CERR( "  - 操作／遷移回数なら期待値間の関係式を求め行列累乗やボスタン森法" );
+  CERR( "    \\Mathematics\\LinearAlgebra" );
+  CERR( "    \\Mathematics\\Polynomial\\BostanMori" );
   CERR( "を検討しましょう。" );
 }
 
@@ -579,6 +582,13 @@ AC( ExplicitExpressionConvolution )
     CERR( "  Mathematics\\Polynomial\\Truncate" );
     CERR( "- 冪乗の積は高速フーリエ変換とexpとlog" );
     CERR( "  Mathematics\\Polynomial\\Truncate" );
+    CERR( "- f mod gの逆元計算は" );
+    CERR( "  - deg(g)が小さいならば拡張ユークリッドの互助法" );
+    CERR( "    Mathematics\\Polynomial\\Mod" );
+    CERR( "  - deg(f)が小さいならば1から(g mod f)^{-1}の代表元とg%fの積を引いて" );
+    CERR( "    得られるfの倍元をfで割った商" );
+    CERR( "- f/gの係数計算はボスタン森法" );
+    CERR( "  Mathematics\\Polynomial\\BostanMori" );
   } else if( num == num_temp++ ){
     CERR( "- 部分集合の各部分集合を渡るaugmentationは高速ゼータ変換" );
     CERR( "  Mathematics\\Combinatorial\\ZetaTransform" );
