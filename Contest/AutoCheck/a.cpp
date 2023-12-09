@@ -278,7 +278,7 @@ AC( ExplicitExpressionUnaryLinearRecursion )
   CERR( "  \\Mathematics\\LinearAlgebra" );
   CERR( "- B=998244353かつ初項L項も漸化式を満たしかつO(N log N)が間に合いそうならば" );
   CERR( "  1/(1-sum(i,0,L){c_i x^i})のN次係数の高速フーリエ変換による計算" );
-  CERR( "  \\Mathematics\\Polynomial\\Mod" );
+  CERR( "  \\Mathematics\\Polynomial\\Truncate" );
   CERR( "- 係数列(c_i)_iが周期Pを持ちO(PN log N)が間に合いそうならばP個の区間加算BIT" );
   CERR( "  \\Mathematics\\SetTheory\\DirectProduct\\AffineSpace\\BIT\\IntervalAddo" );
   CERR( "- 係数列(c_i)_iが単調でD階差分が定数列でO((N+L)D)が間に合いそうならば" );
@@ -375,8 +375,7 @@ AC( ExplicitExpressionArraySum )
     CERR( "  内積は片方の添え字を反転させることで畳み込みに帰着させることができます。" );
     CERR( "  配列への操作がシフトである場合は繰り返し内積を求めることになるので、" );
     CERR( "  適当な法での高速フーリエ変換" );
-    CERR( "  \\Mathematics\\Arithmetic\\Mod" );
-    CERR( "  \\Mathematics\\Polynoial" );
+    CERR( "  \\Mathematics\\Polynoial\\Truncate" );
     CERR( "- 2変数関数fと数列(a_i)_iが与えられ、sum_{i,j} f(a_i,a_j)を求める場合、" );
     CERR( "  f(x,y)=sum_k g_k(x) h_k(y)と表示できれば" );
     CERR( "  (g_k(a_i))_iの累積和と(h_k(a_j))_jの積の総和に帰着されます。" );
@@ -576,9 +575,9 @@ AC( ExplicitExpressionConvolution )
     CERR( "- 次数の大きな多項式と小さな多項式の積は愚直乗算" );
     CERR( "  Mathematics\\Polynomial\\a.hpp" );
     CERR( "- 通常の積は高速フーリエ変換と中国剰余定理" );
-    CERR( "  Mathematics\\Analysis\\FFT" );
+    CERR( "  Mathematics\\Polynomial\\Truncate" );
     CERR( "- 冪乗の積は高速フーリエ変換とexpとlog" );
-    CERR( "  Mathematics\\Analysis\\FFT" );
+    CERR( "  Mathematics\\Polynomial\\Truncate" );
   } else if( num == num_temp++ ){
     CERR( "- 部分集合の各部分集合を渡るaugmentationは高速ゼータ変換" );
     CERR( "  Mathematics\\Combinatorial\\ZetaTransform" );
@@ -756,8 +755,7 @@ AC( MaximisationSubArraySum )
     CERR( "- O((N+V)log_2 V)が通りそうでVが10^5オーダーで" );
     CERR( "  プロス素数Pを法とするならば法Pでの高速フーリエ変換による" );
     CERR( "  exp(logの総和)計算" );
-    CERR( "  \\Mathematics\\Arithmetic\\Mod" );
-    CERR( "  \\Mathematics\\Polynomial" );
+    CERR( "  \\Mathematics\\Polynomial\\Truncate" );
     CERR( "を検討しましょう。" );
   }
 }
@@ -1081,8 +1079,7 @@ AC( CountingSumFixedSubArray )
     CERR( "- O((N+V)log_2 V)が通りそうでVが10^5オーダーで" );
     CERR( "  プロス素数Pを法とするならば法Pでの高速フーリエ変換による" );
     CERR( "  exp(logの総和)計算" );
-    CERR( "  \\Mathematics\\Arithmetic\\Mod" );
-    CERR( "  \\Mathematics\\Polynomial" );
+    CERR( "  \\Mathematics\\Polynomial\\Truncate" );
   }
   CERR( "を検討しましょう。" );
 }
