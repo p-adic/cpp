@@ -76,6 +76,7 @@ public:
 
   inline const vector<T>& GetCoefficient() const noexcept;
   inline const uint& size() const noexcept;
+  inline void resize( const uint& deg_plus ) noexcept;
 
   inline void swap( Polynomial<T>& f );
   inline void swap( vector<T>& f );
@@ -108,11 +109,6 @@ template <typename T> inline Polynomial<T> operator/( const Polynomial<T>& f0 , 
 template <typename T> inline Polynomial<T> operator/( const Polynomial<T>& f0 , const Polynomial<T>& f1 );
 template <typename T , typename P> inline Polynomial<T> operator%( const Polynomial<T>& f0 , const P& f1 );
 template <typename T> inline Polynomial<T> operator<<( const Polynomial<T>& f , const T& t );
-
-// 多項式などの列の総乗を分割統治で計算し、その結果を第1成分に格納して参照返しする。
-// V<T>はeraseを持つ必要がある。
-template <typename T , template <typename...> typename V>
-T& Prod( V<T>& f );
 
 template <typename T> inline Polynomial<T> Differential( const Polynomial<T>& f );
 

@@ -238,6 +238,7 @@ template <typename T> inline Polynomial<T> Polynomial<T>::operator-() const { re
 
 template <typename T> inline const vector<T>& Polynomial<T>::GetCoefficient() const noexcept { return m_f; }
 template <typename T> inline const uint& Polynomial<T>::size() const noexcept { return m_size; }
+template <typename T> inline void Polynomial<T>::resize( const uint& deg_plus ) noexcept { m_f.resize( m_size = deg_plus ); }
 
 template <typename T> inline void Polynomial<T>::swap( Polynomial<T>& f ) { m_f.swap( f.m_f ); swap( m_size , f.m_size ); }
 template <typename T> inline void Polynomial<T>::swap( vector<T>& f ) { m_f.swap( f ); m_size = m_f.size(); }
@@ -340,42 +341,6 @@ template <typename T , typename P> inline Polynomial<T> operator-( const Polynom
 template <typename T , typename P> inline Polynomial<T> operator*( const Polynomial<T>& f0 , const P& f1 ) { return move( Polynomial<T>( f0 ) *= f1 ); }
 template <typename T> inline Polynomial<T> operator/( const Polynomial<T>& f0 , const T& t1 ) { return move( Polynomial<T>( f0 ) /= t1 ); }
 
-template <typename T , template <typename...> typename V>
-T& Prod( V<T>& f )
-{
-
-  if( f.empty() ){
-
-    f.push_back( T( 1 ) );
-
-  }
-
-  if( f.size() == 1 ){
-
-    return f.front();
-
-  }
-
-  auto itr = f.begin() , end = f.end();
-  
-  while( itr != end ){
-
-    T& t = *itr;
-    itr++;
-
-    if( itr != end ){
-
-      t *= *itr;
-      itr = f.erase( itr );
-      
-    }
-
-  }
-
-  return Prod( f );
-
-}
-
 template <typename T> inline Polynomial<T> Differential( const Polynomial<T>& f ) { return Differential<T>( f , 1 ); }
 
 template <typename T>
@@ -433,7 +398,7 @@ Polynomial<T> Polynomial<T>::Quotient( const Polynomial<T>& f0 , const Polynomia
 
   for( uint d0 = ( f0_transpose_size + 1 ) / 2 ; d0 < f0_transpose_size ; d0++ ){
 
-    ::swap( f0_transpose.Polynomial<T>::m_f[d0] , f0_transpose.Polynomial<T>::m_f[ f0_transpose_size - 1 - d0 ] );
+    ::swap( f0_transpose[d0] , f0_transpose[ f0_transpose_size - 1 - d0 ] );
 
   }
 
