@@ -1,4 +1,4 @@
-// c:/Users/user/Documents/Programming/Mathematics/Polynomial/Truncate/a_Macro.hpp
+// c:/Users/user/Documents/Programming/Mathematics/Polynomial/Mod/a_Macro.hpp
 
 #pragma once
 
@@ -309,8 +309,8 @@
 									\
   const uint product_length = N_input_start_0_start_1 + two_power;	\
   DECLARATION_OF_F0;							\
-  FFT<T>( f0 , N_INPUT_START_0 , N_INPUT_LIM_0 , two_power , exponent ); \
   DECLARATION_OF_F1;							\
+  FFT<T>( f0 , N_INPUT_START_0 , N_INPUT_LIM_0 , two_power , exponent ); \
   FFT<T>( f1 , N_INPUT_START_1 , N_INPUT_LIM_1 , two_power , exponent ); \
   RESIZE_VECTOR_FOR_IFFT;						\
 									\
