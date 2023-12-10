@@ -1,0 +1,5 @@
+// ../Truncate/compress.txt
+// ../../Combinatorial/BernulliNumber/compress.txt
+// ÇêÊÇ…ì\ÇÈÅB
+
+TE <TY T,uint deg_max>PO<T> CumulativeSum(PO<T> f,CO bool& EXial = false){CO uint f_SZ = f.SZ();if(f_SZ == 0){RE f;}CO uint deg = f_SZ - 1;assert(deg <= deg_max);CO T f0 = f[0];CO uint deg_half =(deg + 1)/ 2;if(!EXial){for(uint d = 1;d <= deg;d++){f[d] *= T::Factorial(d);}}for(uint d = 0;d < deg_half;d++){swap(f[d],f[deg - d]);}f.reSZ(deg);TRPO<T> f_transpose{f_SZ,MO(f)};ST CO BernulliNumberCalculator<T,deg_max+1> B{false};ST PO<T> g{};ST uint g_SZ = 0;WH(deg >= g_SZ){g[g_SZ] = B[g_SZ] * T::FactorialInverse(g_SZ);g_SZ++;}f_transpose *= g;f_transpose.SetTruncation(f_SZ + 1);CO uint f_SZ_half =(f_SZ + 1)/ 2;for(uint d = 0;d < f_SZ_half;d++){swap(f_transpose[d],f_transpose[f_SZ - d]);}if(!EXial){for(uint d = 1;d<= f_SZ;d++){f_transpose[d] *= T::FactorialInverse(d);}}f_transpose[1] += f_transpose[0] = f0;RE f_transpose;}
