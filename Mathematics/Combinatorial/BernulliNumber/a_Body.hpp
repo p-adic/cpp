@@ -5,7 +5,7 @@
 
 #include "../../Polynomial/a_Body.hpp"
 
-template <typename T , int length> inline BernulliNumberCalculator<T,length>::BernulliNumberCalculator() : m_val() 
+template <typename T , int length> inline BernulliNumberCalculator<T,length>::BernulliNumberCalculator( const bool& negative ) : m_val() 
 {
 
   TruncatedPolynomial<T> f{ length };
@@ -21,6 +21,12 @@ template <typename T , int length> inline BernulliNumberCalculator<T,length>::Be
   for( int i = 0 ; i < length ; i++ ){
 
     m_val[i] = move( f[i] *= T::Factorial( i ) );
+
+  }
+
+  if( !negative && length > 1 ){
+
+    m_val[1] *= -1;
 
   }
 
