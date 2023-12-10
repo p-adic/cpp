@@ -421,42 +421,6 @@ Polynomial<T>& Polynomial<T>::operator%=( const Polynomial<T>& f )
 
 }
 
-template <typename T >
-Polynomial<T>& Polynomial<T>::operator<<=( const T& t )
-{
-
-  if( m_size > 0 ){
-
-    for( uint d = 0 ; d < m_size ; d++ ){
-
-      m_f[d] *= T::Factorial( d );
-
-    }
-
-    TruncatedPolynomial<T> exp_t_transpose{ m_size * 2 };
-    T power_t = const_one();
-  
-    for( uint d = 0 ; d < m_size ; d++ ){
-
-      exp_t_transpose[m_size - 1 - d] = power_t * T::FactorialInverse( d );
-      power_t *= t;
-
-    }
-
-    exp_t_transpose *= *this;
-  
-    for( uint d = 0 ; d < m_size ; d++ ){
-
-      m_f[d] = exp_t_transpose.Polynomial<T>::m_f[d + m_size - 1] * T::FactorialInverse( d );
-
-    }
-
-  }
-
-  return *this;
-
-}
-
 template <typename T> inline Polynomial<T> operator/( const Polynomial<T>& f0 , const Polynomial<T>& f1 ) { return Polynomial<T>::Quotient( f0 , f1 ); }
 template <typename T , typename P> inline Polynomial<T> operator%( const Polynomial<T>& f0 , const P& f1 ) { return move( Polynomial<T>( f0 ) %= f1 ); }
 template <typename T> Polynomial<T> operator<<( const Polynomial<T>& f , const T& t ) { return move( Polynomial<T>( f ) <<= t ); };
