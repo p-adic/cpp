@@ -6,7 +6,7 @@
 #include "../a_Body.hpp"
 
 template <int V_max,list<int> E(const int&),int digit> inline DepthFirstSearchOnTree<V_max,E,digit>::DepthFirstSearchOnTree( const int& V , const int& root ) :
-  DepthFirstSearch<V_max,E>( V , root ) , m_reversed() , m_children() , m_set_children() , m_depth() , m_set_depth , m_height() , m_set_height() , m_weight() , m_set_weight() , m_doubling() , m_set_doubling()
+  DepthFirstSearch<V_max,E>( V , root ) , m_reversed() , m_children() , m_set_children() , m_depth() , m_set_depth() , m_height() , m_set_height() , m_weight() , m_set_weight() , m_doubling() , m_set_doubling()
 {
 
   int n = DepthFirstSearch<V_max,E>::size();
@@ -339,7 +339,7 @@ T DepthFirstSearchOnTree<V_max,E,digit>::RootingDP()
     
     const int& i = NodeNumber( n , true );
     const int& j = Parent( i );
-    temp = f( children_value[i] , i )
+    temp = f( children_value[i] , i );
 
     if( j != -1 ){
 
@@ -353,7 +353,7 @@ T DepthFirstSearchOnTree<V_max,E,digit>::RootingDP()
 
 }
   
-template <int V_max,list<int> E(const int&),int digit> template <typename T , T m_T(const T&,const T&) ,const T& e_T() , T f(const T&,const int&)>
+template <int V_max,list<int> E(const int&),int digit> template <typename T , T m_T(const T&,const T&) ,const T& e_T() , T f(const T&,const int&), T g(const T&,const bool&,const int&,const int&)>
 void DepthFirstSearchOnTree<V_max,E,digit>::RerootingDP( T ( &d )[V_max] )
 {
 
@@ -365,12 +365,18 @@ void DepthFirstSearchOnTree<V_max,E,digit>::RerootingDP( T ( &d )[V_max] )
   
   const int& V = DepthFirstSearch<V_max,E>::size();
   const T& e = e_T();
+
+  // children_value[i][m]‚Éi‚Ìm”Ô–Ú‚Ìqƒm[ƒhj‚Ü‚Å‚ÌŒvZ’l‚Ìf‚Å‚Ì‘œ‚ğŠi”[B
   vector<T> children_value[V_max] = {};
+  // left_sum[i][m]‚Échildren_value[i][0],...,children_value[i][m-1]‚Ì
+  // g‚Å‚Ì‘œ‚Ìm_T‚ÉŠÖ‚·‚éÏ‚ğŠi”[B
   vector<T> left_sum[V_max] = {};
+  // right_sum[i][m]‚Échildren_value[i][m+1],...,children_value[i][size_i-1]‚Ì
+  // g‚Å‚Ì‘œ‚Ìm_T‚ÉŠÖ‚·‚éÏ‚ğŠi”[B
   vector<T> right_sum[V_max] = {};
   
   for( int i = 0 ; i < V ; i++ ){
-    
+
     children_value[i].resize( m_children[i].size() );
 
   }
@@ -388,7 +394,7 @@ void DepthFirstSearchOnTree<V_max,E,digit>::RerootingDP( T ( &d )[V_max] )
     
     for( int m = 0 ; m < size_i ; m++ ){
 
-      left_sum_i.push_back( temp = m_T( temp , children_value_i[m] ) );
+      left_sum_i.push_back( temp = m_T( temp , g( children_value_i[m] , true , i , m_children[i][m] ) ) );
 
     }
     
@@ -407,12 +413,14 @@ void DepthFirstSearchOnTree<V_max,E,digit>::RerootingDP( T ( &d )[V_max] )
     for( int m = 1 ; m <= size_i ; m++ ){
 
       right_sum_i[ size_i - m ] = temp;
-      temp = m_T( children_value_i[size_i - m] , temp );
+      temp = m_T( g( children_value_i[size_i - m] , true , i , m_children[i][size_i - m] ) , temp );
 
     }
 
   }
 
+  // left_sum[i][m]‚Échildren_value[i][0],...,children_value[i][m-1]‚Ì
+  // g‚Å‚Ì‘œ‚Ìm_T‚ÉŠÖ‚·‚éÏ‚ğŠi”[‚µ‚Ä‚¢‚½‚ªA‚³‚ç‚É‚±‚ê‚Éeƒm[ƒh‚ÌŠñ—^‚à’Ç‰Á‚·‚éB
   for( int n = 1 ; n < V ; n++ ){
     
     const int& i = NodeNumber( n );
@@ -421,10 +429,17 @@ void DepthFirstSearchOnTree<V_max,E,digit>::RerootingDP( T ( &d )[V_max] )
     vector<T>& left_sum_i = left_sum[i];
     vector<T>& right_sum_i = right_sum[i];
     const int size_i = right_sum_i.size();
-    const T rest_i = f( m_T( left_sum[j][k] , right_sum[j][k] ) , j );
+    // children_value[j][0],...,children_value[j][k-1]‚Ìg‚Å‚Ì‘œ‚Æ
+    // rest_jiŠù‚ÉŒvZÏ‚İj‚Æ
+    // children_value[j][k+1],...,children_value[j][size_i-1]‚Ìg‚Å‚Ì‘œ‚Æ
+    // ‚Ìm_T‚ÉŠÖ‚·‚éÏ‚Ìf‚Å‚Ì‘œ‚Ìg‚Å‚Ì‘œB
+    const T rest_i = g( f( m_T( left_sum[j][k] , right_sum[j][k] ) , j ) , false , i , j );
     
     for( int m = 0 ; m <= size_i ; m++ ){
 
+      // left_sum_im‚Érest_i‚Æ
+      // children_value[i][0],...,children_value[i][m-1]‚Ìg‚Å‚Ì‘œ
+      // ‚Ìm_T‚ÉŠÖ‚·‚éÏ‚ğŠi”[B
       T& left_sum_im = left_sum_i[m];
       left_sum_im = m_T( rest_i , left_sum_im );
 
@@ -434,6 +449,8 @@ void DepthFirstSearchOnTree<V_max,E,digit>::RerootingDP( T ( &d )[V_max] )
 
   for( int i = 0 ; i < V ; i++ ){
 
+    // left_sum[i].back()‚Íchildren_value_i[0],...,children_value_i[size_i-1]‚Ì
+    // g‚Å‚Ì‘œ‚Æe‚ÌŠñ—^‚Ìm_T‚ÉŠÖ‚·‚éÏB
     d[i] = f( left_sum[i].back() , i );
 
   }
@@ -441,4 +458,3 @@ void DepthFirstSearchOnTree<V_max,E,digit>::RerootingDP( T ( &d )[V_max] )
   return;
 
 }
-  

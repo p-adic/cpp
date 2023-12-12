@@ -3,7 +3,9 @@
 #pragma once
 #include "../a.hpp"
 
-// verify:https://yukicoder.me/submissions/919091
+// verify:
+// https://yukicoder.me/submissions/919091（RootingDP）
+// https://yukicoder.me/submissions/938101（RerootingDP）
 
 // digitはAncestorとLCAにのみ使用。普段は0で良い。
 // 2^16 = 65536
@@ -69,11 +71,12 @@ public:
   // (1) (T,m_T:T^2->T,e_T:1->T)がモノイドである
   // (2) 任意の非負整数n,iとTの要素のみからなる任意の長さnの任意の列(t1,...,tn)と
   //     その並び換え(s1,...,sn)に対し
-  //     f(m_T(...m_T(t1,t2),...tn),i)=f(m_T(...m_T(s1,s2),...sn),i)である。
+  //     f(m_T(...m_T(t1,t2),...tn),j)=f(m_T(...m_T(s1,s2),...sn),j)である。
   // を満たす場合のみサポート。
-  // dp[i][j] = f(iを根とみなした時のjの子ノードkを渡るdp[i][k]のm_Tに関する積,j)
+  // dp[i][j] = f(iを根とみなした時のjの子ノードkを渡るg(dp[i][k],jはiの子孫,k,j)のm_Tに関する積,j)
   // を満たす二重配列dpの対角成分dp[i][i]をO(m_V)で求めてdに格納する。
-  template <typename T , T m_T(const T&,const T&) ,const T& e_T() , T f(const T&,const int&)> void RerootingDP( T ( &d )[V_max] );
+  template <typename T , T m_T(const T&,const T&) ,const T& e_T() , T f(const T&,const int&), T g(const T&,const bool&,const int&,const int&)> void RerootingDP( T ( &d )[V_max] );
+  // fはノードjごとのデータ、gは有向辺b?(j,k):(k,j)ごとのデータに対応。
 
 private:
   void SetChildren();
