@@ -1,0 +1,11 @@
+// ../Truncate/compress.txt
+// ÇêÊÇ…ì\ÇÈÅB
+
+// ëçòaÅ^ëçèÊ
+#define DF_OF_PROD(FUNC,UNIT,APPLY)if(f.empty()){f.push_back(UNIT);}if(f.SZ()== 1){RE f.front();}auto IT = f.BE(),EN = f.EN();WH(IT != EN){T& t = *IT;IT++;if(IT != EN){APPLY;IT = f.erase(IT);}}RE FUNC(f);
+TE <TY T,TY <TY...> TY V> PO<T>& Sum(V<PO<T>>& f){DF_OF_PROD(Sum,PO<T>::zero(),t += *IT);}TE <TY T,TY <TY...> TY V> pair<PO<T>,PO<T>>& RationalSum(V<pair<PO<T>,PO<T>>>& f){DF_OF_PROD(RationalSum,{PO<T>::zero(),PO<T>::one()},t ={t.first * itr->second + t.second * itr->first,t.second * itr->second});}TE <TY T,TY <TY...> TY V> PO<T>& Prod(V<PO<T>>& f){DF_OF_PROD(Prod,PO<T>::one(),t += *itr);}
+
+// ../../Combinatorial/BernulliNumber/compress.txt
+// ÇêÊÇ…ì\ÇÈÅB
+// ó›êœòa
+TE <TY T,uint deg_max>PO<T> CumulativeSum(PO<T> f,CO bool& EXial = false){CO uint f_SZ = f.SZ();if(f_SZ == 0){RE f;}CO uint deg = f_SZ - 1;assert(deg <= deg_max);CO T f0 = f[0];CO uint deg_half =(deg + 1)/ 2;if(!EXial){for(uint d = 1;d <= deg;d++){f[d] *= T::Factorial(d);}}for(uint d = 0;d < deg_half;d++){swap(f[d],f[deg - d]);}f.reSZ(deg);TRPO<T> f_transpose{f_SZ,MO(f)};ST CO BernulliNumberCalculator<T,deg_max+1> B{false};ST PO<T> g{};ST uint g_SZ = 0;WH(deg >= g_SZ){g[g_SZ] = B[g_SZ] * T::FactorialInverse(g_SZ);g_SZ++;}f_transpose *= g;f_transpose.SetTruncation(f_SZ + 1);CO uint f_SZ_half =(f_SZ + 1)/ 2;for(uint d = 0;d < f_SZ_half;d++){swap(f_transpose[d],f_transpose[f_SZ - d]);}if(!EXial){for(uint d = 1;d<= f_SZ;d++){f_transpose[d] *= T::FactorialInverse(d);}}f_transpose[1] += f_transpose[0] = f0;RE f_transpose;}
