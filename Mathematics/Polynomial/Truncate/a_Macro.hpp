@@ -355,6 +355,7 @@
 
 
 #define DEFINITION_OF_EXP_FOR_TRUNCATED_POLYNOMIAL( TYPE , RECURSION )	\
+  assert( f[0] == Polynomial< TYPE >::const_zero() );			\
   const uint& N = f.GetTruncation();					\
   uint power;								\
   uint power_2 = 1;							\
@@ -370,7 +371,7 @@
   }									\
 									\
   f_exp.SetTruncation( N );						\
-  return f_exp							\
+  return f_exp								\
 									\
 
 #define DEFINITION_OF_PARTIAL_SPECIALISATION_OF_MULTIPLICATION_OF_TRUNCATED_POLYNOMIAL( TYPE , BORDER_0 , BORDER_1 , BORDER_1_2 , BORDER_1_2_EXPONENT , BORDER_1_2_INV ) \

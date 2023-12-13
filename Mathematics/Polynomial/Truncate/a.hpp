@@ -83,7 +83,6 @@ public:
   // m_N > 0の場合のみサポート。
   // 自身をFFTによりf倍 mod X ^ { m_N }を計算した値で置き換える。
   TruncatedPolynomial<T>& FFT_Multiplication( const Polynomial<T>& f );
-  TruncatedPolynomial<T>& FFT_Multiplication( Polynomial<T>&& f );
 
   // m_N > 0かつf != 0の場合のみサポート。
   // 自身をf倍した値をhとし、長さm_Nの配列
