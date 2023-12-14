@@ -1,0 +1,8 @@
+I,R,O=input,range,print
+J=lambda:map(int,I().split())
+N=int(I())
+a=0
+for i in R(N):
+	X,Y=J()
+	a+=X*Y
+O(a)
