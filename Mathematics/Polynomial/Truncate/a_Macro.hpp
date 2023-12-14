@@ -314,15 +314,9 @@
   FFT<T>( f1 , N_INPUT_START_1 , N_INPUT_LIM_1 , two_power , exponent ); \
   RESIZE_VECTOR_FOR_IFFT;						\
 									\
-  for( uint i = I_START + two_power - 1 ; true ; i-- ){				\
+  for( uint i = I_START + two_power - 1 ; i + 1 > I_START ; i-- ){	\
 									\
     MULTIPLICATiON_FORMULA;						\
-									\
-    if( i == I_START ){							\
-									\
-      break;								\
-									\
-    }									\
 									\
   }									\
 									\

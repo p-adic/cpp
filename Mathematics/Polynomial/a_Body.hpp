@@ -286,6 +286,7 @@ string Polynomial<T>::Display() const noexcept
 
 
 template <typename T> inline const Polynomial<T>& Polynomial<T>::zero() { static const Polynomial<T> z{}; return z; }
+template <typename T> inline const Polynomial<T>& Polynomial<T>::one() { static const Polynomial<T> o{ const_one() }; return o; }
 template <typename T> inline const T& Polynomial<T>::const_zero() { static const T z{ 0 }; return z; }
 template <typename T> inline const T& Polynomial<T>::const_one() { static const T o{ 1 }; return o; }
 template <typename T> inline const T& Polynomial<T>::const_minus_one() { static const T m{ -1 }; return m; }
@@ -340,8 +341,6 @@ template <typename T , typename P> inline Polynomial<T> operator-( const Polynom
 template <typename T , typename P> inline Polynomial<T> operator-( const Polynomial<T>& f0 , const P& f1 ) { return move( Polynomial<T>( f0 ) -= f1 ); }
 template <typename T , typename P> inline Polynomial<T> operator*( const Polynomial<T>& f0 , const P& f1 ) { return move( Polynomial<T>( f0 ) *= f1 ); }
 template <typename T> inline Polynomial<T> operator/( const Polynomial<T>& f0 , const T& t1 ) { return move( Polynomial<T>( f0 ) /= t1 ); }
-
-template <typename T> inline Polynomial<T> Differential( const Polynomial<T>& f ) { return Differential<T>( f , 1 ); }
 
 template <typename T>
 Polynomial<T> Differential( const uint& n , const Polynomial<T>& f )
@@ -423,4 +422,3 @@ Polynomial<T>& Polynomial<T>::operator%=( const Polynomial<T>& f )
 
 template <typename T> inline Polynomial<T> operator/( const Polynomial<T>& f0 , const Polynomial<T>& f1 ) { return Polynomial<T>::Quotient( f0 , f1 ); }
 template <typename T , typename P> inline Polynomial<T> operator%( const Polynomial<T>& f0 , const P& f1 ) { return move( Polynomial<T>( f0 ) %= f1 ); }
-template <typename T> Polynomial<T> operator<<( const Polynomial<T>& f , const T& t ) { return move( Polynomial<T>( f ) <<= t ); };

@@ -64,10 +64,6 @@ public:
 
   inline Polynomial<T> operator-() const;
 
-  // XをX+tにshift
-  // Tにおいてm_size未満の正整数が可逆である時のみサポート
-  Polynomial<T>& operator<<=( const T& t );
-
   inline const vector<T>& GetCoefficient() const noexcept;
   inline const uint& size() const noexcept;
   inline void resize( const uint& deg_plus ) noexcept;
@@ -83,6 +79,7 @@ public:
   static Polynomial<T> Transpose( const Polynomial<T>& f , const uint& f_transpose_size );
 
   static inline const Polynomial<T>& zero();
+  static inline const Polynomial<T>& one();
   static inline const T& const_zero();
   static inline const T& const_one();
   static inline const T& const_minus_one();
@@ -102,8 +99,5 @@ template <typename T , typename P> inline Polynomial<T> operator*( const Polynom
 template <typename T> inline Polynomial<T> operator/( const Polynomial<T>& f0 , const T& t1 );
 template <typename T> inline Polynomial<T> operator/( const Polynomial<T>& f0 , const Polynomial<T>& f1 );
 template <typename T , typename P> inline Polynomial<T> operator%( const Polynomial<T>& f0 , const P& f1 );
-template <typename T> inline Polynomial<T> operator<<( const Polynomial<T>& f , const T& t );
-
-template <typename T> inline Polynomial<T> Differential( const Polynomial<T>& f );
 
 template <typename T> Polynomial<T> Differential( const uint& n , const Polynomial<T>& f );

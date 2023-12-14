@@ -198,68 +198,6 @@ template <typename T> inline TruncatedPolynomial<T>& TruncatedPolynomial<T>::ope
 
 template <typename T> inline TruncatedPolynomial<T> TruncatedPolynomial<T>::operator-() const { return move( TruncatedPolynomial<T>( m_N ) -= *this ); }
 
-template <typename T> inline TruncatedPolynomial<T> TruncatedPolynomial<T>::operator()( const TruncatedPolynomial<T>& f ) const
-{
-
-  assert( m_N > 0 && f[0] == Polynomial<T>::const_zero() );
-  const uint N_minus = m_N - 1;
-
-  if( N_minus == 0 ){
-
-    return *this;
-
-  }
-
-  const uint H = sqrt( N_minus );
-  const uint K = N_minus / H;
-  vector<TruncatedPolynomial<T> > f_power( K < 2 ? 2 : K );
-  ( f_power[1] = f ).SetTruncation( m_N );
-  
-  for( uint k = 2 ; k < K ; k++ ){
-
-    f_power[k] = f_power[k-1] * f_power[1];
-
-  }
-
-  vector<TruncatedPolynomial<T> > f_power2( H + 1 );
-  f_power2[1] = K < 2 ? f_power[1] : f_power[K-1] * f_power[1];
-
-  for( uint h = 2 ; h <= H ; h++ ){
-
-    f_power2[h] = f_power2[h-1] * f_power2[1];
-
-  }
-
-  uint k = 0;
-  uint h = 0;
-  uint n_max = N_minus;
-  TruncatedPolynomial<T> answer{ m_N };
-  TruncatedPolynomial<T> answer_h{ m_N };
-
-  for( uint d = 0 ; d < m_N ; d++ ){
-
-    for( uint n = k ; n <= n_max ; n++ ){
-
-      answer_h[n] += k == 0 ? n == 0 ? ( *this )[d] : T{} : ( *this )[d] * f_power[k][n];
-
-    }
-    
-    if( ++k == K || d == N_minus ){
-
-      answer += h == 0 ? answer_h : answer_h *= f_power2[h];
-      k = 0;
-      h++;
-      n_max -= K;
-      answer_h = TruncatedPolynomial<T>( m_N );
-
-    }
-
-  }
-
-  return answer;
-
-}
-
 template <typename T> inline void TruncatedPolynomial<T>::SetTruncation( const uint& N ) noexcept { if( N < m_N ){ TruncateFinal( N ); } else { Polynomial<T>::m_f.reserve( N ); } m_N = N; }
 template <typename T> inline const uint& TruncatedPolynomial<T>::GetTruncation() const noexcept { return m_N; }
 
@@ -378,9 +316,6 @@ TruncatedPolynomial<T> Exp( const TruncatedPolynomial<T>& f )
 }
 
 template <typename T> inline TruncatedPolynomial<T> Log( const TruncatedPolynomial<T>& f ) { assert( f[0] == Polynomial<T>::const_one() ); return Integral<T>( Differential<T>( f ) /= f ); }
-
-template <typename T> inline TruncatedPolynomial<T> Power( const TruncatedPolynomial<T>& f , const T& t ) { return Exp( Log( f ) *= t ); }
-
 
 template <typename T> inline TruncatedPolynomial<T>& TruncatedPolynomial<T>::operator*=( const T& t ) { Polynomial<T>::operator*=( t ); return *this; }
 

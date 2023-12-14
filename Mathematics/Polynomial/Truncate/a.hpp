@@ -117,9 +117,6 @@ public:
 
   inline TruncatedPolynomial<T> operator-() const;
 
-  // 合成
-  inline TruncatedPolynomial<T> operator()( const TruncatedPolynomial<T>& f ) const;
-
   inline void SetTruncation( const uint& N ) noexcept;
   inline const uint& GetTruncation() const noexcept;
 
@@ -169,7 +166,3 @@ TruncatedPolynomial<T> Exp( const TruncatedPolynomial<T>& f );
 
 // Tが標数0またはf.m_N以上の体でかつf[0] == 1の場合のみサポート。
 template <typename T> inline TruncatedPolynomial<T> Log( const TruncatedPolynomial<T>& f );
-
-// Tが標数0またはf.m_N以上の体でかつf[0] == 1の場合のみサポート。
-template <typename T>
-TruncatedPolynomial<T> Power( const TruncatedPolynomial<T>& f , const T& t );
