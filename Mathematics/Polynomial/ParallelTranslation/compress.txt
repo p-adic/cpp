@@ -1,3 +1,0 @@
-// ../compress.txt‚ğæ‚É“\‚éB
-
-TE <TY T> VO Shift(PO<T>& f,CO T& t,CO bool& EXial = false){f.ReMORedundantZero();CRUI SZ = f.SZ();if(SZ > 0){TRPO<T> exp_t_transpose{SZ * 2};T PW_t = PO<T>::CO_one();for(uint d = 0;d < SZ;d++){exp_t_transpose[SZ - 1 - d] = PW_t * T::FactorialInverse(d);PW_t *= t;}if(EXial){exp_t_transpose *= f;for(uint d = 0;d < SZ;d++){f[d] = exp_t_transpose[d + SZ - 1];}}else{for(uint d = 0;d < SZ;d++){f[d] *= T::Factorial(d);}exp_t_transpose *= f;for(uint d = 0;d < SZ;d++){f[d] = exp_t_transpose[d + SZ - 1] * T::FactorialInverse(d);}}}}
