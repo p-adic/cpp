@@ -7,11 +7,12 @@
 
 // 非常によくバグるので、更新したら必ずverifyすること！
 // verify:
-// https://yukicoder.me/submissions/937654 多点評価
-// https://yukicoder.me/submissions/937650 ボスタン森
 // https://judge.yosupo.jp/submission/175535 畳み込み
 // https://judge.yosupo.jp/submission/176529 剰余
 // https://judge.yosupo.jp/submission/176829 平行移動
+// https://yukicoder.me/submissions/938613 メビウス変換
+// https://yukicoder.me/submissions/937654 多点評価
+// https://yukicoder.me/submissions/937650 ボスタン森
 
 template <typename T> class TruncatedPolynomial;
 
