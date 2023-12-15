@@ -3,6 +3,10 @@
 #pragma once
 #include "../a.hpp"
 
+// verify:
+// https://judge.yosupo.jp/submission/176829 平行移動
+// https://yukicoder.me/submissions/938613 メビウス変換
+
 // 以下次数の上限をDとし、断りのない限り乗算の計算量をO(D log D)とする。
 
 // 一般の合成f(g(x))（乗算がO(D^2)ならO(D^{5/2})、O(D log D)ならO(D^2)）
