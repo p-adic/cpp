@@ -11,6 +11,21 @@
 
 #include <vector>
 
+template <typename T , int exponent_lim>
+class Power3Power_constexpr
+{
+private:
+// -t^{2^i*3}Çm_val[exponent_lim - 1 - i]Ç…äiî[ÅB
+  T m_val[exponent_lim];
+
+public:
+  inline constexpr Power3Power_constexpr( const T& t );
+
+  inline constexpr const T& operator[]( const int& i ) const;
+  inline constexpr const T ( &Get() const )[exponent_lim];
+  
+};
+
 template <typename T> inline constexpr const uint LimitOfPowerForFFT;
 template <typename T> inline constexpr const uint BorderForFFT;
 

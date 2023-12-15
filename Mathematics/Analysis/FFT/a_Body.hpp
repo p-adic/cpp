@@ -4,8 +4,6 @@
 #include "a.hpp"
 
 #include "../../Arithmetic/Mod/ConstexprModulo/Montgomery/a_Body.hpp"
-#include "../../Arithmetic/Power/Constexpr/PowerPower/a_Body.hpp"
-
 
 // 998244353 = 2^{23} * 7 * 17 + 1
 // 167772161 = 2^{25} * 5 + 1
@@ -16,12 +14,21 @@ PARTIAL_SPECIALISATION_FOR_FFT( 167772161 , 26 , 4 , 17 , 29606852 );
 PARTIAL_SPECIALISATION_FOR_FFT( 469762049 , 27 , 4 , 30 , 15658735 );
 PARTIAL_SPECIALISATION_FOR_FFT( 754974721 , 25 , 4 , 362 , 415027540 );
 
+
+template <typename T , int exponent_lim> inline constexpr Power3Power_constexpr<T,exponent_lim>::Power3Power_constexpr( const T& t ) : m_val() { T power{ t }; for( uint exponent = exponent_lim - 1 ; exponent + 1 > 0 ; exponent-- ) { m_val[exponent] = -power; m_val[exponent] *= power *= power; } }
+
+template <typename T , int exponent_lim> inline constexpr const T& Power3Power_constexpr<T,exponent_lim>::operator[]( const int& i ) const { assert( i < exponent_lim ); return m_val[i]; }
+
+template <typename T , int exponent_lim> inline constexpr const T ( &Power3Power_constexpr<T,exponent_lim>::Get() const )[exponent_lim] { return m_val; }
+
 template <typename T> inline void FFT( vector<T>& f , const uint& N_input_start , const uint& N_input_lim , const uint& two_power , const uint& exponent ) { CooleyTukey<T>( f , N_input_start , N_input_lim , 0 , two_power , two_power , exponent , PrimitiveRootOfTwoForFFT<T>() ); }
 template <typename T> inline void FFT( vector<T>& f , const uint& N_input_start , const uint& N_input_lim , const uint& N_output_start , const uint& N_output_lim , const uint& two_power , const uint& exponent ) { CooleyTukey<T>( f , N_input_start , N_input_lim , N_output_start , N_output_lim , two_power , exponent , PrimitiveRootOfTwoForFFT<T>() ); }
 
 template <typename T> inline void IFFT( vector<T>& f , const uint& N_input_start , const uint& N_input_lim , const uint& two_power , const T& two_power_inv , const uint& exponent ) { CooleyTukey<T>( f , N_input_start , N_input_lim , 0 , two_power , two_power , exponent , InversePrimitiveRootOfTwoForFFT<T>() ); const uint size = two_power + N_input_start; for( uint i = N_input_start ; i < size ; i++ ){ f[i] *= two_power_inv; } }
 
 template <typename T> inline void IFFT( vector<T>& f , const uint& N_input_start , const uint& N_input_lim , const uint& N_output_start , const uint& N_output_lim , const uint& two_power , const T& two_power_inv , const uint& exponent ) { CooleyTukey<T>( f , N_input_start , N_input_lim , N_output_start , N_output_lim , two_power , exponent , InversePrimitiveRootOfTwoForFFT<T>() ); const uint size = N_output_lim + N_input_start; for( uint i = N_output_start + N_input_start ; i < size ; i++ ){ f[i] *= two_power_inv; } }
+
+inline unordered_map<uint,uint> Valuation() { unordered_map<uint,uint> answer; for( uint d = 0 ; d < 32 ; d++ ){ answer[1<<d] = d + 1; } return answer; }
 
 template <typename T>
 void CooleyTukey( vector<T>& f , const uint& N_input_start , const uint& N_input_lim , const uint& N_output_start , const uint& N_output_lim , const uint& two_power , const uint& exponent , const T ( &PRT )[LimitOfPowerForFFT<T>] )
@@ -83,67 +90,56 @@ void CooleyTukey( vector<T>& f , const uint& N_input_start , const uint& N_input
 
   }
   
-  uint two_power_curr = 1;
-  uint two_power_curr_2 = 2;
-  const T& zeta_0 = PRT[0];
+  static const unordered_map<uint,uint> valuation = Valuation();
+  const T& one = PRT[0];
   T zeta , diff;
-  const T* p_zeta_i;
-  uint bit_num_copy , i , j , j_butterfly , j_lim;
-  
-  // バタフライ演算
-  while( two_power_curr < two_power ){
+  uint i , j , j_lim , two_power_curr = 1 , two_power_curr_2 = 2;
 
+  // バタフライ演算
+  while(two_power_curr < two_power){
+
+    const uint N_input_start_shifted = N_input_start + two_power_curr;
     bit_num = 0;
     i = 0;
-    
+    zeta = one;
+
     while( i < two_power ){
 
-      zeta = zeta_0;
-      p_zeta_i = &zeta_0 + 2;
-      bit_num_copy = bit_num;
-
-      // 1の羃根の計算
-      // zeta[exponent]^{*p_bit_num_reverse = bit_num % 2^{exponent - 1}のbit_reverse}
-      // = prod( uint i = 0 ; i < exponent - 1 ; i++ ) zeta[exponent]^[2^i * (*p_bit_num_reverseの2^iの位)]
-      // = prod( uint i = 0 ; i < exponent - 1 ; i++ ) zeta[exponent - i]^{bit_numの2^{exponent - 2 - i}の位}
-      // = prod( uint i = 2 ; i < exponent ; i++ ) zeta[i]^{bit_numの2^{i - 2}の位}
-      while( bit_num_copy != 0 ){
-
-	if( bit_num_copy % 2 == 1 ){
-
-	  zeta *= *p_zeta_i;
-
-	}
-
-	bit_num_copy /= 2;
-	p_zeta_i++;	
-	
-      }
-      
       j = i;
       j_lim = i + two_power_curr;
 
-      // バタフライルーチン
       while( j < j_lim ){
 
-	j_butterfly = j + two_power_curr;
-	T& f_j = f[j + N_input_start];
-	T& f_j_butterfly = f[j_butterfly + N_input_start];
-	diff = f_j - f_j_butterfly;
-	f_j += f_j_butterfly;
-	f_j_butterfly = zeta * diff;
-	j++;
-	
+      	diff = f[j + N_input_start] - f[j + N_input_start_shifted];
+      	f[j + N_input_start] += f[j + N_input_start_shifted];
+      	f[j + N_input_start_shifted] = zeta * diff;
+      	j++;
+
       }
 
       bit_num++;
       i += two_power_curr_2;
-      
-    }
+      j = 0;
 
-    swap( two_power_curr , two_power_curr_2 );
-    two_power_curr_2 *= 4;
+      // 2進付値の取得。unordered_mapを使うと逆に遲い。
+      while( true ){
+
+	if( ( ( bit_num >> j ) & 1 ) == 1 ){
+
+	  zeta *= PRT[j+1];
+	  break;
+
+	}
+
+	j++;
+
+      }
+
+    }
     
+    two_power_curr <<= 1;
+    two_power_curr_2 <<= 1;
+
   }
 
   const uint length_fixed = N_output_lim + N_input_start;
