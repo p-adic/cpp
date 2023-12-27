@@ -2,24 +2,24 @@
 
 inline void Solve()
 {
-  // // æ•°
-  // // DEXPR( ll , bound_N , 100000 , 100 ); // 0ãŒ5å€‹
-  // // // DEXPR( ll , bound_N , 1000000000 , 100 ); // 0ãŒ9å€‹
-  // // // DEXPR( ll , bound_N , 1000000000000000000 , 100 ); // 0ãŒ18å€‹
-  // // CEXPR( TYPE_OF( bound_N ) , bound_M , bound_N );
+  // // ”
+  // DEXPR( ll , bound_N , 100000 , 100 ); // 0‚ª5ŒÂ
+  // // DEXPR( ll , bound_N , 1000000000 , 100 ); // 0‚ª9ŒÂ
+  // // DEXPR( ll , bound_N , 1000000000000000000 , 100 ); // 0‚ª18ŒÂ
+  // CEXPR( TYPE_OF( bound_N ) , bound_M , bound_N );
   // CIN( ll , N , M , K );
-  // // CIN_ASSERT( N , 1 , bound_N ); // ãƒ©ãƒ³ãƒ€ãƒ ãƒ†ã‚¹ãƒˆç”¨ã€‚
+  // // CIN_ASSERT( N , 1 , bound_N ); // ƒ‰ƒ“ƒ_ƒ€ƒeƒXƒg—pB
   // ll answer = 0;
   // // MP answer = 0;
   // RETURN( answer );
 
-  // // é…åˆ—
+  // // ”z—ñ
   // CIN_A( ll , A , N ); CIN_A( ll , B , N );
-  // // CIN_A( MP , A , N );  CIN_A( MP , B , N );
+  // // CIN_A( MP , A , N ); CIN_A( MP , B , N );
   // // vector<ll> A( N ) , B( N );
   // // vector<MP> A( N ) , B( N );
-  // // ll A[bound_N] , ll B[bound_N]; // é–¢æ•°ã®å¼•æ•°ã«ä½¿ã†ã€‚
-  // // MP A[bound_N] , MP B[bound_N]; // é–¢æ•°ã®å¼•æ•°ã«ä½¿ã†ã€‚
+  // // ll A[bound_N] , ll B[bound_N]; // ŠÖ”‚Ìˆø”‚Ég‚¤B
+  // // MP A[bound_N] , MP B[bound_N]; // ŠÖ”‚Ìˆø”‚Ég‚¤B
   // // FOR( i , 0 , N ){ cin >> A[i] >> B[i]; }
   // // FOR( i , 0 , N * 2 ){ cin >> ( i < N ? A[i] : B[i-N] ); }
   // ll answer = 0;
@@ -27,13 +27,13 @@ inline void Solve()
   // // COUT_A( A , N );
   // RETURN( answer );
 
-  // // æ–‡å­—åˆ—
+  // // •¶š—ñ
   // CIN( string , S , T );
   // ll answer = 0;
   // // MP answer = 0;
   // RETURN( answer );
 
-  // // é †åˆ—
+  // // ‡—ñ
   // vector<int> A( N ) , A_inv( N );
   // FOR( i , 0 , N ){ cin >> A[i]; A_inv[--A[i]] = i; }
   // ll answer = 0;
@@ -41,7 +41,7 @@ inline void Solve()
   // // COUT( answer );
   // RETURN( answer );
   
-  // // ã‚°ãƒ©ãƒ•
+  // // ƒOƒ‰ƒt
   // e<int>.resize( N );
   // // e<path>.resize( N );
   // FOR( j , 0 , M ){
@@ -55,30 +55,30 @@ inline void Solve()
   // // MP answer = 0;
   // RETURN( answer );
 
-  // // åº§æ¨™åœ§ç¸®ã‚„å˜ä¸€ã‚¯ã‚¨ãƒªã‚¿ã‚¤ãƒ—ãªã©ã®ãŸã‚ã®å…¥åŠ›æ ¼ç´
+  // // À•Wˆ³k‚â’PˆêƒNƒGƒŠƒ^ƒCƒv‚È‚Ç‚Ì‚½‚ß‚Ì“ü—ÍŠi”[
   // vector<T3<ll> > data( M );
   // FOR( j , 0 , M ){ CIN( ll , x , y , z ); data[j] = { x , y , z }; }
   // ll answer = 0;
   // // MP answer = 0;
   // RETURN( answer );
   
-  // // ä¸€èˆ¬ã®ã‚¯ã‚¨ãƒª
+  // // ˆê”Ê‚ÌƒNƒGƒŠ
   // CIN( int , Q );
-  // // DEXPR( int , bound_Q , 100000 , 100 ); // åŸºæœ¬ä¸è¦ã€‚
-  // // CIN_ASSERT( Q , 1 , bound_Q ); // åŸºæœ¬ä¸è¦ã€‚
+  // // DEXPR( int , bound_Q , 100000 , 100 ); // Šî–{•s—vB
+  // // CIN_ASSERT( Q , 1 , bound_Q ); // Šî–{•s—vB
   // // vector<T3<int> > query( Q );
   // // vector<T2<int> > query( Q );
   // FOR( q , 0 , Q ){
   //   CIN( int , type );
   //   if( type == 1 ){
-  //     CIN( int , x , y );
+  //     CIN( ll , x , y );
   //     // query[q] = { type , x , y };
   //   } else if( type == 2 ){
-  //     CIN( int , x , y );
+  //     CIN( ll , x , y );
   //     // query[q] = { type , x , y };
   //     COUT( x + y );
   //   }
-  //   // CIN( int , x , y );
+  //   // CIN( ll , x , y );
   //   // // query[q] = { x , y };
   //   // COUT( x + y );
   // }
@@ -91,26 +91,26 @@ inline void Solve()
   // // MP answer = 0;
   // RETURN( answer );
   
-  // // ã‚°ãƒªãƒƒãƒ‰
+  // // ƒOƒŠƒbƒh
   // // DEXPR( int , bound_H , 2000 , 30 );
-  // // // DEXPR( int , bound_H , 100000 , 10 ); // 0ãŒ5å€‹
-  // // // CEXPR( int , bound_H , 1000000000 ); // 0ãŒ9å€‹
+  // // // DEXPR( int , bound_H , 100000 , 10 ); // 0‚ª5ŒÂ
+  // // // CEXPR( int , bound_H , 1000000000 ); // 0‚ª9ŒÂ
   // // CEXPR( int , bound_W , bound_H );
   // // static_assert( ll( bound_H ) * bound_W < ll( 1 ) << 31 );
   // // CEXPR( int , bound_HW , bound_H * bound_W );
   // cin >> H >> W;
-  // // SET_ASSERT( H , 1 , bound_H ); SET_ASSERT( W , 1 , bound_W ); // ãƒ©ãƒ³ãƒ€ãƒ ãƒ†ã‚¹ãƒˆç”¨ã€‚  // H_minus = H - 1; W_minus = W - 1; HW = H * W;
+  // // SET_ASSERT( H , 1 , bound_H ); SET_ASSERT( W , 1 , bound_W ); // ƒ‰ƒ“ƒ_ƒ€ƒeƒXƒg—pB  // H_minus = H - 1; W_minus = W - 1; HW = H * W;
   // vector<string> S( H );
   // FOR( i , 0 , H ){
   //   cin >> S[i];
   //   // SetEdgeOnGrid( S[i] , i , e<int> );
   //   // SetWallOnGrid( S[i] , i , non_wall );
   // }
-  // // {h,w}ã¸ãƒ‡ã‚³ãƒ¼ãƒ‰: EnumHW( v )
-  // // {h,w}ã‚’ã‚³ãƒ¼ãƒ‰: EnumHW_inv( h , w );
-  // // (i,j)->(k,h)ã®æ–¹å‘ç•ªå·ã‚’å–å¾—: DirectionNumberOnGrid( i , j , k , h );
-  // // v->wã®æ–¹å‘ç•ªå·ã‚’å–å¾—: DirectionNumberOnGrid( v , w );
-  // // æ–¹å‘ç•ªå·ã®åè»¢U<->Dã€R<->L: ReverseDirectionNumberOnGrid( n );
+  // // {h,w}‚ÖƒfƒR[ƒh: EnumHW( v )
+  // // {h,w}‚ğƒR[ƒh: EnumHW_inv( h , w );
+  // // (i,j)->(k,h)‚Ì•ûŒü”Ô†‚ğæ“¾: DirectionNumberOnGrid( i , j , k , h );
+  // // v->w‚Ì•ûŒü”Ô†‚ğæ“¾: DirectionNumberOnGrid( v , w );
+  // // •ûŒü”Ô†‚Ì”½“]U<->DAR<->L: ReverseDirectionNumberOnGrid( n );
   // ll answer = 0;
   // // MP answer = 0;
   // RETURN( answer );
@@ -125,29 +125,29 @@ template <typename PATH> list<PATH> E( const int& i )
 {
   // list<PATH> answer{};
   list<PATH> answer = e<PATH>[i];
-  // VVV å…¥åŠ›ã«ã‚ˆã‚‰ãªã„å‡¦ç†ã¯ä»¥ä¸‹ã«æŒ¿å…¥ã™ã‚‹ã€‚
+  // VVV “ü—Í‚É‚æ‚ç‚È‚¢ˆ—‚ÍˆÈ‰º‚É‘}“ü‚·‚éB
 
-  // AAA å…¥åŠ›ã«ã‚ˆã‚‰ãªã„å‡¦ç†ã¯ä»¥ä¸Šã«æŒ¿å…¥ã™ã‚‹ã€‚
+  // AAA “ü—Í‚É‚æ‚ç‚È‚¢ˆ—‚ÍˆÈã‚É‘}“ü‚·‚éB
   return answer;
 }
 
 template <typename T> inline T F( const T& t ){ return f<T>[t]; }
 template <typename T> inline T G( const int& i ){ return g<T>[i]; }
 
-// COMPAREã«ä½¿ç”¨ã€‚åœ§ç¸®æ™‚ã¯å‰Šé™¤ã™ã‚‹ã€‚
+// COMPARE‚Ég—pBˆ³k‚Ííœ‚·‚éB
 ll Naive( int N , int M , int K )
 {
   ll answer = N + M + K;
   return answer;
 }
 
-// COMPAREã«ä½¿ç”¨ã€‚åœ§ç¸®æ™‚ã¯å‰Šé™¤ã™ã‚‹ã€‚
+// COMPARE‚Ég—pBˆ³k‚Ííœ‚·‚éB
 ll Answer( ll N , ll M , ll K )
 {
   // START_WATCH;
   ll answer = N + M + K;
 
-  // // TLã«æº–ã˜ã‚‹ä¹±æŠã‚„å…¨æ¢ç´¢ã€‚ãƒ‡ãƒ•ã‚©ãƒ«ãƒˆã®çŒ¶äºˆã¯100.0[ms]ã€‚
+  // // TL‚É€‚¶‚é—‘ğ‚â‘S’TõBƒfƒtƒHƒ‹ƒg‚Ì—P—\‚Í100.0[ms]B
   // CEXPR( double , TL , 2000.0 );
   // while( CHECK_WATCH( TL ) ){
 
@@ -155,7 +155,7 @@ ll Answer( ll N , ll M , ll K )
   return answer;
 }
 
-// åœ§ç¸®æ™‚ã¯ä¸­èº«ã ã‘å‰Šé™¤ã™ã‚‹ã€‚
+// ˆ³k‚Í’†g‚¾‚¯íœ‚·‚éB
 inline void Experiment()
 {
   // CEXPR( int , bound , 10 );
@@ -169,7 +169,7 @@ inline void Experiment()
   // }
 }
 
-// åœ§ç¸®æ™‚ã¯ä¸­èº«ã ã‘å‰Šé™¤ã™ã‚‹ã€‚
+// ˆ³k‚Í’†g‚¾‚¯íœ‚·‚éB
 inline void SmallTest()
 {
   // CEXPR( int , bound , 10 );
@@ -192,7 +192,7 @@ inline void SmallTest()
 
 /*
 
-C-x 3 C-x o C-x C-fã«ã‚ˆã‚‹ãƒ•ã‚¡ã‚¤ãƒ«æ“ä½œç”¨
+C-x 3 C-x o C-x C-f‚É‚æ‚éƒtƒ@ƒCƒ‹‘€ì—p
 
 BFS:
 c:/Users/user/Documents/Programming/Mathematics/Geometry/Graph/BreadthFirstSearch/compress.txt
@@ -214,7 +214,7 @@ c:/Users/user/Documents/Programming/Utility/VLTree/UnionFindForest/compress.txt
 
 */
 
-// VVV å¸¸è¨­ã§ãªã„ãƒ©ã‚¤ãƒ–ãƒ©ãƒªã¯ä»¥ä¸‹ã«æŒ¿å…¥ã™ã‚‹ã€‚
+// VVV íİ‚Å‚È‚¢ƒ‰ƒCƒuƒ‰ƒŠ‚ÍˆÈ‰º‚É‘}“ü‚·‚éB
 
 
 
@@ -229,7 +229,7 @@ c:/Users/user/Documents/Programming/Utility/VLTree/UnionFindForest/compress.txt
 
 
 
-// AAA å¸¸è¨­ã§ãªã„ãƒ©ã‚¤ãƒ–ãƒ©ãƒªã¯ä»¥ä¸Šã«æŒ¿å…¥ã™ã‚‹ã€‚
+// AAA íİ‚Å‚È‚¢ƒ‰ƒCƒuƒ‰ƒŠ‚ÍˆÈã‚É‘}“ü‚·‚éB
 
 #define INCLUDE_SUB
 #include __FILE__
@@ -240,17 +240,17 @@ c:/Users/user/Documents/Programming/Utility/VLTree/UnionFindForest/compress.txt
 // #define USE_GETLINE
 #ifdef DEBUG
   #define _GLIBCXX_DEBUG
-  #define REPEAT_MAIN( BOUND ) START_MAIN; signal( SIGABRT , &AlertAbort ); AutoCheck( exec_mode , use_getline ); if( exec_mode == sample_debug_mode || exec_mode == submission_debug_mode || exec_mode == library_search_mode ){ return 0; } else if( exec_mode == experiment_mode ){ Experiment(); return 0; } else if( exec_mode == small_test_mode ){ SmallTest(); return 0; }; DEXPR( int , bound_test_case_num , BOUND , min( BOUND , 100 ) ); int test_case_num = 1; if( exec_mode == solve_mode ){ if constexpr( bound_test_case_num > 1 ){ SET_ASSERT( test_case_num , 1 , bound_test_case_num ); } } else if( exec_mode == random_test_mode ){ CERR( "ãƒ©ãƒ³ãƒ€ãƒ ãƒ†ã‚¹ãƒˆã‚’è¡Œã†å›æ•°ã‚’æŒ‡å®šã—ã¦ãã ã•ã„ã€‚" ); SET_LL( test_case_num ); } FINISH_MAIN
+  #define REPEAT_MAIN( BOUND ) START_MAIN; signal( SIGABRT , &AlertAbort ); AutoCheck( exec_mode , use_getline ); if( exec_mode == sample_debug_mode || exec_mode == submission_debug_mode || exec_mode == library_search_mode ){ return 0; } else if( exec_mode == experiment_mode ){ Experiment(); return 0; } else if( exec_mode == small_test_mode ){ SmallTest(); return 0; }; DEXPR( int , bound_test_case_num , BOUND , min( BOUND , 100 ) ); int test_case_num = 1; if( exec_mode == solve_mode ){ if constexpr( bound_test_case_num > 1 ){ SET_ASSERT( test_case_num , 1 , bound_test_case_num ); } } else if( exec_mode == random_test_mode ){ CERR( "ƒ‰ƒ“ƒ_ƒ€ƒeƒXƒg‚ğs‚¤‰ñ”‚ğw’è‚µ‚Ä‚­‚¾‚³‚¢B" ); SET_LL( test_case_num ); } FINISH_MAIN
   #define DEXPR( LL , BOUND , VALUE , DEBUG_VALUE ) CEXPR( LL , BOUND , DEBUG_VALUE )
-  #define ASSERT( A , MIN , MAX ) CERR( "ASSERTãƒã‚§ãƒƒã‚¯ï¼š " , ( MIN ) , ( ( MIN ) <= A ? "<=" : ">" ) , A , ( A <= ( MAX ) ? "<=" : ">" ) , ( MAX ) ); assert( ( MIN ) <= A && A <= ( MAX ) )
+  #define ASSERT( A , MIN , MAX ) CERR( "ASSERTƒ`ƒFƒbƒNF " , ( MIN ) , ( ( MIN ) <= A ? "<=" : ">" ) , A , ( A <= ( MAX ) ? "<=" : ">" ) , ( MAX ) ); assert( ( MIN ) <= A && A <= ( MAX ) )
   #define SET_ASSERT( A , MIN , MAX ) if( exec_mode == solve_mode ){ SET_LL( A ); ASSERT( A , MIN , MAX ); } else if( exec_mode == random_test_mode ){ CERR( #A , " = " , ( A = GetRand( MIN , MAX ) ) ); } else { assert( false ); }
   #define SOLVE_ONLY static_assert( __FUNCTION__[0] == 'S' )
   #define CERR( ... ) VariadicCout( cerr , __VA_ARGS__ ) << endl
-  #define COUT( ... ) VariadicCout( cout << "å‡ºåŠ›ï¼š " , __VA_ARGS__ ) << endl
+  #define COUT( ... ) VariadicCout( cout << "o—ÍF " , __VA_ARGS__ ) << endl
   #define CERR_A( A , N ) OUTPUT_ARRAY( cerr , A , N ) << endl
-  #define COUT_A( A , N ) cout << "å‡ºåŠ›ï¼š "; OUTPUT_ARRAY( cout , A , N ) << endl
+  #define COUT_A( A , N ) cout << "o—ÍF "; OUTPUT_ARRAY( cout , A , N ) << endl
   #define CERR_ITR( A ) OUTPUT_ITR( cerr , A ) << endl
-  #define COUT_ITR( A ) cout << "å‡ºåŠ›ï¼š "; OUTPUT_ITR( cout , A ) << endl
+  #define COUT_ITR( A ) cout << "o—ÍF "; OUTPUT_ITR( cout , A ) << endl
 #else
   #pragma GCC optimize ( "O3" )
   #pragma GCC optimize ( "unroll-loops" )
@@ -304,7 +304,7 @@ using path = pair<int,ll>;
 #define CIN_ASSERT( A , MIN , MAX ) TYPE_OF( MAX ) A; SET_ASSERT( A , MIN , MAX )
 #define FOR( VAR , INITIAL , FINAL_PLUS_ONE ) for( TYPE_OF( FINAL_PLUS_ONE ) VAR = INITIAL ; VAR < FINAL_PLUS_ONE ; VAR ++ )
 #define FOREQ( VAR , INITIAL , FINAL ) for( TYPE_OF( FINAL ) VAR = INITIAL ; VAR <= FINAL ; VAR ++ )
-#define FOREQINV( VAR , INITIAL , FINAL ) for( TYPE_OF( INITIAL ) VAR = INITIAL ; VAR >= FINAL ; VAR -- )
+#define FOREQINV( VAR , INITIAL , FINAL ) for( TYPE_OF( INITIAL ) VAR = INITIAL ; VAR + 1 > FINAL ; VAR -- )
 #define AUTO_ITR( ARRAY ) auto itr_ ## ARRAY = ARRAY .begin() , end_ ## ARRAY = ARRAY .end()
 #define FOR_ITR( ARRAY ) for( AUTO_ITR( ARRAY ) , itr = itr_ ## ARRAY ; itr_ ## ARRAY != end_ ## ARRAY ; itr_ ## ARRAY ++ , itr++ )
 #define REPEAT( HOW_MANY_TIMES ) FOR( VARIABLE_FOR_REPEAT_ ## HOW_MANY_TIMES , 0 , HOW_MANY_TIMES )
@@ -312,17 +312,18 @@ using path = pair<int,ll>;
 #define OUTPUT_ARRAY( OS , A , N ) FOR( VARIABLE_FOR_OUTPUT_ARRAY , 0 , N ){ OS << A[VARIABLE_FOR_OUTPUT_ARRAY] << (VARIABLE_FOR_OUTPUT_ARRAY==N-1?"":" "); } OS
 #define OUTPUT_ITR( OS , A ) { auto ITERATOR_FOR_OUTPUT_ITR = A.begin() , END_FOR_OUTPUT_ITR = A.end(); bool VARIABLE_FOR_OUTPUT_ITR = ITERATOR_FOR_COUT_ITR != END_FOR_COUT_ITR; while( VARIABLE_FOR_OUTPUT_ITR ){ OS << *ITERATOR_FOR_COUT_ITR; ( VARIABLE_FOR_OUTPUT_ITR = ++ITERATOR_FOR_COUT_ITR != END_FOR_COUT_ITR ) ? OS : OS << " "; } } OS
 #define RETURN( ... ) SOLVE_ONLY; COUT( __VA_ARGS__ ); return
-#define COMPARE( ... ) auto naive = Naive( __VA_ARGS__ ); auto answer = Answer( __VA_ARGS__ ); bool match = naive == answer; COUT( #__VA_ARGS__ , ":" , naive , match ? "==" : "!=" , answer ); if( !match ){ return; }
+#define COMPARE( ... ) auto naive = Naive( __VA_ARGS__ ); auto answer = Answer( __VA_ARGS__ ); bool match = naive == answer; COUT( "(" , #__VA_ARGS__ , ") == (" , __VA_ARGS__ , ") : Naive == " , naive , match ? "==" : "!=" , answer , "== Answer" ); if( !match ){ return; }
 
-// å…¥å‡ºåŠ›ç”¨
+// “üo—Í—p
 template <class Traits> inline basic_istream<char,Traits>& VariadicCin( basic_istream<char,Traits>& is ) { return is; }
 template <class Traits , typename Arg , typename... ARGS> inline basic_istream<char,Traits>& VariadicCin( basic_istream<char,Traits>& is , Arg& arg , ARGS&... args ) { return VariadicCin( is >> arg , args... ); }
 template <class Traits> inline basic_istream<char,Traits>& VariadicGetline( basic_istream<char,Traits>& is , const char& separator ) { return is; }
 template <class Traits , typename Arg , typename... ARGS> inline basic_istream<char,Traits>& VariadicGetline( basic_istream<char,Traits>& is , const char& separator , Arg& arg , ARGS&... args ) { return VariadicGetline( getline( is , arg , separator ) , separator , args... ); }
+template <class Traits , typename Arg> inline basic_ostream<char,Traits>& operator<<( basic_ostream<char,Traits>& os , const vector<Arg>& arg ) { auto begin = arg.begin() , end = arg.end(); auto itr = begin; while( itr != end ){ ( itr == begin ? os : os << " " ) << *itr; itr++; } return os; }
 template <class Traits , typename Arg> inline basic_ostream<char,Traits>& VariadicCout( basic_ostream<char,Traits>& os , const Arg& arg ) { return os << arg; }
 template <class Traits , typename Arg1 , typename Arg2 , typename... ARGS> inline basic_ostream<char,Traits>& VariadicCout( basic_ostream<char,Traits>& os , const Arg1& arg1 , const Arg2& arg2 , const ARGS&... args ) { return VariadicCout( os << arg1 << " " , arg2 , args... ); }
 
-// ç®—è¡“ç”¨
+// Zp—p
 template <typename T> constexpr T PositiveBaseResidue( const T& a , const T& p ){ return a >= 0 ? a % p : p - 1 - ( ( - ( a + 1 ) ) % p ); }
 template <typename T> constexpr T Residue( const T& a , const T& p ){ return PositiveBaseResidue( a , p < 0 ? -p : p ); }
 template <typename T> constexpr T PositiveBaseQuotient( const T& a , const T& p ){ return ( a - PositiveBaseResidue( a , p ) ) / p; }
@@ -374,8 +375,8 @@ template <typename T> constexpr T Quotient( const T& a , const T& p ){ return p 
     }									\
   }									\
 
-// äºŒåˆ†æ¢ç´¢ç”¨
-// EXPRESSIONãŒANSWERã®åºƒç¾©å˜èª¿é–¢æ•°ã®æ™‚ã€EXPRESSION >= CONST_TARGETã®æ•´æ•°è§£ã‚’æ ¼ç´ã€‚
+// “ñ•ª’Tõ—p
+// EXPRESSION‚ªANSWER‚ÌL‹`’P’²ŠÖ”‚ÌAEXPRESSION >= CONST_TARGET‚Ì®”‰ğ‚ğŠi”[B
 #define BS( ANSWER , MINIMUM , MAXIMUM , EXPRESSION , DESIRED_INEQUALITY , CONST_TARGET , INEQUALITY_FOR_CHECK , UPDATE_U , UPDATE_L , UPDATE_ANSWER ) \
   static_assert( ! is_same<TYPE_OF( CONST_TARGET ),uint>::value && ! is_same<TYPE_OF( CONST_TARGET ),ull>::value ); \
   ll ANSWER = MINIMUM;							\
@@ -388,7 +389,7 @@ template <typename T> constexpr T Quotient( const T& a , const T& p ){ return p 
   ll DIFFERENCE_BS;							\
   while( L_BS < U_BS ){							\
     DIFFERENCE_BS = ( EXPRESSION_BS = ( EXPRESSION ) ) - CONST_TARGET_BS; \
-    CERR( "äºŒåˆ†æ¢ç´¢ä¸­ï¼š" , "L_BS =" , L_BS , "<=" , ANSWER , "<=" , U_BS , "= U_BS :" , #EXPRESSION , "-" , #CONST_TARGET , "=" , EXPRESSION_BS , "-" , CONST_TARGET_BS , "=" , DIFFERENCE_BS ); \
+    CERR( "“ñ•ª’Tõ’†F" , "L_BS =" , L_BS , "<=" , ANSWER , "<=" , U_BS , "= U_BS :" , #EXPRESSION , "-" , #CONST_TARGET , "=" , EXPRESSION_BS , "-" , CONST_TARGET_BS , "=" , DIFFERENCE_BS ); \
     if( DIFFERENCE_BS INEQUALITY_FOR_CHECK 0 ){				\
       U_BS = UPDATE_U;							\
     } else {								\
@@ -397,51 +398,51 @@ template <typename T> constexpr T Quotient( const T& a , const T& p ){ return p 
     ANSWER = UPDATE_ANSWER;						\
   }									\
   if( L_BS > U_BS ){							\
-    CERR( "äºŒåˆ†æ¢ç´¢å¤±æ•—ï¼š" , "L_BS =" , L_BS , ">" , U_BS , "= U_BS :" , #ANSWER , ":=" , #MAXIMUM , "+ 1 =" , MAXIMUM + 1  ); \
-    CERR( "äºŒåˆ†æ¢ç´¢ãƒã‚¯ãƒ­ã«ãƒŸã‚¹ãŒã‚ã‚‹å¯èƒ½æ€§ãŒã‚ã‚Šã¾ã™ã€‚å¤‰æ›´å‰ã®ç‰ˆã«æˆ»ã—ã¦ãã ã•ã„ã€‚" );	\
+    CERR( "“ñ•ª’Tõ¸”sF" , "L_BS =" , L_BS , ">" , U_BS , "= U_BS :" , #ANSWER , ":=" , #MAXIMUM , "+ 1 =" , MAXIMUM + 1  ); \
+    CERR( "“ñ•ª’Tõƒ}ƒNƒ‚Éƒ~ƒX‚ª‚ ‚é‰Â”\«‚ª‚ ‚è‚Ü‚·B•ÏX‘O‚Ì”Å‚É–ß‚µ‚Ä‚­‚¾‚³‚¢B" );	\
     ANSWER = MAXIMUM + 1;						\
   } else {								\
-    CERR( "äºŒåˆ†æ¢ç´¢çµ‚äº†ï¼š" , "L_BS =" , L_BS , "<=" , ANSWER , "<=" , U_BS , "= U_BS" ); \
-    CERR( "äºŒåˆ†æ¢ç´¢ãŒæˆåŠŸã—ãŸã‹ã‚’ç¢ºèªã™ã‚‹ãŸã‚ã«" , #EXPRESSION , "ã‚’è¨ˆç®—ã—ã¾ã™ã€‚" ); \
-    CERR( "æˆåŠŸåˆ¤å®šãŒä¸è¦ãªå ´åˆã¯ã“ã®è¨ˆç®—ã‚’å‰Šé™¤ã—ã¦ã‚‚æ§‹ã„ã¾ã›ã‚“ã€‚" );	\
+    CERR( "“ñ•ª’TõI—¹F" , "L_BS =" , L_BS , "<=" , ANSWER , "<=" , U_BS , "= U_BS" ); \
+    CERR( "“ñ•ª’Tõ‚ª¬Œ÷‚µ‚½‚©‚ğŠm”F‚·‚é‚½‚ß‚É" , #EXPRESSION , "‚ğŒvZ‚µ‚Ü‚·B" ); \
+    CERR( "¬Œ÷”»’è‚ª•s—v‚Èê‡‚Í‚±‚ÌŒvZ‚ğíœ‚µ‚Ä‚à\‚¢‚Ü‚¹‚ñB" );	\
     EXPRESSION_BS = ( EXPRESSION );					\
-    CERR( "äºŒåˆ†æ¢ç´¢çµæœï¼š" , #EXPRESSION , "=" , EXPRESSION_BS , ( EXPRESSION_BS > CONST_TARGET_BS ? ">" : EXPRESSION_BS < CONST_TARGET_BS ? "<" : "=" ) , CONST_TARGET_BS ); \
+    CERR( "“ñ•ª’TõŒ‹‰ÊF" , #EXPRESSION , "=" , EXPRESSION_BS , ( EXPRESSION_BS > CONST_TARGET_BS ? ">" : EXPRESSION_BS < CONST_TARGET_BS ? "<" : "=" ) , CONST_TARGET_BS ); \
     if( EXPRESSION_BS DESIRED_INEQUALITY CONST_TARGET_BS ){		\
-      CERR( "äºŒåˆ†æ¢ç´¢æˆåŠŸï¼š" , #ANSWER , ":=" , ANSWER );		\
+      CERR( "“ñ•ª’Tõ¬Œ÷F" , #ANSWER , ":=" , ANSWER );		\
     } else {								\
-      CERR( "äºŒåˆ†æ¢ç´¢å¤±æ•—ï¼š" , #ANSWER , ":=" , #MAXIMUM , "+ 1 =" , MAXIMUM + 1 ); \
-      CERR( "å˜èª¿ã§ãªã„ã‹ã€å˜èª¿å¢—åŠ æ€§ã¨å˜èª¿æ¸›å°‘æ€§ã‚’é€†ã«ã—ã¦ã—ã¾ã£ãŸã‹ã€æ¢ç´¢ç¯„å›²å†…ã«è§£ãŒå­˜åœ¨ã—ã¾ã›ã‚“ã€‚" ); \
+      CERR( "“ñ•ª’Tõ¸”sF" , #ANSWER , ":=" , #MAXIMUM , "+ 1 =" , MAXIMUM + 1 ); \
+      CERR( "’P’²‚Å‚È‚¢‚©A’P’²‘‰Á«‚Æ’P’²Œ¸­«‚ğ‹t‚É‚µ‚Ä‚µ‚Ü‚Á‚½‚©A’Tõ”ÍˆÍ“à‚É‰ğ‚ª‘¶İ‚µ‚Ü‚¹‚ñB" ); \
       ANSWER = MAXIMUM + 1;						\
     }									\
   }									\
   }									\
 
-// å˜èª¿å¢—åŠ ã®æ™‚ã«EXPRESSION >= CONST_TARGETã®æœ€å°è§£ã‚’æ ¼ç´ã€‚
+// ’P’²‘‰Á‚Ì‚ÉEXPRESSION >= CONST_TARGET‚ÌÅ¬‰ğ‚ğŠi”[B
 #define BS1( ANSWER , MINIMUM , MAXIMUM , EXPRESSION , CONST_TARGET )	\
   BS( ANSWER , MINIMUM , MAXIMUM , EXPRESSION , >= , CONST_TARGET , >= , ANSWER , ANSWER + 1 , ( L_BS + U_BS ) / 2 ) \
 
-// å˜èª¿å¢—åŠ ã®æ™‚ã«EXPRESSION <= CONST_TARGETã®æœ€å¤§è§£ã‚’æ ¼ç´ã€‚
+// ’P’²‘‰Á‚Ì‚ÉEXPRESSION <= CONST_TARGET‚ÌÅ‘å‰ğ‚ğŠi”[B
 #define BS2( ANSWER , MINIMUM , MAXIMUM , EXPRESSION , CONST_TARGET )	\
   BS( ANSWER , MINIMUM , MAXIMUM , EXPRESSION , <= , CONST_TARGET , > , ANSWER - 1 , ANSWER , ( L_BS + 1 + U_BS ) / 2 ) \
 
-// å˜èª¿æ¸›å°‘ã®æ™‚ã«EXPRESSION >= CONST_TARGETã®æœ€å¤§è§£ã‚’æ ¼ç´ã€‚
+// ’P’²Œ¸­‚Ì‚ÉEXPRESSION >= CONST_TARGET‚ÌÅ‘å‰ğ‚ğŠi”[B
 #define BS3( ANSWER , MINIMUM , MAXIMUM , EXPRESSION , CONST_TARGET )	\
   BS( ANSWER , MINIMUM , MAXIMUM , EXPRESSION , >= , CONST_TARGET , < , ANSWER - 1 , ANSWER , ( L_BS + 1 + U_BS ) / 2 ) \
 
-// å˜èª¿æ¸›å°‘ã®æ™‚ã«EXPRESSION <= CONST_TARGETã®æœ€å°è§£ã‚’æ ¼ç´ã€‚
+// ’P’²Œ¸­‚Ì‚ÉEXPRESSION <= CONST_TARGET‚ÌÅ¬‰ğ‚ğŠi”[B
 #define BS4( ANSWER , MINIMUM , MAXIMUM , EXPRESSION , CONST_TARGET )	\
   BS( ANSWER , MINIMUM , MAXIMUM , EXPRESSION , <= , CONST_TARGET , <= , ANSWER , ANSWER + 1 , ( L_BS + U_BS ) / 2 ) \
 
-// tä»¥ä¸‹ã®å€¤ãŒå­˜åœ¨ã™ã‚Œã°ãã®æœ€å¤§å€¤ã®iteratorã€å­˜åœ¨ã—ãªã‘ã‚Œã°end()ã‚’è¿”ã™ã€‚
+// tˆÈ‰º‚Ì’l‚ª‘¶İ‚·‚ê‚Î‚»‚ÌÅ‘å’l‚ÌiteratorA‘¶İ‚µ‚È‚¯‚ê‚Îend()‚ğ•Ô‚·B
 template <typename T> inline typename set<T>::iterator MaximumLeq( set<T>& S , const T& t ) { const auto end = S.end(); if( S.empty() ){ return end; } auto itr = S.upper_bound( t ); return itr == end ? S.find( *( S.rbegin() ) ) : itr == S.begin() ? end : --itr; }
-// tæœªæº€ã®å€¤ãŒå­˜åœ¨ã™ã‚Œã°ãã®æœ€å¤§å€¤ã®iteratorã€å­˜åœ¨ã—ãªã‘ã‚Œã°end()ã‚’è¿”ã™ã€‚
+// t–¢–‚Ì’l‚ª‘¶İ‚·‚ê‚Î‚»‚ÌÅ‘å’l‚ÌiteratorA‘¶İ‚µ‚È‚¯‚ê‚Îend()‚ğ•Ô‚·B
 template <typename T> inline typename set<T>::iterator MaximumLt( set<T>& S , const T& t ) { const auto end = S.end(); if( S.empty() ){ return end; } auto itr = S.lower_bound( t ); return itr == end ? S.find( *( S.rbegin() ) ) : itr == S.begin() ? end : --itr; }
-// tä»¥ä¸Šã®å€¤ãŒå­˜åœ¨ã™ã‚Œã°ãã®æœ€å°å€¤ã®iteratorã€å­˜åœ¨ã—ãªã‘ã‚Œã°end()ã‚’è¿”ã™ã€‚
+// tˆÈã‚Ì’l‚ª‘¶İ‚·‚ê‚Î‚»‚ÌÅ¬’l‚ÌiteratorA‘¶İ‚µ‚È‚¯‚ê‚Îend()‚ğ•Ô‚·B
 template <typename T> inline typename set<T>::iterator MinimumGeq( set<T>& S , const T& t ) { return S.lower_bound( t ); }
-// tã‚ˆã‚Šå¤§ãã„å€¤ãŒå­˜åœ¨ã™ã‚Œã°ãã®æœ€å°å€¤ã®iteratorã€å­˜åœ¨ã—ãªã‘ã‚Œã°end()ã‚’è¿”ã™ã€‚
+// t‚æ‚è‘å‚«‚¢’l‚ª‘¶İ‚·‚ê‚Î‚»‚ÌÅ¬’l‚ÌiteratorA‘¶İ‚µ‚È‚¯‚ê‚Îend()‚ğ•Ô‚·B
 template <typename T> inline typename set<T>::iterator MinimumGt( set<T>& S , const T& t ) { return S.upper_bound( t ); }
 
-// ãƒ‡ãƒ¼ã‚¿æ§‹é€ ç”¨
+// ƒf[ƒ^\‘¢—p
 template <typename T> inline T Add( const T& t0 , const T& t1 ) { return t0 + t1; }
 template <typename T> inline T XorAdd( const T& t0 , const T& t1 ){ return t0 ^ t1; }
 template <typename T> inline T Multiply( const T& t0 , const T& t1 ) { return t0 * t1; }
@@ -452,30 +453,30 @@ template <typename T> inline T Id( const T& v ) { return v; }
 template <typename T> inline T Min( const T& a , const T& b ){ return a < b ? a : b; }
 template <typename T> inline T Max( const T& a , const T& b ){ return a < b ? b : a; }
 
-// ã‚°ãƒªãƒƒãƒ‰å•é¡Œç”¨
+// ƒOƒŠƒbƒh–â‘è—p
 int H , W , H_minus , W_minus , HW;
 vector<vector<bool> > non_wall;
 inline T2<int> EnumHW( const int& v ) { return { v / W , v % W }; }
 inline int EnumHW_inv( const int& h , const int& w ) { return h * W + w; }
 const string direction[4] = {"U","R","D","L"};
-// (i,j)->(k,h)ã®æ–¹å‘ç•ªå·ã‚’å–å¾—
+// (i,j)->(k,h)‚Ì•ûŒü”Ô†‚ğæ“¾
 inline int DirectionNumberOnGrid( const int& i , const int& j , const int& k , const int& h ){return i<k?2:i>k?0:j<h?1:j>h?3:(assert(false),-1);}
-// v->wã®æ–¹å‘ç•ªå·ã‚’å–å¾—
+// v->w‚Ì•ûŒü”Ô†‚ğæ“¾
 inline int DirectionNumberOnGrid( const int& v , const int& w ){auto [i,j]=EnumHW(v);auto [k,h]=EnumHW(w);return DirectionNumberOnGrid(i,j,k,h);}
-// æ–¹å‘ç•ªå·ã®åè»¢U<->Dã€R<->L
+// •ûŒü”Ô†‚Ì”½“]U<->DAR<->L
 inline int ReverseDirectionNumberOnGrid( const int& n ){assert(0<=n&&n<4);return(n+2)%4;}
 inline void SetEdgeOnGrid( const string& Si , const int& i , list<int> ( &e )[] , const char& walkable = '.' ){FOR(j,0,W){if(Si[j]==walkable){int v = EnumHW_inv(i,j);if(i>0){e[EnumHW_inv(i-1,j)].push_back(v);}if(i+1<H){e[EnumHW_inv(i+1,j)].push_back(v);}if(j>0){e[EnumHW_inv(i,j-1)].push_back(v);}if(j+1<W){e[EnumHW_inv(i,j+1)].push_back(v);}}}}
 inline void SetEdgeOnGrid( const string& Si , const int& i , list<path> ( &e )[] , const char& walkable = '.' ){FOR(j,0,W){if(Si[j]==walkable){const int v=EnumHW_inv(i,j);if(i>0){e[EnumHW_inv(i-1,j)].push_back({v,1});}if(i+1<H){e[EnumHW_inv(i+1,j)].push_back({v,1});}if(j>0){e[EnumHW_inv(i,j-1)].push_back({v,1});}if(j+1<W){e[EnumHW_inv(i,j+1)].push_back({v,1});}}}}
 inline void SetWallOnGrid( const string& Si , const int& i , vector<vector<bool> >& non_wall , const char& walkable = '.'  , const char& unwalkable = '#' ){non_wall.push_back(vector<bool>(W));auto& non_wall_i=non_wall[i];FOR(j,0,W){non_wall_i[j]=Si[j]==walkable?true:(assert(Si[j]==unwalkable),false);}}
 
-// ã‚°ãƒ©ãƒ•ç”¨
+// ƒOƒ‰ƒt—p
 template <typename PATH> vector<list<PATH> > e;
 template <typename T> map<T,T> f;
 template <typename T> vector<T> g;
 
-// ãƒ‡ãƒãƒƒã‚°ç”¨
+// ƒfƒoƒbƒO—p
 #ifdef DEBUG
-  inline void AlertAbort( int n ) { CERR( "aborté–¢æ•°ãŒå‘¼ã°ã‚Œã¾ã—ãŸã€‚assertãƒã‚¯ãƒ­ã®ãƒ¡ãƒƒã‚»ãƒ¼ã‚¸ãŒå‡ºåŠ›ã•ã‚Œã¦ã„ãªã„å ´åˆã¯ã‚ªãƒ¼ãƒãƒ¼ãƒ•ãƒ­ãƒ¼ã®æœ‰ç„¡ã‚’ç¢ºèªã‚’ã—ã¦ãã ã•ã„ã€‚" ); }
+  inline void AlertAbort( int n ) { CERR( "abortŠÖ”‚ªŒÄ‚Î‚ê‚Ü‚µ‚½Bassertƒ}ƒNƒ‚ÌƒƒbƒZ[ƒW‚ªo—Í‚³‚ê‚Ä‚¢‚È‚¢ê‡‚ÍƒI[ƒo[ƒtƒ[‚Ì—L–³‚ğŠm”F‚ğ‚µ‚Ä‚­‚¾‚³‚¢B" ); }
   void AutoCheck( int& exec_mode , const bool& use_getline );
   inline void Solve();
   inline void Experiment();
@@ -496,10 +497,10 @@ template <typename T> vector<T> g;
     CEXPR( bool , use_getline , false );
   #endif
 #else
-  ll GetRand( const ll& , const ll& ) { abort(); return 0; }
+  ll GetRand( const ll& Rand_min , const ll& Rand_max ) { ll answer = time( NULL ); return answer * rand() % ( Rand_max + 1 - Rand_min ) + Rand_min; }
 #endif
 
-// åœ§ç¸®ç”¨
+// ˆ³k—p
 #define TE template
 #define TY typename
 #define US using
@@ -525,7 +526,7 @@ template <typename T> vector<T> g;
 #define CRUI CO uint&
 #define CRL CO ll&
 
-// VVV å¸¸è¨­ãƒ©ã‚¤ãƒ–ãƒ©ãƒªã¯ä»¥ä¸‹ã«æŒ¿å…¥ã™ã‚‹ã€‚
+// VVV íİƒ‰ƒCƒuƒ‰ƒŠ‚ÍˆÈ‰º‚É‘}“ü‚·‚éB
 
 // ConstexprModulo
 // c:/Users/user/Documents/Programming/Mathematics/Arithmetic/Mod/ConstexprModulo/a.hpp
@@ -561,7 +562,7 @@ TE <TY T,int N> IN BIT<T,N>::BIT():m_fenwick(){static_assert(! is_same<T,int>::v
 TE <TY T,int N>CL IntervalAddBIT{PU:BIT<T,N> m_bit_0;BIT<T,N> m_bit_1;IN IntervalAddBIT();IN IntervalAddBIT(CO T(&a)[N]);IN T Get(CRI i)CO;IN VO Set(CRI i,CO T& n);IN VO Set(CO T(&a)[N]);IN VO Initialise();IN IntervalAddBIT<T,N>& OP+=(CO T(&a)[N]);IN VO Add(CRI i,CO T& n);IN VO IntervalAdd(CRI i_start,CRI i_final,CO T& n);IN T InitialSegmentSum(CRI i_final)CO;IN T IntervalSum(CRI i_start,CRI i_final)CO;};
 TE <TY T,int N> IN IntervalAddBIT<T,N>::IntervalAddBIT():m_bit_0(),m_bit_1(){}TE <TY T,int N> IN IntervalAddBIT<T,N>::IntervalAddBIT(CO T(&a)[N]):m_bit_0(),m_bit_1(){OP+=(a);}TE <TY T,int N> IN T IntervalAddBIT<T,N>::Get(CRI i)CO{RE IntervalSum(i,i);}TE <TY T,int N> IN VO IntervalAddBIT<T,N>::Set(CRI i,CO T& n){Add(i,n - IntervalSum(i,i));}TE <TY T,int N> IN VO IntervalAddBIT<T,N>::Set(CO T(&a)[N]){IntervalAddBIT<T,N> a_copy{a};swap(m_bit_0,a_copy.m_bit_0);swap(m_bit_1,a_copy.m_bit_1);}TE <TY T,int N> IN VO IntervalAddBIT<T,N>::Initialise(){m_bit_0.Initialise();m_bit_1.Initialise();}TE <TY T,int N> IN IntervalAddBIT<T,N>& IntervalAddBIT<T,N>::OP+=(CO T(&a)[N]){for(int i = 0;i < N;i++){Add(i,a[i]);}RE *TH;}TE <TY T,int N> IN VO IntervalAddBIT<T,N>::Add(CRI i,CO T& n){IntervalAdd(i,i,n);}TE <TY T,int N> IN VO IntervalAddBIT<T,N>::IntervalAdd(CRI i_start,CRI i_final,CO T& n){m_bit_0.Add(i_start,-(i_start - 1)* n);m_bit_0.Add(i_final + 1,i_final * n);m_bit_1.Add(i_start,n);m_bit_1.Add(i_final + 1,- n);}TE <TY T,int N> IN T IntervalAddBIT<T,N>::InitialSegmentSum(CRI i_final)CO{RE m_bit_0.InitialSegmentSum(i_final)+ i_final * m_bit_1.InitialSegmentSum(i_final);}TE <TY T,int N> IN T IntervalAddBIT<T,N>::IntervalSum(CRI i_start,CRI i_final)CO{RE InitialSegmentSum(i_final)- InitialSegmentSum(i_start - 1);}
 
-// AAA å¸¸è¨­ãƒ©ã‚¤ãƒ–ãƒ©ãƒªã¯ä»¥ä¸Šã«æŒ¿å…¥ã™ã‚‹ã€‚
+// AAA íİƒ‰ƒCƒuƒ‰ƒŠ‚ÍˆÈã‚É‘}“ü‚·‚éB
 
 #define INCLUDE_LIBRARY
 #include __FILE__
