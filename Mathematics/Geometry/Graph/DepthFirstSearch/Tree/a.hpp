@@ -6,6 +6,7 @@
 // verify:
 // https://yukicoder.me/submissions/919091（RootingDP）
 // https://yukicoder.me/submissions/938101（RerootingDP）
+// https://yukicoder.me/submissions/941430（RerootingDP）
 
 // digitはAncestorとLCAにのみ使用。普段は0で良い。
 // 2^16 = 65536
@@ -76,7 +77,8 @@ public:
   // dp[i][j] = f(iを根とみなした時のjの子ノードkを渡るg(dp[i][k],jはiの子孫,k,j)のm_Tに関する積,j)
   // を満たす二重配列dpの対角成分dp[i][i]をO(m_V)で求めてdに格納する。
   template <typename T , T m_T(const T&,const T&) ,const T& e_T() , T f(const T&,const int&), T g(const T&,const bool&,const int&,const int&)> void RerootingDP( T ( &d )[V_max] );
-  // fはノードjごとのデータ、gは有向辺b?(j,k):(k,j)ごとのデータに対応。
+  // fはノードjごとのデータ（グラフ構造に依存しない）、gは有向辺b?(j,k):(k,j)ごとのデータに対応。
+  // 例えば「パスの数」を求める時はm_Tが和、fが+1（葉かどうかに関係ない）、gがidでよい。
 
 private:
   void SetChildren();
