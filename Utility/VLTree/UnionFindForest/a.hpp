@@ -4,16 +4,19 @@
 #include "Entry/a.hpp"
 #include "../../LinkedVector/a.hpp"
 
-template <typename T>
+// verify:https://yukicoder.me/submissions/935675
+
+template <typename T = char>
 class UnionFindForest :
   public LinkedVector<EntryOfUnionFindForest<T> >
 {
 
 public:
-  // コンストラクタは領域を確保するだけなのでpush_RightMostで要素を追加する必要があることに注意。
+  // １つ目のコンストラクタは領域を確保するだけなのでpush_RightMostで要素を追加する必要があることに注意。
   // EntryOfUnionFindForest<T>::m_nodeはVLSubTree<T>型でありポインタをメンバに持つため
   // 予め最大要素数max_sizeを固定しないといけない。
   inline UnionFindForest( const uint& max_size );
+  inline UnionFindForest( const uint& max_size , const uint& size );
 
   // num番目のNodeをRootとする部分木を構築する。
   inline const VLSubTree<T>& GetSubTree( const uint& num ) const;
@@ -21,8 +24,10 @@ public:
   inline const uint& GetPredecessorNode( const uint& num ) const;
   // num番目のNodeのRootを計算して返す。
   const uint& GetRootOfNode( const uint& num );
-  // num番目のRootを返す。
+  // num番目のRootを返す。（O(num)）
   uint GetRoot( const uint& num ) const;
+  // Rootを全て格納する。（O(Rootの個数)）
+  template <template <typename...> typename V> void SetRoot( V<uint>& a ) const;
 
   // num番目のNodeに格納された値への参照を返す。
   inline const T& operator[]( const uint& num ) const;

@@ -7,6 +7,7 @@
 #include "../../LinkedVector/a_Body.hpp"
 
 template <typename T> inline UnionFindForest<T>::UnionFindForest( const uint& max_size ) : LinkedVector<EntryOfUnionFindForest<T> >( max_size ) {}
+template <typename T> inline UnionFindForest<T>::UnionFindForest( const uint& max_size , const uint& size ) : UnionFindForest( max_size ) { T t{}; for( int i = 0 ; i < size ; i++ ){ push_RightMost( t ); } }
 
 template <typename T> inline const VLSubTree<T>& UnionFindForest<T>::GetSubTree( const uint& num ) const { return LinkedVector<EntryOfUnionFindForest<T> >::operator[]( num ).m_node; }
 template <typename T> inline const uint& UnionFindForest<T>::GetPredecessorNode( const uint& num ) const { return LinkedVector<EntryOfUnionFindForest<T> >::operator[]( num ).m_pred_node; }
@@ -43,6 +44,21 @@ uint UnionFindForest<T>::GetRoot( const uint& num ) const
   
 }
 
+template <typename T> template <template <typename...> typename V>
+void UnionFindForest<T>::SetRoot( V<uint>& a ) const
+{
+
+  a.clear();
+  
+  for( auto itr = LinkedVector<EntryOfUnionFindForest<T> >::begin() , end = LinkedVector<EntryOfUnionFindForest<T> >::end() ; itr != end ; itr++ ){
+
+    a.push_back( itr.GetIndex() );
+
+  }
+
+  return;
+
+}
 
 template <typename T> inline const T& UnionFindForest<T>::operator[]( const uint& num ) const { return LinkedVector<EntryOfUnionFindForest<T> >::operator[]( num ).m_node.GetRoot(); }
 template <typename T> inline T& UnionFindForest<T>::operator[]( const uint& num ) { return LinkedVector<EntryOfUnionFindForest<T> >::operator[]( num ).m_node.RefRoot(); }
