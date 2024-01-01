@@ -1,73 +1,71 @@
+#ifndef INCLUDE_MODE
+  #define INCLUDE_MODE
+  // #define REACTIVE
+  // #define USE_GETLINE
+#endif
+
 #ifdef INCLUDE_MAIN
 
 inline void Solve()
 {
   // // 数
-  // DEXPR( ll , bound_N , 100000 , 100 ); // 0が5個
-  // // DEXPR( ll , bound_N , 1000000000 , 100 ); // 0が9個
-  // // DEXPR( ll , bound_N , 1000000000000000000 , 100 ); // 0が18個
+  // DEXPR( ll , bound_N , 1e5 , 10 );
   // CEXPR( TYPE_OF( bound_N ) , bound_M , bound_N );
   // CIN( ll , N , M , K );
-  // // CIN_ASSERT( N , 1 , bound_N ); // ランダムテスト用。
+  // CIN_ASSERT( N , 1 , bound_N ); // ランダムテスト用。
   // ll answer = 0;
-  // // MP answer = 0;
   // RETURN( answer );
 
   // // 配列
-  // CIN_A( ll , A , N ); CIN_A( ll , B , N );
-  // // CIN_A( MP , A , N ); CIN_A( MP , B , N );
-  // // vector<ll> A( N ) , B( N );
-  // // vector<MP> A( N ) , B( N );
-  // // ll A[bound_N] , ll B[bound_N]; // 関数の引数に使う。
-  // // MP A[bound_N] , MP B[bound_N]; // 関数の引数に使う。
-  // // FOR( i , 0 , N ){ cin >> A[i] >> B[i]; }
-  // // FOR( i , 0 , N * 2 ){ cin >> ( i < N ? A[i] : B[i-N] ); }
-  // ll answer = 0;
-  // // MP answer = 0;
-  // // COUT_A( A , N );
+  // using value_type = ll;
+  // using value_type = MP;
+  // CIN( uint , N ); CIN_A( value_type , A , N ); CIN_A( value_type , B , N );
+  // CIN( uint , N ); vector<value_type> A( N ) , B( N );
+  // CIN( uint , N ); value_type A[bound_N] , B[bound_N]; // 関数の引数に使う。
+  // FOR( i , 0 , N ){ cin >> A[i] >> B[i]; }
+  // FOR( i , 0 , N * 2 ){ cin >> ( i < N ? A[i] : B[i-N] ); }
+  // value_type answer = 0;
+  // COUT_A( A , N );
   // RETURN( answer );
 
   // // 文字列
-  // CIN( string , S , T );
+  // CIN( uint , N ); CIN( string , S , T );
   // ll answer = 0;
-  // // MP answer = 0;
   // RETURN( answer );
 
   // // 順列
-  // vector<int> A( N ) , A_inv( N );
+  // CIN( uint , N ); vector<int> A( N ) , A_inv( N );
   // FOR( i , 0 , N ){ cin >> A[i]; A_inv[--A[i]] = i; }
   // ll answer = 0;
-  // // MP answer = 0;
-  // // COUT( answer );
   // RETURN( answer );
   
   // // グラフ
-  // e<int>.resize( N );
-  // // e<path>.resize( N );
+  // DEXPR( uint , bound_N , 1e5 , 10 );
+  // CIN( uint , N , M );
+  // CIN( uint , N ); uint M = N - 1;
+  // gE<int>.resize( N );
+  // gE<path>.resize( N );
+  // uint M = N - 1;
   // FOR( j , 0 , M ){
   //   CIN_ASSERT( uj , 1 , N ); CIN_ASSERT( vj , 1 , N );
   //   uj--; vj--;
-  //   e<int>[uj].push_back( vj ); e<int>[vj].push_back( uj );
+  //   gE<int>[uj].push_back( vj ); gE<int>[vj].push_back( uj );
   //   // CIN( ll , wj );
-  //   // e<path>[uj].push_back( { vj , wj } ); e<path>[vj].push_back( { uj , wj } );
+  //   // gE<path>[uj].push_back( { vj , wj } ); gE<path>[vj].push_back( { uj , wj } );
   // }
+  // BreadthFirstSearch<bound_N,GetgE<int>> bfs{ N , 0 };
+  // DepthFirstSearch<bound_N,GetgE<int>> dfs{ N , 0 };
+  // DepthFirstSearchOnTree<bound_N,GetgE<int>> dfst{ N , 0 };
+  // Dijkstra<GetgE<path>,bound_N> dijk{ N };
   // ll answer = 0;
-  // // MP answer = 0;
+  // MP answer = 0;
   // RETURN( answer );
-
-  // // 座標圧縮や単一クエリタイプなどのための入力格納
-  // vector<T3<ll> > data( M );
-  // FOR( j , 0 , M ){ CIN( ll , x , y , z ); data[j] = { x , y , z }; }
-  // ll answer = 0;
-  // // MP answer = 0;
-  // RETURN( answer );
-  
+ 
   // // 一般のクエリ
+  // DEXPR( int , bound_Q , 1e5 , 100 );
   // CIN( int , Q );
-  // // DEXPR( int , bound_Q , 100000 , 100 ); // 基本不要。
-  // // CIN_ASSERT( Q , 1 , bound_Q ); // 基本不要。
-  // // vector<T3<int> > query( Q );
-  // // vector<T2<int> > query( Q );
+  // vector<T3<int> > query( Q );
+  // vector<T2<int> > query( Q );
   // FOR( q , 0 , Q ){
   //   CIN( int , type );
   //   if( type == 1 ){
@@ -88,18 +86,16 @@ inline void Solve()
   // //   // auto& [type,x,y] = query[q];
   // // }
   // ll answer = 0;
-  // // MP answer = 0;
   // RETURN( answer );
   
   // // グリッド
-  // // DEXPR( int , bound_H , 2000 , 30 );
-  // // // DEXPR( int , bound_H , 100000 , 10 ); // 0が5個
-  // // // CEXPR( int , bound_H , 1000000000 ); // 0が9個
-  // // CEXPR( int , bound_W , bound_H );
-  // // static_assert( ll( bound_H ) * bound_W < ll( 1 ) << 31 );
-  // // CEXPR( int , bound_HW , bound_H * bound_W );
+  // DEXPR( int , bound_H , 2e3 , 30 );
+  // CEXPR( int , bound_W , bound_H );
+  // static_assert( ll( bound_H ) * bound_W < ll( 1 ) << 31 );
+  // CEXPR( int , bound_HW , bound_H * bound_W );
   // cin >> H >> W;
-  // // SET_ASSERT( H , 1 , bound_H ); SET_ASSERT( W , 1 , bound_W ); // ランダムテスト用。  // H_minus = H - 1; W_minus = W - 1; HW = H * W;
+  // SET_ASSERT( H , 1 , bound_H ); SET_ASSERT( W , 1 , bound_W ); // ランダムテスト用。
+  // H_minus = H - 1; W_minus = W - 1; HW = H * W;
   // vector<string> S( H );
   // FOR( i , 0 , H ){
   //   cin >> S[i];
@@ -112,7 +108,6 @@ inline void Solve()
   // // v->wの方向番号を取得: DirectionNumberOnGrid( v , w );
   // // 方向番号の反転U<->D、R<->L: ReverseDirectionNumberOnGrid( n );
   // ll answer = 0;
-  // // MP answer = 0;
   // RETURN( answer );
 }
 REPEAT_MAIN(1);
@@ -121,18 +116,18 @@ REPEAT_MAIN(1);
 
 #ifdef INCLUDE_SUB
 
-template <typename PATH> list<PATH> E( const int& i )
+template <typename PATH> list<PATH> GetgE( const int& i )
 {
   // list<PATH> answer{};
-  list<PATH> answer = e<PATH>[i];
+  list<PATH> answer = gE<PATH>[i];
   // VVV 入力によらない処理は以下に挿入する。
 
   // AAA 入力によらない処理は以上に挿入する。
   return answer;
 }
 
-template <typename T> inline T F( const T& t ){ return f<T>[t]; }
-template <typename T> inline T G( const int& i ){ return g<T>[i]; }
+template <typename T> inline T GetgF( const T& t ){ return gF<T>[t]; }
+template <typename T> inline T GetgA( const int& i ){ return gA<T>[i]; }
 
 // COMPAREに使用。圧縮時は削除する。
 ll Naive( int N , int M , int K )
@@ -236,8 +231,6 @@ c:/Users/user/Documents/Programming/Utility/VLTree/UnionFindForest/compress.txt
 
 #else // INCLUDE_LIBRARY
 
-// #define REACTIVE
-// #define USE_GETLINE
 #ifdef DEBUG
   #define _GLIBCXX_DEBUG
   #define REPEAT_MAIN( BOUND ) START_MAIN; signal( SIGABRT , &AlertAbort ); AutoCheck( exec_mode , use_getline ); if( exec_mode == sample_debug_mode || exec_mode == submission_debug_mode || exec_mode == library_search_mode ){ return 0; } else if( exec_mode == experiment_mode ){ Experiment(); return 0; } else if( exec_mode == small_test_mode ){ SmallTest(); return 0; }; DEXPR( int , bound_test_case_num , BOUND , min( BOUND , 100 ) ); int test_case_num = 1; if( exec_mode == solve_mode ){ if constexpr( bound_test_case_num > 1 ){ SET_ASSERT( test_case_num , 1 , bound_test_case_num ); } } else if( exec_mode == random_test_mode ){ CERR( "ランダムテストを行う回数を指定してください。" ); SET_LL( test_case_num ); } FINISH_MAIN
@@ -443,6 +436,10 @@ template <typename T> inline typename set<T>::iterator MinimumGeq( set<T>& S , c
 template <typename T> inline typename set<T>::iterator MinimumGt( set<T>& S , const T& t ) { return S.upper_bound( t ); }
 
 // データ構造用
+template <typename T , template <typename...> typename V> inline T operator+( const T& t0 , const T& t1 ) { if( t0.empty() ){ return t1; } if( t1.empty() ){ return t0; } assert( t0.size() == t1.size() ); V<T> answer{}; for( auto itr0 = t0.begin() , itr1 = t1.begin() , end0 = t0.end(); itr0 != end0 ; itr0++ , itr1++ ){ answer.push_back( *itr0 + *itr1 ); } return answer; }
+template <typename T> inline T operator+( const T2<T>& t0 , const T2<T>& t1 ) { return { t0.first + t1.first , t0.second + t1.second }; }
+template <typename T> inline T operator+( const T3<T>& t0 , const T3<T>& t1 ) { return { get<0>( t0 ) + get<0>( t1 ) , get<1>( t0 ) + get<1>( t1 ) , get<2>( t0 ) + get<2>( t1 ) }; }
+template <typename T> inline T operator+( const T4<T>& t0 , const T4<T>& t1 ) { return { get<0>( t0 ) + get<0>( t1 ) , get<1>( t0 ) + get<1>( t1 ) , get<2>( t0 ) + get<2>( t1 ) , get<3>( t0 ) + get<3>( t1 ) }; }
 template <typename T> inline T Add( const T& t0 , const T& t1 ) { return t0 + t1; }
 template <typename T> inline T XorAdd( const T& t0 , const T& t1 ){ return t0 ^ t1; }
 template <typename T> inline T Multiply( const T& t0 , const T& t1 ) { return t0 * t1; }
@@ -470,9 +467,9 @@ inline void SetEdgeOnGrid( const string& Si , const int& i , list<path> ( &e )[]
 inline void SetWallOnGrid( const string& Si , const int& i , vector<vector<bool> >& non_wall , const char& walkable = '.'  , const char& unwalkable = '#' ){non_wall.push_back(vector<bool>(W));auto& non_wall_i=non_wall[i];FOR(j,0,W){non_wall_i[j]=Si[j]==walkable?true:(assert(Si[j]==unwalkable),false);}}
 
 // グラフ用
-template <typename PATH> vector<list<PATH> > e;
-template <typename T> map<T,T> f;
-template <typename T> vector<T> g;
+template <typename PATH> vector<list<PATH> > gE;
+template <typename T> map<T,T> gF;
+template <typename T> vector<T> gA;
 
 // デバッグ用
 #ifdef DEBUG
