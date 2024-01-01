@@ -67,7 +67,9 @@ AC( DebugHint )
     CERR( "  を検討しましょう。" );
     CERR( "- whileループで添字等の更新忘れによる無限ループはありませんか？" );
     CERR( "- DEXPR使用時に手元とオンライン環境で実行時間が変わることを失念していませんか？" );
-    CERR( "- cerrの消し忘れはありませんか？" );
+    CERR( "- デバッグ用の処理の消し忘れはありませんか？" );
+    CERR( "  - cerrが残っていませんか？" );
+    CERR( "  - 実装が空のデバッグ用関数の呼び出しコストを無視していませんか？" );
     CERR( "- 重過ぎる定数倍を考慮し忘れてませんか？" );
     CERR( "  - bool値の処理はbit演算による並列化" );
     CERR( "  - 変数の和や積に上限があるグリッド問題は動的配列" );
@@ -77,6 +79,7 @@ AC( DebugHint )
     CERR( "    S_ijをO(1)で構築することを検討しましょう。" );
     CERR( "- リアクティブ問題でflushと改行をし忘れていませんか？" );
     CERR( "- gccのvariadic arrayのバグの可能性がありませんか？" );
+    CERR( "- 畳み込みでgccを使っていませんか？" );
     CERR( "- 構築可能性の判定問題であれば、時間を計測して打ち切りましょう。" );
   } else if( num == num_temp++ ){
     CERR( "- グラフで辺を持ち過ぎていませんか？" );
@@ -151,6 +154,7 @@ AC( DebugHintWA )
   CERR( "  - バグの検証の難しい処理は関数化しましょう。" );
   CERR( "  - 関数化された処理は、そこだけをテストしてみましょう。" );
   CERR( "- inplace処理を行う２項演算で２項が等しい場合を考慮し忘れていませんか？" );
+  CERR( "- TruncatedPolynomialをPolynomialにキャストしてm_Nよりm_sizeが大きくなっていませんか？" );
   CERR( "- マルチテストケースで配列にstaticをつけて値が持ち越されていませんか？" );
   CERR( "- cLay使用畤にsetmod以前に10^9+7より大きい値を代入していませんか？" );
   CERR( "  #define MD 998244353 などを用いましょう。" );
@@ -444,16 +448,37 @@ AC( ExplicitExpressionFunctionOnPermutation )
 
 AC( ExplicitExpressionFunctionOnTree )
 {
-  CERR( "木を受け取る関数fが与えられているとします。" );
-  CERR( "" );
-  CALL_AC( FunctionOnTree );
-  CERR( "" );
-  CERR( "部分木に関する良い遷移関係を探し、（全方位）木DP" );
-  CERR( "\\Mathematics\\Geometry\\Graph\\DepthFirstSearch\\Tree" );
-  CERR( "を検討しましょう。" );
-  ASK_YES_NO( "fがbit演算の多引数化である問題ですか？" );
-  if( reply == "y" ){
-    CALL_AC( ExplicitExpressionBitFunctionOnTree );
+  ASK_NUMBER(
+	     "木を受け取る関数の計算問題" ,
+	     "構文木の計算問題"
+	     );
+  if( num == num_temp++ ){
+    CERR( "木を受け取る関数fが与えられているとします。" );
+    CERR( "" );
+    CALL_AC( FunctionOnTree );
+    CERR( "" );
+    CERR( "部分木に関する良い遷移関係を探し、（全方位）木DP" );
+    CERR( "\\Mathematics\\Geometry\\Graph\\DepthFirstSearch\\Tree" );
+    CERR( "を検討しましょう。" );
+    ASK_YES_NO( "fがbit演算の多引数化である問題ですか？" );
+    if( reply == "y" ){
+      CALL_AC( ExplicitExpressionBitFunctionOnTree );
+    }
+  } else if( num == num_temp++ ){
+    CERR( "構文解析は言語の再帰式に沿って再帰関数で実装しましょう。" );
+    CERR( "例えば式Sを左から順に読み、" );
+    CERR( "Expression(S,読んでいる位置i,式番号v,構文木T)を" );
+    CERR( "「S[i]を演算子または始端とする式eに番号vを振り、" );
+    CERR( " Tにeの部分式の式番号へ有向辺を張り、iとvを増やす」" );
+    CERR( "という処理を式の再帰式に従っていくつかの関数に分けて" );
+    CERR( "再帰すると良いです。" );
+    CERR( "https://qiita.com/kazuki_tamaribuchi/items/77a4b4e6214646a079ed" );
+    CERR( "" );
+    CERR( "構文木に沿った計算は、演算を１つ以外の引数を固定した１変数関数とみなし" );
+    CERR( "合成として処理し、分割統治とcompress+rakeを組み合わせてO(N(log N)^3)で" );
+    CERR( "処理することを検討しましょう。" );
+    CERR( "https://en.wikipedia.org/wiki/Tree_contraction#Expression_Evaluation" );
+    CERR( "https://yukicoder.me/submissions/940108" );
   }
 }
 
@@ -563,8 +588,11 @@ AC( ExplicitExpressionProbability )
 
 AC( ExplicitExpressionCountingOperation )
 {
-  CERR( "操作回数を求める際は、操作列を「一斉に処理できる区間」いくつかに分割し、" );
-  CERR( "それぞれの区間での処理を計算することを検討しましょう。" );
+  CERR( "操作回数を求める際は、" );
+  CERR( "- 操作列を「一斉に処理できる区間」いくつかに分割し、それぞれの区間での処理を計算" );
+  CERR( "- 操作後の状態を何らかの不変量で分類し、操作を不変量間の遷移とみなすことで" );
+  CERR( "  動的計画法や移動コスト最小化問題に帰着" );
+  CERR( "を検討しましょう。" );
 }
 
 AC( ExplicitExpressionConvolution )
@@ -644,7 +672,8 @@ AC( Maximisation )
 	     "文字列のマッチングに関する最大／最長化問題" ,
 	     "最大二部マッチング問題" ,
 	     "確率／期待値の最大化問題" ,
-	     "操作回数の最小化問題"
+	     "操作回数の最小化問題" ,
+	     "操作回数の最大化問題"
 	     );
   if( num == num_temp++ ){
     CALL_AC( MaximisationFunctionOnAffineSpace );
@@ -666,6 +695,8 @@ AC( Maximisation )
     CALL_AC( MaximisationProbability );
   } else if( num == num_temp++ ){
     CALL_AC( ExplicitExpressionCountingOperation );
+  } else if( num == num_temp++ ){
+    CALL_AC( MaximisationCountingOperation );
   }
 }
 
@@ -718,6 +749,8 @@ AC( MaximisationFunctionOnArray )
     CERR( "  を管理するiに関する動的計画法" );
     CERR( "- 「v以上の値を取り得るか否か」が判定可能である時は" );
     CERR( "  vに関する二分探索" );
+    CERR( "- 「v以上の値を取り得るか否か」が判定可能である時は" );
+    CERR( "  vに関する二分探索" );
     CERR( "を検討しましょう。" );
   }
 }
@@ -754,6 +787,7 @@ AC( MaximisationSubArraySum )
     CERR( "  を前計算し" );
     CERR( "  「コストの総和がc以下の時の価値の最大値dp[c]」" );
     CERR( "  を管理するcに関する動的計画法" );
+    CERR( "- Cが十分小さいならば、コストの大きい選択回数の全探策や二分探索" );
     CERR( "を検討しましょう。" );
   } else if( num == num_temp++ ){
     CERR( "区間をスライドしていき、両端の更新値を用いて最大値を管理しましょう。" );
@@ -932,6 +966,15 @@ AC( MaximisationProbability )
   CERR( "を管理するsに関する動的計画法を検討しましょう。" );
 }
 
+AC( MaximisationCountingOperation )
+{
+  CERR( "操作によって減る数値xを見付けることで操作回数の上界を求めましょう。" );
+  CERR( "上界を達成する方法の探索には" );
+  CERR( "- 操作によってxが減る値が最小になるような操作の反復" );
+  CERR( "- ほとんど同じ操作の反復" );
+  CERR( "を検討しましょう。" );
+}
+
 AC( Counting )
 {
   ASK_NUMBER(
@@ -983,21 +1026,23 @@ AC( CountingExplicitExpression )
   CERR( "  \\Mathematics\\Combinatorial\\ZetaTransform" );
   CERR( "- gcd(n,x)=1かつ1<=x<=nを満たすxの数え上げはオイラー関数" );
   CERR( "  \\Mathematics\\Arithmetic\\Mod\\Function\\Euler" );
-  CERR( "- f(g(x),g(y))=kの形は" );
-  CERR( "  - まず各b in im(g)に対しf(a,b) = kを満たすa in im(g)全体を前計算する。" );
-  CERR( "  - 次に|dom(g)| = N、max im(g) = Mとしてim(g)を多重集合として" );
-  CERR( "    - O(N log_2 N)が間に合いそうならばmap iterator + map::lower_bound" );
-  CERR( "    - O(N)が間に合いそうならばunordered_map iterator + unordered_map::[]" );
-  CERR( "    - O(M+N)が間に合いそうならば配列全探策 + 配列::[]" );
+  CERR( "- f(g(x),g(y))=cの形は" );
+  CERR( "  - まず各b in im(g)に対しf(a,b) = cを満たすa in im(g)全体を前計算する。" );
+  CERR( "  - 次に|dom(g)| = N、max im(g) = Mとして、各y in im(g)に対する" );
+  CERR( "    逆像の濃度|g^{-1}(y)|を管理するg_inv[y]を" );
+  CERR( "    - O(N)が間に合いそうならばunordered_map::g_inv[g[x]]++" );
+  CERR( "    - O(M+N)が間に合いそうならば配列::g_inv[g[x]]++" );
   CERR( "    - x,yに制限h(x)<h(y)がある場合はh(x)の上限cについてループして" );
-  CERR( "      g(x)の集合を更新していき、それと並行してyをc<h(y)の範囲で全探索" );
+  CERR( "      g_inv[g(x)]++していき、それと並行してyをc<h(y)の範囲で全探索" );
   CERR( "    により管理する。" );
-  CERR( "  - 最後に各yごとにf(a,g(y)) = kを満たす各a in im(g)に対しa = g(x)を満たす" );
-  CERR( "    xをim(g)の多重集合構造を使って数え上げる。" );
-  CERR( "- f(g(x),g(y))<=kの形でfとgが単調増加する時は" );
-  CERR( "  - まず各b in im(g)に対しf(a,b) <= kを満たすaの上限を二分探索で前計算する。" );
+  CERR( "  - 最後に各yごとにf(a,g(y)) = cを満たす各a in im(g)に対しa = g(x)を満たす" );
+  CERR( "    xをg_inv[a]で数え上げる。" );
+  CERR( "- f(g(x),g(y))<=cの形でfとgが単調増加する時は" );
+  CERR( "  - まず各b in im(g)に対しf(a,b) <= cを満たすaの上限を二分探索で前計算する。" );
   CERR( "  - 次にそうして得られる各aに対しg(x)<=aを満たすxの上限を二分探索で前計算する。" );
   CERR( "  - 最後に各yごとにb = g(y)に対する前計算結果の総和を求める。" );
+  CERR( "- 平方数の和はヤコビの二平方定理" );
+  CERR( "  https://ja.wikipedia.org/wiki/ヤコビの二平方定理" );
   CERR( "を検討しましょう。" );
 }
 
@@ -1013,6 +1058,13 @@ AC( CountingArray )
     CERR( "- 取り得る値が少なく関数が長さに関して再帰的構造を持つ場合は、" );
     CERR( "  「長さiの時に値vである配列の総数dp[i][v]」" );
     CERR( "  を管理するi,vに関する動的計画法" );
+    CERR( "- 配列が有界で関数が非零係数ベクトルBを持つ場合は、" );
+    CERR( "  「長さiの時に値vである配列の総数dp[i][v]」" );
+    CERR( "  が漸化式dp[i+1][v] = sum_j dp[i][v-j*B_{i+1}]を" );
+    CERR( "  満たすことからdp[i][p+xv]がxに関する多項式関数となるので" );
+    CERR( "  平行移動と累積和による計算" );
+    CERR( "  \\Mathematics\\Polynomial\\ParallelTranslation" );
+    CERR( "  \\Mathematics\\Polynomial\\CumulativeSum" );
     CERR( "- 関数が区間和などデータ構造で計算できる場合は、" );
     CERR( "  データ構造に翻訳した上での数え上げ" );
     CERR( "を検討しましょう。" );
@@ -1362,10 +1414,37 @@ AC( CountingParenthesisSequence )
 
 AC( Solving )
 {
-  CERR( "- 単調関数は二分探索" );
-  CERR( "- 可微分関数はニュートン法" );
-  CERR( "- 一次関数は掃き出し法" );
-  CERR( "- f(g(x),g(y),...)の形はf,g別々に前計算" );
+  ASK_NUMBER(
+	     "１つの方程式f(g(x),g(y),...)=c" ,
+	     "M個の方程式f(x[a[i]],x[b[i]])=c[i]" ,
+	     "その他の方程式"
+	     );
+  if( num == num_temp++ ){
+    CERR( "f,gを別々に以下の手順で前計算" );
+    CERR( "- まず各b in im(g)に対しf(a,b) = cを満たすa in im(g)全体を前計算する。" );
+    CERR( "- 次に|dom(g)| = N、max im(g) = Mとして、各y in im(g)に対する" );
+    CERR( "  逆像の代表元を管理するg_inv[y]を" );
+    CERR( "  - O(N)が間に合いそうならばunordered_map::g_inv[g[x]]=x" );
+    CERR( "  - O(M+N)が間に合いそうならば配列::g_inv[g[x]]=x" );
+    CERR( "  - x,yに制限h(x)<h(y)がある場合はh(x)の上限cについてループして" );
+    CERR( "    g_inv[g(x)]=xしていき、それと並行してyをc<h(y)の範囲で全探索" );
+    CERR( "  により管理する。" );
+    CERR( "- 最後に各yごとにf(a,g(y)) = cを満たす各a in im(g)に対しa = g(x)を満たす" );
+    CERR( "  xをg_inv[a]として与える。" );
+  } else if( num == num_temp++ ){
+    CERR( "f(x,-)かf(-y)が単射であるとします。" );
+    CERR( "- O(BMf(BN) + BN log B)が間に合いそうならば素集合データ構造" );
+    CERR( "  \\Utility\\VLTree\\UnionFindForest" );
+    CERR( "- O(BM + BN log B)が間に合いそうならば幅／深さ優先探索" );
+    CERR( "  \\Mathematics\\Geometry\\Graph\\BreadthFirst" );
+    CERR( "  \\Mathematics\\Geometry\\Graph\\DepthFirst" );
+    CERR( "- O(Mf(N) + N)が間に合いそうでf(x,y)=x-yならば差分付き素集合データ構造" );
+    CERR( "  https://qiita.com/drken/items/cce6fc5c579051e64fab" );
+  } else if( num == num_temp++ ){
+    CERR( "- 単調関数は二分探索" );
+    CERR( "- 可微分関数はニュートン法" );
+    CERR( "- 連立一次方程式は掃き出し法" );
+  }
   CERR( "を検討しましょう。" );
 }
 
@@ -1773,6 +1852,7 @@ AC( DecisionPresentability )
 AC( Construction )
 {
   CERR( "存在定理に帰着できる問題は構成的証明を実装しましょう。" );
+  CERR( "" );
   CERR( "リアクティブ問題で質問をする際は" );
   CERR( "- 何らかの順序における極大元に触れる聞き方" );
   CERR( "- なるべく多くの数値に依存する情報に触れる聞き方" );
@@ -1780,14 +1860,22 @@ AC( Construction )
   CERR( "を検討しましょう。" );
   ASK_NUMBER(
 	     "数や配列や文字列の構築" ,
+	     "方程式の解の構築" ,
+	     "写像の構築" ,
 	     "経路の構築" ,
 	     "必勝戦略の構築" ,
 	     "最大化戦略の構築" ,
+	     "グリッド操作の構築" ,
+	     "分割方法の構築" ,
 	     "表現可能性の判定" ,
 	     "ソースコードの構築"
 	     );
   if( num == num_temp++ ){
     CERR( "p進法や階差数列を検討しましょう。" );
+  } else if( num == num_temp++ ){
+    CALL_AC( Solving );
+  } else if( num == num_temp++ ){
+    CALL_AC( ConstructionMap );
   } else if( num == num_temp++ ){
     CERR( "可能な経路の定めるグラフの問題に帰着させましょう。" );
     CALL_AC( DecisionAccessibility );
@@ -1797,10 +1885,45 @@ AC( Construction )
   } else if( num == num_temp++ ){
     CALL_AC( ConstructionMaximisation );
   } else if( num == num_temp++ ){
+    CERR( "HWが小さいケースを手作業または全探策で求め、" );
+    CERR( "それらの反復を検討しましょう。" );
+  } else if( num == num_temp++ ){
+    ASK_NUMBER(
+	       "数やベクトルの和への分割" ,
+	       "集合や文字列や配列の部分集合や部分列への分割" ,
+	       );
+    if( num == num_temp++ ){
+      CERR( "数やベクトルの半群の要素は、加素元からなる極小生成系の要素の和で表せます。" );
+      CERR( "- 加素元の和で表すならば、半群が方程式の解空間で与えられる場合には" );
+      CERR( "  Qの直和に埋め込めば解の1/nも解であることに着目し、整数の範囲での商を" );
+      CERR( "  うまく端数を揃えて解を構成できるかもしれません。" );
+      CERR( "- 数を素数の和で表すならば、Klove数列で必要な素数の個数を見積りましょう。" );
+      CERR( "  Mathematics\\Arithmetic\\Prime\\KloveSequence\\a.hpp" );
+      CERR( "- 数を多角数の和で表すならば、二平方定理などを参考にしましょう。" );
+      CERR( "  https://ja.wikipedia.org/wiki/二個の平方数の和#素数についての証明" );
+      CERR( "  https://ja.wikipedia.org/wiki/三個の平方数の和#証明" );
+      CERR( "  https://ja.wikipedia.org/wiki/四平方定理#ラグランジュの四平方定理の証明" );
+      CERR( "  https://ja.wikipedia.org/wiki/多角数定理#証明" );
+    } else {
+      CERR( "集合や文字列や配列の分割は写像の一種です。" );
+      CALL_AC( ConstructionMap );
+    }
+  } else if( num == num_temp++ ){
     CALL_AC( DecisionPresentability );
   } else if( num == num_temp++ ){
     CERR( "正解を出力をするソースコードを提出しましょう。" );
   }
+}
+
+AC( ConstructionMap )
+{
+  CERR( "- 単射の構築にはHallの結婚定理" );
+  CERR( "  https://ja.wikipedia.org/wiki/ホールの定理" );
+  CERR( "- 全単射の構築にはホップクロフトカープ法やカントールベルンシュタインの定理" );
+  CERR( "  \\Mathematics\\Geometry\\Graph\\HopcroftKarp" );
+  CERR( "  https://ja.wikipedia.org/wiki/ベルンシュタインの定理#証明" );
+  CERR( "- 全射の構築には部分集合を制限して全単射の構築の反復" );
+  CERR( "を検討しましょう。" )
 }
 
 AC( ConstructionMaximisation )
