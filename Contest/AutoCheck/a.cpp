@@ -456,9 +456,9 @@ AC( ExplicitExpressionFunctionOnTree )
     CERR( "木を受け取る関数fが与えられているとします。" );
     CERR( "" );
     CALL_AC( FunctionOnTree );
-    CERR( "" );
-    CERR( "部分木に関する良い遷移関係を探し、（全方位）木DP" );
-    CERR( "\\Mathematics\\Geometry\\Graph\\DepthFirstSearch\\Tree" );
+    CERR( "- 各ノード（またはその近傍）の寄与に分解できる時はノードごとの計算" );
+    CERR( "- 部分木に関する良い遷移関係があれば（全方位）木DP" );
+    CERR( "  \\Mathematics\\Geometry\\Graph\\DepthFirstSearch\\Tree" );
     CERR( "を検討しましょう。" );
     ASK_YES_NO( "fがbit演算の多引数化である問題ですか？" );
     if( reply == "y" ){
@@ -849,7 +849,7 @@ AC( MaximisationSubsetSize )
   CERR( "  - 後続関数を定義し、後続に関する二分探索" );
   CERR( "- 完全代表系の計算ならば、幅優先探索やUnionFindによる連結成分計算" );
   CERR( "  \\Mathematics\\Geometry\\Graph\\BreadthFirst" );
-  CERR( "  \\Utility\\VLTree\\UnionFindForest" );
+  CERR( "  \\Mathematics\\Geometry\\Graph\\UnionFindForest" );
   CERR( "- 半開区間の極大排他的集合ならば、区間スケジューリング" );
   CERR( "を検討しましょう。" );
 }
@@ -922,7 +922,7 @@ AC( MinimisationSolvingOpenCovering )
   CERR( "  \\Mathematics\\Geometry\\Graph\\BreadthFirst\\ZeroOne" );
   CERR( "- max演算を考えておりO(E(log_2 E + α(V)))が通りそうならば、" );
   CERR( "  重みで辺をソートして素集合データ構造" );
-  CERR( "  \\Utility\\VLTree\\UnionFindForest" );
+  CERR( "  \\Mathematics\\Geometry\\Graph\\UnionFindForest" );
   CERR( "- O((V+E)log_2 E)が通りそうならば、" );
   CERR( "  頂点を１つ追加し各始点に辺を張ったグラフ上でのダイクストラ法" );
   CERR( "  \\Mathematics\\Geometry\\Graph\\Dijkstra" );
@@ -1313,7 +1313,6 @@ AC( CountingPartitionOfTree )
   CERR( "木を受け取る関数fが与えられているとします。" );
   CERR( "" );
   CALL_AC( FunctionOnTree );
-  CERR( "" );
   CERR( "F(P)が固定された時のPの数え上げ問題は" );
   CERR( "「第i成分までで切った時のF(P)=vを満たすPの個数dp[i][v]」" );
   CERR( "を管理するi,vに関する動的計画法（O(N^2 v_max×fの計算量)）" );
@@ -1434,7 +1433,7 @@ AC( Solving )
   } else if( num == num_temp++ ){
     CERR( "f(x,-)かf(-y)が単射であるとします。" );
     CERR( "- O(BMf(BN) + BN log B)が間に合いそうならば素集合データ構造" );
-    CERR( "  \\Utility\\VLTree\\UnionFindForest" );
+    CERR( "  \\Mathematics\\Geometry\\Graph\\UnionFindForest" );
     CERR( "- O(BM + BN log B)が間に合いそうならば幅／深さ優先探索" );
     CERR( "  \\Mathematics\\Geometry\\Graph\\BreadthFirst" );
     CERR( "  \\Mathematics\\Geometry\\Graph\\DepthFirst" );
@@ -1739,7 +1738,7 @@ AC( DecisionConnectedness )
 {
   CERR( "幅優先探索やUnionFind" );
   CERR( "\\Mathematics\\Geometry\\Graph\\BreadthFirst" );
-  CERR( "\\Utility\\VLTree\\UnionFindForest" );
+  CERR( "\\Mathematics\\Geometry\\Graph\\UnionFindForest" );
   CERR( "を検討しましょう。" );
   CERR( "" );
 }
