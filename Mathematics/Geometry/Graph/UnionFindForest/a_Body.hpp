@@ -3,19 +3,7 @@
 #pragma once
 #include "a.hpp"
 
-template <typename T>
-UnionFindForest<T>::UnionFindForest( const uint& size ) : m_node_size( size ) , m_root_size( m_node_size ) , m_pred( m_node_size ) , m_length( m_node_size , 1 ) , m_left_root( m_node_size ) , m_right_root( m_node_size ) , m_w( m_node_size )
-{
-
-  for( uint i = 0 ; i < m_node_size ; i++ ){
-
-    m_pred[i] = i;
-    m_left_root[i] = i == 0 ? 0 : i - 1;
-    m_right_root[i] = i + 1 == m_node_size ? i : i + 1;
-
-  }
-
-}
+template <typename T> inline UnionFindForest<T>::UnionFindForest( const uint& size ) : m_node_size( size ) , m_root_size( m_node_size ) , m_pred( m_node_size ) , m_height( m_node_size , 1 ) , m_w( m_node_size ) { for( uint i = 0 ; i < m_node_size ; i++ ){ m_pred[i] = i; } }
 
 template <typename T>
 const uint& UnionFindForest<T>::RootOfNode( const uint& num )
@@ -47,19 +35,14 @@ void UnionFindForest<T>::SetRoot( V<uint>& a ) const
 {
 
   a.clear();
-  uint i = m_left_root[0];
-  
-  while( true ){
 
-    a.push_back( i );
+  for( uint i = 0 ; i < m_node_size ; i++ ){
 
-    if( i == m_right_root[i] ){
-
-      break;
+    if( i == m_pred[i] ){
+      
+      a.push_back( i );
 
     }
-
-    i = m_right_root[i];
 
   }
 
@@ -96,13 +79,13 @@ bool UnionFindForest<T>::Graft( const uint& num0 , const uint& num1 , const T& w
     
   }
 
-  uint& length0 = m_length[root0];
-  const uint& length1 = m_length[root1];
+  uint& height0 = m_height[root0];
+  const uint& height1 = m_height[root1];
   const uint* p_removed_root;
   const uint* p_removed_node;
   const uint* p_kept_root;
 
-  if( length0 < length1 ){
+  if( height0 < height1 ){
 
     p_removed_root = &root0;
     p_removed_node = &num0;
@@ -111,9 +94,9 @@ bool UnionFindForest<T>::Graft( const uint& num0 , const uint& num1 , const T& w
 
   } else {
 
-    if( length0 == length1 ){
+    if( height0 == height1 ){
 
-      length0++;
+      height0++;
 
     }
 
@@ -121,24 +104,6 @@ bool UnionFindForest<T>::Graft( const uint& num0 , const uint& num1 , const T& w
     p_removed_node = &num1;
     p_kept_root = &root0;
     m_w[*p_removed_root] += w - m_w[num1] + m_w[num0];
-
-  }
-
-  const uint& left = m_left_root[*p_removed_root];
-  const uint& right = m_right_root[*p_removed_root];
-
-  if( left == *p_removed_root ){
-
-    m_left_root[0] = m_left_root[right] = right;
-
-  } else if( *p_removed_root == right ){
-
-    m_right_root[m_node_size - 1] = m_right_root[left] = left;
-
-  } else {
-
-    m_left_root[right] = left;
-    m_right_root[left] = right;
 
   }
 
