@@ -164,8 +164,9 @@ void SetPrimeFactorisation( const PrimeEnumeration<INT,val_limit,length_max>& pr
 
   INT1 n_copy = n;
   int i = 0;
+  const int& length = prime.length();
 
-  while( i < prime.m_length ){
+  while( i < length ){
 
     const INT2& p = prime[i];
 
@@ -274,8 +275,9 @@ void SetPrimeFactorisation( const PrimeEnumeration<INT,val_limit,length_max>& pr
 
   INT1 n_copy = n;
   int i = 0;
+  const int& length = prime.length();
 
-  while( i < prime.m_length ){
+  while( i < length ){
 
     const INT2& p = prime[i];
 
