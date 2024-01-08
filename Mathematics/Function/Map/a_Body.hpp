@@ -2,3 +2,5 @@
 
 #pragma once
 #include "a.hpp"
+
+template <typename INT , template <typename...> typename T> inline size_t hash<T<INT>>::operator()( const T<INT>& n ) const { return hash<INT>::operator()( n.Represent() ); }

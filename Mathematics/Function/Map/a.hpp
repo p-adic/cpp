@@ -15,6 +15,16 @@ public:
 
 };
 
+
+template <typename INT , template <typename...> typename T>
+struct hash<T<INT>> :
+  public hash<INT>
+{
+
+  inline size_t operator()( const T<INT>& n ) const;
+
+};
+
 #include "a_Alias.hpp"
 // Map<T,U>‚Í
 // - unordered_map<T,U>()‚ªwell-formed‚È‚ç‚Îunordered_map<T,U>
