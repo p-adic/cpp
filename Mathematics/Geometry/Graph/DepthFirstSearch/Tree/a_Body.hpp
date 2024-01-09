@@ -5,33 +5,33 @@
 
 #include "../a_Body.hpp"
 
-template <int V_max,list<int> E(const int&),int digit> inline DepthFirstSearchOnTree<V_max,E,digit>::DepthFirstSearchOnTree( const int& V , const int& root ) :
-  DepthFirstSearch<V_max,E>( V , root ) , m_reversed() , m_children() , m_set_children() , m_depth() , m_set_depth() , m_height() , m_set_height() , m_weight() , m_set_weight() , m_doubling() , m_set_doubling()
+template <list<int> E(const int&),int digit> inline DepthFirstSearchOnTree<E,digit>::DepthFirstSearchOnTree( const int& V , const int& root ) :
+  DepthFirstSearch<E>( V , root ) , m_reversed( V ) , m_children() , m_set_children() , m_depth() , m_set_depth() , m_height() , m_set_height() , m_weight() , m_set_weight() , m_doubling() , m_set_doubling()
 {
 
-  int n = DepthFirstSearch<V_max,E>::size();
+  int n = V;
   
   while( --n >= 0 ){
     
-    m_reversed[n] = DepthFirstSearch<V_max,E>::Next();
+    m_reversed[n] = DepthFirstSearch<E>::Next();
 
   }
 
 }
 
-template <int V_max,list<int> E(const int&),int digit> inline const int& DepthFirstSearchOnTree<V_max,E,digit>::Root() const { return DepthFirstSearch<V_max,E>::init(); }
+template <list<int> E(const int&),int digit> inline const int& DepthFirstSearchOnTree<E,digit>::Root() const { return DepthFirstSearch<E>::init(); }
 
-template <int V_max,list<int> E(const int&),int digit> inline const int& DepthFirstSearchOnTree<V_max,E,digit>::Parent( const int& i ) const { return DepthFirstSearch<V_max,E>::prev( i ); }
-template <int V_max,list<int> E(const int&),int digit> inline const vector<int>& DepthFirstSearchOnTree<V_max,E,digit>::Children( const int& i ) { if( ! m_set_children ){ SetChildren(); } return m_children[i]; }
-template <int V_max,list<int> E(const int&),int digit> inline const int& DepthFirstSearchOnTree<V_max,E,digit>::Depth( const int& i ) const { if( ! m_set_depth ){ SetDepth(); } return m_depth[i]; }
-template <int V_max,list<int> E(const int&),int digit> inline const int& DepthFirstSearchOnTree<V_max,E,digit>::Height( const int& i ) { if( ! m_set_height ){ SetHeight(); } return m_height[i]; }
-template <int V_max,list<int> E(const int&),int digit> inline const int& DepthFirstSearchOnTree<V_max,E,digit>::Weight( const int& i ) { if( ! m_set_weight ){ SetWeight(); } return m_weight[i]; }
+template <list<int> E(const int&),int digit> inline const int& DepthFirstSearchOnTree<E,digit>::Parent( const int& i ) const { return DepthFirstSearch<E>::prev( i ); }
+template <list<int> E(const int&),int digit> inline const vector<int>& DepthFirstSearchOnTree<E,digit>::Children( const int& i ) { if( ! m_set_children ){ SetChildren(); } return m_children[i]; }
+template <list<int> E(const int&),int digit> inline const int& DepthFirstSearchOnTree<E,digit>::Depth( const int& i ) const { if( ! m_set_depth ){ SetDepth(); } return m_depth[i]; }
+template <list<int> E(const int&),int digit> inline const int& DepthFirstSearchOnTree<E,digit>::Height( const int& i ) { if( ! m_set_height ){ SetHeight(); } return m_height[i]; }
+template <list<int> E(const int&),int digit> inline const int& DepthFirstSearchOnTree<E,digit>::Weight( const int& i ) { if( ! m_set_weight ){ SetWeight(); } return m_weight[i]; }
 
-template <int V_max,list<int> E(const int&),int digit> inline const int& DepthFirstSearchOnTree<V_max,E,digit>::NodeNumber( const int& i , const bool& reversed ) const { return m_reversed[reversed ? i : DepthFirstSearch<V_max,E>::size() - 1 - i]; }
-template <int V_max,list<int> E(const int&),int digit> inline const int& DepthFirstSearchOnTree<V_max,E,digit>::ChildrenNumber( const int& i ) { if( ! m_set_children ){ SetChildren(); } return m_children_num[i]; }
+template <list<int> E(const int&),int digit> inline const int& DepthFirstSearchOnTree<E,digit>::NodeNumber( const int& i , const bool& reversed ) const { return m_reversed[reversed ? i : DepthFirstSearch<E>::size() - 1 - i]; }
+template <list<int> E(const int&),int digit> inline const int& DepthFirstSearchOnTree<E,digit>::ChildrenNumber( const int& i ) { if( ! m_set_children ){ SetChildren(); } return m_children_num[i]; }
 
-template <int V_max,list<int> E(const int&),int digit>
-int DepthFirstSearchOnTree<V_max,E,digit>::Ancestor( int i , int n )
+template <list<int> E(const int&),int digit>
+int DepthFirstSearchOnTree<E,digit>::Ancestor( int i , int n )
 {
 
   if( ! m_set_doubling ){
@@ -61,8 +61,8 @@ int DepthFirstSearchOnTree<V_max,E,digit>::Ancestor( int i , int n )
 
 }
 
-template <int V_max,list<int> E(const int&),int digit>
-int DepthFirstSearchOnTree<V_max,E,digit>::LCA( int i , int j )
+template <list<int> E(const int&),int digit>
+int DepthFirstSearchOnTree<E,digit>::LCA( int i , int j )
 {
 
   int diff = Depth( i ) - Depth( j );
@@ -86,7 +86,7 @@ int DepthFirstSearchOnTree<V_max,E,digit>::LCA( int i , int j )
 
   while( --d >= 0 ){
 
-    const int ( &doubling_d )[V_max] = m_doubling[d];
+    const vector<int>& doubling_d = m_doubling[d];
     const int& doubling_d_i = doubling_d[i];
     const int& doubling_d_j = doubling_d[j];
 
@@ -105,8 +105,8 @@ int DepthFirstSearchOnTree<V_max,E,digit>::LCA( int i , int j )
 
 }
 
-template <int V_max,list<int> E(const int&),int digit>
-int DepthFirstSearchOnTree<V_max,E,digit>::LCA( int i , int j , int& i_prev , int& j_prev )
+template <list<int> E(const int&),int digit>
+int DepthFirstSearchOnTree<E,digit>::LCA( int i , int j , int& i_prev , int& j_prev )
 {
 
   if( i == j ){
@@ -147,7 +147,7 @@ int DepthFirstSearchOnTree<V_max,E,digit>::LCA( int i , int j , int& i_prev , in
 
   while( --d >= 0 ){
 
-    const int ( &doubling_d )[V_max] = m_doubling[d];
+    const vector<int>& doubling_d = m_doubling[d];
     const int& doubling_d_i = doubling_d[i];
     const int& doubling_d_j = doubling_d[j];
 
@@ -168,13 +168,13 @@ int DepthFirstSearchOnTree<V_max,E,digit>::LCA( int i , int j , int& i_prev , in
 
 }
 
-template <int V_max,list<int> E(const int&),int digit>
-void DepthFirstSearchOnTree<V_max,E,digit>::SetChildren()
+template <list<int> E(const int&),int digit>
+void DepthFirstSearchOnTree<E,digit>::SetChildren()
 {
 
   assert( !m_set_children );
   m_set_children = true;
-  const int& V = DepthFirstSearch<V_max,E>::size();
+  const int& V = DepthFirstSearch<E>::size();
   m_children.resize( V );
   m_children_num.resize( V );
   
@@ -200,13 +200,13 @@ void DepthFirstSearchOnTree<V_max,E,digit>::SetChildren()
   
 }
 
-template <int V_max,list<int> E(const int&),int digit>
-void DepthFirstSearchOnTree<V_max,E,digit>::SetDepth()
+template <list<int> E(const int&),int digit>
+void DepthFirstSearchOnTree<E,digit>::SetDepth()
 {
 
   assert( !m_set_depth );
   m_set_depth = true;
-  const int& V = DepthFirstSearch<V_max,E>::size();
+  const int& V = DepthFirstSearch<E>::size();
   m_depth.resize( V );
   
   for( int i = 0 ; i < V ; i++ ){
@@ -226,13 +226,13 @@ void DepthFirstSearchOnTree<V_max,E,digit>::SetDepth()
 
 }
 
-template <int V_max,list<int> E(const int&),int digit>
-void DepthFirstSearchOnTree<V_max,E,digit>::SetHeight()
+template <list<int> E(const int&),int digit>
+void DepthFirstSearchOnTree<E,digit>::SetHeight()
 {
 
   assert( !m_set_height );
   m_set_height = true;
-  const int& V = DepthFirstSearch<V_max,E>::size();
+  const int& V = DepthFirstSearch<E>::size();
   m_height.resize( V );
   
   for( int i = 0 ; i < V ; i++ ){
@@ -254,13 +254,13 @@ void DepthFirstSearchOnTree<V_max,E,digit>::SetHeight()
 
 }
 
-template <int V_max,list<int> E(const int&),int digit>
-void DepthFirstSearchOnTree<V_max,E,digit>::SetWeight()
+template <list<int> E(const int&),int digit>
+void DepthFirstSearchOnTree<E,digit>::SetWeight()
 {
 
   assert( !m_set_weight );
   m_set_weight = true;
-  const int& V = DepthFirstSearch<V_max,E>::size();
+  const int& V = DepthFirstSearch<E>::size();
   m_weight.resize( V );
   
   for( int i = 0 ; i < V ; i++ ){
@@ -280,13 +280,13 @@ void DepthFirstSearchOnTree<V_max,E,digit>::SetWeight()
 
 }
 
-template <int V_max,list<int> E(const int&),int digit>
-void DepthFirstSearchOnTree<V_max,E,digit>::SetDoubling()
+template <list<int> E(const int&),int digit>
+void DepthFirstSearchOnTree<E,digit>::SetDoubling()
 {
 
   assert( !m_set_doubling );
   m_set_doubling = true;
-  const int& V = DepthFirstSearch<V_max,E>::size();
+  const int& V = DepthFirstSearch<E>::size();
   
   {
     
@@ -321,8 +321,8 @@ void DepthFirstSearchOnTree<V_max,E,digit>::SetDoubling()
 
 }
 
-template <int V_max,list<int> E(const int&),int digit> template <typename T , T f(const list<T>&,const int&)>
-T DepthFirstSearchOnTree<V_max,E,digit>::RootingDP()
+template <list<int> E(const int&),int digit> template <typename T , T f(const list<T>&,const int&)>
+T DepthFirstSearchOnTree<E,digit>::RootingDP()
 {
 
   if( ! m_set_children ){
@@ -331,8 +331,8 @@ T DepthFirstSearchOnTree<V_max,E,digit>::RootingDP()
 
   }
   
-  const int& V = DepthFirstSearch<V_max,E>::size();
-  list<T> children_value[V_max] = {};
+  const int& V = DepthFirstSearch<E>::size();
+  vector<list<T>> children_value( V );
   T temp;
   
   for( int n = 0 ; n < V ; n++ ){
@@ -353,8 +353,8 @@ T DepthFirstSearchOnTree<V_max,E,digit>::RootingDP()
 
 }
   
-template <int V_max,list<int> E(const int&),int digit> template <typename T , T m_T(const T&,const T&) ,const T& e_T() , T f(const T&,const int&), T g(const T&,const bool&,const int&,const int&)>
-void DepthFirstSearchOnTree<V_max,E,digit>::RerootingDP( T ( &d )[V_max] )
+template <list<int> E(const int&),int digit> template <typename T , T m_T(const T&,const T&) ,const T& e_T() , T f(const T&,const int&), T g(const T&,const bool&,const int&,const int&)>
+void DepthFirstSearchOnTree<E,digit>::RerootingDP( vector<T>& d )
 {
 
   if( ! m_set_children ){
@@ -363,17 +363,18 @@ void DepthFirstSearchOnTree<V_max,E,digit>::RerootingDP( T ( &d )[V_max] )
 
   }
   
-  const int& V = DepthFirstSearch<V_max,E>::size();
+  const int& V = DepthFirstSearch<E>::size();
   const T& e = e_T();
+  d.resize( V );
 
   // children_value[i][m]Ç…iÇÃmî‘ñ⁄ÇÃéqÉmÅ[ÉhjÇ‹Ç≈ÇÃåvéZílÇÃfÇ≈ÇÃëúÇäiî[ÅB
-  vector<T> children_value[V_max] = {};
+  vector<vector<T>> children_value( V );
   // left_sum[i][m]Ç…children_value[i][0],...,children_value[i][m-1]ÇÃ
   // gÇ≈ÇÃëúÇÃm_TÇ…ä÷Ç∑ÇÈêœÇäiî[ÅB
-  vector<T> left_sum[V_max] = {};
+  vector<vector<T>> left_sum( V );
   // right_sum[i][m]Ç…children_value[i][m+1],...,children_value[i][size_i-1]ÇÃ
   // gÇ≈ÇÃëúÇÃm_TÇ…ä÷Ç∑ÇÈêœÇäiî[ÅB
-  vector<T> right_sum[V_max] = {};
+  vector<vector<T>> right_sum( V );
   
   for( int i = 0 ; i < V ; i++ ){
 

@@ -3,21 +3,20 @@
 #pragma once
 #include "a.hpp"
 
-template <int V_max> inline ZeroOneBreadthFirstSearch_Body<V_max>::ZeroOneBreadthFirstSearch_Body( const int& V ) : m_V( V ) , m_init() , m_next() , m_found() , m_prev() , m_weight() { assert( m_V <= V_max ); for( int i = 0 ; i < m_V ; i++ ){ m_prev[i] = m_weight[i] -1; } }
-template <int V_max> inline ZeroOneBreadthFirstSearch_Body<V_max>::ZeroOneBreadthFirstSearch_Body( const int& V , const int& init ) : ZeroOneBreadthFirstSearch_Body( V ) { m_init = init; m_next.push_back( m_init ); m_found[m_init] = 2; m_weight[m_init] = 0; }
-template <int V_max,list<pair<int,bool> > E(const int&)> template <typename... Args> inline ZeroOneBreadthFirstSearch<V_max,E>::ZeroOneBreadthFirstSearch( const Args&... args ) : ZeroOneBreadthFirstSearch_Body<V_max>( args... ) {}
+inline ZeroOneBreadthFirstSearch_Body::ZeroOneBreadthFirstSearch_Body( const int& V ) : m_V( V ) , m_init() , m_next() , m_found( m_V ) , m_prev( m_V , -1 ) , m_weight( m_V , -1 ) {}
+inline ZeroOneBreadthFirstSearch_Body::ZeroOneBreadthFirstSearch_Body( const int& V , const int& init ) : ZeroOneBreadthFirstSearch_Body( V ) { assert( init < m_V ); m_init = init; m_next.push_back( m_init ); m_found[m_init] = 2; m_weight[m_init] = 0; }
+template <list<pair<int,bool> > E(const int&)> template <typename... Args> inline ZeroOneBreadthFirstSearch<E>::ZeroOneBreadthFirstSearch( const Args&... args ) : ZeroOneBreadthFirstSearch_Body( args... ) {}
 
-template <int V_max> inline void ZeroOneBreadthFirstSearch_Body<V_max>::Reset( const int& init ) { m_init = init; assert( m_init < m_V ); m_next.clear(); m_next.push_back( m_init ); for( int i = 0 ; i < m_V ; i++ ){ m_found[i] = 0; m_prev[i] = m_weight[i] = -1; } m_found[m_init] = 2; m_weight[m_init] = 0; }
-template <int V_max> inline void ZeroOneBreadthFirstSearch_Body<V_max>::Shift( const int& init ) { m_init = init; assert( m_init < m_V ); m_next.clear(); if( ! m_found[m_init] ){ m_next.push_back( m_init ); m_found[m_init] = 2; m_weight[m_init] = 0; } }
+inline void ZeroOneBreadthFirstSearch_Body::Reset( const int& init ) { m_init = init; assert( m_init < m_V ); m_next.clear(); m_next.push_back( m_init ); for( int i = 0 ; i < m_V ; i++ ){ m_found[i] = 0; m_prev[i] = m_weight[i] = -1; } m_found[m_init] = 2; m_weight[m_init] = 0; }
+inline void ZeroOneBreadthFirstSearch_Body::Shift( const int& init ) { m_init = init; assert( m_init < m_V ); m_next.clear(); if( ! m_found[m_init] ){ m_next.push_back( m_init ); m_found[m_init] = 2; m_weight[m_init] = 0; } }
 
-template <int V_max> inline const int& ZeroOneBreadthFirstSearch_Body<V_max>::size() const { return m_V; }
-template <int V_max> inline const int& ZeroOneBreadthFirstSearch_Body<V_max>::init() const { return m_init; }
-template <int V_max> inline int& ZeroOneBreadthFirstSearch_Body<V_max>::found( const int& i ) { assert( i < m_V ); return m_found[i]; }
-template <int V_max> inline const int& ZeroOneBreadthFirstSearch_Body<V_max>::prev( const int& i ) const { assert( i < m_V ); return m_prev[i]; }
-template <int V_max> inline const int& ZeroOneBreadthFirstSearch_Body<V_max>::weight( const int& i ) const { assert( i < m_V ); return m_weight[i]; }
+inline const int& ZeroOneBreadthFirstSearch_Body::size() const { return m_V; }
+inline const int& ZeroOneBreadthFirstSearch_Body::init() const { return m_init; }
+inline int& ZeroOneBreadthFirstSearch_Body::found( const int& i ) { assert( i < m_V ); return m_found[i]; }
+inline const int& ZeroOneBreadthFirstSearch_Body::prev( const int& i ) const { assert( i < m_V ); return m_prev[i]; }
+inline const int& ZeroOneBreadthFirstSearch_Body::weight( const int& i ) const { assert( i < m_V ); return m_weight[i]; }
 
-template <int V_max>
-int ZeroOneBreadthFirstSearch_Body<V_max>::Next()
+inline int ZeroOneBreadthFirstSearch_Body::Next()
 {
 
   if( m_next.empty() ){
@@ -75,7 +74,7 @@ int ZeroOneBreadthFirstSearch_Body<V_max>::Next()
 
 }
 
-template <int V_max> inline void ZeroOneBreadthFirstSearch_Body<V_max>::SetWeight() { while( Next() != -1 ){} }
-template <int V_max> inline const int& ZeroOneBreadthFirstSearch_Body<V_max>::Solve( const int& init , const int& goal ) { Reset( init ); assert( goal < m_V ); int i = Next(); while( i != -1 && i != goal ){ i = Next(); } return m_weight[goal]; }
+inline void ZeroOneBreadthFirstSearch_Body::SetWeight() { while( Next() != -1 ){} }
+inline const int& ZeroOneBreadthFirstSearch_Body::Solve( const int& init , const int& goal ) { Reset( init ); assert( goal < m_V ); int i = Next(); while( i != -1 && i != goal ){ i = Next(); } return m_weight[goal]; }
 
-template <int V_max,list<pair<int,bool> > E(const int&)> inline list<pair<int,bool> > ZeroOneBreadthFirstSearch<V_max,E>::e( const int& t ) { return E( t ); }
+template <list<pair<int,bool> > E(const int&)> inline list<pair<int,bool> > ZeroOneBreadthFirstSearch<E>::e( const int& t ) { return E( t ); }

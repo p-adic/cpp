@@ -5,16 +5,11 @@
 
 DEFINITION_OF_FIRST_SEARCH( Breadth , push_back );
 
-template <int V_max,list<int> E(const int&)>
-void SetDepth_Body( BreadthFirstSearch<V_max,E>& bfs , const int& V , int ( &depth )[V_max] )
+template <list<int> E(const int&)>
+void SetDepth_Body( BreadthFirstSearch<E>& bfs , const int& V , vector<int>& depth )
 {
 
-  for( int i = 0 ; i < V ; i++ ){
-
-    depth[i] = -1;
-
-  }
-
+  depth = vector<int>( V , -1 );
   int i = bfs.Next();
   depth[i] = 0;
   
@@ -28,18 +23,18 @@ void SetDepth_Body( BreadthFirstSearch<V_max,E>& bfs , const int& V , int ( &dep
 
 }
 
-template <int V_max,list<int> E(const int&)>
-void SetDepth( const int& V , const int& init , int ( &depth )[V_max] )
+template <list<int> E(const int&)>
+void SetDepth( const int& V , const int& init , vector<int>& depth )
 {
 
-  BreadthFirstSearch<V_max,E> bfs{ V , init };
+  BreadthFirstSearch<E> bfs{ V , init };
   SetDepth_Body( bfs , V , depth );
   return;
   
 }
 
-template <int V_max,list<int> E(const int&)>
-void SetDepth( BreadthFirstSearch<V_max,E>& bfs , const int& V , const int& init , int ( &depth )[V_max] )
+template <list<int> E(const int&)>
+void SetDepth( BreadthFirstSearch<E>& bfs , const int& V , const int& init , vector<int>& depth )
 {
 
   bfs.Reset( init );

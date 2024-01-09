@@ -4,23 +4,23 @@
 #include "../a.hpp"
 
 // verify:
-// https://yukicoder.me/submissions/919091（RootingDP）
-// https://yukicoder.me/submissions/938101（RerootingDP）
-// https://yukicoder.me/submissions/941430（RerootingDP）
+// https://yukicoder.me/submissions/942454（RootingDP）
+// https://yukicoder.me/submissions/942512（RerootingDP）
+// https://yukicoder.me/submissions/942520（RerootingDP）
 
 // digitはAncestorとLCAにのみ使用。普段は0で良い。
 // 2^16 = 65536
 // 2^17 = 131072
 // 2^18 = 262144
-template <int V_max,list<int> E(const int&),int digit = 0>
+template <list<int> E(const int&),int digit = 0>
 class DepthFirstSearchOnTree :
-  public DepthFirstSearch<V_max,E>
+  public DepthFirstSearch<E>
 {
 
 private:
-  int m_reversed[V_max];
+  vector<int> m_reversed;
 
-  vector<vector<int> > m_children;
+  vector<vector<int>> m_children;
   vector<int> m_children_num;
   bool m_set_children;
 
@@ -76,7 +76,7 @@ public:
   // を満たす場合のみサポート。
   // dp[i][j] = f(iを根とみなした時のjの子ノードkを渡るg(dp[i][k],jはiの子孫,k,j)のm_Tに関する積,j)
   // を満たす二重配列dpの対角成分dp[i][i]をO(m_V)で求めてdに格納する。
-  template <typename T , T m_T(const T&,const T&) ,const T& e_T() , T f(const T&,const int&), T g(const T&,const bool&,const int&,const int&)> void RerootingDP( T ( &d )[V_max] );
+  template <typename T , T m_T(const T&,const T&) ,const T& e_T() , T f(const T&,const int&), T g(const T&,const bool&,const int&,const int&)> void RerootingDP( vector<T>& d );
   // fはノードjごとのデータ（グラフ構造に依存しない）、gは有向辺b?(j,k):(k,j)ごとのデータに対応。
   // 例えば「パスの数」を求める時はm_Tが和、fが+1（葉かどうかに関係ない）、gがidでよい。
 

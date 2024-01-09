@@ -3,9 +3,8 @@
 #pragma once
 #include "../a.hpp"
 
+// verify: https://yukicoder.me/submissions/942450
 
-
-template <int V_max>
 class ZeroOneBreadthFirstSearch_Body
 {
 
@@ -13,9 +12,11 @@ protected:
   int m_V;
   int m_init;
   list<int> m_next;
-  int m_found[V_max];
-  int m_prev[V_max];
-  int m_weight[V_max];
+
+  // 0:未接続、1:前に接続、2:後ろに接続、3:探索済み
+  vector<int> m_found;
+  vector<int> m_prev;
+  vector<int> m_weight;
   
 public:
   inline ZeroOneBreadthFirstSearch_Body( const int& V );
@@ -32,7 +33,7 @@ public:
   inline const int& prev( const int& i ) const;
   inline const int& weight( const int& i ) const;
 
-  int Next();
+  inline int Next();
 
   // Next()の反復でm_initから到達可能な頂点を全探索。
   // 計算量O((m_initの連結成分)+(m_initの連結成分におけるEのサイズの合計))
@@ -47,9 +48,9 @@ private:
 
 };
 
-template <int V_max,list<pair<int,bool> > E(const int&)>
+template <list<pair<int,bool> > E(const int&)>
 class ZeroOneBreadthFirstSearch :
-  public ZeroOneBreadthFirstSearch_Body<V_max>
+  public ZeroOneBreadthFirstSearch_Body
 {
   
 public:

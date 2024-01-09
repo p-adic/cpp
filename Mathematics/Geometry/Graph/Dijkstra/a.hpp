@@ -3,12 +3,16 @@
 #pragma once
 #include "a_Macro.hpp"
 
+#include "../../../Function/Map/a.hpp"
+
 // verify:
-// https://yukicoder.me/submissions/919134
-// https://yukicoder.me/submissions/919135
+// https://yukicoder.me/submissions/942531
+// https://yukicoder.me/submissions/942534
 
 // メモリが不足する場合はEの定義を前計算しないでその都度計算させること。
-template <typename T , typename U , list<pair<T,U> > E(const T&) , int size_max>
+// O((size+|E|)log size)が間に合わない場合は、
+// 始点からの距離を格納して一番近い未訪問点を全探策で探し距離を更新するO(size^2)版を検討。
+template <typename T , typename U , list<pair<T,U> > E(const T&)>
 class DijkstraBody
 {
 
@@ -23,7 +27,7 @@ public:
   U Solve( const T& t_start , const T& t_final );
   U Solve( const T& t_start , const T& t_final , list<T>& path );
   void Solve( const T& t_start , vector<U>& weight );
-  void Solve( const T& t_start , vector<U>& weight , list<T> ( &path )[size_max] );
+  void Solve( const T& t_start , vector<U>& weight , vector<list<T>>& path );
   
   const U& Infty() const;
   
@@ -38,7 +42,7 @@ private:
 
 // 入力の範囲内で要件
 // (1) Eの値の各成分の第2成分が0以上である。
-// (2) 2^{31}-1がEの値の各成分の第2成分size_max個以下の和で表せるいかなる数よりも大きい。
+// (2) 2^{31}-1がEの値の各成分の第2成分size個以下の和で表せるいかなる数よりも大きい。
 // (6) Vの各要素u,vに対し、辺u->vが複数存在する場合は重みが最小のものが前にpushされている。
 // が成り立つ場合にのみサポート。
 
@@ -46,9 +50,9 @@ private:
 // 単一始点単一終点最短経路探索／経路復元ありO((size+|E|)log size)
 // 単一始点全終点最短経路探索／経路復元なしO((size+|E|)log size)
 // 単一始点全終点最短経路探索／経路復元ありO(size^2 + |E| log size)
-template <list<pair<int,ll> > E(const int&) , int size_max>
+template <list<pair<int,ll> > E(const int&)>
 class Dijkstra :
-  public DijkstraBody<int,ll,E,size_max>
+  public DijkstraBody<int,ll,E>
 {
 
 public:
@@ -65,8 +69,8 @@ private:
 
 // 入力の範囲内で要件
 // (1) Eの値の各成分の第2成分がe_U()以上である。
-// (2) inftyがEの値の各成分の第2成分size_max個以下の和で表せるいかなる項よりも大きい。
-// (3) foundがEの値の各成分の第2成分size_max個以下の和で表せず、inftyとも異なる。
+// (2) inftyがEの値の各成分の第2成分size個以下の和で表せるいかなる項よりも大きい。
+// (3) foundがEの値の各成分の第2成分size個以下の和で表せず、inftyとも異なる。
 // (4) (U,m_U:U^2->U,e_U:1->U)がbool operator<(const U&,const U&)に関して全順序モノイドである。
 // (6) Vの各要素u,vに対し、辺u->vが複数存在する場合は重みが最小のものが前にpushされている。
 // が成り立つ場合にのみサポート。
@@ -75,14 +79,14 @@ private:
 // 単一始点単一終点最短経路探索／経路復元ありO((size+|E|)(log size)^2)
 // 単一始点全終点最短経路探索／経路復元なしO((size+|E|)(log size)^2)
 // 単一始点全終点最短経路探索／経路復元ありO(size^2 log size + |E|(log size)^2)
-template <typename T , typename U , U m_U(const U&,const U&) , const U& e_U() , list<pair<T,U> > E(const T&) , int size_max>
+template <typename T , typename U , U m_U(const U&,const U&) , const U& e_U() , list<pair<T,U> > E(const T&)>
 class MemorisationDijkstra :
-  public DijkstraBody<T,U,E,size_max>
+  public DijkstraBody<T,U,E>
 {
 
 private:
   int m_length;
-  map<T,int> m_memory;
+  Map<T,int> m_memory;
   vector<T> m_memory_inv;
 
 public:
@@ -99,8 +103,8 @@ private:
 
 // 入力の範囲内で要件
 // (1) Eの値の各成分の第2成分がe_U()以上である。
-// (2) inftyがEの値の各成分の第2成分size_max個以下の和で表せるいかなる項よりも大きい。
-// (3) foundがEの値の各成分の第2成分size_max個以下の和で表せず、inftyとも異なる。
+// (2) inftyがEの値の各成分の第2成分size個以下の和で表せるいかなる項よりも大きい。
+// (3) foundがEの値の各成分の第2成分size個以下の和で表せず、inftyとも異なる。
 // (4) (U,m_U:U^2->U,e_U:1->U)がbool operator<(const U&,const U&)に関して全順序モノイドである。
 // (5) (enum_T,enum_T_inv)が互いに逆写像である。
 // (6) Vの各要素u,vに対し、辺u->vが複数存在する場合は重みが最小のものが前にpushされている。
@@ -110,9 +114,9 @@ private:
 // 単一始点単一終点最短経路探索／経路復元ありO((size+|E|)log size)
 // 単一始点全終点最短経路探索／経路復元なしO((size+|E|)log size)
 // 単一始点全終点最短経路探索／経路復元ありO(size^2 + |E| log size)
-template <typename T , typename U , U m_U(const U&,const U&) , const U& e_U() , list<pair<T,U> > E(const T&) , int size_max , T enum_T(const int&) , int enum_T_inv(const T&)>
+template <typename T , typename U , U m_U(const U&,const U&) , const U& e_U() , list<pair<T,U> > E(const T&) , T enum_T(const int&) , int enum_T_inv(const T&)>
 class EnumerationDijkstra :
-  public DijkstraBody<T,U,E,size_max>
+  public DijkstraBody<T,U,E>
 {
 
 public:
