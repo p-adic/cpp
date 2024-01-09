@@ -3,7 +3,9 @@
 #pragma once
 #include "a_Macro.hpp"
 
-// verify: https://atcoder.jp/contests/agc023/submissions/49156204（左右区間積逆像数え上げ）
+// verify:
+// https://atcoder.jp/contests/agc023/submissions/49156204（左右区間積逆像数え上げ）
+// https://yukicoder.me/submissions/942404（左右区間積逆像数え上げ）
 
 // 入力の範囲内で要件
 // (1) (T,m_T:T^2->T,i_T:T->T)が群である。
@@ -68,9 +70,9 @@ public:
 
   // 以下はe_Tとi_Tを使用しないので、m_Tが群演算でさえあればe_Tとi_Tをm_Tと無関係なものにしてもよい。
   // 右区間積a[i]...a[j]がtと等しい区間[i,j]の個数を計算する。
-  ll CountRightProdInverseImage( const T& t );
+  ll CountRightProdInverseImage( const T& t = e_T() );
   // 左区間積a[j]...a[i]がtと等しい区間[i,j]の個数を計算する。
-  ll CountLeftProdInverseImage( const T& t );
+  ll CountLeftProdInverseImage( const T& t = e_T() );
   
 private:
   inline int Parent( const int& i );

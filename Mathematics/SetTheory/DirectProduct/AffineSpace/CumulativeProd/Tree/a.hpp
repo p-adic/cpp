@@ -14,13 +14,13 @@
 // 2^16 = 65536
 // 2^17 = 131072
 // 2^18 = 262144
-template <typename T , T m_T(const T&,const T&) , T i_T(const T&) , list<int> E(const int&) , int size_max , int digit>
+template <typename T , T m_T(const T&,const T&) , T i_T(const T&) , list<int> E(const int&) , int digit>
 class CumulativeProdOnTree :
   public CumulativeProd_Body<T,m_T,i_T>
 {
 
 private:
-  DepthFirstSearchOnTree<size_max,E,digit> m_dfst;
+  DepthFirstSearchOnTree<E,digit> m_dfst;
 
 public:
   template <typename U , SFINAE_FOR_CUMULATIVE_PROD( = nullptr )> inline CumulativeProdOnTree( const vector<U>& a );

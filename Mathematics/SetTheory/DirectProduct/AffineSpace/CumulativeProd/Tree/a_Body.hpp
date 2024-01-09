@@ -6,8 +6,7 @@
 #include "../a_Body.hpp"
 #include "../../../../../Geometry/Graph/DepthFirstSearch/Tree/a_Body.hpp"
 
-
-template <typename T , T m_T(const T&,const T&) , T i_T(const T&) , list<int> E(const int&) , int size_max , int digit> template <typename U , SFINAE_FOR_CUMULATIVE_PROD()> inline CumulativeProdOnTree<T,m_T,i_T,E,size_max,digit>::CumulativeProdOnTree( const vector<U>& a ) : CumulativeProd_Body<T,m_T,i_T>( a.size() ) , m_dfst( CumulativeProd_Body<T,m_T,i_T>::m_size , 0 )
+template <typename T , T m_T(const T&,const T&) , T i_T(const T&) , list<int> E(const int&) , int digit> template <typename U , SFINAE_FOR_CUMULATIVE_PROD()> inline CumulativeProdOnTree<T,m_T,i_T,E,digit>::CumulativeProdOnTree( const vector<U>& a ) : CumulativeProd_Body<T,m_T,i_T>( a.size() ) , m_dfst( CumulativeProd_Body<T,m_T,i_T>::m_size , 0 )
 {
 
   using base = CumulativeProd_Body<T,m_T,i_T>;
@@ -24,8 +23,8 @@ template <typename T , T m_T(const T&,const T&) , T i_T(const T&) , list<int> E(
 
 }
 
-template <typename T , T m_T(const T&,const T&) , T i_T(const T&) , list<int> E(const int&) , int size_max , int digit> inline int CumulativeProdOnTree<T,m_T,i_T,E,size_max,digit>::Parent( const int& i ) { return m_dfst.Parent( i ); }
+template <typename T , T m_T(const T&,const T&) , T i_T(const T&) , list<int> E(const int&) , int digit> inline int CumulativeProdOnTree<T,m_T,i_T,E,digit>::Parent( const int& i ) { return m_dfst.Parent( i ); }
 
-template <typename T , T m_T(const T&,const T&) , T i_T(const T&) , list<int> E(const int&) , int size_max , int digit> inline int CumulativeProdOnTree<T,m_T,i_T,E,size_max,digit>::LCA( const int& i , const int& j ) { return m_dfst.LCA( i , j ); }
+template <typename T , T m_T(const T&,const T&) , T i_T(const T&) , list<int> E(const int&) , int digit> inline int CumulativeProdOnTree<T,m_T,i_T,E,digit>::LCA( const int& i , const int& j ) { return m_dfst.LCA( i , j ); }
 
 
