@@ -11,8 +11,8 @@ inline void Solve()
   // // 数
   // DEXPR( ll , bound_N , 1e5 , 10 );
   // CEXPR( TYPE_OF( bound_N ) , bound_M , bound_N );
-  // CIN( ll , N , M , K );
   // CIN_ASSERT( N , 1 , bound_N ); // ランダムテスト用。
+  // CIN( ll , N , M , K );
   // ll answer = 0;
   // RETURN( answer );
 
@@ -40,29 +40,29 @@ inline void Solve()
   // RETURN( answer );
   
   // // グラフ
-  // DEXPR( uint , bound_N , 1e5 , 10 );
   // CIN( uint , N , M );
   // CIN( uint , N ); uint M = N - 1;
   // gE<int>.resize( N );
   // gE<path>.resize( N );
-  // uint M = N - 1;
+  // UnionFindForest<> uff{ N };
   // FOR( j , 0 , M ){
   //   CIN_ASSERT( uj , 1 , N ); CIN_ASSERT( vj , 1 , N );
   //   uj--; vj--;
   //   gE<int>[uj].push_back( vj ); gE<int>[vj].push_back( uj );
+  //   // uff.Graft( uj , vj );
   //   // CIN( ll , wj );
   //   // gE<path>[uj].push_back( { vj , wj } ); gE<path>[vj].push_back( { uj , wj } );
+  //   // uff.Graft( uj , vj , wj );
   // }
+  // DEXPR( uint , bound_N , 1e5 , 10 );
   // BreadthFirstSearch<bound_N,GetgE<int>> bfs{ N , 0 };
   // DepthFirstSearch<bound_N,GetgE<int>> dfs{ N , 0 };
   // DepthFirstSearchOnTree<bound_N,GetgE<int>> dfst{ N , 0 };
   // Dijkstra<GetgE<path>,bound_N> dijk{ N };
   // ll answer = 0;
-  // MP answer = 0;
   // RETURN( answer );
  
   // // 一般のクエリ
-  // DEXPR( int , bound_Q , 1e5 , 100 );
   // CIN( int , Q );
   // vector<T3<int> > query( Q );
   // vector<T2<int> > query( Q );
@@ -93,8 +93,8 @@ inline void Solve()
   // CEXPR( int , bound_W , bound_H );
   // static_assert( ll( bound_H ) * bound_W < ll( 1 ) << 31 );
   // CEXPR( int , bound_HW , bound_H * bound_W );
-  // cin >> H >> W;
   // SET_ASSERT( H , 1 , bound_H ); SET_ASSERT( W , 1 , bound_W ); // ランダムテスト用。
+  // cin >> H >> W;
   // H_minus = H - 1; W_minus = W - 1; HW = H * W;
   // vector<string> S( H );
   // FOR( i , 0 , H ){
@@ -116,6 +116,8 @@ REPEAT_MAIN(1);
 
 #ifdef INCLUDE_SUB
 
+// グラフ用
+template <typename PATH> vector<list<PATH> > gE;
 template <typename PATH> list<PATH> GetgE( const int& i )
 {
   // list<PATH> answer{};
@@ -126,7 +128,10 @@ template <typename PATH> list<PATH> GetgE( const int& i )
   return answer;
 }
 
+template <typename T> Map<T,T> gF;
 template <typename T> inline T GetgF( const T& t ){ return gF<T>[t]; }
+
+template <typename T> vector<T> gA;
 template <typename T> inline T GetgA( const int& i ){ return gA<T>[i]; }
 
 // COMPAREに使用。圧縮時は削除する。
@@ -210,8 +215,6 @@ c:/Users/user/Documents/Programming/Utility/VLTree/UnionFindForest/compress.txt
 */
 
 // VVV 常設でないライブラリは以下に挿入する。
-
-
 
 
 
@@ -374,40 +377,40 @@ template <typename T> constexpr T Quotient( const T& a , const T& p ){ return p 
   static_assert( ! is_same<TYPE_OF( CONST_TARGET ),uint>::value && ! is_same<TYPE_OF( CONST_TARGET ),ull>::value ); \
   ll ANSWER = MINIMUM;							\
   {									\
-  ll L_BS = MINIMUM;							\
-  ll U_BS = MAXIMUM;							\
-  ANSWER = UPDATE_ANSWER;						\
-  ll EXPRESSION_BS;							\
-  const ll CONST_TARGET_BS = ( CONST_TARGET );				\
-  ll DIFFERENCE_BS;							\
-  while( L_BS < U_BS ){							\
-    DIFFERENCE_BS = ( EXPRESSION_BS = ( EXPRESSION ) ) - CONST_TARGET_BS; \
-    CERR( "二分探索中：" , "L_BS =" , L_BS , "<=" , ANSWER , "<=" , U_BS , "= U_BS :" , #EXPRESSION , "-" , #CONST_TARGET , "=" , EXPRESSION_BS , "-" , CONST_TARGET_BS , "=" , DIFFERENCE_BS ); \
-    if( DIFFERENCE_BS INEQUALITY_FOR_CHECK 0 ){				\
-      U_BS = UPDATE_U;							\
-    } else {								\
-      L_BS = UPDATE_L;							\
-    }									\
+    ll L_BS = MINIMUM;							\
+    ll U_BS = MAXIMUM;							\
     ANSWER = UPDATE_ANSWER;						\
-  }									\
-  if( L_BS > U_BS ){							\
-    CERR( "二分探索失敗：" , "L_BS =" , L_BS , ">" , U_BS , "= U_BS :" , #ANSWER , ":=" , #MAXIMUM , "+ 1 =" , MAXIMUM + 1  ); \
-    CERR( "二分探索マクロにミスがある可能性があります。変更前の版に戻してください。" );	\
-    ANSWER = MAXIMUM + 1;						\
-  } else {								\
-    CERR( "二分探索終了：" , "L_BS =" , L_BS , "<=" , ANSWER , "<=" , U_BS , "= U_BS" ); \
-    CERR( "二分探索が成功したかを確認するために" , #EXPRESSION , "を計算します。" ); \
-    CERR( "成功判定が不要な場合はこの計算を削除しても構いません。" );	\
-    EXPRESSION_BS = ( EXPRESSION );					\
-    CERR( "二分探索結果：" , #EXPRESSION , "=" , EXPRESSION_BS , ( EXPRESSION_BS > CONST_TARGET_BS ? ">" : EXPRESSION_BS < CONST_TARGET_BS ? "<" : "=" ) , CONST_TARGET_BS ); \
-    if( EXPRESSION_BS DESIRED_INEQUALITY CONST_TARGET_BS ){		\
-      CERR( "二分探索成功：" , #ANSWER , ":=" , ANSWER );		\
-    } else {								\
-      CERR( "二分探索失敗：" , #ANSWER , ":=" , #MAXIMUM , "+ 1 =" , MAXIMUM + 1 ); \
-      CERR( "単調でないか、単調増加性と単調減少性を逆にしてしまったか、探索範囲内に解が存在しません。" ); \
-      ANSWER = MAXIMUM + 1;						\
+    ll EXPRESSION_BS;							\
+    const ll CONST_TARGET_BS = ( CONST_TARGET );			\
+    ll DIFFERENCE_BS;							\
+    while( L_BS < U_BS ){						\
+      DIFFERENCE_BS = ( EXPRESSION_BS = ( EXPRESSION ) ) - CONST_TARGET_BS; \
+      CERR( "二分探索中：" , "L_BS =" , L_BS , "<=" , ANSWER , "<=" , U_BS , "= U_BS :" , #EXPRESSION , "-" , #CONST_TARGET , "=" , EXPRESSION_BS , "-" , CONST_TARGET_BS , "=" , DIFFERENCE_BS ); \
+      if( DIFFERENCE_BS INEQUALITY_FOR_CHECK 0 ){			\
+	U_BS = UPDATE_U;						\
+      } else {								\
+	L_BS = UPDATE_L;						\
+      }									\
+      ANSWER = UPDATE_ANSWER;						\
     }									\
-  }									\
+    if( L_BS > U_BS ){							\
+      CERR( "二分探索失敗：" , "L_BS =" , L_BS , ">" , U_BS , "= U_BS :" , #ANSWER , ":=" , #MAXIMUM , "+ 1 =" , MAXIMUM + 1  ); \
+      CERR( "二分探索マクロにミスがある可能性があります。変更前の版に戻してください。" ); \
+      ANSWER = MAXIMUM + 1;						\
+    } else {								\
+      CERR( "二分探索終了：" , "L_BS =" , L_BS , "<=" , ANSWER , "<=" , U_BS , "= U_BS" ); \
+      CERR( "二分探索が成功したかを確認するために" , #EXPRESSION , "を計算します。" ); \
+      CERR( "成功判定が不要な場合はこの計算を削除しても構いません。" );	\
+      EXPRESSION_BS = ( EXPRESSION );					\
+      CERR( "二分探索結果：" , #EXPRESSION , "=" , EXPRESSION_BS , ( EXPRESSION_BS > CONST_TARGET_BS ? ">" : EXPRESSION_BS < CONST_TARGET_BS ? "<" : "=" ) , CONST_TARGET_BS ); \
+      if( EXPRESSION_BS DESIRED_INEQUALITY CONST_TARGET_BS ){		\
+	CERR( "二分探索成功：" , #ANSWER , ":=" , ANSWER );		\
+      } else {								\
+	CERR( "二分探索失敗：" , #ANSWER , ":=" , #MAXIMUM , "+ 1 =" , MAXIMUM + 1 ); \
+	CERR( "単調でないか、単調増加性と単調減少性を逆にしてしまったか、探索範囲内に解が存在しません。" ); \
+	ANSWER = MAXIMUM + 1;						\
+      }									\
+    }									\
   }									\
 
 // 単調増加の時にEXPRESSION >= CONST_TARGETの最小解を格納。
@@ -436,7 +439,7 @@ template <typename T> inline typename set<T>::iterator MinimumGeq( set<T>& S , c
 template <typename T> inline typename set<T>::iterator MinimumGt( set<T>& S , const T& t ) { return S.upper_bound( t ); }
 
 // データ構造用
-template <typename T , template <typename...> typename V> inline T operator+( const T& t0 , const T& t1 ) { if( t0.empty() ){ return t1; } if( t1.empty() ){ return t0; } assert( t0.size() == t1.size() ); V<T> answer{}; for( auto itr0 = t0.begin() , itr1 = t1.begin() , end0 = t0.end(); itr0 != end0 ; itr0++ , itr1++ ){ answer.push_back( *itr0 + *itr1 ); } return answer; }
+template <typename T , template <typename...> typename V> inline V<T> operator+( const V<T>& a0 , const V<T>& a1 ) { if( a0.empty() ){ return a1; } if( a1.empty() ){ return a0; } assert( a0.size() == a1.size() ); V<T> answer{}; for( auto itr0 = a0.begin() , itr1 = a1.begin() , end0 = a0.end(); itr0 != end0 ; itr0++ , itr1++ ){ answer.push_back( *itr0 + *itr1 ); } return answer; }
 template <typename T> inline T operator+( const T2<T>& t0 , const T2<T>& t1 ) { return { t0.first + t1.first , t0.second + t1.second }; }
 template <typename T> inline T operator+( const T3<T>& t0 , const T3<T>& t1 ) { return { get<0>( t0 ) + get<0>( t1 ) , get<1>( t0 ) + get<1>( t1 ) , get<2>( t0 ) + get<2>( t1 ) }; }
 template <typename T> inline T operator+( const T4<T>& t0 , const T4<T>& t1 ) { return { get<0>( t0 ) + get<0>( t1 ) , get<1>( t0 ) + get<1>( t1 ) , get<2>( t0 ) + get<2>( t1 ) , get<3>( t0 ) + get<3>( t1 ) }; }
@@ -465,11 +468,6 @@ inline int ReverseDirectionNumberOnGrid( const int& n ){assert(0<=n&&n<4);return
 inline void SetEdgeOnGrid( const string& Si , const int& i , list<int> ( &e )[] , const char& walkable = '.' ){FOR(j,0,W){if(Si[j]==walkable){int v = EnumHW_inv(i,j);if(i>0){e[EnumHW_inv(i-1,j)].push_back(v);}if(i+1<H){e[EnumHW_inv(i+1,j)].push_back(v);}if(j>0){e[EnumHW_inv(i,j-1)].push_back(v);}if(j+1<W){e[EnumHW_inv(i,j+1)].push_back(v);}}}}
 inline void SetEdgeOnGrid( const string& Si , const int& i , list<path> ( &e )[] , const char& walkable = '.' ){FOR(j,0,W){if(Si[j]==walkable){const int v=EnumHW_inv(i,j);if(i>0){e[EnumHW_inv(i-1,j)].push_back({v,1});}if(i+1<H){e[EnumHW_inv(i+1,j)].push_back({v,1});}if(j>0){e[EnumHW_inv(i,j-1)].push_back({v,1});}if(j+1<W){e[EnumHW_inv(i,j+1)].push_back({v,1});}}}}
 inline void SetWallOnGrid( const string& Si , const int& i , vector<vector<bool> >& non_wall , const char& walkable = '.'  , const char& unwalkable = '#' ){non_wall.push_back(vector<bool>(W));auto& non_wall_i=non_wall[i];FOR(j,0,W){non_wall_i[j]=Si[j]==walkable?true:(assert(Si[j]==unwalkable),false);}}
-
-// グラフ用
-template <typename PATH> vector<list<PATH> > gE;
-template <typename T> map<T,T> gF;
-template <typename T> vector<T> gA;
 
 // デバッグ用
 #ifdef DEBUG
@@ -524,6 +522,10 @@ template <typename T> vector<T> gA;
 #define CRL CO ll&
 
 // VVV 常設ライブラリは以下に挿入する。
+// Map
+// c:/Users/user/Documents/Programming/Mathematics/Function/Map
+CL is_ordered{PU:is_ordered()= delete;TE <TY T> ST CE auto Check(CO T& t)-> decltype(t < t,true_type());ST CE false_type Check(...);TE <TY T> ST CE CO bool value = is_same_v< decltype(Check(declval<T>())),true_type >;};
+TE <TY T , TY U>US Map = conditional_t<is_constructible_v<unordered_map<T,int>>,unordered_map<T,U>,conditional_t<is_ordered::value<T>,map<T,U>,void>>;
 
 // ConstexprModulo
 // c:/Users/user/Documents/Programming/Mathematics/Arithmetic/Mod/ConstexprModulo/a.hpp
@@ -548,7 +550,7 @@ TE <uint M>CL COantsForMod{PU:COantsForMod()= delete;ST CE CO bool g_even =((M &
 
 US MP = Mod<P>;US MNP = MN<P>;TE <uint M> CE uint MN<M>::Form(CRUI n)NE{ull n_copy = n;RE uint(MO(Reduction(n_copy *= COantsForMod<M>::g_MN_base_square_mod)));}TE <uint M> CE ull& MN<M>::Reduction(ull& n)NE{ull n_sub = n & COantsForMod<M>::g_MN_base_minus;RE((n +=((n_sub *= COantsForMod<M>::g_MN_M_neg_inverse)&= COantsForMod<M>::g_MN_base_minus)*= M)>>= COantsForMod<M>::g_MN_digit)< M?n:n -= M;}TE <uint M> CE ull& MN<M>::ReducedMU(ull& n,CRUI m)NE{RE Reduction(n *= m);}TE <uint M> CE uint MN<M>::MU(CRUI n0,CRUI n1)NE{ull n0_copy = n0;RE uint(MO(ReducedMU(ReducedMU(n0_copy,n1),COantsForMod<M>::g_MN_base_square_mod)));}TE <uint M> CE uint MN<M>::BaseSquareTruncation(uint& n)NE{CO uint n_u = n >> COantsForMod<M>::g_MN_digit_half;n &= COantsForMod<M>::g_MN_base_sqrt_minus;RE n_u;}TE <uint M> CE MN<M>::MN()NE:Mod<M>(){static_assert(! COantsForMod<M>::g_even);}TE <uint M> CE MN<M>::MN(CO MN<M>& n)NE:Mod<M>(n){}TE <uint M> CE MN<M>::MN(MN<M>& n)NE:Mod<M>(n){}TE <uint M> CE MN<M>::MN(MN<M>&& n)NE:Mod<M>(MO(n)){}TE <uint M> TE <SFINAE_FOR_MN()> CE MN<M>::MN(CO T& n)NE:Mod<M>(n){static_assert(! COantsForMod<M>::g_even);Mod<M>::m_n = Form(Mod<M>::m_n);}TE <uint M> TE <SFINAE_FOR_MN()> CE MN<M>::MN(T&& n)NE:Mod<M>(forward<T>(n)){static_assert(! COantsForMod<M>::g_even);Mod<M>::m_n = Form(Mod<M>::m_n);}TE <uint M> CE MN<M>& MN<M>::OP=(CO MN<M>& n)NE{RE Ref(Mod<M>::OP=(n));}TE <uint M> CE MN<M>& MN<M>::OP=(MN<M>&& n)NE{RE Ref(Mod<M>::OP=(MO(n)));}TE <uint M> CE MN<M>& MN<M>::OP+=(CO MN<M>& n)NE{RE Ref(Mod<M>::OP+=(n));}TE <uint M> CE MN<M>& MN<M>::OP-=(CO MN<M>& n)NE{RE Ref(Mod<M>::OP-=(n));}TE <uint M> CE MN<M>& MN<M>::OP*=(CO MN<M>& n)NE{ull m_n_copy = Mod<M>::m_n;RE Ref(Mod<M>::m_n = MO(ReducedMU(m_n_copy,n.m_n)));}TE <uint M> IN MN<M>& MN<M>::OP/=(CO MN<M>& n){RE OP*=(MN<M>(n).Invert());}TE <uint M> CE MN<M>& MN<M>::OP<<=(int n)NE{RE Ref(Mod<M>::OP<<=(n));}TE <uint M> CE MN<M>& MN<M>::OP>>=(int n)NE{RE Ref(Mod<M>::OP>>=(n));}TE <uint M> CE MN<M>& MN<M>::OP++()NE{RE Ref(Mod<M>::Normalise(Mod<M>::m_n += COantsForMod<M>::g_MN_base_mod));}TE <uint M> CE MN<M> MN<M>::OP++(int)NE{MN<M> n{*TH};OP++();RE n;}TE <uint M> CE MN<M>& MN<M>::OP--()NE{RE Ref(Mod<M>::m_n < COantsForMod<M>::g_MN_base_mod?((Mod<M>::m_n += M)-= COantsForMod<M>::g_MN_base_mod):Mod<M>::m_n -= COantsForMod<M>::g_MN_base_mod);}TE <uint M> CE MN<M> MN<M>::OP--(int)NE{MN<M> n{*TH};OP--();RE n;}DF_OF_AR_FOR_MN(+,MN<M>(forward<T>(n))+= *TH);DF_OF_AR_FOR_MN(-,MN<M>(forward<T>(n)).SignInvert()+= *TH);DF_OF_AR_FOR_MN(*,MN<M>(forward<T>(n))*= *TH);DF_OF_AR_FOR_MN(/,MN<M>(forward<T>(n)).Invert()*= *TH);TE <uint M> CE MN<M> MN<M>::OP<<(int n)CO NE{RE MO(MN<M>(*TH)<<= n);}TE <uint M> CE MN<M> MN<M>::OP>>(int n)CO NE{RE MO(MN<M>(*TH)>>= n);}TE <uint M> CE MN<M> MN<M>::OP-()CO NE{RE MO(MN<M>(*TH).SignInvert());}TE <uint M> CE MN<M>& MN<M>::SignInvert()NE{RE Ref(Mod<M>::m_n > 0?Mod<M>::m_n = M - Mod<M>::m_n:Mod<M>::m_n);}TE <uint M> CE MN<M>& MN<M>::Double()NE{RE Ref(Mod<M>::Double());}TE <uint M> CE MN<M>& MN<M>::Halve()NE{RE Ref(Mod<M>::Halve());}TE <uint M> CE MN<M>& MN<M>::Invert(){assert(Mod<M>::m_n > 0);RE PositivePW(uint(COantsForMod<M>::g_M_minus_2));}TE <uint M> TE <TY T> CE MN<M>& MN<M>::PositivePW(T&& EX)NE{MN<M> PW{*TH};(--EX)%= COantsForMod<M>::g_M_minus_2;WH(EX != 0){(EX & 1)== 1?OP*=(PW):*TH;EX >>= 1;PW *= PW;}RE *TH;}TE <uint M> TE <TY T> CE MN<M>& MN<M>::NonNegativePW(T&& EX)NE{RE EX == 0?Ref(Mod<M>::m_n = COantsForMod<M>::g_MN_base_mod):PositivePW(forward<T>(EX));}TE <uint M> TE <TY T> CE MN<M>& MN<M>::PW(T&& EX){bool neg = EX < 0;assert(!(neg && Mod<M>::m_n == 0));RE neg?PositivePW(forward<T>(EX *= COantsForMod<M>::g_M_minus_2_neg)):NonNegativePW(forward<T>(EX));}TE <uint M> CE uint MN<M>::RP()CO NE{ull m_n_copy = Mod<M>::m_n;RE MO(Reduction(m_n_copy));}TE <uint M> CE Mod<M> MN<M>::Reduce()CO NE{ull m_n_copy = Mod<M>::m_n;RE Mod<M>::DeRP(MO(Reduction(m_n_copy)));}TE <uint M> CE MN<M> MN<M>::DeRP(CRUI n)NE{RE MN<M>(Mod<M>::DeRP(n));}TE <uint M> IN CO MN<M>& MN<M>::Formise(CRUI n)NE{ST MN<M> memory[COantsForMod<M>::g_memory_LE] ={zero(),one()};ST uint LE_curr = 2;WH(LE_curr <= n){memory[LE_curr] = DeRP(LE_curr);LE_curr++;}RE memory[n];}TE <uint M> IN CO MN<M>& MN<M>::Inverse(CRUI n)NE{ST MN<M> memory[COantsForMod<M>::g_memory_LE] ={zero(),one()};ST uint LE_curr = 2;WH(LE_curr <= n){memory[LE_curr] = MN<M>(Mod<M>::Inverse(LE_curr));LE_curr++;}RE memory[n];}TE <uint M> IN CO MN<M>& MN<M>::Factorial(CRUI n)NE{ST MN<M> memory[COantsForMod<M>::g_memory_LE] ={one(),one()};ST uint LE_curr = 2;ST MN<M> val_curr{one()};ST MN<M> val_last{one()};WH(LE_curr <= n){memory[LE_curr++] = val_curr *= ++val_last;}RE memory[n];}TE <uint M> IN CO MN<M>& MN<M>::FactorialInverse(CRUI n)NE{ST MN<M> memory[COantsForMod<M>::g_memory_LE] ={one(),one()};ST uint LE_curr = 2;ST MN<M> val_curr{one()};ST MN<M> val_last{one()};WH(LE_curr <= n){memory[LE_curr] = val_curr *= Inverse(LE_curr);LE_curr++;}RE memory[n];}TE <uint M> IN MN<M> MN<M>::Combination(CRUI n,CRUI i)NE{RE i <= n?Factorial(n)*FactorialInverse(i)*FactorialInverse(n - i):zero();}TE <uint M> IN CO MN<M>& MN<M>::zero()NE{ST CE CO MN<M> z{};RE z;}TE <uint M> IN CO MN<M>& MN<M>::one()NE{ST CE CO MN<M> o{DeRP(1)};RE o;}TE <uint M> TE <TY T> CE MN<M>& MN<M>::Ref(T&& n)NE{RE *TH;}TE <uint M> CE MN<M> Twice(CO MN<M>& n)NE{RE MO(MN<M>(n).Double());}TE <uint M> CE MN<M> Half(CO MN<M>& n)NE{RE MO(MN<M>(n).Halve());}TE <uint M> CE MN<M> Inverse(CO MN<M>& n){RE MO(MN<M>(n).Invert());}TE <uint M,TY T> CE MN<M> PW(MN<M> n,T EX){RE MO(n.PW(EX));}TE <uint M> CE VO swap(MN<M>& n0,MN<M>& n1)NE{n0.swap(n1);}TE <uint M> IN string to_string(CO MN<M>& n)NE{RE to_string(n.RP())+ " + MZ";}TE<uint M,CL Traits> IN basic_istream<char,Traits>& OP>>(basic_istream<char,Traits>& is,MN<M>& n){ll m;is >> m;n = m;RE is;}TE<uint M,CL Traits> IN basic_ostream<char,Traits>& OP<<(basic_ostream<char,Traits>& os,CO MN<M>& n){RE os << n.RP();}
 
-TE <uint M> CE Mod<M>::Mod()NE:m_n(){}TE <uint M> CE Mod<M>::Mod(CO Mod<M>& n)NE:m_n(n.m_n){}TE <uint M> CE Mod<M>::Mod(Mod<M>& n)NE:m_n(n.m_n){}TE <uint M> CE Mod<M>::Mod(Mod<M>&& n)NE:m_n(MO(n.m_n)){}TE <uint M> TE <SFINAE_FOR_MOD()> CE Mod<M>::Mod(CO T& n)NE:m_n(RS<M>(n)){}TE <uint M> TE <SFINAE_FOR_MOD()> CE Mod<M>::Mod(T& n)NE:m_n(RS<M>(decay_t<T>(n))){}TE <uint M> TE <SFINAE_FOR_MOD()> CE Mod<M>::Mod(T&& n)NE:m_n(RS<M>(forward<T>(n))){}TE <uint M> CE Mod<M>& Mod<M>::OP=(CO Mod<M>& n)NE{RE Ref(m_n = n.m_n);}TE <uint M> CE Mod<M>& Mod<M>::OP=(Mod<M>&& n)NE{RE Ref(m_n = MO(n.m_n));}TE <uint M> CE Mod<M>& Mod<M>::OP+=(CO Mod<M>& n)NE{RE Ref(Normalise(m_n += n.m_n));}TE <uint M> CE Mod<M>& Mod<M>::OP-=(CO Mod<M>& n)NE{RE Ref(m_n < n.m_n?(m_n += M)-= n.m_n:m_n -= n.m_n);}TE <uint M> CE Mod<M>& Mod<M>::OP*=(CO Mod<M>& n)NE{RE Ref(m_n = COantsForMod<M>::g_even?RS<M>(ull(m_n)* n.m_n):MN<M>::MU(m_n,n.m_n));}TE <> CE MP& MP::OP*=(CO MP& n)NE{ull m_n_copy = m_n;RE Ref(m_n = MO((m_n_copy *= n.m_n)< P?m_n_copy:RSP(m_n_copy)));}TE <uint M> IN Mod<M>& Mod<M>::OP/=(CO Mod<M>& n){RE OP*=(Mod<M>(n).Invert());}TE <uint M> CE Mod<M>& Mod<M>::OP<<=(int n)NE{WH(n-- > 0){Normalise(m_n <<= 1);}RE *TH;}TE <uint M> CE Mod<M>& Mod<M>::OP>>=(int n)NE{WH(n-- > 0){((m_n & 1)== 0?m_n:m_n += M)>>= 1;}RE *TH;}TE <uint M> CE Mod<M>& Mod<M>::OP++()NE{RE Ref(m_n < COantsForMod<M>::g_M_minus?++m_n:m_n = 0);}TE <uint M> CE Mod<M> Mod<M>::OP++(int)NE{Mod<M> n{*TH};OP++();RE n;}TE <uint M> CE Mod<M>& Mod<M>::OP--()NE{RE Ref(m_n == 0?m_n = COantsForMod<M>::g_M_minus:--m_n);}TE <uint M> CE Mod<M> Mod<M>::OP--(int)NE{Mod<M> n{*TH};OP--();RE n;}DF_OF_CM_FOR_MOD(==);DF_OF_CM_FOR_MOD(!=);DF_OF_CM_FOR_MOD(>);DF_OF_CM_FOR_MOD(>=);DF_OF_CM_FOR_MOD(<);DF_OF_CM_FOR_MOD(<=);DF_OF_AR_FOR_MOD(+,Mod<M>(forward<T>(n))+= *TH);DF_OF_AR_FOR_MOD(-,Mod<M>(forward<T>(n)).SignInvert()+= *TH);DF_OF_AR_FOR_MOD(*,Mod<M>(forward<T>(n))*= *TH);DF_OF_AR_FOR_MOD(/,Mod<M>(forward<T>(n)).Invert()*= *TH);TE <uint M> CE Mod<M> Mod<M>::OP<<(int n)CO NE{RE MO(Mod<M>(*TH)<<= n);}TE <uint M> CE Mod<M> Mod<M>::OP>>(int n)CO NE{RE MO(Mod<M>(*TH)>>= n);}TE <uint M> CE Mod<M> Mod<M>::OP-()CO NE{RE MO(Mod<M>(*TH).SignInvert());}TE <uint M> CE Mod<M>& Mod<M>::SignInvert()NE{RE Ref(m_n > 0?m_n = M - m_n:m_n);}TE <uint M> CE Mod<M>& Mod<M>::Double()NE{RE Ref(Normalise(m_n <<= 1));}TE <uint M> CE Mod<M>& Mod<M>::Halve()NE{RE Ref(((m_n & 1)== 0?m_n:m_n += M)>>= 1);}TE <uint M> IN Mod<M>& Mod<M>::Invert(){assert(m_n > 0);uint m_n_neg;RE m_n < COantsForMod<M>::g_memory_LE?Ref(m_n = Inverse(m_n).m_n):((m_n_neg = M - m_n)< COantsForMod<M>::g_memory_LE)?Ref(m_n = M - Inverse(m_n_neg).m_n):PositivePW(uint(COantsForMod<M>::g_M_minus_2));}TE <> IN Mod<2>& Mod<2>::Invert(){assert(m_n > 0);RE *TH;}TE <uint M> TE <TY T> CE Mod<M>& Mod<M>::PositivePW(T&& EX)NE{Mod<M> PW{*TH};EX--;WH(EX != 0){(EX & 1)== 1?OP*=(PW):*TH;EX >>= 1;PW *= PW;}RE *TH;}TE <> TE <TY T> CE Mod<2>& Mod<2>::PositivePW(T&& EX)NE{RE *TH;}TE <uint M> TE <TY T> CE Mod<M>& Mod<M>::NonNegativePW(T&& EX)NE{RE EX == 0?Ref(m_n = 1):Ref(PositivePW(forward<T>(EX)));}TE <uint M> TE <TY T> CE Mod<M>& Mod<M>::PW(T&& EX){bool neg = EX < 0;assert(!(neg && m_n == 0));neg?EX *= COantsForMod<M>::g_M_minus_2_neg:EX;RE m_n == 0?*TH:(EX %= COantsForMod<M>::g_M_minus)== 0?Ref(m_n = 1):PositivePW(forward<T>(EX));}TE <uint M> IN CO Mod<M>& Mod<M>::Inverse(CRUI n)NE{ST Mod<M> memory[COantsForMod<M>::g_memory_LE] ={zero(),one()};ST uint LE_curr = 2;WH(LE_curr <= n){memory[LE_curr].m_n = M - MN<M>::MU(memory[M % LE_curr].m_n,M / LE_curr);LE_curr++;}RE memory[n];}TE <uint M> IN CO Mod<M>& Mod<M>::Factorial(CRUI n)NE{ST Mod<M> memory[COantsForMod<M>::g_memory_LE] ={one(),one()};ST uint LE_curr = 2;WH(LE_curr <= n){memory[LE_curr] = MN<M>::Factorial(LE_curr).Reduce();LE_curr++;}RE memory[n];}TE <uint M> IN CO Mod<M>& Mod<M>::FactorialInverse(CRUI n)NE{ST Mod<M> memory[COantsForMod<M>::g_memory_LE] ={one(),one()};ST uint LE_curr = 2;WH(LE_curr <= n){memory[LE_curr] = MN<M>::FactorialInverse(LE_curr).Reduce();LE_curr++;}RE memory[n];}TE <uint M> IN Mod<M> Mod<M>::Combination(CRUI n,CRUI i)NE{RE MN<M>::Combination(n,i).Reduce();}TE <uint M> CE VO Mod<M>::swap(Mod<M>& n)NE{std::swap(m_n,n.m_n);}TE <uint M> CE CRUI Mod<M>::RP()CO NE{RE m_n;}TE <uint M> CE Mod<M> Mod<M>::DeRP(CRUI n)NE{Mod<M> n_copy{};n_copy.m_n = n;RE n_copy;}TE <uint M> CE uint& Mod<M>::Normalise(uint& n)NE{RE n < M?n:n -= M;}TE <uint M> IN CO Mod<M>& Mod<M>::zero()NE{ST CE CO Mod<M> z{};RE z;}TE <uint M> IN CO Mod<M>& Mod<M>::one()NE{ST CE CO Mod<M> o{DeRP(1)};RE o;}TE <uint M> TE <TY T> CE Mod<M>& Mod<M>::Ref(T&& n)NE{RE *TH;}TE <uint M> CE Mod<M> Twice(CO Mod<M>& n)NE{RE MO(Mod<M>(n).Double());}TE <uint M> CE Mod<M> Half(CO Mod<M>& n)NE{RE MO(Mod<M>(n).Halve());}TE <uint M> IN Mod<M> Inverse(CO Mod<M>& n){RE MO(Mod<M>(n).Invert());}TE <uint M> CE Mod<M> Inverse_COrexpr(CRUI n)NE{RE MO(Mod<M>::DeRP(RS<M>(n)).NonNegativePW(M - 2));}TE <uint M,TY T> CE Mod<M> PW(Mod<M> n,T EX){RE MO(n.PW(EX));}TE <TY T>CE Mod<2> PW(Mod<2> n,const T& p){RE p == 0?Mod<2>::one():move(n);}TE <uint M> CE VO swap(Mod<M>& n0,Mod<M>& n1)NE{n0.swap(n1);}TE <uint M> IN string to_string(CO Mod<M>& n)NE{RE to_string(n.RP())+ " + MZ";}TE<uint M,CL Traits> IN basic_ostream<char,Traits>& OP<<(basic_ostream<char,Traits>& os,CO Mod<M>& n){RE os << n.RP();}
+TE <uint M> CE Mod<M>::Mod()NE:m_n(){}TE <uint M> CE Mod<M>::Mod(CO Mod<M>& n)NE:m_n(n.m_n){}TE <uint M> CE Mod<M>::Mod(Mod<M>& n)NE:m_n(n.m_n){}TE <uint M> CE Mod<M>::Mod(Mod<M>&& n)NE:m_n(MO(n.m_n)){}TE <uint M> TE <SFINAE_FOR_MOD()> CE Mod<M>::Mod(CO T& n)NE:m_n(RS<M>(n)){}TE <uint M> TE <SFINAE_FOR_MOD()> CE Mod<M>::Mod(T& n)NE:m_n(RS<M>(decay_t<T>(n))){}TE <uint M> TE <SFINAE_FOR_MOD()> CE Mod<M>::Mod(T&& n)NE:m_n(RS<M>(forward<T>(n))){}TE <uint M> CE Mod<M>& Mod<M>::OP=(CO Mod<M>& n)NE{RE Ref(m_n = n.m_n);}TE <uint M> CE Mod<M>& Mod<M>::OP=(Mod<M>&& n)NE{RE Ref(m_n = MO(n.m_n));}TE <uint M> CE Mod<M>& Mod<M>::OP+=(CO Mod<M>& n)NE{RE Ref(Normalise(m_n += n.m_n));}TE <uint M> CE Mod<M>& Mod<M>::OP-=(CO Mod<M>& n)NE{RE Ref(m_n < n.m_n?(m_n += M)-= n.m_n:m_n -= n.m_n);}TE <uint M> CE Mod<M>& Mod<M>::OP*=(CO Mod<M>& n)NE{RE Ref(m_n = COantsForMod<M>::g_even?RS<M>(ull(m_n)* n.m_n):MN<M>::MU(m_n,n.m_n));}TE <> CE MP& MP::OP*=(CO MP& n)NE{ull m_n_copy = m_n;RE Ref(m_n = MO((m_n_copy *= n.m_n)< P?m_n_copy:RSP(m_n_copy)));}TE <uint M> IN Mod<M>& Mod<M>::OP/=(CO Mod<M>& n){RE OP*=(Mod<M>(n).Invert());}TE <uint M> CE Mod<M>& Mod<M>::OP<<=(int n)NE{WH(n-- > 0){Normalise(m_n <<= 1);}RE *TH;}TE <uint M> CE Mod<M>& Mod<M>::OP>>=(int n)NE{WH(n-- > 0){((m_n & 1)== 0?m_n:m_n += M)>>= 1;}RE *TH;}TE <uint M> CE Mod<M>& Mod<M>::OP++()NE{RE Ref(m_n < COantsForMod<M>::g_M_minus?++m_n:m_n = 0);}TE <uint M> CE Mod<M> Mod<M>::OP++(int)NE{Mod<M> n{*TH};OP++();RE n;}TE <uint M> CE Mod<M>& Mod<M>::OP--()NE{RE Ref(m_n == 0?m_n = COantsForMod<M>::g_M_minus:--m_n);}TE <uint M> CE Mod<M> Mod<M>::OP--(int)NE{Mod<M> n{*TH};OP--();RE n;}DF_OF_CM_FOR_MOD(==);DF_OF_CM_FOR_MOD(!=);DF_OF_CM_FOR_MOD(>);DF_OF_CM_FOR_MOD(>=);DF_OF_CM_FOR_MOD(<);DF_OF_CM_FOR_MOD(<=);DF_OF_AR_FOR_MOD(+,Mod<M>(forward<T>(n))+= *TH);DF_OF_AR_FOR_MOD(-,Mod<M>(forward<T>(n)).SignInvert()+= *TH);DF_OF_AR_FOR_MOD(*,Mod<M>(forward<T>(n))*= *TH);DF_OF_AR_FOR_MOD(/,Mod<M>(forward<T>(n)).Invert()*= *TH);TE <uint M> CE Mod<M> Mod<M>::OP<<(int n)CO NE{RE MO(Mod<M>(*TH)<<= n);}TE <uint M> CE Mod<M> Mod<M>::OP>>(int n)CO NE{RE MO(Mod<M>(*TH)>>= n);}TE <uint M> CE Mod<M> Mod<M>::OP-()CO NE{RE MO(Mod<M>(*TH).SignInvert());}TE <uint M> CE Mod<M>& Mod<M>::SignInvert()NE{RE Ref(m_n > 0?m_n = M - m_n:m_n);}TE <uint M> CE Mod<M>& Mod<M>::Double()NE{RE Ref(Normalise(m_n <<= 1));}TE <uint M> CE Mod<M>& Mod<M>::Halve()NE{RE Ref(((m_n & 1)== 0?m_n:m_n += M)>>= 1);}TE <uint M> IN Mod<M>& Mod<M>::Invert(){assert(m_n > 0);uint m_n_neg;RE m_n < COantsForMod<M>::g_memory_LE?Ref(m_n = Inverse(m_n).m_n):((m_n_neg = M - m_n)< COantsForMod<M>::g_memory_LE)?Ref(m_n = M - Inverse(m_n_neg).m_n):PositivePW(uint(COantsForMod<M>::g_M_minus_2));}TE <> IN Mod<2>& Mod<2>::Invert(){assert(m_n > 0);RE *TH;}TE <uint M> TE <TY T> CE Mod<M>& Mod<M>::PositivePW(T&& EX)NE{Mod<M> PW{*TH};EX--;WH(EX != 0){(EX & 1)== 1?OP*=(PW):*TH;EX >>= 1;PW *= PW;}RE *TH;}TE <> TE <TY T> CE Mod<2>& Mod<2>::PositivePW(T&& EX)NE{RE *TH;}TE <uint M> TE <TY T> CE Mod<M>& Mod<M>::NonNegativePW(T&& EX)NE{RE EX == 0?Ref(m_n = 1):Ref(PositivePW(forward<T>(EX)));}TE <uint M> TE <TY T> CE Mod<M>& Mod<M>::PW(T&& EX){bool neg = EX < 0;assert(!(neg && m_n == 0));neg?EX *= COantsForMod<M>::g_M_minus_2_neg:EX;RE m_n == 0?*TH:(EX %= COantsForMod<M>::g_M_minus)== 0?Ref(m_n = 1):PositivePW(forward<T>(EX));}TE <uint M> IN CO Mod<M>& Mod<M>::Inverse(CRUI n)NE{ST Mod<M> memory[COantsForMod<M>::g_memory_LE] ={zero(),one()};ST uint LE_curr = 2;WH(LE_curr <= n){memory[LE_curr].m_n = M - MN<M>::MU(memory[M % LE_curr].m_n,M / LE_curr);LE_curr++;}RE memory[n];}TE <uint M> IN CO Mod<M>& Mod<M>::Factorial(CRUI n)NE{ST Mod<M> memory[COantsForMod<M>::g_memory_LE] ={one(),one()};ST uint LE_curr = 2;WH(LE_curr <= n){memory[LE_curr] = MN<M>::Factorial(LE_curr).Reduce();LE_curr++;}RE memory[n];}TE <uint M> IN CO Mod<M>& Mod<M>::FactorialInverse(CRUI n)NE{ST Mod<M> memory[COantsForMod<M>::g_memory_LE] ={one(),one()};ST uint LE_curr = 2;WH(LE_curr <= n){memory[LE_curr] = MN<M>::FactorialInverse(LE_curr).Reduce();LE_curr++;}RE memory[n];}TE <uint M> IN Mod<M> Mod<M>::Combination(CRUI n,CRUI i)NE{RE MN<M>::Combination(n,i).Reduce();}TE <uint M> CE VO Mod<M>::swap(Mod<M>& n)NE{std::swap(m_n,n.m_n);}TE <uint M> CE CRUI Mod<M>::RP()CO NE{RE m_n;}TE <uint M> CE Mod<M> Mod<M>::DeRP(CRUI n)NE{Mod<M> n_copy{};n_copy.m_n = n;RE n_copy;}TE <uint M> CE uint& Mod<M>::Normalise(uint& n)NE{RE n < M?n:n -= M;}TE <uint M> IN CO Mod<M>& Mod<M>::zero()NE{ST CE CO Mod<M> z{};RE z;}TE <uint M> IN CO Mod<M>& Mod<M>::one()NE{ST CE CO Mod<M> o{DeRP(1)};RE o;}TE <uint M> TE <TY T> CE Mod<M>& Mod<M>::Ref(T&& n)NE{RE *TH;}TE <uint M> CE Mod<M> Twice(CO Mod<M>& n)NE{RE MO(Mod<M>(n).Double());}TE <uint M> CE Mod<M> Half(CO Mod<M>& n)NE{RE MO(Mod<M>(n).Halve());}TE <uint M> IN Mod<M> Inverse(CO Mod<M>& n){RE MO(Mod<M>(n).Invert());}TE <uint M> CE Mod<M> Inverse_COrexpr(CRUI n)NE{RE MO(Mod<M>::DeRP(RS<M>(n)).NonNegativePW(M - 2));}TE <uint M,TY T> CE Mod<M> PW(Mod<M> n,T EX){RE MO(n.PW(EX));}TE <TY T>CE Mod<2> PW(Mod<2> n,const T& p){RE p == 0?Mod<2>::one():move(n);}TE <uint M> CE VO swap(Mod<M>& n0,Mod<M>& n1)NE{n0.swap(n1);}TE <uint M> IN string to_string(CO Mod<M>& n)NE{RE to_string(n.RP())+ " + MZ";}TE<uint M,CL Traits> IN basic_istream<char,Traits>& OP>>(basic_istream<char,Traits>& is,Mod<M>& n){ll m;is >> m;n = m;RE is;}TE<uint M,CL Traits> IN basic_ostream<char,Traits>& OP<<(basic_ostream<char,Traits>& os,CO Mod<M>& n){RE os << n.RP();}
 
 // IntervalAddBIT
 // c:/Users/user/Documents/Programming/Mathematics/SetTheory/DirectProduct/AffineSpace/BIT/IntervalAdd/a.hpp
