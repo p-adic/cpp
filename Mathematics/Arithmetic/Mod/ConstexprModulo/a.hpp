@@ -104,8 +104,8 @@ template <INT_TYPE_FOR_MOD M> inline Mod<M> Inverse( const Mod<M>& n );
 template <INT_TYPE_FOR_MOD M> inline constexpr Mod<M> Inverse_constexpr( const Mod<M>& n );
 
 // Mが素数であるかexponent>=0である場合にのみサポート。
-template <INT_TYPE_FOR_MOD M , typename T> inline constexpr Mod<M> Power( const Mod<M>& n , const T& exponent );
-template <typename T> inline constexpr Mod<2> Power( const Mod<2>& n , const T& p );
+template <INT_TYPE_FOR_MOD M , typename T> inline constexpr Mod<M> Power( Mod<M> n , T exponent );
+template <typename T> inline constexpr Mod<2> Power( Mod<2> n , const T& p );
 
 // ../Power/a_Body.hppにて定義。
 template <typename T> inline constexpr T Square( const T& t );
@@ -115,4 +115,5 @@ template <INT_TYPE_FOR_MOD M> inline constexpr void swap( Mod<M>& n0 , Mod<M>& n
 
 template <INT_TYPE_FOR_MOD M> inline string to_string( const Mod<M>& n ) noexcept;
 
+template <INT_TYPE_FOR_MOD M , class Traits> inline basic_istream<char,Traits>& operator>>( basic_istream<char,Traits>& is , Mod<M>& n );
 template <INT_TYPE_FOR_MOD M , class Traits> inline basic_ostream<char,Traits>& operator<<( basic_ostream<char,Traits>& os , const Mod<M>& n );

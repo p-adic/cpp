@@ -57,7 +57,7 @@ template <INT_TYPE_FOR_MOD M> inline constexpr Mod<M>& Mod<M>::SignInvert() noex
 template <INT_TYPE_FOR_MOD M> inline constexpr Mod<M>& Mod<M>::Double() noexcept { return Ref( Normalise( m_n <<= 1 ) ); }
 template <INT_TYPE_FOR_MOD M> inline constexpr Mod<M>& Mod<M>::Halve() noexcept { return Ref( ( ( m_n & 1 ) == 0 ? m_n : m_n += M ) >>= 1 ); }
 
-template <INT_TYPE_FOR_MOD M> inline Mod<M>& Mod<M>::Invert() { if( m_n == 0 ){ ERR_INPUT( m_n ); } INT_TYPE_FOR_MOD m_n_neg; return m_n < ConstantsForMod<M>::g_memory_length ? Ref( m_n = Inverse( m_n ).m_n ) : ( m_n_neg = M - m_n < ConstantsForMod<M>::g_memory_length ) ? Ref( m_n = M - Inverse( m_n_neg ).m_n ) : PositivePower( INT_TYPE_FOR_MOD( ConstantsForMod<M>::g_M_minus_2 ) ); }
+template <INT_TYPE_FOR_MOD M> inline Mod<M>& Mod<M>::Invert() { if( m_n == 0 ){ ERR_INPUT( m_n ); } INT_TYPE_FOR_MOD m_n_neg; return m_n < ConstantsForMod<M>::g_memory_length ? Ref( m_n = Inverse( m_n ).m_n ) : ( ( m_n_neg = M - m_n ) < ConstantsForMod<M>::g_memory_length ) ? Ref( m_n = M - Inverse( m_n_neg ).m_n ) : PositivePower( INT_TYPE_FOR_MOD( ConstantsForMod<M>::g_M_minus_2 ) ); }
 template <> inline Mod<2>& Mod<2>::Invert() { if( m_n == 0 ){ ERR_INPUT( m_n ); } return *this; }
 
 template <INT_TYPE_FOR_MOD M> template <typename T> inline constexpr Mod<M>& Mod<M>::PositivePower( T&& exponent ) noexcept { Mod<M> power{ *this }; exponent--; while( exponent != 0 ){ ( exponent & 1 ) == 1 ? operator*=( power ) : *this; exponent >>= 1; power *= power; } return *this; }
@@ -89,10 +89,12 @@ template <INT_TYPE_FOR_MOD M> inline constexpr Mod<M> Half( const Mod<M>& n ) no
 template <INT_TYPE_FOR_MOD M> inline Mod<M> Inverse( const Mod<M>& n ) { return move( Mod<M>( n ).Invert() ); }
 template <INT_TYPE_FOR_MOD M> inline constexpr Mod<M> Inverse_constrexpr( const INT_TYPE_FOR_MOD& n ) noexcept { return move( Mod<M>::Derepresent( Residue<M>( n ) ).NonNegativePower( M - 2 ) ); }
 
-template <INT_TYPE_FOR_MOD M , typename T> inline constexpr Mod<M> Power( const Mod<M>& n , const T& exponent ) { return move( Mod<M>( n ).Power( T( exponent ) ) ); }
+template <INT_TYPE_FOR_MOD M , typename T> inline constexpr Mod<M> Power( Mod<M> n , T exponent ) { return move( n.Power( exponent ) ); }
+template <typename T> inline constexpr Mod<2> Power( Mod<2> n , const T& p ) { return p == 0 ? Mod<2>::one() : move( n ); }
 
 template <INT_TYPE_FOR_MOD M> inline constexpr void swap( Mod<M>& n0 , Mod<M>& n1 ) noexcept { n0.swap( n1 ); }
 
 template <INT_TYPE_FOR_MOD M> inline string to_string( const Mod<M>& n ) noexcept { return to_string( n.Represent() ) + " + MZ"; }
 
-template<INT_TYPE_FOR_MOD M , class Traits> inline basic_ostream<char,Traits>& operator<<( basic_ostream<char,Traits>& os , const Mod<M>& n ) { return os << n.Represent(); }
+template <INT_TYPE_FOR_MOD M , class Traits> inline basic_istream<char,Traits>& operator>>( basic_istream<char,Traits>& is , Mod<M>& n ) { ll m; is >> m; n = m; return is; }
+template <INT_TYPE_FOR_MOD M , class Traits> inline basic_ostream<char,Traits>& operator<<( basic_ostream<char,Traits>& os , const Mod<M>& n ) { return os << n.Represent(); }
