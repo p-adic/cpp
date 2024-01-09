@@ -3,17 +3,13 @@
 #pragma once
 #include "a.hpp"
 
-// BinarySearchÇ…égÇ§ÅB
-#include "../../../../Arithmetic/Power/Constexpr/Inverse/a_Body.hpp"
+template <typename T> inline BIT<T>::BIT( const int& size ) : m_size( size ) , m_fenwick( m_size + 1 ) , m_power( 1 ) { static_assert( ! is_same<T,int>::value ); while( m_power < m_size ){ m_power <<= 1; } }
 
-template <typename T , int N> inline BIT<T,N>::BIT() : m_fenwick() { static_assert( ! is_same<T,int>::value ); }
-template <typename T , int N>
-BIT<T,N>::BIT( const T ( &a )[N] ) : m_fenwick()
+template <typename T>
+BIT<T>::BIT( const vector<T>& a ) : BIT( a.size() )
 {
 
-  static_assert( ! is_same<T,int>::value );
-
-  for( int j = 1 ; j <= N ; j++ ){
+  for( int j = 1 ; j <= m_size ; j++ ){
 
     T& fenwick_j = m_fenwick[j];
     int i = j - 1;
@@ -31,20 +27,22 @@ BIT<T,N>::BIT( const T ( &a )[N] ) : m_fenwick()
 
 }
 
-template <typename T , int N> inline T BIT<T,N>::Get( const int& i ) const { return IntervalSum( i , i ); }
-template <typename T , int N> inline void BIT<T,N>::Set( const int& i , const T& n ) { Add( i , n - IntervalSum( i , i ) ); }
-template <typename T , int N> inline void BIT<T,N>::Set( const T ( &a )[N] ) { BIT<T,N> a_copy{ a }; swap( m_fenwick , a_copy.m_fenwick ); }
-template <typename T , int N> inline void BIT<T,N>::Initialise() { for( int j = 1 ; j <= N ; j++ ){ m_fenwick[j] = 0; } }
+template <typename T> inline BIT<T>& BIT<T>::operato=( BIT<T>&& a ) { m_size = a.m_size; m_fenwick = move( a.m_fenwick ); m_power = a.m_power; return *this; }
 
-template <typename T , int N> inline BIT<T,N>& BIT<T,N>::operator+=( const T ( &a )[N] ) { for( int i = 0 ; i < N ; i++ ){ Add( i , a[i] ); } return *this; }
+template <typename T> inline T BIT<T>::Get( const int& i ) const { return IntervalSum( i , i ); }
+template <typename T> inline void BIT<T>::Set( const int& i , const T& n ) { Add( i , n - IntervalSum( i , i ) ); }
+template <typename T> inline void BIT<T>::Set( const vector<T>& a ) { *this = BIT<T>{ a }; }
+template <typename T> inline void BIT<T>::Initialise( const int& size ) { *this = BIT<T>( size ); }
 
-template <typename T , int N>
-void BIT<T,N>::Add( const int& i , const T& n )
+template <typename T> inline BIT<T>& BIT<T>::operator+=( const vector<T>& a ) { BIT<T> a_copy{ a }; assert( m_size == a.m_size ); for( int i = 1 ; i <= m_size ; i++ ){ m_fenwick[i] += a.m_fenwick[i]; } return *this; }
+
+template <typename T>
+void BIT<T>::Add( const int& i , const T& n )
 {
   
   int j = i + 1;
 
-  while( j <= N ){
+  while( j <= m_size ){
 
     m_fenwick[j] += n;
     j += ( j & -j );
@@ -55,12 +53,14 @@ void BIT<T,N>::Add( const int& i , const T& n )
   
 }
 
-template <typename T , int N> 
-T BIT<T,N>::InitialSegmentSum( const int& i_final ) const
+xtemplate <typename T> inline const T& BIT<T>::LSBSegmentSum( const int& j ) const { assert( 0 < j && j <= m_size ); return m_fenwick[j]; }
+
+template <typename T> 
+T BIT<T>::InitialSegmentSum( const int& i_final ) const
 {
 
   T sum = 0;
-  int j = ( i_final < N ? i_final : N - 1 ) + 1;
+  int j = ( i_final < m_size ? i_final : m_size - 1 ) + 1;
 
   while( j > 0 ){
 
@@ -73,15 +73,15 @@ T BIT<T,N>::InitialSegmentSum( const int& i_final ) const
   
 }
 
-template <typename T , int N> inline T BIT<T,N>::IntervalSum( const int& i_start , const int& i_final ) const { return InitialSegmentSum( i_final ) - InitialSegmentSum( i_start - 1 ); }
+template <typename T> inline T BIT<T>::IntervalSum( const int& i_start , const int& i_final ) const { return InitialSegmentSum( i_final ) - InitialSegmentSum( i_start - 1 ); }
 
 
-template <typename T , int N>
-int BIT<T,N>::BinarySearch( const T& n ) const
+template <typename T>
+int BIT<T>::BinarySearch( const T& n ) const
 {
 
+  int power = m_power;
   int j = 0;
-  int power = PowerInverse_constexpr<N>().m_val;
   T sum{};
   T sum_next{};
   
@@ -89,7 +89,7 @@ int BIT<T,N>::BinarySearch( const T& n ) const
 
     int j_next = j | power;
 
-    if( j_next < N ){
+    if( j_next < m_size ){
       
       sum_next += m_fenwick[j_next];
 
@@ -118,4 +118,4 @@ int BIT<T,N>::BinarySearch( const T& n ) const
 
 }
 
-template <typename T , int N> inline int BIT<T,N>::BinarySearch( const int& i_start , const T& n ) const { return max( i_start , BinarySearch( InitialSegmentSum( i_start ) + n ) ); }
+template <typename T> inline int BIT<T>::BinarySearch( const int& i_start , const T& n ) const { return max( i_start , BinarySearch( InitialSegmentSum( i_start ) + n ) ); }

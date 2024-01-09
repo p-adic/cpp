@@ -3,17 +3,17 @@
 #pragma once
 #include "a.hpp"
 
-#include "../../BIT/a_Body.hpp"
+#include "../a_Body.hpp"
 
-template <typename T , int N> inline HybridBIT<T,N>::HybridBIT() : BIT<T,N>() , m_a() {}
-template <typename T , int N> inline HybridBIT<T,N>::HybridBIT( const T ( &a )[N] ) : BIT( a ) , m_a() { for( int i = 0 ; i < N ; i++ ){ m_a[i] = a[i]; } }
-template <typename T , int N> inline HybridBIT<T,N>::HybridBIT( T ( &&a )[N] ) : BIT( a ) , m_a() { swap( m_a , a ); }
+template <typename T> inline HybridBIT<T>::HybridBIT( const int& size ) : BIT<T>( size ) , m_a( size ) {}
+template <typename T> inline HybridBIT<T>::HybridBIT( const vector<T>& a ) : BIT<T>( a ) , m_a( a ) {}
+template <typename T> inline HybridBIT<T>::HybridBIT( vector<T>&& a ) : BIT<T>( a ) , m_a( move( a ) ) {}
 
-template <typename T , int N> inline const T& HybridBIT<T,N>::operator[]( const int& i ) const { return m_a[i]; }
-template <typename T , int N> inline const T& HybridBIT<T,N>::Get()( const int& i ) const { return m_a[i]; }
-template <typename T , int N> inline void HybridBIT<T,N>::Set( const int& i , const T& n ) { Add( i , n - m_a[i] ); }
-template <typename T , int N> inline void HybridBIT<T,N>::Set( T ( &&a )[N] ) { BIT<T,N> a_copy{ a }; swap( BIT<T,N>::m_fenwick , a_copy.m_fenwick ); swap( m_a , a ); }
+template <typename T> inline const T& HybridBIT<T>::operator[]( const int& i ) const { return m_a[i]; }
+template <typename T> inline const T& HybridBIT<T>::Get()( const int& i ) const { return m_a[i]; }
+template <typename T> inline void HybridBIT<T>::Set( const int& i , const T& n ) { Add( i , n - m_a[i] ); }
+template <typename T> inline void HybridBIT<T>::Set( vector<T>&&a ) { BIT<T>::Set( a ); m_a = move( a ); }
 
-template <typename T , int N> inline HybridBIT<T,N>& HybridBIT<T,N>::operator+=( const T ( & a )[N] ) { for( int i = 0 ; i < N ; i++ ){ Add( i , a[i] ); } return *this; }
+template <typename T> inline HybridBIT<T>& HybridBIT<T>::operator+=( const vector<T>& a ) { BIT<T>::operator+=( a ); for( int i = 0 ; i < BIT<T>::m_size ; i++ ){ m_a[i] += a[i]; } return *this; }
 
-template <typename T , int N> inline void HybridBIT<T,N>::Add( const int& i , const T& n ) { m_a[i] += n; BIT<T,N>::Add( i , n ); }
+template <typename T> inline void HybridBIT<T>::Add( const int& i , const T& n ) { m_a[i] += n; BIT<T>::Add( i , n ); }
