@@ -4,15 +4,15 @@
 #include "../a.hpp"
 
 // verify:
-// https://yukicoder.me/submissions/942454（RootingDP）
-// https://yukicoder.me/submissions/942512（RerootingDP）
-// https://yukicoder.me/submissions/942520（RerootingDP）
+// https://yukicoder.me/submissions/942799（RootingDP）
+// https://yukicoder.me/submissions/942800（RerootingDP）
+// https://yukicoder.me/submissions/942801（RerootingDP）
 
 // digitはAncestorとLCAにのみ使用。普段は0で良い。
 // 2^16 = 65536
 // 2^17 = 131072
 // 2^18 = 262144
-template <list<int> E(const int&),int digit = 0>
+template <typename E>
 class DepthFirstSearchOnTree :
   public DepthFirstSearch<E>
 {
@@ -33,11 +33,12 @@ private:
   vector<int> m_weight;
   bool m_set_weight;
 
-  vector<int> m_doubling[digit];
+  int m_digit;
+  vector<vector<int>> m_doubling;
   bool m_set_doubling;
 
 public:
-  inline DepthFirstSearchOnTree( const int& V , const int& root );
+  inline DepthFirstSearchOnTree( const int& V , E e , const int& root = 0 , const int& digit = 0 );
   inline void Reset( const int& init ) = delete;
   inline void Shift( const int& init ) = delete;
 

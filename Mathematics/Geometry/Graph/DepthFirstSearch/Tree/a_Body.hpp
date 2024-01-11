@@ -5,8 +5,8 @@
 
 #include "../a_Body.hpp"
 
-template <list<int> E(const int&),int digit> inline DepthFirstSearchOnTree<E,digit>::DepthFirstSearchOnTree( const int& V , const int& root ) :
-  DepthFirstSearch<E>( V , root ) , m_reversed( V ) , m_children() , m_set_children() , m_depth() , m_set_depth() , m_height() , m_set_height() , m_weight() , m_set_weight() , m_doubling() , m_set_doubling()
+template <typename E> inline DepthFirstSearchOnTree<E>::DepthFirstSearchOnTree( const int& V , E e , const int& root , const int& digit ) :
+  DepthFirstSearch<E>( V , move( e ) , root ) , m_reversed( V ) , m_children() , m_set_children() , m_depth() , m_set_depth() , m_height() , m_set_height() , m_weight() , m_set_weight() , m_digit( digit ) , m_doubling( m_digit ) , m_set_doubling()
 {
 
   int n = V;
@@ -19,19 +19,19 @@ template <list<int> E(const int&),int digit> inline DepthFirstSearchOnTree<E,dig
 
 }
 
-template <list<int> E(const int&),int digit> inline const int& DepthFirstSearchOnTree<E,digit>::Root() const { return DepthFirstSearch<E>::init(); }
+template <typename E> inline const int& DepthFirstSearchOnTree<E>::Root() const { return DepthFirstSearch<E>::init(); }
 
-template <list<int> E(const int&),int digit> inline const int& DepthFirstSearchOnTree<E,digit>::Parent( const int& i ) const { return DepthFirstSearch<E>::prev( i ); }
-template <list<int> E(const int&),int digit> inline const vector<int>& DepthFirstSearchOnTree<E,digit>::Children( const int& i ) { if( ! m_set_children ){ SetChildren(); } return m_children[i]; }
-template <list<int> E(const int&),int digit> inline const int& DepthFirstSearchOnTree<E,digit>::Depth( const int& i ) const { if( ! m_set_depth ){ SetDepth(); } return m_depth[i]; }
-template <list<int> E(const int&),int digit> inline const int& DepthFirstSearchOnTree<E,digit>::Height( const int& i ) { if( ! m_set_height ){ SetHeight(); } return m_height[i]; }
-template <list<int> E(const int&),int digit> inline const int& DepthFirstSearchOnTree<E,digit>::Weight( const int& i ) { if( ! m_set_weight ){ SetWeight(); } return m_weight[i]; }
+template <typename E> inline const int& DepthFirstSearchOnTree<E>::Parent( const int& i ) const { return DepthFirstSearch<E>::prev( i ); }
+template <typename E> inline const vector<int>& DepthFirstSearchOnTree<E>::Children( const int& i ) { if( ! m_set_children ){ SetChildren(); } return m_children[i]; }
+template <typename E> inline const int& DepthFirstSearchOnTree<E>::Depth( const int& i ) const { if( ! m_set_depth ){ SetDepth(); } return m_depth[i]; }
+template <typename E> inline const int& DepthFirstSearchOnTree<E>::Height( const int& i ) { if( ! m_set_height ){ SetHeight(); } return m_height[i]; }
+template <typename E> inline const int& DepthFirstSearchOnTree<E>::Weight( const int& i ) { if( ! m_set_weight ){ SetWeight(); } return m_weight[i]; }
 
-template <list<int> E(const int&),int digit> inline const int& DepthFirstSearchOnTree<E,digit>::NodeNumber( const int& i , const bool& reversed ) const { return m_reversed[reversed ? i : DepthFirstSearch<E>::size() - 1 - i]; }
-template <list<int> E(const int&),int digit> inline const int& DepthFirstSearchOnTree<E,digit>::ChildrenNumber( const int& i ) { if( ! m_set_children ){ SetChildren(); } return m_children_num[i]; }
+template <typename E> inline const int& DepthFirstSearchOnTree<E>::NodeNumber( const int& i , const bool& reversed ) const { return m_reversed[reversed ? i : DepthFirstSearch<E>::size() - 1 - i]; }
+template <typename E> inline const int& DepthFirstSearchOnTree<E>::ChildrenNumber( const int& i ) { if( ! m_set_children ){ SetChildren(); } return m_children_num[i]; }
 
-template <list<int> E(const int&),int digit>
-int DepthFirstSearchOnTree<E,digit>::Ancestor( int i , int n )
+template <typename E>
+int DepthFirstSearchOnTree<E>::Ancestor( int i , int n )
 {
 
   if( ! m_set_doubling ){
@@ -40,7 +40,7 @@ int DepthFirstSearchOnTree<E,digit>::Ancestor( int i , int n )
 
   }
 
-  assert( ( n >> digit ) == 0 );
+  assert( ( n >> m_digit ) == 0 );
     
   int d = 0;
   
@@ -61,8 +61,8 @@ int DepthFirstSearchOnTree<E,digit>::Ancestor( int i , int n )
 
 }
 
-template <list<int> E(const int&),int digit>
-int DepthFirstSearchOnTree<E,digit>::LCA( int i , int j )
+template <typename E>
+int DepthFirstSearchOnTree<E>::LCA( int i , int j )
 {
 
   int diff = Depth( i ) - Depth( j );
@@ -82,7 +82,7 @@ int DepthFirstSearchOnTree<E,digit>::LCA( int i , int j )
       
   }
     
-  int d = digit;
+  int d = m_digit;
 
   while( --d >= 0 ){
 
@@ -105,8 +105,8 @@ int DepthFirstSearchOnTree<E,digit>::LCA( int i , int j )
 
 }
 
-template <list<int> E(const int&),int digit>
-int DepthFirstSearchOnTree<E,digit>::LCA( int i , int j , int& i_prev , int& j_prev )
+template <typename E>
+int DepthFirstSearchOnTree<E>::LCA( int i , int j , int& i_prev , int& j_prev )
 {
 
   if( i == j ){
@@ -143,7 +143,7 @@ int DepthFirstSearchOnTree<E,digit>::LCA( int i , int j , int& i_prev , int& j_p
 
   }
     
-  int d = digit;
+  int d = m_digit;
 
   while( --d >= 0 ){
 
@@ -168,8 +168,8 @@ int DepthFirstSearchOnTree<E,digit>::LCA( int i , int j , int& i_prev , int& j_p
 
 }
 
-template <list<int> E(const int&),int digit>
-void DepthFirstSearchOnTree<E,digit>::SetChildren()
+template <typename E>
+void DepthFirstSearchOnTree<E>::SetChildren()
 {
 
   assert( !m_set_children );
@@ -200,8 +200,8 @@ void DepthFirstSearchOnTree<E,digit>::SetChildren()
   
 }
 
-template <list<int> E(const int&),int digit>
-void DepthFirstSearchOnTree<E,digit>::SetDepth()
+template <typename E>
+void DepthFirstSearchOnTree<E>::SetDepth()
 {
 
   assert( !m_set_depth );
@@ -226,8 +226,8 @@ void DepthFirstSearchOnTree<E,digit>::SetDepth()
 
 }
 
-template <list<int> E(const int&),int digit>
-void DepthFirstSearchOnTree<E,digit>::SetHeight()
+template <typename E>
+void DepthFirstSearchOnTree<E>::SetHeight()
 {
 
   assert( !m_set_height );
@@ -254,8 +254,8 @@ void DepthFirstSearchOnTree<E,digit>::SetHeight()
 
 }
 
-template <list<int> E(const int&),int digit>
-void DepthFirstSearchOnTree<E,digit>::SetWeight()
+template <typename E>
+void DepthFirstSearchOnTree<E>::SetWeight()
 {
 
   assert( !m_set_weight );
@@ -280,8 +280,8 @@ void DepthFirstSearchOnTree<E,digit>::SetWeight()
 
 }
 
-template <list<int> E(const int&),int digit>
-void DepthFirstSearchOnTree<E,digit>::SetDoubling()
+template <typename E>
+void DepthFirstSearchOnTree<E>::SetDoubling()
 {
 
   assert( !m_set_doubling );
@@ -302,7 +302,7 @@ void DepthFirstSearchOnTree<E,digit>::SetDoubling()
 
   }
   
-  for( int d = 1 ; d < digit ; d++ ){
+  for( int d = 1 ; d < m_digit ; d++ ){
 
     vector<int>& doubling_d = m_doubling[d];
     vector<int>& doubling_d_minus = m_doubling[d-1];
@@ -321,8 +321,8 @@ void DepthFirstSearchOnTree<E,digit>::SetDoubling()
 
 }
 
-template <list<int> E(const int&),int digit> template <typename T , T f(const list<T>&,const int&)>
-T DepthFirstSearchOnTree<E,digit>::RootingDP()
+template <typename E> template <typename T , T f(const list<T>&,const int&)>
+T DepthFirstSearchOnTree<E>::RootingDP()
 {
 
   if( ! m_set_children ){
@@ -353,8 +353,8 @@ T DepthFirstSearchOnTree<E,digit>::RootingDP()
 
 }
   
-template <list<int> E(const int&),int digit> template <typename T , T m_T(const T&,const T&) ,const T& e_T() , T f(const T&,const int&), T g(const T&,const bool&,const int&,const int&)>
-void DepthFirstSearchOnTree<E,digit>::RerootingDP( vector<T>& d )
+template <typename E> template <typename T , T m_T(const T&,const T&) ,const T& e_T() , T f(const T&,const int&), T g(const T&,const bool&,const int&,const int&)>
+void DepthFirstSearchOnTree<E>::RerootingDP( vector<T>& d )
 {
 
   if( ! m_set_children ){

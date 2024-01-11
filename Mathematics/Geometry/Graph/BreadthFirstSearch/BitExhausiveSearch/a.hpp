@@ -5,19 +5,19 @@
 
 #include "../a.hpp"
 
-// verify: https://yukicoder.me/submissions/942441（NextSubset）
+// verify: https://yukicoder.me/submissions/942797（NextSubset）
 
-template <int digit>
 class BitExhausiveSearch :
   public BreadthFirstSearch_Body
 {
 
 private:
-  static unordered_map<int,int> g_v;
+  int m_digit;
   
 public:
   // Vは最大の集合に対応する整数+1（digitの羃集合全体なら1<<digit）
-  inline BitExhausiveSearch( const int& V = 1 << digit );
+  inline BitExhausiveSearch( const int& digit , const int& V );
+  inline BitExhausiveSearch( const int& digit );
 
   // tに対応する部分集合に1つ要素を追加した部分集合で未到達なものを格納。
   inline list<int> UnreachedAdjacentSupsetOf( const int& t ) noexcept;
@@ -40,12 +40,13 @@ public:
   static inline list<int> ProperSubsetOf( const int& t ) noexcept;
 
   // 対応する部分集合の濃度を変えずにtを昇順で後続に遷移させる。
-  static inline bool NextSubset( int& t , const int& V = 1 << digit ) noexcept;
+  static inline bool NextSubset( int& t , const int& digit , const int& V ) noexcept;
+  static inline bool NextSubset( int& t , const int& digit ) noexcept;
 
-  // d<digitかつt==1<<dを満たすdを返す。
+  // tの2進加法付値を返す。
   static inline const int& ValuationOf( const int& t ) noexcept;
 
 private:
-  inline list<int> e( const int& t );
+  inline list<int> e( const int& i );
   
 };

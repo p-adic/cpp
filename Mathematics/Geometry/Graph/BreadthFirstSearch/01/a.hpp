@@ -3,13 +3,15 @@
 #pragma once
 #include "../a.hpp"
 
-// verify: https://yukicoder.me/submissions/942450
+// verify: https://yukicoder.me/submissions/942784
 
-class ZeroOneBreadthFirstSearch_Body
+template <typename E>
+class ZeroOneBreadthFirstSearch
 {
 
 protected:
   int m_V;
+  E m_e;
   int m_init;
   list<int> m_next;
 
@@ -19,8 +21,8 @@ protected:
   vector<int> m_weight;
   
 public:
-  inline ZeroOneBreadthFirstSearch_Body( const int& V );
-  inline ZeroOneBreadthFirstSearch_Body( const int& V , const int& init );
+  inline ZeroOneBreadthFirstSearch( const int& V , E e );
+  inline ZeroOneBreadthFirstSearch( const int& V , E e , const int& init );
 
   // m_foundとm_prevとm_weightを初期化
   inline void Reset( const int& init );
@@ -33,7 +35,7 @@ public:
   inline const int& prev( const int& i ) const;
   inline const int& weight( const int& i ) const;
 
-  inline int Next();
+  int Next();
 
   // Next()の反復でm_initから到達可能な頂点を全探索。
   // 計算量O((m_initの連結成分)+(m_initの連結成分におけるEのサイズの合計))
@@ -42,21 +44,5 @@ public:
   // Next()の反復でinitからgoalまでの最短経路を探索。
   // 計算量O((initの連結成分)+(m_initの連結成分におけるEのサイズの合計))
   inline const int& Solve( const int& init , const int& goal );
-
-private:
-  virtual list<pair<int,bool> > e( const int& t ) = 0;
-
-};
-
-template <list<pair<int,bool> > E(const int&)>
-class ZeroOneBreadthFirstSearch :
-  public ZeroOneBreadthFirstSearch_Body
-{
-  
-public:
-  template<typename... Args> inline ZeroOneBreadthFirstSearch( const Args&... args );
-
-private:
-  inline list<pair<int,bool> > e( const int& t );
 
 };

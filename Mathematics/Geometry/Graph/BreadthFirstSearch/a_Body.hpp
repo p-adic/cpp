@@ -5,7 +5,7 @@
 
 DEFINITION_OF_FIRST_SEARCH( Breadth , push_back );
 
-template <list<int> E(const int&)>
+template <typename E>
 void SetDepth_Body( BreadthFirstSearch<E>& bfs , const int& V , vector<int>& depth )
 {
 
@@ -23,17 +23,17 @@ void SetDepth_Body( BreadthFirstSearch<E>& bfs , const int& V , vector<int>& dep
 
 }
 
-template <list<int> E(const int&)>
-void SetDepth( const int& V , const int& init , vector<int>& depth )
+template <typename E>
+void SetDepth( const int& V , E e , const int& init , vector<int>& depth )
 {
 
-  BreadthFirstSearch<E> bfs{ V , init };
+  BreadthFirstSearch bfs{ V , move( e ) , init };
   SetDepth_Body( bfs , V , depth );
   return;
   
 }
 
-template <list<int> E(const int&)>
+template <typename E>
 void SetDepth( BreadthFirstSearch<E>& bfs , const int& V , const int& init , vector<int>& depth )
 {
 

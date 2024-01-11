@@ -31,32 +31,34 @@
     inline vector<bool>::reference found( const int& i );		\
     inline const int& prev( const int& i ) const;			\
 									\
-    inline int Next();								\
+    inline int Next();							\
 									\
   private:								\
-    virtual list<int> e( const int& t ) = 0;				\
+    virtual list<int> e( const int& ) = 0;				\
 									\
   };									\
 									\
-  template <list<int> E(const int&)>				\
+  template <typename E>							\
   class BREADTH ## FirstSearch :					\
-    public BREADTH ## FirstSearch_Body				\
+    public BREADTH ## FirstSearch_Body					\
   {									\
 									\
+  private:								\
+    E m_e;								\
+									\
   public:								\
-    template<typename... Args> inline BREADTH ## FirstSearch( const Args&... args ); \
+    template <typename...Args> inline BREADTH ## FirstSearch( const int& V , E e , const Args&... args ); \
 									\
   private:								\
-    inline list<int> e( const int& t );					\
-									\
+    inline list<int> e( const int& i );					\
   };									\
 									\
-  template <list<int> E(const int&)> void BREADTH ## FirstConnectedComponentSearch( const int& V , vector<int>& cc_num , int& count ); \
+  template <typename E> void BREADTH ## FirstConnectedComponentSearch( const int& V , vector<int>& cc_num , int& count ); \
 
 #define DEFINITION_OF_FIRST_SEARCH( BREADTH , PUSH )			\
   inline BREADTH ## FirstSearch_Body::BREADTH ## FirstSearch_Body( const int& V ) : m_V( V ) , m_init() , m_next() , m_found( m_V ) , m_prev( m_V , -1 ) {} \
-  inline BREADTH ## FirstSearch_Body::BREADTH ## FirstSearch_Body( const int& V , const int& init ) : BREADTH ## FirstSearch_Body( V ) { assert( init < m_V ); m_init = init; m_next.push_back( m_init ); m_found[m_init] = true; } \
-  template <list<int> E(const int&)> template <typename... Args> inline BREADTH ## FirstSearch<E>::BREADTH ## FirstSearch( const Args&... args ) : BREADTH ## FirstSearch_Body( args... ) {} \
+  inline BREADTH ## FirstSearch_Body::BREADTH ## FirstSearch_Body( const int& V const int& init ) : BREADTH ## FirstSearch_Body( V ) { assert( init < m_V ); m_init = init; m_next.push_back( m_init ); m_found[m_init] = true; } \
+  template <typename E> template <typename...Args> inline BREADTH ## FirstSearch<E>::BREADTH ## FirstSearch( const int& V , E e , const Args&... args ) : BREADTH ## FirstSearch_Body( V , args... ) , m_e( move( e ) ) { static_assert( is_invocable_r_v<list<int>,E,int> ) }; \
 									\
   inline void BREADTH ## FirstSearch_Body::Reset( const int& init ) { m_init = init; assert( m_init < m_V ); m_next.clear(); m_next.push_back( m_init ); for( int i = 0 ; i < m_V ; i++ ){ m_found[i] = i == m_init; m_prev[i] = -1; } } \
   inline void BREADTH ## FirstSearch_Body::Shift( const int& init ) { m_init = init; assert( m_init < m_V ); m_next.clear(); if( ! m_found[m_init] ){ m_next.push_back( m_init ); m_found[m_init] = true; } } \
@@ -100,12 +102,12 @@
 									\
   }									\
 									\
-  template <list<int> E(const int&)> inline list<int> BREADTH ## FirstSearch<E>::e( const int& t ) { return E( t ); } \
+  template <typename E> inline list<int> BREADTH ## FirstSearch<E>::e( const int& i ) { assert( i < BREADTH ## FirstSearch_Body::m_V ); return m_e( i ); }; \
 									\
-  template <list<int> E(const int&)> void BREADTH ## FirstConnectedComponentSearch( const int& V , vector<int>& cc_num , int& count ) \
+  template <typename E> void BREADTH ## FirstConnectedComponentSearch( const int& V , E e , vector<int>& cc_num , int& count ) \
   {									\
 									\
-    BREADTH ## FirstSearch<E> bfs{ V };				\
+    BREADTH ## FirstSearch<E> bfs{ V , move( e ) };			\
     count = 0;								\
     cc_num = vector<int>( V , -1 );					\
 									\
