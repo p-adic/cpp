@@ -2,16 +2,21 @@
 
 #pragma once
 
-// verify: https://yukicoder.me/submissions/920482
+// verify: https://yukicoder.me/submissions/942861（経路復元なし）
+
+// weightに値を格納する関係で、dを関数テンプレートで置き換えてもメモリ削減は見込めない。
+
+// M_Tは乗算m_T:T \times T->Tに相当する型。
+// A_Tはmeet a_T:T \times T->Tに相当する型。
 
 // 入力の範囲内で要件
-// (1) (T,A_T:T^2->T)がmeet半束（可換羃等半群）である。
-//     （以下A_Tの定める等号つき半順序を<=と置く）
+// (1) (T,a_T:T^2->T)がmeet半束（可換羃等半群）である。
+//     （以下a_Tの定める等号つき半順序を<=と置く）
 // (2) (T,m_T:T^2->T)が半群である。
-// (3) m_TがA_T上分配的、つまり
+// (3) m_Tがa_T上分配的、つまり
 //     - Tの任意の要素s,t,uに対し
-//       - m_T(u,A_T(s,t)) = A_T(m_T(u,s),m_T(u,t)) 
-//       - m_T(A_T(s,t),u) = A_T(m_T(s,u),m_T(t,u))
+//       - m_T(u,a_T(s,t)) = a_T(m_T(u,s),m_T(u,t)) 
+//       - m_T(a_T(s,t),u) = a_T(m_T(s,u),m_T(t,u))
 //     である。
 // (4) inftyでないdの値はnon-negative、つまり
 //     - Tの任意の要素sとinftyでないdの任意の値tに対し
@@ -30,9 +35,9 @@
 // と同値であることに注意。
 
 // O(size_max^3)で全経路の重み（edgeごとの重みのm_Tに関する積）の
-// A_Tに関する下限（多変数化したA_Tへの適用値）を計算。
-template <typename T , T m_T(const T&,const T&) , T A_T(const T&,const T&) , int size_max>
-void FloydWarshall( const T ( &d )[size_max][size_max] , T ( &weight )[size_max][size_max] , const int& size , const T& infty );
+// a_Tに関する下限（多変数化したa_Tへの適用値）を計算。
+template <typename T , typename M_T , typename A_T>
+void FloydWarshall( M_T m_T , A_T a_T , const vector<vector<T>>& d , vector<vector<T>>& weight , const T& infty );
 
 
 // 入力の範囲内で要件
@@ -54,6 +59,6 @@ void FloydWarshall( const T ( &d )[size_max][size_max] , T ( &weight )[size_max]
 
 // O(size_max^3)で各２点間の最短経路を１つずつ計算。path[i][j]には、
 // 固定した最短経路i->jで経由する１点があればその値、なければ-1を格納。
-template <typename T , T m_T(const T&,const T&) , int size_max>
-void FloydWarshall( const T ( &d )[size_max][size_max] , T ( &weight )[size_max][size_max] , const int& size , const T& infty , int ( &path )[size_max][size_max] );
+template <typename T , typename M_T>
+void FloydWarshall( M_T m_T , const vector<vector<T>>& d , vector<vector<T>>& weight , const T& infty , vector<vector<int>>& path );
 

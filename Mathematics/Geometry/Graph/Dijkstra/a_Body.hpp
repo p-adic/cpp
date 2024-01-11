@@ -5,24 +5,25 @@
 
 #include "../../../Function/Map/a_Body.hpp"
 
-template <typename T , typename U , list<pair<T,U> > E(const T&)> inline DijkstraBody<T,U,E>::DijkstraBody( const int& size , const U& infty , const U& found ) : m_size( size ) , m_infty( infty ) , m_found( found ) { static_assert( ! is_same<U,int>::value ); }
-template <list<pair<int,ll> > E(const int&)> inline Dijkstra<E>::Dijkstra( const int& size ) : DijkstraBody<int,ll,E>( size , 9223372036854775807 , -1 ) {}
-template <typename T , typename U , U m_U(const U&,const U&) , const U& e_U() , list<pair<T,U> > E(const T&)> inline MemorisationDijkstra<T,U,m_U,e_U,E>::MemorisationDijkstra( const int& size , const U& infty , const U& found ) : DijkstraBody<T,U,E>( size , infty , found ) , m_length() , m_memory() , m_memory_inv() {}
-template <typename T , typename U , U m_U(const U&,const U&) , const U& e_U() , list<pair<T,U> > E(const T&) , T enum_T(const int&) , int enum_T_inv(const T&)> inline EnumerationDijkstra<T,U,m_U,e_U,E,enum_T,enum_T_inv>::EnumerationDijkstra( const int& size , const U& infty , const U& found ) : DijkstraBody<T,U,E>( size , infty , found ) {}
+template <typename T , typename U , typename E> inline Dijkstra_Body<T,U,E>::Dijkstra_Body( const int& size , const U& infty , const U& found , E edge ) : m_size( size ) , m_infty( infty ) , m_found( found ) , m_edge( move( edge ) ) { static_assert( ! is_same_v<U,int> && is_invocable_r_v<list<pair<T,U>>,E,T> ); }
+template <typename E> inline Dijkstra<E>::Dijkstra( const int& size , E edge ) : Dijkstra_Body<int,ll,E>( size , 9223372036854775807 , -1 , move( edge ) ) {}
+template <typename T , typename U , typename M_U , typename E_U , typename E> inline MonoidForDijkstra<T,U,M_U,E_U,E>::MonoidForDijkstra( const int& size , M_U m_U , E_U e_U , const U& infty , const U& found , E edge ) : Dijkstra_Body<T,U,E>( size , infty , found , move( edge ) ) , m_m_U( move( m_U ) ) , m_e_U( move( e_U ) ) {}
+template <typename T , typename U , typename M_U , typename E_U , typename E> template <typename U2> inline MemorisationDijkstra<T,U,M_U,E_U,E>::MemorisationDijkstra( const int& size , M_U m_U , E_U e_U , const U& infty , const U2& found , E edge ) : MonoidForDijkstra<T,U,M_U,E_U,E>( size , move( m_U ) , move( e_U ) , infty , found , move( edge ) ) , m_length() , m_memory() , m_memory_inv() { static_assert( is_constructible_v<U,U2> ); }
+template <typename T , typename Enum_T , typename Enum_T_inv , typename U , typename M_U , typename E_U , typename E> template <typename U2> inline EnumerationDijkstra<T,Enum_T,Enum_T_inv,U,M_U,E_U,E>::EnumerationDijkstra( const int& size , Enum_T enum_T , Enum_T_inv enum_T_inv , M_U m_U , E_U e_U , const U& infty , const U2& found , E edge ) : MonoidForDijkstra<T,U,M_U,E_U,E>( size , move( m_U ) , move( e_U ) , infty , found , move( edge ) ) , m_enum_T( move( enum_T ) ) , m_enum_T_inv( move( enum_T_inv ) ) { static_assert( is_constructible_v<U,U2> ); }
 
-template <typename T , typename U , list<pair<T,U> > E(const T&)>
-U DijkstraBody<T,U,E>::Solve( const T& t_start , const T& t_final )
+template <typename T , typename U , typename E>
+U Dijkstra_Body<T,U,E>::Solve( const T& t_start , const T& t_final )
 {
 
-  const int i_final = e_inv( t_final );					\
+  const int i_final = e_inv( t_final );
   DIJKSTRA_BODY( , vector<U> weight( m_size , m_infty ) , weight[i] = m_found , weight_j != m_found , , );
   Reset();
   return weight[i_final];
 
 }
 
-template <typename T , typename U , list<pair<T,U> > E(const T&)>
-U DijkstraBody<T,U,E>::Solve( const T& t_start , const T& t_final , list<T>& path )
+template <typename T , typename U , typename E>
+U Dijkstra_Body<T,U,E>::Solve( const T& t_start , const T& t_final , list<T>& path )
 {
 
   const int i_final = e_inv( t_final );					\
@@ -42,8 +43,8 @@ U DijkstraBody<T,U,E>::Solve( const T& t_start , const T& t_final , list<T>& pat
 
 }
 
-template <typename T , typename U , list<pair<T,U> > E(const T&)>
-void DijkstraBody<T,U,E>::Solve( const T& t_start , vector<U>& weight )
+template <typename T , typename U , typename E>
+void Dijkstra_Body<T,U,E>::Solve( const T& t_start , vector<U>& weight )
 {
 
   constexpr const int i_final = -1;
@@ -53,8 +54,8 @@ void DijkstraBody<T,U,E>::Solve( const T& t_start , vector<U>& weight )
 
 }
 
-template <typename T , typename U , list<pair<T,U> > E(const T&)>
-void DijkstraBody<T,U,E>::Solve( const T& t_start , vector<U>& weight , vector<list<T>>& path )
+template <typename T , typename U , typename E>
+void Dijkstra_Body<T,U,E>::Solve( const T& t_start , vector<U>& weight , vector<list<T>>& path )
 {
 
   constexpr const int i_final = -1;
@@ -81,24 +82,24 @@ void DijkstraBody<T,U,E>::Solve( const T& t_start , vector<U>& weight , vector<l
 
 }
 
-template <typename T , typename U , list<pair<T,U> > E(const T&)> const U& DijkstraBody<T,U,E>::Infty() const { return m_infty; }
+template <typename T , typename U , typename E> const U& Dijkstra_Body<T,U,E>::Infty() const { return m_infty; }
 
-template <list<pair<int,ll> > E(const int&)> inline const ll& Dijkstra<E>::Unit() const { static const ll unit = 0; return unit; }
-template <typename T , typename U , U m_U(const U&,const U&) , const U& e_U() , list<pair<T,U> > E(const T&)> inline const U& MemorisationDijkstra<T,U,m_U,e_U,E>::Unit() const { return e_U(); }
-template <typename T , typename U , U m_U(const U&,const U&) , const U& e_U() , list<pair<T,U> > E(const T&) , T enum_T(const int&) , int enum_T_inv(const T&)> inline const U& EnumerationDijkstra<T,U,m_U,e_U,E,enum_T,enum_T_inv>::Unit() const { return e_U(); }
+template <typename E> inline const ll& Dijkstra<E>::Unit() const { static const ll unit = 0; return unit; }
+template <typename T , typename U , typename M_U , typename E_U , typename E> inline const U& MonoidForDijkstra<T,U,M_U,E_U,E>::Unit() const { return m_e_U(); }
 
-template <list<pair<int,ll> > E(const int&)> inline ll Dijkstra<E>::Addition( const ll& u0 , const ll& u1 ) const { return u0 + u1; }
-template <typename T , typename U , U m_U(const U&,const U&) , const U& e_U() , list<pair<T,U> > E(const T&)> inline U MemorisationDijkstra<T,U,m_U,e_U,E>::Addition( const U& u0 , const U& u1 ) const { return m_U( u0 , u1 ); }
-template <typename T , typename U , U m_U(const U&,const U&) , const U& e_U() , list<pair<T,U> > E(const T&) , T enum_T(const int&) , int enum_T_inv(const T&)> inline U EnumerationDijkstra<T,U,m_U,e_U,E,enum_T,enum_T_inv>::Addition( const U& u0 , const U& u1 ) const { return m_U( u0 , u1 ); }
+template <typename E> inline ll Dijkstra<E>::Addition( const ll& u0 , const ll& u1 ) const { return u0 + u1; }
+template <typename T , typename U , typename M_U , typename E_U , typename E> inline U MonoidForDijkstra<T,U,M_U,E_U,E>::Addition( const U& u0 , const U& u1 ) const { return m_m_U( u0 , u1 ); }
 
-template <typename T , typename U , U m_U(const U&,const U&) , const U& e_U() , list<pair<T,U> > E(const T&)> inline T MemorisationDijkstra<T,U,m_U,e_U,E>::e( const int& i ) { assert( i < m_length ); return m_memory_inv[i]; }
-template <list<pair<int,ll> > E(const int&)> inline int Dijkstra<E>::e( const int& i ) { return i; }
-template <typename T , typename U , U m_U(const U&,const U&) , const U& e_U() , list<pair<T,U> > E(const T&) , T enum_T(const int&) , int enum_T_inv(const T&)> inline T EnumerationDijkstra<T,U,m_U,e_U,E,enum_T,enum_T_inv>::e( const int& i ) { return enum_T( i ); }
+template <typename E> inline int Dijkstra<E>::e( const int& i ) { return i; }
+template <typename T , typename U , typename M_U , typename E_U , typename E> inline T MemorisationDijkstra<T,U,M_U,E_U,E>::e( const int& i ) { assert( i < m_length ); return m_memory_inv[i]; }
+template <typename T , typename Enum_T , typename Enum_T_inv , typename U , typename M_U , typename E_U , typename E> inline T EnumerationDijkstra<T,Enum_T,Enum_T_inv,U,M_U,E_U,E>::e( const int& i ) { return m_enum_T( i ); }
 
-template <typename T , typename U , U m_U(const U&,const U&) , const U& e_U() , list<pair<T,U> > E(const T&)> inline int MemorisationDijkstra<T,U,m_U,e_U,E>::e_inv( const T& t )
+template <typename E> inline int Dijkstra<E>::e_inv( const int& t ) { return t; }
+
+template <typename T , typename U , typename M_U , typename E_U , typename E> inline int MemorisationDijkstra<T,U,M_U,E_U,E>::e_inv( const T& t )
 {
 
-  using base = DijkstraBody<T,U,E>;
+  using base = Dijkstra_Body<T,U,E>;
   
   if( m_memory.count( t ) == 0 ){
 
@@ -112,9 +113,7 @@ template <typename T , typename U , U m_U(const U&,const U&) , const U& e_U() , 
 
 }
 
-template <list<pair<int,ll> > E(const int&)> inline int Dijkstra<E>::e_inv( const int& t ) { return t; }
-template <typename T , typename U , U m_U(const U&,const U&) , const U& e_U() , list<pair<T,U> > E(const T&) , T enum_T(const int&) , int enum_T_inv(const T&)> inline int EnumerationDijkstra<T,U,m_U,e_U,E,enum_T,enum_T_inv>::e_inv( const T& t ) { return enum_T_inv( t ); }
+template <typename T , typename Enum_T , typename Enum_T_inv , typename U , typename M_U , typename E_U , typename E> inline int EnumerationDijkstra<T,Enum_T,Enum_T_inv,U,M_U,E_U,E>::e_inv( const T& t ) { return m_enum_T_inv( t ); }
 
-template <typename T , typename U , U m_U(const U&,const U&) , const U& e_U() , list<pair<T,U> > E(const T&)> inline void MemorisationDijkstra<T,U,m_U,e_U,E>::Reset() { m_length = 0; m_memory.clear(); m_memory_inv.clear(); }
-template <list<pair<int,ll> > E(const int&)> inline void Dijkstra<E>::Reset() {}
-template <typename T , typename U , U m_U(const U&,const U&) , const U& e_U() , list<pair<T,U> > E(const T&) , T enum_T(const int&) , int enum_T_inv(const T&)> inline void EnumerationDijkstra<T,U,m_U,e_U,E,enum_T,enum_T_inv>::Reset() {}
+template <typename T , typename U , typename E> inline void Dijkstra_Body<T,U,E>::Reset() {}
+template <typename T , typename U , typename M_U , typename E_U , typename E> inline void MemorisationDijkstra<T,U,M_U,E_U,E>::Reset() { m_length = 0; m_memory.clear(); m_memory_inv.clear(); }

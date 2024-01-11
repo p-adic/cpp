@@ -29,7 +29,7 @@
       const U& u = v.first;						\
       UPDATE_FOUND;							\
       vertex.erase( itr_vertex );					\
-      const list<pair<T,U> > edge_i = E( e( i ) );			\
+      const list<pair<T,U> > edge_i = m_edge( e( i ) );			\
       list<pair<U,int> > changed_vertex{};				\
 									\
       for( auto itr_edge_i = edge_i.begin() , end_edge_i = edge_i.end() ; itr_edge_i != end_edge_i ; itr_edge_i++ ){ \

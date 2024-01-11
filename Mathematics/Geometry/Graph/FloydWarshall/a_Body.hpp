@@ -3,30 +3,21 @@
 #pragma once
 #include "a.hpp"
 
-template <typename T , T m_T(const T&,const T&) , T A_T(const T&,const T&) , int size_max>
-void FloydWarshall( const T ( &d )[size_max][size_max] , T ( &weight )[size_max][size_max] , const int& size , const T& infty )
+template <typename T , typename M_T , typename A_T>
+void FloydWarshall( M_T m_T , A_T a_T , const vector<vector<T>>& d , vector<vector<T>>& weight , const T& infty )
 {
 
-  for( int i = 0 ; i < size ; i++ ){
-
-    T ( &weight_i )[size_max] = weight[i];
-    const T ( &d_i )[size_max] = d[i];
-    
-    for( int j = 0 ; j < size ; j++ ){
-
-      weight_i[j] = d_i[j];
-
-    }
-
-  }
+  const int size = d.size();
+  assert( size > 0 ? size == int( d[0].size() ) : true );
+  weight = d;
 
   for( int k = 0 ; k < size ; k++ ){
 
-    T ( &weight_k )[size_max] = weight[k];
+    auto& weight_k = weight[k];
 
     for( int i = 0 ; i < size ; i++ ){
 
-      T ( &weight_i )[size_max] = weight[i];
+      auto& weight_i = weight[i];
       const T& weight_ik = weight_i[k];
     
       if( i != k && weight_ik != infty ){
@@ -39,7 +30,7 @@ void FloydWarshall( const T ( &d )[size_max][size_max] , T ( &weight )[size_max]
 
 	    T& weight_ij = weight_i[j];
 	    const T weight_curr = m_T( weight_ik , weight_kj );
-	    weight_ij = weight_ij == infty ? weight_curr : A_T( weight_ij , weight_curr );
+	    weight_ij = weight_ij == infty ? weight_curr : a_T( weight_ij , weight_curr );
 
 	  }
 
@@ -55,33 +46,23 @@ void FloydWarshall( const T ( &d )[size_max][size_max] , T ( &weight )[size_max]
 
 }
 
-template <typename T , T m_T(const T&,const T&) , int size_max>
-void FloydWarshall( const T ( &d )[size_max][size_max] , T ( &weight )[size_max][size_max] , const int& size , const T& infty , int ( &path )[size_max][size_max] )
+template <typename T , typename M_T>
+void FloydWarshall( M_T m_T , const vector<vector<T>>& d , vector<vector<T>>& weight , const T& infty , vector<vector<int>>& path )
 {
 
-  for( int i = 0 ; i < size ; i++ ){
-
-    T ( &weight_i )[size_max] = weight[i];
-    T ( &path_i )[size_max] = path[i];
-    const T ( &d_i )[size_max] = d[i];
-    
-    for( int j = 0 ; j < size ; j++ ){
-
-      weight_i[j] = d_i[j];
-      path_i[j] = -1;
-
-    }
-
-  }
+  const int size = d.size();
+  assert( size > 0 ? size == int( d[0].size() ) : true );
+  weight = d;
+  path = vector<vector<int>>( size , vector<int>( size , -1 ) );
 
   for( int k = 0 ; k < size ; k++ ){
 
-    T ( &weight_k )[size_max] = weight[k];
+    auto& weight_k = weight[k];
 
     for( int i = 0 ; i < size ; i++ ){
 
-      T ( &weight_i )[size_max] = weight[i];
-      T ( &path_i )[size_max] = path[i];
+      auto& weight_i = weight[i];
+      auto& path_i = path[i];
       const T& weight_ik = weight_i[k];
     
       if( i != k && weight_ik != infty ){
