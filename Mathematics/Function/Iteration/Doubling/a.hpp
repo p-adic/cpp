@@ -1,10 +1,9 @@
 // c:/Users/user/Documents/Programming/Mathematics/Function/Iteration/Doubling/a.hpp
 
 #pragma once
-#include "a_Macro.hpp"
 
 // verify:
-// https://atcoder.jp/contests/abc013/submissions/42023050
+// https://atcoder.jp/contests/abc013/submissions/49214926（Doubling）
 // https://yukicoder.me/submissions/942761（Doubling）
 // https://yukicoder.me/submissions/942770（MemorisationDoubling）
 // https://yukicoder.me/submissions/942771（EnumerationDoubling）
@@ -17,7 +16,7 @@
 
 // FはT->U(-->T)に相当する型
 template <typename T , typename F>
-class DoublingBody
+class Doubling_Body
 {
   
 protected:
@@ -26,7 +25,7 @@ protected:
   int m_digit;
   vector<vector<int> > m_doubling;
   
-  inline DoublingBody( F f , const int& size , const int& digit );
+  inline Doubling_Body( F f , const int& size , const int& digit );
   
 public:
   // f^n(t)を計算する。
@@ -46,7 +45,7 @@ private:
 // 合計O(size log n)の計算量で求める。
 template <typename F>
 class Doubling :
-  public DoublingBody<int,F>
+  public Doubling_Body<int,F>
 {
 
 public:
@@ -67,7 +66,7 @@ private:
 // 合計O(size log size log n)の計算量で求める。
 template <typename T, typename F>
 class MemorisationDoubling :
-  public DoublingBody<T,F>
+  public Doubling_Body<T,F>
 {
 
 private:
@@ -95,7 +94,7 @@ template <typename F,typename... Args> MemorisationDoubling(F,Args...) -> Memori
 // 合計O(size log n)の計算量で求める。
 template <typename T , typename Enum_T , typename Enum_T_inv , typename F>
 class EnumerationDoubling :
-  public DoublingBody<T,F>
+  public Doubling_Body<T,F>
 {
 
 private:

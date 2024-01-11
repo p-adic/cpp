@@ -1,34 +1,35 @@
 // c:/Users/user/Documents/Programming/Mathematics/Function/Iteration/LoopDetection/a.hpp
 
 #pragma once
-#include "a_Macro.hpp"
+#include "../../Map/a.hpp"
 
-// verify: https://yukicoder.me/submissions/909162
+// verify:
+// https://yukicoder.me/submissions/942807（MemorisationLoopDetection）
+// https://yukicoder.me/submissions/942806（EnumerationLoopDetection）
 
-// 写像f:T->Uとcast U->Tの合成のループ検出を行う。
-// fとcastの合成の像の要素数がlength_max以下の場合にのみサポート。
+// Fはf:T->U(-->T)の型。
+// fのループ検出を行う。
 
 // 反復合成O(loop_start+(n-loop_start)%loop_length)
 // 像の要素数取得O(1)（ただしループ検出前の時のみO(loop_start+loop_length)）
 // ループ始点取得O(1)（ただしループ検出前の時のみO(loop_start+loop_length)）
 // ループ長取得O(1)（ただしループ検出前の時のみO(loop_start+loop_length)）
-template <typename T , typename U , U f(const T&) , int length_max>
-class LoopDetectionBody
+template <typename T , typename F>
+class LoopDetection_Body
 {
 
 private:
   T m_init;
-  map<T,int> m_memory;
-  vector<T> m_memory_inv;
-
+  F m_f;
+  
 protected:
-  int m_value[length_max];
   int m_length;
   int m_loop_start;
   int m_loop_length;
 
 public:
-  template <SFINAE_FOR_LOOP_DETECTION_BODY( = nullptr )> inline LoopDetectionBody( const T& init );
+  inline LoopDetection_Body( const T& init , F f );
+  
   template <typename INT> T IteratedComposition( const INT& n );
 
   // 像の要素数取得
@@ -40,56 +41,81 @@ public:
   
 private:
   inline void SetInit();
-  void SearchLoop();
-  virtual T e( const int& i );
-  virtual int e_inv( const T& t );
-  virtual void SetValue( const int& i );
+  inline void SearchLoop();
+  virtual T e( const int& i ) = 0;
+  virtual int e_inv( const T& t ) = 0;
+  virtual void SetValue( const int& i ) = 0;
+  virtual const int& GetValue( const int& i ) = 0;
 
 };
 
-template <int f(const int&) , int length_max>
-class LoopDetection :
-  public LoopDetectionBody<int,int,f,length_max>
+template <typename T , typename F>
+class ValueCalculatorForLoopDetection :
+  public LoopDetection_Body<T,F>
 {
 
 private:
-  int m_value_inv[length_max];
+  unordered_map<int,int> m_value;
+  unordered_map<int,int> m_value_inv;
+
+public:
+  inline ValueCalculatorForLoopDetection( const T& init , F f );
+
+private:
+  void SetValue( const int& i );
+  int& RefValue( const int& i );
+  const int& GetValue( const int& i );
+  int& RefValue_inv( const int& i );
+
+};
+
+template <typename F>
+class LoopDetection :
+  public ValueCalculatorForLoopDetection<int,F>
+{
   
 public:
-  inline LoopDetection( const int& init );
+  inline LoopDetection( const int& init , F f );
 
 private:
   inline int e( const int& i );
   inline int e_inv( const int& t );
-  void SetValue( const int& i );
 
 };
 
-template <typename T , typename U , U f(const T&) , int length_max>
+template <typename T , typename F>
 class MemorisationLoopDetection :
-  public LoopDetectionBody<T,U,f,length_max>
-{
-
-public:
-  inline MemorisationLoopDetection( const T& init );
-
-};
-
-template <typename T , typename U , U f(const T&) , int length_max , T enum_T(const int&) , int enum_T_inv(const T&)>
-class EnumerationLoopDetection :
-  public LoopDetectionBody<T,U,f,length_max>
+  public LoopDetection_Body<T,F>
 {
 
 private:
-  int m_value_inv[length_max];
-  
+  Map<T,int> m_memory;
+  vector<T> m_memory_inv;
+
 public:
-  inline EnumerationLoopDetection( const T& init );
+  inline MemorisationLoopDetection( const T& init , F f );
+  inline T e( const int& i );
+  inline int e_inv( const T& t );
+  void SetValue( const int& i );
+  const int& GetValue( const int& i );
+
+};
+
+template <typename T , typename Enum_T , typename Enum_T_inv , typename F>
+class EnumerationLoopDetection :
+  public ValueCalculatorForLoopDetection<T,F>
+{
+
+private:
+  Enum_T m_enum_T;
+  Enum_T_inv m_enum_T_inv;
+
+public:
+  inline EnumerationLoopDetection( const T& init , Enum_T enum_T , Enum_T_inv enum_T_inv , F f );
   
 private:
   inline T e( const int& i );
   inline int e_inv( const T& t );
-  void SetValue( const int& i );
 
 };
 
