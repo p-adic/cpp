@@ -3,71 +3,13 @@
 #pragma once
 #include "a.hpp"
 
-template <typename T, typename U , U f(const T&) , int size_max , int digit> template <SFINAE_FOR_DOUBLING_BODY()> inline DoublingBody<T,U,f,size_max,digit>::DoublingBody( const int& size ) : m_length() , m_memory() , m_memory_inv() , m_size( size ) , m_doubling() {}
+template <typename T, typename F> inline DoublingBody<T,F>::DoublingBody( F f , const int& size , const int& digit ) : m_f( move( f ) ) , m_size( size ) , m_digit( digit ) , m_doubling( m_digit , vector<int>( m_size , -1 ) ) { static_assert( is_invocable_r_v<T,F,T> ); }
+template <typename F> inline Doubling<F>::Doubling( F f , const int& size , const int& digit ) : DoublingBody<int,F>( move( f ) , size , digit ) {}
+template <typename T, typename F> inline MemorisationDoubling<T,F>::MemorisationDoubling( F f , const int& size , const int& digit ) : DoublingBody<T,F>( move( f ) , size , digit ) , m_length() , m_memory() , m_memory_inv() {}
+template <typename T , typename Enum_T , typename Enum_T_inv , typename F> inline EnumerationDoubling<T,Enum_T,Enum_T_inv,F>::EnumerationDoubling( Enum_T enum_T , Enum_T_inv enum_T_inv , F f , const int& size , const int& digit) : DoublingBody<T,F>( move( f ) , size , digit ) , m_enum_T( move( enum_T ) ) , m_enum_T_inv( move( enum_T_inv ) ) {}
 
-template <int f(const int&) , int size_max , int digit> inline Doubling<f,size_max,digit>::Doubling( const int& size ) :
-  DoublingBody<int,int,f,size_max,digit>( size )
-{
-
-  using base = DoublingBody<int,int,f,size_max,digit>;
-  
-  for( int d = 0 ; d < digit ; d++ ){
-
-    int ( &doubling_d )[size_max] = base::m_doubling[d];
-
-    for( int i = 0 ; i < base::m_size ; i++ ){
-
-      doubling_d[i] = -1;
-
-    }
-
-  }
-
-}
-
-template <typename T, typename U , U f(const T&) , int size_max , int digit> inline MemorisationDoubling<T,U,f,size_max,digit>::MemorisationDoubling( const int& size ) :
-  DoublingBody<T,U,f,size_max,digit>( size )
-{
-
-  using base = DoublingBody<T,U,f,size_max,digit>;
-  
-  for( int d = 0 ; d < digit ; d++ ){
-
-    int ( &doubling_d )[size_max] = base::m_doubling[d];
-
-    for( int i = 0 ; i < base::m_size ; i++ ){
-
-      doubling_d[i] = -1;
-
-    }
-
-  }
-
-}
-
-template <typename T, typename U , U f(const T&) , int size_max , T enum_T(const int&) , int enum_T_inv(const T&) , int digit> inline EnumerationDoubling<T,U,f,size_max,enum_T,enum_T_inv,digit>::EnumerationDoubling( const int& size ) :
-  DoublingBody<T,U,f,size_max,digit>( size )
-{
-
-  using base = DoublingBody<T,U,f,size_max,digit>;
-
-  for( int d = 0 ; d < digit ; d++ ){
-
-    int ( &doubling_d )[size_max] = base::m_doubling[d];
-
-    // enum_T‚ªm_size–¢–ž‚Ö‚Ì‘S’PŽË‚Æ‚ÍŒÀ‚ç‚È‚¢‚Ì‚Åsize_max‚Ü‚Å‰Šú‰»‚·‚éB
-    for( int i = 0 ; i < size_max ; i++ ){
-
-      doubling_d[i] = -1;
-
-    }
-
-  }
-
-}
-
-template <typename T, typename U , U f(const T&) , int size_max , int digit> template <typename INT>
-T DoublingBody<T,U,f,size_max,digit>::IteratedComposition( T t , INT n )
+template <typename T, typename F> template <typename INT>
+T DoublingBody<T,F>::IteratedComposition( T t , INT n )
 {
   
   int i = e_inv( t );
@@ -75,8 +17,8 @@ T DoublingBody<T,U,f,size_max,digit>::IteratedComposition( T t , INT n )
 
   while( n != 0 ){
 
-    assert( d < digit );
-    int ( &doubling_d )[size_max] = m_doubling[d];
+    assert( d < m_digit );
+    auto& doubling_d = m_doubling[d];
     const int& doubling_d_i = doubling_d[i];
 
     if( doubling_d_i == -1 ){
@@ -87,13 +29,13 @@ T DoublingBody<T,U,f,size_max,digit>::IteratedComposition( T t , INT n )
 
 	while( doubling_d[j] == -1 ){
 
-	  j = doubling_d[j] = e_inv( t = f( t ) );
+	  j = doubling_d[j] = e_inv( t = m_f( t ) );
 
 	}
 
       } else {
 
-	int ( &doubling_d_minus )[size_max] = m_doubling[d - 1];
+	auto& doubling_d_minus = m_doubling[d - 1];
 
 	while( doubling_d[j] == -1 ){
 
@@ -115,33 +57,10 @@ T DoublingBody<T,U,f,size_max,digit>::IteratedComposition( T t , INT n )
 
 }
 
-template <typename T, typename U , U f(const T&) , int size_max , int digit>
-T DoublingBody<T,U,f,size_max,digit>::e( const int& i )
-{
-  
-  assert( i < m_length );
-  return m_memory_inv[i];
+template <typename F> inline int Doubling<F>::e( const int& i ) { return i; }
+template <typename T, typename F> inline T MemorisationDoubling<T,F>::e( const int& i ) { assert( i < m_length ); return m_memory_inv[i]; }
+template <typename T , typename Enum_T , typename Enum_T_inv , typename F> inline T EnumerationDoubling<T,Enum_T,Enum_T_inv,F>::e( const int& i ) { using base = DoublingBody<T,F>; assert( i < base::m_size ); return m_enum_T( i ); }
 
-}
-
-template <int f(const int&) , int size_max , int digit> inline int Doubling<f,size_max,digit>::e( const int& i ) { return i; }
-template <typename T, typename U , U f(const T&) , int size_max , T enum_T(const int&) , int enum_T_inv(const T&) , int digit> inline T EnumerationDoubling<T,U,f,size_max,enum_T,enum_T_inv,digit>::e( const int& i ) { return enum_T( i ); }
-
-template <typename T, typename U , U f(const T&) , int size_max , int digit>
-int DoublingBody<T,U,f,size_max,digit>::e_inv( const T& t )
-{
-
-  if( m_memory.count( t ) == 0 ){
-
-    assert( m_length < m_size );
-    m_memory_inv.push_back( t );
-    return m_memory[t] = m_length++;
-
-  }
-  
-  return m_memory[t];
-
-}
-
-template <int f(const int&) , int size_max , int digit> inline int Doubling<f,size_max,digit>::e_inv( const int& t ) { return t; }
-template <typename T, typename U , U f(const T&) , int size_max , T enum_T(const int&) , int enum_T_inv(const T&) , int digit> inline int EnumerationDoubling<T,U,f,size_max,enum_T,enum_T_inv,digit>::e_inv( const T& t ) { return enum_T_inv( t ); }
+template <typename F> inline int Doubling<F>::e_inv( const int& t ) { return t; }
+template <typename T, typename F> inline int MemorisationDoubling<T,F>::e_inv( const T& t ) { if( m_memory.count( t ) == 0 ){ using base = DoublingBody<T,F>; assert( m_length < base::m_size ); m_memory_inv.push_back( t ); return m_memory[t] = m_length++; } return m_memory[t]; }
+template <typename T , typename Enum_T , typename Enum_T_inv , typename F> inline int EnumerationDoubling<T,Enum_T,Enum_T_inv,F>::e_inv( const T& t ) { return m_enum_T_inv( t ); }
