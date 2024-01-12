@@ -3,23 +3,14 @@
 #pragma once
 #include "a.hpp"
 
-// BinarySearchに使う。
-#include "../../../../../../Arithmetic/Power/Constexpr/Inverse/a_Body.hpp"
+template <typename T , typename M_T> inline IdempotentMonoidBIT<T,M_T>::IdempotentMonoidBIT( M_T m_T , T e_T , const int& size ) : m_m_T( move( m_T ) ) , m_e_T( move( e_T ) ) , m_size( size ) , m_a( m_size , m_e_T ) , m_fenwick_0( m_size + 1 , m_e_T ) , m_fenwick_1( m_size + 1 , m_e_T ) , m_power( 1 ) { static_assert( is_invocable_r_v<T,M_T,T,T> ); while( m_power < m_size ){ m_power <<= 1; } }
 
-template <TEMPLATE_ARGUMENTS_FOR_IDEMPOTENT_MONOID_BIT> inline const T& AbstractBIT<T,m_T,e_T,N>::g_e = e_T();
-
-template <TEMPLATE_ARGUMENTS_FOR_IDEMPOTENT_MONOID_BIT> inline IdempotentMonoidBIT<T,m_T,e_T,N>::IdempotentMonoidBIT() : m_a() , m_fenwick_0() , m_fenwick_1() { if( m_a[0] != g_e ){ for( int i = 0 ; i < N ; i++ ){ m_a[i] = m_fenwick_0[i+1] = m_fenwick_1[i+1] = g_e; } } }
-
-template <TEMPLATE_ARGUMENTS_FOR_IDEMPOTENT_MONOID_BIT> inline IdempotentMonoidBIT<T,m_T,e_T,N>::IdempotentMonoidBIT( const T ( &a )[N] ) : m_init( n ) , m_a() , m_fenwick_0() , m_fenwick_1() 
+template <typename T , typename M_T> inline IdempotentMonoidBIT<T,M_T>::IdempotentMonoidBIT( M_T m_T , T e_T , vector<T> a ) :  m_m_T( move( m_T ) ) , m_e_T( move( e_T ) ) , m_size( a.size() ) , m_a( move( a ) ) , m_fenwick_0( m_size + 1 ) , m_fenwick_1( m_size + 1 ) , m_power( 1 )
 {
 
-  for( int i = 0 ; i < N ; i++ ){
-
-    m_a[i] = a[i];
-
-  }
-
-  for( int i = 0 ; i < N ; i++ ){
+  static_assert( is_invocable_r_v<T,M_T,T,T> );
+  
+  for( int i = 0 ; i < m_size ; i++ ){
 
     int j = i + 1;
     T& fenwick_0i = m_fenwick_0[j];
@@ -29,124 +20,92 @@ template <TEMPLATE_ARGUMENTS_FOR_IDEMPOTENT_MONOID_BIT> inline IdempotentMonoidB
 
     while( j > j_llim ){
 
-      fenwick_0i = m_T( m_fenwick_0[j] , fenwick_0i );
+      fenwick_0i = m_m_T( m_fenwick_0[j] , fenwick_0i );
       j -= ( j & -j );
 
     }
 
   }
 
-  for( int i = N - 1 ; i >= 0 ; i-- ){
+  for( int i = m_size - 1 ; i >= 0 ; i-- ){
 
     int j = i + 1;
     T& fenwick_1i = m_fenwick_1[j];
     fenwick_1i = m_a[i];
-    const int j_ulim = min( j + ( j & -j ) , N + 1 );
+    const int j_ulim = min( j + ( j & -j ) , m_size + 1 );
     j++;
 
     while( j < j_ulim ){
 
-      fenwick_1i = m_T( fenwick_1i , m_fenwick_1[j] );
+      fenwick_1i = m_m_T( fenwick_1i , m_fenwick_1[j] );
       j += ( j & -j );
 
     }
 
   }
 
-}
+  while( m_power < m_size ){
 
-template <TEMPLATE_ARGUMENTS_FOR_IDEMPOTENT_MONOID_BIT> inline IdempotentMonoidBIT<T,m_T,e_T,N>::IdempotentMonoidBIT( T ( &&a )[N] ) : m_init( n ) , m_a() , m_fenwick_0() , m_fenwick_1() 
-{
-
-  swap( m_a , a );
-
-  for( int i = 0 ; i < N ; i++ ){
-
-    int j = i + 1;
-    T& fenwick_0i = m_fenwick_0[j];
-    fenwick_0i = m_a[i];
-    const int j_llim = j - ( j & -j );
-    j--;
-
-    while( j > j_llim ){
-
-      fenwick_0i = m_T( m_fenwick_0[j] , fenwick_0i );
-      j -= ( j & -j );
-
-    }
-
-  }
-
-  for( int i = N - 1 ; i >= 0 ; i-- ){
-
-    int j = i + 1;
-    T& fenwick_1i = m_fenwick_1[j];
-    fenwick_1i = m_a[i];
-    const int j_ulim = min( j + ( j & -j ) , N + 1 );
-    j++;
-
-    while( j < j_ulim ){
-
-      fenwick_1i = m_T( fenwick_1i , m_fenwick_1[j] );
-      j += ( j & -j );
-
-    }
+    m_power <<= 1;
 
   }
 
 }
 
-template <TEMPLATE_ARGUMENTS_FOR_IDEMPOTENT_MONOID_BIT> inline const T& IdempotentMonoidBIT<T,m_T,e_T,N>::operator[]( const int& i ) const { return m_a[i]; } 
-template <TEMPLATE_ARGUMENTS_FOR_IDEMPOTENT_MONOID_BIT> inline const T& IdempotentMonoidBIT<T,m_T,e_T,N>::Get( const int& i ) const { return m_a[i]; } 
+template <typename T , typename M_T> inline IdempotentMonoidBIT<T,M_T>& IdempotentMonoidBIT<T,M_T>::operator=( IdempotentMonoidBIT<T,M_T>&& a ) { m_m_T = move( a.m_m_T ); m_e_T = move( a.m_e_T ); m_size = move( a.m_size ); m_a = move( a.m_a ); m_fenwick_0 = move( a.m_fenwick_0 ); m_fenwick_1 = move( a.m_fenwick_1 ); m_power = a.m_power; return *this; }
 
-template <TEMPLATE_ARGUMENTS_FOR_IDEMPOTENT_MONOID_BIT>
-T IdempotentMonoidBIT<T,m_T,e_T,N>::IntervalSum( const int& i_start , const int& i_final ) const
+template <typename T , typename M_T> inline const T& IdempotentMonoidBIT<T,M_T>::operator[]( const int& i ) const { assert( i < m_size ); return m_a[i]; } 
+template <typename T , typename M_T> inline const T& IdempotentMonoidBIT<T,M_T>::Get( const int& i ) const { return operator[]( i ); } 
+template <typename T , typename M_T> inline const T& IdempotentMonoidBIT<T,M_T>::LSBSegmentSum( const int& j , const bool& left ) const { assert( 0 < j && j <= m_size ); return ( left ? m_fenwick_0 : m_fenwick_1 )[j]; }
+
+template <typename T , typename M_T>
+T IdempotentMonoidBIT<T,M_T>::IntervalSum( const int& i_start , const int& i_final ) const
 {
 
-  const int j_min = i_start < 0 ? 1 : i_start + 1;
-  const int j_max = i_final < N ? i_final + 1 : N;
+  const int j_min = max( i_start + 1 , 1 );
+  const int j_max = min( i_final + 1 , m_size );
 
   if( j_min > j_max ){
 
-    return g_e;
+    return m_e_T;
   }
     
-  T answer1 = g_e;
+  T answer1 = m_e_T;
   int j = j_min;
   int j_next = j + ( j & -j );
 
   while( j_next <= j_max ){
 
-    answer1 = m_T( answer1 , m_fenwick_1[j] );
+    answer1 = m_m_T( answer1 , m_fenwick_1[j] );
     j = j_next;
     j_next += ( j & -j );
 
   }
 
-  answer1 = m_T( answer1 , m_a[j-1] ); 
-  T answer0 = g_e;
+  answer1 = m_m_T( answer1 , m_a[j-1] ); 
+  T answer0 = m_e_T;
   j = j_max;
   j_next = j - ( j & -j );
 
   while( j_next >= j_min ){
 
-    answer0 = m_T( m_fenwick_0[j] , answer0 );
+    answer0 = m_m_T( m_fenwick_0[j] , answer0 );
     j = j_next;
     j_next -= ( j & -j );
 
   }
 
-  return m_T( answer1 , answer0 );
+  return m_m_T( answer1 , answer0 );
 
 }
 
-template <TEMPLATE_ARGUMENTS_FOR_IDEMPOTENT_MONOID_BIT>
-void IdempotentMonoidBIT<T,m_T,e_T,N>::Set( const int& i , const T& n )
+template <typename T , typename M_T>
+void IdempotentMonoidBIT<T,M_T>::Set( const int& i , const T& n )
 {
 
   T& ai = m_a[i];
 
-  if( n == m_T( ai , n ) ){
+  if( n == m_m_T( ai , n ) ){
 
     Add( i , n );
 
@@ -154,10 +113,10 @@ void IdempotentMonoidBIT<T,m_T,e_T,N>::Set( const int& i , const T& n )
   
     int j = i + 1;
 
-    while( j <= N ){
+    while( j <= m_size ){
 
       const int lsb = ( j & -j );
-      m_fenwick_0[j] = m_T( m_T( IntervalSum( j - lsb , i - 1 ) , n ) , IntervalSum( i + 1 , j - 1 ) ); 
+      m_fenwick_0[j] = m_m_T( m_m_T( IntervalSum( j - lsb , i - 1 ) , n ) , IntervalSum( i + 1 , j - 1 ) ); 
       j += lsb;
 
     }
@@ -167,7 +126,7 @@ void IdempotentMonoidBIT<T,m_T,e_T,N>::Set( const int& i , const T& n )
     while( j > 0 ){
 
       const int lsb = ( j & -j );
-      m_fenwick_0[j] = m_T( m_T( IntervalSum( j - 1 , i - 1 ) , n ) , IntervalSum( i + 1 , j + lsb - 2 ) ); 
+      m_fenwick_0[j] = m_m_T( m_m_T( IntervalSum( j - 1 , i - 1 ) , n ) , IntervalSum( i + 1 , j + lsb - 2 ) ); 
       j -= lsb;
 
     }
@@ -180,33 +139,23 @@ void IdempotentMonoidBIT<T,m_T,e_T,N>::Set( const int& i , const T& n )
 
 }
 
-template <TEMPLATE_ARGUMENTS_FOR_IDEMPOTENT_MONOID_BIT>
-void IdempotentMonoidBIT<T,m_T,e_T,N>::Set( T ( &&a )[N] )
-{
+template <typename T , typename M_T> inline void IdempotentMonoidBIT<T,M_T>::Set( vector<T>&& a ) { *this = IdempotentMonoidBIT<T,M_T>( move( m_m_T ) , move( m_e_T ) , move( a ) ); }
+template <typename T , typename M_T> inline void IdempotentMonoidBIT<T,M_T>::Initialise( const int& size ) { *this = IdempotentMonoidBIT<T,M_T>( move( m_m_T ) , move( m_e_T ) , m_size ); }
 
-  IdempotentMonoidBIT<T,m_T,e_T,N> a_copy{ a };
-  swap( m_a , a_copy.m_a );
-  swap( m_fenwick_0 , a_copy.m_fenwick_0 );
-  swap( m_fenwick_1 , a_copy.m_fenwick_1 );
-  return;
+template <typename T , typename M_T> inline IdempotentMonoidBIT<T,M_T>& IdempotentMonoidBIT<T,M_T>::operator+=( vector<T>&& a ) { IdempotentMonoidBIT<T,M_T> a_copy{ m_m_T , m_e_T , move( a ) }; assert( m_size == a_copy.m_size ); for( int j = 1 ; j <= m_size ; j++ ){ T& t0j = m_fenwick_0[j]; t0j = m_m_T( t0j , a_copy.m_fenwick_0[j] ); T& t1j = m_fenwick_1[j]; t1j = m_m_T( t1j , a_copy.m_fenwick_1[j] ); } }
 
-}
-
-template <TEMPLATE_ARGUMENTS_FOR_IDEMPOTENT_MONOID_BIT> inline void IdempotentMonoidBIT<T,m_T,e_T,N>::Initialise() { for( int i = 0 ; i < N ; i++ ){ m_a[i] = m_fenwick_0[i+1] = m_fenwick_1[i+1] = g_e; } }
-
-
-template <TEMPLATE_ARGUMENTS_FOR_IDEMPOTENT_MONOID_BIT>
-void IdempotentMonoidBIT<T,m_T,e_T,N>::Add( const int& i , const T& n ) 
+template <typename T , typename M_T>
+void IdempotentMonoidBIT<T,M_T>::Add( const int& i , const T& n ) 
 {
 
   T& ai = m_a[i];
-  ai = m_T( ai , n );
+  ai = m_m_T( ai , n );
   int j = i + 1;
 
-  while( j <= N ){
+  while( j <= m_size ){
 
     T& tj = m_fenwick_0[j];
-    tj = m_T( tj , n );
+    tj = m_m_T( tj , n );
     j += ( j & -j );
 
   }
@@ -216,7 +165,7 @@ void IdempotentMonoidBIT<T,m_T,e_T,N>::Add( const int& i , const T& n )
   while( j > 0 ){
 
     T& tj = m_fenwick_1[j];
-    tj = m_T( tj , n );
+    tj = m_m_T( tj , n );
     j -= ( j & -j );
 
   }
@@ -225,23 +174,22 @@ void IdempotentMonoidBIT<T,m_T,e_T,N>::Add( const int& i , const T& n )
 
 }
 
-
-template <TEMPLATE_ARGUMENTS_FOR_IDEMPOTENT_MONOID_BIT>
-void IdempotentMonoidBIT<T,m_T,e_T,N>::IntervalAdd( const int& i_start , const int& i_final , const T& n ) 
+template <typename T , typename M_T>
+void IdempotentMonoidBIT<T,M_T>::IntervalAdd( const int& i_start , const int& i_final , const T& n ) 
 {
 
   const int j_min = max( i_start + 1 , 1 );
-  const int j_max = min( i_final + 1 , N );
+  const int j_max = min( i_final + 1 , m_size );
 
   for( int i = j_min - 1 ; i < j_max ; i++ ){
 
     T& ai = m_a[i];
-    ai = m_T( ai , n );
+    ai = m_m_T( ai , n );
 
   }
 
   const int j_llim = j_min - ( j_min & -j_min );
-  const int j_ulim = min( j_max + ( j_max & j_max ) , N + 1 );
+  const int j_ulim = min( j_max + ( j_max & j_max ) , m_size + 1 );
 
   if( j_min <= j_max ){
 
@@ -252,7 +200,7 @@ void IdempotentMonoidBIT<T,m_T,e_T,N>::IntervalAdd( const int& i_start , const i
       if( j - ( j & -j ) < j_max ){
 
 	T& tj = m_fenwick_0[j];
-	tj = m_T( tj , n );
+	tj = m_m_T( tj , n );
   
       }
 
@@ -267,7 +215,7 @@ void IdempotentMonoidBIT<T,m_T,e_T,N>::IntervalAdd( const int& i_start , const i
       if( j + ( j & -j ) > j_min ){
 
 	T& tj = m_fenwick_0[j];
-	tj = m_T( tj , n );
+	tj = m_m_T( tj , n );
 
       }
 
@@ -278,25 +226,26 @@ void IdempotentMonoidBIT<T,m_T,e_T,N>::IntervalAdd( const int& i_start , const i
   }
 
   return;
+
 }
 
-template <TEMPLATE_ARGUMENTS_FOR_IDEMPOTENT_MONOID_BIT> inline int MonoidBIT<T,m_T,e_T,N>::BinarySearch( const T& t ) const
+template <typename T , typename M_T> inline int IdempotentMonoidBIT<T,M_T>::BinarySearch( const T& t ) const
 {
 
   int j = 0;
-  int power = PowerInverse_constexpr<N>().m_val;
-  T sum = g_e;
-  T sum_next = g_e;
+  int power = m_power;
+  T sum = m_e_T;
+  T sum_next = m_e_T;
   
   while( power > 0 ){
 
     int j_next = j | power;
 
-    if( j_next < N ){
+    if( j_next < m_size ){
       
-      sum_next = m_T( sum_next , m_fenwick[j_next] );
+      sum_next = m_m_T( sum_next , m_fenwick_0[j_next] );
 
-      if( sum_next != m_T( sum_next , t ) ){
+      if( sum_next != m_m_T( sum_next , t ) ){
 	
 	sum = sum_next;
 	j = j_next;
@@ -313,9 +262,9 @@ template <TEMPLATE_ARGUMENTS_FOR_IDEMPOTENT_MONOID_BIT> inline int MonoidBIT<T,m
 
   }
 
-  // InitialSegmentSum( i )がt未満となるiが存在するならばjはその最大値に1を足したものとなり、
-  // InitialSegmentSum( i )がt未満となるiが存在しないならばj=0となり、
-  // いずれの場合もjはInitialSegmentSum( i )がt以上となる最小のiと等しい。
+  // m_a[0],...,m_a[i]がt未満となるiが存在するならばjはその最大値に1を足したものとなり、
+  // そのようなiが存在しないならばj=0となり、
+  // いずれの場合もjはm_a[0],...,m_a[i]がt以上となる最小のiと等しい。
   return j;
 
 }
