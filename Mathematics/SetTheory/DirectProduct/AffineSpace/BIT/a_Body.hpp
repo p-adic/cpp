@@ -16,7 +16,7 @@ BIT<T>::BIT( const vector<T>& a ) : BIT( a.size() )
     fenwick_j = a[i];
     int i_lim = j - ( j & -j );
 
-    while( i != i_lim ){
+    while( i > i_lim ){
 
       fenwick_j += m_fenwick[i];
       i -= ( i & -i );
@@ -29,12 +29,11 @@ BIT<T>::BIT( const vector<T>& a ) : BIT( a.size() )
 
 template <typename T> inline BIT<T>& BIT<T>::operato=( BIT<T>&& a ) { m_size = a.m_size; m_fenwick = move( a.m_fenwick ); m_power = a.m_power; return *this; }
 
-template <typename T> inline T BIT<T>::Get( const int& i ) const { return IntervalSum( i , i ); }
 template <typename T> inline void BIT<T>::Set( const int& i , const T& n ) { Add( i , n - IntervalSum( i , i ) ); }
 template <typename T> inline void BIT<T>::Set( const vector<T>& a ) { *this = BIT<T>{ a }; }
 template <typename T> inline void BIT<T>::Initialise( const int& size ) { *this = BIT<T>( size ); }
 
-template <typename T> inline BIT<T>& BIT<T>::operator+=( const vector<T>& a ) { BIT<T> a_copy{ a }; assert( m_size == a.m_size ); for( int i = 1 ; i <= m_size ; i++ ){ m_fenwick[i] += a.m_fenwick[i]; } return *this; }
+template <typename T> inline BIT<T>& BIT<T>::operator+=( const vector<T>& a ) { BIT<T> a_copy{ a }; assert( m_size == a.m_size ); for( int j = 1 ; j <= m_size ; j++ ){ m_fenwick[j] += a.m_fenwick[j]; } return *this; }
 
 template <typename T>
 void BIT<T>::Add( const int& i , const T& n )
@@ -53,7 +52,9 @@ void BIT<T>::Add( const int& i , const T& n )
   
 }
 
-xtemplate <typename T> inline const T& BIT<T>::LSBSegmentSum( const int& j ) const { assert( 0 < j && j <= m_size ); return m_fenwick[j]; }
+template <typename T> inline T BIT<T>::operator[]( const int& i ) const { assert( 0 <= i && i < m_size ); return IntervalSum( i , i ); }
+template <typename T> inline T BIT<T>::Get( const int& i ) const { return operator[]( i ); }
+template <typename T> inline const T& BIT<T>::LSBSegmentSum( const int& j ) const { assert( 0 < j && j <= m_size ); return m_fenwick[j]; }
 
 template <typename T> 
 T BIT<T>::InitialSegmentSum( const int& i_final ) const
@@ -74,6 +75,7 @@ T BIT<T>::InitialSegmentSum( const int& i_final ) const
 }
 
 template <typename T> inline T BIT<T>::IntervalSum( const int& i_start , const int& i_final ) const { return InitialSegmentSum( i_final ) - InitialSegmentSum( i_start - 1 ); }
+template <typename T> inline const int& BIT<T>::size() const noexcept { return m_size; }
 
 
 template <typename T>
