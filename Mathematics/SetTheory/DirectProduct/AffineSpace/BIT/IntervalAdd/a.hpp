@@ -3,7 +3,7 @@
 #pragma once
 #include "../a.hpp"
 
-// verify: https://yukicoder.me/submissions/942591x
+// verify: https://yukicoder.me/submissions/942888（零初期化、一点加算、区間加算、一点取得）
 
 // 使用演算：
 // T& T::operator=( const T& )（BITそのものに使用）
@@ -38,8 +38,6 @@ public:
 
   inline IntervalAddBIT<T>& operator=( IntervalAddBIT<T>&& a );
 
-  // const参照でないことに注意。
-  inline T Get( const int& i ) const;
   inline void Set( const int& i , const T& n );
   inline void Set( const vector<T>& a );
   inline void Initialise( const int& size = 0 );
@@ -50,6 +48,9 @@ public:
   // max(0,i_start)<=i<=min(N-1,i_final)を満たすiに対し各第i成分にnを足す。
   inline void IntervalAdd( const int& i_start , const int& i_final , const T& n );
 
+  // const参照でないことに注意。
+  inline T operator[]( const int& i ) const;
+  inline T Get( const int& i ) const;
   inline T InitialSegmentSum( const int& i_final ) const;
   inline T IntervalSum( const int& i_start , const int& i_final ) const;
   
