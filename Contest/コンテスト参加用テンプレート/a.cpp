@@ -40,7 +40,7 @@ inline void Solve()
   // // CIN( int , N ); int M = N - 1;
   // gE<int>.resize( N );
   // // gE<path>.resize( N );
-  // // UnionFindForest<> uff{ N };
+  // // UnionFindForest uff{ N };
   // FOR( j , 0 , M ){
   //   CIN_ASSERT( uj , 1 , N ); CIN_ASSERT( vj , 1 , N );
   //   uj--; vj--;
@@ -50,10 +50,13 @@ inline void Solve()
   //   // gE<path>[uj].push_back( { vj , wj } ); gE<path>[vj].push_back( { uj , wj } );
   //   // uff.Graft( uj , vj , wj );
   // }
-  // // BreadthFirstSearch<GetgE<int>> bfs{ N , 0 };
-  // // DepthFirstSearch<GetgE<int>> dfs{ N , 0 };
-  // // DepthFirstSearchOnTree<GetgE<int>> dfst{ N , 0 };
-  // // Dijkstra<GetgE<path>> dijk{ N };
+  // // auto edge = [&]( const int& i ){
+  // //   list<int> answer{};
+  // //   return answer;
+  // // };
+  // // BreadthFirstSearch bfs{ N , Get( gE<int> ) , 0 };
+  // // DepthFirstSearchOnTree dfst{ N , Get( gE<int> ) , 0 };
+  // // Dijkstra dijk{ N , Get( gE<path> ) };
   // ll answer = 0;
   // RETURN( answer );
  
@@ -111,21 +114,9 @@ REPEAT_MAIN(1);
 
 // グラフ用
 template <typename T> Map<T,T> gF;
-template <typename T> inline T GetgF( const T& t ){ return gF<T>[t]; }
-
 template <typename T> vector<T> gA;
-template <typename T> inline T GetgA( const int& i ){ return gA<T>[i]; }
-
 template <typename PATH> vector<list<PATH> > gE;
-template <typename PATH> list<PATH> GetgE( const int& i )
-{
-  // list<PATH> answer{};
-  list<PATH> answer = gE<PATH>[i];
-  // VVV 入力によらない処理は以下に挿入する。
-
-  // AAA 入力によらない処理は以上に挿入する。
-  return answer;
-}
+template <typename T , template <typename...> typename V> inline auto Get( const V<T>& a ) { return [&]( const int& i ){ return a[i]; }; }
 
 // COMPAREに使用。圧縮時は削除する。
 ll Naive( int N , int M , int K )
@@ -203,7 +194,7 @@ Polynomial
 c:/Users/user/Documents/Programming/Mathematics/Polynomial/compress.txt
 
 UnionFind
-c:/Users/user/Documents/Programming/Utility/VLTree/UnionFindForest/compress.txt
+c:/Users/user/Documents/Programming/Mathematics/Geometry/Graph/UnionFindForest/compress.txt
 
 */
 
@@ -378,7 +369,7 @@ template <typename T> constexpr T Quotient( const T& a , const T& p ){ return p 
     ll DIFFERENCE_BS;							\
     while( L_BS < U_BS ){						\
       DIFFERENCE_BS = ( EXPRESSION_BS = ( EXPRESSION ) ) - CONST_TARGET_BS; \
-      CERR( "二分探索中：" , "L_BS =" , L_BS , "<=" , ANSWER , "<=" , U_BS , "= U_BS :" , #EXPRESSION , "-" , #CONST_TARGET , "=" , EXPRESSION_BS , "-" , CONST_TARGET_BS , "=" , DIFFERENCE_BS ); \
+      CERR( "二分探索中：" , "L_BS =" , L_BS , "<=" , #ANSWER , "=" , ANSWER , "<=" , U_BS , "= U_BS :" , #EXPRESSION , "-" , #CONST_TARGET , "=" , EXPRESSION_BS , "-" , CONST_TARGET_BS , "=" , DIFFERENCE_BS ); \
       if( DIFFERENCE_BS INEQUALITY_FOR_CHECK 0 ){			\
 	U_BS = UPDATE_U;						\
       } else {								\
@@ -391,7 +382,7 @@ template <typename T> constexpr T Quotient( const T& a , const T& p ){ return p 
       CERR( "二分探索マクロにミスがある可能性があります。変更前の版に戻してください。" ); \
       ANSWER = MAXIMUM + 1;						\
     } else {								\
-      CERR( "二分探索終了：" , "L_BS =" , L_BS , "<=" , ANSWER , "<=" , U_BS , "= U_BS" ); \
+      CERR( "二分探索終了：" , "L_BS =" , L_BS , "<=" , #ANSWER , "=" , ANSWER , "<=" , U_BS , "= U_BS" ); \
       CERR( "二分探索が成功したかを確認するために" , #EXPRESSION , "を計算します。" ); \
       CERR( "成功判定が不要な場合はこの計算を削除しても構いません。" );	\
       EXPRESSION_BS = ( EXPRESSION );					\
@@ -547,10 +538,11 @@ TE <uint M> CE Mod<M>::Mod()NE:m_n(){}TE <uint M> CE Mod<M>::Mod(CO Mod<M>& n)NE
 
 // IntervalAddBIT
 // c:/Users/user/Documents/Programming/Mathematics/SetTheory/DirectProduct/AffineSpace/BIT/IntervalAdd/a.hpp
-TE <TY T>CL BIT{PU:int m_SZ;VE<T> m_fenwick;int m_PW;IN BIT(CRI SZ = 0);BIT(CO VE<T>& a);IN BIT<T>& OP=(BIT<T>&& a);IN T Get(CRI i)CO;IN VO Set(CRI i,CO T& n);IN VO Set(CO VE<T>& a);IN VO Initialise(CRI SZ = 0);IN BIT<T>& OP+=(CO VE<T>& a);VO Add(CRI i,CO T& n);IN CO T& LSBSegmentSum(CRI j)CO;T InitialSegmentSum(CRI i_final)CO;IN T IntervalSum(CRI i_start,CRI i_final)CO;int BinarySearch(CO T& n)CO;IN int BinarySearch(CRI i_start,CO T& n)CO;};
-TE <TY T> IN BIT<T>::BIT(CRI SZ):m_SZ(SZ),m_fenwick(m_SZ+1),m_PW(1){static_assert(! is_same<T,int>::value);WH(m_PW < m_SZ){m_PW <<= 1;}}TE <TY T>BIT<T>::BIT(CO VE<T>& a):BIT(a.SZ()){for(int j = 1;j <= m_SZ;j++){T& fenwick_j = m_fenwick[j];int i = j - 1;fenwick_j = a[i];int i_lim = j -(j & -j);WH(i > i_lim){fenwick_j += m_fenwick[i];i -=(i & -i);}}}TE <TY T> IN BIT<T>& BIT<T>::OP=(BIT<T>&& a){m_SZ = a.m_SZ;m_fenwick = MO(a.m_fenwick);m_PW = a.m_PW;RE *TH;}TE <TY T> IN T BIT<T>::Get(CRI i)CO{RE IntervalSum(i,i);}TE <TY T> IN VO BIT<T>::Set(CRI i,CO T& n){Add(i,n - IntervalSum(i,i));}TE <TY T> IN VO BIT<T>::Set(CO VE<T>& a){*TH = BIT<T>{a};}TE <TY T> IN VO BIT<T>::Initialise(CRI SZ){*TH = BIT<T>(SZ);}TE <TY T> IN BIT<T>& BIT<T>::OP+=(CO VE<T>&a){ BIT<T> a_copy{ a }; assert(m_SZ == a.m_SZ);for(int i = 1;i <= m_SZ;i++){m_fenwick[i] += a.m_fenwick[i];}RE *TH;}TE <TY T>VO BIT<T>::Add(CRI i,CO T& n){int j = i + 1;WH(j <= m_SZ){m_fenwick[j] += n;j +=(j & -j);}RE;}TE <TY T> IN CO T& BIT<T>::LSBSegmentSum(CRI j)CO{assert(0 < j && j <= m_SZ);RE m_fenwick[j];}TE <TY T>T BIT<T>::InitialSegmentSum(CRI i_final)CO{T sum = 0;int j =(i_final < m_SZ?i_final:m_SZ - 1)+ 1;WH(j > 0){sum += m_fenwick[j];j -= j & -j;}RE sum;}TE <TY T> IN T BIT<T>::IntervalSum(CRI i_start,CRI i_final)CO{RE InitialSegmentSum(i_final)- InitialSegmentSum(i_start - 1);}TE <TY T>int BIT<T>::BinarySearch(CO T& n)CO{int PW = m_PW;int j = 0;T sum{};T sum_next{};WH(PW > 0){int j_next = j | PW;if(j_next < m_SZ){sum_next += m_fenwick[j_next];if(sum_next < n){sum = sum_next;j = j_next;}else{sum_next = sum;}}PW >>= 1;}RE j;}TE <TY T> IN int BIT<T>::BinarySearch(CRI i_start,CO T& n)CO{RE max(i_start,BinarySearch(InitialSegmentSum(i_start)+ n));}
-TE <TY T>CL IntervalAddBIT{PU:BIT<T> m_bit_0;BIT<T> m_bit_1;IN IntervalAddBIT(CRI SZ = 0);IN IntervalAddBIT(CO VE<T>& a);IN IntervalAddBIT<T>& OP=(IntervalAddBIT<T>&& a);IN T Get(CRI i)CO;IN VO Set(CRI i,CO T& n);IN VO Set(CO VE<T>& a);IN VO Initialise(CRI SZ = 0);IN IntervalAddBIT<T>& OP+=(CO VE<T>& a);IN VO Add(CRI i,CO T& n);IN VO IntervalAdd(CRI i_start,CRI i_final,CO T& n);IN T InitialSegmentSum(CRI i_final)CO;IN T IntervalSum(CRI i_start,CRI i_final)CO;};
-TE <TY T> IN IntervalAddBIT<T>::IntervalAddBIT(CRI SZ):m_bit_0(SZ),m_bit_1(SZ){}TE <TY T> IN IntervalAddBIT<T>::IntervalAddBIT(CO VE<T>& a):m_bit_0(),m_bit_1(){CO int SZ = a.SZ();VE<T> diff(SZ);diff[0]= a[0];for(int i = 1;i < SZ;i++){diff[i] = a[i] - a[i-1];}m_bit_0.Set(diff);for(int i = 1;i < SZ;i++){(diff[i]*= 1 - i)-= a[i];}m_bit_1.Set(diff);}TE <TY T> IN IntervalAddBIT<T>& IntervalAddBIT<T>::OP=(IntervalAddBIT<T>&& a){m_bit_0 = MO(a.m_bit_0);m_bit_1 = MO(a.m_bit_1);}TE <TY T> IN T IntervalAddBIT<T>::Get(CRI i)CO{RE IntervalSum(i,i);}TE <TY T> IN VO IntervalAddBIT<T>::Set(CRI i,CO T& n){Add(i,n - IntervalSum(i,i));}TE <TY T> IN VO IntervalAddBIT<T>::Set(CO VE<T>& a){*TH = IntervalAddBIT<T>(a);}TE <TY T> IN VO IntervalAddBIT<T>::Initialise(CO int& SZ){m_bit_0.Initialise(SZ);m_bit_1.Initialise(SZ);}TE <TY T> IN IntervalAddBIT<T>& IntervalAddBIT<T>::OP+=(CO VE<T>& a){IntervalAddBIT<T> a_copy{a};CO int SZ = a.SZ();for(int i = 1;i < SZ;i++){m_bit_0[i] += a_copy.m_bit_0[i];m_bit_1[i] += a_copy.m_bit_1[i];}RE *TH;}TE <TY T> IN VO IntervalAddBIT<T>::Add(CRI i,CO T& n){IntervalAdd(i,i,n);}TE <TY T> IN VO IntervalAddBIT<T>::IntervalAdd(CRI i_start,CRI i_final,CO T& n){m_bit_0.Add(i_start,-(i_start - 1)* n);m_bit_0.Add(i_final + 1,i_final * n);m_bit_1.Add(i_start,n);m_bit_1.Add(i_final + 1,- n);}TE <TY T> IN T IntervalAddBIT<T>::InitialSegmentSum(CRI i_final)CO{RE m_bit_0.InitialSegmentSum(i_final)+ i_final * m_bit_1.InitialSegmentSum(i_final);}TE <TY T> IN T IntervalAddBIT<T>::IntervalSum(CRI i_start,CRI i_final)CO{RE InitialSegmentSum(i_final)- InitialSegmentSum(i_start - 1);}
+TE <TY T>CL BIT{PU:int m_SZ;VE<T> m_fenwick;int m_PW;IN BIT(CRI SZ = 0);BIT(CO VE<T>& a);IN BIT<T>& OP=(BIT<T>&& a);IN VO Set(CRI i,CO T& n);IN VO Set(CO VE<T>& a);IN VO Initialise(CRI SZ = 0);IN BIT<T>& OP+=(CO VE<T>& a);VO Add(CRI i,CO T& n);IN T OP[](CRI i)CO;IN T Get(CRI i)CO;IN CO T& LSBSegmentSum(CRI j)CO;T InitialSegmentSum(CRI i_final)CO;IN T IntervalSum(CRI i_start,CRI i_final)CO;IN CRI SZ()CO NE;int BinarySearch(CO T& n)CO;IN int BinarySearch(CRI i_start,CO T& n)CO;};
+TE <TY T> IN BIT<T>::BIT(CRI SZ):m_SZ(SZ),m_fenwick(m_SZ+1),m_PW(1){static_assert(! is_same<T,int>::value);WH(m_PW < m_SZ){m_PW <<= 1;}}TE <TY T>BIT<T>::BIT(CO VE<T>& a):BIT(a.SZ()){for(int j = 1;j <= m_SZ;j++){T& fenwick_j = m_fenwick[j];int i = j - 1;fenwick_j = a[i];int i_lim = j -(j & -j);WH(i > i_lim){fenwick_j += m_fenwick[i];i -=(i & -i);}}}TE <TY T> IN BIT<T>& BIT<T>::OP=(BIT<T>&& a){m_SZ = a.m_SZ;m_fenwick = MO(a.m_fenwick);m_PW = a.m_PW;RE *TH;}TE <TY T> IN VO BIT<T>::Set(CRI i,CO T& n){Add(i,n - IntervalSum(i,i));}TE <TY T> IN VO BIT<T>::Set(CO VE<T>& a){*TH = BIT<T>{a};}TE <TY T> IN VO BIT<T>::Initialise(CRI SZ){*TH = BIT<T>(SZ);}TE <TY T> IN BIT<T>& BIT<T>::OP+=(CO VE<T>&a){ BIT<T> a_copy{ a }; assert(m_SZ == a.m_SZ);for(int j = 1;j <= m_SZ;j++){m_fenwick[j] += a.m_fenwick[j];}RE *TH;}TE <TY T>VO BIT<T>::Add(CRI i,CO T& n){int j = i + 1;WH(j <= m_SZ){m_fenwick[j] += n;j +=(j & -j);}RE;}TE <TY T> IN T BIT<T>::OP[](CRI i)CO{assert(0 <= i && i < m_SZ);RE IntervalSum(i,i);}TE <TY T> IN T BIT<T>::Get(CRI i)CO{RE OP[](i);}TE <TY T> IN CO T& BIT<T>::LSBSegmentSum(CRI j)CO{assert(0 < j && j <= m_SZ);RE m_fenwick[j];}TE <TY T>T BIT<T>::InitialSegmentSum(CRI i_final)CO{T sum = 0;int j =(i_final < m_SZ?i_final:m_SZ - 1)+ 1;WH(j > 0){sum += m_fenwick[j];j -= j & -j;}RE sum;}TE <TY T> IN T BIT<T>::IntervalSum(CRI i_start,CRI i_final)CO{RE InitialSegmentSum(i_final)- InitialSegmentSum(i_start - 1);}TE <TY T>int BIT<T>::BinarySearch(CO T& n)CO{int PW = m_PW;int j = 0;T sum{};T sum_next{};WH(PW > 0){int j_next = j | PW;if(j_next < m_SZ){sum_next += m_fenwick[j_next];if(sum_next < n){sum = sum_next;j = j_next;}else{sum_next = sum;}}PW >>= 1;}RE j;}TE <TY T> IN CRI BIT<T>::SZ()CO NE{RE m_SZ;};TE <TY T> IN int BIT<T>::BinarySearch(CRI i_start,CO T& n)CO{RE max(i_start,BinarySearch(InitialSegmentSum(i_start)+ n));}
+
+TE <TY T>CL IntervalAddBIT{PU:BIT<T> m_bit_0;BIT<T> m_bit_1;IN IntervalAddBIT(CRI SZ = 0);IN IntervalAddBIT(CO VE<T>& a);IN IntervalAddBIT<T>& OP=(IntervalAddBIT<T>&& a);IN VO Set(CRI i,CO T& n);IN VO Set(CO VE<T>& a);IN VO Initialise(CRI SZ = 0);IN IntervalAddBIT<T>& OP+=(CO VE<T>& a);IN VO Add(CRI i,CO T& n);IN VO IntervalAdd(CRI i_start,CRI i_final,CO T& n);IN T OP[](CRI i)CO;IN T Get(CRI i)CO;IN T InitialSegmentSum(CRI i_final)CO;IN T IntervalSum(CRI i_start,CRI i_final)CO;};
+TE <TY T> IN IntervalAddBIT<T>::IntervalAddBIT(CRI SZ):m_bit_0(SZ),m_bit_1(SZ){}TE <TY T> IN IntervalAddBIT<T>::IntervalAddBIT(CO VE<T>& a):m_bit_0(),m_bit_1(){CO int SZ = a.SZ();VE<T> diff(SZ);diff[0]= a[0];for(int i = 1;i < SZ;i++){diff[i] = a[i] - a[i-1];}m_bit_0.Set(diff);for(int i = 1;i < SZ;i++){(diff[i]*= 1 - i)-= a[i];}m_bit_1.Set(diff);}TE <TY T> IN IntervalAddBIT<T>& IntervalAddBIT<T>::OP=(IntervalAddBIT<T>&& a){m_bit_0 = MO(a.m_bit_0);m_bit_1 = MO(a.m_bit_1);}TE <TY T> IN VO IntervalAddBIT<T>::Set(CRI i,CO T& n){Add(i,n - IntervalSum(i,i));}TE <TY T> IN VO IntervalAddBIT<T>::Set(CO VE<T>& a){*TH = IntervalAddBIT<T>(a);}TE <TY T> IN VO IntervalAddBIT<T>::Initialise(CO int& SZ){m_bit_0.Initialise(SZ);m_bit_1.Initialise(SZ);}TE <TY T> IN IntervalAddBIT<T>& IntervalAddBIT<T>::OP+=(CO VE<T>& a){IntervalAddBIT<T> a_copy{a};CO int SZ = a.SZ();for(int i = 1;i < SZ;i++){m_bit_0[i] += a_copy.m_bit_0[i];m_bit_1[i] += a_copy.m_bit_1[i];}RE *TH;}TE <TY T> IN VO IntervalAddBIT<T>::Add(CRI i,CO T& n){IntervalAdd(i,i,n);}TE <TY T> IN VO IntervalAddBIT<T>::IntervalAdd(CRI i_start,CRI i_final,CO T& n){m_bit_0.Add(i_start,-(i_start - 1)* n);m_bit_0.Add(i_final + 1,i_final * n);m_bit_1.Add(i_start,n);m_bit_1.Add(i_final + 1,- n);}TE <TY T> IN T IntervalAddBIT<T>::OP[](CRI i)CO{assert(0 <= i && i < m_bit_0.SZ());RE IntervalSum(i,i);}TE <TY T> IN T IntervalAddBIT<T>::Get(CRI i)CO{RE OP[](i);}TE <TY T> IN T IntervalAddBIT<T>::InitialSegmentSum(CRI i_final)CO{RE m_bit_0.InitialSegmentSum(i_final)+ i_final * m_bit_1.InitialSegmentSum(i_final);}TE <TY T> IN T IntervalAddBIT<T>::IntervalSum(CRI i_start,CRI i_final)CO{RE InitialSegmentSum(i_final)- InitialSegmentSum(i_start - 1);}
 
 // AAA 常設ライブラリは以上に挿入する。
 
