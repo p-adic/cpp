@@ -1,8 +1,6 @@
 // c:/Users/user/Documents/Programming/Mathematics/SetTheory/DirectProduct/AffineSpace/BIT/Template/Monoid/a.hpp
 
 #pragma once
-#include "a_Macro.hpp"
-
 // verify: https://yukicoder.me/submissions/942886（零初期化、一点更新、一点取得、区間和）
 
 // M_Tは乗算m_T:T^2->Tに相当する型。
