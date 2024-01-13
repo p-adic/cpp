@@ -677,7 +677,7 @@ AC( Maximisation )
 	     "文字列のマッチングに関する最大／最長化問題" ,
 	     "最大二部マッチング問題" ,
 	     "確率／期待値の最大化問題" ,
-	     "操作スコアの最小化問題" ,
+	     "操作コストの最小化問題" ,
 	     "操作回数の最大化問題"
 	     );
   if( num == num_temp++ ){
@@ -699,7 +699,7 @@ AC( Maximisation )
   } else if( num == num_temp++ ){
     CALL_AC( MaximisationProbability );
   } else if( num == num_temp++ ){
-    CALL_AC( MinimisationOperationScore );
+    CALL_AC( MinimisationOperationCost );
   } else if( num == num_temp++ ){
     CALL_AC( MaximisationCountingOperation );
   }
@@ -926,11 +926,17 @@ AC( MinimisationSolvingMaze )
     CERR( "各操作をデータ構造に翻訳することでシンプルな最小化問題に帰着させましょう。" );
     CERR( "- 区間加算ならば、階差数列の２点加算に翻訳" );
     CERR( "- 部分木の白黒反転ならば、木上の階差数列の１点更新に翻訳" );
+    CERR( "その上で、操作を" );
+    CERR( "- 選択部分（どこを操作するか、など）" );
+    CERR( "- 決定的遷移（選択部分を決めたら最小コストを実現するために自動的に決まる部分）" );
+    CERR( "に分けて考えられないか検討し、選択部分の全探索や半分全列挙などを検討しましょう。" );
+    CERR( "例えば各成分高々１回しか操作しないのが最適であれば、どの成分を操作するかに" );
+    CERR( "対応する部分集合の探索問題となります。" );
+    CERR( "" );
     CERR( "操作前後で不変な値（総和や白黒の個数差mod2など）があれば、" );
     CERR( "操作を何らかの零化問題に翻訳できるかもしれません。" );
-    CERR( "なるべくスコアを簡単で等価な値に翻訳し、その翻訳に則って操作も更に翻訳し、" );
+    CERR( "なるべくコストを簡単で等価な値に翻訳し、その翻訳に則って操作も更に翻訳し、" );
     CERR( "よりシンプルな（例えば貪欲法が適用可能な）零化問題への帰着を試みましょう。" );
-    CERR( "" );
   }
 }
 
@@ -989,9 +995,9 @@ AC( MaximisationProbability )
   CERR( "を管理するsに関する動的計画法を検討しましょう。" );
 }
 
-AC( MinimisationOperationScore )
+AC( MinimisationOperationCost )
 {
-  CERR( "操作スコアの最小化は、操作による状態遷移をグラフ上の移動とみなすことで" );
+  CERR( "操作コストの最小化は、操作による状態遷移をグラフ上の移動とみなすことで" );
   CERR( "最短経路問題に帰着させることが可能です。" );
   CALL_AC( MinimisationMovingCost );
 }

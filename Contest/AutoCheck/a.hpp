@@ -39,6 +39,7 @@ AC( MinimisationSolvingOpenCovering );
 AC( MaximisationStringMatching );
 AC( MaximisationBipartiteMatching );
 AC( MaximisationProbability );
+AC( MinimisationOperationCost );
 AC( MaximisationCountingOperation );
 AC( Counting );
 AC( CountingExplicitExpression );
