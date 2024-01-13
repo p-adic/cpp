@@ -590,8 +590,9 @@ AC( ExplicitExpressionProbability )
 
 AC( ExplicitExpressionCountingOperation )
 {
-  CERR( "操作回数を求める際は、" );
-  CERR( "- 操作列を「一斉に処理できる区間」いくつかに分割し、それぞれの区間での処理を計算" );
+  CERR( "選択の余地のない操作回数を求める際は、" );
+  CERR( "- 操作列をイベントとみなし時系列に並べ、「一斉に処理できる区間」いくつかに分割し、" );
+  CERR( "  それぞれの区間での処理をまとめて計算" );
   CERR( "- 操作後の状態を何らかの不変量で分類し、操作を不変量間の遷移とみなすことで" );
   CERR( "  動的計画法や移動コスト最小化問題に帰着" );
   CERR( "- 操作が何らかの集合の要素に高々１回しか適用しないならば、適用する要素全体のなす" );
@@ -676,7 +677,7 @@ AC( Maximisation )
 	     "文字列のマッチングに関する最大／最長化問題" ,
 	     "最大二部マッチング問題" ,
 	     "確率／期待値の最大化問題" ,
-	     "操作回数の最小化問題" ,
+	     "操作スコアの最小化問題" ,
 	     "操作回数の最大化問題"
 	     );
   if( num == num_temp++ ){
@@ -698,7 +699,7 @@ AC( Maximisation )
   } else if( num == num_temp++ ){
     CALL_AC( MaximisationProbability );
   } else if( num == num_temp++ ){
-    CALL_AC( ExplicitExpressionCountingOperation );
+    CALL_AC( MinimisationOperationScore );
   } else if( num == num_temp++ ){
     CALL_AC( MaximisationCountingOperation );
   }
@@ -889,8 +890,8 @@ AC( MinimisationMovingCost )
   } else if( num == num_temp++ ){
     CERR( "- HeldKarp法" );
     CERR( "- 移動方法を分類するパラメータの全探策" );
+    CERR( "を検討しましょう。" );
   }
-  CERR( "を検討しましょう。" );
   CERR( "" );
   CERR( "点の座標と最小化すべきコスト以外の数値xに変化がある場合、最小コスト移動において" );
   CERR( "xの動く範囲を絞って点の座標とxの組を頂点とするグラフを考えましょう。" );
@@ -908,15 +909,29 @@ AC( MinimisationMovingCost )
 
 AC( MinimisationSolvingMaze )
 {
-  CERR( "- コストがなくO(V+E)が通りそうならば幅優先探索" );
-  CERR( "  \\Mathematics\\Geometry\\Graph\\BreadthFirst" );
-  CERR( "- コストが0か1でO(V+E)が通りそうならば01幅優先探索" );
-  CERR( "  \\Mathematics\\Geometry\\Graph\\BreadthFirst\\ZeroOne" );
-  CERR( "- コスト総和上限をCとしO((V+E)C)が間に合いそうならば" );
-  CERR( "  コストも状態に含めたグラフ上での幅優先探索" );
-  CERR( "  \\Mathematics\\Geometry\\Graph\\BreadthFirst" );
-  CERR( "- O((V+E)log_2 E)が間に合いそうならばダイクストラ法" );
-  CERR( "  \\Mathematics\\Geometry\\Graph\\Dijkstra" );
+  ASK_YES_NO( "Vが10^6オーダーで抑えられますか？" );
+  if( reply == "y" ){
+    CERR( "- コストがなくO(V+E)が通りそうならば幅優先探索" );
+    CERR( "  \\Mathematics\\Geometry\\Graph\\BreadthFirst" );
+    CERR( "- コストが0か1でO(V+E)が通りそうならば01幅優先探索" );
+    CERR( "  \\Mathematics\\Geometry\\Graph\\BreadthFirst\\ZeroOne" );
+    CERR( "- コスト総和上限をCとしO((V+E)C)が間に合いそうならば" );
+    CERR( "  コストも状態に含めたグラフ上での幅優先探索" );
+    CERR( "  \\Mathematics\\Geometry\\Graph\\BreadthFirst" );
+    CERR( "- O((V+E)log_2 E)が間に合いそうならばダイクストラ法" );
+    CERR( "  \\Mathematics\\Geometry\\Graph\\Dijkstra" );
+    CERR( "を検討しましょう。" );
+  } else {
+    CERR( "配列の書き換え問題やLightsOut問題のようにVが非常に大きいならば、" );
+    CERR( "各操作をデータ構造に翻訳することでシンプルな最小化問題に帰着させましょう。" );
+    CERR( "- 区間加算ならば、階差数列の２点加算に翻訳" );
+    CERR( "- 部分木の白黒反転ならば、木上の階差数列の１点更新に翻訳" );
+    CERR( "操作前後で不変な値（総和や白黒の個数差mod2など）があれば、" );
+    CERR( "操作を何らかの零化問題に翻訳できるかもしれません。" );
+    CERR( "なるべくスコアを簡単で等価な値に翻訳し、その翻訳に則って操作も更に翻訳し、" );
+    CERR( "よりシンプルな（例えば貪欲法が適用可能な）零化問題への帰着を試みましょう。" );
+    CERR( "" );
+  }
 }
 
 AC( MinimisationSolvingOpenCovering )
@@ -936,6 +951,7 @@ AC( MinimisationSolvingOpenCovering )
   CERR( "- O(V^3)が通りそうならば、" );
   CERR( "  ワーシャルフロイド法" );
   CERR( "  \\Mathematics\\Geometry\\Graph\\FloydWarshall" );
+  CERR( "を検討しましょう。" );
 }
 
 AC( MaximisationStringMatching )
@@ -971,6 +987,13 @@ AC( MaximisationProbability )
   CERR( "被操作対象や可能な操作／戦略のデータなどを状態として定式化し、" );
   CERR( "「sを経由する場合の確率／期待値の最大値dp[s]」" );
   CERR( "を管理するsに関する動的計画法を検討しましょう。" );
+}
+
+AC( MinimisationOperationScore )
+{
+  CERR( "操作スコアの最小化は、操作による状態遷移をグラフ上の移動とみなすことで" );
+  CERR( "最短経路問題に帰着させることが可能です。" );
+  CALL_AC( MinimisationMovingCost );
 }
 
 AC( MaximisationCountingOperation )
