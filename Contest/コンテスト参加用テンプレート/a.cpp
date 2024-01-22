@@ -324,8 +324,9 @@ using namespace std;
 #define CRL CO ll&
 #define ST_AS static_assert
 #define reMO_CO remove_const
-#define reSZ
 #define is_COructible is_constructible
+#define rBE rbegin
+#define reSZ
 
 // 型のエイリアス
 #define decldecay_t( VAR ) decay_t<decltype( VAR )>
