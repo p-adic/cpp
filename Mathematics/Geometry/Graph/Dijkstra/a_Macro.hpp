@@ -2,72 +2,63 @@
 
 #pragma once
 
-#define DIJKSTRA_BODY( SET_FOUND , SET_WEIGHT , UPDATE_FOUND , CHECK_FOUND , INITIALISE_PREV , SET_PREV ) \
-  static const U& unit = Unit();					\
-  assert( unit != m_found && unit < m_infty );				\
-  const int i_start = e_inv( t_start );					\
-  set<pair<U,int> > vertex{};						\
-  SET_FOUND;								\
-  SET_WEIGHT;								\
-  vertex.insert( pair<U,int>( weight[i_start] = unit , i_start ) );	\
+#define DIJKSTRA_BODY( INITIALISE_PREV , CHECK_FINAL , SET_PREV )	\
+  const U& zero = m_M.Zero();						\
+  const U& infty = this->Infty();					\
+  assert( zero < infty );						\
+  const int& size = m_G.size();						\
+  auto&& i_start = m_G.Enumeration_inv( t_start );			\
+  assert( 0 <= i_start && i_start < size );				\
+  set<pair<U,int>> vertex{};						\
+  vector<bool> found( size );						\
+  vector<U> weight( size , infty );					\
+  vertex.insert( pair<U,int>( weight[i_start] = zero , i_start ) );	\
   INITIALISE_PREV;							\
 									\
-  if( i_start != i_final ){						\
-  									\
-    while( ! vertex.empty() ){						\
+  while( ! vertex.empty() ){						\
 									\
-      auto itr_vertex = vertex.begin();					\
-      const pair<U,int> v = *itr_vertex;				\
-      const int& i = v.second;						\
+    auto begin = vertex.begin();					\
+    auto [weight_i,i] = *begin;						\
+    CHECK_FINAL;							\
+    found[i] = true;							\
+    vertex.erase( begin );						\
+    auto&& edge_i = m_G.Edge( m_G.Enumeration( i ) );			\
+    list<pair<U,int>> changed_vertex{};					\
 									\
-      if( i == i_final ){						\
+    for( auto itr = edge_i.begin() , end = edge_i.end() ; itr != end ; itr++ ){ \
 									\
-	break;								\
-									\
-      }									\
-									\
-      const U& u = v.first;						\
-      UPDATE_FOUND;							\
-      vertex.erase( itr_vertex );					\
-      const list<pair<T,U> > edge_i = m_edge( e( i ) );			\
-      list<pair<U,int> > changed_vertex{};				\
-									\
-      for( auto itr_edge_i = edge_i.begin() , end_edge_i = edge_i.end() ; itr_edge_i != end_edge_i ; itr_edge_i++ ){ \
-									\
-	const int& j = e_inv( itr_edge_i->first );			\
-	U& weight_j = weight[j];					\
+      auto&& j = m_G.Enumeration_inv( itr->first );			\
       									\
-	if( CHECK_FOUND ){						\
+      if( !found[j] ){							\
 									\
-	  const U& edge_ij = itr_edge_i->second;			\
-	  const U temp = Addition( u , edge_ij );			\
-	  assert( edge_ij != m_found && temp != m_found && !( temp < edge_ij ) && temp < m_infty ); \
+	const U& edge_ij = itr->second;					\
+	U temp = m_M.Sum( weight_i , edge_ij );				\
+	assert( !( temp < edge_ij ) && temp < infty );			\
+	U& weight_j = weight[j];					\
 									\
-	  if( weight_j > temp ){					\
+	if( weight_j > temp ){						\
 									\
-	    if( weight_j != m_infty ){					\
+	  if( weight_j != infty ){					\
 									\
-	      vertex.erase( pair<U,int>( weight_j , j ) );		\
-									\
-	    }								\
-									\
-	    SET_PREV;							\
-	    changed_vertex.push_back( pair<U,int>( weight_j = temp , j ) ); \
+	    vertex.erase( pair<U,int>( weight_j , j ) );		\
 									\
 	  }								\
+									\
+	  SET_PREV;							\
+	  changed_vertex.push_back( pair<U,int>( weight_j = move( temp ) , j ) ); \
 									\
 	}								\
 									\
       }									\
 									\
-      for( auto itr_changed = changed_vertex.begin() , end_changed = changed_vertex.end() ; itr_changed != end_changed ; itr_changed++ ){ \
+    }									\
 									\
-	vertex.insert( *itr_changed );					\
+    for( auto itr_changed = changed_vertex.begin() , end_changed = changed_vertex.end() ; itr_changed != end_changed ; itr_changed++ ){ \
 									\
-      }									\
+      vertex.insert( *itr_changed );					\
 									\
     }									\
 									\
   }									\
-  
+
 
