@@ -875,10 +875,11 @@ AC( MaximisationFunctionOnTree )
 AC( MinimisationMovingCost )
 {
   ASK_NUMBER(
-	     "１始点多終点最小コスト移動（迷路）問題" ,
-	     "多始点１終点最小コスト移動（競争）問題" ,
-	     "多始点多終点最小コスト移動（開被覆）問題" ,
-	     "１始点多経由点最小コスト移動（スタンプラリー）問題"
+	     "１始点多終点コスト最小化（迷路）問題" ,
+	     "多始点１終点コスト最小化（競争）問題" ,
+	     "多始点多終点コスト最大値最小化（開被覆）問題" ,
+	     "多始点多終点コスト総和最小化（最小費用流）問題" ,
+	     "１始点多経由点コスト最小化（スタンプラリー）問題"
 	     );
   if( num == num_temp++ ){
     CALL_AC( MinimisationSolvingMaze );
@@ -887,6 +888,13 @@ AC( MinimisationMovingCost )
     CALL_AC( MinimisationSolvingMaze );
   } else if( num == num_temp++ ){
     CALL_AC( MinimisationSolvingOpenCovering );
+  } else if( num == num_temp++ ){
+    CERR( "各終点tjをゴールとして良い人数の上限をNjと置いて" );
+    CERR( "- 各辺の容量を∞に設定" );
+    CERR( "- 各始点siへ容量1コスト0の辺を持つ頂点Sを追加" );
+    CERR( "- 各終点tjから容量Njコスト0の辺を持つ頂点Tを追加" );
+    CERR( "とすることで得られる有無向グラフに対しPrimal-Dual法を適用しましょう。" );
+    CERR( "\\Mathematics\\Geometry\\Graph\\Dijkstra\\Potentialised\\MinimumCostFlow" );
   } else if( num == num_temp++ ){
     CERR( "- HeldKarp法" );
     CERR( "- 移動方法を分類するパラメータの全探策" );
@@ -918,8 +926,13 @@ AC( MinimisationSolvingMaze )
     CERR( "- コスト総和上限をCとしO((V+E)C)が間に合いそうならば" );
     CERR( "  コストも状態に含めたグラフ上での幅優先探索" );
     CERR( "  \\Mathematics\\Geometry\\Graph\\BreadthFirst" );
-    CERR( "- O((V+E)log_2 E)が間に合いそうならばダイクストラ法" );
+    CERR( "- コストが非負でO((V+E)log_2 E)が間に合いそうならばダイクストラ法" );
     CERR( "  \\Mathematics\\Geometry\\Graph\\Dijkstra" );
+    CERR( "- コストが負になりえてO(VE)が間に合いそうならばベルマンフォード法" );
+    CERR( "  \\Mathematics\\Geometry\\Graph\\BellmanFord" );
+    CERR( "- コストが負になりえて辺の削除を行い繰り返し解く場合O(VE+Q(V+E)log_2 E)が" );
+    CERR( "  間に合いそうならばポテンシャル付きダイクストラ法" );
+    CERR( "  \\Mathematics\\Geometry\\Graph\\Dijkstra\\Potentialised" );
     CERR( "を検討しましょう。" );
   } else {
     CERR( "配列の書き換え問題やLightsOut問題のようにVが非常に大きいならば、" );
