@@ -5,6 +5,8 @@
 // https://yukicoder.me/submissions/945886（多点BFSによる全探索）
 // https://yukicoder.me/submissions/945907（多点BFSによる連結成分取得）
 
+// GRAPHは辺Edge:N->N^{< \omega}を持つグラフに相当する型。
+
 // 構築 O(1)/O(|V_G|)（未初期化/初期化）
 // Next()の反復でinitから到達可能な頂点を全探索 O(initの連結成分における辺の本数)
 // Next()の反復とShift()で全探索 O(|V_G|+|E_G|)
@@ -44,7 +46,7 @@ public:
 
   // 最初の未到達点（初期化時点ではinit）から到達できる未到達点の深さを格納し、
   // 到達できない未到達点や既到達点は深さの代わりに-1を格納。
-  void SetDepth( vector<int>& depth );
+  vector<int> GetDistance();
   // 無向グラフである場合にのみサポート。
   // 未到達点の全体のなす部分グラフにおける連結成分の色分けと連結成分数を格納。
   void SetConnectedComponent( vector<int>& cc_num , int& count );
