@@ -6,7 +6,7 @@
 
 #ifdef INCLUDE_MAIN
 
-IN VO Solve()
+inline void Solve()
 {
   // // 数
   // // DEXPR( ll , bound_N , 1e5 , 10 );
@@ -39,43 +39,31 @@ IN VO Solve()
   // CIN( int , N , M );
   // // CIN( int , N ); int M = N - 1;
   // gE<int>.resize( N );
+  // // gE<path>.resize( N );
   // // UnionFindForest uff{ N };
   // FOR( j , 0 , M ){
-  //   CIN( int , uj , vj ); uj--; vj--;
+  //   CIN_ASSERT( uj , 1 , N ); CIN_ASSERT( vj , 1 , N );
+  //   uj--; vj--;
   //   gE<int>[uj].push_back( vj ); gE<int>[vj].push_back( uj );
   //   // uff.Graft( uj , vj );
-  // }
-  // // auto edge = [&]( CO int& i ){
-  // //   list<int> answer{};
-  // //   RE answer;
-  // // };
-  // BreadthFirstSearch bfs{ N , Get( gE<int> ) , 0 };
-  // // DepthFirstSearchOnTree dfst{ N , Get( gE<int> ) , 0 };
-  // ll answer = 0;
-  // RETURN( answer );
-  
-  // // 重み付きグラフ
-  // CIN( int , N , M );
-  // // CIN( int , N ); int M = N - 1;
-  // gE<path>.resize( N );
-  // // UnionFindForest uff{ N };
-  // FOR( j , 0 , M ){
-  //   CIN( ll , uj , vj , wj ); uj--; vj--;
-  //   gE<path>[uj].push_back( { vj , wj } ); gE<path>[vj].push_back( { uj , wj } );
+  //   // CIN( ll , wj );
+  //   // gE<path>[uj].push_back( { vj , wj } ); gE<path>[vj].push_back( { uj , wj } );
   //   // uff.Graft( uj , vj , wj );
   // }
-  // auto edge = [&]( CO int& i ){
-  //   list<path> answer{};
-  //   return answer;
-  // };
-  // Dijkstra dijk{ N , Get( gE<path> ) };
+  // // auto edge = [&]( const int& i ){
+  // //   list<int> answer{};
+  // //   return answer;
+  // // };
+  // // BreadthFirstSearch bfs{ N , Get( gE<int> ) , 0 };
+  // // DepthFirstSearchOnTree dfst{ N , Get( gE<int> ) , 0 };
+  // // Dijkstra dijk{ N , Get( gE<path> ) };
   // ll answer = 0;
   // RETURN( answer );
  
   // // 一般のクエリ
   // CIN( int , Q );
-  // vector<T3<int>> query( Q );
-  // // vector<T2<int>> query( Q );
+  // vector<T3<int> > query( Q );
+  // // vector<T2<int> > query( Q );
   // FOR( q , 0 , Q ){
   //   CIN( int , type );
   //   if( type == 1 ){
@@ -100,7 +88,7 @@ IN VO Solve()
   
   // // グリッド
   // // DEXPR( int , bound_H , 2e3 , 30 ); CEXPR( int , bound_W , bound_H );
-  // // ST_AS( ll( bound_H ) * bound_W < ll( 1 ) << 31 );
+  // // static_assert( ll( bound_H ) * bound_W < ll( 1 ) << 31 );
   // // CEXPR( int , bound_HW , bound_H * bound_W );
   // // SET_ASSERT( H , 1 , bound_H ); SET_ASSERT( W , 1 , bound_W ); // ランダムテスト用。
   // cin >> H >> W; H_minus = H - 1; W_minus = W - 1; HW = H * W;
@@ -125,10 +113,10 @@ REPEAT_MAIN(1);
 #ifdef INCLUDE_SUB
 
 // グラフ用
-TE <TY T> Map<T,T> gF;
-TE <TY T> VE<T> gA;
-TE <TY PATH> VE<LI<PATH>> gE;
-TE <TY T , TE <TY...> TY V> IN auto Get( CO V<T>& a ) { return [&]( CRI i = 0 ){ RE a[i]; }; }
+template <typename T> Map<T,T> gF;
+template <typename T> vector<T> gA;
+template <typename PATH> vector<list<PATH> > gE;
+template <typename T , template <typename...> typename V> inline auto Get( const V<T>& a ) { return [&]( const int& i = 0 ){ return a[i]; }; }
 
 // COMPAREに使用。圧縮時は削除する。
 ll Naive( int N , int M , int K )
@@ -152,7 +140,7 @@ ll Answer( ll N , ll M , ll K )
 }
 
 // 圧縮時は中身だけ削除する。
-IN VO Experiment()
+inline void Experiment()
 {
   // CEXPR( int , bound , 10 );
   // FOREQ( N , 0 , bound ){
@@ -166,7 +154,7 @@ IN VO Experiment()
 }
 
 // 圧縮時は中身だけ削除する。
-IN VO SmallTest()
+inline void SmallTest()
 {
   // CEXPR( int , bound , 10 );
   // FOREQ( N , 0 , bound ){
@@ -235,11 +223,11 @@ c:/Users/user/Documents/Programming/Mathematics/Geometry/Graph/UnionFindForest/c
 
 #ifdef DEBUG
   #define _GLIBCXX_DEBUG
-  #define REPEAT_MAIN( BOUND ) START_MAIN; signal( SIGABRT , &AlertAbort ); AutoCheck( exec_mode , use_getline ); if( exec_mode == sample_debug_mode || exec_mode == submission_debug_mode || exec_mode == library_search_mode ){ RE 0; } else if( exec_mode == experiment_mode ){ Experiment(); RE 0; } else if( exec_mode == small_test_mode ){ SmallTest(); RE 0; }; DEXPR( int , bound_test_case_num , BOUND , min( BOUND , 100 ) ); int test_case_num = 1; if( exec_mode == solve_mode ){ if CE( bound_test_case_num > 1 ){ SET_ASSERT( test_case_num , 1 , bound_test_case_num ); } } else if( exec_mode == random_test_mode ){ CERR( "ランダムテストを行う回数を指定してください。" ); SET_LL( test_case_num ); } FINISH_MAIN
+  #define REPEAT_MAIN( BOUND ) START_MAIN; signal( SIGABRT , &AlertAbort ); AutoCheck( exec_mode , use_getline ); if( exec_mode == sample_debug_mode || exec_mode == submission_debug_mode || exec_mode == library_search_mode ){ return 0; } else if( exec_mode == experiment_mode ){ Experiment(); return 0; } else if( exec_mode == small_test_mode ){ SmallTest(); return 0; }; DEXPR( int , bound_test_case_num , BOUND , min( BOUND , 100 ) ); int test_case_num = 1; if( exec_mode == solve_mode ){ if constexpr( bound_test_case_num > 1 ){ SET_ASSERT( test_case_num , 1 , bound_test_case_num ); } } else if( exec_mode == random_test_mode ){ CERR( "ランダムテストを行う回数を指定してください。" ); SET_LL( test_case_num ); } FINISH_MAIN
   #define DEXPR( LL , BOUND , VALUE , DEBUG_VALUE ) CEXPR( LL , BOUND , DEBUG_VALUE )
-  #define ASSERT( A , MIN , MAX ) CERR( "ASSERTチェック： " , ( MIN ) , ( ( MIN ) <= A ? "<=" : ">" ) , A , ( A <= ( MAX ) ? "<=" : ">" ) , ( MAX ) ); AS( ( MIN ) <= A && A <= ( MAX ) )
-  #define SET_ASSERT( A , MIN , MAX ) if( exec_mode == solve_mode ){ SET_LL( A ); ASSERT( A , MIN , MAX ); } else if( exec_mode == random_test_mode ){ CERR( #A , " = " , ( A = GetRand( MIN , MAX ) ) ); } else { AS( false ); }
-  #define SOLVE_ONLY ST_AS( __FUNCTION__[0] == 'S' )
+  #define ASSERT( A , MIN , MAX ) CERR( "ASSERTチェック： " , ( MIN ) , ( ( MIN ) <= A ? "<=" : ">" ) , A , ( A <= ( MAX ) ? "<=" : ">" ) , ( MAX ) ); assert( ( MIN ) <= A && A <= ( MAX ) )
+  #define SET_ASSERT( A , MIN , MAX ) if( exec_mode == solve_mode ){ SET_LL( A ); ASSERT( A , MIN , MAX ); } else if( exec_mode == random_test_mode ){ CERR( #A , " = " , ( A = GetRand( MIN , MAX ) ) ); } else { assert( false ); }
+  #define SOLVE_ONLY static_assert( __FUNCTION__[0] == 'S' )
   #define CERR( ... ) VariadicCout( cerr , __VA_ARGS__ ) << endl
   #define COUT( ... ) VariadicCout( cout << "出力： " , __VA_ARGS__ ) << endl
   #define CERR_A( A , N ) OUTPUT_ARRAY( cerr , A , N ) << endl
@@ -250,9 +238,9 @@ c:/Users/user/Documents/Programming/Mathematics/Geometry/Graph/UnionFindForest/c
   #pragma GCC optimize ( "O3" )
   #pragma GCC optimize ( "unroll-loops" )
   #pragma GCC target ( "sse4.2,fma,avx2,popcnt,lzcnt,bmi2" )
-  #define REPEAT_MAIN( BOUND ) START_MAIN; CEXPR( int , bound_test_case_num , BOUND ); int test_case_num = 1; if CE( bound_test_case_num > 1 ){ SET_ASSERT( test_case_num , 1 , bound_test_case_num ); } FINISH_MAIN
+  #define REPEAT_MAIN( BOUND ) START_MAIN; CEXPR( int , bound_test_case_num , BOUND ); int test_case_num = 1; if constexpr( bound_test_case_num > 1 ){ SET_ASSERT( test_case_num , 1 , bound_test_case_num ); } FINISH_MAIN
   #define DEXPR( LL , BOUND , VALUE , DEBUG_VALUE ) CEXPR( LL , BOUND , VALUE )
-  #define ASSERT( A , MIN , MAX ) AS( ( MIN ) <= A && A <= ( MAX ) )
+  #define ASSERT( A , MIN , MAX ) assert( ( MIN ) <= A && A <= ( MAX ) )
   #define SET_ASSERT( A , MIN , MAX ) SET_LL( A ); ASSERT( A , MIN , MAX )
   #define SOLVE_ONLY 
   #define CERR( ... ) 
@@ -275,29 +263,229 @@ c:/Users/user/Documents/Programming/Mathematics/Geometry/Graph/UnionFindForest/c
   #define SET_LL( A ) cin >> A
   #define CIN( LL , ... ) SOLVE_ONLY; LL __VA_ARGS__; VariadicCin( cin , __VA_ARGS__ )
   #define SET_A( A , N ) SOLVE_ONLY; FOR( VARIABLE_FOR_CIN_A , 0 , N ){ cin >> A[VARIABLE_FOR_CIN_A]; }
-  #define CIN_A( LL , A , N ) VE<LL> A( N ); SET_A( A , N );
+  #define CIN_A( LL , A , N ) vector<LL> A( N ); SET_A( A , N );
 #endif
 #include <bits/stdc++.h>
 using namespace std;
 #define ATT __attribute__( ( target( "sse4.2,fma,avx2,popcnt,lzcnt,bmi2" ) ) )
 #define START_MAIN int main(){ ios_base::sync_with_stdio( false ); cin.tie( nullptr )
-#define FINISH_MAIN REPEAT( test_case_num ){ if CE( bound_test_case_num > 1 ){ CERR( "testcase " , VARIABLE_FOR_REPEAT_test_case_num , ":" ); } Solve(); CERR( "" ); } }
+#define FINISH_MAIN REPEAT( test_case_num ){ if constexpr( bound_test_case_num > 1 ){ CERR( "testcase " , VARIABLE_FOR_REPEAT_test_case_num , ":" ); } Solve(); CERR( "" ); } }
 #define START_WATCH chrono::system_clock::time_point watch = chrono::system_clock::now()
 #define CURRENT_TIME static_cast<double>( chrono::duration_cast<chrono::microseconds>( chrono::system_clock::now() - watch ).count() / 1000.0 )
 #define CHECK_WATCH( TL_MS ) ( CURRENT_TIME < TL_MS - 100.0 )
-#define CEXPR( LL , BOUND , VALUE ) CE LL BOUND = VALUE
+#define CEXPR( LL , BOUND , VALUE ) constexpr LL BOUND = VALUE
 #define CIN_ASSERT( A , MIN , MAX ) decldecay_t( MAX ) A; SET_ASSERT( A , MIN , MAX )
 #define FOR( VAR , INITIAL , FINAL_PLUS_ONE ) for( decldecay_t( FINAL_PLUS_ONE ) VAR = INITIAL ; VAR < FINAL_PLUS_ONE ; VAR ++ )
 #define FOREQ( VAR , INITIAL , FINAL ) for( decldecay_t( FINAL ) VAR = INITIAL ; VAR <= FINAL ; VAR ++ )
 #define FOREQINV( VAR , INITIAL , FINAL ) for( decldecay_t( INITIAL ) VAR = INITIAL ; VAR + 1 > FINAL ; VAR -- )
-#define AUTO_ITR( ARRAY ) auto itr_ ## ARRAY = ARRAY .BE() , end_ ## ARRAY = ARRAY .EN()
+#define AUTO_ITR( ARRAY ) auto itr_ ## ARRAY = ARRAY .begin() , end_ ## ARRAY = ARRAY .end()
 #define FOR_ITR( ARRAY ) for( AUTO_ITR( ARRAY ) , itr = itr_ ## ARRAY ; itr_ ## ARRAY != end_ ## ARRAY ; itr_ ## ARRAY ++ , itr++ )
 #define REPEAT( HOW_MANY_TIMES ) FOR( VARIABLE_FOR_REPEAT_ ## HOW_MANY_TIMES , 0 , HOW_MANY_TIMES )
 #define SET_PRECISION( DECIMAL_DIGITS ) cout << fixed << setprecision( DECIMAL_DIGITS )
 #define OUTPUT_ARRAY( OS , A , N ) FOR( VARIABLE_FOR_OUTPUT_ARRAY , 0 , N ){ OS << A[VARIABLE_FOR_OUTPUT_ARRAY] << (VARIABLE_FOR_OUTPUT_ARRAY==N-1?"":" "); } OS
-#define OUTPUT_ITR( OS , A ) { auto ITERATOR_FOR_OUTPUT_ITR = A.BE() , EN_FOR_OUTPUT_ITR = A.EN(); bool VARIABLE_FOR_OUTPUT_ITR = ITERATOR_FOR_COUT_ITR != END_FOR_COUT_ITR; WH( VARIABLE_FOR_OUTPUT_ITR ){ OS << *ITERATOR_FOR_COUT_ITR; ( VARIABLE_FOR_OUTPUT_ITR = ++ITERATOR_FOR_COUT_ITR != END_FOR_COUT_ITR ) ? OS : OS << " "; } } OS
-#define RETURN( ... ) SOLVE_ONLY; COUT( __VA_ARGS__ ); RE
-#define COMPARE( ... ) auto naive = Naive( __VA_ARGS__ ); auto answer = Answer( __VA_ARGS__ ); bool match = naive == answer; COUT( "(" , #__VA_ARGS__ , ") == (" , __VA_ARGS__ , ") : Naive == " , naive , match ? "==" : "!=" , answer , "== Answer" ); if( !match ){ RE; }
+#define OUTPUT_ITR( OS , A ) { auto ITERATOR_FOR_OUTPUT_ITR = A.begin() , END_FOR_OUTPUT_ITR = A.end(); bool VARIABLE_FOR_OUTPUT_ITR = ITERATOR_FOR_COUT_ITR != END_FOR_COUT_ITR; while( VARIABLE_FOR_OUTPUT_ITR ){ OS << *ITERATOR_FOR_COUT_ITR; ( VARIABLE_FOR_OUTPUT_ITR = ++ITERATOR_FOR_COUT_ITR != END_FOR_COUT_ITR ) ? OS : OS << " "; } } OS
+#define RETURN( ... ) SOLVE_ONLY; COUT( __VA_ARGS__ ); return
+#define COMPARE( ... ) auto naive = Naive( __VA_ARGS__ ); auto answer = Answer( __VA_ARGS__ ); bool match = naive == answer; COUT( "(" , #__VA_ARGS__ , ") == (" , __VA_ARGS__ , ") : Naive == " , naive , match ? "==" : "!=" , answer , "== Answer" ); if( !match ){ return; }
+
+// 型のエイリアス
+#define decldecay_t( VAR ) decay_t<decltype( VAR )>
+TE <TY F , TY...Args> US ret_t = decltype( declval<F>()( declval<Args>()... ) );
+TE <TY T> US inner_t = TY T::type;
+US uint = unsigned int;
+US ll = long long;
+US ull = unsigned long long;
+US ld = long double;
+US lld = __float128;
+TE <TY INT> US T2 = pair<INT,INT>;
+TE <TY INT> US T3 = tuple<INT,INT,INT>;
+TE <TY INT> US T4 = tuple<INT,INT,INT,INT>;
+US path = pair<int,ll>;
+
+// 入出力用
+template <class Traits> inline basic_istream<char,Traits>& VariadicCin( basic_istream<char,Traits>& is ) { return is; }
+template <class Traits , typename Arg , typename... ARGS> inline basic_istream<char,Traits>& VariadicCin( basic_istream<char,Traits>& is , Arg& arg , ARGS&... args ) { return VariadicCin( is >> arg , args... ); }
+template <class Traits> inline basic_istream<char,Traits>& VariadicGetline( basic_istream<char,Traits>& is , const char& separator ) { return is; }
+template <class Traits , typename Arg , typename... ARGS> inline basic_istream<char,Traits>& VariadicGetline( basic_istream<char,Traits>& is , const char& separator , Arg& arg , ARGS&... args ) { return VariadicGetline( getline( is , arg , separator ) , separator , args... ); }
+template <class Traits , typename Arg> inline basic_ostream<char,Traits>& operator<<( basic_ostream<char,Traits>& os , const vector<Arg>& arg ) { auto begin = arg.begin() , end = arg.end(); auto itr = begin; while( itr != end ){ ( itr == begin ? os : os << " " ) << *itr; itr++; } return os; }
+template <class Traits , typename Arg> inline basic_ostream<char,Traits>& VariadicCout( basic_ostream<char,Traits>& os , const Arg& arg ) { return os << arg; }
+template <class Traits , typename Arg1 , typename Arg2 , typename... ARGS> inline basic_ostream<char,Traits>& VariadicCout( basic_ostream<char,Traits>& os , const Arg1& arg1 , const Arg2& arg2 , const ARGS&... args ) { return VariadicCout( os << arg1 << " " , arg2 , args... ); }
+
+// 算術用
+template <typename T> constexpr T PositiveBaseResidue( const T& a , const T& p ){ return a >= 0 ? a % p : p - 1 - ( ( - ( a + 1 ) ) % p ); }
+template <typename T> constexpr T Residue( const T& a , const T& p ){ return PositiveBaseResidue( a , p < 0 ? -p : p ); }
+template <typename T> constexpr T PositiveBaseQuotient( const T& a , const T& p ){ return ( a - PositiveBaseResidue( a , p ) ) / p; }
+template <typename T> constexpr T Quotient( const T& a , const T& p ){ return p < 0 ? PositiveBaseQuotient( -a , -p ) : PositiveBaseQuotient( a , p ); }
+
+#define POWER( ANSWER , ARGUMENT , EXPONENT )				\
+  static_assert( ! is_same<decldecay_t( ARGUMENT ),int>::value && ! is_same<decldecay_t( ARGUMENT ),uint>::value ); \
+  decldecay_t( ARGUMENT ) ANSWER{ 1 };					\
+  {									\
+    decldecay_t( ARGUMENT ) ARGUMENT_FOR_SQUARE_FOR_POWER = ( ARGUMENT );	\
+    decldecay_t( EXPONENT ) EXPONENT_FOR_SQUARE_FOR_POWER = ( EXPONENT );	\
+    while( EXPONENT_FOR_SQUARE_FOR_POWER != 0 ){			\
+      if( EXPONENT_FOR_SQUARE_FOR_POWER % 2 == 1 ){			\
+	ANSWER *= ARGUMENT_FOR_SQUARE_FOR_POWER;			\
+      }									\
+      ARGUMENT_FOR_SQUARE_FOR_POWER *= ARGUMENT_FOR_SQUARE_FOR_POWER;	\
+      EXPONENT_FOR_SQUARE_FOR_POWER /= 2;				\
+    }									\
+  }									\
+
+#define POWER_MOD( ANSWER , ARGUMENT , EXPONENT , MODULO )		\
+  ll ANSWER{ 1 };							\
+  {									\
+    ll ARGUMENT_FOR_SQUARE_FOR_POWER = ( ( ARGUMENT ) % ( MODULO ) ) % ( MODULO ); \
+    ARGUMENT_FOR_SQUARE_FOR_POWER < 0 ? ARGUMENT_FOR_SQUARE_FOR_POWER += ( MODULO ) : ARGUMENT_FOR_SQUARE_FOR_POWER; \
+    decldecay_t( EXPONENT ) EXPONENT_FOR_SQUARE_FOR_POWER = ( EXPONENT );	\
+    while( EXPONENT_FOR_SQUARE_FOR_POWER != 0 ){			\
+      if( EXPONENT_FOR_SQUARE_FOR_POWER % 2 == 1 ){			\
+	ANSWER = ( ANSWER * ARGUMENT_FOR_SQUARE_FOR_POWER ) % ( MODULO ); \
+      }									\
+      ARGUMENT_FOR_SQUARE_FOR_POWER = ( ARGUMENT_FOR_SQUARE_FOR_POWER * ARGUMENT_FOR_SQUARE_FOR_POWER ) % ( MODULO ); \
+      EXPONENT_FOR_SQUARE_FOR_POWER /= 2;				\
+    }									\
+  }									\
+
+#define FACTORIAL_MOD( ANSWER , ANSWER_INV , INVERSE , MAX_INDEX , CONSTEXPR_LENGTH , MODULO ) \
+  ll ANSWER[CONSTEXPR_LENGTH];						\
+  ll ANSWER_INV[CONSTEXPR_LENGTH];					\
+  ll INVERSE[CONSTEXPR_LENGTH];						\
+  {									\
+    ll VARIABLE_FOR_PRODUCT_FOR_FACTORIAL = 1;				\
+    ANSWER[0] = VARIABLE_FOR_PRODUCT_FOR_FACTORIAL;			\
+    FOREQ( i , 1 , MAX_INDEX ){						\
+      ANSWER[i] = ( VARIABLE_FOR_PRODUCT_FOR_FACTORIAL *= i ) %= ( MODULO ); \
+    }									\
+    ANSWER_INV[0] = ANSWER_INV[1] = INVERSE[1] = VARIABLE_FOR_PRODUCT_FOR_FACTORIAL = 1; \
+    FOREQ( i , 2 , MAX_INDEX ){						\
+      ANSWER_INV[i] = ( VARIABLE_FOR_PRODUCT_FOR_FACTORIAL *= INVERSE[i] = ( MODULO ) - ( ( ( ( MODULO ) / i ) * INVERSE[ ( MODULO ) % i ] ) % ( MODULO ) ) ) %= ( MODULO ); \
+    }									\
+  }									\
+
+// 二分探索用
+// EXPRESSIONがANSWERの広義単調関数の時、EXPRESSION >= CONST_TARGETの整数解を格納。
+#define BS( ANSWER , MINIMUM , MAXIMUM , EXPRESSION , DESIRED_INEQUALITY , CONST_TARGET , INEQUALITY_FOR_CHECK , UPDATE_U , UPDATE_L , UPDATE_ANSWER ) \
+  static_assert( ! is_same<decldecay_t( CONST_TARGET ),uint>::value && ! is_same<decldecay_t( CONST_TARGET ),ull>::value ); \
+  ll ANSWER = MINIMUM;							\
+  {									\
+    ll L_BS = MINIMUM;							\
+    ll U_BS = MAXIMUM;							\
+    ANSWER = UPDATE_ANSWER;						\
+    ll EXPRESSION_BS;							\
+    const ll CONST_TARGET_BS = ( CONST_TARGET );			\
+    ll DIFFERENCE_BS;							\
+    while( L_BS < U_BS ){						\
+      DIFFERENCE_BS = ( EXPRESSION_BS = ( EXPRESSION ) ) - CONST_TARGET_BS; \
+      CERR( "二分探索中：" , "L_BS =" , L_BS , "<=" , #ANSWER , "=" , ANSWER , "<=" , U_BS , "= U_BS :" , #EXPRESSION , "-" , #CONST_TARGET , "=" , EXPRESSION_BS , "-" , CONST_TARGET_BS , "=" , DIFFERENCE_BS ); \
+      if( DIFFERENCE_BS INEQUALITY_FOR_CHECK 0 ){			\
+	U_BS = UPDATE_U;						\
+      } else {								\
+	L_BS = UPDATE_L;						\
+      }									\
+      ANSWER = UPDATE_ANSWER;						\
+    }									\
+    if( L_BS > U_BS ){							\
+      CERR( "二分探索失敗：" , "L_BS =" , L_BS , ">" , U_BS , "= U_BS :" , #ANSWER , ":=" , #MAXIMUM , "+ 1 =" , MAXIMUM + 1  ); \
+      CERR( "二分探索マクロにミスがある可能性があります。変更前の版に戻してください。" ); \
+      ANSWER = MAXIMUM + 1;						\
+    } else {								\
+      CERR( "二分探索終了：" , "L_BS =" , L_BS , "<=" , #ANSWER , "=" , ANSWER , "<=" , U_BS , "= U_BS" ); \
+      CERR( "二分探索が成功したかを確認するために" , #EXPRESSION , "を計算します。" ); \
+      CERR( "成功判定が不要な場合はこの計算を削除しても構いません。" );	\
+      EXPRESSION_BS = ( EXPRESSION );					\
+      CERR( "二分探索結果：" , #EXPRESSION , "=" , EXPRESSION_BS , ( EXPRESSION_BS > CONST_TARGET_BS ? ">" : EXPRESSION_BS < CONST_TARGET_BS ? "<" : "=" ) , CONST_TARGET_BS ); \
+      if( EXPRESSION_BS DESIRED_INEQUALITY CONST_TARGET_BS ){		\
+	CERR( "二分探索成功：" , #ANSWER , ":=" , ANSWER );		\
+      } else {								\
+	CERR( "二分探索失敗：" , #ANSWER , ":=" , #MAXIMUM , "+ 1 =" , MAXIMUM + 1 ); \
+	CERR( "単調でないか、単調増加性と単調減少性を逆にしてしまったか、探索範囲内に解が存在しません。" ); \
+	ANSWER = MAXIMUM + 1;						\
+      }									\
+    }									\
+  }									\
+
+// 単調増加の時にEXPRESSION >= CONST_TARGETの最小解を格納。
+#define BS1( ANSWER , MINIMUM , MAXIMUM , EXPRESSION , CONST_TARGET )	\
+  BS( ANSWER , MINIMUM , MAXIMUM , EXPRESSION , >= , CONST_TARGET , >= , ANSWER , ANSWER + 1 , ( L_BS + U_BS ) / 2 ) \
+
+// 単調増加の時にEXPRESSION <= CONST_TARGETの最大解を格納。
+#define BS2( ANSWER , MINIMUM , MAXIMUM , EXPRESSION , CONST_TARGET )	\
+  BS( ANSWER , MINIMUM , MAXIMUM , EXPRESSION , <= , CONST_TARGET , > , ANSWER - 1 , ANSWER , ( L_BS + 1 + U_BS ) / 2 ) \
+
+// 単調減少の時にEXPRESSION >= CONST_TARGETの最大解を格納。
+#define BS3( ANSWER , MINIMUM , MAXIMUM , EXPRESSION , CONST_TARGET )	\
+  BS( ANSWER , MINIMUM , MAXIMUM , EXPRESSION , >= , CONST_TARGET , < , ANSWER - 1 , ANSWER , ( L_BS + 1 + U_BS ) / 2 ) \
+
+// 単調減少の時にEXPRESSION <= CONST_TARGETの最小解を格納。
+#define BS4( ANSWER , MINIMUM , MAXIMUM , EXPRESSION , CONST_TARGET )	\
+  BS( ANSWER , MINIMUM , MAXIMUM , EXPRESSION , <= , CONST_TARGET , <= , ANSWER , ANSWER + 1 , ( L_BS + U_BS ) / 2 ) \
+
+// t以下の値が存在すればその最大値のiterator、存在しなければend()を返す。
+template <typename T> inline typename set<T>::iterator MaximumLeq( set<T>& S , const T& t ) { const auto end = S.end(); if( S.empty() ){ return end; } auto itr = S.upper_bound( t ); return itr == end ? S.find( *( S.rbegin() ) ) : itr == S.begin() ? end : --itr; }
+// t未満の値が存在すればその最大値のiterator、存在しなければend()を返す。
+template <typename T> inline typename set<T>::iterator MaximumLt( set<T>& S , const T& t ) { const auto end = S.end(); if( S.empty() ){ return end; } auto itr = S.lower_bound( t ); return itr == end ? S.find( *( S.rbegin() ) ) : itr == S.begin() ? end : --itr; }
+// t以上の値が存在すればその最小値のiterator、存在しなければend()を返す。
+template <typename T> inline typename set<T>::iterator MinimumGeq( set<T>& S , const T& t ) { return S.lower_bound( t ); }
+// tより大きい値が存在すればその最小値のiterator、存在しなければend()を返す。
+template <typename T> inline typename set<T>::iterator MinimumGt( set<T>& S , const T& t ) { return S.upper_bound( t ); }
+
+// データ構造用
+template <typename T , template <typename...> typename V> inline V<T> operator+( const V<T>& a0 , const V<T>& a1 ) { if( a0.empty() ){ return a1; } if( a1.empty() ){ return a0; } assert( a0.size() == a1.size() ); V<T> answer{}; for( auto itr0 = a0.begin() , itr1 = a1.begin() , end0 = a0.end(); itr0 != end0 ; itr0++ , itr1++ ){ answer.push_back( *itr0 + *itr1 ); } return answer; }
+template <typename T , typename U> inline pair<T,U> operator+( const pair<T,U>& t0 , const pair<T,U>& t1 ) { return { t0.first + t1.first , t0.second + t1.second }; }
+template <typename T , typename U , typename V> inline tuple<T,U,V> operator+( const tuple<T,U,V>& t0 , const tuple<T,U,V>& t1 ) { return { get<0>( t0 ) + get<0>( t1 ) , get<1>( t0 ) + get<1>( t1 ) , get<2>( t0 ) + get<2>( t1 ) }; }
+template <typename T , typename U , typename V , typename W> inline tuple<T,U,V,W> operator+( const tuple<T,U,V,W>& t0 , const tuple<T,U,V,W>& t1 ) { return { get<0>( t0 ) + get<0>( t1 ) , get<1>( t0 ) + get<1>( t1 ) , get<2>( t0 ) + get<2>( t1 ) , get<3>( t0 ) + get<3>( t1 ) }; }
+template <typename T> inline T Add( const T& t0 , const T& t1 ) { return t0 + t1; }
+template <typename T> inline T XorAdd( const T& t0 , const T& t1 ){ return t0 ^ t1; }
+template <typename T> inline T Multiply( const T& t0 , const T& t1 ) { return t0 * t1; }
+template <typename T> inline const T& Zero() { static const T z{}; return z; }
+template <typename T> inline const T& One() { static const T o = 1; return o; }\
+template <typename T> inline T AddInv( const T& t ) { return -t; }
+template <typename T> inline T Id( const T& v ) { return v; }
+template <typename T> inline T Min( const T& a , const T& b ){ return a < b ? a : b; }
+template <typename T> inline T Max( const T& a , const T& b ){ return a < b ? b : a; }
+
+// グリッド問題用
+int H , W , H_minus , W_minus , HW;
+vector<vector<bool> > non_wall;
+inline T2<int> EnumHW( const int& v ) { return { v / W , v % W }; }
+inline int EnumHW_inv( const int& h , const int& w ) { return h * W + w; }
+const string direction[4] = {"U","R","D","L"};
+// (i,j)->(k,h)の方向番号を取得
+inline int DirectionNumberOnGrid( const int& i , const int& j , const int& k , const int& h ){return i<k?2:i>k?0:j<h?1:j>h?3:(assert(false),-1);}
+// v->wの方向番号を取得
+inline int DirectionNumberOnGrid( const int& v , const int& w ){auto [i,j]=EnumHW(v);auto [k,h]=EnumHW(w);return DirectionNumberOnGrid(i,j,k,h);}
+// 方向番号の反転U<->D、R<->L
+inline int ReverseDirectionNumberOnGrid( const int& n ){assert(0<=n&&n<4);return(n+2)%4;}
+inline void SetEdgeOnGrid( const string& Si , const int& i , list<int> ( &e )[] , const char& walkable = '.' ){FOR(j,0,W){if(Si[j]==walkable){int v = EnumHW_inv(i,j);if(i>0){e[EnumHW_inv(i-1,j)].push_back(v);}if(i+1<H){e[EnumHW_inv(i+1,j)].push_back(v);}if(j>0){e[EnumHW_inv(i,j-1)].push_back(v);}if(j+1<W){e[EnumHW_inv(i,j+1)].push_back(v);}}}}
+inline void SetEdgeOnGrid( const string& Si , const int& i , list<path> ( &e )[] , const char& walkable = '.' ){FOR(j,0,W){if(Si[j]==walkable){const int v=EnumHW_inv(i,j);if(i>0){e[EnumHW_inv(i-1,j)].push_back({v,1});}if(i+1<H){e[EnumHW_inv(i+1,j)].push_back({v,1});}if(j>0){e[EnumHW_inv(i,j-1)].push_back({v,1});}if(j+1<W){e[EnumHW_inv(i,j+1)].push_back({v,1});}}}}
+inline void SetWallOnGrid( const string& Si , const int& i , vector<vector<bool> >& non_wall , const char& walkable = '.'  , const char& unwalkable = '#' ){non_wall.push_back(vector<bool>(W));auto& non_wall_i=non_wall[i];FOR(j,0,W){non_wall_i[j]=Si[j]==walkable?true:(assert(Si[j]==unwalkable),false);}}
+
+// デバッグ用
+#ifdef DEBUG
+  inline void AlertAbort( int n ) { CERR( "abort関数が呼ばれました。assertマクロのメッセージが出力されていない場合はオーバーフローの有無を確認をしてください。" ); }
+  void AutoCheck( int& exec_mode , const bool& use_getline );
+  inline void Solve();
+  inline void Experiment();
+  inline void SmallTest();
+  inline void RandomTest();
+  ll GetRand( const ll& Rand_min , const ll& Rand_max );
+  inline void BreakPoint( const int& LINE ) {}
+  int exec_mode;
+  CEXPR( int , solve_mode , 0 );
+  CEXPR( int , sample_debug_mode , 1 );
+  CEXPR( int , submission_debug_mode , 2 );
+  CEXPR( int , library_search_mode , 3 );
+  CEXPR( int , experiment_mode , 4 );
+  CEXPR( int , small_test_mode , 5 );
+  CEXPR( int , random_test_mode , 6 );
+  #ifdef USE_GETLINE
+    CEXPR( bool , use_getline , true );
+  #else
+    CEXPR( bool , use_getline , false );
+  #endif
+#else
+  ll GetRand( const ll& Rand_min , const ll& Rand_max ) { ll answer = time( NULL ); return answer * rand() % ( Rand_max + 1 - Rand_min ) + Rand_min; }
+#endif
 
 // 圧縮用
 #define TE template
@@ -333,206 +521,6 @@ using namespace std;
 #define rBE rbegin
 #define reSZ resize
 
-// 型のエイリアス
-#define decldecay_t( VAR ) decay_t<decltype( VAR )>
-TE <TY F , TY...Args> US ret_t = decltype( declval<F>()( declval<Args>()... ) );
-TE <TY T> US inner_t = TY T::type;
-US uint = unsigned int;
-US ll = long long;
-US ull = unsigned long long;
-US ld = long double;
-US lld = __float128;
-TE <TY INT> US T2 = pair<INT,INT>;
-TE <TY INT> US T3 = tuple<INT,INT,INT>;
-TE <TY INT> US T4 = tuple<INT,INT,INT,INT>;
-US path = pair<int,ll>;
-
-// 入出力用
-TE <CL Traits> IN basic_istream<char,Traits>& VariadicCin( basic_istream<char,Traits>& is ) { RE is; }
-TE <CL Traits , TY Arg , TY... ARGS> IN basic_istream<char,Traits>& VariadicCin( basic_istream<char,Traits>& is , Arg& arg , ARGS&... args ) { RE VariadicCin( is >> arg , args... ); }
-TE <CL Traits> IN basic_istream<char,Traits>& VariadicGetline( basic_istream<char,Traits>& is , CO char& separator ) { RE is; }
-TE <CL Traits , TY Arg , TY... ARGS> IN basic_istream<char,Traits>& VariadicGetline( basic_istream<char,Traits>& is , CO char& separator , Arg& arg , ARGS&... args ) { RE VariadicGetline( getline( is , arg , separator ) , separator , args... ); }
-TE <CL Traits , TY Arg> IN basic_ostream<char,Traits>& operator<<( basic_ostream<char,Traits>& os , CO VE<Arg>& arg ) { auto BE = arg.BE() , EN = arg.EN(); auto itr = BE; WH( itr != EN ){ ( itr == BE ? os : os << " " ) << *itr; itr++; } RE os; }
-TE <CL Traits , TY Arg> IN basic_ostream<char,Traits>& VariadicCout( basic_ostream<char,Traits>& os , CO Arg& arg ) { RE os << arg; }
-TE <CL Traits , TY Arg1 , TY Arg2 , TY... ARGS> IN basic_ostream<char,Traits>& VariadicCout( basic_ostream<char,Traits>& os , CO Arg1& arg1 , CO Arg2& arg2 , CO ARGS&... args ) { RE VariadicCout( os << arg1 << " " , arg2 , args... ); }
-
-// 算術用
-TE <TY T> CE T PositiveBaseResidue( CO T& a , CO T& p ){ RE a >= 0 ? a % p : p - 1 - ( ( - ( a + 1 ) ) % p ); }
-TE <TY T> CE T Residue( CO T& a , CO T& p ){ RE PositiveBaseResidue( a , p < 0 ? -p : p ); }
-TE <TY T> CE T PositiveBaseQuotient( CO T& a , CO T& p ){ RE ( a - PositiveBaseResidue( a , p ) ) / p; }
-TE <TY T> CE T Quotient( CO T& a , CO T& p ){ RE p < 0 ? PositiveBaseQuotient( -a , -p ) : PositiveBaseQuotient( a , p ); }
-
-#define POWER( ANSWER , ARGUMENT , EXPONENT )				\
-  ST_AS( ! is_same<decldecay_t( ARGUMENT ),int>::value && ! is_same<decldecay_t( ARGUMENT ),uint>::value ); \
-  decldecay_t( ARGUMENT ) ANSWER{ 1 };					\
-  {									\
-    decldecay_t( ARGUMENT ) ARGUMENT_FOR_SQUARE_FOR_POWER = ( ARGUMENT ); \
-    decldecay_t( EXPONENT ) EXPONENT_FOR_SQUARE_FOR_POWER = ( EXPONENT ); \
-    WH( EXPONENT_FOR_SQUARE_FOR_POWER != 0 ){				\
-      if( EXPONENT_FOR_SQUARE_FOR_POWER % 2 == 1 ){			\
-	ANSWER *= ARGUMENT_FOR_SQUARE_FOR_POWER;			\
-      }									\
-      ARGUMENT_FOR_SQUARE_FOR_POWER *= ARGUMENT_FOR_SQUARE_FOR_POWER;	\
-      EXPONENT_FOR_SQUARE_FOR_POWER /= 2;				\
-    }									\
-  }									\
-
-#define POWER_MOD( ANSWER , ARGUMENT , EXPONENT , MODULO )		\
-  ll ANSWER{ 1 };							\
-  {									\
-    ll ARGUMENT_FOR_SQUARE_FOR_POWER = ( ( ARGUMENT ) % ( MODULO ) ) % ( MODULO ); \
-    ARGUMENT_FOR_SQUARE_FOR_POWER < 0 ? ARGUMENT_FOR_SQUARE_FOR_POWER += ( MODULO ) : ARGUMENT_FOR_SQUARE_FOR_POWER; \
-    decldecay_t( EXPONENT ) EXPONENT_FOR_SQUARE_FOR_POWER = ( EXPONENT ); \
-    WH( EXPONENT_FOR_SQUARE_FOR_POWER != 0 ){				\
-      if( EXPONENT_FOR_SQUARE_FOR_POWER % 2 == 1 ){			\
-	ANSWER = ( ANSWER * ARGUMENT_FOR_SQUARE_FOR_POWER ) % ( MODULO ); \
-      }									\
-      ARGUMENT_FOR_SQUARE_FOR_POWER = ( ARGUMENT_FOR_SQUARE_FOR_POWER * ARGUMENT_FOR_SQUARE_FOR_POWER ) % ( MODULO ); \
-      EXPONENT_FOR_SQUARE_FOR_POWER /= 2;				\
-    }									\
-  }									\
-
-#define FACTORIAL_MOD( ANSWER , ANSWER_INV , INVERSE , MAX_INDEX , CE_LENGTH , MODULO ) \
-  ll ANSWER[CE_LENGTH];							\
-  ll ANSWER_INV[CE_LENGTH];						\
-  ll INVERSE[CE_LENGTH];						\
-  {									\
-    ll VARIABLE_FOR_PRODUCT_FOR_FACTORIAL = 1;				\
-    ANSWER[0] = VARIABLE_FOR_PRODUCT_FOR_FACTORIAL;			\
-    FOREQ( i , 1 , MAX_INDEX ){						\
-      ANSWER[i] = ( VARIABLE_FOR_PRODUCT_FOR_FACTORIAL *= i ) %= ( MODULO ); \
-    }									\
-    ANSWER_INV[0] = ANSWER_INV[1] = INVERSE[1] = VARIABLE_FOR_PRODUCT_FOR_FACTORIAL = 1; \
-    FOREQ( i , 2 , MAX_INDEX ){						\
-      ANSWER_INV[i] = ( VARIABLE_FOR_PRODUCT_FOR_FACTORIAL *= INVERSE[i] = ( MODULO ) - ( ( ( ( MODULO ) / i ) * INVERSE[ ( MODULO ) % i ] ) % ( MODULO ) ) ) %= ( MODULO ); \
-    }									\
-  }									\
-
-// 二分探索用
-// EXPRESSIONがANSWERの広義単調関数の時、EXPRESSION >= CO_TARGETの整数解を格納。
-#define BS( ANSWER , MINIMUM , MAXIMUM , EXPRESSION , DESIRED_INEQUALITY , CO_TARGET , INEQUALITY_FOR_CHECK , UPDATE_U , UPDATE_L , UPDATE_ANSWER ) \
-  ST_AS( ! is_same<decldecay_t( CO_TARGET ),uint>::value && ! is_same<decldecay_t( CO_TARGET ),ull>::value ); \
-  ll ANSWER = MINIMUM;							\
-  {									\
-    ll L_BS = MINIMUM;							\
-    ll U_BS = MAXIMUM;							\
-    ANSWER = UPDATE_ANSWER;						\
-    ll EXPRESSION_BS;							\
-    CO ll CO_TARGET_BS = ( CO_TARGET );			\
-    ll DIFFERENCE_BS;							\
-    WH( L_BS < U_BS ){						\
-      DIFFERENCE_BS = ( EXPRESSION_BS = ( EXPRESSION ) ) - CO_TARGET_BS; \
-      CERR( "二分探索中：" , "L_BS =" , L_BS , "<=" , #ANSWER , "=" , ANSWER , "<=" , U_BS , "= U_BS :" , #EXPRESSION , "-" , #CO_TARGET , "=" , EXPRESSION_BS , "-" , CO_TARGET_BS , "=" , DIFFERENCE_BS ); \
-      if( DIFFERENCE_BS INEQUALITY_FOR_CHECK 0 ){			\
-	U_BS = UPDATE_U;						\
-      } else {								\
-	L_BS = UPDATE_L;						\
-      }									\
-      ANSWER = UPDATE_ANSWER;						\
-    }									\
-    if( L_BS > U_BS ){							\
-      CERR( "二分探索失敗：" , "L_BS =" , L_BS , ">" , U_BS , "= U_BS :" , #ANSWER , ":=" , #MAXIMUM , "+ 1 =" , MAXIMUM + 1  ); \
-      CERR( "二分探索マクロにミスがある可能性があります。変更前の版に戻してください。" ); \
-      ANSWER = MAXIMUM + 1;						\
-    } else {								\
-      CERR( "二分探索終了：" , "L_BS =" , L_BS , "<=" , #ANSWER , "=" , ANSWER , "<=" , U_BS , "= U_BS" ); \
-      CERR( "二分探索が成功したかを確認するために" , #EXPRESSION , "を計算します。" ); \
-      CERR( "成功判定が不要な場合はこの計算を削除しても構いません。" );	\
-      EXPRESSION_BS = ( EXPRESSION );					\
-      CERR( "二分探索結果：" , #EXPRESSION , "=" , EXPRESSION_BS , ( EXPRESSION_BS > CO_TARGET_BS ? ">" : EXPRESSION_BS < CO_TARGET_BS ? "<" : "=" ) , CO_TARGET_BS ); \
-      if( EXPRESSION_BS DESIRED_INEQUALITY CO_TARGET_BS ){		\
-	CERR( "二分探索成功：" , #ANSWER , ":=" , ANSWER );		\
-      } else {								\
-	CERR( "二分探索失敗：" , #ANSWER , ":=" , #MAXIMUM , "+ 1 =" , MAXIMUM + 1 ); \
-	CERR( "単調でないか、単調増加性と単調減少性を逆にしてしまったか、探索範囲内に解が存在しません。" ); \
-	ANSWER = MAXIMUM + 1;						\
-      }									\
-    }									\
-  }									\
-
-// 単調増加の時にEXPRESSION >= CO_TARGETの最小解を格納。
-#define BS1( ANSWER , MINIMUM , MAXIMUM , EXPRESSION , CO_TARGET )	\
-  BS( ANSWER , MINIMUM , MAXIMUM , EXPRESSION , >= , CO_TARGET , >= , ANSWER , ANSWER + 1 , ( L_BS + U_BS ) / 2 ) \
-
-// 単調増加の時にEXPRESSION <= CO_TARGETの最大解を格納。
-#define BS2( ANSWER , MINIMUM , MAXIMUM , EXPRESSION , CO_TARGET )	\
-  BS( ANSWER , MINIMUM , MAXIMUM , EXPRESSION , <= , CO_TARGET , > , ANSWER - 1 , ANSWER , ( L_BS + 1 + U_BS ) / 2 ) \
-
-// 単調減少の時にEXPRESSION >= CO_TARGETの最大解を格納。
-#define BS3( ANSWER , MINIMUM , MAXIMUM , EXPRESSION , CO_TARGET )	\
-  BS( ANSWER , MINIMUM , MAXIMUM , EXPRESSION , >= , CO_TARGET , < , ANSWER - 1 , ANSWER , ( L_BS + 1 + U_BS ) / 2 ) \
-
-// 単調減少の時にEXPRESSION <= CO_TARGETの最小解を格納。
-#define BS4( ANSWER , MINIMUM , MAXIMUM , EXPRESSION , CO_TARGET )	\
-  BS( ANSWER , MINIMUM , MAXIMUM , EXPRESSION , <= , CO_TARGET , <= , ANSWER , ANSWER + 1 , ( L_BS + U_BS ) / 2 ) \
-
-// t以下の値が存在すればその最大値のiterator、存在しなければend()を返す。
-TE <TY T> IN TY set<T>::iterator MaximumLeq( set<T>& S , CO T& t ) { CO auto EN = S.EN(); if( S.empty() ){ RE EN; } auto itr = S.upper_bound( t ); RE itr == EN ? S.find( *( S.rBE() ) ) : itr == S.BE() ? EN : --itr; }
-// t未満の値が存在すればその最大値のiterator、存在しなければend()を返す。
-TE <TY T> IN TY set<T>::iterator MaximumLt( set<T>& S , CO T& t ) { CO auto EN = S.EN(); if( S.empty() ){ RE EN; } auto itr = S.lower_bound( t ); RE itr == EN ? S.find( *( S.rBE() ) ) : itr == S.BE() ? EN : --itr; }
-// t以上の値が存在すればその最小値のiterator、存在しなければend()を返す。
-TE <TY T> IN TY set<T>::iterator MinimumGeq( set<T>& S , CO T& t ) { RE S.lower_bound( t ); }
-// tより大きい値が存在すればその最小値のiterator、存在しなければend()を返す。
-TE <TY T> IN TY set<T>::iterator MinimumGt( set<T>& S , CO T& t ) { RE S.upper_bound( t ); }
-
-// データ構造用
-TE <TY T , TE <TY...> TY V> IN V<T> OP+( CO V<T>& a0 , CO V<T>& a1 ) { if( a0.empty() ){ RE a1; } if( a1.empty() ){ RE a0; } AS( a0.SZ() == a1.SZ() ); V<T> answer{}; for( auto itr0 = a0.BE() , itr1 = a1.BE() , EN0 = a0.EN(); itr0 != EN0 ; itr0++ , itr1++ ){ answer.push_back( *itr0 + *itr1 ); } RE answer; }
-TE <TY T , TY U> IN pair<T,U> OP+( CO pair<T,U>& t0 , CO pair<T,U>& t1 ) { RE { t0.first + t1.first , t0.second + t1.second }; }
-TE <TY T , TY U , TY V> IN tuple<T,U,V> OP+( CO tuple<T,U,V>& t0 , CO tuple<T,U,V>& t1 ) { RE { get<0>( t0 ) + get<0>( t1 ) , get<1>( t0 ) + get<1>( t1 ) , get<2>( t0 ) + get<2>( t1 ) }; }
-TE <TY T , TY U , TY V , TY W> IN tuple<T,U,V,W> OP+( CO tuple<T,U,V,W>& t0 , CO tuple<T,U,V,W>& t1 ) { RE { get<0>( t0 ) + get<0>( t1 ) , get<1>( t0 ) + get<1>( t1 ) , get<2>( t0 ) + get<2>( t1 ) , get<3>( t0 ) + get<3>( t1 ) }; }
-TE <TY T> IN T Add( CO T& t0 , CO T& t1 ) { RE t0 + t1; }
-TE <TY T> IN T XorAdd( CO T& t0 , CO T& t1 ){ RE t0 ^ t1; }
-TE <TY T> IN T Multiply( CO T& t0 , CO T& t1 ) { RE t0 * t1; }
-TE <TY T> IN CO T& Zero() { ST CO T z{}; RE z; }
-TE <TY T> IN CO T& One() { ST CO T o = 1; RE o; }\
-TE <TY T> IN T AddInv( CO T& t ) { RE -t; }
-TE <TY T> IN T Id( CO T& v ) { RE v; }
-TE <TY T> IN T Min( CO T& a , CO T& b ){ RE a < b ? a : b; }
-TE <TY T> IN T Max( CO T& a , CO T& b ){ RE a < b ? b : a; }
-
-// グリッド問題用
-int H , W , H_minus , W_minus , HW;
-VE<VE<bool>> non_wall;
-IN T2<int> EnumHW( CRI v ) { RE { v / W , v % W }; }
-IN int EnumHW_inv( CRI h , CRI w ) { RE h * W + w; }
-CO string direction[4] = {"U","R","D","L"};
-// (i,j)->(k,h)の方向番号を取得
-IN int DirectionNumberOnGrid( CRI i , CRI j , CRI k , CRI h ){RE i<k?2:i>k?0:j<h?1:j>h?3:(AS(false),-1);}
-// v->wの方向番号を取得
-IN int DirectionNumberOnGrid( CRI v , CRI w ){auto [i,j]=EnumHW(v);auto [k,h]=EnumHW(w);RE DirectionNumberOnGrid(i,j,k,h);}
-// 方向番号の反転U<->D、R<->L
-IN int ReverseDirectionNumberOnGrid( CRI n ){AS(0<=n&&n<4);RE(n+2)%4;}
-IN VO SetEdgeOnGrid( CO string& Si , CRI i , LI<int> ( &e )[] , CO char& walkable = '.' ){FOR(j,0,W){if(Si[j]==walkable){int v = EnumHW_inv(i,j);if(i>0){e[EnumHW_inv(i-1,j)].push_back(v);}if(i+1<H){e[EnumHW_inv(i+1,j)].push_back(v);}if(j>0){e[EnumHW_inv(i,j-1)].push_back(v);}if(j+1<W){e[EnumHW_inv(i,j+1)].push_back(v);}}}}
-IN VO SetEdgeOnGrid( CO string& Si , CRI i , LI<path> ( &e )[] , CO char& walkable = '.' ){FOR(j,0,W){if(Si[j]==walkable){CO int v=EnumHW_inv(i,j);if(i>0){e[EnumHW_inv(i-1,j)].push_back({v,1});}if(i+1<H){e[EnumHW_inv(i+1,j)].push_back({v,1});}if(j>0){e[EnumHW_inv(i,j-1)].push_back({v,1});}if(j+1<W){e[EnumHW_inv(i,j+1)].push_back({v,1});}}}}
-IN VO SetWallOnGrid( CO string& Si , CRI i , VE<VE<bool>>& non_wall , CO char& walkable = '.'  , CO char& unwalkable = '#' ){non_wall.push_back(VE<bool>(W));auto& non_wall_i=non_wall[i];FOR(j,0,W){non_wall_i[j]=Si[j]==walkable?true:(assert(Si[j]==unwalkable),false);}}
-
-// デバッグ用
-#ifdef DEBUG
-  IN VO AlertAbort( int n ) { CERR( "abort関数が呼ばれました。assertマクロのメッセージが出力されていない場合はオーバーフローの有無を確認をしてください。" ); }
-  VO AutoCheck( int& exec_mode , CO bool& use_getline );
-  IN VO Solve();
-  IN VO Experiment();
-  IN VO SmallTest();
-  IN VO RandomTest();
-  ll GetRand( CRL Rand_min , CRL Rand_max );
-  IN VO BreakPoint( CRI LINE ) {}
-  int exec_mode;
-  CEXPR( int , solve_mode , 0 );
-  CEXPR( int , sample_debug_mode , 1 );
-  CEXPR( int , submission_debug_mode , 2 );
-  CEXPR( int , library_search_mode , 3 );
-  CEXPR( int , experiment_mode , 4 );
-  CEXPR( int , small_test_mode , 5 );
-  CEXPR( int , random_test_mode , 6 );
-  #ifdef USE_GETLINE
-    CEXPR( bool , use_getline , true );
-  #else
-    CEXPR( bool , use_getline , false );
-  #endif
-#else
-  ll GetRand( CRL Rand_min , CRL Rand_max ) { ll answer = time( NULL ); RE answer * rand() % ( Rand_max + 1 - Rand_min ) + Rand_min; }
-#endif
-
 // VVV 常設ライブラリは以下に挿入する。
 // Map
 // c:/Users/user/Documents/Programming/Mathematics/Function/Map/compress.txt
@@ -545,7 +533,7 @@ TE <TY T , TY U>US Map = conditional_t<is_COructible_v<unordered_map<T,int>>,uno
 #define DC_OF_POINT(POINT)IN U& POINT() NE
 #define DF_OF_CPOINT(POINT)TE <TY U> IN CO U& VirtualPointedSet<U>::POINT()CO NE{RE Point();}
 #define DF_OF_POINT(POINT)TE <TY U> IN U& VirtualPointedSet<U>::POINT()NE{RE Point();}
-TE <TY U>CL UnderlyingSet{PU:US type = U;};TE <TY U>CL VirtualPointedSet:virtual PU UnderlyingSet<U>{PU:virtual CO U& Point()CO NE = 0;virtual U& Point() NE = 0;DC_OF_CPOINT(Unit);DC_OF_CPOINT(Zero);DC_OF_CPOINT(One);DC_OF_CPOINT(Infty);DC_OF_CPOINT(size);DC_OF_POINT(init);DC_OF_POINT(root);};TE <TY U>CL PointedSet:virtual PU VirtualPointedSet<U>{PU:U m_b_U;IN PointedSet(CO U& b_u = U());IN CO U& Point()CO NE;IN U& Point() NE;};TE <TY U>CL VirtualNSet:virtual PU UnderlyingSet<U>{PU:virtual U Transfer(CO U& u)= 0;IN U Inverse(CO U& u);};TE <TY U,TY F_U>CL AbstractNSet:virtual PU VirtualNSet<U>{PU:F_U& m_f_U;IN AbstractNSet(F_U& f_U);IN U Transfer(CO U& u);};TE <TY U>CL VirtualMagma:virtual PU UnderlyingSet<U>{PU:virtual U Product(CO U& u0,CO U& u1)= 0;IN U Sum(CO U& u0,CO U& u1);};TE <TY U,TY M_U>CL AbstractMagma:virtual PU VirtualMagma<U>{PU:M_U& m_m_U;IN AbstractMagma(M_U& m_U);IN U Product(CO U& u0,CO U& u1);};
+TE <TY U>CL VirtualPointedSet{PU:virtual CO U& Point()CO NE = 0;virtual U& Point() NE = 0;DC_OF_CPOINT(Unit);DC_OF_CPOINT(Zero);DC_OF_CPOINT(One);DC_OF_CPOINT(Infty);DC_OF_CPOINT(size);DC_OF_POINT(init);DC_OF_POINT(root);};TE <TY U>CL PointedSet:virtual PU VirtualPointedSet<U>{PU:U m_b_U;IN PointedSet(CO U& b_u = U());IN CO U& Point()CO NE;IN U& Point() NE;};TE <TY U>CL VirtualNSet{PU:virtual U Transfer(CO U& u)= 0;IN U Inverse(CO U& u);};TE <TY U,TY F_U>CL AbstractNSet:virtual PU VirtualNSet<U>{PU:F_U& m_f_U;IN AbstractNSet(F_U& f_U);IN U Transfer(CO U& u);};TE <TY U>CL VirtualMagma{PU:virtual U Product(CO U& u0,CO U& u1)= 0;IN U Sum(CO U& u0,CO U& u1);};TE <TY U,TY M_U>CL AbstractMagma:virtual PU VirtualMagma<U>{PU:M_U& m_m_U;IN AbstractMagma(M_U& m_U);IN U Product(CO U& u0,CO U& u1);};
 TE <TY U> IN PointedSet<U>::PointedSet(CO U& b_U):m_b_U(b_U){}TE <TY U> IN CO U& PointedSet<U>::Point()CO NE{RE m_b_U;}TE <TY U> IN U& PointedSet<U>::Point()NE{RE m_b_U;}DF_OF_CPOINT(Unit);DF_OF_CPOINT(Zero);DF_OF_CPOINT(One);DF_OF_CPOINT(Infty);DF_OF_CPOINT(size);DF_OF_POINT(init);DF_OF_POINT(root);TE <TY U,TY F_U> IN AbstractNSet<U,F_U>::AbstractNSet(F_U& f_U):m_f_U(f_U){ST_AS(is_invocable_r_v<U,F_U,U>);}TE <TY U,TY F_U> IN U AbstractNSet<U,F_U>::Transfer(CO U& u){RE m_f_U(u);}TE <TY U> IN U VirtualNSet<U>::Inverse(CO U& u){RE Transfer(u);}TE <TY U,TY M_U> IN AbstractMagma<U,M_U>::AbstractMagma(M_U& m_U):m_m_U(m_U){ST_AS(is_invocable_r_v<U,M_U,U,U>);}TE <TY U,TY M_U> IN U AbstractMagma<U,M_U>::Product(CO U& u0,CO U& u1){RE m_m_U(u0,u1);}TE <TY U> IN U VirtualMagma<U>::Sum(CO U& u0,CO U& u1){RE Product(u0,u1);}
 
 TE <TY U>CL VirtualMonoid:virtual PU VirtualMagma<U>,virtual PU VirtualPointedSet<U>{};TE <TY U = ll>CL AdditiveMonoid:virtual PU VirtualMonoid<U>,PU PointedSet<U>{PU:IN U Product(CO U& u0,CO U& u1);};TE <TY U = ll>CL MultiplicativeMonoid:virtual PU VirtualMonoid<U>,PU PointedSet<U>{PU:IN MultiplicativeMonoid(CO U& e_U);IN U Product(CO U& u0,CO U& u1);};TE <TY U,TY M_U>CL AbstractMonoid:virtual PU VirtualMonoid<U>,PU AbstractMagma<U,M_U>,PU PointedSet<U>{PU:IN AbstractMonoid(M_U& m_U,CO U& e_U);IN U Product(CO U& u0,CO U& u1);};
@@ -558,9 +546,8 @@ TE <TY U,TY GROUP,TY MONOID> IN VirtualRing<U,GROUP,MONOID>::VirtualRing(GROUP R
 
 // Graph
 // c:/Users/user/Documents/Programming/Mathematics/Geometry/Graph/compress.txt
-#define SFINAE_FOR_GRAPH TY T,TY E,enable_if_t<is_invocable_v<E,T>,void*> PTR
-TE <TY T,TY R1,TY R2,TY E>CL VirtualGraph:PU UnderlyingSet<T>{PU:int m_SZ;E m_edge;IN VirtualGraph(CRI SZ,E edge);virtual R1 Enumeration(CRI i)= 0;virtual R2 Enumeration_inv(CO T& t)= 0;IN VO Reset();IN CRI SZ()CO NE;IN E& edge()NE;IN ret_t<E,T> Edge(CO T& t);US type = T;};TE <TY E>CL Graph:virtual PU VirtualGraph<int,CRI,CRI,E>{PU:IN Graph(CRI SZ,E edge);IN CRI Enumeration(CRI i);IN CRI Enumeration_inv(CRI t);TE <TY F> IN Graph<F> GetGraph(F edge)CO;};TE <TY T,TY Enum_T,TY Enum_T_inv,TY E>CL EnumerationGraph:virtual PU VirtualGraph<T,ret_t<Enum_T,int>,ret_t<Enum_T_inv,T>,E>{PU:Enum_T& m_enum_T;Enum_T_inv& m_enum_T_inv;IN EnumerationGraph(CRI SZ,Enum_T& enum_T,Enum_T_inv& enum_T_inv,E edge);IN ret_t<Enum_T,int> Enumeration(CRI i);IN ret_t<Enum_T_inv,T> Enumeration_inv(CO T& t);TE <TY F> IN EnumerationGraph<T,Enum_T,Enum_T_inv,F> GetGraph(F edge)CO;};TE <TY Enum_T,TY Enum_T_inv,TY E> EnumerationGraph(CRI SZ,Enum_T& enum_T,Enum_T_inv& enum_T_inv,E edge)-> EnumerationGraph<decldecay_t(declval<Enum_T>()(0)),Enum_T,Enum_T_inv,E>;TE <SFINAE_FOR_GRAPH = nullptr>CL MemorisationGraph:virtual PU VirtualGraph<T,T,CRI,E>{PU:int m_LE;VE<T> m_memory;Map<T,int> m_memory_inv;IN MemorisationGraph(CRI SZ,E edge);IN T Enumeration(CRI i);IN CRI Enumeration_inv(CO T& t);IN VO Reset();TE <TY F> IN MemorisationGraph<T,F> GetGraph(F edge)CO;};TE <TY E> MemorisationGraph(CRI SZ,E edge)-> MemorisationGraph<decldecay_t(declval<E>()().back()),E>;TE <TY E> MemorisationGraph(CRI SZ,E edge)-> MemorisationGraph<decldecay_t(get<0>(declval<E>()().back())),E>;
-TE <TY T,TY R1,TY R2,TY E> IN VirtualGraph<T,R1,R2,E>::VirtualGraph(CRI SZ,E edge):m_SZ(SZ),m_edge(MO(edge)){ST_AS(is_COructible_v<T,R1> && is_COructible_v<int,R2> && is_invocable_v<E,T>);}TE <TY E> IN Graph<E>::Graph(CRI SZ,E edge):VirtualGraph<int,CRI,CRI,E>(SZ,MO(edge)){}TE <TY T,TY Enum_T,TY Enum_T_inv,TY E> IN EnumerationGraph<T,Enum_T,Enum_T_inv,E>::EnumerationGraph(CRI SZ,Enum_T& enum_T,Enum_T_inv& enum_T_inv,E edge):VirtualGraph<T,ret_t<Enum_T,int>,ret_t<Enum_T_inv,T>,E>(SZ,MO(edge)),m_enum_T(enum_T),m_enum_T_inv(enum_T_inv){}TE <SFINAE_FOR_GRAPH> IN MemorisationGraph<T,E,PTR>::MemorisationGraph(CRI SZ,E edge):VirtualGraph<T,T,CRI,E>(SZ,MO(edge)),m_LE(),m_memory(),m_memory_inv(){}TE <TY E> IN CRI Graph<E>::Enumeration(CRI i){RE i;}TE <TY T,TY Enum_T,TY Enum_T_inv,TY E> IN ret_t<Enum_T,int> EnumerationGraph<T,Enum_T,Enum_T_inv,E>::Enumeration(CRI i){RE m_enum_T(i);}TE <SFINAE_FOR_GRAPH> IN T MemorisationGraph<T,E,PTR>::Enumeration(CRI i){AS(0 <= i && i < m_LE);RE m_memory[i];}TE <TY E> IN CRI Graph<E>::Enumeration_inv(CRI i){RE i;}TE <TY T,TY Enum_T,TY Enum_T_inv,TY E> IN ret_t<Enum_T_inv,T> EnumerationGraph<T,Enum_T,Enum_T_inv,E>::Enumeration_inv(CO T& t){RE m_enum_T_inv(t);}TE <SFINAE_FOR_GRAPH> IN CRI MemorisationGraph<T,E,PTR>::Enumeration_inv(CO T& t){if(m_memory_inv.count(t)== 0){AS(m_LE < TH->SZ());m_memory.push_back(t);RE m_memory_inv[t]= m_LE++;}RE m_memory_inv[t];}TE <TY T,TY R1,TY R2,TY E> VO VirtualGraph<T,R1,R2,E>::Reset(){}TE <SFINAE_FOR_GRAPH> IN VO MemorisationGraph<T,E,PTR>::Reset(){m_LE = 0;m_memory.clear();m_memory_inv.clear();}TE <TY T,TY R1,TY R2,TY E> IN CRI VirtualGraph<T,R1,R2,E>::SZ()CO NE{RE m_SZ;}TE <TY T,TY R1,TY R2,TY E> IN E& VirtualGraph<T,R1,R2,E>::edge()NE{RE m_edge;}TE <TY T,TY R1,TY R2,TY E> IN ret_t<E,T> VirtualGraph<T,R1,R2,E>::Edge(CO T& t){RE m_edge(t);}TE <TY E> TE <TY F> IN Graph<F> Graph<E>::GetGraph(F edge)CO{RE Graph<F>(TH->SZ(),MO(edge));}TE <TY T,TY Enum_T,TY Enum_T_inv,TY E> TE <TY F> IN EnumerationGraph<T,Enum_T,Enum_T_inv,F> EnumerationGraph<T,Enum_T,Enum_T_inv,E>::GetGraph(F edge)CO{RE EnumerationGraph(TH->SZ(),m_enum_T,m_enum_T_inv,MO(edge));}TE <SFINAE_FOR_GRAPH> TE <TY F> IN MemorisationGraph<T,F> MemorisationGraph<T,E,PTR>::GetGraph(F edge)CO{RE MemorisationGraph(TH->SZ(),MO(edge));}
+TE <TY T,TY R1,TY R2,TY E>CL VirtualGraph:PU PointedSet<int>{PU:E m_edge;IN VirtualGraph(CRI SZ,E edge);virtual R1 Enumeration(CRI i)= 0;virtual R2 Enumeration_inv(CO T& t)= 0;IN VO Reset();ret_t<E,T> Edge(CO T& t);US type = T;};TE <TY E>CL Graph:virtual PU VirtualGraph<int,CRI,CRI,E>{PU:IN Graph(CRI SZ,E edge);IN CRI Enumeration(CRI i);IN CRI Enumeration_inv(CRI t);TE <TY F> IN Graph<F> GetGraph(F edge)CO;};TE <TY T,TY Enum_T,TY Enum_T_inv,TY E>CL EnumerationGraph:virtual PU VirtualGraph<T,ret_t<Enum_T,int>,ret_t<Enum_T_inv,T>,E>{PU:Enum_T m_enum_T;Enum_T_inv m_enum_T_inv;IN EnumerationGraph(CRI SZ,Enum_T enum_T,Enum_T_inv enum_T_inv,E edge);IN ret_t<Enum_T,int> Enumeration(CRI i);IN ret_t<Enum_T_inv,T> Enumeration_inv(CO T& t);TE <TY F> IN EnumerationGraph<T,Enum_T,Enum_T_inv,F> GetGraph(F edge)CO;};TE <TY Enum_T,TY Enum_T_inv,TY E> EnumerationGraph(CRI SZ,Enum_T enum_T,Enum_T_inv enum_T_inv,E edge)-> EnumerationGraph<decldecay_t(get<0>(declval<E>()(0).back())),Enum_T,Enum_T_inv,E>;TE <TY T,TY E>CL MemorisationGraph:virtual PU VirtualGraph<T,T,CRI,E>{PU:int m_LE;VE<T> m_memory;Map<T,int> m_memory_inv;IN MemorisationGraph(CRI SZ,E edge);IN T Enumeration(CRI i);IN CRI Enumeration_inv(CO T& t);IN VO Reset();TE <TY F> IN MemorisationGraph<T,F> GetGraph(F edge)CO;};TE <TY E> MemorisationGraph(CRI SZ,E edge)-> MemorisationGraph<decldecay_t(declval<E>()().back()),E>;TE <TY E> MemorisationGraph(CRI SZ,E edge)-> MemorisationGraph<decldecay_t(get<0>(declval<E>()().back())),E>;
+TE <TY T,TY R1,TY R2,TY E> IN VirtualGraph<T,R1,R2,E>::VirtualGraph(CRI SZ,E edge):PointedSet<int>(SZ),m_edge(MO(edge)){ST_AS(is_COructible_v<T,R1> && is_COructible_v<int,R2> && is_invocable_v<E,T>);}TE <TY E> IN Graph<E>::Graph(CRI SZ,E edge):VirtualGraph<int,CRI,CRI,E>(SZ,MO(edge)){}TE <TY T,TY Enum_T,TY Enum_T_inv,TY E> IN EnumerationGraph<T,Enum_T,Enum_T_inv,E>::EnumerationGraph(CRI SZ,Enum_T enum_T,Enum_T_inv enum_T_inv,E edge):VirtualGraph<T,ret_t<Enum_T,int>,ret_t<Enum_T_inv,T>,E>(SZ,MO(edge)),m_enum_T(MO(enum_T)),m_enum_T_inv(MO(enum_T_inv)){}TE <TY T,TY E> IN MemorisationGraph<T,E>::MemorisationGraph(CRI SZ,E edge):VirtualGraph<T,T,CRI,E>(SZ,MO(edge)),m_LE(),m_memory(),m_memory_inv(){}TE <TY T,TY R1,TY R2,TY E> IN ret_t<E,T> VirtualGraph<T,R1,R2,E>::Edge(CO T& t){RE m_edge(t);}TE <TY E> IN CRI Graph<E>::Enumeration(CRI i){RE i;}TE <TY T,TY Enum_T,TY Enum_T_inv,TY E> IN ret_t<Enum_T,int> EnumerationGraph<T,Enum_T,Enum_T_inv,E>::Enumeration(CRI i){RE m_enum_T(i);}TE <TY T,TY E> IN T MemorisationGraph<T,E>::Enumeration(CRI i){AS(0 <= i && i < m_LE);RE m_memory[i];}TE <TY E> IN CRI Graph<E>::Enumeration_inv(CRI i){RE i;}TE <TY T,TY Enum_T,TY Enum_T_inv,TY E> IN ret_t<Enum_T_inv,T> EnumerationGraph<T,Enum_T,Enum_T_inv,E>::Enumeration_inv(CO T& t){RE m_enum_T_inv(t);}TE <TY T,TY E> IN CRI MemorisationGraph<T,E>::Enumeration_inv(CO T& t){if(m_memory_inv.count(t)== 0){AS(m_LE < TH->SZ());m_memory.push_back(t);RE m_memory_inv[t]= m_LE++;}RE m_memory_inv[t];}TE <TY T,TY R1,TY R2,TY E> VO VirtualGraph<T,R1,R2,E>::Reset(){}TE <TY T,TY E> IN VO MemorisationGraph<T,E>::Reset(){m_LE = 0;m_memory.clear();m_memory_inv.clear();}TE <TY E> TE <TY F> IN Graph<F> Graph<E>::GetGraph(F edge)CO{RE Graph<F>(TH->SZ(),MO(edge));}TE <TY T,TY Enum_T,TY Enum_T_inv,TY E> TE <TY F> IN EnumerationGraph<T,Enum_T,Enum_T_inv,F> EnumerationGraph<T,Enum_T,Enum_T_inv,E>::GetGraph(F edge)CO{RE EnumerationGraph(TH->SZ(),m_enum_T,m_enum_T_inv,MO(edge));}TE <TY T,TY E> TE <TY F> IN MemorisationGraph<T,F> MemorisationGraph<T,E>::GetGraph(F edge)CO{RE MemorisationGraph(TH->SZ(),MO(edge));}
 
 // ConstexprModulo
 // c:/Users/user/Documents/Programming/Mathematics/Arithmetic/Mod/ConstexprModulo/compress.txt
