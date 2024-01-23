@@ -5,33 +5,33 @@
 
 #include "../a_Body.hpp"
 
-template <typename E> inline DepthFirstSearchOnTree<E>::DepthFirstSearchOnTree( const int& V , E e , const int& root , const int& digit ) :
-  DepthFirstSearch<E>( V , move( e ) , root ) , m_reversed( V ) , m_children() , m_set_children() , m_depth() , m_set_depth() , m_height() , m_set_height() , m_weight() , m_set_weight() , m_digit( digit ) , m_doubling( m_digit ) , m_set_doubling()
+template <typename TREE> inline DepthFirstSearchOnTree<TREE>::DepthFirstSearchOnTree( TREE& T , const int& root , const int& digit ) :
+  DepthFirstSearch<TREE>( T , root ) , m_reversed( this->size() ) , m_children() , m_set_children() , m_depth() , m_set_depth() , m_height() , m_set_height() , m_weight() , m_set_weight() , m_digit( digit ) , m_doubling( m_digit ) , m_set_doubling()
 {
 
-  int n = V;
+  int n = this->size();
   
   while( --n >= 0 ){
     
-    m_reversed[n] = DepthFirstSearch<E>::Next();
+    m_reversed[n] = this->Next();
 
   }
 
 }
 
-template <typename E> inline const int& DepthFirstSearchOnTree<E>::Root() const { return DepthFirstSearch<E>::init(); }
+template <typename TREE> inline const int& DepthFirstSearchOnTree<TREE>::Root() const { return this->init(); }
 
-template <typename E> inline const int& DepthFirstSearchOnTree<E>::Parent( const int& i ) const { return DepthFirstSearch<E>::prev( i ); }
-template <typename E> inline const vector<int>& DepthFirstSearchOnTree<E>::Children( const int& i ) { if( ! m_set_children ){ SetChildren(); } return m_children[i]; }
-template <typename E> inline const int& DepthFirstSearchOnTree<E>::Depth( const int& i ) const { if( ! m_set_depth ){ SetDepth(); } return m_depth[i]; }
-template <typename E> inline const int& DepthFirstSearchOnTree<E>::Height( const int& i ) { if( ! m_set_height ){ SetHeight(); } return m_height[i]; }
-template <typename E> inline const int& DepthFirstSearchOnTree<E>::Weight( const int& i ) { if( ! m_set_weight ){ SetWeight(); } return m_weight[i]; }
+template <typename TREE> inline const int& DepthFirstSearchOnTree<TREE>::Parent( const int& i ) { return this->prev( i ); }
+template <typename TREE> inline const vector<int>& DepthFirstSearchOnTree<TREE>::Children( const int& i ) { if( ! m_set_children ){ SetChildren(); } return m_children[i]; }
+template <typename TREE> inline const int& DepthFirstSearchOnTree<TREE>::Depth( const int& i ) { if( ! m_set_depth ){ SetDepth(); } return m_depth[i]; }
+template <typename TREE> inline const int& DepthFirstSearchOnTree<TREE>::Height( const int& i ) { if( ! m_set_height ){ SetHeight(); } return m_height[i]; }
+template <typename TREE> inline const int& DepthFirstSearchOnTree<TREE>::Weight( const int& i ) { if( ! m_set_weight ){ SetWeight(); } return m_weight[i]; }
 
-template <typename E> inline const int& DepthFirstSearchOnTree<E>::NodeNumber( const int& i , const bool& reversed ) const { return m_reversed[reversed ? i : DepthFirstSearch<E>::size() - 1 - i]; }
-template <typename E> inline const int& DepthFirstSearchOnTree<E>::ChildrenNumber( const int& i ) { if( ! m_set_children ){ SetChildren(); } return m_children_num[i]; }
+template <typename TREE> inline const int& DepthFirstSearchOnTree<TREE>::NodeNumber( const int& i , const bool& reversed ) const { return m_reversed[reversed ? i : this->size() - 1 - i]; }
+template <typename TREE> inline const int& DepthFirstSearchOnTree<TREE>::ChildrenNumber( const int& i ) { if( ! m_set_children ){ SetChildren(); } return m_children_num[i]; }
 
-template <typename E>
-int DepthFirstSearchOnTree<E>::Ancestor( int i , int n )
+template <typename TREE>
+int DepthFirstSearchOnTree<TREE>::Ancestor( int i , int n )
 {
 
   if( ! m_set_doubling ){
@@ -61,8 +61,8 @@ int DepthFirstSearchOnTree<E>::Ancestor( int i , int n )
 
 }
 
-template <typename E>
-int DepthFirstSearchOnTree<E>::LCA( int i , int j )
+template <typename TREE>
+int DepthFirstSearchOnTree<TREE>::LCA( int i , int j )
 {
 
   int diff = Depth( i ) - Depth( j );
@@ -105,8 +105,8 @@ int DepthFirstSearchOnTree<E>::LCA( int i , int j )
 
 }
 
-template <typename E>
-int DepthFirstSearchOnTree<E>::LCA( int i , int j , int& i_prev , int& j_prev )
+template <typename TREE>
+int DepthFirstSearchOnTree<TREE>::LCA( int i , int j , int& i_prev , int& j_prev )
 {
 
   if( i == j ){
@@ -168,13 +168,13 @@ int DepthFirstSearchOnTree<E>::LCA( int i , int j , int& i_prev , int& j_prev )
 
 }
 
-template <typename E>
-void DepthFirstSearchOnTree<E>::SetChildren()
+template <typename TREE>
+void DepthFirstSearchOnTree<TREE>::SetChildren()
 {
 
   assert( !m_set_children );
   m_set_children = true;
-  const int& V = DepthFirstSearch<E>::size();
+  const int& V = this->size();
   m_children.resize( V );
   m_children_num.resize( V );
   
@@ -200,13 +200,13 @@ void DepthFirstSearchOnTree<E>::SetChildren()
   
 }
 
-template <typename E>
-void DepthFirstSearchOnTree<E>::SetDepth()
+template <typename TREE>
+void DepthFirstSearchOnTree<TREE>::SetDepth()
 {
 
   assert( !m_set_depth );
   m_set_depth = true;
-  const int& V = DepthFirstSearch<E>::size();
+  const int& V = this->size();
   m_depth.resize( V );
   
   for( int i = 0 ; i < V ; i++ ){
@@ -226,13 +226,13 @@ void DepthFirstSearchOnTree<E>::SetDepth()
 
 }
 
-template <typename E>
-void DepthFirstSearchOnTree<E>::SetHeight()
+template <typename TREE>
+void DepthFirstSearchOnTree<TREE>::SetHeight()
 {
 
   assert( !m_set_height );
   m_set_height = true;
-  const int& V = DepthFirstSearch<E>::size();
+  const int& V = this->size();
   m_height.resize( V );
   
   for( int i = 0 ; i < V ; i++ ){
@@ -254,13 +254,13 @@ void DepthFirstSearchOnTree<E>::SetHeight()
 
 }
 
-template <typename E>
-void DepthFirstSearchOnTree<E>::SetWeight()
+template <typename TREE>
+void DepthFirstSearchOnTree<TREE>::SetWeight()
 {
 
   assert( !m_set_weight );
   m_set_weight = true;
-  const int& V = DepthFirstSearch<E>::size();
+  const int& V = this->size();
   m_weight.resize( V );
   
   for( int i = 0 ; i < V ; i++ ){
@@ -280,13 +280,13 @@ void DepthFirstSearchOnTree<E>::SetWeight()
 
 }
 
-template <typename E>
-void DepthFirstSearchOnTree<E>::SetDoubling()
+template <typename TREE>
+void DepthFirstSearchOnTree<TREE>::SetDoubling()
 {
 
   assert( !m_set_doubling );
   m_set_doubling = true;
-  const int& V = DepthFirstSearch<E>::size();
+  const int& V = this->size();
   
   {
     
@@ -321,9 +321,12 @@ void DepthFirstSearchOnTree<E>::SetDoubling()
 
 }
 
-template <typename E> template <typename T , T f(const list<T>&,const int&)>
-T DepthFirstSearchOnTree<E>::RootingDP()
+template <typename TREE> template <typename F>
+ret_t<F> DepthFirstSearchOnTree<TREE>::RootingDP( F& f )
 {
+
+  using U = ret_t<F>;
+  static_assert( is_invocable_r_v<U,F,list<U>,int> );
 
   if( ! m_set_children ){
 
@@ -331,9 +334,9 @@ T DepthFirstSearchOnTree<E>::RootingDP()
 
   }
   
-  const int& V = DepthFirstSearch<E>::size();
-  vector<list<T>> children_value( V );
-  T temp;
+  const int& V = this->size();
+  vector<list<U>> children_value( V );
+  U temp;
   
   for( int n = 0 ; n < V ; n++ ){
     
@@ -353,28 +356,31 @@ T DepthFirstSearchOnTree<E>::RootingDP()
 
 }
   
-template <typename E> template <typename T , T m_T(const T&,const T&) ,const T& e_T() , T f(const T&,const int&), T g(const T&,const bool&,const int&,const int&)>
-void DepthFirstSearchOnTree<E>::RerootingDP( vector<T>& d )
+template <typename TREE> template <typename MONOID , typename F , typename G>
+void DepthFirstSearchOnTree<TREE>::RerootingDP( MONOID M , F& f , G& g , vector<inner_t<MONOID>>& d )
 {
 
+  using U = inner_t<MONOID>;
+  static_assert( is_invocable_r_v<U,F,U,int> && is_invocable_r_v<U,G,U,bool,int,int> );
+  
   if( ! m_set_children ){
 
     SetChildren();
 
   }
   
-  const int& V = DepthFirstSearch<E>::size();
-  const T& e = e_T();
+  const int& V = this->size();
+  const U& e = M.Unit();
   d.resize( V );
 
   // children_value[i][m]‚Éi‚Ìm”Ô–Ú‚Ìqƒm[ƒhj‚Ü‚Å‚ÌŒvZ’l‚Ìf‚Å‚Ì‘œ‚ğŠi”[B
-  vector<vector<T>> children_value( V );
+  vector<vector<U>> children_value( V );
   // left_sum[i][m]‚Échildren_value[i][0],...,children_value[i][m-1]‚Ì
-  // g‚Å‚Ì‘œ‚Ìm_T‚ÉŠÖ‚·‚éÏ‚ğŠi”[B
-  vector<vector<T>> left_sum( V );
+  // g‚Å‚Ì‘œ‚ÌM‚ÉŠÖ‚·‚éÏ‚ğŠi”[B
+  vector<vector<U>> left_sum( V );
   // right_sum[i][m]‚Échildren_value[i][m+1],...,children_value[i][size_i-1]‚Ì
-  // g‚Å‚Ì‘œ‚Ìm_T‚ÉŠÖ‚·‚éÏ‚ğŠi”[B
-  vector<vector<T>> right_sum( V );
+  // g‚Å‚Ì‘œ‚ÌMŠÖ‚·‚éÏ‚ğŠi”[B
+  vector<vector<U>> right_sum( V );
   
   for( int i = 0 ; i < V ; i++ ){
 
@@ -385,17 +391,17 @@ void DepthFirstSearchOnTree<E>::RerootingDP( vector<T>& d )
   for( int n = 0 ; n < V ; n++ ){
     
     const int& i = NodeNumber( n , true );
-    const vector<T>& children_value_i = children_value[i];
+    const vector<U>& children_value_i = children_value[i];
     const int size_i = children_value_i.size();
 
-    T temp = e;
-    vector<T>& left_sum_i = left_sum[i];
+    U temp = e;
+    vector<U>& left_sum_i = left_sum[i];
     left_sum_i.reserve( size_i + 1 );
     left_sum_i.push_back( temp );
     
     for( int m = 0 ; m < size_i ; m++ ){
 
-      left_sum_i.push_back( temp = m_T( temp , g( children_value_i[m] , true , i , m_children[i][m] ) ) );
+      left_sum_i.push_back( temp = M.Product( temp , g( children_value_i[m] , true , i , m_children[i][m] ) ) );
 
     }
     
@@ -408,41 +414,41 @@ void DepthFirstSearchOnTree<E>::RerootingDP( vector<T>& d )
     }
 
     temp = e;
-    vector<T>& right_sum_i = right_sum[i];
+    vector<U>& right_sum_i = right_sum[i];
     right_sum_i.resize( size_i );
 
     for( int m = 1 ; m <= size_i ; m++ ){
 
       right_sum_i[ size_i - m ] = temp;
-      temp = m_T( g( children_value_i[size_i - m] , true , i , m_children[i][size_i - m] ) , temp );
+      temp = M.Product( g( children_value_i[size_i - m] , true , i , m_children[i][size_i - m] ) , temp );
 
     }
 
   }
 
   // left_sum[i][m]‚Échildren_value[i][0],...,children_value[i][m-1]‚Ì
-  // g‚Å‚Ì‘œ‚Ìm_T‚ÉŠÖ‚·‚éÏ‚ğŠi”[‚µ‚Ä‚¢‚½‚ªA‚³‚ç‚É‚±‚ê‚Éeƒm[ƒh‚ÌŠñ—^‚à’Ç‰Á‚·‚éB
+  // g‚Å‚Ì‘œ‚ÌM‚ÉŠÖ‚·‚éÏ‚ğŠi”[‚µ‚Ä‚¢‚½‚ªA‚³‚ç‚É‚±‚ê‚Éeƒm[ƒh‚ÌŠñ—^‚à’Ç‰Á‚·‚éB
   for( int n = 1 ; n < V ; n++ ){
     
     const int& i = NodeNumber( n );
     const int& j = Parent( i );
     const int& k = ChildrenNumber( i );
-    vector<T>& left_sum_i = left_sum[i];
-    vector<T>& right_sum_i = right_sum[i];
+    vector<U>& left_sum_i = left_sum[i];
+    vector<U>& right_sum_i = right_sum[i];
     const int size_i = right_sum_i.size();
     // children_value[j][0],...,children_value[j][k-1]‚Ìg‚Å‚Ì‘œ‚Æ
     // rest_jiŠù‚ÉŒvZÏ‚İj‚Æ
     // children_value[j][k+1],...,children_value[j][size_i-1]‚Ìg‚Å‚Ì‘œ‚Æ
-    // ‚Ìm_T‚ÉŠÖ‚·‚éÏ‚Ìf‚Å‚Ì‘œ‚Ìg‚Å‚Ì‘œB
-    const T rest_i = g( f( m_T( left_sum[j][k] , right_sum[j][k] ) , j ) , false , i , j );
+    // ‚ÌM‚ÉŠÖ‚·‚éÏ‚Ìf‚Å‚Ì‘œ‚Ìg‚Å‚Ì‘œB
+    const U rest_i = g( f( M.Product( left_sum[j][k] , right_sum[j][k] ) , j ) , false , i , j );
     
     for( int m = 0 ; m <= size_i ; m++ ){
 
       // left_sum_im‚Érest_i‚Æ
       // children_value[i][0],...,children_value[i][m-1]‚Ìg‚Å‚Ì‘œ
-      // ‚Ìm_T‚ÉŠÖ‚·‚éÏ‚ğŠi”[B
-      T& left_sum_im = left_sum_i[m];
-      left_sum_im = m_T( rest_i , left_sum_im );
+      // ‚ÌM‚ÉŠÖ‚·‚éÏ‚ğŠi”[B
+      U& left_sum_im = left_sum_i[m];
+      left_sum_im = M.Product( rest_i , left_sum_im );
 
     }
 
@@ -451,7 +457,7 @@ void DepthFirstSearchOnTree<E>::RerootingDP( vector<T>& d )
   for( int i = 0 ; i < V ; i++ ){
 
     // left_sum[i].back()‚Íchildren_value_i[0],...,children_value_i[size_i-1]‚Ì
-    // g‚Å‚Ì‘œ‚Æe‚ÌŠñ—^‚Ìm_T‚ÉŠÖ‚·‚éÏB
+    // g‚Å‚Ì‘œ‚Æe‚ÌŠñ—^‚ÌM‚ÉŠÖ‚·‚éÏB
     d[i] = f( left_sum[i].back() , i );
 
   }

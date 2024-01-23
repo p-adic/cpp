@@ -24,11 +24,14 @@ class AbstractBellmanFord :
 {
 
 private:
-  GRAPH m_G;
+  GRAPH& m_G;
+  // コンストラクタに引数が必要なMultiplicativeMonoidなどはstaticメンバ関数による
+  // 参照返しがしにくく、コンストラクタの返り値である右辺値を受け取ることを許容したいので
+  // 左辺値参照にはしない。
   MONOID m_M;
 
 public:
-  inline AbstractBellmanFord( GRAPH G , MONOID M , const U& infty );
+  inline AbstractBellmanFord( GRAPH& G , MONOID M , const U& infty );
 
   // 負の閉路が存在すればfalse、存在しなければtrueを第1成分に返す。
   tuple<bool,vector<U>> GetDistance( const inner_t<GRAPH>& t_start );
@@ -43,6 +46,6 @@ class BellmanFord :
 {
 
 public:
-  inline BellmanFord( GRAPH G );
+  inline BellmanFord( GRAPH& G );
   
 };

@@ -6,8 +6,8 @@
 #include "../a_Body.hpp"
 #include "../../../Algebra/Monoid/a_Body.hpp"
 
-template <typename GRAPH , typename MONOID , typename U> inline AbstractDijkstra<GRAPH,MONOID,U>::AbstractDijkstra( GRAPH G , MONOID M , const U& infty ) : PointedSet<U>( infty ) , m_G( move( G ) ) , m_M( move( M ) ) { static_assert( ! is_same_v<U,int> ); }
-template <typename GRAPH> inline Dijkstra<GRAPH>::Dijkstra( GRAPH G ) : AbstractDijkstra<GRAPH,AdditiveMonoid<>,ll>( G , AdditiveMonoid<>() , 4611686018427387904 ) {}
+template <typename GRAPH , typename MONOID , typename U> inline AbstractDijkstra<GRAPH,MONOID,U>::AbstractDijkstra( GRAPH G& , MONOID M , const U& infty ) : PointedSet<U>( infty ) , m_G( G ) , m_M( move( M ) ) { static_assert( ! is_same_v<U,int> ); }
+template <typename GRAPH> inline Dijkstra<GRAPH>::Dijkstra( GRAPH& G ) : AbstractDijkstra<GRAPH,AdditiveMonoid<>,ll>( G , AdditiveMonoid<>() , 4611686018427387904 ) {}
 
 template <typename GRAPH , typename MONOID , typename U>
 U AbstractDijkstra<GRAPH,MONOID,U>::GetDistance( const inner_t<GRAPH>& t_start , const inner_t<GRAPH>& t_final )

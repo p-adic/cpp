@@ -3,8 +3,8 @@
 #pragma once
 #include "../a.hpp"
 // verify:
-// https://yukicoder.me/submissions/945752（MinimumCostFlow）
-// https://yukicoder.me/submissions/945753（AbstractMinimumCostFlow）
+// https://yukicoder.me/submissions/945877（MinimumCostFlow）
+// https://yukicoder.me/submissions/945876（AbstractMinimumCostFlow）
 
 // GRAPHはグラフG=(V_G,E_G:T->(T \times U(コスト) \times U(容量))^{< \omega})に相当する型。
 
@@ -22,11 +22,11 @@ class AbstractMinimumCostFlow :
 {
 
 private:
-  GRAPH m_G;
+  GRAPH& m_G;
   RING m_R;
 
 public:
-  inline AbstractMinimumCostFlow( GRAPH G , RING R , const U& infty );
+  inline AbstractMinimumCostFlow( GRAPH& G , RING R , const U& infty );
   pair<U,vector<vector<tuple<inner_t<GRAPH>,U>>>> GetFlow( const inner_t<GRAPH>& t_start , const inner_t<GRAPH>& t_final , U f );
 
 };
@@ -37,6 +37,6 @@ class MinimumCostFlow :
 {
 
 public:
-  inline MinimumCostFlow( GRAPH G , const U& one_U , const U& infty );
+  inline MinimumCostFlow( GRAPH& G , const U& one_U , const U& infty );
 
 };

@@ -5,13 +5,25 @@
 
 #include "../a.hpp"
 
-// verify: https://yukicoder.me/submissions/942797（NextSubset）
+// verify:
+// https://yukicoder.me/submissions/945926（NextSubset）
+
+class BitExhausiveEdge
+{
+
+public:
+  int* m_p_V;
+  inline BitExhausiveEdge( const int& V );
+  inline list<int> operator()( const int& t );
+
+};
 
 class BitExhausiveSearch :
-  public BreadthFirstSearch_Body
+  public BreadthFirstSearch<Graph<BitExhausiveEdge>>
 {
 
 private:
+  Graph<BitExhausiveEdge> m_G;
   int m_digit;
   
 public:
@@ -40,13 +52,9 @@ public:
   static inline list<int> ProperSubsetOf( const int& t ) noexcept;
 
   // 対応する部分集合の濃度を変えずにtを昇順で後続に遷移させる。
-  static inline bool NextSubset( int& t , const int& digit , const int& V ) noexcept;
-  static inline bool NextSubset( int& t , const int& digit ) noexcept;
+  inline bool NextSubset( int& t ) noexcept;
 
   // tの2進加法付値を返す。
   static inline const int& ValuationOf( const int& t ) noexcept;
-
-private:
-  inline list<int> e( const int& i );
   
 };

@@ -5,21 +5,22 @@
 
 #include "../a_Body.hpp"
 
-inline BitExhausiveSearch::BitExhausiveSearch( const int& digit , const int& V ) : BreadthFirstSearch_Body( V ) , m_digit( digit ) { assert( 0 <= m_digit && m_digit <= 30 ); assert( ( V >> m_digit ) <= 1 ); }
+inline list<int> BitExhausiveEdge::operator()( const int& t ) { DEFINITION_OF_ADJACENT_SET( ~t , | , *m_p_V , answer.push_back( t_next ); ); }
+
+inline BitExhausiveSearch::BitExhausiveSearch( const int& digit , const int& V ) : BreadthFirstSearch<Graph<BitExhausiveEdge>>( m_G ) , m_G( V , BitExhausiveEdge() ) , m_V( m_G.size() ) , m_digit( digit ) { assert( 0 <= m_digit && m_digit <= 30 && ( m_V >> m_digit ) <= 1 ); m_G.edge().m_p_V = &( m_G.size() ); }
 inline BitExhausiveSearch::BitExhausiveSearch( const int& digit ) : BitExhausiveSearch( digit , 1 << digit ) {}
 
-inline list<int> BitExhausiveSearch::UnreachedAdjacentSupsetOf( const int& t ) noexcept { return e( t ); }
-inline list<int> BitExhausiveSearch::UnreachedProperSupsetOf( const int& t ) noexcept { DEFINITION_OF_PROPER_SET( ++ , |= , BreadthFirstSearch_Body::m_V , if( ! BreadthFirstSearch_Body::found( t_next ) ){ answer.push_back( t_next ); } ); }
-inline list<int> BitExhausiveSearch::AdjacentSupsetOf( const int& t ) noexcept { DEFINITION_OF_ADJACENT_SET( ~t , | , BreadthFirstSearch_Body::m_V , answer.push_back( t_next ) ); }
-inline list<int> BitExhausiveSearch::ProperSupsetOf( const int& t ) noexcept { DEFINITION_OF_PROPER_SET( ++ , |= , BreadthFirstSearch_Body::m_V , answer.push_back( t_next ); ); }
+inline list<int> BitExhausiveSearch::UnreachedAdjacentSupsetOf( const int& t ) noexcept { DEFINITION_OF_ADJACENT_SET( ~t , | , m_V , if( ! this->found( t_next ) ){ answer.push_back( t_next ); } ); }
+inline list<int> BitExhausiveSearch::UnreachedProperSupsetOf( const int& t ) noexcept { DEFINITION_OF_PROPER_SET( ++ , |= , m_V , if( ! this->found( t_next ) ){ answer.push_back( t_next ); } ); }
+inline list<int> BitExhausiveSearch::AdjacentSupsetOf( const int& t ) noexcept { DEFINITION_OF_ADJACENT_SET( ~t , | , m_V , answer.push_back( t_next ) ); }
+inline list<int> BitExhausiveSearch::ProperSupsetOf( const int& t ) noexcept { DEFINITION_OF_PROPER_SET( ++ , |= , m_V , answer.push_back( t_next ); ); }
 
-inline list<int> BitExhausiveSearch::UnreachedAdjacentSubsetOf( const int& t ) noexcept { DEFINITION_OF_ADJACENT_SET( t , ^ , t , if( ! BreadthFirstSearch_Body::found( t_next ) ){ answer.push_back( t_next ); } ); }
-inline list<int> BitExhausiveSearch::UnreachedProperSubsetOf( const int& t ) noexcept { DEFINITION_OF_PROPER_SET( -- , ^= , t , if( ! BreadthFirstSearch_Body::found( t_next ) ){ answer.push_back( t_next ); } ); }
+inline list<int> BitExhausiveSearch::UnreachedAdjacentSubsetOf( const int& t ) noexcept { DEFINITION_OF_ADJACENT_SET( t , ^ , t , if( ! this->found( t_next ) ){ answer.push_back( t_next ); } ); }
+inline list<int> BitExhausiveSearch::UnreachedProperSubsetOf( const int& t ) noexcept { DEFINITION_OF_PROPER_SET( -- , ^= , t , if( ! this->found( t_next ) ){ answer.push_back( t_next ); } ); }
 inline list<int> BitExhausiveSearch::AdjacentSubsetOf( const int& t ) noexcept { DEFINITION_OF_ADJACENT_SET( t , ^ , t , answer.push_back( t_next ) ); }
 inline list<int> BitExhausiveSearch::ProperSubsetOf( const int& t ) noexcept { DEFINITION_OF_PROPER_SET( -- , ^= , t , answer.push_back( t_next ); ); }
 
-inline bool BitExhausiveSearch::NextSubset( int& t , const int& digit , const int& V ) noexcept { vector<int> S( digit ); for( int d = 0 ; d < digit ; d++ ){ S[d] = ( ( t >> ( digit - d - 1 ) ) & 1 ); } bool b = next_permutation( S.begin() , S.end() ); t = 0; for( int d = 0 ; d < digit ; d++ ){ t |= S[d] << ( digit - d - 1 ); b = b && t < V; } return b; }
-inline bool BitExhausiveSearch::NextSubset( int& t , const int& digit ) noexcept { return NextSubset( t , digit , 1 << digit ); }
+inline bool BitExhausiveSearch::NextSubset( int& t ) noexcept { vector<int> S( m_digit ); for( int d = 0 ; d < m_digit ; d++ ){ S[d] = ( ( t >> ( m_digit - d - 1 ) ) & 1 ); } bool b = next_permutation( S.begin() , S.end() ); t = 0; for( int d = 0 ; d < m_digit ; d++ ){ t |= S[d] << ( m_digit - d - 1 ); b = b && t < m_V; } return b; }
 
 inline const int& BitExhausiveSearch::ValuationOf( const int& t ) noexcept
 {
@@ -39,4 +40,3 @@ inline const int& BitExhausiveSearch::ValuationOf( const int& t ) noexcept
   
 }
 
-inline list<int> BitExhausiveSearch::e( const int& t ) { DEFINITION_OF_ADJACENT_SET( ~t , | , BreadthFirstSearch_Body::m_V , if( ! BreadthFirstSearch_Body::found( t_next ) ){ answer.push_back( t_next ); } ); }

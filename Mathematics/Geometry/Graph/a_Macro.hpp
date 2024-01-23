@@ -13,3 +13,7 @@
 #ifndef decldecay_t
   #define decldecay_t( VAR ) decay_t<decltype( VAR )>
 #endif
+
+#define SFINAE_FOR_GRAPH typename T , typename E , enable_if_t<is_invocable_v<E,T>,void*> PTR
+
+

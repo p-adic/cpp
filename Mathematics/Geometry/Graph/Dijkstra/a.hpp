@@ -7,8 +7,8 @@
 #include "../../../Algebra/Monoid/a.hpp"
 
 // verify:
-// https://yukicoder.me/submissions/945636（Dijstra、経路復元なし）
-// https://yukicoder.me/submissions/944509（AbstractDijkstraa、経路復元なし）
+// https://yukicoder.me/submissions/945906（Dijstra、経路復元なし）
+// https://yukicoder.me/submissions/945904（AbstractDijkstraa、経路復元なし）
 
 // GRAPHはグラフG=(V_G,E_G:T->(T \times U)^{< \omega})に相当する型。
 
@@ -32,11 +32,14 @@ class AbstractDijkstra :
 {
 
 private:
-  GRAPH m_G;
+  GRAPH& m_G;
+  // コンストラクタに引数が必要なMultiplicativeMonoidなどはstaticメンバ関数による
+  // 参照返しがしにくく、コンストラクタの返り値である右辺値を受け取ることを許容したいので
+  // 左辺値参照にはしない。
   MONOID m_M;
 
 public:
-  inline AbstractDijkstra( GRAPH G , MONOID M , const U& infty );
+  inline AbstractDijkstra( GRAPH& G , MONOID M , const U& infty );
 
   // 経路が存在しない場合の返り値はinfty
   U GetDistance( const inner_t<GRAPH>& t_start , const inner_t<GRAPH>& t_final );
@@ -53,6 +56,6 @@ class Dijkstra :
 {
 
 public:
-  inline Dijkstra( GRAPH G );
+  inline Dijkstra( GRAPH& G );
 
 };

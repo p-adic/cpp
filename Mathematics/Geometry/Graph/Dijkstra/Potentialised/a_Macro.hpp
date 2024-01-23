@@ -38,7 +38,7 @@
     };									\
 									\
     auto G = m_G.GetGraph( move( edge ) );				\
-    AbstractDijkstra d{ move( G ) , m_M , infty };			\
+    AbstractDijkstra d{ G , m_M , infty };				\
     auto value = d.GET;							\
     const int& size = m_G.size();					\
 									\

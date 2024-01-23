@@ -6,8 +6,8 @@
 #include "../a.hpp"
 
 // verify:
-// https://yukicoder.me/submissions/945752（PotentialisedDijkstra）
-// https://yukicoder.me/submissions/945753（AbstractPotentalisedDijkstra）
+// https://yukicoder.me/submissions/945877（PotentialisedDijkstra）
+// https://yukicoder.me/submissions/945876（AbstractPotentalisedDijkstra）
 
 // GRAPHはグラフG=(V_G,E_G:T->(T \times U)^{< \omega})に相当する型。
 // Onは写像on:im(edge)->\{0,1\}に相当する型。
@@ -28,7 +28,7 @@ class AbstractPotentialisedDijkstra :
 {
 
 private:
-  GRAPH m_G;
+  GRAPH& m_G;
   GROUP m_M;
   T m_t_start;
   // 全ての辺を許容する場合に始点から負のループに到達可能か否か。
@@ -39,8 +39,8 @@ private:
   On m_on;
 
 public:
-  inline AbstractPotentialisedDijkstra( GRAPH G , GROUP M , const T& t_start , const U& infty , On on , const bool& negative = true );
-  inline AbstractPotentialisedDijkstra( GRAPH G , GROUP M , const T& t_start , const U& infty , const bool& valid , vector<U> potential , On on );
+  inline AbstractPotentialisedDijkstra( GRAPH& G , GROUP M , const T& t_start , const U& infty , On on , const bool& negative = true );
+  inline AbstractPotentialisedDijkstra( GRAPH& G , GROUP M , const T& t_start , const U& infty , const bool& valid , vector<U> potential , On on );
 
   inline const bool& Valid() const noexcept;
   inline const vector<U>& Potential() const noexcept;
@@ -57,6 +57,6 @@ class PotentialisedDijkstra :
 {
 
 public:
-  template <typename...Args> inline PotentialisedDijkstra( GRAPH G , const T& t_start , Args&&... args );
+  template <typename...Args> inline PotentialisedDijkstra( GRAPH& G , const T& t_start , Args&&... args );
 
 };

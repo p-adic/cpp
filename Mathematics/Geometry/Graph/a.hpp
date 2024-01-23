@@ -2,20 +2,27 @@
 
 #pragma once
 #include "a_Macro.hpp"
-#includ "../Function/Map/a.hpp"
+#includ "../../Algebra/a.hpp"
+#includ "../../Function/Map/a.hpp"
 
 // verify:
-// https://yukicoder.me/submissions/944510（Graph）
-// https://yukicoder.me/submissions/944511（EnumerationGraph）
-// https://yukicoder.me/submissions/944512（MemorisationGraph）
+// https://yukicoder.me/submissions/945899（Graph、E:T->list<T>）
+// https://yukicoder.me/submissions/945900（EnumerationGraph、E:T->list<T>）
+// https://yukicoder.me/submissions/945907（MemorisationGraph、E:T->list<T>）
+// https://yukicoder.me/submissions/945903（Graph、E:T->list<T \times N>）
+// https://yukicoder.me/submissions/945905（EnumerationGraph、E:T->list<T \times N>）
+// https://yukicoder.me/submissions/945906（MemorisationGraph、E:T->list<T \times N>）
 
 // Enumeration:N->R1-->TとEnumeration_inv:T->R2-->Nは互いに逆写像である仮想関数。
 template <typename T , typename R1 , typename R2 , typename E>
 class VirtualGraph :
-  public PointedSet<int>
+  virtual public UnderlyingSet<T>;
 {
 
 private:
+  int m_size;
+  // 配列への参照を返す関数オブジェクトを構築して返す関数の返り値などの右辺値を受け取ることを
+  // 許容したいので左辺値参照にはしない。
   E m_edge;
 
 public:
@@ -23,8 +30,9 @@ public:
   virtual R1 Enumeration( const int& i ) = 0;
   virtual R2 Enumeration_inv( const T& t ) = 0;
   inline void Reset();
-  ret_t<E,T> Edge( const T& t );
-  using type = T;
+  inline const int& size() const noexcept;
+  inline E& edge() noexcept;
+  inline ret_t<E,T> Edge( const T& t );
 
 };
 
@@ -47,20 +55,20 @@ class EnumerationGraph :
 {
 
 private:
-  Enum_T m_enum_T;
-  Enum_T_inv m_enum_T_inv;
+  Enum_T& m_enum_T;
+  Enum_T_inv& m_enum_T_inv;
   
 public:
-  inline EnumerationGraph( const int& size , Enum_T enum_T , Enum_T_inv enum_T_inv , E edge );
+  inline EnumerationGraph( const int& size , Enum_T& enum_T , Enum_T_inv& enum_T_inv , E edge );
   inline ret_t<Enum_T,int> Enumeration( const int& i );
   inline ret_t<Enum_T_inv,T> Enumeration_inv( const T& t );
   template <typename F> inline EnumerationGraph<T,Enum_T,Enum_T_inv,F> GetGraph( F edge ) const;
 
 };
-template <typename Enum_T , typename Enum_T_inv , typename E> EnumerationGraph( const int& size , Enum_T enum_T , Enum_T_inv enum_T_inv , E edge ) -> EnumerationGraph<decldecay_t(get<0>(declval<E>()(0).back())),Enum_T,Enum_T_inv,E>;
+template <typename Enum_T , typename Enum_T_inv , typename E> EnumerationGraph( const int& size , Enum_T enum_T , Enum_T_inv enum_T_inv , E edge ) -> EnumerationGraph<decldecay_t(declval<Enum_T>()(0)),Enum_T,Enum_T_inv,E>;
 
 // 推論補助のためにE::operator()はデフォルト引数が必要。
-template <typename T , typename E>
+template <SFINAE_FOR_GRAPH = nullptr>
 class MemorisationGraph :
   virtual public VirtualGraph<T,T,const int&,E>
 {
@@ -79,4 +87,5 @@ public:
   template <typename F> inline MemorisationGraph<T,F> GetGraph( F edge ) const;
 
 };
+template <typename E> MemorisationGraph( const int& size , E edge ) -> MemorisationGraph<decldecay_t(declval<E>()().back()),E>;
 template <typename E> MemorisationGraph( const int& size , E edge ) -> MemorisationGraph<decldecay_t(get<0>(declval<E>()().back())),E>;

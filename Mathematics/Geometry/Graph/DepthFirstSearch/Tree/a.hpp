@@ -4,17 +4,19 @@
 #include "../a.hpp"
 
 // verify:
-// https://yukicoder.me/submissions/942799（RootingDP）
-// https://yukicoder.me/submissions/942800（RerootingDP）
-// https://yukicoder.me/submissions/942801（RerootingDP）
+// https://yukicoder.me/submissions/945937（RootingDP）
+// https://yukicoder.me/submissions/945951（RerootingDP）
+// https://yukicoder.me/submissions/945944（RerootingDP）
 
 // digitはAncestorとLCAにのみ使用。普段は0で良い。
 // 2^16 = 65536
 // 2^17 = 131072
 // 2^18 = 262144
-template <typename E>
+
+// Gが無向グラフとしての木である場合にのみサポート。
+template <typename TREE>
 class DepthFirstSearchOnTree :
-  public DepthFirstSearch<E>
+  public DepthFirstSearch<TREE>
 {
 
 private:
@@ -38,14 +40,15 @@ private:
   bool m_set_doubling;
 
 public:
-  inline DepthFirstSearchOnTree( const int& V , E e , const int& root = 0 , const int& digit = 0 );
-  inline void Reset( const int& init ) = delete;
+  inline DepthFirstSearchOnTree( TREE& T , const int& root = 0 , const int& digit = 0 );
+  inline void Initialise( ) = delete;
+  inline void Initialise( const int& init ) = delete;
   inline void Shift( const int& init ) = delete;
 
   inline const int& Root() const;
-  inline const int& Parent( const int& i ) const;
+  inline const int& Parent( const int& i );
   inline const vector<int>& Children( const int& i );
-  inline const int& Depth( const int& i ) const;
+  inline const int& Depth( const int& i );
   inline const int& Height( const int& i );
   inline const int& Weight( const int& i );
 
@@ -61,23 +64,32 @@ public:
   // LCAからi,j側に進める場合に進んだ先の頂点のラベルをi_prev,j_prevに格納する。
   int LCA( int i , int j , int& i_prev , int& j_prev );
 
+  // Uを適当な型とし、
+  // Fは写像f:U^{< \omega} \times N -> Uに相当する型。
+  // 型推論のためにfはデフォルト引数で呼び出し可能とする。
+
   // 入力の範囲内で要件
-  // (2) 任意の非負整数n,iとTの要素のみからなる任意の長さnの任意の列(t1,...,tn)と
-  //     その並び換え(s1,...,sn)に対しf((t1,...,tn),i)=f((s1,...,sn),i)である。
+  // (2) 任意の非負整数n,iとTの要素のみからなる任意の長さnの任意の列(u1,...,un)と
+  //     その並び換え(v1,...,vn)に対しf((u1,...,un),i)=f((v1,...,vn),i)である。
   // を満たす場合のみサポート。
   // dp[j] = f(jの子ノードkを渡るdp[k]の列,j)
   // を満たす配列dpの根での値dp[m_init]をO(m_V)で求める。
-  template <typename T , T f(const list<T>&,const int&)> T RootingDP();
+  template <typename F> ret_t<F> RootingDP( F& f );
 
-  // (T,m_T:T^2->T,e_T:1->T)が入力の範囲内で要件
-  // (1) (T,m_T:T^2->T,e_T:1->T)がモノイドである
-  // (2) 任意の非負整数n,iとTの要素のみからなる任意の長さnの任意の列(t1,...,tn)と
-  //     その並び換え(s1,...,sn)に対し
-  //     f(m_T(...m_T(t1,t2),...tn),j)=f(m_T(...m_T(s1,s2),...sn),j)である。
+  // Uを適当な型とし、
+  // Fは写像f:U \times N ->Uに相当する型。
+  // Eは写像g:U \times \{0,1\} \times N^2 -> Uに相当する型。
+
+  // 入力の範囲内で要件
+  // (1) MがUのモノイド構造である。（以下演算を*と置く）
+  // (2) 任意の非負整数n,iとTの要素のみからなる任意の長さnの任意の列(u1,...,un)と
+  //     その並び換え(v1,...,vn)に対し
+  //     f(u1*u2*...*un,j)=f(v1*v2*...*vn,j)である。
   // を満たす場合のみサポート。
-  // dp[i][j] = f(iを根とみなした時のjの子ノードkを渡るg(dp[i][k],jはiの子孫,k,j)のm_Tに関する積,j)
-  // を満たす二重配列dpの対角成分dp[i][i]をO(m_V)で求めてdに格納する。
-  template <typename T , T m_T(const T&,const T&) ,const T& e_T() , T f(const T&,const int&), T g(const T&,const bool&,const int&,const int&)> void RerootingDP( vector<T>& d );
+  // dp[i][j] =
+  // f(iを根とみなした時のjの子ノードkを渡るg(dp[i][k],jはiの子孫,k,j)のMに関する積,j)
+  // を満たす二重配列dpの対角成分dp[i][i]をO(|V_T|)で求めてdに格納する。
+  template <typename MONOID , typename F , typename G> void RerootingDP( MONOID M , F& f , G& g , vector<inner_t<MONOID>>& d );
   // fはノードjごとのデータ（グラフ構造に依存しない）、gは有向辺b?(j,k):(k,j)ごとのデータに対応。
   // 例えば「パスの数」を求める時はm_Tが和、fが+1（葉かどうかに関係ない）、gがidでよい。
 
@@ -89,7 +101,9 @@ private:
 
   // 各ノードの高さ < 2^digitの場合のみサポート。
   // LCA()を呼ぶ前にAncestor()経由で完全にダブリングを設定するため、
-  // 遅延評価する../../../../Mathematics/Function/Iteration/Doubling/のダブリングで代用しない。
+  // 遅延評価してしまう
+  // ../../../../Mathematics/Function/Iteration/Doubling/
+  // のダブリングでは代用しない。
   void SetDoubling();
 
 };

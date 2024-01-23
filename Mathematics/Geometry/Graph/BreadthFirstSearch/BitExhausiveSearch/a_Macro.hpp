@@ -1,7 +1,7 @@
 // c:/Users/user/Documents/Programming/Mathematics/Geometry/Graph/BreadthFirstSearch/BitExhausiveSearch/a_Macro.hpp
 
 #pragma once
-#define DEFINITION_OF_ADJACENT_SET( T_COPY , OPR , ULIM , UPDATE ) \
+#define DEFINITION_OF_ADJACENT_SET( T_COPY , OPR , ULIM , UPDATE )	\
   list<int> answer{};							\
   int t_copy = T_COPY;							\
   int t_next;								\
@@ -16,7 +16,7 @@
 									\
   return answer								\
 
-#define DEFINITION_OF_PROPER_SET( INCREMENT , OPR , ULIM , UPDATE ) \
+#define DEFINITION_OF_PROPER_SET( INCREMENT , OPR , ULIM , UPDATE )	\
   list<int> answer{};							\
   int t_next = t;							\
 									\
