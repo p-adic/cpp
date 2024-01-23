@@ -39,31 +39,41 @@ inline void Solve()
   // CIN( int , N , M );
   // // CIN( int , N ); int M = N - 1;
   // gE<int>.resize( N );
-  // // gE<path>.resize( N );
   // // UnionFindForest uff{ N };
   // FOR( j , 0 , M ){
-  //   CIN_ASSERT( uj , 1 , N ); CIN_ASSERT( vj , 1 , N );
-  //   uj--; vj--;
+  //   CIN( int , uj , vj ); uj--; vj--;
   //   gE<int>[uj].push_back( vj ); gE<int>[vj].push_back( uj );
   //   // uff.Graft( uj , vj );
-  //   // CIN( ll , wj );
-  //   // gE<path>[uj].push_back( { vj , wj } ); gE<path>[vj].push_back( { uj , wj } );
+  // }
+  // Graph graph{ N , Get( gE<int> ) };
+  // BreadthFirstSearch bfs{ graph , 0 };
+  // // DepthFirstSearchOnTree dfst{ graph , 0 };
+  // ll answer = 0;
+  // RETURN( answer );
+  
+  // // 重み付きグラフ
+  // CIN( int , N , M );
+  // // CIN( int , N ); int M = N - 1;
+  // gE<path>.resize( N );
+  // // UnionFindForest uff{ N };
+  // FOR( j , 0 , M ){
+  //   CIN( ll , uj , vj , wj ); uj--; vj--;
+  //   gE<path>[uj].push_back( { vj , wj } ); gE<path>[vj].push_back( { uj , wj } );
   //   // uff.Graft( uj , vj , wj );
   // }
-  // // auto edge = [&]( const int& i ){
-  // //   list<int> answer{};
-  // //   return answer;
-  // // };
-  // // BreadthFirstSearch bfs{ N , Get( gE<int> ) , 0 };
-  // // DepthFirstSearchOnTree dfst{ N , Get( gE<int> ) , 0 };
-  // // Dijkstra dijk{ N , Get( gE<path> ) };
+  // auto edge = [&]( CO int& i ){
+  //   list<path> answer = gE<path>[i];
+  //   return answer;
+  // };
+  // Graph graph{ N , edge };
+  // Dijkstra dijk{ graph };
   // ll answer = 0;
   // RETURN( answer );
  
   // // 一般のクエリ
   // CIN( int , Q );
-  // vector<T3<int> > query( Q );
-  // // vector<T2<int> > query( Q );
+  // vector<T3<int>> query( Q );
+  // // vector<T2<int>> query( Q );
   // FOR( q , 0 , Q ){
   //   CIN( int , type );
   //   if( type == 1 ){
@@ -88,7 +98,7 @@ inline void Solve()
   
   // // グリッド
   // // DEXPR( int , bound_H , 2e3 , 30 ); CEXPR( int , bound_W , bound_H );
-  // // static_assert( ll( bound_H ) * bound_W < ll( 1 ) << 31 );
+  // // ST_AS( ll( bound_H ) * bound_W < ll( 1 ) << 31 );
   // // CEXPR( int , bound_HW , bound_H * bound_W );
   // // SET_ASSERT( H , 1 , bound_H ); SET_ASSERT( W , 1 , bound_W ); // ランダムテスト用。
   // cin >> H >> W; H_minus = H - 1; W_minus = W - 1; HW = H * W;

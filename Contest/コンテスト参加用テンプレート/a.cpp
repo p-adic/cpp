@@ -45,12 +45,9 @@ IN VO Solve()
   //   gE<int>[uj].push_back( vj ); gE<int>[vj].push_back( uj );
   //   // uff.Graft( uj , vj );
   // }
-  // // auto edge = [&]( CO int& i ){
-  // //   list<int> answer{};
-  // //   RE answer;
-  // // };
-  // BreadthFirstSearch bfs{ N , Get( gE<int> ) , 0 };
-  // // DepthFirstSearchOnTree dfst{ N , Get( gE<int> ) , 0 };
+  // Graph graph{ N , Get( gE<int> ) };
+  // BreadthFirstSearch bfs{ graph , 0 };
+  // // DepthFirstSearchOnTree dfst{ graph , 0 };
   // ll answer = 0;
   // RETURN( answer );
   
@@ -65,10 +62,11 @@ IN VO Solve()
   //   // uff.Graft( uj , vj , wj );
   // }
   // auto edge = [&]( CO int& i ){
-  //   list<path> answer{};
+  //   list<path> answer = gE<path>[i];
   //   return answer;
   // };
-  // Dijkstra dijk{ N , Get( gE<path> ) };
+  // Graph graph{ N , edge };
+  // Dijkstra dijk{ graph };
   // ll answer = 0;
   // RETURN( answer );
  
