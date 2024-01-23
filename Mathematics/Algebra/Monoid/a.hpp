@@ -3,6 +3,9 @@
 #pragma once
 #include "../a.hpp"
 
+// verify:
+// https://yukicoder.me/submissions/945944ÅiAbstractMonoidÅj
+
 template <typename U>
 class VirtualMonoid :
   virtual public VirtualMagma<U> ,
@@ -40,7 +43,6 @@ class AbstractMonoid :
 {
 
 public:
-  inline AbstractMonoid( M_U m_U , const U& e_U );
-  inline U Product( const U& u0 , const U& u1 );
+  inline AbstractMonoid( M_U& m_U , const U& e_U );
 
 };

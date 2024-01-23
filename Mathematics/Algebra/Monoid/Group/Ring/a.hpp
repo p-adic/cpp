@@ -4,8 +4,8 @@
 #include "../a.hpp"
 
 // verify:
-// https://yukicoder.me/submissions/945752（Ring）
-// https://yukicoder.me/submissions/945753（AbstractRing）
+// https://yukicoder.me/submissions/945877（Ring）
+// https://yukicoder.me/submissions/945876（AbstractRing）
 
 template <typename U , typename GROUP , typename MONOID>
 class VirtualRing
@@ -45,6 +45,6 @@ class AbstractRing :
 {
   
 public:
-  inline AbstractRing( A_U a_U , const U& z_U , I_U i_U , M_U m_U , const U& e_U );
+  inline AbstractRing( A_U& a_U , const U& z_U , I_U& i_U , M_U& m_U , const U& e_U );
 
 };

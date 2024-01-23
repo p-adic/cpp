@@ -29,7 +29,7 @@ class AbstractGroup :
 {
 
 public:
-  inline AbstractGroup( M_U m_U , const U& e_U , I_U i_U );
+  inline AbstractGroup( M_U& m_U , const U& e_U , I_U& i_U );
   inline U Transfer( const U& u );
 
 };
