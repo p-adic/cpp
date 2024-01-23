@@ -9,7 +9,7 @@
 
 CEXPR(uint,P,998244353);TE <uint M,TY INT> CE INT& RS(INT& n)NE{RE n < 0?((((++n)*= -1)%= M)*= -1)+= M - 1:n %= M;}TE <uint M> CE uint& RS(uint& n)NE{RE n %= M;}TE <uint M> CE ull& RS(ull& n)NE{RE n %= M;}TE <TY INT> CE INT& RSP(INT& n)NE{CE CO uint trunc =(1 << 23)- 1;INT n_u = n >> 23;n &= trunc;INT n_uq =(n_u / 7)/ 17;n_u -= n_uq * 119;n += n_u << 23;RE n < n_uq?n += P - n_uq:n -= n_uq;}TE <> CE ull& RS<P,ull>(ull& n)NE{CE CO ull Pull = P;CE CO ull Pull2 =(Pull - 1)*(Pull - 1);RE RSP(n > Pull2?n -= Pull2:n);}TE <uint M,TY INT> CE INT RS(INT&& n)NE{RE MO(RS<M>(n));}TE <uint M,TY INT> CE INT RS(CO INT& n)NE{RE RS<M>(INT(n));}
 
-#define SFINAE_FOR_MOD(DEFAULT)TY T,enable_if_t<is_COructible<uint,decay_t<T>>::value>* DEFAULT
+#define SFINAE_FOR_MOD(DEFAULT)TY T,enable_if_t<is_COructible_v<uint,decay_t<T>>>* DEFAULT
 #define DC_OF_CM_FOR_MOD(FUNC)CE bool OP FUNC(CO Mod<M>& n)CO NE
 #define DC_OF_AR_FOR_MOD(FUNC)CE Mod<M> OP FUNC(CO Mod<M>& n)CO NE;TE <SFINAE_FOR_MOD(= nullptr)> CE Mod<M> OP FUNC(T&& n)CO NE;
 #define DF_OF_CM_FOR_MOD(FUNC)TE <uint M> CE bool Mod<M>::OP FUNC(CO Mod<M>& n)CO NE{RE m_n FUNC n.m_n;}
@@ -17,7 +17,7 @@ CEXPR(uint,P,998244353);TE <uint M,TY INT> CE INT& RS(INT& n)NE{RE n < 0?((((++n
 
 TE <uint M>CL Mod{PU:uint m_n;CE Mod()NE;CE Mod(CO Mod<M>& n)NE;CE Mod(Mod<M>& n)NE;CE Mod(Mod<M>&& n)NE;TE <SFINAE_FOR_MOD(= nullptr)> CE Mod(CO T& n)NE;TE <SFINAE_FOR_MOD(= nullptr)> CE Mod(T& n)NE;TE <SFINAE_FOR_MOD(= nullptr)> CE Mod(T&& n)NE;CE Mod<M>& OP=(CO Mod<M>& n)NE;CE Mod<M>& OP=(Mod<M>&& n)NE;CE Mod<M>& OP+=(CO Mod<M>& n)NE;CE Mod<M>& OP-=(CO Mod<M>& n)NE;CE Mod<M>& OP*=(CO Mod<M>& n)NE;IN Mod<M>& OP/=(CO Mod<M>& n);CE Mod<M>& OP<<=(int n)NE;CE Mod<M>& OP>>=(int n)NE;CE Mod<M>& OP++()NE;CE Mod<M> OP++(int)NE;CE Mod<M>& OP--()NE;CE Mod<M> OP--(int)NE;DC_OF_CM_FOR_MOD(==);DC_OF_CM_FOR_MOD(!=);DC_OF_CM_FOR_MOD(<);DC_OF_CM_FOR_MOD(<=);DC_OF_CM_FOR_MOD(>);DC_OF_CM_FOR_MOD(>=);DC_OF_AR_FOR_MOD(+);DC_OF_AR_FOR_MOD(-);DC_OF_AR_FOR_MOD(*);DC_OF_AR_FOR_MOD(/);CE Mod<M> OP<<(int n)CO NE;CE Mod<M> OP>>(int n)CO NE;CE Mod<M> OP-()CO NE;CE Mod<M>& SignInvert()NE;CE Mod<M>& Double()NE;CE Mod<M>& Halve()NE;IN Mod<M>& Invert();TE <TY T> CE Mod<M>& PositivePW(T&& EX)NE;TE <TY T> CE Mod<M>& NonNegativePW(T&& EX)NE;TE <TY T> CE Mod<M>& PW(T&& EX);CE VO swap(Mod<M>& n)NE;CE CRUI RP()CO NE;ST CE Mod<M> DeRP(CRUI n)NE;ST CE uint& Normalise(uint& n)NE;ST IN CO Mod<M>& Inverse(CRUI n)NE;ST IN CO Mod<M>& Factorial(CRUI n)NE;ST IN CO Mod<M>& FactorialInverse(CRUI n)NE;ST IN Mod<M> Combination(CRUI n,CRUI i)NE;ST IN CO Mod<M>& zero()NE;ST IN CO Mod<M>& one()NE;TE <TY T> CE Mod<M>& Ref(T&& n)NE;};
 
-#define SFINAE_FOR_MN(DEFAULT)TY T,enable_if_t<is_COructible<Mod<M>,decay_t<T>>::value>* DEFAULT
+#define SFINAE_FOR_MN(DEFAULT)TY T,enable_if_t<is_COructible_v<Mod<M>,decay_t<T>>>* DEFAULT
 #define DC_OF_AR_FOR_MN(FUNC)IN MN<M> OP FUNC(CO MN<M>& n)CO NE;TE <SFINAE_FOR_MOD(= nullptr)> IN MN<M> OP FUNC(T&& n)CO NE;
 #define DF_OF_CM_FOR_MN(FUNC)TE <uint M> IN bool MN<M>::OP FUNC(CO MN<M>& n)CO NE{RE m_n FUNC n.m_n;}
 #define DF_OF_AR_FOR_MN(FUNC,FORMULA)TE <uint M> IN MN<M> MN<M>::OP FUNC(CO MN<M>& n)CO NE{RE MO(MN<M>(*TH)FUNC ## = n);}TE <uint M> TE <SFINAE_FOR_MOD()> IN MN<M> MN<M>::OP FUNC(T&& n)CO NE{RE FORMULA;}TE <uint M,SFINAE_FOR_MOD(= nullptr)> IN MN<M> OP FUNC(T&& n0,CO MN<M>& n1)NE{RE MO(MN<M>(forward<T>(n0))FUNC ## = n1);}
