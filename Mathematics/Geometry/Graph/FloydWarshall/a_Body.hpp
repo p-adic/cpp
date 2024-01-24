@@ -3,13 +3,17 @@
 #pragma once
 #include "a.hpp"
 
-template <typename T , typename M_T , typename A_T>
-void FloydWarshall( M_T m_T , A_T a_T , const vector<vector<T>>& d , vector<vector<T>>& weight , const T& infty )
+#include "../a_Body.hpp"
+#include "../../../Algebra/Monoid/Semirng/a_Body.hpp"
+
+template <typename U , typename IDEMPOTENT_SEMIRNG>
+void FloydWarshall( IDEMPOTENT_SEMIRNG R , const vector<vector<U>>& d , vector<vector<U>>& weight )
 {
 
   const int size = d.size();
   assert( size > 0 ? size == int( d[0].size() ) : true );
   weight = d;
+  const U& infty = R.Infty();
 
   for( int k = 0 ; k < size ; k++ ){
 
@@ -18,19 +22,18 @@ void FloydWarshall( M_T m_T , A_T a_T , const vector<vector<T>>& d , vector<vect
     for( int i = 0 ; i < size ; i++ ){
 
       auto& weight_i = weight[i];
-      const T& weight_ik = weight_i[k];
+      const U& weight_ik = weight_i[k];
     
       if( i != k && weight_ik != infty ){
 	
 	for( int j = 0 ; j < size ; j++ ){
 
-	  const T& weight_kj = weight_k[j];
+	  const U& weight_kj = weight_k[j];
 
 	  if( i != j && k != j && weight_kj != infty ){
 
-	    T& weight_ij = weight_i[j];
-	    const T weight_curr = m_T( weight_ik , weight_kj );
-	    weight_ij = weight_ij == infty ? weight_curr : a_T( weight_ij , weight_curr );
+	    U& weight_ij = weight_i[j];
+	    weight_ij = R.Meet( weight_ij , R.Product( weight_ik , weight_kj ) );
 
 	  }
 
@@ -46,14 +49,15 @@ void FloydWarshall( M_T m_T , A_T a_T , const vector<vector<T>>& d , vector<vect
 
 }
 
-template <typename T , typename M_T>
-void FloydWarshall( M_T m_T , const vector<vector<T>>& d , vector<vector<T>>& weight , const T& infty , vector<vector<int>>& path )
+template <typename U , typename TROPICAL_SEMIRNG>
+void FloydWarshall( TROPICAL_SEMIRNG R , const vector<vector<U>>& d , vector<vector<U>>& weight , vector<vector<int>>& path )
 {
 
   const int size = d.size();
   assert( size > 0 ? size == int( d[0].size() ) : true );
   weight = d;
   path = vector<vector<int>>( size , vector<int>( size , -1 ) );
+  const U& infty = R.Infty();
 
   for( int k = 0 ; k < size ; k++ ){
 
@@ -63,22 +67,22 @@ void FloydWarshall( M_T m_T , const vector<vector<T>>& d , vector<vector<T>>& we
 
       auto& weight_i = weight[i];
       auto& path_i = path[i];
-      const T& weight_ik = weight_i[k];
+      const U& weight_ik = weight_i[k];
     
       if( i != k && weight_ik != infty ){
 	
 	for( int j = 0 ; j < size ; j++ ){
 
-	  const T& weight_kj = weight_k[j];
+	  const U& weight_kj = weight_k[j];
 
 	  if( i != j && k != j && weight_kj != infty ){
 
-	    T& weight_ij = weight_i[j];
-	    const T weight_curr = m_T( weight_ik , weight_kj );
+	    U& weight_ij = weight_i[j];
+	    U weight_curr = R.Product( weight_ik , weight_kj );
 
-	    if( weight_ij == infty ? true : weight_ij > weight_curr ){
+	    if( weight_ij > weight_curr ){
 
-	      weight_ij = weight_curr;
+	      weight_ij = move( weight_curr );
 	      path_i[j] = k;
 
 	    }
@@ -96,5 +100,3 @@ void FloydWarshall( M_T m_T , const vector<vector<T>>& d , vector<vector<T>>& we
   return;
 
 }
-
-

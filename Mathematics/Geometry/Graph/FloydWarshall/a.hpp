@@ -1,64 +1,60 @@
 // c:/Users/user/Documents/Programming/Mathematics/Geometry/Graph/FloydWarshall/a.hpp
 
 #pragma once
+#include "../a.hpp"
+#include "../../../Algebra/Monoid/Semirng/a.hpp"
 
-// verify: https://yukicoder.me/submissions/942861（経路復元なし）
+// verify:
+// https://yukicoder.me/submissions/946106（経路復元なし）
 
 // weightに値を格納する関係で、dを関数テンプレートで置き換えてもメモリ削減は見込めない。
 
-// M_Tは乗算m_T:T \times T->Tに相当する型。
-// A_Tはmeet a_T:T \times T->Tに相当する型。
-
 // 入力の範囲内で要件
-// (1) (T,a_T:T^2->T)がmeet半束（可換羃等半群）である。
-//     （以下a_Tの定める等号つき半順序を<=と置く）
-// (2) (T,m_T:T^2->T)が半群である。
-// (3) m_Tがa_T上分配的、つまり
-//     - Tの任意の要素s,t,uに対し
-//       - m_T(u,a_T(s,t)) = a_T(m_T(u,s),m_T(u,t)) 
-//       - m_T(a_T(s,t),u) = a_T(m_T(s,u),m_T(t,u))
+// (1) RはUの非単位的半環構造で加法が冪等的なもの。つまり
+//   (1-1)加法∧についてmeet半束（可換羃等半群）である。
+//   (1-2)乗法*について半群である。
+//   (1-3)乗法が加法に対し分配的である。
+//   を満たす。以下∧の定める等号つき半順序を<=と置き、∧に関する単位元をinftyと置く。
+// (2) dの値はRの乗法に関してnon-negative、つまり
+//     - Uの任意の要素sとdの任意の値tに対し
+//       - s<=s*t
+//       - s<=t*s
 //     である。
-// (4) inftyでないdの値はnon-negative、つまり
-//     - Tの任意の要素sとinftyでないdの任意の値tに対し
-//       - s<=m_T(s,t) 
-//       - s<=m_T(t,s)
-//     である。
-// (5) inftyでないdの値size_max個以下のm_Tに関する積でinftyが表せない。
+// (3) inftyでないdの値size個以下のRに関する積でinftyが表せない。
 // が成り立つ場合にのみサポート。
 
-// ただし<=が等号つき全順序である場合、(3)は
-// (3)' m_Tが<=に関する半順序半群演算、つまり
-//     - Tの任意の要素s,t,uに対しs<=tならば
-//       - m_T(u,s) <= m_T(u,t) 
-//       - m_T(s,u) <= m_T(t,u)
+// ただし<=が等号つき全順序である場合、(1-3)は
+// (1-3)' *が<=に関する半順序半群演算、つまり
+//     - Uの任意の要素s,t,uに対しs<=tならば
+//       - u*s <= u*t
+//       - s*u <= t*u
 //     である。
 // と同値であることに注意。
 
-// O(size_max^3)で全経路の重み（edgeごとの重みのm_Tに関する積）の
-// a_Tに関する下限（多変数化したa_Tへの適用値）を計算。
-template <typename T , typename M_T , typename A_T>
-void FloydWarshall( M_T m_T , A_T a_T , const vector<vector<T>>& d , vector<vector<T>>& weight , const T& infty );
-
+// O(size^3)で全経路の乗法的重み（edgeごとの重みのRに関する積）の
+// ∧に関する下限（多変数化した∧への適用値）を計算。
+template <typename U , typename IDEMPOTENT_SEMIRNG>
+void FloydWarshall( IDEMPOTENT_SEMIRNG R , const vector<vector<U>>& d , vector<vector<U>>& weight );
 
 // 入力の範囲内で要件
-// (1)' bool operator<(const T&,const T&)が全順序である。
+// (1)' Rはbool operator<(const U&,const U&)に関するminトロピカル非単位的半環である。つまり
+//   (1-1)' <が最大元inftyを持つ全順序である。
 //     （以下<の定める等号つき全順序を<=と置く）
-// (2) (T,m_T:T^2->T)が半群である。
-// (3)' m_Tが<=に関する半順序半群演算、つまり
-//     - Tの任意の要素s,t,uに対しs<=tならば
-//       - m_T(u,s) <= m_T(u,t) 
-//       - m_T(s,u) <= m_T(t,u)
+//   (1-2)' Rの乗法*が半群演算である。
+//   (1-3)' *が<=に関する半順序半群演算、つまり
+//     - Uの任意の要素s,t,uに対しs<=tならば
+//       - u*s <= u*t
+//       - s*u <= t*u
+//   である。
+// (2) dの値はRの乗法に関してnon-negative、つまり
+//     - Uの任意の要素sとdの任意の値tに対し
+//       - s<=s*t
+//       - s<=t*s
 //     である。
-// (4) inftyでないdの値はnon-negative、つまり
-//     - Tの任意の要素sとinftyでないdの任意の値tに対し
-//       - s<=m_T(s,t) 
-//       - s<=m_T(t,s)
-//     である。
-// (5) inftyでないdの値size_max個以下のm_Tに関する積でinftyが表せない。
+// (3) inftyでないdの値size個以下のRに関する積でinftyが表せない。
 // が成り立つ場合にのみサポート。
 
-// O(size_max^3)で各２点間の最短経路を１つずつ計算。path[i][j]には、
+// O(size^3)で各２点間の最短経路を１つずつ計算。path[i][j]には、
 // 固定した最短経路i->jで経由する１点があればその値、なければ-1を格納。
-template <typename T , typename M_T>
-void FloydWarshall( M_T m_T , const vector<vector<T>>& d , vector<vector<T>>& weight , const T& infty , vector<vector<int>>& path );
-
+template <typename U , typename TROPICAL_SEMIRNG>
+void FloydWarshall( TROPICAL_SEMIRNG R , const vector<vector<U>>& d , vector<vector<U>>& weight , vector<vector<int>>& path );
