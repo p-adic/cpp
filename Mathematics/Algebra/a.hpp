@@ -2,6 +2,19 @@
 
 #pragma once
 
+// - インタフェースをなるべく抽象型で与えて仮想継承する。
+//   - 具体的構造が２種類以上あるものはもちろん抽象型を仮想継承する。
+//   - VirtualPointedSetのように具体的構造が１種類しかないものも仮想継承のコンストラクタ呼び出しを
+//     省略するためになるべく抽象型を用意する。
+//   - AbstractDijkstraのように全ての具体的構造が１つの具体的構造の派生である場合は
+//     インタフェースを必要としない。
+// - コンストラクタはなるべく省略できるようにするが、ポインタはメンバ変数にしない。
+//   - VirtualGraphのように具体的構造が２種類以上あるもので全てに共通の定義本体を持つ関数（Edge）が
+//     必要な場合は実装が膨れ上がらないように抽象型に関数の定義をし、そのため抽象型にメンバ変数が
+//     必要になる場合はコンストラクタを非自明なものにする
+//   - 代わりにポインタを抽象型のメンバとして
+//     派生クラスのコンストラクタの定義内でアドレスを渡すようにすると、ムーブなどで意図せず
+//     ポインタの指すアドレスが意図通りでなくなることに注意する。
 template <typename U>
 class UnderlyingSet
 {
@@ -77,6 +90,26 @@ class VirtualMagma
 public:
   virtual U Product( const U& u0 , const U& u1 ) = 0;
   inline U Sum( const U& u0 , const U& u1 );
+
+};
+
+template <typename U = ll>
+class AdditiveMagma :
+  virtual public VirtualMagma<U>
+{
+
+public:
+  inline U Product( const U& u0 , const U& u1 );
+
+};
+
+template <typename U = ll>
+class MultiplicativeMagma :
+  virtual public VirtualMagma<U> ,
+{
+
+public:
+  inline U Product( const U& u0 , const U& u1 );
 
 };
 

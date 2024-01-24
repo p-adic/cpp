@@ -19,6 +19,10 @@ template <typename U , typename F_U> inline U AbstractNSet<U,F_U>::Transfer( con
 template <typename U> inline U VirtualNSet<U>::Inverse( const U& u ) { return Transfer( u ); }
 
 template <typename U , typename M_U> inline AbstractMagma<U,M_U>::AbstractMagma( M_U& m_U ) : m_m_U( m_U ) { static_assert( is_invocable_r_v<U,M_U,U,U> ); }
+
+
+template <typename U> inline U AdditiveMagma<U>::Product( const U& u0 , const U& u1 ) { return u0 + u1; }
+template <typename U> inline U MultiplicativeMagma<U>::Product( const U& u0 , const U& u1 ) { return u0 * u1; }
 template <typename U , typename M_U> inline U AbstractMagma<U,M_U>::Product( const U& u0 , const U& u1 ) { return m_m_U( u0 , u1 ); }
 template <typename U> inline U VirtualMagma<U>::Sum( const U& u0 , const U& u1 ) { return Product( u0 , u1 ); }
 
