@@ -15,23 +15,19 @@ class VirtualMonoid :
 template <typename U = ll>
 class AdditiveMonoid :
   virtual public VirtualMonoid<U> ,
+  public AdditiveMagma<U> ,
   public PointedSet<U>
-{
-
-public:
-  inline U Product( const U& u0 , const U& u1 );
-
-};
+{};
 
 template <typename U = ll>
 class MultiplicativeMonoid :
   virtual public VirtualMonoid<U> ,
+  public MultiplicativeMagma<U> ,
   public PointedSet<U>
 {
 
 public:
   inline MultiplicativeMonoid( const U& e_U );
-  inline U Product( const U& u0 , const U& u1 );
 
 };
 
