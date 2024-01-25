@@ -4,7 +4,7 @@
 #include "../a.hpp"
 
 // verify:
-// https://yukicoder.me/submissions/945967（経路復元なし）
+// https://yukicoder.me/submissions/946047（経路復元なし）
 
 // GRAPHは{0,1}彩色付き辺Edge:N->(N \times \{0,1\})^{< \omega}を持つグラフに相当する型。
 

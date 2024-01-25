@@ -2,6 +2,8 @@
 
 #pragma once
 #include "../a.hpp"
+#include "../../../Algebra/Monoid/Group/Ring/a.hpp"
+
 // verify:
 // https://yukicoder.me/submissions/945877（MinimumCostFlow）
 // https://yukicoder.me/submissions/945876（AbstractMinimumCostFlow）

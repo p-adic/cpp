@@ -4,6 +4,8 @@
 #include "a.hpp"
 
 #include "../a_Body.hpp"
+#include "../../../Algebra/Monoid/Group/a_Body.hpp"
+
 #include "../../BellmanFord/a_Body.hpp"
 
 template <typename T , typename GRAPH , typename GROUP , typename U , typename On> inline AbstractPotentialisedDijkstra<T,GRAPH,GROUP,U,On>::AbstractPotentialisedDijkstra( GRAPH& G , GROUP M , const T& t_start , const U& infty , On on , const bool& negative ) : AbstractPotentialisedDijkstra( G , move( M ) , t_start , infty , true , vector<U>() , move( on ) )

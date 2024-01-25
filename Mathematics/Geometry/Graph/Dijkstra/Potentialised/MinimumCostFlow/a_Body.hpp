@@ -4,6 +4,7 @@
 #include "a.hpp"
 
 #include "../a_Body.hpp"
+#include "../../../Algebra/Monoid/Group/Ring/a_Body.hpp"
 
 template <typename GRAPH , typename RING , typename U> inline AbstractMinimumCostFlow<GRAPH,RING,U>::AbstractMinimumCostFlow( GRAPH& G , RING R , const U& infty ) : PointedSet<U>( infty ) , m_G( G ) , m_R( move( R ) ) {}
 template <typename GRAPH , typename U> inline MinimumCostFlow<GRAPH,U>::MinimumCostFlow( GRAPH& G , const U& one_U , const U& infty ) : AbstractMinimumCostFlow<GRAPH,Ring<U>,U>( G , Ring<U>( one_U ) , infty ) {}
