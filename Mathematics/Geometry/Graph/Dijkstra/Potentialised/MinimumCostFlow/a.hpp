@@ -2,11 +2,11 @@
 
 #pragma once
 #include "../a.hpp"
-#include "../../../Algebra/Monoid/Group/Ring/a.hpp"
+#include "../../../Algebra/Monoid/Semirng/Ring/a.hpp"
 
 // verify:
-// https://yukicoder.me/submissions/945877（MinimumCostFlow）
-// https://yukicoder.me/submissions/945876（AbstractMinimumCostFlow）
+// https://yukicoder.me/submissions/946132（MinimumCostFlow）
+// https://yukicoder.me/submissions/946198（AbstractMinimumCostFlow）
 
 // GRAPHはグラフG=(V_G,E_G:T->(T \times U(コスト) \times U(容量))^{< \omega})に相当する型。
 
