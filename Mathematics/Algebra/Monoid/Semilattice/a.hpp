@@ -3,6 +3,9 @@
 #pragma once
 #include "../a.hpp"
 
+// verify:
+// https://yukicoder.me/submissions/946106ÅiMinSemilatticeÅj
+
 template <typename U>
 class VirtualMeetSemilattice :
   virtual public VirtualMonoid<U>

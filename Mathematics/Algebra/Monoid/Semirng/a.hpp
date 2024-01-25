@@ -13,6 +13,7 @@ public:
   virtual U Product( const U& u0 , const U& u1 ) = 0;
   virtual MONOID& AdditiveMonoid() noexcept = 0;
   virtual SEMIGROUP& MultiplicativeSemigroup() noexcept = 0;
+  using type = U;
 
 };
 
@@ -22,7 +23,7 @@ class AbstractSemirng :
 
 {
 
-private:
+protected:
   MONOID m_R0;
   SEMIGROUP m_R1;
 

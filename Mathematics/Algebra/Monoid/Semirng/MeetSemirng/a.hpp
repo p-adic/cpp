@@ -4,6 +4,9 @@
 #include "../a.hpp"
 #include "../../Semilattice/a.hpp"
 
+// verify:
+// https://yukicoder.me/submissions/946106ÅiAdditiveTropicalSemirngÅj
+
 template <typename U , typename MEET_SEMILATTICE , typename SEMIGROUP>
 class VirtualMeetSemirng :
   virtual public VirtualSemirng<U,MEET_SEMILATTICE,SEMIGROUP>
