@@ -16,7 +16,22 @@
 // Enumeration:N->R1-->TとEnumeration_inv:T->R2-->Nは互いに逆写像である仮想関数。
 template <typename T , typename R1 , typename R2 , typename E>
 class VirtualGraph :
-  virtual public UnderlyingSet<T>;
+  virtual public UnderlyingSet<T>
+{
+
+public:
+  virtual R1 Enumeration( const int& i ) = 0;
+  virtual R2 Enumeration_inv( const T& t ) = 0;
+  inline void Reset();
+  virtual const int& size() const noexcept = 0;
+  virtual E& edge() noexcept = 0;
+  virtual ret_t<E,T> Edge( const T& t ) = 0;
+
+};
+
+template <typename T , typename R1 , typename R2 , typename E>
+class EdgeImplimentation :
+  virtual public VirtualGraph<T,R1,R2,E>
 {
 
 private:
@@ -26,10 +41,7 @@ private:
   E m_edge;
 
 public:
-  inline VirtualGraph( const int& size , E edge );
-  virtual R1 Enumeration( const int& i ) = 0;
-  virtual R2 Enumeration_inv( const T& t ) = 0;
-  inline void Reset();
+  inline EdgeImplimentation( const int& size , E edge );
   inline const int& size() const noexcept;
   inline E& edge() noexcept;
   inline ret_t<E,T> Edge( const T& t );
@@ -38,7 +50,7 @@ public:
 
 template <typename E>
 class Graph :
-  virtual public VirtualGraph<int,const int&,const int&,E>
+  public EdgeImplimentation<int,const int&,const int&,E>
 {
   
 public:
@@ -51,7 +63,7 @@ public:
 
 template <typename T , typename Enum_T , typename Enum_T_inv , typename E>
 class EnumerationGraph :
-  virtual public VirtualGraph<T,ret_t<Enum_T,int>,ret_t<Enum_T_inv,T>,E>
+  public EdgeImplimentation<T,ret_t<Enum_T,int>,ret_t<Enum_T_inv,T>,E>
 {
 
 private:
@@ -68,9 +80,9 @@ public:
 template <typename Enum_T , typename Enum_T_inv , typename E> EnumerationGraph( const int& size , Enum_T enum_T , Enum_T_inv enum_T_inv , E edge ) -> EnumerationGraph<decldecay_t(declval<Enum_T>()(0)),Enum_T,Enum_T_inv,E>;
 
 // 推論補助のためにE::operator()はデフォルト引数が必要。
-template <SFINAE_FOR_GRAPH = nullptr>
+template <typename T , typename E>
 class MemorisationGraph :
-  virtual public VirtualGraph<T,T,const int&,E>
+  public EdgeImplimentation<T,T,const int&,E>
 {
 
 private:
