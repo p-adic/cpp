@@ -3,66 +3,32 @@
 #pragma once
 #include "a.hpp"
 
-template <typename V , typename T , typename U , int size_max> inline DifferenceSequenceBody<V,T,U,size_max>::DifferenceSequenceBody( const int& size ) :
-  m_size( size ) , m_a() , m_lazy_addition() , m_updated( false ) { assert( m_size <= size_max ); }
-template <typename T , int size_max> inline DifferenceSequence<T,size_max>::DifferenceSequence( const int& size ) :
-  DifferenceSequenceBody<int,T,T,size_max>( size )
+#include "../../../../Graph/Array/a_Body.hpp"
+
+template <typename U> inline AbstractDifferenceSequence<T,FOREST,U,GROUP>::DifferenceSequence( FOREST G , GROUP M ) : DifferenceSequence( move( G ) , vector<U>() , move( M ) ) { m_a = m_lazy_addition(); }
+template <typename U> inline AbstractDifferenceSequence<U,GROUP>::DifferenceSequence( FOREST G , vector<U> a , GROUP M ) : m_G( move( G ) ) , m_root() , m_prev( m_G.size() , -1 ) , m_a( move( a ) ) , m_lazy_addition( m_G.size() , m_M.Zero() ) , m_M( move( M ) ) , m_updated( false )
 {
 
-  using base = DifferenceSequenceBody<int,T,T,size_max>;
-  const T& unit = Unit();
+  static_assert( ! is_same_v<U,int> );
+  const int& size = m_G.size();
   
-  if( base::m_lazy_addition[0] != unit ){
+  for( int i = 0 ; i < size ; i++ ){
 
-    for( int i = 0 ; i < size ; i++ ){
+    auto&& edge_i = m_G.Edge( m_G.Enumersation( i ) );
 
-      base::m_a[i] = base::m_lazy_addition[i] = unit;
+    for( auto itr = edge_i.begin() , end = edge_i.end() ; itr != end ; itr++ ){
+
+      m_prev[*itr] = i;
 
     }
 
   }
-
-}
-
-template <typename T , int size_max> inline DifferenceSequence<T,size_max>::DifferenceSequence( const T ( &a )[size_max] , const int& size ) :
-  DifferenceSequenceBody<int,T,T,size_max>( size )
-{
-
-  using base = DifferenceSequenceBody<int,T,T,size_max>;
 
   for( int i = 0 ; i < size ; i++ ){
 
-    base::m_a[i] = a[i];
+    if( m_prev[i] == -1 ){
 
-  }
-
-  const T& unit = Unit();
-  
-  if( base::m_lazy_addition[0] != unit ){
-
-    for( int i = 0 ; i < size ; i++ ){
-
-      base::m_lazy_addition[i] = unit;
-
-    }
-
-  }
-  
-}
-
-template <typename T , int size_max> inline DifferenceSequence<T,size_max>::DifferenceSequence( T ( &&a )[size_max] , const int& size ) :
-  DifferenceSequenceBody<int,T,T,size_max>( size )
-{
-
-  using base = DifferenceSequenceBody<int,T,T,size_max>;
-  swap( base::m_a , a );
-  const T& unit = Unit();
-  
-  if( base::m_lazy_addition[0] != unit ){
-
-    for( int i = 0 ; i < size ; i++ ){
-
-      base::m_lazy_addition[i] = unit;
+      m_root.push_back( m_G.Enumeration( i ) );
 
     }
 
@@ -70,33 +36,38 @@ template <typename T , int size_max> inline DifferenceSequence<T,size_max>::Diff
 
 }
 
-template <typename V , typename T , typename U , int size_max> inline void DifferenceSequenceBody<V,T,U,size_max>::Set( const V& v , const U& u ) { Update(); m_a[e_inv(v)] = u; }
-template <typename V , typename T , typename U , int size_max> inline const U& DifferenceSequenceBody<V,T,U,size_max>::Get( const V& v ) { Update(); return m_a[e_inv(v)]; }
-template <typename V , typename T , typename U , int size_max> inline U& DifferenceSequenceBody<V,T,U,size_max>::Ref( const V& v ) { return m_a[e_inv(v)]; }
+template <typename U> inline DifferenceSequence<U,GROUP>::DifferenceSequence( const int& size , GROUP M ) : AbstractDifferenceSequence<LinearGraph,U>( LinearGraph( size , true )  , move( M ) ) {}
+template <typename U> inline DifferenceSequence<U,GROUP>::DifferenceSequence( GROUP M , vector<U> a ) : AbstractDifferenceSequence<LinearGraph,U>( LinearGraph( a.size() , true )  , move( a ) , move( M ) ) {}
 
-template <typename V , typename T , typename U , int size_max> inline void DifferenceSequenceBody<V,T,U,size_max>::Add( const V& v , const U& u ) { Addition( m_a[e_inv(v)] , u ); }
+template <typename T , typename FOREST , typename U , typename GROUP> inline void AbstractDifferenceSequence<T,FOREST,U,GROUP>::Set( const T& t , const U& u ) { Update(); m_a[m_G.Enumeration_inv(t)] = u; }
+template <typename T , typename FOREST , typename U , typename GROUP> inline const U& AbstractDifferenceSequence<T,FOREST,U,GROUP>::Get( const T& t ) { Update(); return m_a[m_G.Enumeration_inv(t)]; }
+template <typename T , typename FOREST , typename U , typename GROUP> inline U& AbstractDifferenceSequence<T,FOREST,U,GROUP>::Ref( const T& t ) { return m_a[m_G.Enumeration_inv(t)]; }
 
-template <typename V , typename T , typename U , int size_max>
-void DifferenceSequenceBody<V,T,U,size_max>::SubTreeAdd( const V& v_start , const list<V>& v_final , const U& u )
+template <typename T , typename FOREST , typename U , typename GROUP> inline void AbstractDifferenceSequence<T,FOREST,U,GROUP>::Add( const T& t , const U& u ) { U& a_t = m_a[m_G.Enumeration_inv(t)]: a_t = m_M.Sum( a_t , u ); }
+
+template <typename T , typename FOREST , typename U , typename GROUP>
+void AbstractDifferenceSequence<T,FOREST,U,GROUP>::SubTreeAdd( const T& t_start , const list<T>& t_final , const U& u )
 {
 
-  if( u == Unit() ){
+  if( u == m_M.zero() ){
 
     return;
 
   }
 
   m_updated = true;
-  Addition( u , m_lazy_addition[e_inv(v_start)] );
-  const U u_inv = Inverse( u );
+  U& m_lazy_addition_t_start = m_lazy_addition[m_G.Enumeration_inv(t_start)];
+  m_lazy_addition_t_start = m_M.Sum( m_lazy_addition_t_start , u );
+  const U u_inv = m_M.Inverse( u );
   
-  for( auto itr_v_final = v_final.begin() , end_v_final = v_final.end() ; itr_v_final != end_v_final ; itr_v_final++ ){
+  for( auto itr_t_final = t_final.begin() , end_t_final = t_final.end() ; itr_t_final != end_t_final ; itr_t_final++ ){
 
-    auto edge = Edge( *itr_v_final );
+    auto&& edge = m_G.Edge( *itr_t_final );
 
     for( auto itr_edge = edge.begin() , end_edge = edge.end() ; itr_edge != end_edge ; itr_edge++ ){
 
-      Addition( u_inv , m_lazy_addition[ e_inv( *itr_edge ) ] );
+      U& m_lazy_addition_t = m_lazy_addition[m_G.Enumeration_inv(*itr_edge)];
+      m_lazy_addition_t = m_M.Sum( m_lazy_addition_t , u_inv );
 
     }
 
@@ -106,21 +77,18 @@ void DifferenceSequenceBody<V,T,U,size_max>::SubTreeAdd( const V& v_start , cons
   
 }
 
-template <typename T , int size_max> inline void DifferenceSequence<T,size_max>::InitialSegmentAdd( const int& v_start , const T& u ) { SubTreeAdd( v_start , {} , u ); }
-template <typename T , int size_max> inline void DifferenceSequence<T,size_max>::FinalSegmentAdd( const int& v_final , const T& u ) { IntervalAdd( 0 , v_final , u ); }
-template <typename T , int size_max> inline void DifferenceSequence<T,size_max>::IntervalAdd( const int& v_start , const int& v_final , const T& u ) { SubTreeAdd( v_start , { v_final } , u ); }
+template <typename U> inline void DifferenceSequence<U,GROUP>::InitialSegmentAdd( const int& t_start , const U& u ) { SubTreeAdd( t_start , {} , u ); }
+template <typename U> inline void DifferenceSequence<U,GROUP>::FinalSegmentAdd( const int& t_final , const U& u ) { IntervalAdd( 0 , t_final , u ); }
+template <typename U> inline void DifferenceSequence<U,GROUP>::IntervalAdd( const int& t_start , const int& t_final , const U& u ) { SubTreeAdd( t_start , { t_final } , u ); }
 
-template <typename T , int size_max> inline void DifferenceSequence<T,size_max>::IntervalSubtract( const int& v_start , const int& v_final , const T& u ) { SubTreeAdd( v_start , { v_final } , -u ); }
-
-
-template <typename V , typename T , typename U , int size_max>
-DifferenceSequenceBody<V,T,U,size_max>& DifferenceSequenceBody<V,T,U,size_max>::operator+=( const DifferenceSequenceBody<V,T,U,size_max>& a )
+template <typename T , typename FOREST , typename U , typename GROUP>
+AbstractDifferenceSequence<T,FOREST,U,GROUP>& AbstractDifferenceSequence<T,FOREST,U,GROUP>::operator+=( const AbstractDifferenceSequence<T,U>& a )
 {
 
   for( int i = 0 ; i < m_size ; i++ ){
 
-    Addition( a.m_a[i] , m_a[i] );
-    Addition( a.m_lazy_addition[i] , m_lazy_addition[i] );
+    m_a[i] = m_M.Sum( m_a[i] , a.m_a[i] );
+    m_lazy_addition[i] = m_M.Sum( m_lazy_addition[i] , a.m_lazy_addition[i] );
     
   }
 
@@ -129,8 +97,8 @@ DifferenceSequenceBody<V,T,U,size_max>& DifferenceSequenceBody<V,T,U,size_max>::
   
 }
 
-template <typename V , typename T , typename U , int size_max>
-void DifferenceSequenceBody<V,T,U,size_max>::Update()
+template <typename T , typename FOREST , typename U , typename GROUP>
+void AbstractDifferenceSequence<T,FOREST,U,GROUP>::Update()
 {
 
   if( ! m_updated ){
@@ -139,26 +107,39 @@ void DifferenceSequenceBody<V,T,U,size_max>::Update()
 
   }
 
-  for( int i = 0 ; i < m_size ; i++ ){
+  const U& zero = m_M.Zero();
 
-    const int j = e_inv( Edge_inv( e( i ) ) );
-    
-    if( j != i ){
+  for( auto itr_root = m_root.begin() , end_root = m_root.end() ; itr_root != end_root ; itr_root++ ){
 
-      assert( j < i );
-      Addition( m_lazy_addition[j] , m_lazy_addition[i] );
+    list<T> vertex{};
+    vertex.push_back( *itr_root );
+
+    while( !vertex.empty() ){
+
+      const T& s = vertex.front();
+      auto&& i = m_G.Enumeration_inv( s );
+      auto&& edge = m_G.Edge( s );
+      U& m_lazy_addition_s = m_lazy_addition[i];
+      m_a[i] = m_M.Sum( m_a[i] , m_lazy_addition_s );
+
+      for( auto itr_edge = edge.begin() , end_edge = edge.end() ; itr_edge != end_edge ; itr_edge++ ){
+
+	U& m_lazy_addition_t = m_lazy_addition[m_G.Enumeration_inv(*itr_edge)];
+	m_lazy_addition_t = m_M.Sum( m_lazy_addition_t , m_lazy_addition_s );
+	vertex.push_back( *itr_edge );
+
+      }
+
+      m_lazy_addition_s = zero;
+      vertex.pop_front();
 
     }
 
   }
 
-  const T& unit = Unit();
 
   for( int i = 0 ; i < m_size ; i++ ){
 
-    U& m_lazy_addition_i = m_lazy_addition[i];
-    Action( m_lazy_addition_i , m_a[i] );
-    m_lazy_addition_i = unit;
 
   }
 
@@ -166,20 +147,3 @@ void DifferenceSequenceBody<V,T,U,size_max>::Update()
   return;
   
 }
-
-
-template <typename T , int size_max> inline list<int> DifferenceSequence<T,size_max>::Edge( const int& v ) const { using base = DifferenceSequenceBody<int,T,T,size_max>; const int w = v + 1; return w < base::m_size ? list<int>{ w } : list<int>{}; }
-
-template <typename T , int size_max> inline int DifferenceSequence<T,size_max>::Edge_inv( const int& v ) const { const int w = v - 1; return w < 0 ? v : w; }
-
-template <typename T , int size_max> inline int DifferenceSequence<T,size_max>::e( const int& i ) const { return i; }
-
-template <typename T , int size_max> inline int DifferenceSequence<T,size_max>::e_inv( const int& v ) const { return v; }
-
-template <typename T , int size_max> inline const T& DifferenceSequence<T,size_max>::Unit() const { static const T unit{}; return unit; }
-
-template <typename T , int size_max> inline T& DifferenceSequence<T,size_max>::Addition( const T& t0 , T& t1 ) const { return t1 += t0; }
-
-template <typename T , int size_max> inline T DifferenceSequence<T,size_max>::Inverse( const T& u ) const { return -u; }
-
-template <typename T , int size_max> inline T& DifferenceSequence<T,size_max>::Action( const T& u , T& t ) const { return t += u; }

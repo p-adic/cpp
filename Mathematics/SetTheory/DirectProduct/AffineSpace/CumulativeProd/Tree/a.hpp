@@ -4,26 +4,25 @@
 #include "../a.hpp"
 #include "../../../../../Geometry/Graph/DepthFirstSearch/Tree/a.hpp"
 
-// 木上の累積積。
-
+// 一般の木上の累積積。
 // 入力の範囲内で要件
-// (1) (T,m_T:T^2->T,i_T:T->T)が群である。
-// (2) グラフ(V,E)は無向グラフとして木である。
-// (3) 0を根とした時の各ノードの高さが2^digit未満である。
+// (1) MがUの群構造である。
+// (2) Tが無向グラフとして木である。
+// (3) 0を根とした時のTの各ノードの高さが2^digit未満である。
 // が成り立つ場合にのみサポート。
 // 2^16 = 65536
 // 2^17 = 131072
 // 2^18 = 262144
-template <typename T , T m_T(const T&,const T&) , T i_T(const T&) , typename E>
+template <typename TREE , typename GROUP>
 class CumulativeProdOnTree :
-  public CumulativeProd_Body<T,m_T,i_T>
+  public PathProdImplementation<inner_t<GROUP>,GROUP>
 {
 
 private:
-  DepthFirstSearchOnTree<E> m_dfst;
+  DepthFirstSearchOnTree<TREE> m_dfst;
 
 public:
-  template <typename U , SFINAE_FOR_CUMULATIVE_PROD( = nullptr )> inline CumulativeProdOnTree( const vector<U>& a , E e , const int& digit );
+  template <typename V> inline CumulativeProdOnTree( TREE T , const vector<V>& a , const int& digit , GROUP M );
 
 private:
   inline int Parent( const int& i );

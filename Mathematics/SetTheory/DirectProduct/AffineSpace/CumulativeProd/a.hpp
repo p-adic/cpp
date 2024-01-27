@@ -1,42 +1,52 @@
 // c:/Users/user/Documents/Programming/Mathematics/SetTheory/DirectProduct/AffineSpace/CumulativeProd/a.hpp
 
 #pragma once
-#include "a_Macro.hpp"
 
 // verify:
-// https://atcoder.jp/contests/agc023/submissions/49156204（左右区間積逆像数え上げ）
-// https://yukicoder.me/submissions/942404（左右区間積逆像数え上げ）
+// https://yukicoder.me/submissions/946991（左累積積）
+// https://atcoder.jp/contests/agc023/submissions/49678399（左右区間積逆像数え上げ）
 
-// 入力の範囲内で要件
-// (1) (T,m_T:T^2->T,i_T:T->T)が群である。
-// が成り立つ場合のみサポート。（単位元はテンプレート引数に渡さなくてよい）
-template <typename T , T m_T(const T&,const T&) , T i_T(const T&)>
-class CumulativeProd_Body
+// 木上で群に値を持つ関数の累積積を計算する。
+template <typename U>
+class VirtualCumulativeProd
 {
 
-protected:
-  int m_size;
-  vector<T> m_right;
-  vector<T> m_left;
-
 public:
-  inline CumulativeProd_Body( const int& size = 0 );
-
   // 0 <= i,j < m_sizeの場合のみサポート。
   // iからへのpathがi=v_0->...->v_k=jの時、Setした配列aに対する
   // 右総乗a[v_0]...a[v_k]を計算する。
-  inline T PathProd( const int& i , const int& j );
+  virtual U PathProd( const int& i , const int& j ) = 0;
 
-private:
+protected:
   virtual int Parent( const int& i ) = 0;
   virtual int LCA( const int& i , const int& j ) = 0;
 
 };
 
-// 通常の配列上の累積積。
-// テンプレート引数に単位元e_T:1->Tも渡す。
+template <typename U , typename GROUP>
+class PathProdImplementation :
+  virtual public VirtualCumulativeProd<U>
+{
 
-// e_Tによる初期化O(size)
+protected:
+  int m_size;
+  GROUP m_M;
+  vector<U> m_right;
+  vector<U> m_left;
+
+public:
+  inline PathProdImplementation( const int& size , GROUP M );
+  inline U PathProd( const int& i , const int& j );
+
+};
+
+
+// 木が特に通常の配列である場合。
+// 入力の範囲内で要件
+// (1) MがUの群構造である。
+// が成り立つ場合にのみサポート。
+
+// M.one()による初期化O(size)
 // 配列による初期化O(size)
 
 // 一点左乗算O(size)
@@ -47,35 +57,38 @@ private:
 
 // 右区間積逆像数え上げO(size log size)
 // 右区間積逆像数え上げO(size log size)
-template <typename T , T m_T(const T&,const T&) , const T& e_T() , T i_T(const T&)>
+template <typename U , typename GROUP>
 class CumulativeProd :
-  public CumulativeProd_Body<T,m_T,i_T>
+  public PathProdImplementation<U,GROUP>
 {
 
 public:
-  inline CumulativeProd( const int& size = 0 );
-  template <typename U , SFINAE_FOR_CUMULATIVE_PROD( = nullptr )> inline CumulativeProd( const vector<U>& a );
+  inline CumulativeProd( const int& size , GROUP M );
+  template <typename V> inline CumulativeProd( const vector<V>& a , GROUP M );
 
-  template <typename U , SFINAE_FOR_CUMULATIVE_PROD( = nullptr )> inline void Set( const vector<U>& a );
-  // a[i]をm_T(t,a[i])に置き変える。
-  inline void LeftMultiply( const int& i , const T& t );
-  // a[i]をm_T(a[i],t)に置き変える。
-  inline void RightMultiply( const int& i , const T& t );
-  
+  template <typename V> inline void Set( const vector<V>& a );
+  // a[i]をM.Product(t,a[i])に置き変える。
+  inline void LeftMultiply( const int& i , const U& t );
+  // a[i]をM.Product(a[i],t)に置き変える。
+  inline void RightMultiply( const int& i , const U& t );
+
   // 0 <= iかつi-1 <= j < m_sizeの場合のみサポート。
-  // 右区間積a[i]...a[j]をm_Tに関して計算する。
-  inline T RightProd( const int& i , const int& j );
-  // 左区間積a[j]...a[i]をm_Tに関して計算する。
-  inline T LeftProd( const int& i , const int& j );
+  // 右区間積a[i]...a[j]をMに関して計算する。
+  inline U RightProd( const int& i , const int& j );
+  // 左区間積a[j]...a[i]をMに関して計算する。
+  inline U LeftProd( const int& i , const int& j );
 
-  // 以下はe_Tとi_Tを使用しないので、m_Tが群演算でさえあればe_Tとi_Tをm_Tと無関係なものにしてもよい。
-  // 右区間積a[i]...a[j]がtと等しい区間[i,j]の個数を計算する。
-  ll CountRightProdInverseImage( const T& t = e_T() );
-  // 左区間積a[j]...a[i]がtと等しい区間[i,j]の個数を計算する。
-  ll CountLeftProdInverseImage( const T& t = e_T() );
-  
+  // 以下はM.Product()しか使用しないので、M.Product()が群演算でさえあればM.One()とM.Inverse()が無関係な演算でもよい。
+  // Mに関する右区間積a[i]...a[j]がtと等しい区間[i,j]の個数を計算する。
+  ll CountRightProdInverseImage( const U& t = One() );
+  // Mに関する左区間積a[j]...a[i]がtと等しい区間[i,j]の個数を計算する。
+  ll CountLeftProdInverseImage( const U& t = One() );
+
 private:
   inline int Parent( const int& i );
   inline int LCA( const int& i , const int& j );
+  inline const U& One() const;
 
 };
+template <typename GROUP> CumulativeProd( GROUP M ) -> CumulativeProd<inner_t<GROUP>,GROUP>;
+template <typename V , typename GROUP> CumulativeProd( const vector<V>& a , GROUP M ) -> CumulativeProd<inner_t<GROUP>,GROUP>;
