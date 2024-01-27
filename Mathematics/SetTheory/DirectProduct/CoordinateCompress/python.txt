@@ -1,0 +1,3 @@
+#Xの像のソートがY、Xの座標圧縮がZ。
+Y=list(set(x in X)).sort()
+Z={Y[i]:i for i in len(Y)}
