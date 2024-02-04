@@ -4,8 +4,7 @@
 #include "a_Macro.hpp"
 
 // verify:
-// https://yukicoder.me/submissions/942772（一点加算／区間max取得）
-// https://yukicoder.me/submissions/942771（配列による初期化／区間max取得）
+// https://yukicoder.me/submissions/947876（一点加算／区間max取得）
 
 // 最大（最小）元による初期化O(size)
 // 配列による初期化O(size)
@@ -27,4 +26,3 @@
 // の手法をもとに実装
 DECLARATION_OF_INTERVAL_MAX_BIT( Max );
 DECLARATION_OF_INTERVAL_MAX_BIT( Min );
-
