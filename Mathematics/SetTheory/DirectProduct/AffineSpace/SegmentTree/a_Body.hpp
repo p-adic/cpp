@@ -3,81 +3,81 @@
 #pragma once
 #include "a.hpp"
 
-#include "../../../../Arithmetic/Power/Constexpr/Inverse/a_Body.hpp"
+#include "../../../../Algebra/Monoid/a_Body.hpp"
 
-template <TEMPLATE_ARGUMENTS_FOR_SEGMENT_TREE> inline const T& SegmentTree<T,m_T,e_T,N>::g_e = e_T();
+template <typename U , typename MONOID> inline AbstractSegmentTree<U,MONOID>::AbstractSegmentTree( MONOID M ) : AbstractSegmentTree( move( M ) , vector<U>() ) {}
 
-template <TEMPLATE_ARGUMENTS_FOR_SEGMENT_TREE> inline SegmentTree<T,m_T,e_T,N>::SegmentTree() : m_a() { if( m_a[0] != g_e ){ for( int j = 1 ; j < g_power2 ; j++ ){ m_a[j] = g_e; } } }
-
-template <TEMPLATE_ARGUMENTS_FOR_SEGMENT_TREE> inline SegmentTree<T,m_T,e_T,N>::SegmentTree( const T ( &a )[N] ) : m_a()
+template <typename U , typename MONOID> inline AbstractSegmentTree<U,MONOID>::AbstractSegmentTree( MONOID M , const vector<U>& a ) : m_size( a.size() ) , m_power( 1 ) , m_M( move( M ) ) , m_a()
 {
 
-  int j_ulim = g_power + N;
+  static_assert( is_same_v<U,inner_t<MONOID>> );
+  while( m_size > m_power ){
+
+    m_power <<= 1;
+
+  }
+
+  m_a.resize( m_power << 1 , m_M.One() );
   
-  if( m_a[0] != g_e ){
-    
-    for( int j = g_power2 - 1 ; j >= j_ulim ; j-- ){
+  for( int i = 0 ; i < m_size ; i++ ){
 
-      m_a[j] = g_e;
-
-    }
+    m_a[i | m_power] = a[i];
 
   }
 
-  for( int i = 0 ; i < N ; i++ ){
-
-    m_a[i | g_power] = a[i];
-
-  }
-
-  for( int j = g_power - 1 ; j >= 1 ; j-- ){
+  for( int j = m_power - 1 ; j >= 1 ; j-- ){
 
     int j2 = j << 1;
-    m_a[j] = m_T( m_a[j2] , m_a[j2+1] );
+    m_a[j] = m_M.Product( m_a[j2] , m_a[j2+1] );
 
   }
 
 }
 
-template <TEMPLATE_ARGUMENTS_FOR_SEGMENT_TREE> inline const T& SegmentTree<T,m_T,e_T,N>::operator[]( const int& i ) const { return m_a[g_power + i]; }
-template <TEMPLATE_ARGUMENTS_FOR_SEGMENT_TREE> inline const T& SegmentTree<T,m_T,e_T,N>::Get( const int& i ) const { return m_a[g_power + i]; }
+template <typename U> template <typename...Args> inline SegmentTree<U>::SegmentTree( const U& one_U , const Args&... args ) : AbstractSegmentTree<U,MultiplicativeMonoid<U>>( MultiplicativeMonoid<U>( one_U ) , args... ) {}
 
-template <TEMPLATE_ARGUMENTS_FOR_SEGMENT_TREE>
-T SegmentTree<T,m_T,e_T,N>::IntervalProduct( const int& i_start , const int& i_final ) 
+template <typename U , typename MONOID> inline void AbstractSegmentTree<U,MONOID>::Set( const vector<U>& a ) { *this = AbstractSegmentTree( move( m_M ) , a ); }
+
+template <typename U , typename MONOID>
+void AbstractSegmentTree<U,MONOID>::Set( const int& i , const U& u )
 {
 
-  int j_min = i_start < 0 ? g_power : g_power + i_start;
-  int j_ulim = i_final < N ? g_power + i_final + 1 : g_power + N;
-  T answer0 = g_e;
-  T answer1 = g_e;
+  assert( 0 <= i && i < m_size );
+  int j = m_power + i;
+  m_a[j] = u;
+  
+  while( ( j >>= 1 ) >= 1 ){
+    
+    int j2 = j << 1;
+    m_a[j] = m_M.Product( m_a[j2] , m_a[j2+1] );
+
+  }
+
+  return;
+
+}
+
+template <typename U , typename MONOID> inline const U& AbstractSegmentTree<U,MONOID>::operator[]( const int& i ) const { assert( 0 <= i && i < m_size ); return m_a[m_power + i]; }
+template <typename U , typename MONOID> inline const U& AbstractSegmentTree<U,MONOID>::Get( const int& i ) const { return operator[]( i ); }
+
+template <typename U , typename MONOID>
+U AbstractSegmentTree<U,MONOID>::IntervalProduct( const int& i_start , const int& i_final ) 
+{
+
+  int j_min = m_power + max( 0 , i_start );
+  int j_ulim = m_power + min( i_final + 1 , m_size );
+  U answer0 = m_M.One();
+  U answer1 = answer0;
 
   while( j_min < j_ulim ){
 
-    ( j_min & 1 ) == 1 ? answer0 = m_T( answer0 , m_a[j_min++] ) : answer0;
-    ( j_ulim & 1 ) == 1 ? answer1 = m_T( m_a[--j_ulim] , answer1 ) : answer1;
+    ( j_min & 1 ) == 1 ? answer0 = m_M.Product( answer0 , m_a[j_min++] ) : answer0;
+    ( j_ulim & 1 ) == 1 ? answer1 = m_M.Product( m_a[--j_ulim] , answer1 ) : answer1;
     j_min >>= 1;
     j_ulim >>= 1;
 
   }
 
-  return m_T( answer0 , answer1 );
-
-}
-
-template <TEMPLATE_ARGUMENTS_FOR_SEGMENT_TREE>
-void SegmentTree<T,m_T,e_T,N>::Set( const int& i , const T& n )
-{
-
-  int j = g_power + i;
-  m_a[j] = n;
-  
-  while( ( j >>= 1 ) >= 1 ){
-    
-    int j2 = j << 1;
-    m_a[j] = m_T( m_a[j2] , m_a[j2+1] );
-
-  }
-
-  return;
+  return m_M.Product( answer0 , answer1 );
 
 }
