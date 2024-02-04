@@ -1,5 +1,5 @@
-// ‹æŠÔ‰ÁŽZA
-// ‹æŠÔ˜aS
+#‹æŠÔ‰ÁŽZA
+#‹æŠÔ˜aS
 def B(i,t,F):
 	i+=1
 	while i<=N:F[i],i=F[i]+t,i+(i&-i)
