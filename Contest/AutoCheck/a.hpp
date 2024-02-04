@@ -36,6 +36,7 @@ AC( MaximisationFunctionOnTree );
 AC( MinimisationMovingCost );
 AC( MinimisationSolvingMaze );
 AC( MinimisationSolvingOpenCovering );
+AC( MinimisationSolvingOpenCoveringUnknownCentres );
 AC( MaximisationStringMatching );
 AC( MaximisationBipartiteMatching );
 AC( MaximisationProbability );

@@ -710,18 +710,21 @@ AC( MaximisationFunctionOnAffineSpace )
   ASK_NUMBER(
 	     "凸関数の最小／最大化問題" ,
 	     "可微分関数の最小／最大化問題" ,
-	     "絶対値の最小／最大化問題"
+	     "距離の最小／最大化問題" ,
+	     "被覆半径の最小化問題"
 	     );
   if( num == num_temp++ ){
     CERR( "三分探索を検討しましょう。" );
   } else if( num == num_temp++ ){
     CERR( "ニュートン法を検討しましょう。" );
   } else if( num == num_temp++ ){
-    CERR( "符号を用いて絶対値を外しましょう。" );
+    CERR( "マンハッタン距離（l^1）は一次変換でl^∞に帰着させた上で、" );
     CERR( "- 単調な式に帰着できる場合、二分探索" );
-    CERR( "- 最大化問題の場合、符号パターンの全探策" );
-    CERR( "- マンハッタン距離などは一次変換" );
+    CERR( "- 最大化問題の場合、絶対値を外す符号パターンの全探策" );
     CERR( "を検討しましょう。" );
+  } else if( num == num_temp++ ){
+    CERR( "マンハッタン距離（l^1）は一次変換でl^∞に帰着させた上で、" );
+    CALL_AC( MinimisationSolvingOpenCoveringUnknownCentres );
   }
   CERR( "" );
   CERR( "複数のパラメータを決定すべき場合は、サブゴールの式の値を決め打ちましょう。" );
@@ -955,22 +958,34 @@ AC( MinimisationSolvingMaze )
 
 AC( MinimisationSolvingOpenCovering )
 {
-  CERR( "- コストがなくO(V+E)が通りそうならば、多点幅優先探索か" );
-  CERR( "  頂点を１つ追加し各始点に辺を張ったグラフ上での幅優先探索" );
-  CERR( "  \\Mathematics\\Geometry\\Graph\\BreadthFirst" );
-  CERR( "- コストが0か1でO(V+E)が通りそうならば、多点01幅優先探索" );
-  CERR( "  頂点を１つ追加し各始点に辺を張ったグラフ上での01幅優先探索" );
-  CERR( "  \\Mathematics\\Geometry\\Graph\\BreadthFirst\\ZeroOne" );
-  CERR( "- max演算を考えておりO(E(log_2 E + α(V)))が通りそうならば、" );
-  CERR( "  重みで辺をソートして素集合データ構造" );
-  CERR( "  \\Mathematics\\Geometry\\Graph\\UnionFindForest" );
-  CERR( "- O((V+E)log_2 E)が通りそうならば、" );
-  CERR( "  頂点を１つ追加し各始点に辺を張ったグラフ上でのダイクストラ法" );
-  CERR( "  \\Mathematics\\Geometry\\Graph\\Dijkstra" );
-  CERR( "- O(V^3)が通りそうならば、" );
-  CERR( "  ワーシャルフロイド法" );
-  CERR( "  \\Mathematics\\Geometry\\Graph\\FloydWarshall" );
-  CERR( "を検討しましょう。" );
+  ASK_YES_NO( "始点（被覆中心）が定まっているか、またはEが小さいですか？" );
+  if( reply == "y" ){
+    CERR( "- コストがなくO(V+E)が通りそうならば、多点幅優先探索か" );
+    CERR( "  頂点を１つ追加し各始点に辺を張ったグラフ上での幅優先探索" );
+    CERR( "  \\Mathematics\\Geometry\\Graph\\BreadthFirst" );
+    CERR( "- コストが0か1でO(V+E)が通りそうならば、多点01幅優先探索" );
+    CERR( "  頂点を１つ追加し各始点に辺を張ったグラフ上での01幅優先探索" );
+    CERR( "  \\Mathematics\\Geometry\\Graph\\BreadthFirst\\ZeroOne" );
+    CERR( "- max演算を考えておりO(E(log_2 E + α(V)))が通りそうならば、" );
+    CERR( "  重みで辺をソートして素集合データ構造" );
+    CERR( "  \\Mathematics\\Geometry\\Graph\\UnionFindForest" );
+    CERR( "- O((V+E)log_2 E)が通りそうならば、" );
+    CERR( "  頂点を１つ追加し各始点に辺を張ったグラフ上でのダイクストラ法" );
+    CERR( "  \\Mathematics\\Geometry\\Graph\\Dijkstra" );
+    CERR( "- O(V^3)が通りそうならば、" );
+    CERR( "  ワーシャルフロイド法" );
+    CERR( "  \\Mathematics\\Geometry\\Graph\\FloydWarshall" );
+    CERR( "を検討しましょう。" );
+  } else {
+    CALL_AC( MinimisationSolvingOpenCoveringUnknownCentres );
+  }
+}
+
+AC( MinimisationSolvingOpenCoveringUnknownCentres )
+{
+  CERR( "被覆半径Lを二分探索しましょう。例えば始点（被覆中心または被覆端点）の" );
+  CERR( "候補を絞った上で始点を１つ固定してその始点から距離L以内の点を削除し、" );
+  CERR( "残りの点群に対して再帰的に問題を解くことを検討しましょう。" );
 }
 
 AC( MaximisationStringMatching )
