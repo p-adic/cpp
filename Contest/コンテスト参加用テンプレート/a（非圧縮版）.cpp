@@ -20,19 +20,13 @@ inline void Solve()
   // CIN( int , N );
   // CIN_A( value_type , A , N ); CIN_A( value_type , B , N );
   // // vector<value_type> A( N ) , B( N ); FOR( i , 0 , N ){ cin >> A[i] >> B[i]; }
-  // value_type answer = 0;
-  // RETURN( answer );
 
   // // 文字列
   // CIN( int , N ); CIN( string , S , T );
-  // ll answer = 0;
-  // RETURN( answer );
 
   // // 順列
   // CIN( int , N ); vector<int> A( N ) , A_inv( N );
   // FOR( i , 0 , N ){ cin >> A[i]; A_inv[--A[i]] = i; }
-  // ll answer = 0;
-  // RETURN( answer );
   
   // // グラフ
   // CIN( int , N , M );
@@ -47,8 +41,6 @@ inline void Solve()
   // Graph graph{ N , Get( e ) };
   // BreadthFirstSearch bfs{ graph , 0 };
   // // DepthFirstSearchOnTree dfst{ graph , 0 };
-  // ll answer = 0;
-  // RETURN( answer );
   
   // // 重み付きグラフ
   // CIN( int , N , M );
@@ -66,15 +58,12 @@ inline void Solve()
   // };
   // Graph graph{ N , edge };
   // Dijkstra dijk{ graph };
-  // ll answer = 0;
-  // RETURN( answer );
  
   // // 一般のクエリ
   // CIN( int , Q );
   // // vector<T3<int>> query( Q );
   // FOR( q , 0 , Q ){
   //   CIN( ll , x , y ); x--; y--;
-  //   // query[q] = { x , y };
   //   COUT( x + y );
   //   // CIN( int , type );
   //   // if( type == 1 ){
@@ -88,11 +77,8 @@ inline void Solve()
   // }
   // // sort( query , query + Q );
   // // FOR( q , 0 , Q ){
-  // //   auto& [x,y] = query[q];
-  // //   // auto& [type,x,y] = query[q];
+  // //   auto& [type,x,y] = query[q];
   // // }
-  // ll answer = 0;
-  // RETURN( answer );
   
   // // グリッド
   // // DEXPR( int , bound_H , 2e3 , 30 ); CEXPR( int , bound_W , bound_H );
@@ -111,8 +97,6 @@ inline void Solve()
   // // (i,j)->(k,h)の方向番号を取得: DirectionNumberOnGrid( i , j , k , h );
   // // v->wの方向番号を取得: DirectionNumberOnGrid( v , w );
   // // 方向番号の反転U<->D、R<->L: ReverseDirectionNumberOnGrid( n );
-  // ll answer = 0;
-  // RETURN( answer );
 }
 REPEAT_MAIN(1);
 
