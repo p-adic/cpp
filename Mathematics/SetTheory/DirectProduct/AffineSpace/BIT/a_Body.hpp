@@ -3,15 +3,15 @@
 #pragma once
 #include "a.hpp"
 
-template <typename T> inline BIT<T>::BIT( const int& size ) : m_size( size ) , m_fenwick( m_size + 1 ) , m_power( 1 ) { static_assert( ! is_same<T,int>::value ); while( m_power < m_size ){ m_power <<= 1; } }
+template <typename U> inline BIT<U>::BIT( const int& size ) : m_size( size ) , m_fenwick( m_size + 1 ) , m_power( 1 ) { static_assert( ! is_same<U,int>::value ); while( m_power < m_size ){ m_power <<= 1; } }
 
-template <typename T>
-BIT<T>::BIT( const vector<T>& a ) : BIT( a.size() )
+template <typename U>
+BIT<U>::BIT( const vector<U>& a ) : BIT( a.size() )
 {
 
   for( int j = 1 ; j <= m_size ; j++ ){
 
-    T& fenwick_j = m_fenwick[j];
+    U& fenwick_j = m_fenwick[j];
     int i = j - 1;
     fenwick_j = a[i];
     int i_lim = j - ( j & -j );
@@ -27,23 +27,22 @@ BIT<T>::BIT( const vector<T>& a ) : BIT( a.size() )
 
 }
 
-template <typename T> inline BIT<T>& BIT<T>::operato=( BIT<T>&& a ) { m_size = a.m_size; m_fenwick = move( a.m_fenwick ); m_power = a.m_power; return *this; }
+template <typename U> inline void BIT<U>::Set( const int& i , const U& u ) { Add( i , u - IntervalSum( i , i ) ); }
+template <typename U> inline void BIT<U>::Set( const vector<U>& a ) { *this = BIT<U>{ a }; }
+template <typename U> inline void BIT<U>::Initialise( const int& size ) { *this = BIT<U>( size ); }
 
-template <typename T> inline void BIT<T>::Set( const int& i , const T& n ) { Add( i , n - IntervalSum( i , i ) ); }
-template <typename T> inline void BIT<T>::Set( const vector<T>& a ) { *this = BIT<T>{ a }; }
-template <typename T> inline void BIT<T>::Initialise( const int& size ) { *this = BIT<T>( size ); }
+template <typename U> inline BIT<U>& BIT<U>::operator+=( const vector<U>& a ) { BIT<U> a_copy{ a }; assert( m_size == a.m_size ); for( int j = 1 ; j <= m_size ; j++ ){ m_fenwick[j] += a.m_fenwick[j]; } return *this; }
 
-template <typename T> inline BIT<T>& BIT<T>::operator+=( const vector<T>& a ) { BIT<T> a_copy{ a }; assert( m_size == a.m_size ); for( int j = 1 ; j <= m_size ; j++ ){ m_fenwick[j] += a.m_fenwick[j]; } return *this; }
-
-template <typename T>
-void BIT<T>::Add( const int& i , const T& n )
+template <typename U>
+void BIT<U>::Add( const int& i , const U& u )
 {
   
+  assert( 0 <= i && i < m_size );
   int j = i + 1;
 
   while( j <= m_size ){
 
-    m_fenwick[j] += n;
+    m_fenwick[j] += u;
     j += ( j & -j );
 
   }
@@ -52,15 +51,16 @@ void BIT<T>::Add( const int& i , const T& n )
   
 }
 
-template <typename T> inline T BIT<T>::operator[]( const int& i ) const { assert( 0 <= i && i < m_size ); return IntervalSum( i , i ); }
-template <typename T> inline T BIT<T>::Get( const int& i ) const { return operator[]( i ); }
-template <typename T> inline const T& BIT<T>::LSBSegmentSum( const int& j ) const { assert( 0 < j && j <= m_size ); return m_fenwick[j]; }
+template <typename U> inline const int& BIT<U>::size() const noexcept { return m_size; }
+template <typename U> inline U BIT<U>::operator[]( const int& i ) const { assert( 0 <= i && i < m_size ); return IntervalSum( i , i ); }
+template <typename U> inline U BIT<U>::Get( const int& i ) const { return operator[]( i ); }
+template <typename U> inline const U& BIT<U>::LSBSegmentSum( const int& j ) const { assert( 0 < j && j <= m_size ); return m_fenwick[j]; }
 
-template <typename T> 
-T BIT<T>::InitialSegmentSum( const int& i_final ) const
+template <typename U> 
+U BIT<U>::InitialSegmentSum( const int& i_final ) const
 {
 
-  T sum = 0;
+  U sum = 0;
   int j = ( i_final < m_size ? i_final : m_size - 1 ) + 1;
 
   while( j > 0 ){
@@ -74,18 +74,17 @@ T BIT<T>::InitialSegmentSum( const int& i_final ) const
   
 }
 
-template <typename T> inline T BIT<T>::IntervalSum( const int& i_start , const int& i_final ) const { return InitialSegmentSum( i_final ) - InitialSegmentSum( i_start - 1 ); }
-template <typename T> inline const int& BIT<T>::size() const noexcept { return m_size; }
+template <typename U> inline U BIT<U>::IntervalSum( const int& i_start , const int& i_final ) const { return InitialSegmentSum( i_final ) - InitialSegmentSum( i_start - 1 ); }
 
 
-template <typename T>
-int BIT<T>::BinarySearch( const T& n ) const
+template <typename U>
+int BIT<U>::BinarySearch( const U& u ) const
 {
 
   int power = m_power;
   int j = 0;
-  T sum{};
-  T sum_next{};
+  U sum{};
+  U sum_next{};
   
   while( power > 0 ){
 
@@ -95,7 +94,7 @@ int BIT<T>::BinarySearch( const T& n ) const
       
       sum_next += m_fenwick[j_next];
 
-      if( sum_next < n ){
+      if( sum_next < u ){
 	
 	sum = sum_next;
 	j = j_next;
@@ -112,12 +111,12 @@ int BIT<T>::BinarySearch( const T& n ) const
 
   }
 
-  // InitialSegmentSum( i )がn未満となるiが存在するならばjはその最大値に1を足したものとなり、
-  // InitialSegmentSum( i )がn未満となるiが存在しないならばj=0となり、
-  // いずれの場合もInitialSegmentSum( i )がt以上となるiが存在するならば
+  // InitialSegmentSum( i )がu未満となるiが存在するならばjはその最大値に1を足したものとなり、
+  // InitialSegmentSum( i )がu未満となるiが存在しないならばj=0となり、
+  // いずれの場合もInitialSegmentSum( i )がu以上となるiが存在するならば
   // jはそのような最小のiと等しい。
   return j;
 
 }
 
-template <typename T> inline int BIT<T>::BinarySearch( const int& i_start , const T& n ) const { return max( i_start , BinarySearch( InitialSegmentSum( i_start ) + n ) ); }
+template <typename U> inline int BIT<U>::BinarySearch( const int& i_start , const U& u ) const { return max( i_start , BinarySearch( InitialSegmentSum( i_start - 1 ) + u ) ); }
