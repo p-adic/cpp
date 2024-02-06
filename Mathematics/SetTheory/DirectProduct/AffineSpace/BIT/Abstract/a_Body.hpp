@@ -124,4 +124,4 @@ int AbstractBIT<U,ABELIAN_GROUP>::BinarySearch( const U& u )
 
 }
 
-template <typename U , typename ABELIAN_GROUP> inline int AbstractBIT<U,ABELIAN_GROUP>::BinarySearch( const int& i_start , const U& u ) { return max( i_start , m_M.Sum( BinarySearch( InitialSegmentSum( i_start ) , u ) ) ); }
+template <typename U , typename ABELIAN_GROUP> inline int AbstractBIT<U,ABELIAN_GROUP>::BinarySearch( const int& i_start , const U& u ) { return max( i_start , m_M.Sum( BinarySearch( InitialSegmentSum( i_start - 1 ) , u ) ) ); }
