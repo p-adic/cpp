@@ -20,10 +20,11 @@
 
 // 一点取得O(log_2 size)
 // LSB切片和取得O(1)
-// 始切片和取得O(log_2 size)
+x// 始切片和取得O(log_2 size)
 // 区間和取得O(log_2 size)
 
-// 始切片和がn以上となる要素の添字の最小値の二分探索O(log_2 size)
+// 始切片和がu以上となる要素の添字の最小値の二分探索O(log_2 size)
+// 左端点を固定した時に区間和がu以上となる要素の添字の最小値の二分探索O(log_2 size)
 template <typename U>
 class BIT
 {
