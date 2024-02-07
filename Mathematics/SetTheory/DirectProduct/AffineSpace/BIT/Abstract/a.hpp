@@ -32,6 +32,7 @@
 // (3) 各成分がM.One()より小さくない。
 // を満たす場合にのみサポート。
 // 始切片和がu以上となる要素の添字の最小値の二分探索O(log_2 size)
+// 左端点を固定した時に区間和がu以上となる要素の添字の最小値の二分探索O(log_2 size)
 template <typename U , typename ABELIAN_GROUP>
 class AbstractBIT
 {
@@ -57,7 +58,7 @@ public:
   U InitialSegmentSum( const int& i_final );
   inline U IntervalSum( const int& i_start , const int& i_final );
 
-  // InitialSegmentSum( i )がn以上となるiが存在する場合にその最小値を2進法で探索。
+  // InitialSegmentSum( i )がu以上となるiが存在する場合にその最小値を2進法で探索。
   // 存在しない場合はN以上の最小の2羃×2-1を返す（N以上であることで判定可能）。
   int BinarySearch( const U& u );
   // IntervalSum( i_start , i )がn以上となるi_start以上のiが存在する場合にその最小値を2進法で探索。
