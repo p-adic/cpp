@@ -49,7 +49,7 @@ public:
   inline const U& LSBSegmentProduct( const int& j , const bool& left = true ) const;
   U IntervalProduct( const int& i_start , const int& i_final );
 
-  // IntervalSegmentProduct( 0 , i )がt以上となるiが存在する場合にその最小値を2進法で探索。
+  // IntervalSegmentProduct( 0 , i )がu以上となるiが存在する場合にその最小値を2進法で探索。
   // 存在しない場合はN以上の最小の2羃×2-1を返す（N以上であることで判定可能）。
   int BinarySearch( const U& u );
   
