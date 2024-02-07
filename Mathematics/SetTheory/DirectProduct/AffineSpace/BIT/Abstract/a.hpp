@@ -61,7 +61,7 @@ public:
   // InitialSegmentSum( i )がu以上となるiが存在する場合にその最小値を2進法で探索。
   // 存在しない場合はN以上の最小の2羃×2-1を返す（N以上であることで判定可能）。
   int BinarySearch( const U& u );
-  // IntervalSum( i_start , i )がn以上となるi_start以上のiが存在する場合にその最小値を2進法で探索。
+  // IntervalSum( i_start , i )がu以上となるi_start以上のiが存在する場合にその最小値を2進法で探索。
   // 存在しない場合はN以上の最小の2羃×2-1を返す（N以上であることで判定可能）。
   inline int BinarySearch( const int& i_start , const U& u );
   
