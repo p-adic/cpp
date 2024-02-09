@@ -8,7 +8,7 @@
 
 #include "../../BellmanFord/a_Body.hpp"
 
-template <typename T , typename GRAPH , typename GROUP , typename U , typename On> inline AbstractPotentialisedDijkstra<T,GRAPH,GROUP,U,On>::AbstractPotentialisedDijkstra( GRAPH& G , GROUP M , const T& t_start , const U& infty , On on , const bool& negative ) : AbstractPotentialisedDijkstra( G , move( M ) , t_start , infty , true , vector<U>() , move( on ) )
+template <typename T , typename GRAPH , typename GROUP , typename U , typename On> inline AbstractPotentialisedDijkstra<T,GRAPH,GROUP,U,On>::AbstractPotentialisedDijkstra( GRAPH& G , GROUP M , const T& t_start , const U& infty , On on , const bool& negative ) : AbstractPotentialisedDijkstra( G , move( M ) , t_start , infty , move( on ) , true , vector<U>()  )
 {
 
   if( negative ){
@@ -43,9 +43,9 @@ template <typename T , typename GRAPH , typename GROUP , typename U , typename O
 
 }
 
-template <typename T , typename GRAPH , typename GROUP , typename U , typename On> inline AbstractPotentialisedDijkstra<T,GRAPH,GROUP,U,On>::AbstractPotentialisedDijkstra( GRAPH& G , GROUP M , const T& t_start , const U& infty , const bool& valid , vector<U> potential , On on ) : PointedSet<U>( infty ) , m_G( G ) , m_M( move( M ) ) , m_t_start( t_start ) , m_valid( valid ) , m_potential( potential ) , m_on( move( on ) ) { static_assert( is_invocable_r_v<bool,On,decltype(declval<GRAPH>().Edge(declval<T>()).back())> ); }
+template <typename T , typename GRAPH , typename GROUP , typename U , typename On> inline AbstractPotentialisedDijkstra<T,GRAPH,GROUP,U,On>::AbstractPotentialisedDijkstra( GRAPH& G , GROUP M , const T& t_start , const U& infty , On on , const bool& valid , vector<U> potential ) : PointedSet<U>( infty ) , m_G( G ) , m_M( move( M ) ) , m_t_start( t_start ) , m_on( move( on ) ) , m_valid( valid ) , m_potential( potential ) { static_assert( is_invocable_r_v<bool,On,decltype(declval<GRAPH>().Edge(declval<T>()).back())> ); }
 
-template <typename T , typename GRAPH , typename On> template <typename...Args> inline PotentialisedDijkstra<T,GRAPH,On>::PotentialisedDijkstra( GRAPH& G , const T& t_start , Args&&... args ) : AbstractPotentialisedDijkstra<T,GRAPH,AdditiveGroup<>,ll,On>( G , AdditiveGroup<>() , t_start , 4611686018427387904 , forward<decay_t<Args>>( args )... ) {}
+template <typename T , typename GRAPH , typename On> template <typename...Args> inline PotentialisedDijkstra<T,GRAPH,On>::PotentialisedDijkstra( GRAPH& G , const T& t_start , On on , Args&&... args ) : AbstractPotentialisedDijkstra<T,GRAPH,AdditiveGroup<>,ll,On>( G , AdditiveGroup<>() , t_start , 4611686018427387904 , move( on ) , forward<decay_t<Args>>( args )... ) {}
 
 template <typename T , typename GRAPH , typename GROUP , typename U , typename On> inline const bool& AbstractPotentialisedDijkstra<T,GRAPH,GROUP,U,On>::Valid() const noexcept { return m_valid; }
 template <typename T , typename GRAPH , typename GROUP , typename U , typename On> inline const vector<U>& AbstractPotentialisedDijkstra<T,GRAPH,GROUP,U,On>::Potential() const noexcept { return m_potential; }

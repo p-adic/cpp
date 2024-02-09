@@ -41,7 +41,7 @@ private:
 
 public:
   inline AbstractPotentialisedDijkstra( GRAPH& G , GROUP M , const T& t_start , const U& infty , On on , const bool& negative = true );
-  inline AbstractPotentialisedDijkstra( GRAPH& G , GROUP M , const T& t_start , const U& infty , const bool& valid , vector<U> potential , On on );
+  inline AbstractPotentialisedDijkstra( GRAPH& G , GROUP M , const T& t_start , const U& infty , On on , const bool& valid , vector<U> potential );
 
   inline const bool& Valid() const noexcept;
   inline const vector<U>& Potential() const noexcept;
@@ -58,6 +58,5 @@ class PotentialisedDijkstra :
 {
 
 public:
-  template <typename...Args> inline PotentialisedDijkstra( GRAPH& G , const T& t_start , Args&&... args );
-
+  template <typename...Args> inline PotentialisedDijkstra( GRAPH& G , const T& t_start , On on , Args&&... args );
 };
