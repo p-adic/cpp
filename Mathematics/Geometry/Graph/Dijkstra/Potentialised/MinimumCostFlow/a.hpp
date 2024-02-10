@@ -5,8 +5,8 @@
 #include "../../../Algebra/Monoid/Semirng/Ring/a.hpp"
 
 // verify:
-// https://yukicoder.me/submissions/946132（MinimumCostFlow）
-// https://yukicoder.me/submissions/946198（AbstractMinimumCostFlow）
+// https://yukicoder.me/submissions/949995（MinimumCostFlow、many_edges=false）
+// https://yukicoder.me/submissions/949996（AbstractMinimumCostFlow、many_edges=false）
 
 // GRAPHはグラフG=(V_G,E_G:T->(T \times U(コスト) \times U(容量))^{< \omega})に相当する型。
 
@@ -29,7 +29,7 @@ private:
 
 public:
   inline AbstractMinimumCostFlow( GRAPH& G , RING R , const U& infty );
-  pair<U,vector<vector<tuple<inner_t<GRAPH>,U>>>> GetFlow( const inner_t<GRAPH>& t_start , const inner_t<GRAPH>& t_final , U f );
+  pair<U,vector<vector<tuple<inner_t<GRAPH>,U>>>> GetFlow( const inner_t<GRAPH>& t_start , const inner_t<GRAPH>& t_final , U f , const bool& many_edges = true );
 
 };
 

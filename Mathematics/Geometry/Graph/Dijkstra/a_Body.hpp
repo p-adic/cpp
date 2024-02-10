@@ -6,11 +6,11 @@
 #include "../a_Body.hpp"
 #include "../../../Algebra/Monoid/a_Body.hpp"
 
-template <typename GRAPH , typename MONOID , typename U> inline AbstractDijkstra<GRAPH,MONOID,U>::AbstractDijkstra( GRAPH G& , MONOID M , const U& infty ) : PointedSet<U>( infty ) , m_G( G ) , m_M( move( M ) ) { static_assert( ! is_same_v<U,int> ); }
+template <typename GRAPH , typename MONOID , typename U> inline AbstractDijkstra<GRAPH,MONOID,U>::AbstractDijkstra( GRAPH& G , MONOID M , const U& infty ) : PointedSet<U>( infty ) , m_G( G ) , m_M( move( M ) ) { static_assert( ! is_same_v<U,int> ); }
 template <typename GRAPH> inline Dijkstra<GRAPH>::Dijkstra( GRAPH& G ) : AbstractDijkstra<GRAPH,AdditiveMonoid<>,ll>( G , AdditiveMonoid<>() , 4611686018427387904 ) {}
 
 template <typename GRAPH , typename MONOID , typename U>
-U AbstractDijkstra<GRAPH,MONOID,U>::GetDistance( const inner_t<GRAPH>& t_start , const inner_t<GRAPH>& t_final )
+U AbstractDijkstra<GRAPH,MONOID,U>::GetDistance( const inner_t<GRAPH>& t_start , const inner_t<GRAPH>& t_final , const bool& many_edges )
 {
 
   auto&& i_final = m_G.Enumeration_inv( t_final );
@@ -22,7 +22,7 @@ U AbstractDijkstra<GRAPH,MONOID,U>::GetDistance( const inner_t<GRAPH>& t_start ,
 }
 
 template <typename GRAPH , typename MONOID , typename U>
-vector<U> AbstractDijkstra<GRAPH,MONOID,U>::GetDistance( const inner_t<GRAPH>& t_start )
+vector<U> AbstractDijkstra<GRAPH,MONOID,U>::GetDistance( const inner_t<GRAPH>& t_start , const bool& many_edges )
 {
 
   DIJKSTRA_BODY( , , );
@@ -32,7 +32,7 @@ vector<U> AbstractDijkstra<GRAPH,MONOID,U>::GetDistance( const inner_t<GRAPH>& t
 }
 
 template <typename GRAPH , typename MONOID , typename U>
-pair<U,list<inner_t<GRAPH>>> AbstractDijkstra<GRAPH,MONOID,U>::GetPath( const inner_t<GRAPH>& t_start , const inner_t<GRAPH>& t_final )
+pair<U,list<inner_t<GRAPH>>> AbstractDijkstra<GRAPH,MONOID,U>::GetPath( const inner_t<GRAPH>& t_start , const inner_t<GRAPH>& t_final , const bool& many_edges )
 {
 
   auto&& i_final = m_G.Enumeration_inv( t_final );
@@ -59,7 +59,7 @@ pair<U,list<inner_t<GRAPH>>> AbstractDijkstra<GRAPH,MONOID,U>::GetPath( const in
 }
 
 template <typename GRAPH , typename MONOID , typename U> template <template <typename...> typename V> 
-pair<vector<U>,vector<list<inner_t<GRAPH>>>> AbstractDijkstra<GRAPH,MONOID,U>::GetPath( const inner_t<GRAPH>& t_start , const V<inner_t<GRAPH>>& t_finals )
+pair<vector<U>,vector<list<inner_t<GRAPH>>>> AbstractDijkstra<GRAPH,MONOID,U>::GetPath( const inner_t<GRAPH>& t_start , const V<inner_t<GRAPH>>& t_finals , const bool& many_edges )
 {
 
   DIJKSTRA_BODY( vector<int> prev( size ) , , prev[j] = i );

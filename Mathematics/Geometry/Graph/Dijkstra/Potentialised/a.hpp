@@ -46,7 +46,7 @@ public:
   inline const vector<U>& Potential() const noexcept;
   inline void SetPotential( const bool& valid , vector<U> potential );
 
-  tuple<bool,vector<U>> GetDistance();
+  tuple<bool,vector<U>> GetDistance( const bool& many_edges = true );
   template <typename...Args> tuple<bool,vector<U>,vector<list<T>>> GetPath( const Args&... args );
 
 };

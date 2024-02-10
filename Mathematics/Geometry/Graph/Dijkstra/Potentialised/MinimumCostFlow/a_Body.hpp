@@ -10,7 +10,7 @@ template <typename GRAPH , typename RING , typename U> inline AbstractMinimumCos
 template <typename GRAPH , typename U> inline MinimumCostFlow<GRAPH,U>::MinimumCostFlow( GRAPH& G , const U& one_U , const U& infty ) : AbstractMinimumCostFlow<GRAPH,Ring<U>,U>( G , Ring<U>( one_U ) , infty ) {}
 
 template <typename GRAPH , typename RING , typename U>
-pair<U,vector<vector<tuple<inner_t<GRAPH>,U>>>> AbstractMinimumCostFlow<GRAPH,RING,U>::GetFlow( const inner_t<GRAPH>& t_start , const inner_t<GRAPH>& t_final , U f )
+pair<U,vector<vector<tuple<inner_t<GRAPH>,U>>>> AbstractMinimumCostFlow<GRAPH,RING,U>::GetFlow( const inner_t<GRAPH>& t_start , const inner_t<GRAPH>& t_final , U f , const bool& many_edges )
 {
 
   using T = inner_t<GRAPH>;
@@ -85,7 +85,7 @@ pair<U,vector<vector<tuple<inner_t<GRAPH>,U>>>> AbstractMinimumCostFlow<GRAPH,RI
 
   while( zero < f ){
 
-    auto [valid,weight,paths] = pd.GetPath( t_finals );
+    auto [valid,weight,paths] = pd.GetPath( t_finals , many_edges );
     assert( valid );
     pd.SetPotential( valid , move( weight ) );
     auto& path = paths.front();
