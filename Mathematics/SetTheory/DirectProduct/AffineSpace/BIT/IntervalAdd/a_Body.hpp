@@ -8,8 +8,6 @@
 template <typename U> inline IntervalAddBIT<U>::IntervalAddBIT( const int& size ) : m_bit_0( size ) , m_bit_1( size ) {}
 template <typename U> inline IntervalAddBIT<U>::IntervalAddBIT( const vector<U>& a ) : m_bit_0() , m_bit_1() { const int size = a.size(); vector<U> diff( size ); diff[0] = a[0]; for( int i = 1 ; i < size ; i++ ){ diff[i] = a[i] - a[i-1]; } m_bit_0.Set( diff ); for( int i = 1 ; i < size ; i++ ){ ( diff[i] *= 1 - i ) -= a[i]; } m_bit_1.Set( diff ); }
 
-template <typename U> inline IntervalAddBIT<U>& IntervalAddBIT<U>::operator=( IntervalAddBIT<U>&& a ) { m_bit_0 = move( a.m_bit_0 ); m_bit_1 = move( a.m_bit_1 ); }
-
 template <typename U> inline void IntervalAddBIT<U>::Set( const int& i , const U& u ) { Add( i , u - IntervalSum( i , i ) ); }
 template <typename U> inline void IntervalAddBIT<U>::Set( const vector<U>& a ) { *this = IntervalAddBIT<U>( a ); }
 template <typename U> inline void IntervalAddBIT<U>::Initialise( const int& size ) { m_bit_0.Initialise( size ); m_bit_1.Initialise( size ); }

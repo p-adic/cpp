@@ -37,8 +37,6 @@ public:
   inline IntervalAddBIT( const int& size = 0 );
   inline IntervalAddBIT( const vector<U>& a );
 
-  inline IntervalAddBIT<U>& operator=( IntervalAddBIT<U>&& a );
-
   inline void Set( const int& i , const U& u );
   inline void Set( const vector<U>& a );
   inline void Initialise( const int& size = 0 );
