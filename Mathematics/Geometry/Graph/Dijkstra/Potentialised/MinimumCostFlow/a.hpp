@@ -17,7 +17,7 @@
 // (3) Vの各要素u,vに対し、辺u->vが複数存在しない。
 // が成り立つ場合にのみサポート。
 
-// 単一始点単一終点最小費用流路探索O(F (|V_G|+|E_G|)log |V_G|)
+// 単一始点単一終点最小費用流路探索O(F min(|V_G|^2+|E_G|,(|V_G|+|E_G|)log |V_G|))
 template <typename GRAPH , typename RING , typename U>
 class AbstractMinimumCostFlow :
   public PointedSet<U>

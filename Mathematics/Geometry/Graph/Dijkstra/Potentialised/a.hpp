@@ -20,8 +20,8 @@
 
 // 負辺を含む場合/含まない場合
 // 構築O(|V_G| |E_G|)/O(|V_G|)
-// 単一始点全終点最短経路探索／経路復元なしO((|V_G|+|E_G|)log |V_G|)
-// 単一始点全終点最短経路探索／経路復元ありO(|V_G|^2 + |E_G| log |V_G|)
+// 単一始点全終点最短経路探索／経路復元なしO((min(|V_G|^2+|E_G|,|V_G|+|E_G|)log |V_G|))
+// 単一始点全終点最短経路探索／経路復元ありO(|V_G|^2+|E_G|)
 template <typename T , typename GRAPH , typename GROUP , typename U , typename On>
 class AbstractPotentialisedDijkstra :
   public PointedSet<U>
