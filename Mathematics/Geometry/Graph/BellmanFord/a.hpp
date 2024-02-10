@@ -34,9 +34,9 @@ public:
   inline AbstractBellmanFord( GRAPH& G , MONOID M , const U& infty );
 
   // •‰‚Ì•Â˜H‚ª‘¶İ‚·‚ê‚ÎfalseA‘¶İ‚µ‚È‚¯‚ê‚Îtrue‚ğ‘æ1¬•ª‚É•Ô‚·B
-  tuple<bool,vector<U>> GetDistance( const inner_t<GRAPH>& t_start );
-  template <template <typename...> typename V> tuple<bool,vector<U>,vector<list<inner_t<GRAPH>>>> GetPath( const inner_t<GRAPH>& t_start , const V<inner_t<GRAPH>>& t_finals );
-  tuple<bool,vector<U>,vector<list<inner_t<GRAPH>>>> GetPath( const inner_t<GRAPH>& t_start );
+  tuple<bool,vector<U>> GetDistance( const inner_t<GRAPH>& t_start , const bool& dummy = true );
+  template <template <typename...> typename V> tuple<bool,vector<U>,vector<list<inner_t<GRAPH>>>> GetPath( const inner_t<GRAPH>& t_start , const V<inner_t<GRAPH>>& t_finals , const bool& dummy = true );
+  tuple<bool,vector<U>,vector<list<inner_t<GRAPH>>>> GetPath( const inner_t<GRAPH>& t_start , const bool& dummy = true );
   
 };
 

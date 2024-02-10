@@ -11,7 +11,7 @@ template <typename GRAPH , typename MONOID , typename U> inline AbstractBellmanF
 template <typename GRAPH> inline BellmanFord<GRAPH>::BellmanFord( GRAPH& G ) : AbstractBellmanFord<GRAPH,AdditiveMonoid<>,ll>( G , AdditiveMonoid<>() , 4611686018427387904 ) {}
 
 template <typename GRAPH , typename MONOID , typename U>
-tuple<bool,vector<U>> AbstractBellmanFord<GRAPH,MONOID,U>::GetDistance( const inner_t<GRAPH>& t_start )
+tuple<bool,vector<U>> AbstractBellmanFord<GRAPH,MONOID,U>::GetDistance( const inner_t<GRAPH>& t_start , const bool& dummy )
 {
 
   BELLMAN_FORD_BODY( , );
@@ -21,7 +21,7 @@ tuple<bool,vector<U>> AbstractBellmanFord<GRAPH,MONOID,U>::GetDistance( const in
 }
 
 template <typename GRAPH , typename MONOID , typename U> template <template <typename...> typename V>
-tuple<bool,vector<U>,vector<list<inner_t<GRAPH>>>> AbstractBellmanFord<GRAPH,MONOID,U>::GetPath( const inner_t<GRAPH>& t_start , const V<inner_t<GRAPH>>& t_finals )
+tuple<bool,vector<U>,vector<list<inner_t<GRAPH>>>> AbstractBellmanFord<GRAPH,MONOID,U>::GetPath( const inner_t<GRAPH>& t_start , const V<inner_t<GRAPH>>& t_finals , const bool& dummy )
 {
 
   BELLMAN_FORD_BODY( vector<int> prev( size ) , prev[j] = i );
@@ -63,7 +63,7 @@ tuple<bool,vector<U>,vector<list<inner_t<GRAPH>>>> AbstractBellmanFord<GRAPH,MON
 }
 
 template <typename GRAPH , typename MONOID , typename U>
-tuple<bool,vector<U>,vector<list<inner_t<GRAPH>>>> AbstractBellmanFord<GRAPH,MONOID,U>::GetPath( const inner_t<GRAPH>& t_start )
+tuple<bool,vector<U>,vector<list<inner_t<GRAPH>>>> AbstractBellmanFord<GRAPH,MONOID,U>::GetPath( const inner_t<GRAPH>& t_start , const bool& dummy )
 {
 
   const int& size = m_G.size();
