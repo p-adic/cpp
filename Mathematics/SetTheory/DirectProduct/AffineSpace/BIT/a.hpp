@@ -4,6 +4,7 @@
 
 // verify:
 // https://yukicoder.me/submissions/947999（零初期化、一点加算、区間和）
+// https://yukicoder.me/submissions/949954（配列初期化、一点更新、始切片和）
 
 // 使用演算：
 // U& U::operator=( const U& )
