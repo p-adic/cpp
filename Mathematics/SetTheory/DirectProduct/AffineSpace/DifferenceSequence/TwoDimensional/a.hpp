@@ -3,8 +3,8 @@
 #pragma once
 
 // verify:
-// https://yukicoder.me/submissions/947058（零初期化、一点取得、矩形加算）
-// https://yukicoder.me/submissions/947062（零初期化、一点取得、矩形加算）
+// https://yukicoder.me/submissions/950088（零初期化、一点取得、矩形加算）
+// https://yukicoder.me/submissions/950089（零初期化、一点取得、矩形加算）
 
 // ２次元配列上の階差数列。基本的に２次元imos法
 // https://imoz.jp/algorithms/imos_method.html
@@ -23,23 +23,24 @@
 // 一点加算O(1)（作用を遅延評価しない）
 // 始矩形加算O(1)（作用を遅延評価する）
 // 矩形加算O(1)（作用を遅延評価する）
-// 加法O(size_X*size_Y)（作用の遅延評価を解消する）
+// 加法O(size_X*size_Y)（作用を遅延評価しない）
 template <typename U , typename GROUP>
-class TwoDimensionalDifferenceSequence
+class AbstractTwoDimensionalDifferenceSequence
 {
 
 private:
+  GROUP m_M;
   int m_size_X;
   int m_size_Y;
   vector<vector<U>> m_a;
   vector<vector<U>> m_lazy_addition;
-  GROUP m_M;
   bool m_updated;
   
 public:
-  inline TwoDimensionalDifferenceSequence( vector<vector<U>> a , GROUP M );
-  inline TwoDimensionalDifferenceSequence( const int& size_X , const int& size_Y , GROUP M );
-  
+  inline AbstractTwoDimensionalDifferenceSequence( GROUP M , const int& size_X = 0 , const int& size_Y = 0 );
+  inline AbstractTwoDimensionalDifferenceSequence( GROUP M , vector<vector<U>> a );
+
+  inline void Set( vector<vector<U>> a );
   // 作用の遅延評価を解消してから値を代入する。
   inline void Set( const int& i_x , const int& i_y , const U& u );
   // 作用の遅延評価を解消してから値を参照する。
@@ -53,11 +54,21 @@ public:
   // tを遅延評価で加算する。
   inline void RectangleAdd( const int& i_start_x , const int& i_start_y , const int& i_final_x , const int& i_final_y , const U& u );
 
-  // 作用の遅延評価を解消してから全体を加算する。
-  inline TwoDimensionalDifferenceSequence<U,GROUP>& operator+=( const TwoDimensionalDifferenceSequence<U,GROUP>& a );
+  // aを遅延評価せずに加算する。
+  inline AbstractTwoDimensionalDifferenceSequence<U,GROUP>& operator+=( const vector<U>& a );
 
   // 作用の遅延評価を解消する。
   void Update();
 
 };
-template <typename GROUP> TwoDimensionalDifferenceSequence( const int& size_X , const int& size_Y , GROUP M ) -> TwoDimensionalDifferenceSequence<inner_t<GROUP>,GROUP>;
+template <typename GROUP> AbstractTwoDimensionalDifferenceSequence( GROUP M , const int& size_X , const int& size_Y ) -> AbstractTwoDimensionalDifferenceSequence<inner_t<GROUP>,GROUP>;
+
+template <typename U = ll>
+class TwoDimensionalDifferenceSequence :
+  public AbstractTwoDimensionalDifferenceSequence<U,AdditiveGroup<U>>
+{
+
+public:
+  template <typename...Args> inline TwoDimensionalDifferenceSequence( Args&&... args );
+
+};
