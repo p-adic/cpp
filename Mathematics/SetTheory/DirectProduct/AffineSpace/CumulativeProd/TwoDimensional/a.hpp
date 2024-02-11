@@ -3,7 +3,7 @@
 #pragma once
 
 // verify:
-// https://yukicoder.me/submissions/947062（矩形和）
+// https://yukicoder.me/submissions/950030（矩形和）
 
 // ２次元配列上の累積和。
 // 入力の範囲内で要件
@@ -15,18 +15,20 @@
 // 始矩形和O(1)
 // 矩形和O(1)
 template <typename U , typename ABELIAN_GROUP>
-class TwoDimensionalCumulativeSum
+class AbstractTwoDimensionalCumulativeSum
 {
 
 private:
+  ABELIAN_GROUP m_M;
   int m_size_X;
   int m_size_Y;
-  ABELIAN_GROUP m_M; 
   vector<vector<U>> m_a;
 
 public:
-  TwoDimensionalCumulativeSum( const vector<vector<U>>& a , ABELIAN_GROUP M );
+  AbstractTwoDimensionalCumulativeSum( ABELIAN_GROUP M , const vector<vector<U>>& a = vector<vector<U>>() );
 
+  inline void Set( const vector<vector<U>>& a );
+  
   // 条件
   // (1) -1 <= i_final_x < m_size_X
   // (2) -1 <= i_final_y < m_size_Y
@@ -45,4 +47,14 @@ public:
   // をMに関して計算する。
   inline U RectangleSum( const int& i_start_x , const int& i_start_y , const int& i_final_x , const int& i_final_y );
 
+};
+
+template <typename U = ll>
+class TwoDimensionalCumulativeSum :
+  public AbstractTwoDimensionalCumulativeSum<U,AdditiveGroup<U>>
+{
+
+public:
+  inline TwoDimensionalCumulativeSum( const vector<vector<U>>& a = vector<vector<U>>() );
+  
 };
