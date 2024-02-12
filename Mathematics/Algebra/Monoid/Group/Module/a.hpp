@@ -4,33 +4,35 @@
 #include "../a.hpp"
 
 // verify:
-// https://yukicoder.me/submissions/947868（Module）
+// https://yukicoder.me/submissions/950182（Module）
 
 template <typename R , typename U>
-class VirtualModule :
-  virtual public VirtualGroup<U>
+class VirtualModule
 {
 
 public:
-  virtual inline U Act( const R& r , const U& u ) = 0;
+  virtual inline U Action( const R& r , const U& u ) = 0;
+  inline U Power( const U& u , const R& r );
+  inline U ScalarProduct( const R& r , const U& u );
 
 };
 
-template <typename R , typename U , typename O_U , typename M_U , typename I_U>
+template <typename R , typename U , typename O_U , typename GROUP>
 class AbstractModule :
   virtual public VirtualModule<R,U> ,
-  public AbstractGroup<U,M_U,I_U>
+  public GROUP
 {
 
 private:
-  O_U& m_o_U;
+  O_U m_o_U;
   
 public:
   // 型推論のために余計な引数dummyが必要
-  inline AbstractModule( const R& dummy , O_U& o_U , M_U& m_U , const U& e_U , I_U& i_U );
-  inline U Act( const R& r , const U& u );
+  inline AbstractModule( const R& dummy , O_U o_U , GROUP M );
+  inline U Action( const R& r , const U& u );
 
 };
+template <typename R , typename O_U , typename GROUP> AbstractModule( const R& dummy , O_U o_U , GROUP M ) -> AbstractModule<R,inner_t<GROUP>,O_U,GROUP>;
 
 template <typename R , typename U>
 class Module :
@@ -38,7 +40,7 @@ class Module :
   public AdditiveGroup<U>
 {
 
-public:
-  inline U Act( const R& r , const U& u );
-
+private:
+  inline U Action( const R& r , const U& u );
+  
 };

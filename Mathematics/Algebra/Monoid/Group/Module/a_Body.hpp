@@ -5,7 +5,10 @@
 
 #include "../a_Body.hpp"
 
-template <typename R , typename U , typename O_U , typename M_U , typename I_U> inline AbstractModule<R,U,O_U,M_U,I_U>::AbstractModule( const R& dummy , O_U& o_U , M_U& m_U , const U& e_U , I_U& i_U ) : AbstractGroup<U,M_U,I_U>( m_U , e_U , i_U ) , m_o_U( o_U ) { static_assert( is_invocable_r_v<U,O_U,R,U> ); }
+template <typename R , typename U , typename O_U , typename GROUP> inline AbstractModule<R,U,O_U,GROUP>::AbstractModule( const R& dummy , O_U o_U , GROUP M ) : GROUP( move( M ) ) , m_o_U( move( o_U ) ) { static_assert( is_same_v<U,inner_t<GROUP>> && is_invocable_r_v<U,O_U,R,U> ); }
 
-template <typename R , typename U , typename O_U , typename M_U , typename I_U> inline U AbstractModule<R,U,O_U,M_U,I_U>::Act( const R& r , const U& u ) { return m_o_U.Act( r , u ); }
-template <typename R , typename U> inline U Module<R,U>::Act( const R& r , const U& u ) { return r * u; }
+template <typename R , typename U , typename O_U , typename GROUP> inline U AbstractModule<R,U,O_U,GROUP>::Action( const R& r , const U& u ) { return m_o_U( r , u ); }
+template <typename R , typename U> inline U Module<R,U>::Action( const R& r , const U& u ) { return r * u; }
+
+template <typename R , typename U> inline U VirtualModule<R,U>::Power( const U& u , const R& r ) { return Action( r , u ); }
+template <typename R , typename U> inline U VirtualModule<R,U>::ScalarProduct( const R& r , const U& u ) { return Action( r , u ); }
