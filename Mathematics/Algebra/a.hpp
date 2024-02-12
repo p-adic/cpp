@@ -15,6 +15,10 @@
 //   - 代わりにポインタを抽象型のメンバとして
 //     派生クラスのコンストラクタの定義内でアドレスを渡すようにすると、ムーブなどで意図せず
 //     ポインタの指すアドレスが意図通りでなくなることに注意する。
+// - データ構造に渡すことを想定する。
+//   - データ構造の配列や初期化をムーブセマンティクスで処理できるようにするために
+//     代数構造もムーブコンストラクタがdeleteされないようにする。
+//   - そのために演算に対応する関数オブジェクトは参照ではなく実体としてメンバに持つ。
 template <typename U>
 class UnderlyingSet
 {
@@ -36,7 +40,6 @@ public:
   DECLARATION_OF_CPOINT( Zero );
   DECLARATION_OF_CPOINT( One );
   DECLARATION_OF_CPOINT( Infty );
-  DECLARATION_OF_CPOINT( size );
   DECLARATION_OF_POINT( init );
   DECLARATION_OF_POINT( root );
 
@@ -48,7 +51,7 @@ class PointedSet :
 {
 
 private:
-U m_b_U;
+  U m_b_U;
 
 public:
   inline PointedSet( const U& b_u = U() );
@@ -58,7 +61,7 @@ public:
 };
 
 template <typename U>
-class VirtualNSet
+class VirtualNSet :
   virtual public UnderlyingSet<U>
 {
 
@@ -74,16 +77,16 @@ class AbstractNSet :
 {
 
 private:
-  F_U& m_f_U;
+  F_U m_f_U;
 
 public:
-  inline AbstractNSet( F_U& f_U );
+  inline AbstractNSet( F_U f_U );
   inline U Transfer( const U& u );
 
 };
 
 template <typename U>
-class VirtualMagma
+class VirtualMagma :
   virtual public UnderlyingSet<U>
 {
 
@@ -105,7 +108,7 @@ public:
 
 template <typename U = ll>
 class MultiplicativeMagma :
-  virtual public VirtualMagma<U> ,
+  virtual public VirtualMagma<U>
 {
 
 public:
@@ -119,10 +122,10 @@ class AbstractMagma :
 {
 
 private:
-  M_U& m_m_U;
+  M_U m_m_U;
 
 public:
-  inline AbstractMagma( M_U& m_U );
+  inline AbstractMagma( M_U m_U );
   inline U Product( const U& u0 , const U& u1 );
 
 };
