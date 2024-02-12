@@ -1,0 +1,23 @@
+#零初期化
+F=[0]*(N+1)
+#配列による初期化（計算量はO(N)だがAを反復するO(N log N)の方が早い？）
+for j in R(1,N+1):
+	i=j-1
+	F[j]=E[i]
+	while i>j-(j&-j):
+	      F[j]+=F[i]
+	      i-=i&-i
+#一点加算A
+#始切片和L
+#区間和S
+def A(i,t):
+	i+=1
+	while i<=N:F[i],i=F[i]+t,i+(i&-i)
+def L(r):
+	a=0
+	i=min(r+1,N)
+	while i:a,i=a+F[i],i-(i&-i)
+	return a
+def S(l,r): #l,rは始端,終端
+	return L(r)-L(l-1)
+

@@ -1,0 +1,26 @@
+#（可換とも結合的とも単位的とも限らない）基点付き可換マグマ(F,C:F^2->F,e:1->F)と基点が恒等変換に対応するF作用付き集合(X,O:F×X->X)と非負整数Nをパラメータとする。
+# 配列による初期化O(N)
+# 一点取得O(1)
+# 一点更新O(N^{1/2})（ただし状況次第でO(1)）
+# Oによる一点更新は通常の一点更新かOによる区間更新で処理する（いずれもO(N^{1/2})）
+# Oによる区間更新O(N^{1/2})
+N,M=100000,317
+N,M=200000,447
+N,M=300000,548
+N,M=400000,633
+A=[Xの点]*N
+B=[e]*M
+for q in R(Q):
+	l,r,f=L[q],R[q]+1,F[q]
+	m=(l+M-1)//M
+	n=max(m,r//M)
+	u=min(m*M,r)
+	if m:
+		for i in R(m*M-M,min(m*M,N)):A[i]=O(B[m-1],A[i])
+		B[m-1]=e
+	for i in R(l,u):A[i]=O(f,A[i])
+	for j in R(m,n):B[j]=C(f,B[j])
+	for i in R(n*M,min(n*M+M,N)):A[i]=O(B[n],A[i])
+	if n*M<N:B[n]=e
+	for i in R(max(u,n*M),r):A[i]=O(f,A[i])
+for i in R(N):print(O(B[i//M],A[i]))
