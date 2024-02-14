@@ -6,7 +6,7 @@
 #include "../a.hpp"
 
 // verify:
-// https://yukicoder.me/submissions/950728（NextSubset）
+// https://yukicoder.me/submissions/950736（NextSubset）
 
 class BitExhausiveEdge
 {

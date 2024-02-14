@@ -3,7 +3,7 @@
 #pragma once
 #include "a.hpp"
 
-template <typename GRAPH> inline VirtualBreadthFirstSearch<GRAPH>::VirtualBreadthFirstSearch( GRAPH& G ) : m_G( G ) , m_initialised( false ) , m_next() , m_found() , m_prev() { static_assert( is_same_v<inner_t<GRAPH>,int> && is_same_v<decldec_t(declval<GRAPH>().Edge(0)),int>); }
+template <typename GRAPH> inline VirtualBreadthFirstSearch<GRAPH>::VirtualBreadthFirstSearch( GRAPH& G ) : m_G( G ) , m_initialised( false ) , m_next() , m_found() , m_prev() { static_assert( is_same_v<inner_t<GRAPH>,int> && is_same_v<decldecay_t(declval<GRAPH>().Edge(0)),list<int>>); }
 template <typename GRAPH> inline VirtualBreadthFirstSearch<GRAPH>::VirtualBreadthFirstSearch( GRAPH& G , const int& init ) : VirtualBreadthFirstSearch<GRAPH>( G ) { Initialise( init ); }
 template <typename GRAPH> template <typename...Args> inline BreadthFirstSearch<GRAPH>::BreadthFirstSearch( GRAPH& G , const Args&... args ) : VirtualBreadthFirstSearch<GRAPH>( G , args... ) {}
 
