@@ -8,12 +8,12 @@ template <typename GRAPH> inline VirtualBreadthFirstSearch<GRAPH>::VirtualBreadt
 template <typename GRAPH> template <typename...Args> inline BreadthFirstSearch<GRAPH>::BreadthFirstSearch( GRAPH& G , const Args&... args ) : VirtualBreadthFirstSearch<GRAPH>( G , args... ) {}
 
 template <typename GRAPH> inline void VirtualBreadthFirstSearch<GRAPH>::Initialise() { m_initialised = true; const int& V = size(); m_next.clear(); m_found = vector<bool>( V ); m_prev = vector<int>( V , -1 ); }
-template <typename GRAPH> inline void VirtualBreadthFirstSearch<GRAPH>::Initialise( const int& init ) { assert( ( this->init() = init ) < size() ); Initialise(); m_next.push_back( init ); m_found[init] = true; }
-template <typename GRAPH> inline void VirtualBreadthFirstSearch<GRAPH>::Shift( const int& init ) { if( m_initialised ){ const int& V = size(); assert( ( this->init() = init ) < V ); m_next.clear(); if( ! m_found[init] ){ m_next.push_back( init ); m_found[init] = true; } } else { Initialise( init ); } }
+template <typename GRAPH> inline void VirtualBreadthFirstSearch<GRAPH>::Initialise( const int& init ) { assert( 0 <= init && ( this->init() = init ) < size() ); Initialise(); m_next.push_back( init ); m_found[init] = true; }
+template <typename GRAPH> inline void VirtualBreadthFirstSearch<GRAPH>::Shift( const int& init ) { if( m_initialised ){ const int& V = size(); assert( 0 <= init && ( this->init() = init ) < V ); m_next.clear(); if( ! m_found[init] ){ m_next.push_back( init ); m_found[init] = true; } } else { Initialise( init ); } }
 
 template <typename GRAPH> inline const int& VirtualBreadthFirstSearch<GRAPH>::size() const noexcept { return m_G.size(); }
-template <typename GRAPH> inline vector<bool>::reference VirtualBreadthFirstSearch<GRAPH>::found( const int& i ) { assert( i < size() ); if( !m_initialised ){ Initialise(); } return m_found[i]; }
-template <typename GRAPH> inline const int& VirtualBreadthFirstSearch<GRAPH>::prev( const int& i ) { assert( i < size() ); if( !m_initialised ){ Initialise(); } return m_prev[i]; }
+template <typename GRAPH> inline vector<bool>::reference VirtualBreadthFirstSearch<GRAPH>::found( const int& i ) { assert( 0 <= i && i < size() ); if( !m_initialised ){ Initialise(); } return m_found[i]; }
+template <typename GRAPH> inline const int& VirtualBreadthFirstSearch<GRAPH>::prev( const int& i ) { assert( 0 <= i && i < size() ); if( !m_initialised ){ Initialise(); } return m_prev[i]; }
 
 template <typename GRAPH> inline int VirtualBreadthFirstSearch<GRAPH>::Next()
 {
