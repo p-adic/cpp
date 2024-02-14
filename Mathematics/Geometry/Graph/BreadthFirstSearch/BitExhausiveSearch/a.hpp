@@ -32,14 +32,14 @@ public:
   inline BitExhausiveSearch( const int& V , const int& digit );
   inline BitExhausiveSearch( const int& V );
 
-  // tに対応する部分集合に1つ要素を追加した部分集合で未到達なものを格納。
+  // tに対応する部分集合に1つ要素を追加した部分集合で未到達なものを格納し到達済みにマーク。
   inline list<int> UnreachedAdjacentSupsetOf( const int& t ) noexcept;
-  // tに対応する部分集合に1つ要素を削除した部分集合で未到達なものを格納。
+  // tに対応する部分集合に1つ要素を削除した部分集合で未到達なものを格納し到達済みにマーク。
   inline list<int> UnreachedAdjacentSubsetOf( const int& t ) noexcept;
 
-  // tに対応する部分集合を真に含む部分集合で未到達なものを格納。
+  // tに対応する部分集合を真に含む部分集合で未到達なものを格納し到達済みにマーク。
   inline list<int> UnreachedProperSupsetOf( const int& t ) noexcept;
-  // tに対応する部分集合の真部分集合で未到達なものを格納。
+  // tに対応する部分集合の真部分集合で未到達なものを格納し到達済みにマーク。
   inline list<int> UnreachedProperSubsetOf( const int& t ) noexcept;
 
   // tに対応する部分集合に1つ要素を追加した部分集合を格納。
