@@ -67,11 +67,11 @@ class EnumerationGraph :
 {
 
 private:
-  Enum_T& m_enum_T;
-  Enum_T_inv& m_enum_T_inv;
+  Enum_T m_enum_T;
+  Enum_T_inv m_enum_T_inv;
   
 public:
-  inline EnumerationGraph( const int& size , Enum_T& enum_T , Enum_T_inv& enum_T_inv , E edge );
+  inline EnumerationGraph( const int& size , Enum_T enum_T , Enum_T_inv enum_T_inv , E edge );
   inline ret_t<Enum_T,int> Enumeration( const int& i );
   inline ret_t<Enum_T_inv,T> Enumeration_inv( const T& t );
   template <typename F> inline EnumerationGraph<T,Enum_T,Enum_T_inv,F> GetGraph( F edge ) const;
