@@ -2,6 +2,7 @@
 
 #pragma once
 // verify:
+// https://onlinejudge.u-aizu.ac.jp/status/users/padic/submissions/1/DSL_2_I/judge/8901822/C++17（零初期化、区間代入、区間積取得）
 // https://judge.yosupo.jp/submission/190200（配列初期化、区間作用、区間乗算、区間積取得）
 
 // 入力の範囲内で要件
@@ -9,6 +10,9 @@
 // (2) MがUの「Lの基点がUの恒等変換に対応するUの左L作用つきN加群構造」である。
 // (3) R!=intである。（L作用とN加群構造の区別のため）
 // を満たす場合にのみサポート。
+
+// 区間作用を行わない場合もm_R.Point()の作用を区間積に用いるため、
+// dummyにせずMultiplicativeMonoid(1)などを用いる必要があることに注意。
 
 // M.One()による初期化O(N)
 // 配列による初期化O(N)
@@ -41,6 +45,8 @@ protected:
   vector<U> m_lazy_multiplication;
 
 public:
+  inline IntervalMultiplyLazySqrtDecomposition( PT_MAGMA L , R_MODULE M , const int& N );
+  inline IntervalMultiplyLazySqrtDecomposition( PT_MAGMA L , R_MODULE M , const int& N , const int& N_sqrt );
   inline IntervalMultiplyLazySqrtDecomposition( PT_MAGMA L , R_MODULE M , vector<U> a );
   inline IntervalMultiplyLazySqrtDecomposition( PT_MAGMA L , R_MODULE M , vector<U> a , const int& N_sqrt );
   
@@ -65,4 +71,4 @@ private:
   inline U IntervalProduct_Body( const int& i_min , const int& i_ulim );
   
 };
-template <typename PT_MAGMA , typename U , typename R_MODULE , typename...Args> IntervalMultiplyLazySqrtDecomposition( PT_MAGMA L , R_MODULE M , vector<U> a , const Args&... args ) -> IntervalMultiplyLazySqrtDecomposition<inner_t<PT_MAGMA>,PT_MAGMA,U,R_MODULE>;
+template <typename PT_MAGMA , typename R_MODULE , typename...Args> IntervalMultiplyLazySqrtDecomposition( PT_MAGMA L , R_MODULE M , const Args&... args ) -> IntervalMultiplyLazySqrtDecomposition<inner_t<PT_MAGMA>,PT_MAGMA,inner_t<R_MODULE>,R_MODULE>;

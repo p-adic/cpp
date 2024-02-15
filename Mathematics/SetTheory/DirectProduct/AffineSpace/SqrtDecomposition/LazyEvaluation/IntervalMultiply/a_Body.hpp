@@ -4,6 +4,8 @@
 
 #include "../../Sqrt/a_Body.hpp"
 
+template <typename R , typename PT_MAGMA , typename U , typename R_MODULE> inline IntervalMultiplyLazySqrtDecomposition<R,PT_MAGMA,U,R_MODULE>::IntervalMultiplyLazySqrtDecomposition( PT_MAGMA L , R_MODULE M , const int& N ) : IntervalMultiplyLazySqrtDecomposition( move( L ) , move( M ) , N , Sqrt( N ) ) {}
+template <typename R , typename PT_MAGMA , typename U , typename R_MODULE> inline IntervalMultiplyLazySqrtDecomposition<R,PT_MAGMA,U,R_MODULE>::IntervalMultiplyLazySqrtDecomposition( PT_MAGMA L , R_MODULE M , const int& N , const int& N_sqrt ) : m_L( move( L ) ) , m_M( move( M ) ) , m_N( N ) , m_N_sqrt( N_sqrt ) , m_N_d( ( m_N + m_N_sqrt - 1 ) / m_N_sqrt ) , m_N_m( m_N_d * m_N_sqrt ) , m_a( N , m_M.One() ) , m_b( m_N_d , m_M.One() ) , m_lazy_substitution( m_b ) , m_suspended( m_N_d ) , m_lazy_action( m_N_d , m_L.Point() ) , m_lazy_multiplication( m_b ) { Initialise(); }
 template <typename R , typename PT_MAGMA , typename U , typename R_MODULE> inline IntervalMultiplyLazySqrtDecomposition<R,PT_MAGMA,U,R_MODULE>::IntervalMultiplyLazySqrtDecomposition( PT_MAGMA L , R_MODULE M , vector<U> a ) : m_L( move( L ) ) , m_M( move( M ) ) , m_N( a.size() ) , m_N_sqrt( Sqrt( m_N ) ) , m_N_d( ( m_N + m_N_sqrt - 1 ) / m_N_sqrt ) , m_N_m( m_N_d * m_N_sqrt ) , m_a( move( a ) ) , m_b( m_N_d , m_M.One() ) , m_lazy_substitution( m_b ) , m_suspended( m_N_d ) , m_lazy_action( m_N_d , m_L.Point() ) , m_lazy_multiplication( m_b ) { Initialise(); }
 template <typename R , typename PT_MAGMA , typename U , typename R_MODULE> inline IntervalMultiplyLazySqrtDecomposition<R,PT_MAGMA,U,R_MODULE>::IntervalMultiplyLazySqrtDecomposition( PT_MAGMA L , R_MODULE M , vector<U> a , const int& N_sqrt ) : m_L( move( L ) ) , m_M( move( M ) ) , m_N( a.size() ) , m_N_sqrt( N_sqrt ) , m_N_d( ( m_N + m_N_sqrt - 1 ) / m_N_sqrt ) , m_N_m( m_N_d * m_N_sqrt ) , m_a( move( a ) ) , m_b( m_N_d , m_M.One() ) , m_lazy_substitution( m_b ) , m_suspended( m_N_d ) , m_lazy_action( m_N_d , m_L.Point() ) , m_lazy_multiplication( m_b ) { Initialise(); }
 
@@ -115,7 +117,7 @@ template <typename R , typename PT_MAGMA , typename U , typename R_MODULE> inlin
 
   const U power = m_M.Power( u , m_N_sqrt );
   const U& one = m_M.One();
-  const R& point = m_L.Pint();
+  const R& point = m_L.Point();
   
   for( int d = d_0 ; d < d_1 ; d++ ){
 
