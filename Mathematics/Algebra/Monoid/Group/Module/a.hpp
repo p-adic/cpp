@@ -11,7 +11,7 @@ class VirtualModule
 {
 
 public:
-  virtual inline U Action( const R& r , const U& u ) = 0;
+  virtual U Action( const R& r , const U& u ) = 0;
   inline U Power( const U& u , const R& r );
   inline U ScalarProduct( const R& r , const U& u );
 
