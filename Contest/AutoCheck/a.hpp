@@ -86,6 +86,7 @@ AC( Decision );
 AC( DecisionConnectedness );
 AC( DecisionHigherConnectedness );
 AC( DecisionGame );
+AC( DecisionContinuingGame );
 AC( DecisionAccessibility );
 AC( DecisionSatisfiability );
 AC( DecisionCoincidence );
