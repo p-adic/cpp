@@ -4,6 +4,7 @@
 // verify:
 // https://yukicoder.me/submissions/945886（多点BFSによる全探索）
 // https://yukicoder.me/submissions/945907（多点BFSによる連結成分取得）
+// https://yukicoder.me/submissions/951954（GetDistance）
 
 // GRAPHは辺Edge:N->N^{< \omega}を持つグラフに相当する型。
 
