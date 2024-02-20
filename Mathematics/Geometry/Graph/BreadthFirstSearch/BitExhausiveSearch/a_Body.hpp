@@ -7,7 +7,7 @@
 
 inline list<int> BitExhausiveEdge::operator()( const int& t ) { DEFINITION_OF_ADJACENT_SET( ~t , | , *m_p_V , answer.push_back( t_next ); ); }
 
-inline BitExhausiveSearch::BitExhausiveSearch( const int& V , const int& digit ) : BreadthFirstSearch<Graph<BitExhausiveEdge>>( m_G ) , m_G( V , BitExhausiveEdge() ) , m_p_V( &( m_G.size() ) ) , m_digit( digit ) { assert( 0 <= m_digit && m_digit <= 30 && ( *m_p_V >> m_digit ) <= 1 ); m_G.edge().m_p_V = m_p_V; }
+inline BitExhausiveSearch::BitExhausiveSearch( const int& V , const int& digit ) : BreadthFirstSearch<int,Graph<BitExhausiveEdge>>( m_G , -1 ) , m_G( V , BitExhausiveEdge() ) , m_p_V( &( m_G.size() ) ) , m_digit( digit ) { assert( 0 <= m_digit && m_digit <= 30 && ( *m_p_V >> m_digit ) <= 1 ); m_G.edge().m_p_V = m_p_V; }
 inline BitExhausiveSearch::BitExhausiveSearch( const int& V ) : BitExhausiveSearch( V , DigitOf( V ) ) {}
 
 inline list<int> BitExhausiveSearch::UnreachedAdjacentSupsetOf( const int& t ) noexcept { DEFINITION_OF_ADJACENT_SET( ~t , | , *m_p_V , if( ! this->found( t_next ) ){ this->found( t_next ) = true; answer.push_back( t_next ); } ); }

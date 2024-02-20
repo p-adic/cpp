@@ -3,40 +3,43 @@
 #pragma once
 #include "a.hpp"
 
-template <typename GRAPH> inline VirtualBreadthFirstSearch<GRAPH>::VirtualBreadthFirstSearch( GRAPH& G ) : m_G( G ) , m_initialised( false ) , m_next() , m_found() , m_prev() { static_assert( is_same_v<inner_t<GRAPH>,int> && is_same_v<decldecay_t(declval<GRAPH>().Edge(0)),list<int>>); }
-template <typename GRAPH> inline VirtualBreadthFirstSearch<GRAPH>::VirtualBreadthFirstSearch( GRAPH& G , const int& init ) : VirtualBreadthFirstSearch<GRAPH>( G ) { Initialise( init ); }
-template <typename GRAPH> template <typename...Args> inline BreadthFirstSearch<GRAPH>::BreadthFirstSearch( GRAPH& G , const Args&... args ) : VirtualBreadthFirstSearch<GRAPH>( G , args... ) {}
+template <typename T , typename GRAPH> inline VirtualBreadthFirstSearch<T,GRAPH>::VirtualBreadthFirstSearch( GRAPH& G , const T& not_found ) : m_G( G ) , m_not_found( not_found ) , m_initialised( false ) , m_next() , m_found() , m_prev() {}
+template <typename T , typename GRAPH> template <typename Arg> inline VirtualBreadthFirstSearch<T,GRAPH>::VirtualBreadthFirstSearch( GRAPH& G , const T& not_found , Arg&& init ) : VirtualBreadthFirstSearch<T,GRAPH>( G , not_found ) { Initialise( forward<Arg>( init ) ); }
+template <typename T , typename GRAPH> template <typename...Args> inline BreadthFirstSearch<T,GRAPH>::BreadthFirstSearch( GRAPH& G , const T& not_found , Args&&... args ) : VirtualBreadthFirstSearch<T,GRAPH>( G , not_found , forward<Args>( args )... ) {}
 
-template <typename GRAPH> inline void VirtualBreadthFirstSearch<GRAPH>::Initialise() { m_initialised = true; const int& V = size(); m_next.clear(); m_found = vector<bool>( V ); m_prev = vector<int>( V , -1 ); }
-template <typename GRAPH> inline void VirtualBreadthFirstSearch<GRAPH>::Initialise( const int& init ) { assert( 0 <= init && ( this->init() = init ) < size() ); Initialise(); m_next.push_back( init ); m_found[init] = true; }
-template <typename GRAPH> inline void VirtualBreadthFirstSearch<GRAPH>::Shift( const int& init ) { if( m_initialised ){ const int& V = size(); assert( 0 <= init && ( this->init() = init ) < V ); m_next.clear(); if( ! m_found[init] ){ m_next.push_back( init ); m_found[init] = true; } } else { Initialise( init ); } }
+template <typename T , typename GRAPH> inline void VirtualBreadthFirstSearch<T,GRAPH>::Initialise() { m_initialised = true; const int& V = size(); m_next.clear(); m_found = vector<bool>( V ); m_prev = vector<T>( V , m_not_found ); }
+template <typename T , typename GRAPH> inline void VirtualBreadthFirstSearch<T,GRAPH>::Initialise( const T& init ) { auto&& i = m_G.Enumeration_inv( init ); assert( 0 <= i && i < size() ); Initialise(); m_next.push_back( init ); m_found[i] = true; }
+template <typename T , typename GRAPH> inline void VirtualBreadthFirstSearch<T,GRAPH>::Initialise( list<T> inits ) { Initialise(); m_next = move( inits ); const int& V = size(); for( auto itr = m_next.begin() , end = m_next.end() ; itr != end ; itr++ ){ auto&& i = m_G.Enumeration_inv( *itr ); assert( 0 <= i && i < V ); m_found[i] = true; } }
+template <typename T , typename GRAPH> inline void VirtualBreadthFirstSearch<T,GRAPH>::Shift( const T& init ) { if( m_initialised ){ const int& V = size(); auto&& i = m_G.Enumeration_inv( init ); assert( 0 <= i && i < V ); m_next.clear(); if( ! m_found[i] ){ m_next.push_back( init ); m_found[i] = true; } } else { Initialise( init ); } }
+template <typename T , typename GRAPH> inline void VirtualBreadthFirstSearch<T,GRAPH>::Shift( list<T> inits ) { if( m_initialised ){ m_next.clear(); const int& V = size(); for( auto itr = m_next.begin() , end = m_next.end() ; itr != end ; itr++ ){ auto&& i = m_G.Enumeration_inv( *itr ); assert( 0 <= i && i < V ); if( ! m_found[i] ){ m_next.push_back( *itr ); m_found[i] = true; } } } else { Initialise( move( inits ) ); } }
 
-template <typename GRAPH> inline const int& VirtualBreadthFirstSearch<GRAPH>::size() const noexcept { return m_G.size(); }
-template <typename GRAPH> inline vector<bool>::reference VirtualBreadthFirstSearch<GRAPH>::found( const int& i ) { assert( 0 <= i && i < size() ); if( !m_initialised ){ Initialise(); } return m_found[i]; }
-template <typename GRAPH> inline const int& VirtualBreadthFirstSearch<GRAPH>::prev( const int& i ) { assert( 0 <= i && i < size() ); if( !m_initialised ){ Initialise(); } return m_prev[i]; }
+template <typename T , typename GRAPH> inline const int& VirtualBreadthFirstSearch<T,GRAPH>::size() const noexcept { return m_G.size(); }
+template <typename T , typename GRAPH> inline vector<bool>::reference VirtualBreadthFirstSearch<T,GRAPH>::found( const T& t ) { auto&& i = m_G.Enumeration_inv( t ); assert( 0 <= i && i < size() ); if( !m_initialised ){ Initialise(); } return m_found[i]; }
+template <typename T , typename GRAPH> inline const T& VirtualBreadthFirstSearch<T,GRAPH>::prev( const T& t ) { auto&& i = m_G.Enumeration_inv( t ); assert( 0 <= i && i < size() ); if( !m_initialised ){ Initialise(); } return m_prev[i]; }
 
-template <typename GRAPH> inline int VirtualBreadthFirstSearch<GRAPH>::Next()
+template <typename T , typename GRAPH> inline T VirtualBreadthFirstSearch<T,GRAPH>::Next()
 {
 
   if( m_next.empty() ){
 
-    return -1;
+    return m_not_found;
 
   }
 
-  const int i_curr = m_next.front();
+  const T t_curr = m_next.front();
   m_next.pop_front();
-  auto&& edge = m_G.Edge( i_curr );
+  auto&& edge = m_G.Edge( t_curr );
 
   while( ! edge.empty() ){
 
-    const int& i = edge.front();
+    const T& t = edge.front();
+    auto&& i = m_G.Enumeration_inv( t );
     auto&& found_i = m_found[i];
 
     if( ! found_i ){
 
-      Push( m_next , i );
-      m_prev[i] = i_curr;
+      Push( m_next , t );
+      m_prev[i] = t_curr;
       found_i = true;
 
     }
@@ -45,22 +48,30 @@ template <typename GRAPH> inline int VirtualBreadthFirstSearch<GRAPH>::Next()
 
   }
 
-  return i_curr;
+  return t_curr;
 
 }
 
-template <typename GRAPH>
-vector<int> VirtualBreadthFirstSearch<GRAPH>::GetDistance()
+template <typename T , typename GRAPH>
+vector<int> VirtualBreadthFirstSearch<T,GRAPH>::GetDistance()
 {
 
+  static_assert( is_same_v<T,int> && is_same_v<GRAPH,Graph<decldecay_t( m_G.edge() )>> );
   vector<int> depth{};
   depth = vector<int>( size() , -1 );
-  int i = Next();
-  depth[i] = 0;
-  
-  while( ( i = Next() ) != -1 ){
 
-    depth[i] = depth[prev( i )] + 1;
+  for( auto itr = m_next.begin() , end = m_next.end() ; itr != end ; itr++ ){
+
+    depth[*itr] = 0;
+
+  }
+  
+  int i;
+  
+  while( ( i = Next() ) != m_not_found ){
+
+    int& depth_i = depth[i];
+    depth_i == -1 ? depth_i = depth[prev( i )] + 1 : depth_i;
 
   }
 
@@ -68,10 +79,11 @@ vector<int> VirtualBreadthFirstSearch<GRAPH>::GetDistance()
   
 }
 
-template <typename GRAPH>
-void VirtualBreadthFirstSearch<GRAPH>::SetConnectedComponent( vector<int>& cc_num , int& count )
+template <typename T , typename GRAPH>
+void VirtualBreadthFirstSearch<T,GRAPH>::SetConnectedComponent( vector<int>& cc_num , int& count )
 {
 
+  static_assert( is_same_v<T,int> && is_same_v<GRAPH,Graph<decldecay_t( m_G.edge() )>> );
   const int& V = size();
   cc_num = vector<int>( V , -1 );
   count = 0;
@@ -83,9 +95,9 @@ void VirtualBreadthFirstSearch<GRAPH>::SetConnectedComponent( vector<int>& cc_nu
       Shift( i );
       int j = Next();
 
-      if( j != -1 ){
+      if( j != m_not_found ){
 
-	while( j != -1 ){
+	while( j != m_not_found ){
 
 	  // ñ≥å¸ÉOÉâÉtÇ≈Ç†ÇÈèÍçáÇÕèÌÇ…trueÅB
 	  assert( cc_num[j] == -1 );
@@ -106,4 +118,4 @@ void VirtualBreadthFirstSearch<GRAPH>::SetConnectedComponent( vector<int>& cc_nu
 
 }
 
-template <typename GRAPH> inline void BreadthFirstSearch<GRAPH>::Push( list<int>& next , const int& i ) { next.push_back( i ); }
+template <typename T , typename GRAPH> inline void BreadthFirstSearch<T,GRAPH>::Push( list<T>& next , const T& t ) { next.push_back( t ); }

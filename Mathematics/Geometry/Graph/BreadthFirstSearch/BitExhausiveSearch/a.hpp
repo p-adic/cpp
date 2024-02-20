@@ -6,7 +6,7 @@
 #include "../a.hpp"
 
 // verify:
-// https://yukicoder.me/submissions/950744（NextSubset）
+// https://yukicoder.me/submissions/953260（NextSubset）
 
 class BitExhausiveEdge
 {
@@ -19,7 +19,7 @@ public:
 
 // bitを0から1に変更する方向に有向辺を貼ったグラフに対するBFS
 class BitExhausiveSearch :
-  public BreadthFirstSearch<Graph<BitExhausiveEdge>>
+  public BreadthFirstSearch<int,Graph<BitExhausiveEdge>>
 {
 
 private:
@@ -35,11 +35,13 @@ public:
   // tに対応する部分集合に1つ要素を追加した部分集合で未到達なものを格納し到達済みにマーク。
   inline list<int> UnreachedAdjacentSupsetOf( const int& t ) noexcept;
   // tに対応する部分集合に1つ要素を削除した部分集合で未到達なものを格納し到達済みにマーク。
+  // O(log_2 t)かかり、多点BFSではこれを使えばO(2^digit)で抑えられる。
   inline list<int> UnreachedAdjacentSubsetOf( const int& t ) noexcept;
 
   // tに対応する部分集合を真に含む部分集合で未到達なものを格納し到達済みにマーク。
   inline list<int> UnreachedProperSupsetOf( const int& t ) noexcept;
   // tに対応する部分集合の真部分集合で未到達なものを格納し到達済みにマーク。
+  // tのオーダーがかかるので、多点BFSでこれを使うと最悪3^digitのオーダーになることに注意。
   inline list<int> UnreachedProperSubsetOf( const int& t ) noexcept;
 
   // tに対応する部分集合に1つ要素を追加した部分集合を格納。
