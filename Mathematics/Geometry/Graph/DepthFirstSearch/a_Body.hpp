@@ -3,8 +3,8 @@
 #pragma once
 #include "a.hpp"
 
-#include "../BreadFirst/a_Body.hpp"
+#include "../BreadthFirst/a_Body.hpp"
 
-template <typename GRAPH> template <typename...Args> inline DepthFirstSearch<GRAPH>::DepthFirstSearch( GRAPH& G , const Args&... args ) : VirtualBreadthFirstSearch<GRAPH>( G , args... ) {}
+template <typename T , typename GRAPH> template <typename...Args> inline DepthFirstSearch<T,GRAPH>::DepthFirstSearch( GRAPH& G , const T& not_found , Args&&... args ) : VirtualBreadthFirstSearch<T,GRAPH>( G , not_found , forward<Args>( args )... ) {}
 
-template <typename GRAPH> inline void DepthFirstSearch<GRAPH>::Push( list<int>& next , const int& i ) { next.push_front( i ); }
+template <typename T , typename GRAPH> inline void DepthFirstSearch<T,GRAPH>::Push( list<T>& next , const T& t ) { next.push_front( t ); }

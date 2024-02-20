@@ -4,19 +4,19 @@
 #include "../a.hpp"
 
 // verify:
-// https://yukicoder.me/submissions/945937（RootingDP）
-// https://yukicoder.me/submissions/945951（RerootingDP）
-// https://yukicoder.me/submissions/945944（RerootingDP）
+// https://yukicoder.me/submissions/953264（RootingDP）
+// https://yukicoder.me/submissions/953265（RerootingDP）
+// https://yukicoder.me/submissions/953266（RerootingDP）
 
 // digitはAncestorとLCAにのみ使用。普段は0で良い。
 // 2^16 = 65536
 // 2^17 = 131072
 // 2^18 = 262144
 
-// Gが無向グラフとしての木である場合にのみサポート。
+// inner_t<TREE>==intでありTREEがGraphでありTが無向グラフとしての木である場合にのみサポート。
 template <typename TREE>
 class DepthFirstSearchOnTree :
-  public DepthFirstSearch<TREE>
+  public DepthFirstSearch<int,TREE>
 {
 
 private:

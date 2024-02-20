@@ -4,18 +4,19 @@
 #include "../BreadthFirst/a.hpp"
 
 // verify:
-// https://yukicoder.me/submissions/945933（多点DFSによる全探索）
-// https://yukicoder.me/submissions/945935（多点DFSによる連結成分取得）
+// https://yukicoder.me/submissions/953238（一始点のShiftによる多点DFSでの全探索）
+// https://yukicoder.me/submissions/953239（SetConnectedComponent）
+// https://yukicoder.me/submissions/953242（TopologicalSort）
 
-template <typename GRAPH>
+template <typename T , typename GRAPH>
 class DepthFirstSearch :
-  public VirtualBreadthFirstSearch<GRAPH>
+  public VirtualBreadthFirstSearch<T,GRAPH>
 {
 
 public:
-  template <typename...Args> inline DepthFirstSearch( GRAPH& G , const Args&... args );
+  template <typename...Args> inline DepthFirstSearch( GRAPH& G , const T& not_found , Args&&... args );
 
 private:
-  inline void Push( list<int>& next , const int& i );
+  inline void Push( list<T>& next , const T& t );
 
 };

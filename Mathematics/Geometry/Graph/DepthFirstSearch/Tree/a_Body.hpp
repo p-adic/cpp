@@ -6,7 +6,7 @@
 #include "../a_Body.hpp"
 
 template <typename TREE> inline DepthFirstSearchOnTree<TREE>::DepthFirstSearchOnTree( TREE& T , const int& root , const int& digit ) :
-  DepthFirstSearch<TREE>( T , root ) , m_reversed( this->size() ) , m_children() , m_set_children() , m_depth() , m_set_depth() , m_height() , m_set_height() , m_weight() , m_set_weight() , m_digit( digit ) , m_doubling( m_digit ) , m_set_doubling()
+  DepthFirstSearch<int,TREE>( T , -1 , root ) , m_reversed( this->size() ) , m_children() , m_set_children() , m_depth() , m_set_depth() , m_height() , m_set_height() , m_weight() , m_set_weight() , m_digit( digit ) , m_doubling( m_digit ) , m_set_doubling()
 {
 
   int n = this->size();
