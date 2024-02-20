@@ -680,6 +680,7 @@ AC( Maximisation )
 	     "集合の部分集合の最大化問題" ,
 	     "木上の関数の最大／最小化問題" ,
 	     "移動コスト最小化問題" ,
+	     "移動コスト最大化問題" ,
 	     "文字列のマッチングに関する最大／最長化問題" ,
 	     "最大二部マッチング問題" ,
 	     "確率／期待値の最大化問題" ,
@@ -698,6 +699,8 @@ AC( Maximisation )
     CALL_AC( MaximisationFunctionOnTree );
   } else if( num == num_temp++ ){
     CALL_AC( MinimisationMovingCost );
+  } else if( num == num_temp++ ){
+    CALL_AC( MaximisationMovingCost );
   } else if( num == num_temp++ ){
     CALL_AC( MaximisationStringMatching );
   } else if( num == num_temp++ ){
@@ -921,6 +924,35 @@ AC( MinimisationMovingCost )
   CERR( "辺集合Eが大き過ぎる場合、経路を摂動する方法であってコストが大きくならない" );
   CERR( "ものを特定し、摂動可能でない経路のみに絞ることでEを減らしましょう。" );
   CERR( "" );
+}
+
+AC( MaximisationMovingCost )
+{
+  ASK_NUMBER(
+	     "１始点多終点コスト最大化（最遠点探索）問題" ,
+	     "多始点多終点コスト最大化（最長歩道探索）問題" ,
+	     );
+  if( num == num_temp++ ){
+    CALL_AC( MaximisationMovingCostSingleStart );
+  } else if( num == num_temp++ ){
+    ASK_YES_NO( "閉路を持たない有向グラフですか？" );
+    if( reply == "y" ){
+      CERR( "トポロジカルソートによる動的計画法" );
+      CERR( "\\Mathematics\\Geometry\\Graph\\TopologicalSort" );
+    } else {
+      CERR( "始点を全探策することで、１始点多終点コスト最大化問題に帰着されます。" );
+      CALL_AC( MaximisationMovingCostSingleStart );
+    }
+  }
+  CERR( "を検討しましょう。" );
+}
+
+AC( MaximisationMovingCostSingleStart )
+{
+  CERR( "- コストが非正でO((V+E)log_2 E)が間に合いそうならば-1倍してダイクストラ法" );
+  CERR( "  \\Mathematics\\Geometry\\Graph\\Dijkstra" );
+  CERR( "- コストが正になりえてO(VE)が間に合いそうならば1倍してベルマンフォード法" );
+  CERR( "  \\Mathematics\\Geometry\\Graph\\BellmanFord" );
 }
 
 AC( MinimisationSolvingMaze )

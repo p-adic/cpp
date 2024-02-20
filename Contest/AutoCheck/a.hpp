@@ -34,6 +34,8 @@ AC( MaximisationArrayLength );
 AC( MaximisationSubsetSize );
 AC( MaximisationFunctionOnTree );
 AC( MinimisationMovingCost );
+AC( MaximisationMovingCost );
+AC( MaximisationMovingCostSingleStart );
 AC( MinimisationSolvingMaze );
 AC( MinimisationSolvingOpenCovering );
 AC( MinimisationSolvingOpenCoveringUnknownCentres );
