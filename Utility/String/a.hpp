@@ -13,7 +13,11 @@ inline string to_string( const string& s ) noexcept;
 inline string to_string( const char* const & s ) noexcept;
 inline string to_string( char* const & s ) noexcept;
 inline string to_string( const bool& ) noexcept;
-template <template <typename...> typename V , typename T> inline string to_string( const V<T>& a );
+// ˆÈ‰º‚ÍEntryOfVLArray<T>‚È‚Ç‚àE‚Á‚Ä‚µ‚Ü‚¤‚Ì‚ÅíœB
+// template <template <typename...> typename V , typename T> inline string to_string( const V<T>& a );
+template <typename T> inline string to_string( const vector<T>& a );
+template <typename T> inline string to_string( const list<T>& a );
+template <typename T> inline string to_string( const set<T>& a );
 template <typename ARG1 , typename ARG2 , typename... ARGS> inline string to_string( const ARG1& arg1 , const ARG2& arg2 , const ARGS&... args );
 
 // to_string( typeid( T ) )‚Å"T"‚ğo—Í
