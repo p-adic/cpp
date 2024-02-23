@@ -278,7 +278,8 @@ typename VLArray<T>::iterator VLArray<T>::insert_front( const typename VLArray<T
 
   if( ! CheckContain( itr ) ){
 
-    ERR_INPUT( itr , t );
+    auto& s = itr.Access();
+    ERR_INPUT( s , t );
     
   }
 
@@ -307,7 +308,8 @@ typename VLArray<T>::iterator VLArray<T>::insert_back( const typename VLArray<T>
 
   if( ! CheckContain( itr ) ){
 
-    ERR_INPUT( itr , t );
+    auto& s = itr.Access();
+    ERR_INPUT( s , t );
     
   }
   
@@ -331,7 +333,8 @@ typename VLArray<T>::iterator VLArray<T>::erase_back( typename VLArray<T>::itera
   
   if( ! CheckContain( itr ) ){
 
-    ERR_INPUT( itr );
+    auto& t = itr.Access();
+    ERR_INPUT( t );
     
   }
 
@@ -355,7 +358,8 @@ typename VLArray<T>::iterator VLArray<T>::erase_front( typename VLArray<T>::iter
   
   if( ! CheckContain( itr ) ){
 
-    ERR_INPUT( itr );
+    auto& t = itr.Access();
+    ERR_INPUT( t );
     
   }
 

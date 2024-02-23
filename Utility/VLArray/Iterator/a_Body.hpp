@@ -10,7 +10,7 @@
 template <typename T> inline IteratorOfVLArray<T>::IteratorOfVLArray( EntryOfVLArray<T>* const& p ) noexcept : m_p( p ) {}
 template <typename T> inline IteratorOfVLArray<T>::IteratorOfVLArray( const IteratorOfVLArray<T>& itr ) noexcept : m_p( itr.m_p ) {}
 
-template <typename T> inline T& IteratorOfVLArray<T>::Access() const { return Access( m_p ).m_t; }
+template <typename T> inline T& IteratorOfVLArray<T>::Access() const { return ACCESS( m_p ).m_t; }
 template <typename T> inline T& IteratorOfVLArray<T>::operator*() const { return m_p->m_t; }
 template <typename T> inline T* IteratorOfVLArray<T>::operator->() const { return &( m_p->m_t ); }
 
