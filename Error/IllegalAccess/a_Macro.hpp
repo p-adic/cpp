@@ -4,7 +4,7 @@
 
 #include "../a_Macro.hpp"
 
-#define ACCESS( ... ) Access( POSITION , ARGUMENTS( __VA_ARGS__ ) ) 
+#define ACCESS( ... ) SafeAccess( POSITION , ARGUMENTS( __VA_ARGS__ ) ) 
 
 #ifdef DEBUG
 

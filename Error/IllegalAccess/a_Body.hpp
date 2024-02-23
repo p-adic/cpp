@@ -83,7 +83,7 @@ void IndicateUninitialisedAccess( const char* const FILE , const int& LINE , con
 }
 
 template <typename T , typename... Args>
-T& Access( const char* const FILE , const int& LINE , const char* const FUNC , const string& VARIABLE_NAMES , T* const & p , const Args&... ARGS )
+T& SafeAccess( const char* const FILE , const int& LINE , const char* const FUNC , const string& VARIABLE_NAMES , T* const & p , const Args&... ARGS )
 {
 
   if( p == nullptr ){
@@ -96,7 +96,7 @@ T& Access( const char* const FILE , const int& LINE , const char* const FUNC , c
 
 }
 template <typename T , typename... Args>
-const T& Access( const char* const FILE , const int& LINE , const char* const FUNC , const string& VARIABLE_NAMES , const T* const & p , const Args&... ARGS )
+const T& SafeAccess( const char* const FILE , const int& LINE , const char* const FUNC , const string& VARIABLE_NAMES , const T* const & p , const Args&... ARGS )
 {
 
   if( p == nullptr ){
@@ -110,7 +110,7 @@ const T& Access( const char* const FILE , const int& LINE , const char* const FU
 }
 
 template <typename T , typename... Args>
-T& Access( const char* const FILE , const int& LINE , const char* const FUNC , const string& VARIABLE_NAMES , const SmartPointer<T>& p , const Args&... ARGS )
+T& SafeAccess( const char* const FILE , const int& LINE , const char* const FUNC , const string& VARIABLE_NAMES , const SmartPointer<T>& p , const Args&... ARGS )
 {
 
   if( p == nullptr ){
