@@ -5,6 +5,7 @@
 
 #include "BreakPoint/a.hpp"
 #include "../Utility/SmartPointer/a.hpp"
+#include <cassert>
 
 class ErrorType
 {
