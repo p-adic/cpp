@@ -4,7 +4,7 @@
 #include "a.hpp"
 
 #include "../a_Body.hpp"
-#include "../../Arithmetic/Mod/a_Body.hpp"
+#include "../../Arithmetic/Mod/ConstexprModulo/a_Body.hpp"
 #include <cmath>
 
 template <typename... ARGS> inline Angle::Angle( const ARGS&... args ) noexcept : Mod<360>( args... ){}

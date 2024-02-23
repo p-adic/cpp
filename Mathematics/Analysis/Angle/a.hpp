@@ -1,7 +1,7 @@
 // Angle/a.hpp
 
 #pragma once
-#include "../../Arithmetic/Mod/a.hpp"
+#include "../../Arithmetic/Mod/ConstexprModulo/a.hpp"
 
 class Angle :
   public Mod<360>
