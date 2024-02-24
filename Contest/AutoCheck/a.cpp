@@ -377,7 +377,7 @@ AC( ExplicitExpressionArraySum )
   ASK_NUMBER(
 	     "１つの配列の成分と位置を受け取る関数の総和の計算問題" ,
 	     "１つの配列の部分列を受け取る関数の総和の計算問題" ,
-	     "配列を受け取る関数の総和の計算問題"
+	     "配列を受け取る関数の配列をわたる総和の計算問題"
 	     );
   if( num == num_temp++ ){
     CERR( "- 和の順序交換" );
@@ -417,9 +417,24 @@ AC( ExplicitExpressionArraySum )
 
 AC( ExplicitExpressionArrayCombinatorial )
 {
-  CERR( "二項展開や積の和典型などの組み合わせ論的解釈" );
-  CERR( "https://ei1333.hateblo.jp/entry/2021/07/30/144201" );
-  CERR( "https://ladywingclover.hatenablog.com/entry/2022/11/24/084524" );
+  CERR( "長さNの配列の有限集合Sと、Sを定義域に持つ関数fが与えられているとして、" );
+  CERR( "sum_{A in S} f(A)を求めます。" );
+  CERR( "- 任意のA in Sに対し" );
+  CERR( "  f(A) = sum_{i=0}^{N-1} g(A,i)" );
+  CERR( "  を満たす関数gが存在するならば、" );
+  CERR( "  sum_{A in S} f(A) = sum_{A in S} sum_{i=0}^{N-1} g(A,i)" );
+  CERR( "                    = sum_{i=0}^{N-1} sum_{A in S} g(A,i)" );
+  CERR( "  によりg(-,i)の逆像の数え上げ問題に帰着" );
+  CERR( "- 任意のA in Sに対し" );
+  CERR( "  f(A) = #{i in [0,N)|P(A,i)} " );
+  CERR( "  を満たす関係Pが存在するならば、Pの特性関数をgと置けば任意のA in Sに対し" );
+  CERR( "  f(A) = sum_{i=0}^{N-1} g(A,i)" );
+  CERR( "  が成り立つので上の場合に帰着" );
+  CERR( "- 任意のA in Sに対し" );
+  CERR( "  f(A) = prod_{i=0}^{N-1} g(A,i)" );
+  CERR( "  を満たす関数gが存在するならば、積の和典型などの組み合わせ論的解釈" );
+  CERR( "  https://ei1333.hateblo.jp/entry/2021/07/30/144201" );
+  CERR( "  https://ladywingclover.hatenablog.com/entry/2022/11/24/084524" );
   CERR( "を検討しましょう。" );
 }
 
