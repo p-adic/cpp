@@ -10,7 +10,7 @@
 inline void Solve()
 {
   // // 数
-  // // DEXPR( ll , bound_N , 1e5 , 10 ); CIN_ASSERT( N , 1 , bound_N );
+  // // CEXPR( ll , bound_N , 1e5 ); CIN_ASSERT( N , 1 , bound_N );
   // CIN( ll , N , M , K );
   // ll answer = 0;
   // RETURN( answer );
@@ -47,10 +47,12 @@ inline void Solve()
   // CIN( int , N , M );
   // // CIN( int , N ); int M = N - 1;
   // vector<list<path>> e( N );
+  // // vector<vector<ll>> d( N ); FOR( i , 0 , N ){ d[i].resize( N , 1e18 ); d[i][i] = 0; }
   // // UnionFindForest uff{ N };
   // FOR( j , 0 , M ){
   //   CIN( ll , uj , vj , wj ); uj--; vj--;
   //   e[uj].push_back( { vj , wj } ); e[vj].push_back( { uj , wj } );
+  //   // d[uj][vj] = d[vj][uj] = wj;
   //   // uff.Graft( uj , vj , wj );
   // }
   // auto edge = [&]( const int& i ){
@@ -59,30 +61,31 @@ inline void Solve()
   // };
   // Graph graph{ N , edge };
   // Dijkstra dijk{ graph };
+  // // vector<vector<ll>> weight; FloydWarshall( AdditiveTropicalSemirng( ll( 1e18 ) ) , d , weight );
  
   // // 一般のクエリ
   // CIN( int , Q );
+  // // BIT t{ N };
   // // vector<T3<int>> query( Q );
   // FOR( q , 0 , Q ){
   //   CIN( ll , x , y ); x--; y--;
-  //   COUT( x + y );
+  //   // query[q] = { x , y , q };
   //   // CIN( int , type );
   //   // if( type == 1 ){
   //   //   CIN( ll , x , y ); x--; y--;
+  //   //   t.Set( x , y );
   //   //   // query[q] = { type , x , y };
   //   // } else if( type == 2 ){
   //   //   CIN( ll , x , y ); x--; y--;
   //   //   // query[q] = { type , x , y };
-  //   //   COUT( x + y );
+  //   //   COUT( t.IntervalSum( x , y ) );
   //   // }
   // }
-  // // sort( query , query + Q );
-  // // FOR( q , 0 , Q ){
-  // //   auto& [type,x,y] = query[q];
-  // // }
+  // // sort( query.begin() , query.end() );
+  // // Mo mo{ query };
   
   // // グリッド
-  // // DEXPR( int , bound_H , 2e3 , 30 ); CEXPR( int , bound_W , bound_H );
+  // // CEXPR( int , bound_H , 2e3 ); CEXPR( int , bound_W , bound_H );
   // // ST_AS( ll( bound_H ) * bound_W < ll( 1 ) << 31 );
   // // CEXPR( int , bound_HW , bound_H * bound_W );
   // // SET_ASSERT( H , 1 , bound_H ); SET_ASSERT( W , 1 , bound_W );
@@ -94,8 +97,8 @@ inline void Solve()
   //   // SetEdgeOnGrid( S[i] , i , e );
   //   // SetWallOnGrid( S[i] , i , non_wall );
   // }
-  // // {h,w}へデコード: EnumHW( v )
-  // // {h,w}をコード: EnumHW_inv( h , w );
+  // // {i,j}へデコード: EnumHW( v )
+  // // {i,j}をコード: EnumHW_inv( { i , j } );
   // // (i,j)->(k,h)の方向番号を取得: DirectionNumberOnGrid( i , j , k , h );
   // // v->wの方向番号を取得: DirectionNumberOnGrid( v , w );
   // // 方向番号の反転U<->D、R<->L: ReverseDirectionNumberOnGrid( n );
@@ -211,8 +214,7 @@ c:/Users/user/Documents/Programming/Mathematics/Geometry/Graph/UnionFindForest/c
 
 #ifdef DEBUG
   #define _GLIBCXX_DEBUG
-  #define REPEAT_MAIN( BOUND ) START_MAIN; signal( SIGABRT , &AlertAbort ); AutoCheck( exec_mode , use_getline ); if( exec_mode == sample_debug_mode || exec_mode == submission_debug_mode || exec_mode == library_search_mode ){ return 0; } else if( exec_mode == experiment_mode ){ Experiment(); return 0; } else if( exec_mode == small_test_mode ){ SmallTest(); return 0; }; DEXPR( int , bound_test_case_num , BOUND , min( BOUND , 100 ) ); int test_case_num = 1; if( exec_mode == solve_mode ){ if constexpr( bound_test_case_num > 1 ){ SET_ASSERT( test_case_num , 1 , bound_test_case_num ); } } else if( exec_mode == random_test_mode ){ CERR( "ランダムテストを行う回数を指定してください。" ); SET_LL( test_case_num ); } FINISH_MAIN
-  #define DEXPR( LL , BOUND , VALUE , DEBUG_VALUE ) CEXPR( LL , BOUND , DEBUG_VALUE )
+  #define REPEAT_MAIN( BOUND ) START_MAIN; signal( SIGABRT , &AlertAbort ); AutoCheck( exec_mode , use_getline ); if( exec_mode == sample_debug_mode || exec_mode == submission_debug_mode || exec_mode == library_search_mode ){ return 0; } else if( exec_mode == experiment_mode ){ Experiment(); return 0; } else if( exec_mode == small_test_mode ){ SmallTest(); return 0; }; CEXPR( int , bound_test_case_num , BOUND ); int test_case_num = 1; if( exec_mode == solve_mode ){ if constexpr( bound_test_case_num > 1 ){ SET_ASSERT( test_case_num , 1 , bound_test_case_num ); } } else if( exec_mode == random_test_mode ){ CERR( "ランダムテストを行う回数を指定してください。" ); SET_LL( test_case_num ); } FINISH_MAIN
   #define ASSERT( A , MIN , MAX ) CERR( "ASSERTチェック： " , ( MIN ) , ( ( MIN ) <= A ? "<=" : ">" ) , A , ( A <= ( MAX ) ? "<=" : ">" ) , ( MAX ) ); assert( ( MIN ) <= A && A <= ( MAX ) )
   #define SET_ASSERT( A , MIN , MAX ) if( exec_mode == solve_mode ){ SET_LL( A ); ASSERT( A , MIN , MAX ); } else if( exec_mode == random_test_mode ){ CERR( #A , " = " , ( A = GetRand( MIN , MAX ) ) ); } else { assert( false ); }
   #define SOLVE_ONLY static_assert( __FUNCTION__[0] == 'S' )
@@ -227,7 +229,6 @@ c:/Users/user/Documents/Programming/Mathematics/Geometry/Graph/UnionFindForest/c
   #pragma GCC optimize ( "unroll-loops" )
   #pragma GCC target ( "sse4.2,fma,avx2,popcnt,lzcnt,bmi2" )
   #define REPEAT_MAIN( BOUND ) START_MAIN; CEXPR( int , bound_test_case_num , BOUND ); int test_case_num = 1; if constexpr( bound_test_case_num > 1 ){ SET_ASSERT( test_case_num , 1 , bound_test_case_num ); } FINISH_MAIN
-  #define DEXPR( LL , BOUND , VALUE , DEBUG_VALUE ) CEXPR( LL , BOUND , VALUE )
   #define ASSERT( A , MIN , MAX ) assert( ( MIN ) <= A && A <= ( MAX ) )
   #define SET_ASSERT( A , MIN , MAX ) SET_LL( A ); ASSERT( A , MIN , MAX )
   #define SOLVE_ONLY 
@@ -295,6 +296,7 @@ template <class Traits , typename Arg , typename... ARGS> inline basic_istream<c
 template <class Traits> inline basic_istream<char,Traits>& VariadicGetline( basic_istream<char,Traits>& is , const char& separator ) { return is; }
 template <class Traits , typename Arg , typename... ARGS> inline basic_istream<char,Traits>& VariadicGetline( basic_istream<char,Traits>& is , const char& separator , Arg& arg , ARGS&... args ) { return VariadicGetline( getline( is , arg , separator ) , separator , args... ); }
 template <class Traits , typename Arg> inline basic_ostream<char,Traits>& operator<<( basic_ostream<char,Traits>& os , const vector<Arg>& arg ) { auto begin = arg.begin() , end = arg.end(); auto itr = begin; while( itr != end ){ ( itr == begin ? os : os << " " ) << *itr; itr++; } return os; }
+template <class Traits , typename Arg1 , typename Arg2> inline basic_ostream<char,Traits>& operator<<( basic_ostream<char,Traits>& os , const pair<Arg1,Arg2>& arg ) { return os << arg.first << " " << arg.second; }
 template <class Traits , typename Arg> inline basic_ostream<char,Traits>& VariadicCout( basic_ostream<char,Traits>& os , const Arg& arg ) { return os << arg; }
 template <class Traits , typename Arg1 , typename Arg2 , typename... ARGS> inline basic_ostream<char,Traits>& VariadicCout( basic_ostream<char,Traits>& os , const Arg1& arg1 , const Arg2& arg2 , const ARGS&... args ) { return VariadicCout( os << arg1 << " " , arg2 , args... ); }
 
@@ -393,21 +395,13 @@ template <typename T> constexpr T Quotient( const T& a , const T& p ){ return p 
   }									\
 
 // 単調増加の時にEXPRESSION >= CONST_TARGETの最小解を格納。
-#define BS1( ANSWER , MINIMUM , MAXIMUM , EXPRESSION , CONST_TARGET )	\
-  BS( ANSWER , MINIMUM , MAXIMUM , EXPRESSION , >= , CONST_TARGET , >= , ANSWER , ANSWER + 1 , ( L_BS + U_BS ) / 2 ) \
-
+#define BS1( ANSWER , MINIMUM , MAXIMUM , EXPRESSION , CONST_TARGET ) BS( ANSWER , MINIMUM , MAXIMUM , EXPRESSION , >= , CONST_TARGET , >= , ANSWER , ANSWER + 1 , ( L_BS + U_BS ) / 2 )
 // 単調増加の時にEXPRESSION <= CONST_TARGETの最大解を格納。
-#define BS2( ANSWER , MINIMUM , MAXIMUM , EXPRESSION , CONST_TARGET )	\
-  BS( ANSWER , MINIMUM , MAXIMUM , EXPRESSION , <= , CONST_TARGET , > , ANSWER - 1 , ANSWER , ( L_BS + 1 + U_BS ) / 2 ) \
-
+#define BS2( ANSWER , MINIMUM , MAXIMUM , EXPRESSION , CONST_TARGET ) BS( ANSWER , MINIMUM , MAXIMUM , EXPRESSION , <= , CONST_TARGET , > , ANSWER - 1 , ANSWER , ( L_BS + 1 + U_BS ) / 2 )
 // 単調減少の時にEXPRESSION >= CONST_TARGETの最大解を格納。
-#define BS3( ANSWER , MINIMUM , MAXIMUM , EXPRESSION , CONST_TARGET )	\
-  BS( ANSWER , MINIMUM , MAXIMUM , EXPRESSION , >= , CONST_TARGET , < , ANSWER - 1 , ANSWER , ( L_BS + 1 + U_BS ) / 2 ) \
-
+#define BS3( ANSWER , MINIMUM , MAXIMUM , EXPRESSION , CONST_TARGET ) BS( ANSWER , MINIMUM , MAXIMUM , EXPRESSION , >= , CONST_TARGET , < , ANSWER - 1 , ANSWER , ( L_BS + 1 + U_BS ) / 2 )
 // 単調減少の時にEXPRESSION <= CONST_TARGETの最小解を格納。
-#define BS4( ANSWER , MINIMUM , MAXIMUM , EXPRESSION , CONST_TARGET )	\
-  BS( ANSWER , MINIMUM , MAXIMUM , EXPRESSION , <= , CONST_TARGET , <= , ANSWER , ANSWER + 1 , ( L_BS + U_BS ) / 2 ) \
-
+#define BS4( ANSWER , MINIMUM , MAXIMUM , EXPRESSION , CONST_TARGET ) BS( ANSWER , MINIMUM , MAXIMUM , EXPRESSION , <= , CONST_TARGET , <= , ANSWER , ANSWER + 1 , ( L_BS + U_BS ) / 2 )
 // t以下の値が存在すればその最大値のiterator、存在しなければend()を返す。
 template <typename T> inline typename set<T>::iterator MaximumLeq( set<T>& S , const T& t ) { const auto end = S.end(); if( S.empty() ){ return end; } auto itr = S.upper_bound( t ); return itr == end ? S.find( *( S.rbegin() ) ) : itr == S.begin() ? end : --itr; }
 // t未満の値が存在すればその最大値のiterator、存在しなければend()を返す。
@@ -416,6 +410,35 @@ template <typename T> inline typename set<T>::iterator MaximumLt( set<T>& S , co
 template <typename T> inline typename set<T>::iterator MinimumGeq( set<T>& S , const T& t ) { return S.lower_bound( t ); }
 // tより大きい値が存在すればその最小値のiterator、存在しなければend()を返す。
 template <typename T> inline typename set<T>::iterator MinimumGt( set<T>& S , const T& t ) { return S.upper_bound( t ); }
+
+// 尺取り法用
+// VAR_TPAがINITからUPDATEを繰り返しCONTINUE_CONDITIONを満たす限り、ON_CONDITIONを判定して
+// trueならON、falseならOFFとなる。直近のONの区間を[VAR_TPA_L,VAR_TPA_R)で管理する。
+#define TPA( VAR_TPA , INIT , UPDATE , CONTINUE_CONDITION , ON_CONDITION , ONON , ONOFF , OFFON , OFFOFF , FINISH ) \
+  {									\
+    auto VAR_TPA = INIT;						\
+    auto VAR_TPA ## _L = VAR_TPA;					\
+    auto VAR_TPA ## _R = VAR_TPA;					\
+    bool on_TPA = false;						\
+    int state_TPA = 3;							\
+    while( CONTINUE_CONDITION ){					\
+      bool on_TPA_next = ON_CONDITION;					\
+      state_TPA = ( ( on_TPA ? 1 : 0 ) << 1 ) | ( on_TPA_next ? 1 : 0 ); \
+      CERR( "尺取り中： [L,R) = [" , VAR_TPA ## _L , "," , VAR_TPA ## _R , ") ," , #VAR_TPA , "=" , VAR_TPA , "," , ( ( state_TPA >> 1 ) & 1 ) == 1 ? "on" : "off" , " ->" , ( state_TPA & 1 ) == 1 ? "on" : "off" ); \
+      if( state_TPA == 0 ){						\
+	OFFOFF; VAR_TPA ## _L = VAR_TPA ## _R = VAR_TPA; UPDATE;	\
+      } else if( state_TPA == 1 ){					\
+	OFFON; VAR_TPA ## _L = VAR_TPA; UPDATE; VAR_TPA ## _R = VAR_TPA; \
+      } else if( state_TPA == 2 ){					\
+	ONOFF; VAR_TPA ## _L = VAR_TPA ## _R = VAR_TPA; UPDATE;		\
+      } else {								\
+	ONON; UPDATE; VAR_TPA ## _R = VAR_TPA;				\
+      }									\
+      on_TPA = on_TPA_next;						\
+    }									\
+    CERR( "尺取り終了： [L,R) = [" , VAR_TPA ## _L , "," , VAR_TPA ## _R , ") ," , #VAR_TPA , "=" , VAR_TPA ); \
+    FINISH;								\
+  }									\
 
 // データ構造用
 template <typename T , template <typename...> typename V> inline V<T> operator+( const V<T>& a0 , const V<T>& a1 ) { if( a0.empty() ){ return a1; } if( a1.empty() ){ return a0; } assert( a0.size() == a1.size() ); V<T> answer{}; for( auto itr0 = a0.begin() , itr1 = a1.begin() , end0 = a0.end(); itr0 != end0 ; itr0++ , itr1++ ){ answer.push_back( *itr0 + *itr1 ); } return answer; }
@@ -439,7 +462,7 @@ template <typename T , template <typename...> typename V> inline auto Get( const
 int H , W , H_minus , W_minus , HW;
 vector<vector<bool> > non_wall;
 inline T2<int> EnumHW( const int& v ) { return { v / W , v % W }; }
-inline int EnumHW_inv( const int& h , const int& w ) { return h * W + w; }
+inline int EnumHW_inv( const T2<int>& ij ) { auto& [i,j] = ij; return i * W + j; }
 const string direction[4] = {"U","R","D","L"};
 // (i,j)->(k,h)の方向番号を取得
 inline int DirectionNumberOnGrid( const int& i , const int& j , const int& k , const int& h ){return i<k?2:i>k?0:j<h?1:j>h?3:(assert(false),-1);}
@@ -447,8 +470,8 @@ inline int DirectionNumberOnGrid( const int& i , const int& j , const int& k , c
 inline int DirectionNumberOnGrid( const int& v , const int& w ){auto [i,j]=EnumHW(v);auto [k,h]=EnumHW(w);return DirectionNumberOnGrid(i,j,k,h);}
 // 方向番号の反転U<->D、R<->L
 inline int ReverseDirectionNumberOnGrid( const int& n ){assert(0<=n&&n<4);return(n+2)%4;}
-inline void SetEdgeOnGrid( const string& Si , const int& i , vector<list<int>>& e , const char& walkable = '.' ){FOR(j,0,W){if(Si[j]==walkable){int v = EnumHW_inv(i,j);if(i>0){e[EnumHW_inv(i-1,j)].push_back(v);}if(i+1<H){e[EnumHW_inv(i+1,j)].push_back(v);}if(j>0){e[EnumHW_inv(i,j-1)].push_back(v);}if(j+1<W){e[EnumHW_inv(i,j+1)].push_back(v);}}}}
-inline void SetEdgeOnGrid( const string& Si , const int& i , vector<list<path>>& e , const char& walkable = '.' ){FOR(j,0,W){if(Si[j]==walkable){const int v=EnumHW_inv(i,j);if(i>0){e[EnumHW_inv(i-1,j)].push_back({v,1});}if(i+1<H){e[EnumHW_inv(i+1,j)].push_back({v,1});}if(j>0){e[EnumHW_inv(i,j-1)].push_back({v,1});}if(j+1<W){e[EnumHW_inv(i,j+1)].push_back({v,1});}}}}
+inline void SetEdgeOnGrid( const string& Si , const int& i , vector<list<int>>& e , const char& walkable = '.' ){FOR(j,0,W){if(Si[j]==walkable){int v = EnumHW_inv({i,j});if(i>0){e[EnumHW_inv({i-1,j})].push_back(v);}if(i+1<H){e[EnumHW_inv({i+1,j})].push_back(v);}if(j>0){e[EnumHW_inv({i,j-1})].push_back(v);}if(j+1<W){e[EnumHW_inv({i,j+1})].push_back(v);}}}}
+inline void SetEdgeOnGrid( const string& Si , const int& i , vector<list<path>>& e , const char& walkable = '.' ){FOR(j,0,W){if(Si[j]==walkable){const int v=EnumHW_inv({i,j});if(i>0){e[EnumHW_inv({i-1,j})].push_back({v,1});}if(i+1<H){e[EnumHW_inv({i+1,j})].push_back({v,1});}if(j>0){e[EnumHW_inv({i,j-1})].push_back({v,1});}if(j+1<W){e[EnumHW_inv({i,j+1})].push_back({v,1});}}}}
 inline void SetWallOnGrid( const string& Si , const int& i , vector<vector<bool> >& non_wall , const char& walkable = '.'  , const char& unwalkable = '#' ){non_wall.push_back(vector<bool>(W));auto& non_wall_i=non_wall[i];FOR(j,0,W){non_wall_i[j]=Si[j]==walkable?true:(assert(Si[j]==unwalkable),false);}}
 
 // デバッグ用
