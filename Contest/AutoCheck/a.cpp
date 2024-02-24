@@ -685,7 +685,8 @@ AC( Maximisation )
 	     "最大二部マッチング問題" ,
 	     "確率／期待値の最大化問題" ,
 	     "操作コストの最小化問題" ,
-	     "操作回数の最大化問題"
+	     "操作回数の最大化問題" ,
+	     "描画サイズ／個数の最大／最小化問題"
 	     );
   if( num == num_temp++ ){
     CALL_AC( MaximisationFunctionOnAffineSpace );
@@ -711,6 +712,8 @@ AC( Maximisation )
     CALL_AC( MinimisationOperationCost );
   } else if( num == num_temp++ ){
     CALL_AC( MaximisationCountingOperation );
+  } else if( num == num_temp++ ){
+    CALL_AC( MaximisationDrawingImage );
   }
 }
 
@@ -1077,6 +1080,14 @@ AC( MaximisationCountingOperation )
   CERR( "- 操作が何らかの集合の要素に高々１回しか適用しないならば、適用する要素全体のなす" );
   CERR( "  部分集合の全探策や半分全列挙" );
   CERR( "を検討しましょう。" );
+}
+
+AC( MaximisationDrawingImage )
+{
+  CERR( "描画個数の最大／最小化は描画サイズの最小／最大化に帰着させましょう。" );
+  CERR( "描画サイズの最大／最小化問題はサイズを決め打った二分探索や各点でのサイズの最大化" );
+  CERR( "などを行った上で描画可能性判定問題に帰着させましょう。" );
+  CALL_AC( DecisionDrawability );
 }
 
 AC( Counting )
@@ -1559,6 +1570,7 @@ AC( Query )
 	     "グリッドの範囲更新／取得クエリ問題" ,
 	     "文字列の範囲更新／比較クエリ問題" ,
 	     "集合の範囲更新／比較クエリ問題" ,
+	     "2変数関数の計算クエリ問題" ,
 	     "時系列データのクエリ問題"
 	     );
   if( num == num_temp++ ){
@@ -1571,6 +1583,8 @@ AC( Query )
     CALL_AC( QueryString );
   } else if( num == num_temp++ ){
     CALL_AC( QuerySet );
+  } else if( num == num_temp++ ){
+    CALL_AC( QueryTwoAryFunction );
   } else if( num == num_temp++ ){
     CALL_AC( QueryTime );
   }
@@ -1590,7 +1604,7 @@ AC( QueryArray )
 	     "モノイドへのマグマ作用(+,\\cdot)を使う問題" ,
 	     "序数を扱う問題" ,
 	     "一次関数とのmaxを取った値を使う問題" ,
-	     "定数とのmaxを取った値の区間演算取得を使う問題"
+	     "定数とのmaxを取った値の区間演算取得を使う問題" ,
 	     );
   if( num == num_temp++ ){
     CALL_AC( QueryArrayAbelianGroup );
@@ -1748,6 +1762,15 @@ AC( QuerySet )
   CERR( "ともに加算更新に対応するデータ構造との併用を検討しましょう。" );
 }
 
+AC( QueryTwoAryFunction )
+{
+  CERR( "- 可換群に値を持つ配列の範囲取得は累積積" );
+  CERR( "  \\Mathematics\\SetTheory\\DirectProduct\\AfineSpace\\CulmulativeProd" );
+  CERR( "- 片側差分がO(1)で計算できる2変数関数の計算は莫のアルゴリズム" );
+  CERR( "  \\Mathematics\\SetTheory\\DirectProduct\\AfineSpace\\SqrtDecomposition\\Mo's Algorithm" );
+  CERR( "を検討しましょう。" );
+}
+
 AC( QueryTime )
 {
   ASK_NUMBER(
@@ -1820,6 +1843,7 @@ AC( Decision )
 	     "高次連結性問題" ,
 	     "必勝性問題" ,
 	     "到達可能性問題" ,
+	     "描画可能性問題" ,
 	     "充足可能性問題" ,
 	     "一致判定問題" ,
 	     "表記可能性問題"
@@ -1832,6 +1856,8 @@ AC( Decision )
     CALL_AC( DecisionGame );
   } else if( num == num_temp++ ){
     CALL_AC( DecisionAccessibility );
+  } else if( num == num_temp++ ){
+    CALL_AC( DecisionDrawability );
   } else if( num == num_temp++ ){
     CALL_AC( DecisionSatisfiability );
   } else if( num == num_temp++ ){
@@ -1934,6 +1960,24 @@ AC( DecisionAccessibility )
   CERR( "" );
 }
 
+AC( DecisionDrawability )
+{
+  CERR( "- サイズ固定の図形による描画可能性を考える場合は、" );
+  CERR( "  図形を必要ならば回転させた上で、図形をいくつかの矩形領域の和集合に分解し、" );
+  CERR( "  描画領域内に図形を置けるか否かを図形の位置ごとに２次元累積和や木上の累積和などで" );
+  CERR( "  判定" );
+  CERR( "  \\Mathematics\\SetTheory\\DirectProduct\\AffineSpace\\CumulativeProduct\\Tree" );
+  CERR( "  \\Mathematics\\SetTheory\\DirectProduct\\AffineSpace\\CumulativeProduct\\TwoDimensional" );
+  CERR( "- サイズ可変の図形による描画可能性を考える場合は、" );
+  CERR( "  描画領域内に図形を置けるサイズの最大値を図形の位置ごとに尺取り法などで計算" );
+  CERR( "を検討しましょう。" );
+  CERR( "" );
+  CERR( "描画領域内にどのように図形を置くかを決めた後は、２次元階差数列や森上の階差数列などで" );
+  CERR( "実際に描画をし、描画したい図形と一致するかを判定しましょう。" );
+  CERR( "\\Mathematics\\SetTheory\\DirectProduct\\AffineSpace\\DifferenceSequence" );
+  CERR( "\\Mathematics\\SetTheory\\DirectProduct\\AffineSpace\\DifferenceSequence\\TwoDimensional" );
+}
+
 AC( DecisionSatisfiability )
 {
   ASK_NUMBER(
@@ -2006,8 +2050,18 @@ AC( Construction )
   } else if( num == num_temp++ ){
     CALL_AC( ConstructionMap );
   } else if( num == num_temp++ ){
-    CERR( "可能な経路の定めるグラフの問題に帰着させましょう。" );
-    CALL_AC( DecisionAccessibility );
+    ASK_NUMBER(
+	       "最短経路の構築" ,
+	       "グリッド上の巡回セールスマン問題に対する良い解の構築"
+	       );
+    if( num == num_temp++ ){
+      CERR( "可能な経路の定めるグラフの問題に帰着させましょう。" );
+      CALL_AC( DecisionAccessibility );
+    } else {
+      CERR( "莫のアルゴリズムによるソート" );
+      CERR( "\\Mathematics\\SetTheory\\DirectProduct\\AfineSpace\\SqrtDecomposition\\Mo's Algorithm" );
+      CERR( "を検討しましょう。" );
+    }
   } else if( num == num_temp++ ){
     CERR( "ゲームの問題に帰着させましょう。" );
     CALL_AC( DecisionGame );
