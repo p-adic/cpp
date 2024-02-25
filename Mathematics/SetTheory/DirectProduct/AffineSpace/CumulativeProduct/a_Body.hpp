@@ -125,8 +125,8 @@ template <typename U , typename GROUP> ll AbstractCumulativeProduct<U,GROUP>::Co
 
 template <typename U> ll CumulativeSum<U>::CountIntervalSumInverseImage( const U& u ) { return this->CountRightIntervalProductInverseImage( u ); }
 
-template <typename U , typename GROUP>
-int AbstractCumulativeProduct<U,GROUP>::RightBinarySearch( const int& i_start , const U& u )
+template <typename U , typename GROUP> template <typename F , SFINAE_FOR_CP_BS>
+int AbstractCumulativeProduct<U,GROUP>::RightBinarySearch( const int& i_start , const F& f )
 {
 
   int l = i_start - 1;
@@ -135,7 +135,7 @@ int AbstractCumulativeProduct<U,GROUP>::RightBinarySearch( const int& i_start , 
   while( l + 1 < r ){
 
     int m = ( l + r ) / 2;
-    ( RightIntervalProduct( i_start , m ) < u ? l : r ) = m;
+    ( f( RightIntervalProduct( i_start , m ) , m ) ? r : l ) = m;
 
   }
 
@@ -143,8 +143,8 @@ int AbstractCumulativeProduct<U,GROUP>::RightBinarySearch( const int& i_start , 
 
 }
 
-template <typename U , typename GROUP>
-int AbstractCumulativeProduct<U,GROUP>::LeftBinarySearch( const int& i_start , const U& u )
+template <typename U , typename GROUP> template <typename F , SFINAE_FOR_CP_BS>
+int AbstractCumulativeProduct<U,GROUP>::LeftBinarySearch( const int& i_start , const F& f )
 {
 
   int l = i_start - 1;
@@ -153,7 +153,7 @@ int AbstractCumulativeProduct<U,GROUP>::LeftBinarySearch( const int& i_start , c
   while( l + 1 < r ){
 
     int m = ( l + r ) / 2;
-    ( LeftIntervalProduct( i_start , m ) < u ? l : r ) = m;
+    ( f( LeftIntervalProduct( i_start , m ) , m ) ? r : l ) = m;
 
   }
 
@@ -161,7 +161,10 @@ int AbstractCumulativeProduct<U,GROUP>::LeftBinarySearch( const int& i_start , c
 
 }
 
-template <typename U> int CumulativeSum<U>::BinarySearch( const int& i_start , const U& u ) { return this->RightBinarySearch( i_start , u ); }
+template <typename U , typename GROUP> inline int AbstractCumulativeProduct<U,GROUP>::RightBinarySearch( const int& i_start , const U& u ) { return RightBinarySearch( i_start , [&]( const U& prod , const int& i ){ return !( prod < u ); } ); }
+template <typename U , typename GROUP> inline int AbstractCumulativeProduct<U,GROUP>::LeftBinarySearch( const int& i_start , const U& u ) { return LeftBinarySearch( i_start , [&]( const U& prod , const int& i ){ return !( prod < u ); } ); }
+
+template <typename U> template <typename F> int CumulativeSum<U>::BinarySearch( const int& i_start , const F& f ) { return this->RightBinarySearch( i_start , f ); }
 
 template <typename U , typename GROUP> inline int AbstractCumulativeProduct<U,GROUP>::Parent( const int& i ) { return i - 1; }
 template <typename U , typename GROUP> inline int AbstractCumulativeProduct<U,GROUP>::LCA( const int& i , const int& j ) { return min( i , j ); }

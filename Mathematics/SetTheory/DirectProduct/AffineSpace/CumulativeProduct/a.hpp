@@ -1,6 +1,7 @@
 // c:/Users/user/Documents/Programming/Mathematics/SetTheory/DirectProduct/AffineSpace/CumulativeProduct/a.hpp
 
 #pragma once
+#include "a_Macro.hpp"
 #include "../../../../Algebra/Monoid/Group/a.hpp"
 
 // verify:
@@ -91,11 +92,20 @@ public:
   // Mに関する左区間積a[j]...a[i]がuと等しい区間[i,j]の個数を計算する。
   ll CountLeftIntervalProductInverseImage( const U& u = One() );
 
+  // Fは積順序に関して単調な写像f:U \times int -> {0,1}に相当する型。
+  // f( RightIntervalProduct( i_start , i ) , i )がtrueとなるi_start以上のiが
+  // 存在する場合にその最小値を2進法で探索。
+  // 存在しない場合はN以上の最小の2羃×2-1を返す（N以上であることで判別可能）。
+  template <typename F , SFINAE_FOR_CP_BS = nullptr> int RightBinarySearch( const int& i_start , const F& f );
+  // f( LeftIntervalProduct( i_start , i ) , i )がtrueとなるi_start以上のiが
+  // 存在する場合にその最小値を2進法で探索。
+  // 存在しない場合はN以上の最小の2羃×2-1を返す（N以上であることで判別可能）。
+  template <typename F , SFINAE_FOR_CP_BS = nullptr> int LeftBinarySearch( const int& i_start , const F& f );
   // RightIntervalProduct( i_start , i )がu以上となるi_start以上のiが存在する場合にその最小値を2進法で探索。
-  // 存在しない場合はN以上の最小の2羃×2-1を返す（N以上であることで判定可能）。
+  // 存在しない場合はN以上の最小の2羃×2-1を返す（N以上であることで判別可能）。
   int RightBinarySearch( const int& i_start , const U& u );
   // LeftIntervalProduct( i_start , i )がu以上となるi_start以上のiが存在する場合にその最小値を2進法で探索。
-  // 存在しない場合はN以上の最小の2羃×2-1を返す（N以上であることで判定可能）。
+  // 存在しない場合はN以上の最小の2羃×2-1を返す（N以上であることで判別可能）。
   int LeftBinarySearch( const int& i_start , const U& u );
   
 private:
@@ -124,8 +134,11 @@ public:
   // 区間和a[i]+...+a[j]がuと等しい区間[i,j]の個数を計算する。
   ll CountIntervalSumInverseImage( const U& u = U() );
 
-  // IntervalSum( i_start , i )がu以上となるi_start以上のiが存在する場合にその最小値を2進法で探索。
-  // 存在しない場合はN以上の最小の2羃×2-1を返す（N以上であることで判定可能）。
-  int BinarySearch( const int& i_start , const U& u );
+  // Fは積順序に関して単調な写像f:U \times int -> {0,1}に相当する型またはU。
+  // 前者の場合はf( IntervalSum( i_start , i ) , i )がtrueとなるi_start以上のiが、
+  // 後者の場合はIntervalSum( i_start , i )がu以上となるi_start以上のiが存在する場合に
+  // その最小値を2進法で探索。
+  // 存在しない場合はN以上の最小の2羃×2-1を返す（N以上であることで判別可能）。
+  template <typename F> int BinarySearch( const int& i_start , const F& f );
 
 };
