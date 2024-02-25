@@ -139,4 +139,4 @@ template <typename U , typename ABELIAN_GROUP> template <typename F , SFINAE_FOR
 
 template <typename U , typename ABELIAN_GROUP> inline int AbstractBIT<U,ABELIAN_GROUP>::BinarySearch( const U& u ) { return BinarySearch( [&]( const U& sum , const int& ){ return !( sum < u ); } ); }
 
-template <typename U , typename ABELIAN_GROUP> inline int AbstractBIT<U,ABELIAN_GROUP>::BinarySearch( const int& i_start , const U& u ) { return max( i_start , m_M.Sum( BinarySearch( InitialSegmentSum( i_start - 1 ) , u ) ) ); }
+template <typename U , typename ABELIAN_GROUP> inline int AbstractBIT<U,ABELIAN_GROUP>::BinarySearch( const int& i_start , const U& u ) { return max( i_start , BinarySearch( m_M.Sum( InitialSegmentSum( i_start - 1 ) , u ) ) ); }
