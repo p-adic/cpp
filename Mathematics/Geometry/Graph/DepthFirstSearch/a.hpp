@@ -4,7 +4,7 @@
 #include "../BreadthFirst/a.hpp"
 
 // verify:
-// https://yukicoder.me/submissions/953238（一始点のShiftによる多点DFSでの全探索）
+// https://yukicoder.me/submissions/955873（一始点のShiftによる多点DFSでの全探索）
 // https://yukicoder.me/submissions/953239（SetConnectedComponent）
 // https://yukicoder.me/submissions/953242（TopologicalSort）
 

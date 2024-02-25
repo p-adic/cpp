@@ -30,9 +30,8 @@ template <typename T , typename GRAPH> inline T VirtualBreadthFirstSearch<T,GRAP
   m_next.pop_front();
   auto&& edge = m_G.Edge( t_curr );
 
-  while( ! edge.empty() ){
+  for( auto& t : edge ){
 
-    const T& t = edge.front();
     auto&& i = m_G.Enumeration_inv( t );
     auto&& found_i = m_found[i];
 
@@ -43,8 +42,6 @@ template <typename T , typename GRAPH> inline T VirtualBreadthFirstSearch<T,GRAP
       found_i = true;
 
     }
-
-    edge.pop_front();
 
   }
 

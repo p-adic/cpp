@@ -4,7 +4,7 @@
 #include "../a.hpp"
 
 // verify:
-// https://yukicoder.me/submissions/953264（RootingDP）
+// https://yukicoder.me/submissions/955875（RootingDP）
 // https://yukicoder.me/submissions/953265（RerootingDP）
 // https://yukicoder.me/submissions/953266（RerootingDP）
 

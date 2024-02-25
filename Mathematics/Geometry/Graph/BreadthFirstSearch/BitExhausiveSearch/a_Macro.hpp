@@ -2,7 +2,7 @@
 
 #pragma once
 #define DEFINITION_OF_ADJACENT_SET( T_COPY , OPR , ULIM , UPDATE )	\
-  list<int> answer{};							\
+  vector<int> answer{};							\
   int t_copy = T_COPY;							\
   int t_next;								\
   int d;								\
@@ -17,7 +17,7 @@
   return answer								\
 
 #define DEFINITION_OF_PROPER_SET( INCREMENT , OPR , ULIM , UPDATE )	\
-  list<int> answer{};							\
+  vector<int> answer{};							\
   int t_next = t;							\
 									\
   while( ( ( INCREMENT t_next ) OPR t ) < ULIM ){			\

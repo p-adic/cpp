@@ -39,9 +39,8 @@ template <typename T , typename GRAPH> T ZeroOneBreadthFirstSearch<T,GRAPH>::Nex
   m_found[i_curr] = 3;
   auto&& edge = m_G.Edge( t_curr );
 
-  while( ! edge.empty() ){
-
-    const auto& [t,weighted] = edge.front();
+  for( auto& [t,weighted] : edge ){
+    
     auto&& i = m_G.Enumeration_inv( t );
     int& found_i = m_found[i];
 
@@ -68,8 +67,6 @@ template <typename T , typename GRAPH> T ZeroOneBreadthFirstSearch<T,GRAPH>::Nex
       }
 
     }
-
-    edge.pop_front();
 
   }
 
