@@ -1,9 +1,10 @@
 // c:/Users/user/Documents/Programming/Mathematics/SetTheory/DirectProduct/AffineSpace/BIT/Abstract/Monoid/a.hpp
 
 #pragma once
+#include "../a_Macro.hpp"
 
 // verify:
-// https://yukicoder.me/submissions/947851（一点代入、区間積）
+// https://yukicoder.me/submissions/955164（一点代入、区間積）
 
 // 入力の範囲内で要件
 // (1) MがUのモノイド構造である。
@@ -49,9 +50,13 @@ public:
   inline const U& LSBSegmentProduct( const int& j , const bool& left = true ) const;
   U IntervalProduct( const int& i_start , const int& i_final );
 
-  // IntervalSegmentProduct( 0 , i )がu以上となるiが存在する場合にその最小値を2進法で探索。
-  // 存在しない場合はN以上の最小の2羃×2-1を返す（N以上であることで判定可能）。
-  int BinarySearch( const U& u );
+  // Fは積順序に関して単調な写像f:U \times int -> {0,1}に相当する型。
+  // f( IntervalProduct( 0 , i ) , i )がtrueとなるiが存在する場合にその最小値を
+  // 2進法で探索。存在しない場合はN以上の最小の2羃×2-1を返す（N以上であることで判別可能）。
+  template <typename F , SFINAE_FOR_BIT_BS = nullptr> int BinarySearch( const F& f );
+  // IntervalProduct( 0 , i )がu以上となるiが存在する場合にその最小値を2進法で探索。
+  // 存在しない場合はN以上の最小の2羃×2-1を返す（N以上であることで判別可能）。
+  inline int BinarySearch( const U& u );
   
 };
 template <typename MONOID> MonoidBIT( MONOID M ) -> MonoidBIT<inner_t<MONOID>,MONOID>;

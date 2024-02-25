@@ -1,10 +1,11 @@
 // c:/Users/user/Documents/Programming/Mathematics/SetTheory/DirectProduct/AffineSpace/BIT/IntervalMax/a.hpp
 
 #pragma once
+#include "../a_Macro.hpp"
 #include "../../../../../Algebra/Monoid/Semilattice/a.hpp"
 
 // verify:
-// https://yukicoder.me/submissions/950378（一点乗算／区間積取得）
+// https://yukicoder.me/submissions/955165（一点乗算、区間積取得）
 
 // 入力の範囲内で要件
 // (1) MがUの可換羃等モノイド構造である。
@@ -55,6 +56,13 @@ public:
   inline const U& LSBSegmentProduct( const int& j , const bool& left = true ) const;
   U IntervalProduct( const int& i_start , const int& i_final );
 
+  // Fは積順序に関して単調な写像f:U \times int -> {0,1}に相当する型。
+  // f( IntervalProduct( 0 , i ) , i )がtrueとなるiが存在する場合にその最小値を
+  // 2進法で探索。存在しない場合はN以上の最小の2羃×2-1を返す（N以上であることで判別可能）。
+  template <typename F , SFINAE_FOR_BIT_BS = nullptr> int BinarySearch( const F& f );
+  // IntervalProduct( 0 , i )がuを吸収する（max演算ならu以上、min演算ならu以下となる）
+  // iが存在する場合にその最小値を2進法で探索。
+  // 存在しない場合はN以上の最小の2羃×2-1を返す（N以上であることで判別可能）。
   int BinarySearch( const U& u );
 
 private:

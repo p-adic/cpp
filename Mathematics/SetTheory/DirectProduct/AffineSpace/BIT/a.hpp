@@ -1,17 +1,19 @@
 // c:/Users/user/Documents/Programming/Mathematics/SetTheory/DirectProduct/AffineSpace/BIT/Abstract/a.hpp
 
 #pragma once
+#include "a_Macro.hpp"
 #include "../../../../Algebra/Monoid/Group/a.hpp"
 
 // verify:
 // https://yukicoder.me/submissions/950337（零初期化、一点加算、区間和）
 // https://yukicoder.me/submissions/950342（零初期化、配列初期化、始切片和）
+// https://yukicoder.me/submissions/955156（配列初期化、一点加算、通常の二分探索）
 
 // 入力の範囲内で要件
 // (1) MがUの可換群構造である。
 // を満たす場合にのみサポート。
-// ただしM.Inverse()を使うのはSetとIntervalSumのみなので、
-// AddとInitialSegmentSumしか使わない場合は
+// ただしM.Inverse()を使うのはSetとIntervalSumと単調関係に関する区間でのBinarySearchのみなので、
+// AddとInitialSegmentSumとその他のBinarySearchしか使わない場合は
 // M.Inverse()を好きに設定してMをUの可換モノイド構造として良い。
 
 // 配列による初期化O(size)
@@ -57,11 +59,20 @@ public:
   U InitialSegmentSum( const int& i_final );
   inline U IntervalSum( const int& i_start , const int& i_final );
 
+  // Fは積順序に関して単調な写像f:U \times int -> {0,1}に相当する型。
+  // f( InitialSegmentSum( i ) , i )がtrueとなるiが存在する場合にその最小値を2進法で探索。
+  // 存在しない場合はN以上の最小の2羃×2-1を返す（N以上であることで判別可能）。
+  template <typename F , SFINAE_FOR_BIT_BS = nullptr> int BinarySearch( const F& f );
+  // f( IntervalSum( i_start , i ) , i )がtrueとなるi_start以上のiが存在する場合に
+  // その最小値を2進法で探索。
+  // 存在しない場合はN以上の最小の2羃×2-1を返す（N以上であることで判別可能）。
+  template <typename F , SFINAE_FOR_BIT_BS = nullptr> inline int BinarySearch( const int& i_start , const F& f );
+
   // InitialSegmentSum( i )がu以上となるiが存在する場合にその最小値を2進法で探索。
-  // 存在しない場合はN以上の最小の2羃×2-1を返す（N以上であることで判定可能）。
-  int BinarySearch( const U& u );
+  // 存在しない場合はN以上の最小の2羃×2-1を返す（N以上であることで判別可能）。
+  inline int BinarySearch( const U& u );
   // IntervalSum( i_start , i )がu以上となるi_start以上のiが存在する場合にその最小値を2進法で探索。
-  // 存在しない場合はN以上の最小の2羃×2-1を返す（N以上であることで判定可能）。
+  // 存在しない場合はN以上の最小の2羃×2-1を返す（N以上であることで判別可能）。
   inline int BinarySearch( const int& i_start , const U& u );
 
 private:
@@ -71,7 +82,7 @@ private:
 };
 template <typename ABELIAN_GROUP , typename...Args> AbstractBIT( ABELIAN_GROUP M , const Args&... args ) -> AbstractBIT<inner_t<ABELIAN_GROUP>,ABELIAN_GROUP>;
 
-template <typename U>
+template <typename U = ll>
 class BIT :
   public AbstractBIT<U,AdditiveGroup<U>>
 {

@@ -276,7 +276,7 @@ U IdempotentMonoidBIT<U,COMM_IDEM_MONOID>::IntervalProduct( const int& i_start ,
 template <typename U> U IntervalMaxBIT<U>::IntervalMax( const int& i_start , const int& i_final ) { return this->IntervalProduct( i_start , i_final ); }
 template <typename U> U IntervalMinBIT<U>::IntervalMin( const int& i_start , const int& i_final ) { return this->IntervalProduct( i_start , i_final ); }
 
-template <typename U , typename COMM_IDEM_MONOID> inline int IdempotentMonoidBIT<U,COMM_IDEM_MONOID>::BinarySearch( const U& u )
+template <typename U , typename COMM_IDEM_MONOID> template <typename F , SFINAE_FOR_BIT_BS> inline int IdempotentMonoidBIT<U,COMM_IDEM_MONOID>::BinarySearch( const F& f )
 {
 
   int j = 0;
@@ -292,15 +292,15 @@ template <typename U , typename COMM_IDEM_MONOID> inline int IdempotentMonoidBIT
       
       product_next = m_M.Product( product_next , m_fenwick_0[j_next] );
 
-      if( product_next != m_M.Product( product_next , u ) ){
+      if( f( product_next , j_next - 1 ) ){
 	
+	product_next = product;
+	
+      } else {
+
 	product = product_next;
 	j = j_next;
 
-      } else {
-
-	product_next = product;
-	
       }
       
     }
@@ -309,9 +309,11 @@ template <typename U , typename COMM_IDEM_MONOID> inline int IdempotentMonoidBIT
 
   }
 
-  // m_a[0]*...*m_a[i]がuを吸収しないiが存在するならばjはその最大値に1を足したものとなり、
-  // そのようなiが存在しないならばj=0となり、
-  // いずれの場合もjはm_a[0]*...*m_a[i]がuを吸収する最小のiと等しい。
+  // f( IntervalProduct( 0 , i ) , i )がfalseとなるiが存在するならば
+  // jはその最大値に1を足したものとなり、そのようなiが存在しないならばj=0となる。
+  // いずれの場合もjはf( IntervalProduct( 0 , i ) , i )がtrueとなる最小のiと等しい。
   return j;
 
 }
+
+template <typename U , typename COMM_IDEM_MONOID> inline int IdempotentMonoidBIT<U,COMM_IDEM_MONOID>::BinarySearch( const U& u ) { return BinarySearch( [&]( const U& prod , const int& ){ return prod == m_M.Product( prod , u ); } ); }

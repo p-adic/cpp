@@ -155,7 +155,7 @@ U MonoidBIT<U,MONOID>::IntervalProduct( const int& i_start , const int& i_final 
 
 }
 
-template <typename U , typename MONOID> inline int MonoidBIT<U,MONOID>::BinarySearch( const U& u )
+template <typename U , typename MONOID> template <typename F , SFINAE_FOR_BIT_BS> inline int MonoidBIT<U,MONOID>::BinarySearch( const F& f )
 {
 
   int j = 0;
@@ -171,14 +171,14 @@ template <typename U , typename MONOID> inline int MonoidBIT<U,MONOID>::BinarySe
       
       sum_next = m_M.Product( sum_next , m_fenwick_0[j_next] );
 
-      if( sum_next < u ){
-	
-	sum = sum_next;
-	j = j_next;
-
-      } else {
+      if( f( sum_next , j_next - 1 ) ){
 
 	sum_next = sum;
+	
+      } else {
+
+	sum = sum_next;
+	j = j_next;
 	
       }
       
@@ -188,9 +188,11 @@ template <typename U , typename MONOID> inline int MonoidBIT<U,MONOID>::BinarySe
 
   }
 
-  // m_a[0]*...*m_a[i]がt未満となるiが存在するならばjはその最大値に1を足したものとなり、
-  // そのようなiが存在しないならばj=0となり、
-  // いずれの場合もjはm_a[0]*...*m_a[i]がu以上となる最小のiと等しい。
+  // f( IntervalProduct( 0 , i ) , i )がfalseとなるiが存在するならば
+  // jはその最大値に1を足したものとなり、そのようなiが存在しないならばj=0となる。
+  // いずれの場合もjはf( IntervalProduct( 0 , i ) , i )がtrueとなる最小のiと等しい。
   return j;
 
 }
+
+template <typename U , typename MONOID> inline int MonoidBIT<U,MONOID>::BinarySearch( const U& u ) { return BinarySearch( [&]( const U& prod , const int& ){ return !( prod < u ); } ); }

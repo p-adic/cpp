@@ -93,8 +93,8 @@ U AbstractBIT<U,ABELIAN_GROUP>::InitialSegmentSum( const int& i_final )
 template <typename U , typename ABELIAN_GROUP> inline U AbstractBIT<U,ABELIAN_GROUP>::IntervalSum( const int& i_start , const int& i_final ) { return m_M.Sum( m_M.Inverse( InitialSegmentSum( i_start - 1 ) ) , InitialSegmentSum( i_final ) ); }
 
 
-template <typename U , typename ABELIAN_GROUP>
-int AbstractBIT<U,ABELIAN_GROUP>::BinarySearch( const U& u )
+template <typename U , typename ABELIAN_GROUP> template <typename F , SFINAE_FOR_BIT_BS>
+int AbstractBIT<U,ABELIAN_GROUP>::BinarySearch( const F& f )
 {
 
   int j = 0;
@@ -110,14 +110,14 @@ int AbstractBIT<U,ABELIAN_GROUP>::BinarySearch( const U& u )
       
       sum_next = m_M.Sum( sum_next , m_fenwick[j_next] );
 
-      if( sum_next < u ){
+      if( f( sum_next , j_next - 1 ) ){
 	
-	sum = sum_next;
-	j = j_next;
+	sum_next = sum;
 
       } else {
 
-	sum_next = sum;
+	sum = sum_next;
+	j = j_next;
 	
       }
       
@@ -127,12 +127,16 @@ int AbstractBIT<U,ABELIAN_GROUP>::BinarySearch( const U& u )
 
   }
 
-  // InitialSegmentSum( i )がn未満となるiが存在するならばjはその最大値に1を足したものとなり、
-  // InitialSegmentSum( i )がn未満となるiが存在しないならばj=0となり、
-  // いずれの場合もInitialSegmentSum( i )がt以上となるiが存在するならば
+  // f( InitialSegmentSum( i ) , i )がfalseとなるiが存在するならばjはその最大値に
+  // 1を足したものとなり、存在しないならばj=0となる。
+  // いずれの場合もf( InitialSegmentSum( i ) , i )がtrueとなるiが存在するならば
   // jはそのような最小のiと等しい。
   return j;
-
+  
 }
+
+template <typename U , typename ABELIAN_GROUP> template <typename F , SFINAE_FOR_BIT_BS> inline int AbstractBIT<U,ABELIAN_GROUP>::BinarySearch( const int& i_start , const F& f ) { const U u_inv = m_M.Inverse( InitialSegmentSum( i_start - 1 ) ); return max( i_start , BinarySearch( [&]( const U& sum , const int& i ){ return i_start <= i && f( m_M.Sum( u_inv , sum ) , i ); } ) ); }
+
+template <typename U , typename ABELIAN_GROUP> inline int AbstractBIT<U,ABELIAN_GROUP>::BinarySearch( const U& u ) { return BinarySearch( [&]( const U& sum , const int& ){ return !( sum < u ); } ); }
 
 template <typename U , typename ABELIAN_GROUP> inline int AbstractBIT<U,ABELIAN_GROUP>::BinarySearch( const int& i_start , const U& u ) { return max( i_start , m_M.Sum( BinarySearch( InitialSegmentSum( i_start - 1 ) , u ) ) ); }
