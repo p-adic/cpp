@@ -92,9 +92,10 @@ template <typename U , typename COMM_MONOID> inline U MonoidSqrtDecomposition<U,
   
 }
 
-template <typename U , typename COMM_MONOID> inline int MonoidSqrtDecomposition<U,COMM_MONOID>::Search( const int& i_start , const U& u ) { return Search( i_start , u , m_M.Zero() ); }
+template <typename U , typename COMM_MONOID> template <typename F , SFINAE_FOR_SD_S> inline int MonoidSqrtDecomposition<U,COMM_MONOID>::Search( const int& i_start , const F& f ) { return Search( i_start , f , m_M.Zero() ); }
+template <typename U , typename COMM_MONOID> inline int MonoidSqrtDecomposition<U,COMM_MONOID>::Search( const int& i_start , const U& u ) { return Search( i_start , [&]( const U& prod , const int& ){ return prod <= u; } ); }
 
-template <typename U , typename COMM_MONOID> int MonoidSqrtDecomposition<U,COMM_MONOID>::Search_Body( const int& i_start , const U& u , U sum_temp )
+template <typename U , typename COMM_MONOID> template <typename F> int MonoidSqrtDecomposition<U,COMM_MONOID>::Search_Body( const int& i_start , const F& f , U sum_temp )
 {
 
   const int i_min = max( i_start , 0 );
@@ -105,7 +106,7 @@ template <typename U , typename COMM_MONOID> int MonoidSqrtDecomposition<U,COMM_
 
     sum_temp = m_M.Product( sum_temp , m_a[i] );
 
-    if( !( sum_temp < u ) ){
+    if( f( sum_temp , i ) ){
 
       return i;
 
@@ -117,15 +118,13 @@ template <typename U , typename COMM_MONOID> int MonoidSqrtDecomposition<U,COMM_
 
     U sum_next = m_M.Product( sum_temp , m_b[d] );
 
-    if( sum_next < u ){
+    if( f( sum_next , min( ( d + 1 ) * m_N_sqrt , m_N ) - 1 ) ){
 
-      sum_temp = move( sum_next );
-
-    } else {
-
-      return Search_Body( d * m_N_sqrt , u , sum_temp );
+      return Search_Body( d * m_N_sqrt , f , sum_temp );
 
     }
+
+    sum_temp = move( sum_next );
     
   }
 

@@ -4,7 +4,7 @@
 #include "../a.hpp"
 
 // verify:
-// https://yukicoder.me/submissions/950345（一点乗算、区間乗算、一点取得）
+// https://yukicoder.me/submissions/955170（一点乗算、区間乗算、一点取得）
 
 // 入力の範囲内で要件
 // (1) MがUのN加群構造である。
@@ -39,6 +39,7 @@ public:
   inline U Get( const int& i );
   inline U IntervalProduct( const int& i_start , const int& i_final );
 
+  template <typename F , SFINAE_FOR_SD_S> inline int Search( const int& i_start , const F& f ) = delete;
   inline int Search( const int& i_start , const U& u ) = delete;
 
 };

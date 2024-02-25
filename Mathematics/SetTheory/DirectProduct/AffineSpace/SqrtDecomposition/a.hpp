@@ -1,8 +1,9 @@
 // c:/Users/user/Documents/Programming/Mathematics/SetTheory/DirectProduct/AffineSpace/SqrtDecomposition/a.hpp
 
 #pragma once
+#include "a_macro.hpp"
 // verify:
-// https://yukicoder.me/submissions/950343（零初期化、一点加算、区間和）
+// https://yukicoder.me/submissions/955166（零初期化、一点加算、区間和）
 
 // 入力の範囲内で要件
 // (1) MがUの可換群構造である。
@@ -52,13 +53,17 @@ public:
   inline const U& Get( const int& i ) const;
   inline U IntervalSum( const int& i_start , const int& i_final );
 
-  // u <= IntervalSum( i_start , i_final )を満たすi_start以上の最小のi_finalを探索。
+  // Fは積順序に関して単調な写像f:U \times int -> {0,1}に相当する型。
+  // f( IntervalSum( i_start , i ) , i )がtrueとなるi_start以上の最小のiを探索。
+  // 存在しない場合は-1を返す。
+  template <typename F , SFINAE_FOR_SD_S = nullptr> inline int Search( const int& i_start , const F& f );
+  // u <= IntervalSum( i_start , i )を満たすi_start以上の最小のiを探索。
   // 存在しない場合は-1を返す。
   inline int Search( const int& i_start , const U& u );
   
 private:
   void Initialise();
-  int Search_Body( const int& i_start , const U& u , U sum_temp );
+  template <typename F> int Search_Body( const int& i_start , const F& f , U sum_temp );
   
 };
 template <typename ABELIAN_GROUP , typename...Args> AbstractSqrtDecomposition( ABELIAN_GROUP M , Args&&...args ) -> AbstractSqrtDecomposition<inner_t<ABELIAN_GROUP>,ABELIAN_GROUP>;

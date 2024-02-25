@@ -77,9 +77,10 @@ template <typename U , typename ABELIAN_GROUP> inline U AbstractSqrtDecompositio
   
 }
 
-template <typename U , typename ABELIAN_GROUP> inline int AbstractSqrtDecomposition<U,ABELIAN_GROUP>::Search( const int& i_start , const U& u ) { return Search( i_start , u , m_M.Zero() ); }
+template <typename U , typename ABELIAN_GROUP> template <typename F , SFINAE_FOR_SD_S> inline int AbstractSqrtDecomposition<U,ABELIAN_GROUP>::Search( const int& i_start , const F& f ) { return Search_Body( i_start , f , m_M.Zero() ); }
+template <typename U , typename ABELIAN_GROUP> inline int AbstractSqrtDecomposition<U,ABELIAN_GROUP>::Search( const int& i_start , const U& u ) { return Search( i_start , [&]( const U& sum , const int& ){ return !( u < sum ); } ); }
 
-template <typename U , typename ABELIAN_GROUP> int AbstractSqrtDecomposition<U,ABELIAN_GROUP>::Search_Body( const int& i_start , const U& u , U sum_temp )
+template <typename U , typename ABELIAN_GROUP> template <typename F> int AbstractSqrtDecomposition<U,ABELIAN_GROUP>::Search_Body( const int& i_start , const F& f , U sum_temp )
 {
 
   const int i_min = max( i_start , 0 );
@@ -90,7 +91,7 @@ template <typename U , typename ABELIAN_GROUP> int AbstractSqrtDecomposition<U,A
 
     sum_temp = m_M.Sum( sum_temp , m_a[i] );
 
-    if( !( sum_temp < u ) ){
+    if( f( sum_temp , i ) ){
 
       return i;
 
@@ -102,15 +103,13 @@ template <typename U , typename ABELIAN_GROUP> int AbstractSqrtDecomposition<U,A
 
     U sum_next = m_M.Sum( sum_temp , m_b[d] );
 
-    if( sum_next < u ){
+    if( f( sum_next , min( ( d + 1 ) * m_N_sqrt , m_N ) - 1 ) ){
 
-      sum_temp = move( sum_next );
-
-    } else {
-
-      return Search_Body( d * m_N_sqrt , u , sum_temp );
+      return Search_Body( d * m_N_sqrt , f , sum_temp );
 
     }
+
+    sum_temp = move( sum_next );
     
   }
 
