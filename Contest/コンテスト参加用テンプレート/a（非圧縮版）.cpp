@@ -555,8 +555,8 @@ TE <TY U> IN PointedSet<U>::PointedSet(CO U& b_U):m_b_U(b_U){}TE <TY U> IN CO U&
 TE <TY U>CL VirtualMonoid:VI PU VirtualMagma<U>,VI PU VirtualPointedSet<U>{};TE <TY U = ll>CL AdditiveMonoid:VI PU VirtualMonoid<U>,PU AdditiveMagma<U>,PU PointedSet<U>{};TE <TY U = ll>CL MultiplicativeMonoid:VI PU VirtualMonoid<U>,PU MultiplicativeMagma<U>,PU PointedSet<U>{PU:IN MultiplicativeMonoid(CO U& e_U);};TE <TY U,TY M_U>CL AbstractMonoid:VI PU VirtualMonoid<U>,PU AbstractMagma<U,M_U>,PU PointedSet<U>{PU:IN AbstractMonoid(M_U m_U,CO U& e_U);};
 TE <TY U> IN MultiplicativeMonoid<U>::MultiplicativeMonoid(CO U& e_U):PointedSet<U>(e_U){}TE <TY U,TY M_U> IN AbstractMonoid<U,M_U>::AbstractMonoid(M_U m_U,CO U& e_U):AbstractMagma<U,M_U>(MO(m_U)),PointedSet<U>(e_U){}
 
-TE <TY U>CL VirtualGroup:VI PU VirtualMonoid<U>,VI PU VirtualPointedSet<U>,VI PU VirtualNSet<U>{};TE <TY U = ll>CL AdditiveGroup:VI PU VirtualGroup<U>,PU AdditiveMonoid<U>{PU:IN U Transfer(CO U& u);};TE <TY U,TY M_U,TY I_U>CL AbstractGroup:VI PU VirtualGroup<U>,PU AbstractMonoid<U,M_U>,PU AbstractNSet<U,I_U>{PU:IN AbstractGroup(M_U m_U,CO U& e_U,I_U i_U);IN U Transfer(CO U& u);};
-TE <TY U,TY M_U,TY I_U> IN AbstractGroup<U,M_U,I_U>::AbstractGroup(M_U m_U,CO U& e_U,I_U i_U):AbstractMonoid<U,M_U>(MO(m_U),e_U),AbstractNSet<U,I_U>(MO(i_U)){}TE <TY U,TY M_U,TY I_U> IN U AbstractGroup<U,M_U,I_U>::Transfer(CO U& u){RE TH->m_f_U(u);}TE <TY U> IN U AdditiveGroup<U>::Transfer(CO U& u){RE -u;}
+TE <TY U>CL VirtualGroup:VI PU VirtualMonoid<U>,VI PU VirtualPointedSet<U>,VI PU VirtualNSet<U>{};TE <TY U = ll>CL AdditiveGroup:VI PU VirtualGroup<U>,PU AdditiveMonoid<U>{PU:IN U Transfer(CO U& u);};TE <TY U,TY M_U,TY I_U>CL AbstractGroup:VI PU VirtualGroup<U>,PU AbstractMonoid<U,M_U>,PU AbstractNSet<U,I_U>{PU:IN AbstractGroup(M_U m_U,CO U& e_U,I_U i_U);};
+TE <TY U,TY M_U,TY I_U> IN AbstractGroup<U,M_U,I_U>::AbstractGroup(M_U m_U,CO U& e_U,I_U i_U):AbstractMonoid<U,M_U>(MO(m_U),e_U),AbstractNSet<U,I_U>(MO(i_U)){}TE <TY U> IN U AdditiveGroup<U>::Transfer(CO U& u){RE -u;}
 
 // Graph
 // c:/Users/user/Documents/Programming/Mathematics/Geometry/Graph/compress.txt
