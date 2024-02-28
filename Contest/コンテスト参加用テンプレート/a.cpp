@@ -250,7 +250,7 @@ c:/Users/user/Documents/Programming/Mathematics/Geometry/Graph/UnionFindForest/c
 #else
   #define SET_LL( A ) cin >> A
   #define CIN( LL , ... ) SOLVE_ONLY; LL __VA_ARGS__; VariadicCin( cin , __VA_ARGS__ )
-  #define SET_A( A , N ) SOLVE_ONLY; FOR( VARIABLE_FOR_CIN_A , 0 , N ){ cin >> A[VARIABLE_FOR_CIN_A]; }
+  #define SET_A( A , N ) SOLVE_ONLY; FOR( VARIABLE_FOR_SET_A , 0 , N ){ cin >> A[VARIABLE_FOR_SET_A]; }
   #define CIN_A( LL , A , N ) VE<LL> A( N ); SET_A( A , N );
 #endif
 #include <bits/stdc++.h>
@@ -262,7 +262,9 @@ using namespace std;
 #define CURRENT_TIME static_cast<double>( chrono::duration_cast<chrono::microseconds>( chrono::system_clock::now() - watch ).count() / 1000.0 )
 #define CHECK_WATCH( TL_MS ) ( CURRENT_TIME < TL_MS - 100.0 )
 #define CEXPR( LL , BOUND , VALUE ) CE LL BOUND = VALUE
+#define SET_A_ASSERT( A , N , MIN , MAX ) FOR( VARIABLE_FOR_SET_A , 0 , N ){ SET_ASSERT( A[VARIABLE_FOR_SET_A] , MIN , MAX ); }
 #define CIN_ASSERT( A , MIN , MAX ) decldecay_t( MAX ) A; SET_ASSERT( A , MIN , MAX )
+#define CIN_A_ASSERT( A , N , MIN , MAX ) vector<decldecay_t( MAX )> A( N ); SET_A_ASSERT( A , N , MIN , MAX )
 #define FOR( VAR , INITIAL , FINAL_PLUS_ONE ) for( decldecay_t( FINAL_PLUS_ONE ) VAR = INITIAL ; VAR < FINAL_PLUS_ONE ; VAR ++ )
 #define FOREQ( VAR , INITIAL , FINAL ) for( decldecay_t( FINAL ) VAR = INITIAL ; VAR <= FINAL ; VAR ++ )
 #define FOREQINV( VAR , INITIAL , FINAL ) for( decldecay_t( INITIAL ) VAR = INITIAL ; VAR + 1 > FINAL ; VAR -- )
