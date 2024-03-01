@@ -944,38 +944,9 @@ AC( MinimisationMovingCost )
   CERR( "" );
 }
 
-AC( MaximisationMovingCost )
-{
-  ASK_NUMBER(
-	     "１始点多終点コスト最大化（最遠点探索）問題" ,
-	     "多始点多終点コスト最大化（最長歩道探索）問題" ,
-	     );
-  if( num == num_temp++ ){
-    CALL_AC( MaximisationMovingCostSingleStart );
-  } else if( num == num_temp++ ){
-    ASK_YES_NO( "閉路を持たない有向グラフですか？" );
-    if( reply == "y" ){
-      CERR( "トポロジカルソートによる動的計画法" );
-      CERR( "\\Mathematics\\Geometry\\Graph\\TopologicalSort" );
-    } else {
-      CERR( "始点を全探策することで、１始点多終点コスト最大化問題に帰着されます。" );
-      CALL_AC( MaximisationMovingCostSingleStart );
-    }
-  }
-  CERR( "を検討しましょう。" );
-}
-
-AC( MaximisationMovingCostSingleStart )
-{
-  CERR( "- コストが非正でO((V+E)log_2 E)が間に合いそうならば-1倍してダイクストラ法" );
-  CERR( "  \\Mathematics\\Geometry\\Graph\\Dijkstra" );
-  CERR( "- コストが正になりえてO(VE)が間に合いそうならば1倍してベルマンフォード法" );
-  CERR( "  \\Mathematics\\Geometry\\Graph\\BellmanFord" );
-}
-
 AC( MinimisationSolvingMaze )
 {
-  ASK_YES_NO( "Vが10^6オーダーで抑えられますか？" );
+  ASK_YES_NO( "Eが10^8オーダーで抑えられますか？" );
   if( reply == "y" ){
     CERR( "- コストがなくO(V+E)が通りそうならば幅優先探索" );
     CERR( "  \\Mathematics\\Geometry\\Graph\\BreadthFirst" );
@@ -993,10 +964,12 @@ AC( MinimisationSolvingMaze )
     CERR( "  \\Mathematics\\Geometry\\Graph\\Dijkstra\\Potentialised" );
     CERR( "を検討しましょう。" );
   } else {
-    CERR( "配列の書き換え問題やLightsOut問題のようにVが非常に大きいならば、" );
+    CERR( "配列の書き換え問題やLightsOut問題のようにEが非常に大きいならば、" );
     CERR( "各操作をデータ構造に翻訳することでシンプルな最小化問題に帰着させましょう。" );
     CERR( "- 区間加算ならば、階差数列の２点加算に翻訳" );
     CERR( "- 部分木の白黒反転ならば、木上の階差数列の１点更新に翻訳" );
+    CERR( "- 無向グラフと非輪状有向グラフの合成ならば、有向グラフの有向辺に沿った動的計画法の" );
+    CERR( "  データ構造高速化" );
     CERR( "その上で、操作を" );
     CERR( "- 選択部分（どこを操作するか、など）" );
     CERR( "- 決定的遷移（選択部分を決めたら最小コストを実現するために" );
@@ -1042,6 +1015,35 @@ AC( MinimisationSolvingOpenCoveringUnknownCentres )
   CERR( "被覆半径Lを二分探索しましょう。例えば始点（被覆中心または被覆端点）の" );
   CERR( "候補を絞った上で始点を１つ固定してその始点から距離L以内の点を削除し、" );
   CERR( "残りの点群に対して再帰的に問題を解くことを検討しましょう。" );
+}
+
+AC( MaximisationMovingCost )
+{
+  ASK_NUMBER(
+	     "１始点多終点コスト最大化（最遠点探索）問題" ,
+	     "多始点多終点コスト最大化（最長歩道探索）問題" ,
+	     );
+  if( num == num_temp++ ){
+    CALL_AC( MaximisationMovingCostSingleStart );
+  } else if( num == num_temp++ ){
+    ASK_YES_NO( "閉路を持たない有向グラフですか？" );
+    if( reply == "y" ){
+      CERR( "トポロジカルソートによる動的計画法" );
+      CERR( "\\Mathematics\\Geometry\\Graph\\TopologicalSort" );
+    } else {
+      CERR( "始点を全探策することで、１始点多終点コスト最大化問題に帰着されます。" );
+      CALL_AC( MaximisationMovingCostSingleStart );
+    }
+  }
+  CERR( "を検討しましょう。" );
+}
+
+AC( MaximisationMovingCostSingleStart )
+{
+  CERR( "- コストが非正でO((V+E)log_2 E)が間に合いそうならば-1倍してダイクストラ法" );
+  CERR( "  \\Mathematics\\Geometry\\Graph\\Dijkstra" );
+  CERR( "- コストが正になりえてO(VE)が間に合いそうならば1倍してベルマンフォード法" );
+  CERR( "  \\Mathematics\\Geometry\\Graph\\BellmanFord" );
 }
 
 AC( MaximisationStringMatching )
