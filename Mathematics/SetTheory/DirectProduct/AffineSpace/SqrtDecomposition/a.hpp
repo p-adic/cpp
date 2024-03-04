@@ -77,3 +77,4 @@ public:
   template <typename...Args> inline SqrtDecomposition( Args&&... args );
   
 };
+template <typename U , typename...Args> SqrtDecomposition( vector<U> a , Args&&...args ) -> SqrtDecomposition<U>;
