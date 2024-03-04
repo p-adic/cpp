@@ -1729,7 +1729,7 @@ AC( QueryArrayAbelianGroup )
   CERR( "  \\Mathematics\\SetTheory\\DirectProduct\\AffineSpace\\SqrtDecomposition\\Dual\\Commutative" );
   CERR( "- ˆê“_‰ÁZO(1)^‹æŠÔ‰ÁZO(ãN)^ˆê“_‘ã“üO(1)^ˆê“_æ“¾O(1)^‹æŠÔæ“¾O(ãN)" );
   CERR( "  ‚ª•K—v‚È‚ç‚Î‹æŠÔ‰ÁZ•½•û•ªŠ„" );
-  CERR( "  \\Mathematics\\SetTheory\\DirectProduct\\AffineSpace\\SqrtDecomposition\\IntervalMultiply" );
+  CERR( "  \\Mathematics\\SetTheory\\DirectProduct\\AffineSpace\\SqrtDecomposition\\IntervalAdd" );
   CERR( "- ‹æŠÔ‘ã“üO(ãN)^ˆê“_æ“¾O(1)^‹æŠÔæ“¾O(ãN)‚ª•K—v‚È‚ç‚Î’x‰„•½•û•ªŠ„" );
   CERR( "  \\Mathematics\\SetTheory\\DirectProduct\\AffineSpace\\SqrtDecomposition\\LazyEvaluation" );
   CERR( "- ‹æŠÔ‰ÁZO(ãN)^‹æŠÔ‘ã“üO(ãN)^ˆê“_æ“¾O(1)^‹æŠÔæ“¾O(ãN)‚ª•K—v‚È‚ç‚Î" );
