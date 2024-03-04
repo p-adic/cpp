@@ -384,14 +384,14 @@ AC( ExplicitExpressionArraySum )
     CERR( "- 同じ値になる項の纏め上げ" );
     CERR( "- 2変数関数fと数列(a_i)_iが与えられ、sum_i f(a_i,i)を求める場合、" );
     CERR( "  f(x,i)=sum_k b_{i,k} g_k(x)と表示できれば" );
-    CERR( "  (b_{i,k})_iと(g_k(a_i))_iの内積の総和に帰着されます。" );
-    CERR( "  内積は片方の添え字を反転させることで畳み込みに帰着させることができます。" );
-    CERR( "  配列への操作がシフトである場合は繰り返し内積を求めることになるので、" );
-    CERR( "  適当な法での高速フーリエ変換" );
-    CERR( "  \\Mathematics\\Polynoial\\Truncate" );
+    CERR( "  (b_{i,k})_iと(g_k(a_i))_iの内積の総和に帰着、" );
+    CERR( "  内積は片方の添え字を反転させることで畳み込みに帰着" );
+    CERR( "  - 配列への操作がシフトである場合は繰り返し内積を求めることになるので、" );
+    CERR( "    適当な法での高速フーリエ変換" );
+    CERR( "    \\Mathematics\\Polynoial\\Truncate" );
     CERR( "- 2変数関数fと数列(a_i)_iが与えられ、sum_{i,j} f(a_i,a_j)を求める場合、" );
     CERR( "  f(x,y)=sum_k g_k(x) h_k(y)と表示できれば" );
-    CERR( "  (g_k(a_i))_iの累積和と(h_k(a_j))_jの積の総和に帰着されます。" );
+    CERR( "  (g_k(a_i))_iの累積和と(h_k(a_j))_jの積の総和に帰着" );
     CERR( "を検討しましょう。" );
   } else if( num == num_temp++ ){
     ASK_NUMBER(
@@ -473,6 +473,7 @@ AC( ExplicitExpressionFunctionOnTree )
 {
   ASK_NUMBER(
 	     "木を受け取る関数の計算問題" ,
+	     "木上の関数の総和の計算問題" ,
 	     "構文木の計算問題"
 	     );
   if( num == num_temp++ ){
@@ -487,6 +488,8 @@ AC( ExplicitExpressionFunctionOnTree )
     if( reply == "y" ){
       CALL_AC( ExplicitExpressionBitFunctionOnTree );
     }
+  } else if( num == num_temp++ ){
+    CALL_AC( QueryTree );
   } else if( num == num_temp++ ){
     CERR( "構文解析は言語の再帰式に沿って再帰関数で実装しましょう。" );
     CERR( "例えば式Sを左から順に読み、" );
@@ -689,34 +692,39 @@ AC( ExplicitExpressionArea )
 AC( Maximisation )
 {
   ASK_NUMBER(
-	     "低次元アフィン空間上の関数の最大／最小化問題" ,
-	     "配列上の関数の最大／最小化問題" ,
+	     "移動コストの最小化問題" ,
+	     "移動長の最大化問題" ,
+	     "配列上の関数に関する最大／最小化問題" ,
 	     "配列の隣接成分間関係式を満たす部分列の最長化問題" ,
-	     "集合の部分集合の最大化問題" ,
-	     "木上の関数の最大／最小化問題" ,
-	     "移動コスト最小化問題" ,
-	     "移動コスト最大化問題" ,
+	     "低次元アフィン空間上の関数の最大／最小化問題" ,
+	     "集合の部分集合の要素数の最大化問題" ,
+	     "グラフの辺集合に関する最大／最小化問題" ,
+	     "木上の関数に関する最大／最小化問題" ,
 	     "文字列のマッチングに関する最大／最長化問題" ,
 	     "最大二部マッチング問題" ,
 	     "確率／期待値の最大化問題" ,
 	     "操作コストの最小化問題" ,
 	     "操作回数の最大化問題" ,
-	     "描画サイズ／個数の最大／最小化問題"
+	     "描画サイズ／個数の最大／最小化問題" ,
+	     "最大値／総和の最小化問題" ,
+	     "最小値／総和の最大化問題"
 	     );
   if( num == num_temp++ ){
-    CALL_AC( MaximisationFunctionOnAffineSpace );
+    CALL_AC( MinimisationMovingCost );
+  } else if( num == num_temp++ ){
+    CALL_AC( MaximisationMovingDistance );
   } else if( num == num_temp++ ){
     CALL_AC( MaximisationFunctionOnArray );
   } else if( num == num_temp++ ){
     CALL_AC( MaximisationArrayLength );
   } else if( num == num_temp++ ){
+    CALL_AC( MaximisationFunctionOnAffineSpace );
+  } else if( num == num_temp++ ){
     CALL_AC( MaximisationSubsetSize );
   } else if( num == num_temp++ ){
+    CALL_AC( MinimisationGraphCost );
+  } else if( num == num_temp++ ){
     CALL_AC( MaximisationFunctionOnTree );
-  } else if( num == num_temp++ ){
-    CALL_AC( MinimisationMovingCost );
-  } else if( num == num_temp++ ){
-    CALL_AC( MaximisationMovingCost );
   } else if( num == num_temp++ ){
     CALL_AC( MaximisationStringMatching );
   } else if( num == num_temp++ ){
@@ -729,177 +737,11 @@ AC( Maximisation )
     CALL_AC( MaximisationCountingOperation );
   } else if( num == num_temp++ ){
     CALL_AC( MaximisationDrawingImage );
+  } else if( num == num_temp++ ){
+    CALL_AC( MaximisationMinimum );
+  } else if( num == num_temp++ ){
+    CALL_AC( MinimisationMaximum );
   }
-}
-
-AC( MaximisationFunctionOnAffineSpace )
-{
-  ASK_NUMBER(
-	     "凸関数の最小／最大化問題" ,
-	     "可微分関数の最小／最大化問題" ,
-	     "距離の最小／最大化問題" ,
-	     "被覆半径の最小化問題"
-	     );
-  if( num == num_temp++ ){
-    CERR( "三分探索を検討しましょう。" );
-  } else if( num == num_temp++ ){
-    CERR( "ニュートン法を検討しましょう。" );
-  } else if( num == num_temp++ ){
-    CERR( "マンハッタン距離（l^1）は一次変換でl^∞に帰着させた上で、" );
-    CERR( "- 単調な式に帰着できる場合、二分探索" );
-    CERR( "- 最大化問題の場合、絶対値を外す符号パターンの全探策" );
-    CERR( "を検討しましょう。" );
-  } else if( num == num_temp++ ){
-    CERR( "マンハッタン距離（l^1）は一次変換でl^∞に帰着させた上で、" );
-    CALL_AC( MinimisationSolvingOpenCoveringUnknownCentres );
-  }
-  CERR( "" );
-  CERR( "複数のパラメータを決定すべき場合は、サブゴールの式の値を決め打ちましょう。" );
-}
-
-AC( MaximisationFunctionOnArray )
-{
-  ASK_NUMBER(
-	     "問題文または入力で与えられる１つの配列に関する問題" ,
-	     "条件を満たす任意の配列に関する問題"
-	     );
-  if( num == num_temp++ ){
-    ASK_NUMBER(
-	       "成分を受け取る関数の部分和の最大化問題" ,
-	       "成分を受け取る関数の部分和と補部分和の差の最小化問題" ,
-	       "0/1倍以外の配列の変更と配列を受け取る関数の合成の最大化問題"
-	       );
-    if( num == num_temp++ ){
-      CALL_AC( MaximisationSubArraySum );
-    } else if( num == num_temp++ ){
-      CERR( "部分和と総和の半分の差の最小化を行いましょう。" )
-      CERR( "これは小さい方を考えることで上限付き部分和の最大化問題となります。" )
-      CALL_AC( MaximisationSubArraySum );
-    } else if( num == num_temp++ ){
-      CALL_AC( MaximisationArrayFunction );
-    }
-  } else if( num == num_temp++ ){
-    CERR( "- 取り得る値が少なく関数が長さに関して再帰的構造を持つ場合は、" );
-    CERR( "  「長さiの時に可能な値全体または一部の集合dp[i]」" );
-    CERR( "  を管理するiに関する動的計画法" );
-    CERR( "- 「v以上の値を取り得るか否か」が判定可能である時は" );
-    CERR( "  vに関する二分探索" );
-    CERR( "- 「v以上の値を取り得るか否か」が判定可能である時は" );
-    CERR( "  vに関する二分探索" );
-    CERR( "を検討しましょう。" );
-  }
-}
-
-AC( MaximisationSubArraySum )
-{
-  CERR( "和を取る値を価値と呼ぶことにします。" );
-  CERR( "配列の項数N、第i成分の価値A_i、価値の総和の上限Vとします。" );
-  CERR( "{0,...,N-1}の部分集合Iであって、" );
-  CERR( "- sum(i in I){A_i} = v" );
-  CERR( "- その他の条件" );
-  CERR( "を満たすものが存在するv <= Vの最大化を考えます。" );
-  ASK_NUMBER(
-	     "Iにコスト制約があり重複した選択を許す場合" ,
-	     "Iにコスト制約があり重複した選択を許さない場合" ,
-	     "Iが固定長の区間である場合" ,
-	     "Iに追加の制約がない場合"
-	     );
-  if( num == num_temp++ ){
-    CERR( "各選択のコスト上限が存在する場合、その上限以下の項だけを考えましょう。" );
-    CERR( "コストの次元をK<=2、n項目のコストをC_nとし、" );
-    CERR( "m選択目ではC_n[k_m]<=D_mを満たす項nを選べるとします。" );
-    CERR( "" );
-    CERR( "項{C_n,n}と選択{k_m,D_m}をそれぞれ辞書式順序でソートし、" );
-    CERR( "以下の手順で選択を昇順に決定していきましょう。" );
-    CERR( "- K=1の場合、各選択では可能な選択の中で最大のものを採用しましょう。" );
-    CERR( "- K=2の場合、各選択では可能な選択の{第2成分,項番号}をsetで管理しつつ" );
-    CERR( "  その中で最大のものを採用しましょう。" );
-  } else if( num == num_temp++ ){
-    CERR( "各選択のコスト上限が存在する場合、その上限以下の項だけを考えましょう。" );
-    CERR( "コストの総和上限C<∞とします。Cの次元は自由です。" );
-    CERR( "- Cが十分小さいならば、コストの大きい選択回数の全探策や二分探索" );
-    CERR( "- O(NC)が通りそうならば" );
-    CERR( "  「i番目の項まで使ってコストの総和がc以下の時の価値の最大値dp[i][c]」" );
-    CERR( "  を管理するcに関する動的計画法" );
-    CERR( "- O(C^2)が通りそうならば" );
-    CERR( "  「コストcの項の価値の最大値v[c]」" );
-    CERR( "  を前計算し" );
-    CERR( "  「コストの総和がc以下の時の価値の最大値dp[c]」" );
-    CERR( "  を管理するcに関する動的計画法" );
-    CERR( "を検討しましょう。" );
-  } else if( num == num_temp++ ){
-    CERR( "区間をスライドしていき、両端の更新値を用いて最大値を管理しましょう。" );
-  } else if( num == num_temp++ ){
-    CERR( "- O(2^N)が通りそうならば愚直に全探策" );
-    CERR( "- O(N 2^{N/2})が通りそうならば半分全列挙" );
-    CERR( "- O(NV)が通りそうならば[v-V,v+V]での実現可能性を" );
-    CERR( "  遷移する動的計画法" );
-    CERR( "  https://stackoverflow.com/a/18949218" );
-    CERR( "- O((N+V)log_2 V)が通りそうでVが10^5オーダーで" );
-    CERR( "  プロス素数Pを法とするならば法Pでの高速フーリエ変換による" );
-    CERR( "  exp(logの総和)計算" );
-    CERR( "  \\Mathematics\\Polynomial\\Truncate" );
-    CERR( "を検討しましょう。" );
-  }
-}
-
-AC( MaximisationArrayFunction )
-{
-  CERR( "配列を受け取る関数Fが与えられているとします。与えられた配列Aに" );
-  CERR( "何らかの処理をして得られる配列Bに対するF(B)の最大化問題は、" );
-  CERR( "最大化すべき式のサブゴールfに表れる項xのうち決め打ちやすいものを探しましょう。" );
-  CERR( "- 配列の長さをiで打ち切った時のxの候補数をX(i)" );
-  CERR( "- 配列の長さをiで打ち切ってxを決め打った時の配列の長さi+1でのxの候補数をdX(i)" );
-  CERR( "と置きます。" );
-  CERR( "- O(sum_i X(i) dX(i))が通りそうでfがxからO(1)で計算できるならば、" );
-  CERR( "  iとxに関する動的計画法" );
-  CERR( "- O(N log_2 X(N))が通りそうで" );
-  CERR( "  - fがxからO(N)で計算できxに関して単調ならば、xの二分探索" );
-  CERR( "  - fがxからO(N/x)で計算できるならば、xの全探索" );
-  CERR( "- O(N log_2 N)が通りそうでxを並び替えるとfがxからO(log_2 N)で計算できるならば、" );
-  CERR( "  優先度つきキューなどでのxの管理" );
-  CERR( "を検討しましょう。" );
-}
-
-AC( MaximisationArrayLength )
-{
-  CERR( "全順序か疎な半順序かで効率的な実装が違います。" );
-  CERR( "- 全順序ならば、条件を満たす部分列の長さの最大値をインデックスに持つ" );
-  CERR( "  配列を用いて、それらの部分列の末尾である項を記録すること" );
-  CERR( "  \\Mathematics\\Combinatorial\\Counting\\IncreasingSubsequence" );
-  CERR( "- 疎な半順序ならば、条件を満たす部分列の末尾をインデックスに持つ" );
-  CERR( "  連想配列を用いて、それら部分列の長さの最大値を記録すること" );
-  CERR( "  \\Mathematics\\Combinatorial\\Counting\\IncreasingSubsequence\\Subwalk" );
-  CERR( "を検討しましょう。" );
-}
-
-AC( MaximisationSubsetSize )
-{
-  CERR( "与えられた集合のサイズをNと置きます。" );
-  CERR( "- O(2^N)が間に合いそうならば、bit全探策" );
-  CERR( "  \\Mathematics\\Geometry\\Graph\\BreadthFirstSearch\\BitExhausiveSearch" );
-  CERR( "- O(N2^N)が間に合いそうならば、部分集合の包含対のbit全探策" );
-  CERR( "  \\Mathematics\\Geometry\\Graph\\BreadthFirstSearch\\BitExhausiveSearch" );
-  CERR( "- 極大鎖の計算ならば、後続関数を定義し、極大元から後続関数の逆像のグラフの深さ計算" );
-  CERR( "- 極大反鎖の計算ならば、" );
-  CERR( "  - Dilworthの定理の証明に基く構築" );
-  CERR( "    https://en.wikipedia.org/wiki/Dilworth%27s_theorem#Inductive_proof" );
-  CERR( "  - 後続関数を定義し、後続に関する二分探索" );
-  CERR( "- 完全代表系の計算ならば、幅優先探索やUnionFindによる連結成分計算" );
-  CERR( "  \\Mathematics\\Geometry\\Graph\\BreadthFirst" );
-  CERR( "  \\Mathematics\\Geometry\\Graph\\UnionFindForest" );
-  CERR( "- 半開区間の極大排他的集合ならば、区間スケジューリング" );
-  CERR( "を検討しましょう。" );
-}
-
-AC( MaximisationFunctionOnTree )
-{
-  CERR( "木を受け取る関数fが与えられているとします。" );
-  CERR( "" );
-  CALL_AC( FunctionOnTree );
-  CERR( "「第i頂点までで切った時のF(P)たちの最大値dp[i]」" );
-  CERR( "を管理するiに関する動的計画法（O(N^2×fの計算量)）" );
-  CERR( "を検討しましょう。" );
 }
 
 AC( MinimisationMovingCost )
@@ -1017,14 +859,14 @@ AC( MinimisationSolvingOpenCoveringUnknownCentres )
   CERR( "残りの点群に対して再帰的に問題を解くことを検討しましょう。" );
 }
 
-AC( MaximisationMovingCost )
+AC( MaximisationMovingDistance )
 {
   ASK_NUMBER(
-	     "１始点多終点コスト最大化（最遠点探索）問題" ,
-	     "多始点多終点コスト最大化（最長歩道探索）問題" ,
+	     "１始点多終点距離最長化（最遠点探索）問題" ,
+	     "多始点多終点距離最長化（最長歩道探索）問題" ,
 	     );
   if( num == num_temp++ ){
-    CALL_AC( MaximisationMovingCostSingleStart );
+    CALL_AC( MaximisationMovingDistanceSingleStart );
   } else if( num == num_temp++ ){
     ASK_YES_NO( "閉路を持たない有向グラフですか？" );
     if( reply == "y" ){
@@ -1032,18 +874,215 @@ AC( MaximisationMovingCost )
       CERR( "\\Mathematics\\Geometry\\Graph\\TopologicalSort" );
     } else {
       CERR( "始点を全探策することで、１始点多終点コスト最大化問題に帰着されます。" );
-      CALL_AC( MaximisationMovingCostSingleStart );
+      CALL_AC( MaximisationMovingDistanceSingleStart );
     }
   }
   CERR( "を検討しましょう。" );
 }
 
-AC( MaximisationMovingCostSingleStart )
+AC( MaximisationMovingDistanceSingleStart )
 {
   CERR( "- コストが非正でO((V+E)log_2 E)が間に合いそうならば-1倍してダイクストラ法" );
   CERR( "  \\Mathematics\\Geometry\\Graph\\Dijkstra" );
   CERR( "- コストが正になりえてO(VE)が間に合いそうならば1倍してベルマンフォード法" );
   CERR( "  \\Mathematics\\Geometry\\Graph\\BellmanFord" );
+}
+
+AC( MaximisationFunctionOnArray )
+{
+  ASK_NUMBER(
+	     "問題文または入力で与えられる１つの配列に関する問題" ,
+	     "条件を満たす任意の配列に関する問題"
+	     );
+  if( num == num_temp++ ){
+    ASK_NUMBER(
+	       "成分を受け取る関数の部分最大値／部分和の最大化問題" ,
+	       "成分を受け取る関数の部分和と補部分和の差の最小化問題" ,
+	       "0/1倍以外の配列の変更と配列を受け取る関数の合成の最大化問題"
+	       );
+    if( num == num_temp++ ){
+      CALL_AC( MaximisationSubArraySum );
+    } else if( num == num_temp++ ){
+      CERR( "部分和と総和の半分の差の最小化を行いましょう。" )
+      CERR( "これは小さい方を考えることで上限付き部分和の最大化問題となります。" )
+      CALL_AC( MaximisationSubArraySum );
+    } else if( num == num_temp++ ){
+      CALL_AC( MaximisationArrayFunction );
+    }
+  } else if( num == num_temp++ ){
+    CERR( "- 取り得る値が少なく関数が長さに関して再帰的構造を持つ場合は、" );
+    CERR( "  「長さiの時に可能な値全体または一部の集合dp[i]」" );
+    CERR( "  を管理するiに関する動的計画法" );
+    CERR( "- 「v以上の値を取り得るか否か」が判定可能である時は" );
+    CERR( "  vに関する二分探索" );
+    CERR( "- 「v以上の値を取り得るか否か」が判定可能である時は" );
+    CERR( "  vに関する二分探索" );
+    CERR( "を検討しましょう。" );
+  }
+}
+
+AC( MaximisationSubArraySum )
+{
+  CERR( "最大値／総和を取る値を価値と呼ぶことにします。" );
+  CERR( "配列の項数N、第i成分の価値A_i、価値の最大値／総和の上限Vとします。" );
+  CERR( "{0,...,N-1}の部分集合Iであって、" );
+  CERR( "- sum(i in I){A_i} = v" );
+  CERR( "- その他の条件" );
+  CERR( "を満たすものが存在するv <= Vの最大化を考えます。" );
+  ASK_NUMBER(
+	     "Iにコスト制約があり重複した選択を許す場合" ,
+	     "Iにコスト制約があり重複した選択を許さない場合" ,
+	     "Iが固定長の区間である場合" ,
+	     "Iに追加の制約がない場合"
+	     );
+  if( num == num_temp++ ){
+    CERR( "各選択のコスト上限が存在する場合、その上限以下の項だけを考えましょう。" );
+    CERR( "コストの次元をK<=2、n項目のコストをC_nとし、" );
+    CERR( "m選択目ではC_n[k_m]<=D_mを満たす項nを選べるとします。" );
+    CERR( "" );
+    CERR( "項{C_n,n}と選択{k_m,D_m}をそれぞれ辞書式順序でソートし、" );
+    CERR( "以下の手順で選択を昇順に決定していきましょう。" );
+    CERR( "- K=1の場合、各選択では可能な選択の中で最大のものを採用しましょう。" );
+    CERR( "- K=2の場合、各選択では可能な選択の{第2成分,項番号}をsetで管理しつつ" );
+    CERR( "  その中で最大のものを採用しましょう。" );
+  } else if( num == num_temp++ ){
+    CERR( "各選択のコスト上限が存在する場合、その上限以下の項だけを考えましょう。" );
+    CERR( "コストの最大値／総和上限C<∞とします。Cの次元は自由です。" );
+    CERR( "- Cが十分小さいならば、コストの大きい選択回数の全探策や二分探索" );
+    CERR( "- O(NC)が通りそうならば" );
+    CERR( "  「i番目の項まで使ってコストの最大値／総和がc以下の時の価値の最大値dp[i][c]」" );
+    CERR( "  を管理するcに関する動的計画法" );
+    CERR( "- O(C^2)が通りそうならば" );
+    CERR( "  「コストcの項の価値の最大値v[c]」" );
+    CERR( "  を前計算し" );
+    CERR( "  「コストの最大値／総和がc以下の時の価値の最大値dp[c]」" );
+    CERR( "  を管理するcに関する動的計画法" );
+    CERR( "を検討しましょう。" );
+  } else if( num == num_temp++ ){
+    CERR( "区間をスライドしていき、両端の更新値を用いて最大値を管理しましょう。" );
+  } else if( num == num_temp++ ){
+    CERR( "- O(2^N)が通りそうならば愚直に全探策" );
+    CERR( "- O(N 2^{N/2})が通りそうならば半分全列挙" );
+    CERR( "- O(NV)が通りそうならば[v-V,v+V]での実現可能性を" );
+    CERR( "  遷移する動的計画法" );
+    CERR( "  https://stackoverflow.com/a/18949218" );
+    CERR( "- O((N+V)log_2 V)が通りそうでVが10^5オーダーで" );
+    CERR( "  プロス素数Pを法とするならば法Pでの高速フーリエ変換による" );
+    CERR( "  exp(logの総和)計算" );
+    CERR( "  \\Mathematics\\Polynomial\\Truncate" );
+    CERR( "を検討しましょう。" );
+  }
+}
+
+AC( MaximisationArrayFunction )
+{
+  CERR( "配列を受け取る関数Fが与えられているとします。与えられた配列Aに" );
+  CERR( "何らかの処理をして得られる配列Bに対するF(B)の最大化問題は、" );
+  CERR( "最大化すべき式のサブゴールfに表れる項xのうち決め打ちやすいものを探しましょう。" );
+  CERR( "- 配列の長さをiで打ち切った時のxの候補数をX(i)" );
+  CERR( "- 配列の長さをiで打ち切ってxを決め打った時の配列の長さi+1でのxの候補数をdX(i)" );
+  CERR( "と置きます。" );
+  CERR( "- O(sum_i X(i) dX(i))が通りそうでfがxからO(1)で計算できるならば、" );
+  CERR( "  iとxに関する動的計画法" );
+  CERR( "- O(N log_2 X(N))が通りそうで" );
+  CERR( "  - fがxからO(N)で計算できxに関して単調ならば、xの二分探索" );
+  CERR( "  - fがxからO(N/x)で計算できるならば、xの全探索" );
+  CERR( "- O(N log_2 N)が通りそうでxを並び替えるとfがxからO(log_2 N)で計算できるならば、" );
+  CERR( "  優先度つきキューなどでのxの管理" );
+  CERR( "を検討しましょう。" );
+}
+
+AC( MaximisationArrayLength )
+{
+  CERR( "全順序か疎な半順序かで効率的な実装が違います。" );
+  CERR( "- 全順序ならば、条件を満たす部分列の長さの最大値をインデックスに持つ" );
+  CERR( "  配列を用いて、それらの部分列の末尾である項を記録すること" );
+  CERR( "  \\Mathematics\\Combinatorial\\Counting\\IncreasingSubsequence" );
+  CERR( "- 疎な半順序ならば、条件を満たす部分列の末尾をインデックスに持つ" );
+  CERR( "  連想配列を用いて、それら部分列の長さの最大値を記録すること" );
+  CERR( "  \\Mathematics\\Combinatorial\\Counting\\IncreasingSubsequence\\Subwalk" );
+  CERR( "を検討しましょう。" );
+}
+
+AC( MaximisationFunctionOnAffineSpace )
+{
+  ASK_NUMBER(
+	     "凸関数の最小／最大化問題" ,
+	     "可微分関数の最小／最大化問題" ,
+	     "距離の最小／最大化問題" ,
+	     "被覆半径の最小化問題"
+	     );
+  if( num == num_temp++ ){
+    CERR( "三分探索を検討しましょう。" );
+  } else if( num == num_temp++ ){
+    CERR( "ニュートン法を検討しましょう。" );
+  } else if( num == num_temp++ ){
+    CERR( "マンハッタン距離（l^1）は一次変換でl^∞に帰着させた上で、" );
+    CERR( "- 単調な式に帰着できる場合、二分探索" );
+    CERR( "- 最大化問題の場合、絶対値を外す符号パターンの全探策" );
+    CERR( "を検討しましょう。" );
+  } else if( num == num_temp++ ){
+    CERR( "マンハッタン距離（l^1）は一次変換でl^∞に帰着させた上で、" );
+    CALL_AC( MinimisationSolvingOpenCoveringUnknownCentres );
+  }
+  CERR( "" );
+  CERR( "複数のパラメータを決定すべき場合は、サブゴールの式の値を決め打ちましょう。" );
+}
+
+AC( MaximisationSubsetSize )
+{
+  CERR( "与えられた集合のサイズをNと置きます。" );
+  CERR( "- O(2^N)が間に合いそうならば、bit全探策" );
+  CERR( "  \\Mathematics\\Geometry\\Graph\\BreadthFirstSearch\\BitExhausiveSearch" );
+  CERR( "- O(N2^N)が間に合いそうならば、部分集合の包含対のbit全探策" );
+  CERR( "  \\Mathematics\\Geometry\\Graph\\BreadthFirstSearch\\BitExhausiveSearch" );
+  CERR( "- 極大鎖の計算ならば、後続関数を定義し、極大元から後続関数の逆像のグラフの深さ計算" );
+  CERR( "- 極大反鎖の計算ならば、" );
+  CERR( "  - Dilworthの定理の証明に基く構築" );
+  CERR( "    https://en.wikipedia.org/wiki/Dilworth%27s_theorem#Inductive_proof" );
+  CERR( "  - 後続関数を定義し、後続に関する二分探索" );
+  CERR( "- 完全代表系の計算ならば、幅優先探索やUnionFindによる連結成分計算" );
+  CERR( "  \\Mathematics\\Geometry\\Graph\\BreadthFirst" );
+  CERR( "  \\Mathematics\\Geometry\\Graph\\UnionFindForest" );
+  CERR( "- 半開区間の極大排他的集合ならば、区間スケジューリング" );
+  CERR( "を検討しましょう。" );
+}
+
+AC( MinimisationGraphCost )
+{
+
+  CERR( "価値の最大化問題は価値を-1倍したコストを考えることで" );
+  CERR( "コストの最小化問題に帰着されます。" );
+  ASK_NUMBER(
+	     "全域森のコスト最小化問題" ,
+	     "パスのコスト最小化問題"
+	     );
+  if( num == num_temp++ ){
+    CERR( "クラスカル法" );
+    CERR( "\\Mathematics\\Geometry\\Graph\\UnionFindForest\\Kruscal" );
+    CERR( "を検討しましょう。" );
+  } else if( num == num_temp++ ){
+    CERR( "これは最短経路問題そのものです。" );
+    AC( MinimisationMovingCost );
+  }
+}
+
+AC( MaximisationFunctionOnTree )
+{
+  ASK_NUMBER(
+	     "木上の関数の特定の部分集合上での最大／最小値計算問題" ,
+	     "木の分割ごとに定まる値の最大／最小化問題"
+	     );
+  if( num == num_temp++ ){
+    CALL_AC( QueryTree );
+  } else if( num == num_temp++ ){
+    CERR( "木を受け取る関数fが与えられているとします。" );
+    CERR( "" );
+    CALL_AC( FunctionOnTree );
+    CERR( "「第i頂点までで切った時のF(P)たちの最大値dp[i]」" );
+    CERR( "を管理するiに関する動的計画法（O(N^2×fの計算量)）" );
+    CERR( "を検討しましょう。" );
+  }
 }
 
 AC( MaximisationStringMatching )
@@ -1105,6 +1144,27 @@ AC( MaximisationDrawingImage )
   CERR( "描画サイズの最大／最小化問題はサイズを決め打った二分探索や各点でのサイズの最大化" );
   CERR( "などを行った上で描画可能性判定問題に帰着させましょう。" );
   CALL_AC( DecisionDrawability );
+}
+
+AC( MaximisationMinimum )
+{
+  CERR( "全てを-1倍することで最大値／総和の最小化問題に帰着させます。" );
+  CALL_AC( MinimisationMaximum );
+}
+
+AC( MinimisationMaximum )
+{
+  ASK_NUMBER(
+	     "グラフの辺集合E上の関数の部分最大値／部分和の最小化問題" ,
+	     "一般の集合上の関数の部分最大値／部分和の最小化問題"
+	     );
+  if( num == num_temp++ ){
+    CERR( "max／+を演算とする最短経路問題に帰着させましょう。" );
+    CALL_AC( MinimisationMovingCost );
+  } else if( num == num_temp++ ){
+    CERR( "部分最大値／部分和を固定して部分集合の存在を判定する" );
+    CERR( "二分探索を検討しましょう。" );
+  }
 }
 
 AC( Counting )
@@ -1413,7 +1473,7 @@ AC( CountingMatchingSubString )
   CERR( "- 回文である部分文字列の数え上げ問題は" );
   CERR( "  - O(N^2)が通りそうならば、尺取り法による前計算" );
   CERR( "    \\Utility\\String\\Palindrome" );
-  CERR( "  - O(N^2)が通らなさそうならば、Manacherのアルゴリズムや" );
+  CERR( "  - O(N^2)が通らなさそうならば、マナチャーのアルゴリズムや" );
   CERR( "    ローリングハッシュで前計算" );
   CERR( "    https://snuke.hatenablog.com/entry/2014/12/02/235837" );
   CERR( "    \\Utility\\String\\RollingHash" );
@@ -1436,8 +1496,8 @@ AC( CountingShapedSubString )
   CERR( "文字列配置の不適切な文字列やなくても復元可能な文字列全体の生成するイデアルで" );
   CERR( "割って得られる非可換環の空文字列係数が1であるもの全体のなす非可換乗法モノイドに" );
   CERR( "値を取るため、非可換モノイドで抽象化可能なBITやセグメント木を用いることも可能です。" );
-  CERR( "\\Mathematics\\SetTheory\\DirectProduct\\AffineSpace\\BIT\\Template\\Monoid\\a.hpp" );
-  CERR( "\\Mathematics\\SetTheory\\DirectProduct\\AffineSpace\\SegmentTree\\a.hpp" );
+  CERR( "\\Mathematics\\SetTheory\\DirectProduct\\AffineSpace\\BIT\\Monoid" );
+  CERR( "\\Mathematics\\SetTheory\\DirectProduct\\AffineSpace\\SegmentTree" );
 }
 
 AC( CountingPartitionOfTree )
@@ -1583,8 +1643,9 @@ AC( Query )
 {
   ASK_NUMBER(
 	     "配列の範囲更新／取得クエリ問題" ,
-	     "グラフの範囲更新／取得クエリ問題" ,
+	     "木の範囲更新／取得クエリ問題" ,
 	     "グリッドの範囲更新／取得クエリ問題" ,
+	     "一般のグラフの範囲更新／取得クエリ問題" ,
 	     "文字列の範囲更新／比較クエリ問題" ,
 	     "集合の範囲更新／比較クエリ問題" ,
 	     "2変数関数の計算クエリ問題" ,
@@ -1593,9 +1654,11 @@ AC( Query )
   if( num == num_temp++ ){
     CALL_AC( QueryArray );
   } else if( num == num_temp++ ){
-    CALL_AC( QueryGraph );
+    CALL_AC( QueryTree );
   } else if( num == num_temp++ ){
     CALL_AC( QueryGrid );
+  } else if( num == num_temp++ ){
+    CALL_AC( QueryGraph );
   } else if( num == num_temp++ ){
     CALL_AC( QueryString );
   } else if( num == num_temp++ ){
@@ -1618,8 +1681,10 @@ AC( QueryArray )
 	     "モノイド構造*を使う問題" ,
 	     "非結合的マグマ構造*を使う問題" ,
 	     "集合へのマグマ作用(*,\\cdot)を使う問題" ,
+	     "集合への可換マグマ作用(*,\\cdot)を使う問題" ,
 	     "モノイドへのマグマ作用(+,\\cdot)を使う問題" ,
 	     "序数を扱う問題" ,
+	     "像の要素数を扱う問題" ,
 	     "一次関数とのmaxを取った値を使う問題" ,
 	     "定数とのmaxを取った値の区間演算取得を使う問題" ,
 	     );
@@ -1634,6 +1699,8 @@ AC( QueryArray )
   } else if( num == num_temp++ ){
     CALL_AC( QueryArrayMagmaSet );
   } else if( num == num_temp++ ){
+    CALL_AC( QueryArrayCommutativeMagmaSet );
+  } else if( num == num_temp++ ){
     CALL_AC( QueryArrayMagmaMonoid );
   } else if( num == num_temp++ ){
     CALL_AC( QueryArrayOrder );
@@ -1646,33 +1713,53 @@ AC( QueryArray )
 
 AC( QueryArrayAbelianGroup )
 {
-  CERR( "- 加算／全更新後の一点取得のみが必要ならば階差数列" );
+  CERR( "- 加算／全更新後の一点取得O(1)のみが必要ならば階差数列" );
   CERR( "  \\Mathematics\\SetTheory\\DirectProduct\\AfineSpace\\DifferenceSeqeuence" );
-  CERR( "- 加算／全更新なしで区間取得のみが必要ならば累積積" );
+  CERR( "- 加算／全更新なしで区間取得O(1)のみが必要ならば累積積" );
   CERR( "  \\Mathematics\\SetTheory\\DirectProduct\\AfineSpace\\CumulativeProd" );
-  CERR( "- 区間加算／区間取得が必要ならば通常のBITや可換群BIT" );
+  CERR( "- 一点加算O(log N)／一点代入O(log N)／区間取得O(log N)が必要ならばBIT" );
   CERR( "  \\Mathematics\\SetTheory\\DirectProduct\\AffineSpace\\BIT" );
-  CERR( "  \\Mathematics\\SetTheory\\DirectProduct\\AffineSpace\\BIT\\Template" );
-  CERR( "- 一点代入／一点加算／区間取得が必要ならば可換群平方分割" );
-  CERR( "  \\Mathematics\\SetTheory\\DirectProduct\\AffineSpace\\SqrtDecomposition\\Template" );
+  CERR( "- 区間加算O(log N)／一点代入O(log N)／区間取得O(log N)が必要ならば" );
+  CERR( "  区間加算BIT" );
+  CERR( "  \\Mathematics\\SetTheory\\DirectProduct\\AffineSpace\\BIT\\InteralAdd" );
+  CERR( "- 一点加算O(1)／一点代入O(√N)／区間取得O(√N)が必要ならば平方分割" );
+  CERR( "  \\Mathematics\\SetTheory\\DirectProduct\\AffineSpace\\SqrtDecomposition" );
+  CERR( "- 一点加算O(1)／区間加算O(√N)／一点代入O(1)／一点取得O(1)が必要ならば" );
+  CERR( "  可換双対平方分割" );
+  CERR( "  \\Mathematics\\SetTheory\\DirectProduct\\AffineSpace\\SqrtDecomposition\\Dual\\Commutative" );
+  CERR( "- 一点加算O(1)／区間加算O(√N)／一点代入O(1)／一点取得O(1)／区間取得O(√N)" );
+  CERR( "  が必要ならば区間加算平方分割" );
+  CERR( "  \\Mathematics\\SetTheory\\DirectProduct\\AffineSpace\\SqrtDecomposition\\IntervalMultiply" );
+  CERR( "- 区間代入O(√N)／一点取得O(1)／区間取得O(√N)が必要ならば遅延平方分割" );
+  CERR( "  \\Mathematics\\SetTheory\\DirectProduct\\AffineSpace\\SqrtDecomposition\\LazyEvaluation" );
+  CERR( "- 区間加算O(√N)／区間代入O(√N)／一点取得O(1)／区間取得O(√N)が必要ならば" );
+  CERR( "  区間乗算遅延平方分割" );
+  CERR( "  \\Mathematics\\SetTheory\\DirectProduct\\AffineSpace\\SqrtDecomposition\\LazyEvaluation\\IntervalMultiply" );
   CERR( "を検討しましょう。" );
 }
 
 AC( QueryArrayCommutativeIdempotentMonoid )
 {
-  CERR( "- 一点代入／区間加算／一点取得／区間取得が必要ならば区間maxBITや可換羃等モノイドBIT" );
+  CERR( "- 一点乗算O(log N)／一点代入O((log N)^2)／区間取得O(log N)が必要ならば" );
+  CERR( "  区間maxBIT" );
   CERR( "  \\Mathematics\\SetTheory\\DirectProduct\\AffineSpace\\BIT\\IntervalMax" );
-  CERR( "  \\Mathematics\\SetTheory\\DirectProduct\\AffineSpace\\BIT\\IntervalMax\\Template" );
+  CERR( "- 一点乗算O(1)／区間乗算O(√N)／一点代入O(√N)／一点取得O(1)が必要ならば" );
+  CERR( "  可換双対平方分割" );
+  CERR( "  \\Mathematics\\SetTheory\\DirectProduct\\AffineSpace\\SqrtDecomposition\\Dual\\Commutative" );
   CERR( "を検討しましょう。" );
 }
 
 AC( QueryArrayMonoid )
 {
-  CERR( "- 一点代入／区間取得が必要ならばモノイドBIT" );
-  CERR( "  \\Mathematics\\SetTheory\\DirectProduct\\AffineSpace\\BIT\\Template\\Monoid" );
-  CERR( "- 一点加算／区間加算／一点取得／区間取得が必要ならばモノイド平方分割" );
-  CERR( "  \\Mathematics\\SetTheory\\DirectProduct\\AffineSpace\\SqrtDecomposition\\Template\\Monoid" );
-  CERR( "- 一点代入／一点取得／区間取得が必要ならばモノイドセグメント木" );
+  CERR( "- 一点代入O((log N)^2)／区間取得O(log N)が必要ならばモノイドBIT" );
+  CERR( "  \\Mathematics\\SetTheory\\DirectProduct\\AffineSpace\\BIT\\Monoid" );
+  CERR( "- 一点乗算O(1)／一点代入O(√N)／一点取得O(1)／区間取得O(√N)が必要ならば" );
+  CERR( "  モノイド平方分割" );
+  CERR( "  \\Mathematics\\SetTheory\\DirectProduct\\AffineSpace\\SqrtDecomposition\\Monoid" );
+  CERR( "- 一点乗算O(1)／区間乗算O(√N)／一点代入O(√N)／一点取得O(1)／区間取得O(√N)" );
+  CERR( "  が必要ならば区間乗算モノイド平方分割" );
+  CERR( "  \\Mathematics\\SetTheory\\DirectProduct\\AffineSpace\\SqrtDecomposition\\Monoid\\IntervalMultiply" );
+  CERR( "- 一点代入O(log N)／区間取得O(log N)が必要ならばセグメント木" );
   CERR( "  \\Mathematics\\SetTheory\\DirectProduct\\AffineSpace\\SegmentTree" );
   CERR( "を検討しましょう。" );
 }
@@ -1689,34 +1776,64 @@ AC( QueryArrayNonAssociativeMagma )
 
 AC( QueryArrayMagmaSet )
 {
-  CERR( "- 一点作用／区間作用／一点取得が必要ならば双対平方分割" );
-  CERR( "  \\Mathematics\\SetTheory\\DirectProduct\\AffineSpace\\SqrtDecomposition\\Template\\Dual" );
+  CERR( "- 区間作用O(√N)／一点代入O(√N)／一点取得O(1)が必要ならば双対平方分割" );
+  CERR( "  \\Mathematics\\SetTheory\\DirectProduct\\AffineSpace\\SqrtDecomposition\\Dual" );
+  CERR( "を検討しましょう。" );
+}
+
+AC( QueryArrayCommutativeMagmaSet )
+{
+  CERR( "- 区間作用O(√N)／一点代入O(√N)／一点取得O(1)が必要ならば双対平方分割" );
+  CERR( "  \\Mathematics\\SetTheory\\DirectProduct\\AffineSpace\\SqrtDecomposition\\Dual" );
+  CERR( "- 一点作用O(1)／区間作用O(√N)／一点代入O(√N)／一点取得O(1)が必要ならば" );
+  CERR( "  可換双対平方分割" );
+  CERR( "  \\Mathematics\\SetTheory\\DirectProduct\\AffineSpace\\SqrtDecomposition\\Dual\\Commutative" );
   CERR( "を検討しましょう。" );
 }
 
 AC( QueryArrayMagmaMonoid )
 {
-  CERR( "- 区間代入／区間作用／区間加算／一点取得／区間取得が必要な場合は遅延評価平方分割" );
-  CERR( "  \\Mathematics\\SetTheory\\DirectProduct\\AffineSpace\\SqrtDecomposition\\Template\\LazyEvaluation" );
+  CERR( "- 区間作用O(√N)／区間乗算O(√N)／区間代入O(√N)／一点取得O(1)／区間取得O(√N)" );
+  CERR( "  が必要ならば遅延評価平方分割" );
+  CERR( "  \\Mathematics\\SetTheory\\DirectProduct\\AffineSpace\\SqrtDecomposition\\LazyEvaluation" );
+  CERR( "を検討しましょう。" );
+}
+
+AC( QueryArrayCommutativeMagmaMonoid )
+{
+  CERR( "- 区間作用O(√N)／区間代入O(√N)／一点取得O(1)／区間取得O(√N)が必要ならば" );
+  CERR( "  遅延評価平方分割" );
+  CERR( "  \\Mathematics\\SetTheory\\DirectProduct\\AffineSpace\\SqrtDecomposition\\LazyEvaluation" );
+  CERR( "- 区間作用O(√N)／区間乗算O(√N)／区間代入O(√N)／一点取得O(1)／区間取得O(√N)" );
+  CERR( "  が必要ならば区間乗算遅延評価平方分割" );
+  CERR( "  \\Mathematics\\SetTheory\\DirectProduct\\AffineSpace\\SqrtDecomposition\\LazyEvaluation" );
   CERR( "を検討しましょう。" );
 }
 
 AC( QueryArrayOrder )
 {
-  CERR( "- 一点代入／一点序数取得／全体での序数を実現する点の取得が必要ならば通常のBITで像を管理し" );
+  CERR( "- 始切片内での一点序数取得O(log N)／序数実現値取得O(log N)が必要ならば" );
+  CERR( "  右端の大きさでクエリをソートしてBITで像を管理し" );
   CERR( "  \\Mathematics\\SetTheory\\DirectProduct\\AffineSpace\\BIT" );
   CERR( "  - 一点序数取得は平面走査" );
-  CERR( "  - 全体での序数を実現する点の取得は平面走査＋二分探索" );
-  CERR( "- 一点加算／区間での序数を実現する点の取得が必要ならば区間maxBITや可換羃等モノイドBITで" );
+  CERR( "  - 序数実現値取得は平面走査＋二分探索" );
+  CERR( "- 区間での序数実現点取得O(ord log N)が必要ならば区間maxBITで" );
   CERR( "  区間最大／最小値＋二分探索で区間を分割" );
   CERR( "  \\Mathematics\\SetTheory\\DirectProduct\\AffineSpace\\BIT\\IntervalMax" );
-  CERR( "  \\Mathematics\\SetTheory\\DirectProduct\\AffineSpace\\BIT\\IntervalMax\\Template" );
+  CERR( "を検討しましょう。" );
+}
+
+AC( QueryArrayImageSize )
+{
+  CERR( "- 区間での像の要素数取得が必要ならば莫のアルゴリズム" );
+  CERR( "  \\Mathematics\\SetTheory\\DirectProduct\\AfineSpace\\SqrtDecomposition\\Mo" );
   CERR( "を検討しましょう。" );
 }
 
 AC( QueryArrayMaxLinearFunction )
 {
-  CERR( "- 一次関数による全体max更新／一点取得が必要な場合はConvex Hull Trick" );
+  CERR( "- 一次関数による全体max更新O(log N)／一点取得O(log N)が必要ならば" );
+  CERR( "  Convex Hull Trick" );
   CERR( "  \\Mathematics\\Function\\MaxLinearFunction" );
   CERR( "を検討しましょう。" );
 }
@@ -1730,33 +1847,50 @@ AC( QueryArrayMaxConstant )
   CALL_AC( QueryTimeMax );
 }
 
-AC( QueryGraph )
+AC( QueryTree )
 {
-  ASK_YES_NO( "代数構造を扱う問題ですか？" );
-  if( reply == "y" ){
-    CERR( "- 可換群構造に関する加算／全更新後の一点取得のみが必要ならば階差数列" );
-    CERR( "  \\Mathematics\\SetTheory\\DirectProduct\\AfineSpace\\DifferenceSeqeuence\\Tree" );
-    CERR( "- 木上で可換モノイド構造に関する再帰が必要ならば全域木DP" );
-    CERR( "  \\Mathematics\\Geometry\\Graph\\DepthFirst\\Tree" );
-  } else {
-    CERR( "深さ優先探索や動的木やUnionFind" );
-    CERR( "\\Mathematics\\Geometry\\Graph\\DepthFirst\\Tree" );
-    CERR( "\\Utility\\VLTree" );
-    CERR( "\\Utility\\VLTree\\UnionFndForest" );
-  }
+  CERR( "- 可換群構造に関する加算O(1)／全更新後の一点取得O(1)が必要ならば階差数列" );
+  CERR( "  \\Mathematics\\SetTheory\\DirectProduct\\AfineSpace\\DifferenceSeqeuence" );
+  CERR( "- 可換群構造に関する範囲取得O(1)のみが必要ならば累積和" );
+  CERR( "  \\Mathematics\\SetTheory\\DirectProduct\\AfineSpace\\CumulativeProduct\\Tree" );
+  CERR( "- 可換モノイド構造に関する部分木での総乗O(N)が必要ならば全域木DP" );
+  CERR( "  \\Mathematics\\Geometry\\Graph\\DepthFirst\\Tree" );
+  CERR( "- モノイド構造に関するパスでの総乗O(log N)が必要ならば重み付きLCA" );
+  CERR( "  \\Mathematics\\Geometry\\Graph\\DepthFirst\\Tree\\Weighted" );
   CERR( "を検討しましょう。" );  
 }
 
 AC( QueryGrid )
 {
-  CERR( "- 可換群構造に関する加算／全更新後の一点取得のみが必要ならば二次元階差数列" );
+  CERR( "- 可換群構造に関する加算O(1)／全更新後の一点取得O(1)が必要ならば二次元階差数列" );
   CERR( "  \\Mathematics\\SetTheory\\DirectProduct\\AfineSpace\\DifferenceSeqeuence\\TwoDimentioal" );
-  CERR( "- 可換群構造に関する加算／全更新なしの矩形取得のみが必要ならば二次元累積和" );
-  CERR( "  \\Mathematics\\SetTheory\\DirectProduct\\AfineSpace\\CulmulativeProd\\TwoDimentioal" );
-  CERR( "- 可換群構造に関する加算／全更新後の矩形取得が必要ならば二次元階差数列／累積和の併用" );
+  CERR( "- 可換群構造に関する加算O(1)／全更新なしの矩形取得O(1)が必要ならば二次元累積和" );
+  CERR( "  \\Mathematics\\SetTheory\\DirectProduct\\AfineSpace\\CumulativeProduct\\TwoDimentioal" );
+  CERR( "- 可換群構造に関する加算O(1)／全更新後の矩形取得O(1)が必要ならば二次元階差数列と" );
+  CERR( "  二次元累積和の併用" );
   CERR( "  \\Mathematics\\SetTheory\\DirectProduct\\AfineSpace\\DifferenceSeqeuence\\TwoDimentioal" );
-  CERR( "  \\Mathematics\\SetTheory\\DirectProduct\\AfineSpace\\CulmulativeProd\\TwoDimentioal" );
+  CERR( "  \\Mathematics\\SetTheory\\DirectProduct\\AfineSpace\\CumulativeProduct\\TwoDimentioal" );
+  CERR( "- 差分計算が高速に可能ならば莫のアルゴリズム" );
+  CERR( "  \\Mathematics\\SetTheory\\DirectProduct\\AfineSpace\\SqrtDecomposition\\Mo" );
   CERR( "を検討しましょう。" );
+}
+
+AC( QueryGraph )
+{
+  CERR( "グラフの頂点数をV、辺の本数をE、クエリ数をQと置きます。" );
+  CERR( "- 辺の追加でO(V+(E+Q)α(V))が間に合いそうならばUnionFind" );
+  CERR( "  \\Mathematics\\Geometry\\Graph\\UnionFindForest" );
+  CERR( "- 辺の削除でO(V+Eα(V))が間に合いそうならばクエリ逆読みのUnionFind" );
+  CERR( "  \\Mathematics\\Geometry\\Graph\\UnionFindForest" );
+  CERR( "- 特定の辺を含む最小全域森取得でO((V+Q)log V + E log E)が間に合いそうならば" );
+  CERR( "  全体に対する最小全域森をクラスカル法で前計算し重み付きLCAによる" );
+  CERR( "  最大コスト辺計算" );
+  CERR( "  \\Mathematics\\Geometry\\Graph\\UnionFindForest\\Kruscal" );
+  CERR( "  \\Mathematics\\Geometry\\Graph\\DepthFirst\\Tree\\Weighted" );
+  CERR( "- 辺集合の彩色を変えた最小全域森取得でO(V + E log E + Qα(V))が間に合いそう" );
+  CERR( "  ならば全体に対する辺のソートを前計算しクラスカル法の反復" );
+  CERR( "  \\Mathematics\\Geometry\\Graph\\UnionFindForest\\Kruscal" );
+  CERR( "を検討しましょう。" );  
 }
 
 AC( QueryString )
@@ -1782,9 +1916,9 @@ AC( QuerySet )
 AC( QueryTwoAryFunction )
 {
   CERR( "- 可換群に値を持つ配列の範囲取得は累積積" );
-  CERR( "  \\Mathematics\\SetTheory\\DirectProduct\\AfineSpace\\CulmulativeProd" );
+  CERR( "  \\Mathematics\\SetTheory\\DirectProduct\\AfineSpace\\CumulativeProduct" );
   CERR( "- 片側差分がO(1)で計算できる2変数関数の計算は莫のアルゴリズム" );
-  CERR( "  \\Mathematics\\SetTheory\\DirectProduct\\AfineSpace\\SqrtDecomposition\\Mo's Algorithm" );
+  CERR( "  \\Mathematics\\SetTheory\\DirectProduct\\AfineSpace\\SqrtDecomposition\\Mo" );
   CERR( "を検討しましょう。" );
 }
 
@@ -2076,7 +2210,7 @@ AC( Construction )
       CALL_AC( DecisionAccessibility );
     } else {
       CERR( "莫のアルゴリズムによるソート" );
-      CERR( "\\Mathematics\\SetTheory\\DirectProduct\\AfineSpace\\SqrtDecomposition\\Mo's Algorithm" );
+      CERR( "\\Mathematics\\SetTheory\\DirectProduct\\AfineSpace\\SqrtDecomposition\\Mo" );
       CERR( "を検討しましょう。" );
     }
   } else if( num == num_temp++ ){
