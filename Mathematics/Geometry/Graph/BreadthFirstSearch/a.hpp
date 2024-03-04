@@ -2,11 +2,12 @@
 
 #pragma once
 // verify:
-// https://yukicoder.me/submissions/953232（一始点Shiftの反復による多点BFSでの全探索）
+// https://yukicoder.me/submissions/957306（一始点Shiftの反復による多点BFSでの全探索）
+// https://yukicoder.me/submissions/957304（↑でEdgeにダミー変数がついたもの）
 // https://yukicoder.me/submissions/953226（SetConnectedComponent）
 // https://yukicoder.me/submissions/953225（一始点のGetDistance）
 
-// GRAPHは辺Edge:T->T^{< \omega}を持つグラフに相当する型。
+// GRAPHは辺Edge:T->(T \times ...)^{< \omega}を持つグラフに相当する型。
 
 // 構築 O(1)/O(|V_G|)（未初期化/初期化）
 // Next()の反復でinitから到達可能な頂点を全探索 O(initの連結成分における辺の本数)
@@ -61,6 +62,7 @@ public:
 
 private:
   virtual void Push( list<T>& next , const T& t ) = 0;
+  template <typename PATH> inline void Push( list<T>& next , const PATH& p );
 
 };
 
