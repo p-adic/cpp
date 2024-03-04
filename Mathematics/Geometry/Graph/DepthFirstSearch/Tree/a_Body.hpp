@@ -5,36 +5,42 @@
 
 #include "../a_Body.hpp"
 
+// ƒtƒ@ƒCƒ‹—e—ÊíŒ¸‚Ì‚½‚ß‹É—Ívector‚Ì¬•ª‚ğQÆ‚·‚é‚¾‚¯‚Ì•Ï”‚ğ—p‚¢‚È‚¢B
+// ÀsŠÔ‚É—DˆÊ·‚Í‚È‚µB
+
 template <typename TREE> inline DepthFirstSearchOnTree<TREE>::DepthFirstSearchOnTree( TREE& T , const int& root , const int& digit ) :
-  DepthFirstSearch<int,TREE>( T , -1 , root ) , m_reversed( this->size() ) , m_children() , m_set_children() , m_depth() , m_set_depth() , m_height() , m_set_height() , m_weight() , m_set_weight() , m_digit( digit ) , m_doubling( m_digit ) , m_set_doubling()
+  DepthFirstSearch<int,TREE>( T , -1 , root ) , m_node_num( this->size() ) , m_children() , m_set_children() , m_depth() , m_set_depth() , m_height_max() , m_height_min() , m_set_height() , m_heaviness() , m_set_heaviness() , m_digit( digit ) , m_doubling( m_digit ) , m_set_doubling()
 {
 
-  int n = this->size();
-  
-  while( --n >= 0 ){
-    
-    m_reversed[n] = this->Next();
+  static_assert( is_same_v<TREE,Graph<decldecay_t( declval<TREE>().edge() )>> );
+  const int& V = this->size();
 
+  for( int n = 0 ; n < V ; n++ ){
+
+    assert( ( m_node_num[n] = this->Next() ) != -1 );
+    
   }
+
+  assert( this->Next() == -1 );
 
 }
 
-template <typename TREE> inline const int& DepthFirstSearchOnTree<TREE>::Root() const { return this->init(); }
+template <typename TREE> inline const int& DepthFirstSearchOnTree<TREE>::Root() const { return this->Point(); }
 
 template <typename TREE> inline const int& DepthFirstSearchOnTree<TREE>::Parent( const int& i ) { return this->prev( i ); }
 template <typename TREE> inline const vector<int>& DepthFirstSearchOnTree<TREE>::Children( const int& i ) { if( ! m_set_children ){ SetChildren(); } return m_children[i]; }
-template <typename TREE> inline const int& DepthFirstSearchOnTree<TREE>::Depth( const int& i ) { if( ! m_set_depth ){ SetDepth(); } return m_depth[i]; }
-template <typename TREE> inline const int& DepthFirstSearchOnTree<TREE>::Height( const int& i ) { if( ! m_set_height ){ SetHeight(); } return m_height[i]; }
-template <typename TREE> inline const int& DepthFirstSearchOnTree<TREE>::Weight( const int& i ) { if( ! m_set_weight ){ SetWeight(); } return m_weight[i]; }
+template <typename TREE> inline const int& DepthFirstSearchOnTree<TREE>::Depth( const int& i ) { if( !m_set_depth ){ SetDepth(); } return m_depth[i]; }
+template <typename TREE> inline const int& DepthFirstSearchOnTree<TREE>::Height( const int& i , const bool& maximum ) { if( !m_set_height ){ SetHeight(); } return ( maximum ? m_height_max : m_height_min )[i]; }
+template <typename TREE> inline const int& DepthFirstSearchOnTree<TREE>::Heaviness( const int& i ) { if( !m_set_heaviness ){ SetHeaviness(); } return m_heaviness[i]; }
 
-template <typename TREE> inline const int& DepthFirstSearchOnTree<TREE>::NodeNumber( const int& i , const bool& reversed ) const { return m_reversed[reversed ? i : this->size() - 1 - i]; }
+template <typename TREE> inline const int& DepthFirstSearchOnTree<TREE>::NodeNumber( const int& i , const bool& reversed ) const { const int& V = this->size(); assert( i < V ); return m_node_num[reversed ? V - 1 - i : i]; }
 template <typename TREE> inline const int& DepthFirstSearchOnTree<TREE>::ChildrenNumber( const int& i ) { if( ! m_set_children ){ SetChildren(); } return m_children_num[i]; }
 
 template <typename TREE>
 int DepthFirstSearchOnTree<TREE>::Ancestor( int i , int n )
 {
 
-  if( ! m_set_doubling ){
+  if( !m_set_doubling ){
 
     SetDoubling();
 
@@ -46,12 +52,7 @@ int DepthFirstSearchOnTree<TREE>::Ancestor( int i , int n )
   
   while( n != 0 ){
 
-    if( ( n & 1 ) == 1 ){
-
-      assert( ( i = m_doubling[d][i] ) != -1 );
-
-    }
-    
+    assert( ( n & 1 ) == 1 ? ( i = m_doubling[d][i] ) != -1 : true );
     d++;
     n >>= 1;
 
@@ -61,110 +62,37 @@ int DepthFirstSearchOnTree<TREE>::Ancestor( int i , int n )
 
 }
 
-template <typename TREE>
-int DepthFirstSearchOnTree<TREE>::LCA( int i , int j )
-{
-
-  int diff = Depth( i ) - Depth( j );
-
-  if( diff < 0 ){
-
-    swap( i , j );
-    diff *= -1;
-
-  }
-    
-  i = Ancestor( i , diff );
-
-  if( i == j ){
-
-    return i;
-      
-  }
-    
-  int d = m_digit;
-
-  while( --d >= 0 ){
-
-    const vector<int>& doubling_d = m_doubling[d];
-    const int& doubling_d_i = doubling_d[i];
-    const int& doubling_d_j = doubling_d[j];
-
-    if( doubling_d_i != doubling_d_j ){
-
-      i = doubling_d_i;
-      j = doubling_d_j;
-      assert( i != -1 );
-      assert( j != -1 );
-
-    }
-
-  }
-
-  return Parent( i );
-
-}
+template <typename TREE> inline int DepthFirstSearchOnTree<TREE>::LCA( int i , int j ) { int i_prev; int j_prev; return LCA( i , j , i_prev , j_prev ); }
 
 template <typename TREE>
 int DepthFirstSearchOnTree<TREE>::LCA( int i , int j , int& i_prev , int& j_prev )
 {
 
-  if( i == j ){
+  i_prev = j_prev = -1;
+  const int diff = Depth( i ) - Depth( j );
+  assert( diff > 0 ? ( i = Parent( i_prev = Ancestor( i , diff - 1 ) ) ) != -1 : diff < 0 ? ( j = Parent( j_prev = Ancestor( j , - diff - 1 ) ) ) != -1 : true );
 
-    i_prev = j_prev = -1;
-    return i;
-
-  }
+  if( i != j ){
   
-  int diff = Depth( i ) - Depth( j );
+    if( !m_set_doubling ){
 
-  if( diff < 0 ){
+      SetDoubling();
 
-    return LCA( j , i , j_prev , i_prev );
-
-  }
-  
-  if( diff > 0 ){
-
-    i_prev = Ancestor( i , diff - 1 );
-    i = Parent( i_prev );
-    assert( i != -1 );
-    
-    if( i == j ){
-
-      j_prev = -1;
-      return i;
-      
     }
-    
-  } else if( ! m_set_doubling ){
+  
+    int d = m_digit;
 
-    SetDoubling();
+    while( --d >= 0 ){
 
-  }
-    
-  int d = m_digit;
-
-  while( --d >= 0 ){
-
-    const vector<int>& doubling_d = m_doubling[d];
-    const int& doubling_d_i = doubling_d[i];
-    const int& doubling_d_j = doubling_d[j];
-
-    if( doubling_d_i != doubling_d_j ){
-
-      i = doubling_d_i;
-      j = doubling_d_j;
-      assert( i != -1 );
-      assert( j != -1 );
+      assert( m_doubling[d][i] != m_doubling[d][j] ? ( i = m_doubling[d][i] ) != -1 && ( j = m_doubling[d][j] ) != -1 : true );
 
     }
 
-  }
+    assert( ( i = Parent( i_prev = i ) ) == ( j = Parent( j_prev = j ) ) );
 
-  i_prev = i;
-  j_prev = j;
-  return Parent( i_prev );
+  }
+  
+  return i;
 
 }
 
@@ -188,9 +116,8 @@ void DepthFirstSearchOnTree<TREE>::SetChildren()
 
     } else {
       
-      vector<int>& m_children_j = m_children[j];
-      m_children_num[i] = m_children_j.size();
-      m_children_j.push_back( i );
+      m_children_num[i] = m_children[j].size();
+      m_children[j].push_back( i );
 
     }
 
@@ -209,16 +136,12 @@ void DepthFirstSearchOnTree<TREE>::SetDepth()
   const int& V = this->size();
   m_depth.resize( V );
   
-  for( int i = 0 ; i < V ; i++ ){
+  for( int n = 1 ; n < V ; n++ ){
 
-    const int& reversed_i = m_reversed[i];
-    const int& parent_i = Parent( reversed_i );
-
-    if( parent_i != -1 ){
-
-      m_depth[i] += m_depth[parent_i] + 1;
-
-    }
+    const int& i = m_node_num[n];
+    const int& j = Parent( i );
+    assert( j != -1 );
+    m_depth[i] += m_depth[j] + 1;
 
   }
 
@@ -233,20 +156,16 @@ void DepthFirstSearchOnTree<TREE>::SetHeight()
   assert( !m_set_height );
   m_set_height = true;
   const int& V = this->size();
-  m_height.resize( V );
+  m_height_max.resize( V );
+  m_height_min.resize( V );
   
-  for( int i = 0 ; i < V ; i++ ){
+  for( int n = V - 1 ; n > 0 ; n-- ){
 
-    const int& reversed_i = m_reversed[i];
-    const int& parent_i = Parent( reversed_i );
-
-    if( parent_i != -1 ){
-
-      int& height_parent_i = m_height[parent_i];
-      const int& height_i = m_height[reversed_i];
-      height_parent_i > height_i ? height_parent_i : height_parent_i = height_i + 1;
-
-    }
+    const int& i = m_node_num[n];
+    const int& j = Parent( i );
+    assert( j != -1 );
+    m_height_max[j] = max( m_height_max[j] , m_height_max[i] + 1 );
+    m_height_min[j] = m_height_min[j] == 0 ? m_height_min[i] + 1 : min( m_height_min[j] , m_height_min[i] + 1 );
 
   }
 
@@ -255,24 +174,20 @@ void DepthFirstSearchOnTree<TREE>::SetHeight()
 }
 
 template <typename TREE>
-void DepthFirstSearchOnTree<TREE>::SetWeight()
+void DepthFirstSearchOnTree<TREE>::SetHeaviness()
 {
 
-  assert( !m_set_weight );
-  m_set_weight = true;
+  assert( !m_set_heaviness );
+  m_set_heaviness = true;
   const int& V = this->size();
-  m_weight.resize( V );
+  m_heaviness.resize( V );
   
-  for( int i = 0 ; i < V ; i++ ){
+  for( int n = V - 1 ; n > 0 ; n-- ){
 
-    const int& reversed_i = m_reversed[i];
-    const int& parent_i = Parent( reversed_i );
-
-    if( parent_i != -1 ){
-
-      m_weight[parent_i] += m_weight[reversed_i] + 1;
-
-    }
+    const int& i = m_node_num[n];
+    const int& j = Parent( i );
+    assert( j != -1 );
+    m_heaviness[j] += m_heaviness[i] + 1;
 
   }
 
@@ -290,13 +205,11 @@ void DepthFirstSearchOnTree<TREE>::SetDoubling()
   
   {
     
-    vector<int>& doubling_0 = m_doubling[0];
-    doubling_0.reserve( V );
-    const int& r = Root();
+    m_doubling[0].reserve( V );
 
     for( int i = 0 ; i < V ; i++ ){
 
-      doubling_0.push_back( Parent( i ) );
+      m_doubling[0].push_back( Parent( i ) );
 
     }
 
@@ -304,14 +217,11 @@ void DepthFirstSearchOnTree<TREE>::SetDoubling()
   
   for( int d = 1 ; d < m_digit ; d++ ){
 
-    vector<int>& doubling_d = m_doubling[d];
-    vector<int>& doubling_d_minus = m_doubling[d-1];
-    doubling_d.reserve( V );
+    m_doubling[d].reserve( V );
 
     for( int i = 0 ; i < V ; i++ ){
 
-      const int& doubling_d_minus_i = doubling_d_minus[i];
-      doubling_d.push_back( doubling_d_minus_i == -1 ? -1 : doubling_d_minus[doubling_d_minus_i] );
+      m_doubling[d].push_back( m_doubling[d-1][i] == -1 ? -1 : m_doubling[d-1][m_doubling[d-1][i]] );
 
     }
 
@@ -356,12 +266,11 @@ ret_t<F> DepthFirstSearchOnTree<TREE>::RootingDP( F& f )
 
 }
   
-template <typename TREE> template <typename MONOID , typename F , typename G>
-void DepthFirstSearchOnTree<TREE>::RerootingDP( MONOID M , F& f , G& g , vector<inner_t<MONOID>>& d )
+template <typename TREE> template <typename U , typename COMM_MONOID , typename F , typename G>
+void DepthFirstSearchOnTree<TREE>::RerootingDP( COMM_MONOID M , F& f , G& g , vector<U>& d )
 {
 
-  using U = inner_t<MONOID>;
-  static_assert( is_invocable_r_v<U,F,U,int> && is_invocable_r_v<U,G,U,bool,int,int> );
+  static_assert( is_same_v<U,inner_t<COMM_MONOID>> && is_invocable_r_v<U,F,U,int> && is_invocable_r_v<U,G,U,bool,int,int> );
   
   if( ! m_set_children ){
 
@@ -375,12 +284,12 @@ void DepthFirstSearchOnTree<TREE>::RerootingDP( MONOID M , F& f , G& g , vector<
 
   // children_value[i][m]‚Éi‚Ìm”Ô–Ú‚Ìqƒm[ƒhj‚Ü‚Å‚ÌŒvZ’l‚Ìf‚Å‚Ì‘œ‚ğŠi”[B
   vector<vector<U>> children_value( V );
-  // left_sum[i][m]‚Échildren_value[i][0],...,children_value[i][m-1]‚Ì
+  // l_sum[i][m]‚Échildren_value[i][0],...,children_value[i][m-1]‚Ì
   // g‚Å‚Ì‘œ‚ÌM‚ÉŠÖ‚·‚éÏ‚ğŠi”[B
-  vector<vector<U>> left_sum( V );
-  // right_sum[i][m]‚Échildren_value[i][m+1],...,children_value[i][size_i-1]‚Ì
+  vector<vector<U>> l_sum( V );
+  // r_sum[i][m]‚Échildren_value[i][m+1],...,children_value[i][size_i-1]‚Ì
   // g‚Å‚Ì‘œ‚ÌMŠÖ‚·‚éÏ‚ğŠi”[B
-  vector<vector<U>> right_sum( V );
+  vector<vector<U>> r_sum( V );
   
   for( int i = 0 ; i < V ; i++ ){
 
@@ -395,13 +304,12 @@ void DepthFirstSearchOnTree<TREE>::RerootingDP( MONOID M , F& f , G& g , vector<
     const int size_i = children_value_i.size();
 
     U temp = e;
-    vector<U>& left_sum_i = left_sum[i];
-    left_sum_i.reserve( size_i + 1 );
-    left_sum_i.push_back( temp );
+    l_sum[i].reserve( size_i + 1 );
+    l_sum[i].push_back( temp );
     
     for( int m = 0 ; m < size_i ; m++ ){
 
-      left_sum_i.push_back( temp = M.Product( temp , g( children_value_i[m] , true , i , m_children[i][m] ) ) );
+      l_sum[i].push_back( temp = M.Product( temp , g( children_value_i[m] , true , i , m_children[i][m] ) ) );
 
     }
     
@@ -414,41 +322,36 @@ void DepthFirstSearchOnTree<TREE>::RerootingDP( MONOID M , F& f , G& g , vector<
     }
 
     temp = e;
-    vector<U>& right_sum_i = right_sum[i];
-    right_sum_i.resize( size_i );
+    r_sum[i].resize( size_i );
 
     for( int m = 1 ; m <= size_i ; m++ ){
 
-      right_sum_i[ size_i - m ] = temp;
+      r_sum[i][size_i - m] = temp;
       temp = M.Product( g( children_value_i[size_i - m] , true , i , m_children[i][size_i - m] ) , temp );
 
     }
 
   }
 
-  // left_sum[i][m]‚Échildren_value[i][0],...,children_value[i][m-1]‚Ì
+  // l_sum[i][m]‚Échildren_value[i][0],...,children_value[i][m-1]‚Ì
   // g‚Å‚Ì‘œ‚ÌM‚ÉŠÖ‚·‚éÏ‚ğŠi”[‚µ‚Ä‚¢‚½‚ªA‚³‚ç‚É‚±‚ê‚Éeƒm[ƒh‚ÌŠñ—^‚à’Ç‰Á‚·‚éB
   for( int n = 1 ; n < V ; n++ ){
     
     const int& i = NodeNumber( n );
     const int& j = Parent( i );
     const int& k = ChildrenNumber( i );
-    vector<U>& left_sum_i = left_sum[i];
-    vector<U>& right_sum_i = right_sum[i];
-    const int size_i = right_sum_i.size();
+    const int size_i = r_sum[i].size();
     // children_value[j][0],...,children_value[j][k-1]‚Ìg‚Å‚Ì‘œ‚Æ
     // rest_jiŠù‚ÉŒvZÏ‚İj‚Æ
     // children_value[j][k+1],...,children_value[j][size_i-1]‚Ìg‚Å‚Ì‘œ‚Æ
     // ‚ÌM‚ÉŠÖ‚·‚éÏ‚Ìf‚Å‚Ì‘œ‚Ìg‚Å‚Ì‘œB
-    const U rest_i = g( f( M.Product( left_sum[j][k] , right_sum[j][k] ) , j ) , false , i , j );
+    const U rest_i = g( f( M.Product( l_sum[j][k] , r_sum[j][k] ) , j ) , false , i , j );
     
     for( int m = 0 ; m <= size_i ; m++ ){
 
-      // left_sum_im‚Érest_i‚Æ
-      // children_value[i][0],...,children_value[i][m-1]‚Ìg‚Å‚Ì‘œ
-      // ‚ÌM‚ÉŠÖ‚·‚éÏ‚ğŠi”[B
-      U& left_sum_im = left_sum_i[m];
-      left_sum_im = M.Product( rest_i , left_sum_im );
+      // l_sum[i][m]‚Érest_i‚Æchildren_value[i][0],...,children_value[i][m-1]‚Ì
+      // g‚Å‚Ì‘œ‚ÌM‚ÉŠÖ‚·‚éÏ‚ğŠi”[B
+      l_sum[i][m] = M.Product( rest_i , l_sum[i][m] );
 
     }
 
@@ -456,9 +359,9 @@ void DepthFirstSearchOnTree<TREE>::RerootingDP( MONOID M , F& f , G& g , vector<
 
   for( int i = 0 ; i < V ; i++ ){
 
-    // left_sum[i].back()‚Íchildren_value_i[0],...,children_value_i[size_i-1]‚Ì
+    // l_sum[i].back()‚Íchildren_value_i[0],...,children_value_i[size_i-1]‚Ì
     // g‚Å‚Ì‘œ‚Æe‚ÌŠñ—^‚ÌM‚ÉŠÖ‚·‚éÏB
-    d[i] = f( left_sum[i].back() , i );
+    d[i] = f( l_sum[i].back() , i );
 
   }
 
