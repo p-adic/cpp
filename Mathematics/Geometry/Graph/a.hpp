@@ -6,12 +6,10 @@
 #includ "../../Function/Map/a.hpp"
 
 // verify:
-// https://yukicoder.me/submissions/945899（Graph、E:T->list<T>）
-// https://yukicoder.me/submissions/945900（EnumerationGraph、E:T->list<T>）
-// https://yukicoder.me/submissions/945907（MemorisationGraph、E:T->list<T>）
-// https://yukicoder.me/submissions/945903（Graph、E:T->list<T \times N>）
-// https://yukicoder.me/submissions/945905（EnumerationGraph、E:T->list<T \times N>）
-// https://yukicoder.me/submissions/945906（MemorisationGraph、E:T->list<T \times N>）
+// https://yukicoder.me/submissions/957306（Graph、E:int->list<int>）
+// https://yukicoder.me/submissions/957304（Graph、E:int->list<pair<int,dummy>>）
+// https://yukicoder.me/submissions/957307（EnumerationGraph、E:int->list<int>）
+// https://yukicoder.me/submissions/957308（MemorisationGraph、E:T->list<T>）
 
 // Enumeration:N->R1-->TとEnumeration_inv:T->R2-->Nは互いに逆写像である仮想関数。
 template <typename T , typename R1 , typename R2 , typename E>
@@ -21,11 +19,15 @@ class VirtualGraph :
 
 public:
   virtual R1 Enumeration( const int& i ) = 0;
-  virtual R2 Enumeration_inv( const T& t ) = 0;
+  inline R2 Enumeration_inv( const T& t );
+  template <typename PATH> inline R2 Enumeration_inv( const PATH& p );
   inline void Reset();
   virtual const int& size() const noexcept = 0;
   virtual E& edge() noexcept = 0;
   virtual ret_t<E,T> Edge( const T& t ) = 0;
+
+private:
+  virtual inline R2 Enumeration_inv_Body( const T& t ) = 0;
 
 };
 
@@ -56,8 +58,10 @@ class Graph :
 public:
   inline Graph( const int& size , E edge );
   inline const int& Enumeration( const int& i );
-  inline const int& Enumeration_inv( const int& t );
   template <typename F> inline Graph<F> GetGraph( F edge ) const;
+
+private:
+  inline const int& Enumeration_inv_Body( const int& t );
 
 };
 
@@ -73,8 +77,10 @@ private:
 public:
   inline EnumerationGraph( const int& size , Enum_T enum_T , Enum_T_inv enum_T_inv , E edge );
   inline ret_t<Enum_T,int> Enumeration( const int& i );
-  inline ret_t<Enum_T_inv,T> Enumeration_inv( const T& t );
   template <typename F> inline EnumerationGraph<T,Enum_T,Enum_T_inv,F> GetGraph( F edge ) const;
+
+private:
+  inline ret_t<Enum_T_inv,T> Enumeration_inv_Body( const T& t );
 
 };
 template <typename Enum_T , typename Enum_T_inv , typename E> EnumerationGraph( const int& size , Enum_T enum_T , Enum_T_inv enum_T_inv , E edge ) -> EnumerationGraph<decldecay_t(declval<Enum_T>()(0)),Enum_T,Enum_T_inv,E>;
@@ -94,10 +100,12 @@ public:
   inline MemorisationGraph( const int& size , E edge );
   // push_backする可能性のあるvectorなので参照にしないように注意
   inline T Enumeration( const int& i );
-  inline const int& Enumeration_inv( const T& t );
   inline void Reset();
   template <typename F> inline MemorisationGraph<T,F> GetGraph( F edge ) const;
 
+private:
+  inline const int& Enumeration_inv_Body( const T& t );
+  
 };
 template <typename E> MemorisationGraph( const int& size , E edge ) -> MemorisationGraph<decldecay_t(declval<E>()().back()),E>;
 template <typename E> MemorisationGraph( const int& size , E edge ) -> MemorisationGraph<decldecay_t(get<0>(declval<E>()().back())),E>;

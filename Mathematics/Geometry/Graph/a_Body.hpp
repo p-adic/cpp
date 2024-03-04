@@ -15,9 +15,12 @@ template <typename E> inline const int& Graph<E>::Enumeration( const int& i ) { 
 template <typename T , typename Enum_T , typename Enum_T_inv , typename E> inline ret_t<Enum_T,int> EnumerationGraph<T,Enum_T,Enum_T_inv,E>::Enumeration( const int& i ) { return m_enum_T( i ); }
 template <typename T , typename E> inline T MemorisationGraph<T,E>::Enumeration( const int& i ) { assert( 0 <= i && i < m_length ); return m_memory[i]; }
 
-template <typename E> inline const int& Graph<E>::Enumeration_inv( const int& i ) { return i; }
-template <typename T , typename Enum_T , typename Enum_T_inv , typename E> inline ret_t<Enum_T_inv,T> EnumerationGraph<T,Enum_T,Enum_T_inv,E>::Enumeration_inv( const T& t ) { return m_enum_T_inv( t ); }
-template <typename T , typename E> inline const int& MemorisationGraph<T,E>::Enumeration_inv( const T& t )
+template <typename T , typename R1 , typename R2 , typename E> inline R2 VirtualGraph<T,R1,R2,E>::Enumeration_inv( const T& t ) { return Enumeration_inv_Body( t ); }
+template <typename T , typename R1 , typename R2 , typename E> template <typename PATH> inline R2 VirtualGraph<T,R1,R2,E>::Enumeration_inv( const PATH& p ) { return Enumeration_inv_Body( get<0>( p ) ); }
+template <typename E> inline const int& Graph<E>::Enumeration_inv_Body( const int& i ) { return i; }
+template <typename T , typename Enum_T , typename Enum_T_inv , typename E> inline ret_t<Enum_T_inv,T> EnumerationGraph<T,Enum_T,Enum_T_inv,E>::Enumeration_inv_Body( const T& t ) { return m_enum_T_inv( t ); }
+
+template <typename T , typename E> inline const int& MemorisationGraph<T,E>::Enumeration_inv_Body( const T& t )
 {
 
   if( m_memory_inv.count( t ) == 0 ){
