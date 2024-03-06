@@ -52,7 +52,7 @@ public:
 };
 template <typename Z_MODULE> AbstractIntervalAddBIT( Z_MODULE M ) -> AbstractIntervalAddBIT<inner_t<Z_MODULE>,Z_MODULE>;
 
-template <typename U>
+template <typename U = ll>
 class IntervalAddBIT :
   public AbstractIntervalAddBIT<U,Module<int,U>>
 {
