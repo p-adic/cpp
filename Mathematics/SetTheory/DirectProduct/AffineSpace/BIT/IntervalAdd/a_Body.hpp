@@ -25,7 +25,7 @@ template <typename U , typename Z_MODULE> AbstractIntervalAddBIT<U,Z_MODULE>::Ab
   for( int i = 1 ; i < size ; i++ ){
 
     U& diff_i = diff[i];
-    diff_i = m_M.Inverse( m_M.Sum( m_M.ScalarProduct( i - i , diff_i ) , a[i] ) );
+    diff_i = m_M.Inverse( m_M.Sum( m_M.ScalarProduct( i - 1 , diff_i ) , a[i] ) );
 
   }
 
