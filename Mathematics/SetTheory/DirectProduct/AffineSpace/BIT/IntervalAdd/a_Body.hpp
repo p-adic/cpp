@@ -20,7 +20,7 @@ template <typename U , typename Z_MODULE> AbstractIntervalAddBIT<U,Z_MODULE>::Ab
 
   }
 
-  m_bit_0.Reset( diff );
+  m_bit_1.Reset( diff );
 
   for( int i = 1 ; i < size ; i++ ){
 
@@ -29,7 +29,7 @@ template <typename U , typename Z_MODULE> AbstractIntervalAddBIT<U,Z_MODULE>::Ab
 
   }
 
-  m_bit_1.Reset( diff );
+  m_bit_0.Reset( diff );
 
 }
 
