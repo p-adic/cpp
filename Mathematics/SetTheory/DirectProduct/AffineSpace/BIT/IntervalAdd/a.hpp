@@ -27,9 +27,9 @@ class AbstractIntervalAddBIT
   
 protected:
   Z_MODULE m_M;
-  // 母関数の微分の負の階差数列（(i-1)a_{i-1} - ia_i）の管理
+  // 次数を1ずらした負の階差数列の微分（-(i-1)(a_i - a_{i-1})）をBITで管理
   AbstractBIT<U,Z_MODULE> m_bit_0;
-  // 階差数列（a_i - a_{i-1}）の管理
+  // 階差数列（a_i - a_{i-1}）をBITで管理
   AbstractBIT<U,Z_MODULE> m_bit_1;
   
 public:
