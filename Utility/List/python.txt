@@ -33,7 +33,7 @@ class dliterator:
 class dllist:
 	def __init__(self,init=[]):
 		n=len(init)
-		self.a=[[0,n,0]]+[[x,i,i+2]for x,i in zip(init,R(n))]
+		self.a=[[n,n,0]]+[[x,i,i+2]for x,i in zip(init,R(n))]
 		if n:self.a[0][2],self.a[-1][2]=1,0
 		self.i=self.end()
 	def size(self):
