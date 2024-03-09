@@ -206,7 +206,7 @@ template <typename R , typename PT_MAGMA , typename U , typename R_MODULE> inlin
 	} else {
 	  
 	  IntervalAct_Body( d_0_N_sqrt_minus , i_min , m_lazy_action_d );
-	  IntervalAct_Body( i_min , i_0 , m_M.Action( r , m_lazy_action_d ) );
+	  IntervalAct_Body( i_min , i_0 , m_L.Product( r , m_lazy_action_d ) );
 	  IntervalAct_Body( i_0 , d_0_N_sqrt , m_lazy_action_d );
 	  m_lazy_action_d = point;
 
@@ -242,7 +242,7 @@ template <typename R , typename PT_MAGMA , typename U , typename R_MODULE> inlin
       } else {
       
 	R& m_lazy_action_d = m_lazy_action[d];
-	m_lazy_action_d = m_M.Action( r , m_lazy_action_d );
+	m_lazy_action_d = m_L.Product( r , m_lazy_action_d );
 	U& m_lazy_multiplication_d = m_lazy_multiplication[d];
 	m_lazy_multiplication_d = m_M.Action( r , m_lazy_multiplication_d );
 
@@ -279,7 +279,7 @@ template <typename R , typename PT_MAGMA , typename U , typename R_MODULE> inlin
 	} else {
 	  
 	  IntervalAct_Body( d_1_N_sqrt , i_1 , m_lazy_action_d );
-	  IntervalAct_Body( i_1 , i_ulim , m_M.Action( r , m_lazy_action_d ) );
+	  IntervalAct_Body( i_1 , i_ulim , m_L.Product( r , m_lazy_action_d ) );
 	  IntervalAct_Body( i_ulim , d_1_N_sqrt_plus , m_lazy_action_d );
 	  m_lazy_action_d = point;
 
@@ -378,7 +378,7 @@ template <typename R , typename PT_MAGMA , typename U , typename R_MODULE> inlin
     for( int d = d_0 ; d < d_1 ; d++ ){
 
       U& m_bd = m_b[d];
-	// N加群性を使った。
+      // N加群性を使った。
       m_bd = m_M.Product( m_bd , power );
 
       if( m_suspended[d] ){
@@ -448,19 +448,45 @@ template <typename R , typename PT_MAGMA , typename U , typename R_MODULE> inlin
   
 }
 
-template <typename R , typename PT_MAGMA , typename U , typename R_MODULE> inline U IntervalMultiplyLazySqrtDecomposition<R,PT_MAGMA,U,R_MODULE>::IntervalProduct_Body( const int& i_min , const int& i_ulim )
+template <typename R , typename PT_MAGMA , typename U , typename R_MODULE> inline U IntervalMultiplyLazySqrtDecomposition<R,PT_MAGMA,U,R_MODULE>::Get( const int& i ) { const int d = i / m_N_sqrt; return m_suspended[d] ? m_lazy_substitution[d] : m_M.Product( m_M.Action( m_lazy_action[d] , m_a[i] ) , m_lazy_multiplication[d] ) ; }
+
+template <typename R , typename PT_MAGMA , typename U , typename R_MODULE> inline U IntervalMultiplyLazySqrtDecomposition<R,PT_MAGMA,U,R_MODULE>::IntervalProduct( const int& i_start , const int& i_final )
 {
 
-  U answer = m_M.One();
+  const int i_min = max( i_start , 0 );
+  const int i_ulim = min( i_final + 1 , m_N );
+  const int d_0 = ( i_min + m_N_sqrt - 1 ) / m_N_sqrt;
+  const int d_1 = max( d_0 , i_ulim / m_N_sqrt );
+  const int i_0 = min( d_0 * m_N_sqrt , i_ulim );
+  const int i_1 = max( i_0 , d_1 * m_N_sqrt );
   
-  for( int i = i_min ; i < i_ulim ; i++ ){
+  U answer = m_M.One();
 
-    answer = m_M.Product( answer , m_a[i] );
+  if( i_min < i_0 ){
+
+    // この時d_0 > 0になる。
+    // N加群性を使った。
+    const int d_0_minus = d_0 - 1;
+    answer = m_suspended[d_0_minus] ? m_M.Power( m_lazy_substitution[d_0_minus] , i_0 - i_min ) : m_M.Product( m_M.Action( m_lazy_action[d_0_minus] , IntervalProduct_Body( i_min , i_0 ) ) , m_M.Power( m_lazy_multiplication[d_0_minus] , i_0 - i_min ) );
+    
+  }
+  
+  for( int d = d_0 ; d < d_1 ; d++ ){
+
+    answer = m_M.Product( answer , m_b[d] );
+
+  }
+
+  if( i_1 < i_ulim ){
+
+    // この時d_1 < m_N_dになる。
+    // N加群性を使った。
+    answer = m_M.Product( answer , m_suspended[d_1] ? m_M.Power( m_lazy_substitution[d_1] , i_ulim - i_1 ) : m_M.Product( m_M.Action( m_lazy_action[d_1] , IntervalProduct_Body( i_1 , i_ulim ) ) , m_M.Power( m_lazy_multiplication[d_1] , i_ulim - i_1 ) ) );
 
   }
 
   return answer;
-  
+
 }
 
 template <typename R , typename PT_MAGMA , typename U , typename R_MODULE> inline void IntervalMultiplyLazySqrtDecomposition<R,PT_MAGMA,U,R_MODULE>::SetProduct( const int& d )
@@ -563,43 +589,17 @@ template <typename R , typename PT_MAGMA , typename U , typename R_MODULE> inlin
   
 }
 
-template <typename R , typename PT_MAGMA , typename U , typename R_MODULE> inline U IntervalMultiplyLazySqrtDecomposition<R,PT_MAGMA,U,R_MODULE>::Get( const int& i ) { const int d = i / m_N_sqrt; return m_suspended[d] ? m_lazy_substitution[d] : m_M.Product( m_M.Action( m_lazy_action[d] , m_a[i] ) , m_lazy_multiplication[d] ) ; }
-
-template <typename R , typename PT_MAGMA , typename U , typename R_MODULE> inline U IntervalMultiplyLazySqrtDecomposition<R,PT_MAGMA,U,R_MODULE>::IntervalProduct( const int& i_start , const int& i_final )
+template <typename R , typename PT_MAGMA , typename U , typename R_MODULE> inline U IntervalMultiplyLazySqrtDecomposition<R,PT_MAGMA,U,R_MODULE>::IntervalProduct_Body( const int& i_min , const int& i_ulim )
 {
 
-  const int i_min = max( i_start , 0 );
-  const int i_ulim = min( i_final + 1 , m_N );
-  const int d_0 = ( i_min + m_N_sqrt - 1 ) / m_N_sqrt;
-  const int d_1 = max( d_0 , i_ulim / m_N_sqrt );
-  const int i_0 = min( d_0 * m_N_sqrt , i_ulim ) ;
-  const int i_1 = max( i_0 , d_1 * m_N_sqrt );
-  
   U answer = m_M.One();
-
-  if( i_min < i_0 ){
-
-    // この時d_0 > 0になる。
-    // N加群性を使った。
-    const int d_0_minus = d_0 - 1;
-    answer = m_suspended[d_0_minus] ? m_M.Power( m_lazy_substitution[d_0_minus] , i_0 - i_min ) : m_M.Product( m_M.Action( m_lazy_action[d_0_minus] , IntervalProduct_Body( i_min , i_0 ) ) , m_M.Power( m_lazy_multiplication[d_0_minus] , i_0 - i_min ) );
-    
-  }
   
-  for( int d = d_0 ; d < d_1 ; d++ ){
+  for( int i = i_min ; i < i_ulim ; i++ ){
 
-    answer = m_M.Product( answer , m_b[d] );
-
-  }
-
-  if( i_1 < i_ulim ){
-
-    // この時d_1 < m_N_dになる。
-    // N加群性を使った。
-    answer = m_M.Product( answer , m_suspended[d_1] ? m_M.Power( m_lazy_substitution[d_1] , i_ulim - i_1 ) : m_M.Product( m_M.Action( m_lazy_action[d_1] , IntervalProduct_Body( i_1 , i_ulim ) ) , m_M.Power( m_lazy_multiplication[d_1] , i_ulim - i_1 ) ) );
+    answer = m_M.Product( answer , m_a[i] );
 
   }
 
   return answer;
-
+  
 }

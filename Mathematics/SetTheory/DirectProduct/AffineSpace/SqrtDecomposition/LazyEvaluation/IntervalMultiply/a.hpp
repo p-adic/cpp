@@ -8,10 +8,10 @@
 // 入力の範囲内で要件
 // (1) LがRの基点付きマグマ構造である。
 // (2) MがUの「Lの基点がUの恒等変換に対応するUの左L作用つきN加群構造」である。
-// (3) R!=intである。（L作用とN加群構造の区別のため）
+// (3) R=intならばL作用とN加群構造が整合的である。
 // を満たす場合にのみサポート。
 
-// 区間作用を行わない場合もm_R.Point()の作用を区間積に用いるため、
+// 区間作用を行わない場合もm_L.Point()の作用を区間積に用いるため、
 // dummyにせずMultiplicativeMonoid(1)などを用いる必要があることに注意。
 
 // M.One()による初期化O(N)
@@ -45,7 +45,10 @@ protected:
   vector<U> m_lazy_multiplication;
 
 public:
-  inline IntervalMultiplyLazySqrtDecomposition( PT_MAGMA L , R_MODULE M , const int& N );
+  // vectorを構築する時は
+  // vector t( N , IntervalMultiplyLazySqrtDecomposition{L,M} );
+  // としてResetすればよい。
+  inline IntervalMultiplyLazySqrtDecomposition( PT_MAGMA L , R_MODULE M , const int& N = 0 );
   inline IntervalMultiplyLazySqrtDecomposition( PT_MAGMA L , R_MODULE M , const int& N , const int& N_sqrt );
   inline IntervalMultiplyLazySqrtDecomposition( PT_MAGMA L , R_MODULE M , vector<U> a );
   inline IntervalMultiplyLazySqrtDecomposition( PT_MAGMA L , R_MODULE M , vector<U> a , const int& N_sqrt );
