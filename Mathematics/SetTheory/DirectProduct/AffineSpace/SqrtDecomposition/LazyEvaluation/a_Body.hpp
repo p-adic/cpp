@@ -197,7 +197,7 @@ template <typename R , typename PT_MAGMA , typename U , typename R_MODULE> inlin
 	} else {
 	  
 	  IntervalAct_Body( d_0_N_sqrt_minus , i_min , m_lazy_action_d );
-	  IntervalAct_Body( i_min , i_0 , m_R( r , m_lazy_action_d ) );
+	  IntervalAct_Body( i_min , i_0 , m_L.Product( r , m_lazy_action_d ) );
 	  IntervalAct_Body( i_0 , d_0_N_sqrt , m_lazy_action_d );
 	  m_lazy_action_d = m_L.Point();
 
@@ -222,7 +222,7 @@ template <typename R , typename PT_MAGMA , typename U , typename R_MODULE> inlin
       } else {
       
 	R& m_lazy_action_d = m_lazy_action[d];
-	m_lazy_action_d = m_R( r , m_lazy_action_d );
+	m_lazy_action_d = m_L.Product( r , m_lazy_action_d );
 
       }
 
@@ -257,7 +257,7 @@ template <typename R , typename PT_MAGMA , typename U , typename R_MODULE> inlin
 	} else {
 	  
 	  IntervalAct_Body( d_1_N_sqrt , i_1 , m_lazy_action_d );
-	  IntervalAct_Body( i_1 , i_ulim , m_R( r , m_lazy_action_d ) );
+	  IntervalAct_Body( i_1 , i_ulim , m_L.Product( r , m_lazy_action_d ) );
 	  IntervalAct_Body( i_ulim , d_1_N_sqrt_plus , m_lazy_action_d );
 	  m_lazy_action_d = m_L.Point();
 	  SetProduct( d_1 );
