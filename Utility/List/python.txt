@@ -1,0 +1,112 @@
+#双方向リストを基点ノードとコンテナノードを円環状に繋いで実装。
+#基点ノードは[コンテナの長さ,末尾コンテナノード,先頭コンテナノード]を格納。
+#コンテナノードは[値,前のノード,後ろのノード]を格納。
+#dllistのlist()とcopy()はmutableな成分のコピーを複製しないことに注意
+class dliterator:
+	def __init__(self,a,i):
+		self.a,self.i=a,i
+	def __eq__(self,i):
+		return id(self.a)==id(i.a)and self.i==i.i
+	def get(self):
+		assert(self.i)
+		return self.a.a[self.i][0]
+	def set(self,x):
+		assert(self.i)
+		self.a.a[self.i][0]=x
+	def copy(self):
+		return dliterator(self.a,self.i)
+	def next(self,c=1):
+		for _ in R(c):
+			self.i=self.a.a[self.i][2]
+			assert(self.i>=0)
+	def prev(self,c=1):
+		for _ in R(c):
+			self.i=self.a.a[self.i][1]
+			assert(self.i>=0)
+	def shift(c):
+		if c<0:self.prev(-c)
+		else:self.next(c)
+	def __ladd__(self,c):
+		self.shift(c)
+	def __lsub__(self,c):
+		self.shift(-c)
+class dllist:
+	def __init__(self,init=[]):
+		n=len(init)
+		self.a=[[0,n,0]]+[[x,i,i+2]for x,i in zip(init,R(n))]
+		if n:self.a[0][2],self.a[-1][2]=1,0
+		self.i=self.end()
+	def size(self):
+		return self.a[0][0]
+	def end(self):
+		return dliterator(self,0)
+	def rend(self):
+		return self.end()
+	def begin(self):
+		n=self.end()
+		n.next()
+		return n
+	def rbegin(self):
+		n=self.rend()
+		n.prev()
+		return n
+	def front(self):
+		return self.begin().get()
+	def back(self):
+		return self.rbegin().get()
+	def insert_between(self,i,j,x,c):
+		assert(id(i.a)==id(self)==id(j.a)and self.a[i.i][2]>=0 and self.a[j.i][2]>=0)
+		k=j.copy()
+		for _ in R(c):
+			self.a[0][0]+=1
+			n=self.i.i
+			v=[x,i.i,k.i]
+			if n:
+				assert(self.a[n][2]==-1)
+				self.i.prev()
+				self.a[n]=v
+			else:
+				n=len(self.a)
+				self.a+=[v]
+			self.a[i.i][2]=self.a[k.i][1]=n
+			k=dliterator(self,n)
+	def insert_front(self,i,x,c=1):
+		j=i.copy()
+		j.prev()
+		self.insert_between(j,i,x,c)
+	def insert_back(self,i,x,c=1):
+		j=i.copy()
+		j.next()
+		self.insert_between(i,j,x,c)
+	def push_front(self,x,c=1):
+		self.insert_front(self.begin(),x,c)
+	def push_back(self,x,c=1):
+		self.insert_back(self.rbegin(),x,c)
+	def __ladd__(self,a):
+		for x in a:self.push_back(x)
+	def erase(self,i):
+		assert(self.size()and id(i.a)==id(self)and i.i and self.a[i.i][2]>=0)
+		self.a[0][0]-=1
+		m=i.copy()
+		m.prev()
+		l=i.copy()
+		l.next()
+		self.a[m.i][2],self.a[l.i][1]=l.i,m.i
+		self.i,self.a[i.i][1]=i,self.i.i
+		self.a[i.i][2]=-1
+	def pop_front(self):
+		self.erase(self.begin())
+	def pop_back(self):
+		self.erase(self.rbegin())
+	def clear(self):
+		self.a,self.i=[[0,0,0]],self.end()
+	def list(self):
+		a=[]
+		i=self.begin()
+		e=self.end()
+		while i!=e:
+			a+=[i.get()]
+			i.next()
+		return a
+	def copy(self):
+		return dllist(self.list())
