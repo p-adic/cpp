@@ -187,7 +187,8 @@ AC( LibrarySearch )
 	     "求解問題" ,
 	     "クエリ処理問題" ,
 	     "真偽判定問題" ,
-	     "構築問題"
+	     "構築問題" ,
+	     "推定問題"
 	     );
   if( num == num_temp++ ){
     CALL_AC( ExplicitExpression );
@@ -203,6 +204,8 @@ AC( LibrarySearch )
     CALL_AC( Decision );
   } else if( num == num_temp++ ){
     CALL_AC( Construction );
+  } else if( num == num_temp++ ){
+    CALL_AC( Deduction );
   }
   ASK_YES_NO( "マルチテストケースですか？" );
   if( reply == "y" ){
@@ -1606,8 +1609,9 @@ AC( CountingParenthesisSequence )
 AC( Solving )
 {
   ASK_NUMBER(
-	     "１つの方程式f(g(x),g(y),...)=c" ,
-	     "M個の方程式f(x[a[i]],x[b[i]])=c[i]" ,
+	     "１つの方程式f(g(x),g(y),...) = c" ,
+	     "M個の方程式f(x[a[i]],C^{d[i]}x[b[i]]) = c[i]" ,
+	     "M個の方程式sum_{j=a[i]}^{b[i]} C^{j-a[i]} x[j] = c[i]" ,
 	     "その他の方程式"
 	     );
   if( num == num_temp++ ){
@@ -1622,20 +1626,36 @@ AC( Solving )
     CERR( "  により管理する。" );
     CERR( "- 最後に各yごとにf(a,g(y)) = cを満たす各a in im(g)に対しa = g(x)を満たす" );
     CERR( "  xをg_inv[a]として与える。" );
+    CERR( "を検討しましょう。" );
   } else if( num == num_temp++ ){
-    CERR( "f(x,-)かf(-y)が単射であるとします。" );
-    CERR( "- O(BMf(BN) + BN log B)が間に合いそうならば素集合データ構造" );
-    CERR( "  \\Mathematics\\Geometry\\Graph\\UnionFindForest" );
-    CERR( "- O(BM + BN log B)が間に合いそうならば幅／深さ優先探索" );
-    CERR( "  \\Mathematics\\Geometry\\Graph\\BreadthFirst" );
-    CERR( "  \\Mathematics\\Geometry\\Graph\\DepthFirst" );
-    CERR( "- O(Mf(N) + N)が間に合いそうでf(x,y)=x-yならば差分付き素集合データ構造" );
-    CERR( "  https://qiita.com/drken/items/cce6fc5c579051e64fab" );
+    CALL_AC( SolvingBinaryEquations );
+  } else if( num == num_temp++ ){
+    CERR( "累積和sum_{j=i}^{N} C^{j-i} x[j]を新たに変数X[i]と置くことで" );
+    CERR( "M個の方程式X[a[i]]-C^{b[i]-a[i]+1}X[b[i]+1] = c[i]" );
+    CERR( "に帰着されます。これはf(x,y)=x-yと置くと" );
+    CERR( "M個の方程式f(X[a[i]],d^{b[i]-a[i]+1}X[b[i]+1]) = c[i]" );
+    CERR( "に他なりません。" );
+    CALL_AC( SolvingBinaryEquations );
   } else if( num == num_temp++ ){
     CERR( "- 単調関数は二分探索" );
     CERR( "- 可微分関数はニュートン法" );
     CERR( "- 連立一次方程式は掃き出し法" );
+    CERR( "- 変数の依存関係が閉路を持たないならば逆順に決定" );
+    CERR( "を検討しましょう。" );
   }
+}
+
+AC( SolvingBinaryEquations )
+{
+  CERR( "f(x,C^j -)かf(-,C^j y)が単射であるとします。" );
+  CERR( "- O(BMf(BN) + BN log B)が間に合いそうならば素集合データ構造" );
+  CERR( "  \\Mathematics\\Geometry\\Graph\\UnionFindForest" );
+  CERR( "- O(BM + BN log B)が間に合いそうならば幅／深さ優先探索" );
+  CERR( "  \\Mathematics\\Geometry\\Graph\\BreadthFirst" );
+  CERR( "  \\Mathematics\\Geometry\\Graph\\DepthFirst" );
+  CERR( "- O(Mf(N) + N)が間に合いそうでf(x,y)=x-yかつC=1ならば" );
+  CERR( "  ポテンシャル付き素集合データ構造" );
+  CERR( "  \\Mathematics\\Geometry\\Graph\\UnionFindForest" );
   CERR( "を検討しましょう。" );
 }
 
@@ -1995,9 +2015,10 @@ AC( Decision )
 	     "必勝性問題" ,
 	     "到達可能性問題" ,
 	     "描画可能性問題" ,
+	     "存在判定問題" ,
 	     "充足可能性問題" ,
 	     "一致判定問題" ,
-	     "表記可能性問題"
+	     "表示可能性問題"
 	     );
   if( num == num_temp++ ){
     CALL_AC( DecisionConnectedness );
@@ -2009,6 +2030,8 @@ AC( Decision )
     CALL_AC( DecisionAccessibility );
   } else if( num == num_temp++ ){
     CALL_AC( DecisionDrawability );
+  } else if( num == num_temp++ ){
+    CALL_AC( DecisionExistence );
   } else if( num == num_temp++ ){
     CALL_AC( DecisionSatisfiability );
   } else if( num == num_temp++ ){
@@ -2059,24 +2082,26 @@ AC( DecisionContinuingGame )
 {
   CERR( "まずゲームをなるべく簡単な設定に同値変形しましょう。" );
   CERR( "- 単調増大列は階差を取りましょう。" );
-  CERR( "- 良い不変量を探し、不変量を変えないような応酬が可能な操作を無視することで、" );
+  CERR( "- 良い不変量を探し、不変量を変えないような応酬が可能な操作を無視することで" );
   CERR( "  不変量の推移のみを観察しましょう。例えば以下の不変量に注目しましょう。" );
   CERR( "  - 何らかの数値の適当な法での値" );
-  CERR( "  - 固定した二部マッチング上での各組内での何らかの数値（到達個数など）の偶奇" );
+  CERR( "  - 特定の二部マッチング上での各組内での何らかの数値（到達個数など）の偶奇" );
   CERR( "    - グリッドで、１回の移動で移り合える２マスの組によるタイリング" );
   CERR( "    - 配列で、１回の操作で影響を受ける成分が常に２個ならば、そのような" );
   CERR( "      ２成分ずつによるタイリング" );
   CERR( "  - ある成分を無視する同値関係での剰余類" );
   CERR( "  - 既に得られている不変量を変えない操作で応酬できる操作を無視する同値関係" );
   CERR( "その後、ゲームの性質に注目して典型考察に帰着させましょう。" );
-  CERR( "- ゲームの和に分解できるならば、最小単位やなるべく小さい単位で考察をしましょう。" );
-  CERR( "  - 分解後の状態数や遷移回数上限が少ないなるならば、グランディ数を計算しましょう" );
+  CERR( "- ゲームの和に分解できるならば、最小単位やなるべく小さい単位で" );
+  CERR( "  考察をしましょう。" );
+  CERR( "  - 分解後の状態数や遷移回数上限が少ないなるならば、グランディ数を" );
+  CERR( "    計算しましょう" );
   CERR( "    \\Utility\\Set\\Mex" );
-  CERR( "  - 分解後の勝敗の実験が自動化できそうならば、整礎構造を探して順序数の小さい順に" );
-  CERR( "    実験をしましょう。" );
-  CERR( "  - 分解後の勝敗の実験が自動化できなさそうならば、手計算での実験だと考察漏れが" );
-  CERR( "    生じやすいので他の考察を優先しましょう。" );
-  CERR( "- 先手しか可能でない遷移であって他のどの遷移へも経由できるものがあるならば、" );
+  CERR( "  - 分解後の勝敗の実験が自動化できそうならば、整礎構造を探して順序数の" );
+  CERR( "    小さい順に実験をしましょう。" );
+  CERR( "  - 分解後の勝敗の実験が自動化できなさそうならば、手計算での実験だと" );
+  CERR( "    考察漏れが生じやすいので他の考察を優先しましょう。" );
+  CERR( "- 先手しか可能でない遷移であって他のどの遷移へも経由できるものがあるならば" );
   CERR( "  strategy-stealing argument" );
   CERR( "  https://en.wikipedia.org/wiki/Strategy-stealing_argument" );
   CERR( "- 整合的な全順序構造があるならば、勝敗で区間を連結成分に分解" );
@@ -2129,6 +2154,41 @@ AC( DecisionDrawability )
   CERR( "\\Mathematics\\SetTheory\\DirectProduct\\AffineSpace\\DifferenceSequence\\TwoDimensional" );
 }
 
+AC( DecisionExistence )
+{
+  ASK_NUMBER(
+	     "数の方程式の解の存在" ,
+	     "F_2上の方程式の解の存在" ,
+	     "単純な条件を満たす数や配列や文字列の存在" ,
+	     "動く範囲の狭い変数の組み合わせで表せる概念の存在" ,
+	     "経路の存在" ,
+	     "描画方法の存在" ,
+	     "数やベクトルの表示方法の存在" ,
+	     "集合の分割方法の存在"
+	     );
+  if( num == num_temp++ ){
+    CALL_AC( Solving );
+    CERR( "" );
+    CERR( "方程式の数が足りない代わりに変域に制限がある場合、確定しない変数xを用いて" );
+    CERR( "他の変数を表し、各方程式をxの不等式に翻訳して変域の非空判定をしましょう。" );
+  } else if( num == num_temp++ ){
+    CERR( "bool値の方程式は命題の充足可能性に帰着させましょう。" );
+    CALL_AC( DecisionSatisfiability );
+  } else if( num == num_temp++ ){
+    CALL_AC( ConstructionArray );
+  } else if( num == num_temp++ ){
+    CERR( "変数の組み合わせで表して全探策を検討しましょう。" );
+  } else if( num == num_temp++ ){
+    CALL_AC( DecisionAccessibility );
+  } else if( num == num_temp++ ){
+    CALL_AC( DecisionDrawability );
+  } else if( num == num_temp++ ){
+    CALL_AC( DecisionPresentability );
+  } else if( num == num_temp++ ){
+    CALL_AC( ConstructionPartition );
+  }
+}
+
 AC( DecisionSatisfiability )
 {
   ASK_NUMBER(
@@ -2164,24 +2224,35 @@ AC( DecisionCoincidence )
 
 AC( DecisionPresentability )
 {
-  CERR( "数／文字列を使って特定の数や文字を表現できるかの判定は" );
-  CERR( "- 左結合的に関数／演算を処理する場合は" );
-  CERR( "  「第i成分／文字までで打ち切った時に表現できるもの全体の集合dp[i]」" );
-  CERR( "  を管理するiに関する動的計画法" );
-  CERR( "- 関数／演算の適用方法にも選択がある場合は2項を選んで適用させた" );
-  CERR( "  結果得られる数／文字列の再帰的な全探策" );
+  ASK_NUMBER(
+	     "単一の演算による表示可能性（生成部分マグマ問題）" ,
+	     "複数の演算による表示可能性（テンパズル問題）"
+	     );
+  if( num == num_temp++ ){
+    CERR( "半群の要素は、加素元からなる極小生成系の要素の和で表せます。" );
+    CERR( "- 加素元の和で表すならば、半群が方程式の解空間で与えられる場合には" );
+    CERR( "  Qの直和に埋め込めば解の1/nも解であることに着目し、整数の範囲での商を" );
+    CERR( "  うまく端数を揃えて解を構成できるかもしれません。" );
+    CERR( "- 数を素数の和で表すならば、Klove数列で必要な素数の個数を見積りましょう。" );
+    CERR( "  Mathematics\\Arithmetic\\Prime\\KloveSequence\\a.hpp" );
+    CERR( "- 数を多角数の和で表すならば、二平方定理などを参考にしましょう。" );
+    CERR( "  https://ja.wikipedia.org/wiki/二個の平方数の和#素数についての証明" );
+    CERR( "  https://ja.wikipedia.org/wiki/三個の平方数の和#証明" );
+    CERR( "  https://ja.wikipedia.org/wiki/四平方定理#ラグランジュの四平方定理の証明" );
+    CERR( "  https://ja.wikipedia.org/wiki/多角数定理#証明" );
+  } else if( num == num_temp++ ){
+    CERR( "- 左結合的に関数／演算を処理する場合は" );
+    CERR( "  「第i成分／文字までで打ち切った時に表現できるもの全体の集合dp[i]」" );
+    CERR( "  を管理するiに関する動的計画法" );
+    CERR( "- 関数／演算の適用方法にも選択がある場合は2項を選んで適用させた" );
+    CERR( "  結果得られる数／文字列の再帰的な全探策" );
+  }
   CERR( "を検討しましょう。" );
 }
 
 AC( Construction )
 {
   CERR( "存在定理に帰着できる問題は構成的証明を実装しましょう。" );
-  CERR( "" );
-  CERR( "リアクティブ問題で質問をする際は" );
-  CERR( "- 何らかの順序における極大元に触れる聞き方" );
-  CERR( "- なるべく多くの数値に依存する情報に触れる聞き方" );
-  CERR( "- N^2個の数値に対するO(N)回の質問では対角線に触れる聞き方" );
-  CERR( "を検討しましょう。" );
   ASK_NUMBER(
 	     "数や配列や文字列の構築" ,
 	     "方程式の解の構築" ,
@@ -2190,29 +2261,18 @@ AC( Construction )
 	     "必勝戦略の構築" ,
 	     "最大化戦略の構築" ,
 	     "グリッド操作の構築" ,
-	     "分割方法の構築" ,
-	     "表現可能性の判定" ,
+	     "数やベクトルの表示方法の構築" ,
+	     "集合の分割方法の構築" ,
 	     "ソースコードの構築"
 	     );
   if( num == num_temp++ ){
-    CERR( "p進法や階差数列を検討しましょう。" );
+    CALL_AC( ConstructionArray );
   } else if( num == num_temp++ ){
     CALL_AC( Solving );
   } else if( num == num_temp++ ){
     CALL_AC( ConstructionMap );
   } else if( num == num_temp++ ){
-    ASK_NUMBER(
-	       "最短経路の構築" ,
-	       "グリッド上の巡回セールスマン問題に対する良い解の構築"
-	       );
-    if( num == num_temp++ ){
-      CERR( "可能な経路の定めるグラフの問題に帰着させましょう。" );
-      CALL_AC( DecisionAccessibility );
-    } else {
-      CERR( "莫のアルゴリズムによるソート" );
-      CERR( "\\Mathematics\\SetTheory\\DirectProduct\\AfineSpace\\SqrtDecomposition\\Mo" );
-      CERR( "を検討しましょう。" );
-    }
+    CALL_AC( ConstructionPath );
   } else if( num == num_temp++ ){
     CERR( "ゲームの問題に帰着させましょう。" );
     CALL_AC( DecisionGame );
@@ -2222,31 +2282,17 @@ AC( Construction )
     CERR( "HWが小さいケースを手作業または全探策で求め、" );
     CERR( "それらの反復を検討しましょう。" );
   } else if( num == num_temp++ ){
-    ASK_NUMBER(
-	       "数やベクトルの和への分割" ,
-	       "集合や文字列や配列の部分集合や部分列への分割" ,
-	       );
-    if( num == num_temp++ ){
-      CERR( "数やベクトルの半群の要素は、加素元からなる極小生成系の要素の和で表せます。" );
-      CERR( "- 加素元の和で表すならば、半群が方程式の解空間で与えられる場合には" );
-      CERR( "  Qの直和に埋め込めば解の1/nも解であることに着目し、整数の範囲での商を" );
-      CERR( "  うまく端数を揃えて解を構成できるかもしれません。" );
-      CERR( "- 数を素数の和で表すならば、Klove数列で必要な素数の個数を見積りましょう。" );
-      CERR( "  Mathematics\\Arithmetic\\Prime\\KloveSequence\\a.hpp" );
-      CERR( "- 数を多角数の和で表すならば、二平方定理などを参考にしましょう。" );
-      CERR( "  https://ja.wikipedia.org/wiki/二個の平方数の和#素数についての証明" );
-      CERR( "  https://ja.wikipedia.org/wiki/三個の平方数の和#証明" );
-      CERR( "  https://ja.wikipedia.org/wiki/四平方定理#ラグランジュの四平方定理の証明" );
-      CERR( "  https://ja.wikipedia.org/wiki/多角数定理#証明" );
-    } else {
-      CERR( "集合や文字列や配列の分割は写像の一種です。" );
-      CALL_AC( ConstructionMap );
-    }
-  } else if( num == num_temp++ ){
     CALL_AC( DecisionPresentability );
+  } else if( num == num_temp++ ){
+    CALL_AC( ConstructionPartition );
   } else if( num == num_temp++ ){
     CERR( "正解を出力をするソースコードを提出しましょう。" );
   }
+}
+
+AC( ConstructionArray )
+{
+  CERR( "p進法や階差数列への翻訳を検討しましょう。" );
 }
 
 AC( ConstructionMap )
@@ -2260,6 +2306,22 @@ AC( ConstructionMap )
   CERR( "を検討しましょう。" )
 }
 
+AC( ConstructionPath )
+{
+  ASK_NUMBER(
+	     "最短経路の構築" ,
+	     "グリッド上の巡回セールスマン問題に対する良い解の構築"
+	     );
+  if( num == num_temp++ ){
+    CERR( "可能な経路の定めるグラフの問題に帰着させましょう。" );
+    CALL_AC( DecisionAccessibility );
+  } else {
+    CERR( "莫のアルゴリズムによるソート" );
+    CERR( "\\Mathematics\\SetTheory\\DirectProduct\\AfineSpace\\SqrtDecomposition\\Mo" );
+    CERR( "を検討しましょう。" );
+  }
+}
+
 AC( ConstructionMaximisation )
 {
   CERR( "操作ごとに決まる値を最大化するためには、操作の整礎な変形手順であって" );
@@ -2267,3 +2329,19 @@ AC( ConstructionMaximisation )
   CERR( "絞って考えましょう。" );
   CALL_AC( Maximisation );
 }
+
+AC( ConstructionPartition )
+{
+  CERR( "集合や文字列や配列の分割は写像の一種です。" );
+  AC( ConstructionMap );
+}
+
+AC( Deduction )
+{
+  CERR( "リアクティブ問題で質問をする際は" );
+  CERR( "- 何らかの順序における極大元に触れる聞き方" );
+  CERR( "- なるべく多くの数値に依存する情報に触れる聞き方" );
+  CERR( "- N^2個の数値に対するO(N)回の質問では対角線に触れる聞き方" );
+  CERR( "を検討しましょう。" );
+}
+
