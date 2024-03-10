@@ -21,7 +21,7 @@ template <typename U , typename MONOID> inline AbstractSegmentTree<U,MONOID>::Ab
   
   for( int i = 0 ; i < m_size ; i++ ){
 
-    m_a[i | m_power] = a[i];
+    m_a[m_power | i] = a[i];
 
   }
 
@@ -43,7 +43,7 @@ void AbstractSegmentTree<U,MONOID>::Set( const int& i , const U& u )
 {
 
   assert( 0 <= i && i < m_size );
-  int j = m_power + i;
+  int j = m_power | i;
   m_a[j] = u;
   
   while( ( j >>= 1 ) >= 1 ){
@@ -64,8 +64,8 @@ template <typename U , typename MONOID>
 U AbstractSegmentTree<U,MONOID>::IntervalProduct( const int& i_start , const int& i_final ) 
 {
 
-  int j_min = m_power + max( 0 , i_start );
-  int j_ulim = m_power + min( i_final + 1 , m_size );
+  int j_min = m_power | max( 0 , i_start );
+  int j_ulim = ( m_power | min( i_final , m_size - 1 ) ) + 1;
   U answer0 = m_M.One();
   U answer1 = answer0;
 
