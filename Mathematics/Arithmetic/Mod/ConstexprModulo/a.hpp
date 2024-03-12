@@ -7,36 +7,33 @@
 
 // 非常によくバグるので、更新したら必ずverifyすること！
 // verify:
-// https://judge.yosupo.jp/submission/150497
-// https://yukicoder.me/submissions/892588
-// https://yukicoder.me/submissions/914268
+// https://yukicoder.me/submissions/959438
+// （Derepresent,+=,-=,*,Combination,one）
+// https://yukicoder.me/submissions/959442
+// （Derepresent,+=,-=,*=,SignInvert,+,*,^,++,--,Combination,zero,one）
 
-// ここをtempate <typename INT , INT M>などにしてしまうとoperator+などを呼び出す際に型推論に失敗する。整数型を変えたい時はINT_TYPE_FOR_MODの型エイリアスを変更する。
 template <INT_TYPE_FOR_MOD M>
 class Mod
 {
 
-protected:
+private:
   INT_TYPE_FOR_MOD m_n;
 
 public:
   inline constexpr Mod() noexcept;
   inline constexpr Mod( const Mod<M>& n ) noexcept;
-  inline constexpr Mod( Mod<M>& n ) noexcept;
   inline constexpr Mod( Mod<M>&& n ) noexcept;
-  template <SFINAE_FOR_MOD( = nullptr )> inline constexpr Mod( const T& n ) noexcept;
-  template <SFINAE_FOR_MOD( = nullptr )> inline constexpr Mod( T& n ) noexcept;
-  template <SFINAE_FOR_MOD( = nullptr )> inline constexpr Mod( T&& n ) noexcept;
+  template <typename T> inline constexpr Mod( T n ) noexcept;
 
-  inline constexpr Mod<M>& operator=( const Mod<M>& n ) noexcept;
-  inline constexpr Mod<M>& operator=( Mod<M>&& n ) noexcept;
+  inline constexpr Mod<M>& operator=( Mod<M> n ) noexcept;
   inline constexpr Mod<M>& operator+=( const Mod<M>& n ) noexcept;
   inline constexpr Mod<M>& operator-=( const Mod<M>& n ) noexcept;
   inline constexpr Mod<M>& operator*=( const Mod<M>& n ) noexcept;
-  inline Mod<M>& operator/=( const Mod<M>& n );
-  inline constexpr Mod<M>& operator<<=( int n ) noexcept;
-  // Mが奇数である場合のみサポート。
-  inline constexpr Mod<M>& operator>>=( int n ) noexcept;
+  inline Mod<M>& operator/=( Mod<M> n );
+  // n>=0である場合のみサポート。計算量O(log n)で2^n倍する。
+  template <typename INT> inline constexpr Mod<M>& operator<<=( INT n );
+  // n>=0かつMが奇数である場合のみサポート。計算量O(n)で2^{-n}倍する。
+  template <typename INT> inline constexpr Mod<M>& operator>>=( INT n );
 
   inline constexpr Mod<M>& operator++() noexcept;
   inline constexpr Mod<M> operator++( int ) noexcept;
@@ -50,66 +47,58 @@ public:
   DECLARATION_OF_COMPARISON_FOR_MOD( > );
   DECLARATION_OF_COMPARISON_FOR_MOD( >= );
 
-  DECLARATION_OF_ARITHMETIC_FOR_MOD( + );
-  DECLARATION_OF_ARITHMETIC_FOR_MOD( - );
-  DECLARATION_OF_ARITHMETIC_FOR_MOD( * );
-  DECLARATION_OF_ARITHMETIC_FOR_MOD( / );
-  inline constexpr Mod<M> operator<<( int n ) const noexcept;
-  inline constexpr Mod<M> operator>>( int n ) const noexcept;
+  DECLARATION_OF_ARITHMETIC_FOR_MOD( + , noexcept );
+  DECLARATION_OF_ARITHMETIC_FOR_MOD( - , noexcept );
+  DECLARATION_OF_ARITHMETIC_FOR_MOD( * , noexcept );
+  DECLARATION_OF_ARITHMETIC_FOR_MOD( / , );
+  // Mが素数であるかexponent>=0である場合にのみサポート。exponent乗する。
+  template <typename INT> inline constexpr Mod<M> operator^( INT exponent ) const;
+  // n>=0である場合のみサポート。計算量O(log n)で2^n倍を返す。
+  template <typename INT> inline constexpr Mod<M> operator<<( INT n ) const;
+  // n>=0かつMが奇数である場合のみサポート。計算量O(n)で2^{-n}倍を返す。
+  template <typename INT> inline constexpr Mod<M> operator>>( INT n ) const;
 
   inline constexpr Mod<M> operator-() const noexcept;
+  // -1倍する。
   inline constexpr Mod<M>& SignInvert() noexcept;
-  inline constexpr Mod<M>& Double() noexcept;
-  // Mが奇数である場合のみサポート。
-  inline constexpr Mod<M>& Halve() noexcept;
-  // Mが素数である場合のみサポート。
+  // Mが素数である場合のみサポート。-1乗する。
   inline Mod<M>& Invert();
-  // exponentがuniversal referenceであることに注意。
-  template <typename T> inline constexpr Mod<M>& PositivePower( T&& exponent ) noexcept;
-  template <typename T> inline constexpr Mod<M>& NonNegativePower( T&& exponent ) noexcept;
-  // Mが素数であるかexponent>=0である場合にのみサポート。
-  template <typename T> inline constexpr Mod<M>& Power( T&& exponent );
-
+  // Mが素数であるかexponent>=0である場合にのみサポート。exponent乗する。
+  template <typename INT> inline constexpr Mod<M>& Power( INT exponent );
+  // グローバルスコープでswapを定義するためのもの。
   inline constexpr void swap( Mod<M>& n ) noexcept;
 
   inline constexpr const INT_TYPE_FOR_MOD& Represent() const noexcept;
-
-  // 0 <= n < Mの場合のみサポート。
+  // 0 <= n < Mの場合のみサポート。定数倍高速化のためにassertなし。
   static inline constexpr Mod<M> Derepresent( const INT_TYPE_FOR_MOD& n ) noexcept;
-  static inline constexpr INT_TYPE_FOR_MOD& Normalise( INT_TYPE_FOR_MOD& n ) noexcept;
   
   // Mが素数かつn < g_memory_lengthである場合のみサポート。
-  static inline const Mod<M>& Inverse( const INT_TYPE_FOR_MOD& n ) noexcept;
+  static inline const Mod<M>& Inverse( const INT_TYPE_FOR_MOD& n );
   // n < g_memory_lengthである場合のみサポート。
-  static inline const Mod<M>& Factorial( const INT_TYPE_FOR_MOD& n ) noexcept;
+  static inline const Mod<M>& Factorial( const INT_TYPE_FOR_MOD& n );
   // Mが素数かつn < g_memory_lengthである場合のみサポート。
-  static inline const Mod<M>& FactorialInverse( const INT_TYPE_FOR_MOD& n ) noexcept;
+  static inline const Mod<M>& FactorialInverse( const INT_TYPE_FOR_MOD& n );
   // Mが素数かつn < g_memory_lengthである場合のみサポート。
-  static inline Mod<M> Combination( const INT_TYPE_FOR_MOD& n , const INT_TYPE_FOR_MOD& i ) noexcept;
+  static inline Mod<M> Combination( const INT_TYPE_FOR_MOD& n , const INT_TYPE_FOR_MOD& i );
 
   static inline const Mod<M>& zero() noexcept;
   static inline const Mod<M>& one() noexcept;
-  
+
 private:
+  template <typename INT> inline constexpr Mod<M>& PositivePower( INT exponent ) noexcept;
+  template <typename INT> inline constexpr Mod<M>& NonNegativePower( INT exponent ) noexcept;
+
   template <typename T> inline constexpr Mod<M>& Ref( T&& n ) noexcept;
+  static inline constexpr INT_TYPE_FOR_MOD& Normalise( INT_TYPE_FOR_MOD& n ) noexcept;
 
 };
 
-template <INT_TYPE_FOR_MOD M> inline constexpr Mod<M> Twice( const Mod<M>& n ) noexcept;
-// Mが奇数である場合のみサポート。
-template <INT_TYPE_FOR_MOD M> inline constexpr Mod<M> Half( const Mod<M>& n ) noexcept;
-
 // Mが素数でありnが0でない場合にのみサポート。
 template <INT_TYPE_FOR_MOD M> inline Mod<M> Inverse( const Mod<M>& n );
-template <INT_TYPE_FOR_MOD M> inline constexpr Mod<M> Inverse_constexpr( const Mod<M>& n );
+template <INT_TYPE_FOR_MOD M> inline constexpr Mod<M> Inverse_constexpr( Mod<M> n );
 
 // Mが素数であるかexponent>=0である場合にのみサポート。
 template <INT_TYPE_FOR_MOD M , typename T> inline constexpr Mod<M> Power( Mod<M> n , T exponent );
-template <typename T> inline constexpr Mod<2> Power( Mod<2> n , const T& p );
-
-// ../Power/a_Body.hppにて定義。
-template <typename T> inline constexpr T Square( const T& t );
-template <> inline constexpr Mod<2> Square<Mod<2> >( const Mod<2>& t );
 
 template <INT_TYPE_FOR_MOD M> inline constexpr void swap( Mod<M>& n0 , Mod<M>& n1 ) noexcept;
 
