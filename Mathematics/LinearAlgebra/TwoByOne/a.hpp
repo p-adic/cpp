@@ -1,40 +1,46 @@
 // c:/Users/user/Documents/Programming/Mathematics/LinearAlgebra/TwoByOne/a.hpp
 
 #pragma once
-#include "../a_Macro.hpp"
+#include "../TwoByTwo/a.hpp"
 
-template <typename T> class TwoByTwoMatrix;
+// verify:
+// https://yukicoder.me/submissions/959442（+=,-=,*=,Act）
 
 template <typename T>
 class TwoByOneMatrix
 {
-
-  friend class TwoByTwoMatrix<T>;
 
 private:
   T m_M0;
   T m_M1;
 
 public:
-  inline constexpr TwoByOneMatrix( const T& M0 = T() , const T& M1 = T() ) noexcept;
-  inline constexpr TwoByOneMatrix( T&& M0 , T&& M1 ) noexcept;
+  inline constexpr TwoByOneMatrix( T M0 = T() , T M1 = T() ) noexcept;
   inline constexpr TwoByOneMatrix( const TwoByOneMatrix<T>& mat ) noexcept;
   inline constexpr TwoByOneMatrix( TwoByOneMatrix<T>&& mat ) noexcept;
   
-  inline constexpr TwoByOneMatrix<T>& operator=( const TwoByOneMatrix<T>& mat ) noexcept;
-  inline constexpr TwoByOneMatrix<T>& operator=( TwoByOneMatrix<T>&& mat ) noexcept;
+  inline constexpr TwoByOneMatrix<T>& operator=( TwoByOneMatrix<T> mat ) noexcept;
   inline constexpr TwoByOneMatrix<T>& operator+=( const TwoByOneMatrix<T>& mat ) noexcept;
   inline constexpr TwoByOneMatrix<T>& operator-=( const TwoByOneMatrix<T>& mat ) noexcept;
-  // 左からの積
-  inline TwoByOneMatrix<T>& operator*=( const TwoByTwoMatrix<T>& mat ) noexcept;
   inline constexpr TwoByOneMatrix<T>& operator*=( const T& scalar ) noexcept;
-  template <SFINAE_FOR_MATRIX( = nullptr )> inline constexpr TwoByOneMatrix<T>& operator*=( const Arg& scalar ) noexcept;
   inline TwoByOneMatrix<T>& operator/=( const T& scalar );
-  template <SFINAE_FOR_MATRIX( = nullptr )> inline constexpr TwoByOneMatrix<T>& operator/=( const Arg& scalar );
   inline TwoByOneMatrix<T>& operator%=( const T& scalar );
-  template <SFINAE_FOR_MATRIX( = nullptr )> inline constexpr TwoByOneMatrix<T>& operator%=( const Arg& scalar );
 
-  inline constexpr const T& GetEntry( const uint& y ) const noexcept;
-  inline constexpr T& RefEntry( const uint& y ) noexcept;
-  
+  // 左からの積
+  inline constexpr TwoByOneMatrix<T>& Act( const TwoByTwoMatrix<T>& mat ) noexcept;
+  inline constexpr TwoByOneMatrix<T> Action( const TwoByTwoMatrix<T>& mat ) const noexcept;
+
+  inline constexpr TwoByOneMatrix<T> operator+( TwoByOneMatrix<T> mat ) const noexcept;
+  inline constexpr TwoByOneMatrix<T> operator-( TwoByOneMatrix<T> mat ) const noexcept;
+  inline constexpr TwoByOneMatrix<T> operator*( const T& scalar ) const noexcept;
+  inline TwoByOneMatrix<T> operator/( const T& scalar ) const;
+  inline TwoByOneMatrix<T> operator%( const T& scalar ) const;
+
+  // TwoByTwoがoperator[]を持たないので構文を合わせる。
+  inline constexpr const T& Get( const uint& y ) const noexcept;
+  inline constexpr T& Ref( const uint& y ) noexcept;
+
 };
+
+template <typename T> inline constexpr TwoByOneMatrix<T> operator*( const TwoByTwoMatrix<T>& mat1 , const TwoByOneMatrix<T>& mat2 ) noexcept;
+
