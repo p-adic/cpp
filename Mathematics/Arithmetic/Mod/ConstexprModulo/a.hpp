@@ -7,9 +7,9 @@
 
 // 非常によくバグるので、更新したら必ずverifyすること！
 // verify:
-// https://yukicoder.me/submissions/959438
+// https://yukicoder.me/submissions/959511
 // （Derepresent,+=,-=,*,Combination,one）
-// https://yukicoder.me/submissions/959442
+// https://yukicoder.me/submissions/959509
 // （Derepresent,+=,-=,*=,SignInvert,+,*,^,++,--,Combination,zero,one）
 
 template <INT_TYPE_FOR_MOD M>
