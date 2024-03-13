@@ -16,8 +16,31 @@ template <typename T> inline constexpr TwoByOneMatrix<T>& TwoByOneMatrix<T>::ope
 template <typename T> inline TwoByOneMatrix<T>& TwoByOneMatrix<T>::operator/=( const T& scalar ) { m_M0 /= scalar; m_M1 /= scalar; return *this; }
 template <typename T> inline TwoByOneMatrix<T>& TwoByOneMatrix<T>::operator%=( const T& scalar ) { m_M0 %= scalar; m_M1 %= scalar; return *this; }
 
-template <typename T> inline constexpr TwoByOneMatrix<T>& TwoByOneMatrix<T>::Act( const TwoByTwoMatrix<T>& mat ) noexcept { return *this = Action( mat ); }
-template <typename T> inline constexpr TwoByOneMatrix<T> TwoByOneMatrix<T>::Action( const TwoByTwoMatrix<T>& mat ) const noexcept { return TwoByOneMatrix<T>( mat.m_M00 * m_M0 + mat.m_M01 * m_M1 , mat.m_M10 * m_M0 + mat.m_M11 * m_M1 ); }
+template <typename T> template <typename INT> inline constexpr TwoByOneMatrix<T>& TwoByOneMatrix<T>::Act( TwoByTwoMatrix<T> mat , INT exponent )
+{
+
+  exponent < 0 ? ( exponent = -exponent , mat.Invert() ) : mat;
+
+  while( exponent > 0 ){
+
+    if( ( exponent & 1 ) == 1 ){
+
+      T M0 = mat.m_M00 * m_M0 + mat.m_M01 * m_M1;
+      m_M1 = mat.m_M10 * m_M0 + mat.m_M11 * m_M1;
+      m_M0 = move( M0 );
+
+    }
+
+    mat = mat.Square();
+    exponent >>= 1;
+
+  }
+  
+  return *this;
+
+}
+
+template <typename T> template <typename INT> inline constexpr TwoByOneMatrix<T> TwoByOneMatrix<T>::Action( TwoByTwoMatrix<T> mat , INT exponent ) const { return TwoByOneMatrix<T>( *this ).Act( move( mat ) , move( exponent ) ); }
 
 template <typename T> inline constexpr TwoByOneMatrix<T> TwoByOneMatrix<T>::operator+( TwoByOneMatrix<T> mat ) const noexcept { return move( mat += *this ); }
 template <typename T> inline constexpr TwoByOneMatrix<T> TwoByOneMatrix<T>::operator-( TwoByOneMatrix<T> mat ) const noexcept { return move( mat -= *this ); }

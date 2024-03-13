@@ -4,7 +4,7 @@
 #include "../TwoByTwo/a.hpp"
 
 // verify:
-// https://yukicoder.me/submissions/959442（+=,-=,*=,Act）
+// https://yukicoder.me/submissions/959497（+=,-=,*=,Act）
 
 template <typename T>
 class TwoByOneMatrix
@@ -27,8 +27,8 @@ public:
   inline TwoByOneMatrix<T>& operator%=( const T& scalar );
 
   // 左からの積
-  inline constexpr TwoByOneMatrix<T>& Act( const TwoByTwoMatrix<T>& mat ) noexcept;
-  inline constexpr TwoByOneMatrix<T> Action( const TwoByTwoMatrix<T>& mat ) const noexcept;
+  template <typename INT> inline constexpr TwoByOneMatrix<T>& Act( TwoByTwoMatrix<T> mat , INT exponent = 1 );
+  template <typename INT> inline constexpr TwoByOneMatrix<T> Action( TwoByTwoMatrix<T> mat , INT exponent = 1 ) const;
 
   inline constexpr TwoByOneMatrix<T> operator+( TwoByOneMatrix<T> mat ) const noexcept;
   inline constexpr TwoByOneMatrix<T> operator-( TwoByOneMatrix<T> mat ) const noexcept;
