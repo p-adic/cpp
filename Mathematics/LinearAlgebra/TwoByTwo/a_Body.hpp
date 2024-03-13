@@ -20,7 +20,7 @@ template <typename T> inline TwoByTwoMatrix<T>& TwoByTwoMatrix<T>::operator/=( c
 template <typename T> template <SFINAE_FOR_MATRIX()> inline TwoByTwoMatrix<T>& TwoByTwoMatrix<T>::operator/=( const Arg& scalar ) { return *this /= T( scalar ); }
 template <typename T> inline TwoByTwoMatrix<T>& TwoByTwoMatrix<T>::operator%=( const T& scalar ) { m_M00 %= scalar; m_M01 %= scalar; m_M10 %= scalar; m_M11 %= scalar; return *this; }
 
-template <typename T> inline TwoByTwoMatrix<T>& TwoByTwoMatrix<T>::Invert() { swap( m_M00 , m_M11 ); m_M01 = -m_M01; m_M10 = -m_M10; return *this /= det(); }
+template <typename T> inline TwoByTwoMatrix<T>& TwoByTwoMatrix<T>::Invert() { ::swap( m_M00 , m_M11 ); m_M01 = -m_M01; m_M10 = -m_M10; return *this /= det(); }
 template <typename T> TwoByTwoMatrix<T> TwoByTwoMatrix<T>::Inverse() const { return move( TwoByTwoMatrix<T>( *this ).invert() ); }
 
 template <typename T> inline constexpr bool TwoByTwoMatrix<T>::operator==( const TwoByTwoMatrix<T>& mat ) const noexcept { return m_M00 == mat.m_M00 && m_M01 == mat.m_M01 && m_M10 == mat.m_M10 && m_M11 == mat.m_M11; }

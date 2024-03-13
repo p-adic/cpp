@@ -4,7 +4,7 @@
 #include "../a_Macro.hpp"
 
 // verify:
-// https://yukicoder.me/submissions/959442（^）
+// https://yukicoder.me/submissions/959497（^）
 
 template <typename T> class TwoByOneMatrix;
 

@@ -40,20 +40,16 @@ class TwoByTwoMatrix:
 		return self.__class__(-self.M00,-self.M01,-self.M10,-self.M11)
 
 	def __mul__(self,other):
-		M00 = self.M00 * other.M00 + self.M01 * other.M10
-		M01 = self.M00 * other.M01 + self.M01 * other.M11
-		M10 = self.M10 * other.M00 + self.M11 * other.M10
-		M11 = self.M10 * other.M01 + self.M11 * other.M11
-		return self.__class__(M00,M01,M10,M11)
+		return self.__class__(self.M00 * other.M00 + self.M01 * other.M10,self.M00 * other.M01 + self.M01 * other.M11,self.M10 * other.M00 + self.M11 * other.M10,self.M10 * other.M01 + self.M11 * other.M11)
 	def __imul__(self,other):
-		self = self * other
+		self.M00 , self.M01 , self.M10 , self.M11 = self.M00 * other.M00 + self.M01 * other.M10 , self.M00 * other.M01 + self.M01 * other.M11 , self.M10 * other.M00 + self.M11 * other.M10 , self.M10 * other.M01 + self.M11 * other.M11
 		return self
-	def ScalarMultiply(self,x): #__rmul__にするとx.__class__の__mul__が優先される。
-		M00 = x * self.M00
-		M01 = x * self.M01
-		M10 = x * self.M10
-		M11 = x * self.M11
-		return self.__class__(M00,M01,M10,M11)
+	def ScalarMultiply(self,x):
+		self.M00 *= x
+		self.M01 *= x
+		self.M10 *= x
+		self.M11 *= x
+		return self
 
 	def det(self):
 		return self.M00 * self.M11 - self.M01 * self.M10
@@ -61,14 +57,10 @@ class TwoByTwoMatrix:
 		return self.M00 + self.M11
 
 	def Adjugate(self):
-		M00 = self.M11
-		M01 = - self.M01
-		M10 = - self.M10
-		M11 = self.M00
-		return self.__class__(M00,M01,M10,M11)
+		return self.__class__( self.M11 , - self.M01 , - self.M10 , self.M00 )
 	def Inverse(self):
-		d = self.det()
-		return self.Adjugate().ScalarMultiply( 1 / d )
+		return self.Adjugate().ScalarMultiply( 1 / self.det() )
+		# d = self.det()
 		# assert( d in [1,-1] ) # 整数係数の場合
 		# return self.Adjugate().ScalarMultiply( d )
 	def __truediv__(self,other):
@@ -77,8 +69,7 @@ class TwoByTwoMatrix:
 		self *= other.Inverse()
 		return self
 
-	def __pow__(self,n):
-		if n < 0:n , self = -n , self.Inverse()
+	def __pow__(self,n): #n>=0の場合のみサポート
 		answer = self.__class__.one.copy()
 		power = self.copy()
 		while n > 0:
@@ -86,6 +77,8 @@ class TwoByTwoMatrix:
 			power.Square()
 			n >>= 1
 		return answer
+	def __xor__(self,n):
+		return self.Inverse()**(-n)if n < 0 else self ** n
 
 	#private:
 	def Square(self):
