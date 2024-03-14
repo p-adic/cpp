@@ -6,11 +6,11 @@
 #include "../Sqrt/a_Body.hpp"
 
 template <typename R , typename PT_MAGMA , typename U , typename R_MODULE> inline LazySqrtDecomposition<R,PT_MAGMA,U,R_MODULE>::LazySqrtDecomposition( PT_MAGMA L , R_MODULE M , const int& N ) : LazySqrtDecomposition( move( L ) , move( M ) , N , Sqrt( N ) ) {}
-template <typename R , typename PT_MAGMA , typename U , typename R_MODULE> inline LazySqrtDecomposition<R,PT_MAGMA,U,R_MODULE>::LazySqrtDecomposition( PT_MAGMA L , R_MODULE M , const int& N , const int& N_sqrt ) : m_L( move( L ) ) , m_M( move( M ) ) , m_N( N ) , m_N_sqrt( N_sqrt ) , m_N_d( ( m_N + m_N_sqrt - 1 ) / m_N_sqrt ) , m_N_m( m_N_d * m_N_sqrt ) , m_a( N , m_M.One() ) , m_b( m_N_d , m_M.One() ) , m_lazy_substitution( m_b ) , m_suspended( m_N_d ) , m_lazy_action( m_N_d , m_L.Point() ) { Initialise(); }
-template <typename R , typename PT_MAGMA , typename U , typename R_MODULE> inline LazySqrtDecomposition<R,PT_MAGMA,U,R_MODULE>::LazySqrtDecomposition( PT_MAGMA L , R_MODULE M , vector<U> a ) : m_L( move( L ) ) , m_M( move( M ) ) , m_N( a.size() ) , m_N_sqrt( Sqrt( m_N ) ) , m_N_d( ( m_N + m_N_sqrt - 1 ) / m_N_sqrt ) , m_N_m( m_N_d * m_N_sqrt ) , m_a( move( a ) ) , m_b( m_N_d , m_M.One() ) , m_lazy_substitution( m_b ) , m_suspended( m_N_d ) , m_lazy_action( m_N_d , m_L.Point() ) { Initialise(); }
-template <typename R , typename PT_MAGMA , typename U , typename R_MODULE> inline LazySqrtDecomposition<R,PT_MAGMA,U,R_MODULE>::LazySqrtDecomposition( PT_MAGMA L , R_MODULE M , vector<U> a , const int& N_sqrt ) : m_L( move( L ) ) , m_M( move( M ) ) , m_N( a.size() ) , m_N_sqrt( N_sqrt ) , m_N_d( ( m_N + m_N_sqrt - 1 ) / m_N_sqrt ) , m_N_m( m_N_d * m_N_sqrt ) , m_a( move( a ) ) , m_b( m_N_d , m_M.One() ) , m_lazy_substitution( m_b ) , m_suspended( m_N_d ) , m_lazy_action( m_N_d , m_L.Point() ) { Initialise(); }
+template <typename R , typename PT_MAGMA , typename U , typename R_MODULE> inline LazySqrtDecomposition<R,PT_MAGMA,U,R_MODULE>::LazySqrtDecomposition( PT_MAGMA L , R_MODULE M , const int& N , const int& N_sqrt ) : m_L( move( L ) ) , m_M( move( M ) ) , m_N( N ) , m_N_sqrt( N_sqrt ) , m_N_d( ( m_N + m_N_sqrt - 1 ) / m_N_sqrt ) , m_N_m( m_N_d * m_N_sqrt ) , m_a( N , m_M.One() ) , m_b( m_N_d , m_M.One() ) , m_lazy_substitution( m_b ) , m_suspended( m_N_d ) , m_lazy_action( m_N_d , m_L.Point() ) { Construct(); }
+template <typename R , typename PT_MAGMA , typename U , typename R_MODULE> inline LazySqrtDecomposition<R,PT_MAGMA,U,R_MODULE>::LazySqrtDecomposition( PT_MAGMA L , R_MODULE M , vector<U> a ) : m_L( move( L ) ) , m_M( move( M ) ) , m_N( a.size() ) , m_N_sqrt( Sqrt( m_N ) ) , m_N_d( ( m_N + m_N_sqrt - 1 ) / m_N_sqrt ) , m_N_m( m_N_d * m_N_sqrt ) , m_a( move( a ) ) , m_b( m_N_d , m_M.One() ) , m_lazy_substitution( m_b ) , m_suspended( m_N_d ) , m_lazy_action( m_N_d , m_L.Point() ) { Construct(); }
+template <typename R , typename PT_MAGMA , typename U , typename R_MODULE> inline LazySqrtDecomposition<R,PT_MAGMA,U,R_MODULE>::LazySqrtDecomposition( PT_MAGMA L , R_MODULE M , vector<U> a , const int& N_sqrt ) : m_L( move( L ) ) , m_M( move( M ) ) , m_N( a.size() ) , m_N_sqrt( N_sqrt ) , m_N_d( ( m_N + m_N_sqrt - 1 ) / m_N_sqrt ) , m_N_m( m_N_d * m_N_sqrt ) , m_a( move( a ) ) , m_b( m_N_d , m_M.One() ) , m_lazy_substitution( m_b ) , m_suspended( m_N_d ) , m_lazy_action( m_N_d , m_L.Point() ) { Construct(); }
 
-template <typename R , typename PT_MAGMA , typename U , typename R_MODULE> inline void LazySqrtDecomposition<R,PT_MAGMA,U,R_MODULE>::Initialise()
+template <typename R , typename PT_MAGMA , typename U , typename R_MODULE> inline void LazySqrtDecomposition<R,PT_MAGMA,U,R_MODULE>::Construct()
 {
 
   static_assert( is_same_v<R,inner_t<PT_MAGMA>> && is_same_v<U,inner_t<R_MODULE>> );
@@ -35,7 +35,7 @@ template <typename R , typename PT_MAGMA , typename U , typename R_MODULE> inlin
 
 }
 
-template <typename R , typename PT_MAGMA , typename U , typename R_MODULE> template <typename...Args> inline void LazySqrtDecomposition<R,PT_MAGMA,U,R_MODULE>::Reset( Args&&...args ) { *this = LazySqrtDecomposition<R,PT_MAGMA,U,R_MODULE>( move( m_L ) , move( m_M ) , forward<Args>( args )... ); }
+template <typename R , typename PT_MAGMA , typename U , typename R_MODULE> template <typename...Args> inline void LazySqrtDecomposition<R,PT_MAGMA,U,R_MODULE>::Initialise( Args&&...args ) { *this = LazySqrtDecomposition<R,PT_MAGMA,U,R_MODULE>( move( m_L ) , move( m_M ) , forward<Args>( args )... ); }
 
 template <typename R , typename PT_MAGMA , typename U , typename R_MODULE> inline void LazySqrtDecomposition<R,PT_MAGMA,U,R_MODULE>::Set( const int& i , const U& u )
 {

@@ -36,7 +36,7 @@ public:
   inline DualSqrtDecomposition( PT_MAGMA L , R_MODULE X , vector<U> a );
   inline DualSqrtDecomposition( PT_MAGMA L , R_MODULE X , vector<U> a , const int& N_sqrt );
 
-  template <typename...Args> inline void Reset( Args&&... args );
+  template <typename...Args> inline void Initialise( Args&&... args );
   inline void Set( const int& i , const U& u );
   inline void Act( const int& i , const R& r );
   inline void IntervalAct( const int& i_start , const int& i_final , const R& r );

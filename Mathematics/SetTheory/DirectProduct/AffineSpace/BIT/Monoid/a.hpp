@@ -4,7 +4,7 @@
 #include "../a_Macro.hpp"
 
 // verify:
-// https://yukicoder.me/submissions/955164（一点代入、区間積）
+// https://yukicoder.me/submissions/959651（一点代入、区間積）
 
 // 入力の範囲内で要件
 // (1) MがUのモノイド構造である。
@@ -31,17 +31,18 @@ template <typename U , typename MONOID>
 class MonoidBIT
 {
 private:
-  int m_size;
   MONOID m_M;
+  int m_size;
   vector<U> m_a;
   vector<U> m_fenwick_0;
   vector<U> m_fenwick_1;
   int m_power;
 
 public:
-  inline MonoidBIT( MONOID M , vector<U> a = vector<U>() );
+  inline MonoidBIT( MONOID M , const int& size = 0 );
+  inline MonoidBIT( MONOID M , vector<U> a );
 
-  inline void Set( vector<U>&& a );
+  template <typename...Args> inline void Initialise( Args&&... args );
   void Set( const int& i , const U& u );
 
   inline const int& size() const noexcept;
@@ -52,11 +53,11 @@ public:
 
   // Fは積順序に関して単調な写像f:U \times int -> {0,1}に相当する型。
   // f( IntervalProduct( 0 , i ) , i )がtrueとなるiが存在する場合にその最小値を
-  // 2進法で探索。存在しない場合はN以上の最小の2羃×2-1を返す（N以上であることで判別可能）。
+  // 2進法で探索。存在しない場合はNを返す。
   template <typename F , SFINAE_FOR_BIT_BS = nullptr> int BinarySearch( const F& f );
   // IntervalProduct( 0 , i )がu以上となるiが存在する場合にその最小値を2進法で探索。
-  // 存在しない場合はN以上の最小の2羃×2-1を返す（N以上であることで判別可能）。
+  // 存在しない場合はNを返す。
   inline int BinarySearch( const U& u );
   
 };
-template <typename MONOID> MonoidBIT( MONOID M ) -> MonoidBIT<inner_t<MONOID>,MONOID>;
+template <typename MONOID , typename...Args> MonoidBIT( MONOID M , Args&&... args ) -> MonoidBIT<inner_t<MONOID>,MONOID>;

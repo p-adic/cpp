@@ -4,7 +4,7 @@
 
 // verify:
 // https://yukicoder.me/submissions/950088（零初期化、一点取得、矩形加算）
-// https://yukicoder.me/submissions/950089（零初期化、一点取得、矩形加算）
+// https://yukicoder.me/submissions/959652（零初期化、一点取得、矩形加算）
 
 // ２次元配列上の階差数列。基本的に２次元imos法
 // https://imoz.jp/algorithms/imos_method.html
@@ -37,10 +37,10 @@ private:
   bool m_updated;
   
 public:
-  inline AbstractTwoDimensionalDifferenceSequence( GROUP M , const int& size_X = 0 , const int& size_Y = 0 );
-  inline AbstractTwoDimensionalDifferenceSequence( GROUP M , vector<vector<U>> a );
+  inline AbstractTwoDimensionalDifferenceSequence( GROUP M , const int& size_X , const int& size_Y );
+  inline AbstractTwoDimensionalDifferenceSequence( GROUP M , vector<vector<U>> a = {} );
 
-  inline void Set( vector<vector<U>> a );
+  template <typename...Args> inline void Initialise( Args&&... args );
   // 作用の遅延評価を解消してから値を代入する。
   inline void Set( const int& i_x , const int& i_y , const U& u );
   // 作用の遅延評価を解消してから値を参照する。

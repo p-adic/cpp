@@ -44,7 +44,7 @@ public:
   inline MonoidSqrtDecomposition( COMM_MONOID M , vector<U> a );
   inline MonoidSqrtDecomposition( COMM_MONOID M , vector<U> a , const int& N_sqrt );
 
-  template <typename...Args> inline void Reset( Args&&... args );
+  template <typename...Args> inline void Initialise( Args&&... args );
   inline void Set( const int& i , const U& u );
   inline void Multiply( const int& i , const U& u );
 

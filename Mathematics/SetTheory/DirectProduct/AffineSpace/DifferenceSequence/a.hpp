@@ -7,6 +7,7 @@
 
 // verify:
 // https://yukicoder.me/submissions/950084（Abstract、零初期化、一点取得、部分木加算）
+// https://yukicoder.me/submissions/953509（Abstract、零初期化、一点取得、部分木加算）
 
 // 数列に対するimos法
 // https://imoz.jp/algorithms/imos_method.html
@@ -77,7 +78,7 @@ public:
   inline AbstractDifferenceSequence( FOREST G , PREV Prev , GROUP M );
   inline AbstractDifferenceSequence( FOREST G , PREV Prev , GROUP M , vector<U> a );
 
-  inline void Set( vector<U> a );
+  inline void Initialise( vector<U> a );
   // 作用の遅延評価を解消してから値を代入する。
   inline void Set( const T& t , const U& u );
   // 作用の遅延評価を解消してから値を参照する。

@@ -7,7 +7,7 @@
 
 template <typename U , typename N_MODULE> template <typename...Args> inline IntervalMultiplySqrtDecomposition<U,N_MODULE>::IntervalMultiplySqrtDecomposition( N_MODULE M , Args&&... args ) : MonoidSqrtDecomposition<U,N_MODULE>( move( M ) , forward<Args>( args )... ) , m_lazy_multiplication( this->m_N_d , this->m_M.One() ) {}
 
-template <typename U , typename N_MODULE> template <typename...Args> inline void IntervalMultiplySqrtDecomposition<U,N_MODULE>::Reset( Args&&... args ) { *this = IntervalMultiplySqrtDecomposition<U,N_MODULE>( move( this->m_M ) , forward<Args>( args )... ); }
+template <typename U , typename N_MODULE> template <typename...Args> inline void IntervalMultiplySqrtDecomposition<U,N_MODULE>::Initialise( Args&&... args ) { *this = IntervalMultiplySqrtDecomposition<U,N_MODULE>( move( this->m_M ) , forward<Args>( args )... ); }
 
 template <typename U , typename N_MODULE> inline void IntervalMultiplySqrtDecomposition<U,N_MODULE>::Set( const int& i , const U& u )
 {

@@ -47,7 +47,7 @@ public:
   inline LazySqrtDecomposition( PT_MAGMA L , R_MODULE M , vector<U> a );
   inline LazySqrtDecomposition( PT_MAGMA L , R_MODULE M , vector<U> a , const int& N_sqrt );
   
-  template <typename...Args> inline void Reset( Args&&... args );
+  template <typename...Args> inline void Initialise( Args&&... args );
   inline void Set( const int& i , const U& u );
   inline void IntervalSet( const int& i_start , const int& i_final , const U& u );
   inline void IntervalAct( const int& i_start , const int& i_final , const R& r );
@@ -57,7 +57,7 @@ public:
   inline U IntervalProduct( const int& i_start , const int& i_final );
 
 private:
-  inline void Initialise();
+  inline void Construct();
   inline void SetProduct( const int& i );
   inline void SolveSuspendedSubstitution( const int& d , const U& u );
   inline void IntervalSet_Body( const int& i_min , const int& i_ulim , const U& u );

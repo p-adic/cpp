@@ -1,18 +1,19 @@
 #零初期化
 F=[0]*(N+1)
-#配列による初期化（計算量はO(N)だがAを反復するO(N log N)の方が早い？）
+#配列による初期化（計算量はO(N)だがPを反復するO(N log N)の方が早い？）
 for j in R(1,N+1):
 	i=j-1
-	F[j]=E[i]
+	F[j]=A[i]
 	while i>j-(j&-j):
-	      F[j]+=F[i]
-	      i-=i&-i
-#一点加算A
+		F[j]+=F[i]
+		i-=i&-i
+#一点加算P
 #始切片和L
 #区間和S
-def A(i,t):
+#二分探索（u<=L(0,i)の最小解）
+def P(i,u):
 	i+=1
-	while i<=N:F[i],i=F[i]+t,i+(i&-i)
+	while i<=N:F[i],i=F[i]+u,i+(i&-i)
 def L(r):
 	a=0
 	i=min(r+1,N)
@@ -20,4 +21,14 @@ def L(r):
 	return a
 def S(l,r): #l,rは始端,終端
 	return L(r)-L(l-1)
-
+def B(u):
+	j=s=n=0
+	p=1<<17 #131072
+	while p:
+		k=j|p
+		if k<=N:
+			n+=F[k]
+			if n<u:s,j=n,k
+			else:n=s
+		p>>=1
+	return j

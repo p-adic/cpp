@@ -5,9 +5,9 @@
 
 #include "../../../../Algebra/Monoid/a_Body.hpp"
 
-template <typename U , typename MONOID> inline AbstractSegmentTree<U,MONOID>::AbstractSegmentTree( MONOID M ) : AbstractSegmentTree( move( M ) , vector<U>() ) {}
+template <typename U , typename MONOID> inline AbstractSegmentTree<U,MONOID>::AbstractSegmentTree( MONOID M , const int& size ) : AbstractSegmentTree( M , vector<U>( size , M.One() ) ) {}
 
-template <typename U , typename MONOID> inline AbstractSegmentTree<U,MONOID>::AbstractSegmentTree( MONOID M , const vector<U>& a ) : m_size( a.size() ) , m_power( 1 ) , m_M( move( M ) ) , m_a()
+template <typename U , typename MONOID> inline AbstractSegmentTree<U,MONOID>::AbstractSegmentTree( MONOID M , const vector<U>& a ) : m_M( move( M ) ) , m_size( a.size() ) , m_power( 1 ) , m_a()
 {
 
   static_assert( is_same_v<U,inner_t<MONOID>> );
@@ -36,7 +36,7 @@ template <typename U , typename MONOID> inline AbstractSegmentTree<U,MONOID>::Ab
 
 template <typename U> template <typename...Args> inline SegmentTree<U>::SegmentTree( const U& one_U , const Args&... args ) : AbstractSegmentTree<U,MultiplicativeMonoid<U>>( MultiplicativeMonoid<U>( one_U ) , args... ) {}
 
-template <typename U , typename MONOID> inline void AbstractSegmentTree<U,MONOID>::Set( const vector<U>& a ) { *this = AbstractSegmentTree( move( m_M ) , a ); }
+template <typename U , typename MONOID> template <typename...Args> inline void AbstractSegmentTree<U,MONOID>::Initialise( const Args&... args ) { *this = AbstractSegmentTree( move( m_M ) , args... ); }
 
 template <typename U , typename MONOID>
 void AbstractSegmentTree<U,MONOID>::Set( const int& i , const U& u )

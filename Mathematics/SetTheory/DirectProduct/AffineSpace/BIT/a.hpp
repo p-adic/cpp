@@ -7,7 +7,7 @@
 // verify:
 // https://yukicoder.me/submissions/950337（零初期化、一点加算、区間和）
 // https://yukicoder.me/submissions/950342（零初期化、配列初期化、始切片和）
-// https://yukicoder.me/submissions/955156（配列初期化、一点加算、通常の二分探索）
+// https://yukicoder.me/submissions/956409（配列初期化、一点加算、通常の二分探索）
 
 // 入力の範囲内で要件
 // (1) MがUの可換群構造である。
@@ -46,7 +46,7 @@ public:
   inline AbstractBIT( ABELIAN_GROUP M , const int& size = 0 );
   inline AbstractBIT( ABELIAN_GROUP M , const vector<U>& a );
   
-  template <typename...Args> inline void Reset( const Args&... args );
+  template <typename...Args> inline void Initialise( const Args&... args );
   inline void Set( const int& i , const U& u );
   inline AbstractBIT<U,ABELIAN_GROUP>& operator+=( const vector<U>& a );
   void Add( const int& i , const U& u );
@@ -64,20 +64,18 @@ public:
   // 存在しない場合はN以上の最小の2羃×2-1を返す（N以上であることで判別可能）。
   template <typename F , SFINAE_FOR_BIT_BS = nullptr> int BinarySearch( const F& f );
   // f( IntervalSum( i_start , i ) , i )がtrueとなるi_start以上のiが存在する場合に
-  // その最小値を2進法で探索。
-  // 存在しない場合はN以上の最小の2羃×2-1を返す（N以上であることで判別可能）。
+  // その最小値を2進法で探索。存在しない場合はNを返す。
   template <typename F , SFINAE_FOR_BIT_BS = nullptr> inline int BinarySearch( const int& i_start , const F& f );
 
   // InitialSegmentSum( i )がu以上となるiが存在する場合にその最小値を2進法で探索。
-  // 存在しない場合はN以上の最小の2羃×2-1を返す（N以上であることで判別可能）。
+  // 存在しない場合はNを返す。
   inline int BinarySearch( const U& u );
-  // IntervalSum( i_start , i )がu以上となるi_start以上のiが存在する場合にその最小値を2進法で探索。
-  // 存在しない場合はN以上の最小の2羃×2-1を返す（N以上であることで判別可能）。
+  // IntervalSum( i_start , i )がu以上となるi_start以上のiが存在する場合にその最小値を
+  // 2進法で探索。存在しない場合はNを返す。
   inline int BinarySearch( const int& i_start , const U& u );
 
 private:
-  inline void Initialise();
-
+  inline void Construct();
   
 };
 template <typename ABELIAN_GROUP , typename...Args> AbstractBIT( ABELIAN_GROUP M , const Args&... args ) -> AbstractBIT<inner_t<ABELIAN_GROUP>,ABELIAN_GROUP>;

@@ -44,7 +44,7 @@ public:
   inline AbstractHybridBIT( ABELIAN_GROUP M , const int& size = 0 );
   inline AbstractHybridBIT( ABELIAN_GROUP M , vector<U> a );
 
-  template <typename...Args> inline void Reset( Args&&... args );
+  template <typename...Args> inline void Initialise( Args&&... args );
   inline void Set( const int& i , const U& u );
   inline AbstractHybridBIT<U,ABELIAN_GROUP>& operator+=( const vector<U>& a );
   inline void Add( const int& i , const U& u );

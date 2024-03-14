@@ -18,7 +18,7 @@
 
 // 一点代入O(N^{1/2})
 // M.Product()による一点乗算O(1)（可換性を使う）
-// M.Product()による区間乗算O(N^{1/2})（可換性を使う）
+// M.Product()による区間乗算O(N^{1/2})（N加群構造を使う）
 template <typename U , typename N_MODULE>
 class IntervalMultiplySqrtDecomposition :
   public MonoidSqrtDecomposition<U,N_MODULE>
@@ -30,7 +30,7 @@ protected:
 public:
   template <typename...Args> inline IntervalMultiplySqrtDecomposition( N_MODULE M , Args&&... args );
 
-  template <typename...Args> inline void Reset( Args&&... args );
+  template <typename...Args> inline void Initialise( Args&&... args );
   inline void Set( const int& i , const U& u );
   inline void IntervalMultiply( const int& i_start , const int& i_final , const U& u );
 

@@ -45,7 +45,7 @@ public:
   inline AbstractSqrtDecomposition( ABELIAN_GROUP M , vector<U> a );
   inline AbstractSqrtDecomposition( ABELIAN_GROUP M , vector<U> a , const int& N_sqrt );
 
-  template <typename...Args> inline void Reset( Args&&... args );
+  template <typename...Args> inline void Initialise( Args&&... args );
   inline void Set( const int& i , const U& u );
   inline void Add( const int& i , const U& u );
 
@@ -62,7 +62,7 @@ public:
   inline int Search( const int& i_start , const U& u );
   
 private:
-  void Initialise();
+  void Construct();
   template <typename F> int Search_Body( const int& i_start , const F& f , U sum_temp );
   
 };

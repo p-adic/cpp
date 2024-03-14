@@ -3,7 +3,7 @@
 #pragma once
 
 // verify:
-// https://yukicoder.me/submissions/950030（矩形和）
+// https://yukicoder.me/submissions/959652（矩形和）
 
 // ２次元配列上の累積和。
 // 入力の範囲内で要件
@@ -25,9 +25,10 @@ private:
   vector<vector<U>> m_a;
 
 public:
-  AbstractTwoDimensionalCumulativeSum( ABELIAN_GROUP M , const vector<vector<U>>& a = vector<vector<U>>() );
+  AbstractTwoDimensionalCumulativeSum( ABELIAN_GROUP M , const int& size_X , const int& size_Y );
+  AbstractTwoDimensionalCumulativeSum( ABELIAN_GROUP M , const vector<vector<U>>& a = {} );
 
-  inline void Set( const vector<vector<U>>& a );
+  template <typename...Args> inline void Initialise( const Args&... args );
   
   // 条件
   // (1) -1 <= i_final_x < m_size_X
@@ -48,6 +49,8 @@ public:
   inline U RectangleSum( const int& i_start_x , const int& i_start_y , const int& i_final_x , const int& i_final_y );
 
 };
+template <typename ABELIAN_GROUP , typename...Args> AbstractTwoDimensionalCumulativeSum( ABELIAN_GROUP , const Args&... ) -> AbstractTwoDimensionalCumulativeSum<inner_t<ABELIAN_GROUP>,ABELIAN_GROUP>;
+
 
 template <typename U = ll>
 class TwoDimensionalCumulativeSum :
@@ -55,6 +58,7 @@ class TwoDimensionalCumulativeSum :
 {
 
 public:
-  inline TwoDimensionalCumulativeSum( const vector<vector<U>>& a = vector<vector<U>>() );
+  inline TwoDimensionalCumulativeSum( const int& size_X , const int& size_Y );
+  inline TwoDimensionalCumulativeSum( const vector<vector<U>>& a = {} );
   
 };

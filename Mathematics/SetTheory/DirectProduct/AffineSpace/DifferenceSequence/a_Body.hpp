@@ -12,7 +12,7 @@ template <typename T , typename FOREST , typename PREV , typename U , typename G
 template <typename U> inline DifferenceSequence<U>::DifferenceSequence( const int& size ) : DifferenceSequence( vector<U>( size ) ) {}
 template <typename U> inline DifferenceSequence<U>::DifferenceSequence( vector<U> a ) : AbstractDifferenceSequence<int,LinearGraph,int(const int&)noexcept,U,AdditiveGroup<U>>( LinearGraph( a.size() , true ) , PrevOf , AdditiveGroup<U>() , move( a ) ) {}
 
-template <typename T , typename FOREST , typename PREV , typename U , typename GROUP> inline void AbstractDifferenceSequence<T,FOREST,PREV,U,GROUP>::Set( vector<U> a ) { *this = AbstractDifferenceSequence<T,FOREST,PREV,U,GROUP>( move( m_G ) , move( m_Prev ) , move( m_M ) , move( a ) ); }
+template <typename T , typename FOREST , typename PREV , typename U , typename GROUP> inline void AbstractDifferenceSequence<T,FOREST,PREV,U,GROUP>::Initialise( vector<U> a ) { *this = AbstractDifferenceSequence<T,FOREST,PREV,U,GROUP>( move( m_G ) , move( m_Prev ) , move( m_M ) , move( a ) ); }
 template <typename T , typename FOREST , typename PREV , typename U , typename GROUP> inline void AbstractDifferenceSequence<T,FOREST,PREV,U,GROUP>::Set( const T& t , const U& u ) { Update(); m_a[m_G.Enumeration_inv(t)] = u; }
 template <typename T , typename FOREST , typename PREV , typename U , typename GROUP> inline const U& AbstractDifferenceSequence<T,FOREST,PREV,U,GROUP>::Get( const T& t ) { Update(); return m_a[m_G.Enumeration_inv(t)]; }
 template <typename T , typename FOREST , typename PREV , typename U , typename GROUP> inline U& AbstractDifferenceSequence<T,FOREST,PREV,U,GROUP>::Ref( const T& t ) { return m_a[m_G.Enumeration_inv(t)]; }

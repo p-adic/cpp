@@ -3,7 +3,8 @@
 #pragma once
 #include "a.hpp"
 
-template <typename U , typename MONOID> inline MonoidBIT<U,MONOID>::MonoidBIT( MONOID m_U , vector<U> a ) : m_size( a.size() ) , m_M( move( m_U ) ) , m_a( move( a ) ) , m_fenwick_0( m_size + 1 , m_M.One() ) , m_fenwick_1( m_fenwick_0 ) , m_power( 1 )
+template <typename U , typename MONOID> inline MonoidBIT<U,MONOID>::MonoidBIT( MONOID M , const int& size ) : MonoidBIT( M , vector<U>( size , M.One() ) ) {}
+template <typename U , typename MONOID> inline MonoidBIT<U,MONOID>::MonoidBIT( MONOID M , vector<U> a ) : m_M( move( M ) ) , m_size( a.size() ) , m_a( move( a ) ) , m_fenwick_0( m_size + 1 , m_M.One() ) , m_fenwick_1( m_fenwick_0 ) , m_power( 1 )
 {
 
   static_assert( is_same_v<U,inner_t<MONOID>> );
@@ -50,7 +51,7 @@ template <typename U , typename MONOID> inline MonoidBIT<U,MONOID>::MonoidBIT( M
 
 }
 
-template <typename U , typename MONOID> inline void MonoidBIT<U,MONOID>::Set( vector<U>&& a ) { *this = MonoidBIT<U,MONOID>( move( m_M ) , move( a ) ); }
+template <typename U , typename MONOID> template <typename...Args> inline void MonoidBIT<U,MONOID>::Initialise( Args&&... args ) { *this = MonoidBIT<U,MONOID>( move( m_M ) , forward<decay_t<Args>>( args )... ); }
 
 template <typename U , typename MONOID>
 void MonoidBIT<U,MONOID>::Set( const int& i , const U& u )
@@ -167,7 +168,7 @@ template <typename U , typename MONOID> template <typename F , SFINAE_FOR_BIT_BS
 
     int j_next = j | power;
 
-    if( j_next < m_size ){
+    if( j_next <= m_size ){
       
       sum_next = m_M.Product( sum_next , m_fenwick_0[j_next] );
 

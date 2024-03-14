@@ -8,7 +8,7 @@
 template <typename U , typename Z_MODULE> template <typename...Args> inline IntervalAddAbstractSqrtDecomposition<U,Z_MODULE>::IntervalAddAbstractSqrtDecomposition( Z_MODULE M , Args&&... args ) : AbstractSqrtDecomposition<U,Z_MODULE>( move( M ) , forward<Args>( args )... ) , m_lazy_addition( this->m_N_d , this->m_M.Zero() ) {}
 template <typename U> template <typename...Args> inline IntervalAddSqrtDecomposition<U>::IntervalAddSqrtDecomposition( Args&&... args ) : IntervalAddAbstractSqrtDecomposition<U,Module<int,U>>( Module<int,U>() , args... ) {}
 
-template <typename U , typename Z_MODULE> template <typename...Args> inline void IntervalAddAbstractSqrtDecomposition<U,Z_MODULE>::Reset( Args&&... args ) { *this = IntervalAddAbstractSqrtDecomposition<U,Z_MODULE>( move( this->m_M ) , forward<Args>( args )... ); }
+template <typename U , typename Z_MODULE> template <typename...Args> inline void IntervalAddAbstractSqrtDecomposition<U,Z_MODULE>::Initialise( Args&&... args ) { *this = IntervalAddAbstractSqrtDecomposition<U,Z_MODULE>( move( this->m_M ) , forward<Args>( args )... ); }
 
 template <typename U , typename Z_MODULE> inline void IntervalAddAbstractSqrtDecomposition<U,Z_MODULE>::Set( const int& i , const U& u ) { const int d = i / this->m_N_sqrt; this->m_b[d] = this->m_M.Sum( this->m_b[d] , this->m_M.Sum( u , this->m_M.Inverse( this->m_a[i] ) ) ); this->m_a[i] = this->m_M.Sum( u , this->m_M.Inverse( m_lazy_addition[d] ) ); }
 

@@ -3,6 +3,7 @@
 #pragma once
 #include "a.hpp"
 
+template <typename U , typename ABELIAN_GROUP> inline AbstractTwoDimensionalCumulativeSum<U,ABELIAN_GROUP>::AbstractTwoDimensionalCumulativeSum( ABELIAN_GROUP M , const int& size_X , const int& size_Y ) : AbstractTwoDimensionalCumulativeSum( M , vector( size_X , vector( size_Y , M.Zero() ) ) ) {}
 template <typename U , typename ABELIAN_GROUP>
 AbstractTwoDimensionalCumulativeSum<U,ABELIAN_GROUP>::AbstractTwoDimensionalCumulativeSum( ABELIAN_GROUP M , const vector<vector<U>>& a ) :
   m_M( move( M ) ) , m_size_X( a.size() ) , m_size_Y() , m_a( m_size_X + 1 )
@@ -37,9 +38,10 @@ AbstractTwoDimensionalCumulativeSum<U,ABELIAN_GROUP>::AbstractTwoDimensionalCumu
 
 }
 
+template <typename U> inline TwoDimensionalCumulativeSum<U>::TwoDimensionalCumulativeSum( const int& size_X , const int& size_Y ) : TwoDimensionalCumulativeSum( vector( size_X , vector<U>( size_Y ) ) ) {}
 template <typename U> inline TwoDimensionalCumulativeSum<U>::TwoDimensionalCumulativeSum( const vector<vector<U>>& a ) : AbstractTwoDimensionalCumulativeSum<U,AdditiveGroup<U>>( AdditiveGroup<U>() , a ) {}
 
-template <typename U , typename ABELIAN_GROUP> inline void AbstractTwoDimensionalCumulativeSum<U,ABELIAN_GROUP>::Set( const vector<vector<U>>& a ) { *this = AbstractTwoDimensionalCumulativeSum<U,ABELIAN_GROUP>( move( m_M ) , a ); }
+template <typename U , typename ABELIAN_GROUP> template <typename...Args> inline void AbstractTwoDimensionalCumulativeSum<U,ABELIAN_GROUP>::Initialise( const Args&... args ) { *this = AbstractTwoDimensionalCumulativeSum<U,ABELIAN_GROUP>( move( m_M ) , args... ); }
 
 template <typename U , typename ABELIAN_GROUP> inline const U& AbstractTwoDimensionalCumulativeSum<U,ABELIAN_GROUP>::InitialRectangleSum( const int& i_x , const int& i_y ) const { assert( -1 <= i_x && i_x < m_size_X && -1 <= i_y && i_y < m_size_Y ); return m_a[i_x+1][i_y+1]; }
 

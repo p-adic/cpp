@@ -1,16 +1,16 @@
-#区間加算A
+#区間加算P
 #区間和S
-def B(i,t,F):
+def B(i,u,F):
 	i+=1
-	while i<=N:F[i],i=F[i]+t,i+(i&-i)
+	while i<=N:F[i],i=F[i]+u,i+(i&-i)
 def M(r,F):
 	a=0
 	i=min(r+1,N)
 	while i:a,i=a+F[i],i-(i&-i)
 	return a
 F=[[0]*(N+1)for i in R(2)]
-def A(l,r,t):
-	B(l,-(l-1)*t,F[0]),B(r+1,r*t,F[0]),B(l,t,F[1]),B(r+1,-t,F[1])
+def P(l,r,u):
+	B(l,-(l-1)*u,F[0]),B(r+1,r*u,F[0]),B(l,u,F[1]),B(r+1,-u,F[1])
 def L(r):
 	return M(r,F[0])+r*M(r,F[1])
 def S(l,r): #l,rは始端,終端

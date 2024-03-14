@@ -43,7 +43,7 @@ public:
   inline IdempotentMonoidBIT( COMM_IDEM_MONOID M , const int& size = 0 );
   inline IdempotentMonoidBIT( COMM_IDEM_MONOID M , vector<U> a );
 
-  template <typename...Args> inline void Reset( Args&&... args );
+  template <typename...Args> inline void Initialise( Args&&... args );
   void Set( const int& i , const U& u );
 
   inline IdempotentMonoidBIT<U,COMM_IDEM_MONOID>& operator+=( vector<U>&& a );
@@ -58,15 +58,14 @@ public:
 
   // Fは積順序に関して単調な写像f:U \times int -> {0,1}に相当する型。
   // f( IntervalProduct( 0 , i ) , i )がtrueとなるiが存在する場合にその最小値を
-  // 2進法で探索。存在しない場合はN以上の最小の2羃×2-1を返す（N以上であることで判別可能）。
+  // 2進法で探索。存在しない場合はNを返す。
   template <typename F , SFINAE_FOR_BIT_BS = nullptr> int BinarySearch( const F& f );
   // IntervalProduct( 0 , i )がuを吸収する（max演算ならu以上、min演算ならu以下となる）
-  // iが存在する場合にその最小値を2進法で探索。
-  // 存在しない場合はN以上の最小の2羃×2-1を返す（N以上であることで判別可能）。
+  // iが存在する場合にその最小値を2進法で探索。存在しない場合はNを返す。
   int BinarySearch( const U& u );
 
 private:
-  inline void Initialise();
+  inline void Construct();
   
 };
 template <typename COMM_IDEM_MONOID> IdempotentMonoidBIT( COMM_IDEM_MONOID M ) -> IdempotentMonoidBIT<inner_t<COMM_IDEM_MONOID>,COMM_IDEM_MONOID>;

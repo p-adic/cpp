@@ -5,12 +5,12 @@
 
 #include "../../../../../Algebra/Monoid/Semilattice/a_Bod.hpp"
 
-template <typename U , typename COMM_IDEM_MONOID> inline IdempotentMonoidBIT<U,COMM_IDEM_MONOID>::IdempotentMonoidBIT( COMM_IDEM_MONOID M , const int& size ) : m_M( move( M ) ) , m_size( size ) , m_a( size , m_M.One() ) , m_fenwick_0( m_size + 1 , m_M.One() ) , m_fenwick_1( m_size + 1 , m_M.One() ) , m_power( 1 ) { Initialise(); }
+template <typename U , typename COMM_IDEM_MONOID> inline IdempotentMonoidBIT<U,COMM_IDEM_MONOID>::IdempotentMonoidBIT( COMM_IDEM_MONOID M , const int& size ) : m_M( move( M ) ) , m_size( size ) , m_a( size , m_M.One() ) , m_fenwick_0( m_size + 1 , m_M.One() ) , m_fenwick_1( m_size + 1 , m_M.One() ) , m_power( 1 ) { Construct(); }
 
 template <typename U , typename COMM_IDEM_MONOID> inline IdempotentMonoidBIT<U,COMM_IDEM_MONOID>::IdempotentMonoidBIT( COMM_IDEM_MONOID M , vector<U> a ) : m_M( move( M ) ) , m_size( a.size() ) , m_a( move( a ) ) , m_fenwick_0( m_size + 1 ) , m_fenwick_1( m_size + 1 ) , m_power( 1 )
 {
 
-  Initialise();
+  Construct();
   
   for( int i = 0 ; i < m_size ; i++ ){
 
@@ -51,7 +51,7 @@ template <typename U , typename COMM_IDEM_MONOID> inline IdempotentMonoidBIT<U,C
 template <typename U> template <typename...Args> inline IntervalMaxBIT<U>::IntervalMaxBIT( const U& zero_U , Args&&... args ) : IdempotentMonoidBIT<U,MaxSemilattice<U>>( MaxSemilattice<U>( zero_U ) , forward<Args>( args )... ) {}
 template <typename U> template <typename...Args> inline IntervalMinBIT<U>::IntervalMinBIT( const U& infty_U , Args&&... args ) : IdempotentMonoidBIT<U,MinSemilattice<U>>( MinSemilattice<U>( infty_U ) , forward<Args>( args )... ) {}
 
-template <typename U , typename COMM_IDEM_MONOID> inline void IdempotentMonoidBIT<U,COMM_IDEM_MONOID>::Initialise()
+template <typename U , typename COMM_IDEM_MONOID> inline void IdempotentMonoidBIT<U,COMM_IDEM_MONOID>::Construct()
 {
 
   static_assert( is_same_v<U,inner_t<COMM_IDEM_MONOID>> );
@@ -64,7 +64,7 @@ template <typename U , typename COMM_IDEM_MONOID> inline void IdempotentMonoidBI
 
 }
 
-template <typename U , typename COMM_IDEM_MONOID> template <typename...Args> inline void IdempotentMonoidBIT<U,COMM_IDEM_MONOID>::Reset( Args&&... args ) { *this = IdempotentMonoidBIT<U,COMM_IDEM_MONOID>( move( m_M ) , forward<Args>( args )... ); }
+template <typename U , typename COMM_IDEM_MONOID> template <typename...Args> inline void IdempotentMonoidBIT<U,COMM_IDEM_MONOID>::Initialise( Args&&... args ) { *this = IdempotentMonoidBIT<U,COMM_IDEM_MONOID>( move( m_M ) , forward<Args>( args )... ); }
 
 template <typename U , typename COMM_IDEM_MONOID>
 void IdempotentMonoidBIT<U,COMM_IDEM_MONOID>::Set( const int& i , const U& u )
@@ -288,7 +288,7 @@ template <typename U , typename COMM_IDEM_MONOID> template <typename F , SFINAE_
 
     int j_next = j | power;
 
-    if( j_next < m_size ){
+    if( j_next <= m_size ){
       
       product_next = m_M.Product( product_next , m_fenwick_0[j_next] );
 

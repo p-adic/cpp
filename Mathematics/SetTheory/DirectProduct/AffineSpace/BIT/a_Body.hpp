@@ -5,11 +5,11 @@
 
 #include "../../../../Algebra/Monoid/Group/a_Body.hpp"
 
-template <typename U , typename ABELIAN_GROUP> inline AbstractBIT<U,ABELIAN_GROUP>::AbstractBIT( ABELIAN_GROUP M , const int& size ) : m_M( move( M ) ) , m_size( size ) , m_fenwick( m_size + 1 , m_M.Zero() ) , m_power( 1 ) { Initialise(); }
+template <typename U , typename ABELIAN_GROUP> inline AbstractBIT<U,ABELIAN_GROUP>::AbstractBIT( ABELIAN_GROUP M , const int& size ) : m_M( move( M ) ) , m_size( size ) , m_fenwick( m_size + 1 , m_M.Zero() ) , m_power( 1 ) { Construct(); }
 template <typename U , typename ABELIAN_GROUP> inline AbstractBIT<U,ABELIAN_GROUP>::AbstractBIT( ABELIAN_GROUP M , const vector<U>& a ) : m_M( move( M ) ) , m_size( a.size() ) , m_fenwick( m_size + 1 , m_M.Zero() ) , m_power( 1 )
 {
 
-  Initialise();
+  Construct();
 
   for( int j = 1 ; j <= m_size ; j++ ){
 
@@ -29,7 +29,7 @@ template <typename U , typename ABELIAN_GROUP> inline AbstractBIT<U,ABELIAN_GROU
 
 }
 
-template <typename U , typename ABELIAN_GROUP> inline void AbstractBIT<U,ABELIAN_GROUP>::Initialise()
+template <typename U , typename ABELIAN_GROUP> inline void AbstractBIT<U,ABELIAN_GROUP>::Construct()
 {
 
   static_assert( is_same_v<U,inner_t<ABELIAN_GROUP>> );
@@ -44,7 +44,7 @@ template <typename U , typename ABELIAN_GROUP> inline void AbstractBIT<U,ABELIAN
   
 template <typename U> template <typename...Args> inline BIT<U>::BIT( const Args&... args ) : AbstractBIT<U,AdditiveGroup<U>>( AdditiveGroup<U>() , args... ) { static_assert( !is_same_v<U,int> ); }
 
-template <typename U , typename ABELIAN_GROUP> template <typename...Args> inline void AbstractBIT<U,ABELIAN_GROUP>::Reset( const Args&... args ) { *this = AbstractBIT<U,ABELIAN_GROUP>( move( m_M ) , args... ); }
+template <typename U , typename ABELIAN_GROUP> template <typename...Args> inline void AbstractBIT<U,ABELIAN_GROUP>::Initialise( const Args&... args ) { *this = AbstractBIT<U,ABELIAN_GROUP>( move( m_M ) , args... ); }
 template <typename U , typename ABELIAN_GROUP> inline void AbstractBIT<U,ABELIAN_GROUP>::Set( const int& i , const U& u ) { Add( i , m_M.Sum( m_M.Inverse( IntervalSum( i , i ) ) , u ) ); }
 template <typename U , typename ABELIAN_GROUP> inline AbstractBIT<U,ABELIAN_GROUP>& AbstractBIT<U,ABELIAN_GROUP>::operator+=( const vector<U>& a ) { AbstractBIT<U,ABELIAN_GROUP> a_copy{ m_M , a }; assert( m_size == a_copy.m_size ); for( int j = 1 ; j <= m_size ; j++ ){ m_fenwick[j] = m_M.Sum( m_fenwick[j] , a.m_fenwick[j] ); } return *this; }
 
@@ -106,7 +106,7 @@ int AbstractBIT<U,ABELIAN_GROUP>::BinarySearch( const F& f )
 
     int j_next = j | power;
 
-    if( j_next < m_size ){
+    if( j_next <= m_size ){
       
       sum_next = m_M.Sum( sum_next , m_fenwick[j_next] );
 

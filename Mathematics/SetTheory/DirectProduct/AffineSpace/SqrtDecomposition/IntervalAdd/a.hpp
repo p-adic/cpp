@@ -30,7 +30,7 @@ protected:
 public:
   template <typename...Args> inline IntervalAddAbstractSqrtDecomposition( Z_MODULE M , Args&&... args );
 
-  template <typename...Args> inline void Reset( Args&&... args );
+  template <typename...Args> inline void Initialise( Args&&... args );
   inline void Set( const int& i , const U& u );
   inline void IntervalAdd( const int& i_start , const int& i_final , const U& u );
 

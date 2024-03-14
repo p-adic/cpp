@@ -33,7 +33,7 @@ template <typename U , typename COMM_MONOID> inline MonoidSqrtDecomposition<U,CO
 
 }
 
-template <typename U , typename COMM_MONOID> template <typename...Args> inline void MonoidSqrtDecomposition<U,COMM_MONOID>::Reset( Args&&... args ) { *this = MonoidSqrtDecomposition<U,COMM_MONOID>( move( m_M ) , forward<Args>( args )... ); }
+template <typename U , typename COMM_MONOID> template <typename...Args> inline void MonoidSqrtDecomposition<U,COMM_MONOID>::Initialise( Args&&... args ) { *this = MonoidSqrtDecomposition<U,COMM_MONOID>( move( m_M ) , forward<Args>( args )... ); }
 
 template <typename U , typename COMM_MONOID> inline void MonoidSqrtDecomposition<U,COMM_MONOID>::Set( const int& i , const U& u )
 {
