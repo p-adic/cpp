@@ -88,11 +88,9 @@ IN VO Solve()
   // // SET_ASSERT( H , 1 , bound_H ); SET_ASSERT( W , 1 , bound_W );
   // cin >> H >> W;
   // H_minus = H - 1; W_minus = W - 1; HW = H * W;
-  // wall_str.resize( H );
-  // // wall.resize( H , vector<bool>( W ));
   // FOR( i , 0 , H ){
-  //   cin >> wall_str[i];
-  //   // SetWallOnGrid( i , wall[i] );
+  //   SetWallStringOnGrid( i , wall_str );
+  //   // SetWallOnGrid( i , wall );
   // }
   // // {i,j}へデコード: EnumHW( v )
   // // {i,j}をコード: EnumHW_inv( { i , j } );
@@ -313,8 +311,8 @@ using namespace std;
 #define reSZ resize
 
 // 型のエイリアス
-#define decldecay_t( VAR ) decay_t<decltype( VAR )>
-TE <TY F , TY...Args> US ret_t = decltype( declval<F>()( declval<Args>()... ) );
+#define decldecay_t(VAR)decay_t<decltype(VAR)>
+TE <TY F,TY...Args> US ret_t = decltype(declval<F>()(declval<Args>()...));
 TE <TY T> US inner_t = TY T::type;
 US uint = unsigned int;
 US ll = long long;
@@ -327,20 +325,25 @@ TE <TY INT> US T4 = tuple<INT,INT,INT,INT>;
 US path = pair<int,ll>;
 
 // 入出力用
-TE <CL Traits> IN basic_istream<char,Traits>& VariadicCin( basic_istream<char,Traits>& is ) { RE is; }
-TE <CL Traits , TY Arg , TY... ARGS> IN basic_istream<char,Traits>& VariadicCin( basic_istream<char,Traits>& is , Arg& arg , ARGS&... args ) { RE VariadicCin( is >> arg , args... ); }
-TE <CL Traits> IN basic_istream<char,Traits>& VariadicGetline( basic_istream<char,Traits>& is , CO char& separator ) { RE is; }
-TE <CL Traits , TY Arg , TY... ARGS> IN basic_istream<char,Traits>& VariadicGetline( basic_istream<char,Traits>& is , CO char& separator , Arg& arg , ARGS&... args ) { RE VariadicGetline( getline( is , arg , separator ) , separator , args... ); }
-TE <CL Traits , TY Arg> IN basic_ostream<char,Traits>& operator<<( basic_ostream<char,Traits>& os , CO VE<Arg>& arg ) { auto BE = arg.BE() , EN = arg.EN(); auto itr = BE; WH( itr != EN ){ ( itr == BE ? os : os << " " ) << *itr; itr++; } RE os; }
-TE <CL Traits , TY Arg1 , TY Arg2> IN basic_ostream<char,Traits>& operator<<( basic_ostream<char,Traits>& os , CO pair<Arg1,Arg2>& arg ) { RE os << arg.first << " " << arg.second; }
-TE <CL Traits , TY Arg> IN basic_ostream<char,Traits>& VariadicCout( basic_ostream<char,Traits>& os , CO Arg& arg ) { RE os << arg; }
-TE <CL Traits , TY Arg1 , TY Arg2 , TY... ARGS> IN basic_ostream<char,Traits>& VariadicCout( basic_ostream<char,Traits>& os , CO Arg1& arg1 , CO Arg2& arg2 , CO ARGS&... args ) { RE VariadicCout( os << arg1 << " " , arg2 , args... ); }
+#define DF_OF_COUT_FOR_VE(V)TE <CL Traits,TY Arg> IN basic_ostream<char,Traits>& OP<<(basic_ostream<char,Traits>& os,CO V<Arg>& arg){auto BE = arg.BE(),EN = arg.EN();auto IT = BE;WH(IT != EN){(IT == BE?os:os << " ")<< *IT;IT++;}RE os;}
+TE <CL Traits> IN basic_istream<char,Traits>& VariadicCin(basic_istream<char,Traits>& is){RE is;}
+TE <CL Traits,TY Arg,TY... ARGS> IN basic_istream<char,Traits>& VariadicCin(basic_istream<char,Traits>& is,Arg& arg,ARGS&... args){RE VariadicCin(is >> arg,args...);}
+TE <CL Traits> IN basic_istream<char,Traits>& VariadicGetline(basic_istream<char,Traits>& is,CO char& separator){RE is;}
+TE <CL Traits,TY Arg,TY... ARGS> IN basic_istream<char,Traits>& VariadicGetline(basic_istream<char,Traits>& is,CO char& separator,Arg& arg,ARGS&... args){RE VariadicGetline(getline(is,arg,separator),separator,args...);}
+DF_OF_COUT_FOR_VE(VE);
+DF_OF_COUT_FOR_VE(LI);
+DF_OF_COUT_FOR_VE(set);
+DF_OF_COUT_FOR_VE(unordered_set);
+TE <CL Traits,TY Arg1,TY Arg2> IN basic_ostream<char,Traits>& OP<<(basic_ostream<char,Traits>& os,CO pair<Arg1,Arg2>& arg){RE os << arg.first << " " << arg.second;}
+TE <CL Traits,TY Arg> IN basic_ostream<char,Traits>& VariadicCout(basic_ostream<char,Traits>& os,CO Arg& arg){RE os << arg;}
+TE <CL Traits,TY Arg1,TY Arg2,TY... ARGS> IN basic_ostream<char,Traits>& VariadicCout(basic_ostream<char,Traits>& os,CO Arg1& arg1,CO Arg2& arg2,CO ARGS&... args){RE VariadicCout(os << arg1 << " ",arg2,args...);}
+
 
 // 算術用
-TE <TY T> CE T PositiveBaseResidue( CO T& a , CO T& p ){ RE a >= 0 ? a % p : p - 1 - ( ( - ( a + 1 ) ) % p ); }
-TE <TY T> CE T Residue( CO T& a , CO T& p ){ RE PositiveBaseResidue( a , p < 0 ? -p : p ); }
-TE <TY T> CE T PositiveBaseQuotient( CO T& a , CO T& p ){ RE ( a - PositiveBaseResidue( a , p ) ) / p; }
-TE <TY T> CE T Quotient( CO T& a , CO T& p ){ RE p < 0 ? PositiveBaseQuotient( -a , -p ) : PositiveBaseQuotient( a , p ); }
+TE <TY T> CE T PositiveBaseRS(CO T& a,CO T& p){RE a >= 0?a % p:p - 1 -((-(a + 1))% p);}
+TE <TY T> CE T RS(CO T& a,CO T& p){RE PositiveBaseRS(a,p < 0?-p:p);}
+TE <TY T> CE T PositiveBaseQuotient(CO T& a,CO T& p){RE(a - PositiveBaseRS(a,p))/ p;}
+TE <TY T> CE T Quotient(CO T& a,CO T& p){RE p < 0?PositiveBaseQuotient(-a,-p):PositiveBaseQuotient(a,p);}
 
 #define POWER( ANSWER , ARGUMENT , EXPONENT )				\
   ST_AS( ! is_same<decldecay_t( ARGUMENT ),int>::value && ! is_same<decldecay_t( ARGUMENT ),uint>::value ); \
@@ -439,13 +442,13 @@ TE <TY T> CE T Quotient( CO T& a , CO T& p ){ RE p < 0 ? PositiveBaseQuotient( -
 // 単調減少の時にEXPRESSION <= CO_TARGETの最小解を格納。
 #define BS4( ANSWER , MINIMUM , MAXIMUM , EXPRESSION , CO_TARGET ) BS( ANSWER , MINIMUM , MAXIMUM , EXPRESSION , <= , CO_TARGET , <= , ANSWER , ANSWER + 1 , ( L_BS + U_BS ) / 2 )
 // t以下の値が存在すればその最大値のiterator、存在しなければend()を返す。
-TE <TY T> IN TY set<T>::iterator MaximumLeq( set<T>& S , CO T& t ) { CO auto EN = S.EN(); if( S.empty() ){ RE EN; } auto itr = S.upper_bound( t ); RE itr == EN ? S.find( *( S.rBE() ) ) : itr == S.BE() ? EN : --itr; }
+TE <TY T> IN TY set<T>::iterator MaximumLeq(set<T>& S,CO T& t){CO auto EN = S.EN();if(S.empty()){RE EN;}auto IT = S.upper_bound(t);RE IT == EN?S.find(*(S.rBE())):IT == S.BE()?EN:--IT;}
 // t未満の値が存在すればその最大値のiterator、存在しなければend()を返す。
-TE <TY T> IN TY set<T>::iterator MaximumLt( set<T>& S , CO T& t ) { CO auto EN = S.EN(); if( S.empty() ){ RE EN; } auto itr = S.lower_bound( t ); RE itr == EN ? S.find( *( S.rBE() ) ) : itr == S.BE() ? EN : --itr; }
+TE <TY T> IN TY set<T>::iterator MaximumLt(set<T>& S,CO T& t){CO auto EN = S.EN();if(S.empty()){RE EN;}auto IT = S.lower_bound(t);RE IT == EN?S.find(*(S.rBE())):IT == S.BE()?EN:--IT;}
 // t以上の値が存在すればその最小値のiterator、存在しなければend()を返す。
-TE <TY T> IN TY set<T>::iterator MinimumGeq( set<T>& S , CO T& t ) { RE S.lower_bound( t ); }
+TE <TY T> IN TY set<T>::iterator MinimumGeq(set<T>& S,CO T& t){RE S.lower_bound(t);}
 // tより大きい値が存在すればその最小値のiterator、存在しなければend()を返す。
-TE <TY T> IN TY set<T>::iterator MinimumGt( set<T>& S , CO T& t ) { RE S.upper_bound( t ); }
+TE <TY T> IN TY set<T>::iterator MinimumGt(set<T>& S,CO T& t){RE S.upper_bound(t);}
 
 // 尺取り法用
 // VAR_TPAがINITからUPDATEを繰り返しCONTINUE_CONDITIONを満たす限り、ON_CONDITIONを判定して
@@ -477,37 +480,34 @@ TE <TY T> IN TY set<T>::iterator MinimumGt( set<T>& S , CO T& t ) { RE S.upper_b
   }									\
 
 // データ構造用
-TE <TY T , TE <TY...> TY V> IN V<T> OP+( CO V<T>& a0 , CO V<T>& a1 ) { if( a0.empty() ){ RE a1; } if( a1.empty() ){ RE a0; } AS( a0.SZ() == a1.SZ() ); V<T> answer{}; for( auto itr0 = a0.BE() , itr1 = a1.BE() , EN0 = a0.EN(); itr0 != EN0 ; itr0++ , itr1++ ){ answer.push_back( *itr0 + *itr1 ); } RE answer; }
-TE <TY T , TY U> IN pair<T,U> OP+( CO pair<T,U>& t0 , CO pair<T,U>& t1 ) { RE { t0.first + t1.first , t0.second + t1.second }; }
-TE <TY T , TY U , TY V> IN tuple<T,U,V> OP+( CO tuple<T,U,V>& t0 , CO tuple<T,U,V>& t1 ) { RE { get<0>( t0 ) + get<0>( t1 ) , get<1>( t0 ) + get<1>( t1 ) , get<2>( t0 ) + get<2>( t1 ) }; }
-TE <TY T , TY U , TY V , TY W> IN tuple<T,U,V,W> OP+( CO tuple<T,U,V,W>& t0 , CO tuple<T,U,V,W>& t1 ) { RE { get<0>( t0 ) + get<0>( t1 ) , get<1>( t0 ) + get<1>( t1 ) , get<2>( t0 ) + get<2>( t1 ) , get<3>( t0 ) + get<3>( t1 ) }; }
-TE <TY T> IN T Addition( CO T& t0 , CO T& t1 ) { RE t0 + t1; }
-TE <TY T> IN T Xor( CO T& t0 , CO T& t1 ){ RE t0 ^ t1; }
-TE <TY T> IN T Multiplication( CO T& t0 , CO T& t1 ) { RE t0 * t1; }
-TE <TY T> IN CO T& Zero() { ST CO T z{}; RE z; }
-TE <TY T> IN CO T& One() { ST CO T o = 1; RE o; }\
-TE <TY T> IN T AdditionInv( CO T& t ) { RE -t; }
-TE <TY T> IN T Id( CO T& v ) { RE v; }
-TE <TY T> IN T Min( CO T& a , CO T& b ){ RE a < b ? a : b; }
-TE <TY T> IN T Max( CO T& a , CO T& b ){ RE a < b ? b : a; }
-TE <TY T , TE <TY...> TY V> IN auto Get( CO V<T>& a ) { return [&]( CRI i = 0 ){ RE a[i]; }; }
+TE <TY T,TE <TY...> TY V> IN auto OP+(CO V<T>& a0,CO V<T>& a1)-> decldecay_t((declval<V<T>>().push_back(declval<T>()),a0)){if(a0.empty()){RE a1;}if(a1.empty()){RE a0;}AS(a0.SZ()== a1.SZ());V<T> AN{};for(auto IT0 = a0.BE(),IT1 = a1.BE(),EN0 = a0.EN();IT0 != EN0;IT0++,IT1++){AN.push_back(*IT0 + *IT1);}RE AN;}
+TE <TY T,TY U> IN pair<T,U> OP+(CO pair<T,U>& t0,CO pair<T,U>& t1){RE{t0.first + t1.first,t0.second + t1.second};}
+TE <TY T,TY U,TY V> IN tuple<T,U,V> OP+(CO tuple<T,U,V>& t0,CO tuple<T,U,V>& t1){RE{get<0>(t0)+ get<0>(t1),get<1>(t0)+ get<1>(t1),get<2>(t0)+ get<2>(t1)};}
+TE <TY T,TY U,TY V,TY W> IN tuple<T,U,V,W> OP+(CO tuple<T,U,V,W>& t0,CO tuple<T,U,V,W>& t1){RE{get<0>(t0)+ get<0>(t1),get<1>(t0)+ get<1>(t1),get<2>(t0)+ get<2>(t1),get<3>(t0)+ get<3>(t1)};}
+TE <TY T> IN T Addition(CO T& t0,CO T& t1){RE t0 + t1;}
+TE <TY T> IN T Xor(CO T& t0,CO T& t1){RE t0 ^ t1;}
+TE <TY T> IN T MU(CO T& t0,CO T& t1){RE t0 * t1;}
+TE <TY T> IN CO T& Zero(){ST CO T z{};RE z;}
+TE <TY T> IN CO T& One(){ST CO T o = 1;RE o;}TE <TY T> IN T AdditionInv(CO T& t){RE -t;}
+TE <TY T> IN T Id(CO T& v){RE v;}
+TE <TY T> IN T Min(CO T& a,CO T& b){RE a < b?a:b;}
+TE <TY T> IN T Max(CO T& a,CO T& b){RE a < b?b:a;}
+TE <TY T,TE <TY...> TY V> IN auto Get(CO V<T>& a){RE[&](CRI i = 0){RE a[i];};}
 
 // グリッド問題用
-int H , W , H_minus , W_minus , HW;
-VE<string> wall_str;VE<VE<bool> > wall;
+int H,W,H_minus,W_minus,HW;
+VE<string> wall_str;VE<VE<bool> > non_wall;
 char walkable = '.',unwalkable = '#';
-IN T2<int> EnumHW( CRI v ) { RE { v / W , v % W }; }
-IN int EnumHW_inv( CO T2<int>& ij ) { auto& [i,j] = ij; RE i * W + j; }
-CO string direction[4] = {"U","R","D","L"};
-// (i,j)->(k,h)の方向番号を取得
-IN int DirectionNumberOnGrid( CRI i , CRI j , CRI k , CRI h ){RE i<k?2:i>k?0:j<h?1:j>h?3:(AS(false),-1);}
-// v->wの方向番号を取得
-IN int DirectionNumberOnGrid( CRI v , CRI w ){auto [i,j]=EnumHW(v);auto [k,h]=EnumHW(w);RE DirectionNumberOnGrid(i,j,k,h);}
-// 方向番号の反転U<->D、R<->L
-IN int ReverseDirectionNumberOnGrid( CRI n ){AS(0<=n&&n<4);RE(n+2)%4;}
+IN T2<int> EnumHW(CRI v){RE{v / W,v % W};}
+IN int EnumHW_inv(CO T2<int>& ij){auto&[i,j]= ij;RE i * W + j;}
+CO string direction[4]={"U","R","D","L"};
+IN int DirectionNumberOnGrid(CRI i,CRI j,CRI k,CRI h){RE i<k?2:i>k?0:j<h?1:j>h?3:(AS(false),-1);}
+IN int DirectionNumberOnGrid(CRI v,CRI w){auto[i,j]=EnumHW(v);auto[k,h]=EnumHW(w);RE DirectionNumberOnGrid(i,j,k,h);}
+IN int ReverseDirectionNumberOnGrid(CRI n){AS(0<=n&&n<4);RE(n+2)%4;}
 IN VE<int> EdgeOnGrid(CRI v){VE<int>AN{};auto[i,j]=EnumHW(v);if(i>0&&wall_str[i-1][j]==walkable){AN.push_back(EnumHW_inv({i-1,j}));}if(i+1<H&&wall_str[i+1][j]==walkable){AN.push_back(EnumHW_inv({i+1,j}));}if(j>0&&wall_str[i][j-1]==walkable){AN.push_back(EnumHW_inv({i,j-1}));}if(j+1<W&&wall_str[i][j+1]==walkable){AN.push_back(EnumHW_inv({i,j+1}));}RE AN;}
 IN VE<path> WeightedEdgeOnGrid(CRI v){VE<path>AN{};auto[i,j]=EnumHW(v);if(i>0&&wall_str[i-1][j]==walkable){AN.push_back({EnumHW_inv({i-1,j}),1});}if(i+1<H&&wall_str[i+1][j]==walkable){AN.push_back({EnumHW_inv({i+1,j}),1});}if(j>0&&wall_str[i][j-1]==walkable){AN.push_back({EnumHW_inv({i,j-1}),1});}if(j+1<W&&wall_str[i][j+1]==walkable){AN.push_back({EnumHW_inv({i,j+1}),1});}RE AN;}
-IN VO SetWallOnGrid(CRI i,VE<bool>&wall_i){auto&wall_str_i=wall_str[i];FOR(j,0,W){wall_i[j]=wall_str_i[j]==walkable?false:(AS(wall_str_i[j]==unwalkable),true);}}
+IN VO SetWallStringOnGrid(CRI i,VE<string>& S){if(S.empty()){S.reSZ(H);}cin>>S[i];AS(int(S[i].SZ())==W);}
+IN VO SetWallOnGrid(CRI i,VE<VE<bool>>& b){if(b.empty()){b.reSZ(H,VE<bool>(W));}auto&S_i=wall_str[i];auto&b_i=b[i];FOR(j,0,W){b_i[j]=S_i[j]==walkable?false:(AS(S_i[j]==unwalkable),true);}}
 
 // デバッグ用
 #ifdef DEBUG

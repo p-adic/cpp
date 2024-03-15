@@ -89,11 +89,9 @@ inline void Solve()
   // // SET_ASSERT( H , 1 , bound_H ); SET_ASSERT( W , 1 , bound_W );
   // cin >> H >> W;
   // H_minus = H - 1; W_minus = W - 1; HW = H * W;
-  // wall_str.resize( H );
-  // // wall.resize( H , vector<bool>( W ));
   // FOR( i , 0 , H ){
-  //   cin >> wall_str[i];
-  //   // SetWallOnGrid( i , wall[i] );
+  //   SetWallStringOnGrid( i , wall_str );
+  //   // SetWallOnGrid( i , wall );
   // }
   // // {i,j}へデコード: EnumHW( v )
   // // {i,j}をコード: EnumHW_inv( { i , j } );
@@ -292,11 +290,15 @@ template <typename INT> using T4 = tuple<INT,INT,INT,INT>;
 using path = pair<int,ll>;
 
 // 入出力用
+#define DEFINITION_OF_COUT_FOR_VECTOR( V ) template <class Traits , typename Arg> inline basic_ostream<char,Traits>& operator<<( basic_ostream<char,Traits>& os , const V<Arg>& arg ) { auto begin = arg.begin() , end = arg.end(); auto itr = begin; while( itr != end ){ ( itr == begin ? os : os << " " ) << *itr; itr++; } return os; }
 template <class Traits> inline basic_istream<char,Traits>& VariadicCin( basic_istream<char,Traits>& is ) { return is; }
 template <class Traits , typename Arg , typename... ARGS> inline basic_istream<char,Traits>& VariadicCin( basic_istream<char,Traits>& is , Arg& arg , ARGS&... args ) { return VariadicCin( is >> arg , args... ); }
 template <class Traits> inline basic_istream<char,Traits>& VariadicGetline( basic_istream<char,Traits>& is , const char& separator ) { return is; }
 template <class Traits , typename Arg , typename... ARGS> inline basic_istream<char,Traits>& VariadicGetline( basic_istream<char,Traits>& is , const char& separator , Arg& arg , ARGS&... args ) { return VariadicGetline( getline( is , arg , separator ) , separator , args... ); }
-template <class Traits , typename Arg> inline basic_ostream<char,Traits>& operator<<( basic_ostream<char,Traits>& os , const vector<Arg>& arg ) { auto begin = arg.begin() , end = arg.end(); auto itr = begin; while( itr != end ){ ( itr == begin ? os : os << " " ) << *itr; itr++; } return os; }
+DEFINITION_OF_COUT_FOR_VECTOR( vector );
+DEFINITION_OF_COUT_FOR_VECTOR( list );
+DEFINITION_OF_COUT_FOR_VECTOR( set );
+DEFINITION_OF_COUT_FOR_VECTOR( unordered_set );
 template <class Traits , typename Arg1 , typename Arg2> inline basic_ostream<char,Traits>& operator<<( basic_ostream<char,Traits>& os , const pair<Arg1,Arg2>& arg ) { return os << arg.first << " " << arg.second; }
 template <class Traits , typename Arg> inline basic_ostream<char,Traits>& VariadicCout( basic_ostream<char,Traits>& os , const Arg& arg ) { return os << arg; }
 template <class Traits , typename Arg1 , typename Arg2 , typename... ARGS> inline basic_ostream<char,Traits>& VariadicCout( basic_ostream<char,Traits>& os , const Arg1& arg1 , const Arg2& arg2 , const ARGS&... args ) { return VariadicCout( os << arg1 << " " , arg2 , args... ); }
@@ -442,7 +444,7 @@ template <typename T> inline typename set<T>::iterator MinimumGt( set<T>& S , co
   }									\
 
 // データ構造用
-template <typename T , template <typename...> typename V> inline V<T> operator+( const V<T>& a0 , const V<T>& a1 ) { if( a0.empty() ){ return a1; } if( a1.empty() ){ return a0; } assert( a0.size() == a1.size() ); V<T> answer{}; for( auto itr0 = a0.begin() , itr1 = a1.begin() , end0 = a0.end(); itr0 != end0 ; itr0++ , itr1++ ){ answer.push_back( *itr0 + *itr1 ); } return answer; }
+template <typename T , template <typename...> typename V> inline auto operator+( const V<T>& a0 , const V<T>& a1 ) -> decldecay_t( ( declval<V<T>>().push_back( declval<T>() ) , a0 ) ) { if( a0.empty() ){ return a1; } if( a1.empty() ){ return a0; } assert( a0.size() == a1.size() ); V<T> answer{}; for( auto itr0 = a0.begin() , itr1 = a1.begin() , end0 = a0.end(); itr0 != end0 ; itr0++ , itr1++ ){ answer.push_back( *itr0 + *itr1 ); } return answer; }
 template <typename T , typename U> inline pair<T,U> operator+( const pair<T,U>& t0 , const pair<T,U>& t1 ) { return { t0.first + t1.first , t0.second + t1.second }; }
 template <typename T , typename U , typename V> inline tuple<T,U,V> operator+( const tuple<T,U,V>& t0 , const tuple<T,U,V>& t1 ) { return { get<0>( t0 ) + get<0>( t1 ) , get<1>( t0 ) + get<1>( t1 ) , get<2>( t0 ) + get<2>( t1 ) }; }
 template <typename T , typename U , typename V , typename W> inline tuple<T,U,V,W> operator+( const tuple<T,U,V,W>& t0 , const tuple<T,U,V,W>& t1 ) { return { get<0>( t0 ) + get<0>( t1 ) , get<1>( t0 ) + get<1>( t1 ) , get<2>( t0 ) + get<2>( t1 ) , get<3>( t0 ) + get<3>( t1 ) }; }
@@ -466,15 +468,13 @@ char walkable = '.' , unwalkable = '#';
 inline T2<int> EnumHW( const int& v ) { return { v / W , v % W }; }
 inline int EnumHW_inv( const T2<int>& ij ) { auto& [i,j] = ij; return i * W + j; }
 const string direction[4] = {"U","R","D","L"};
-// (i,j)->(k,h)の方向番号を取得
 inline int DirectionNumberOnGrid( const int& i , const int& j , const int& k , const int& h ){return i<k?2:i>k?0:j<h?1:j>h?3:(assert(false),-1);}
-// v->wの方向番号を取得
 inline int DirectionNumberOnGrid( const int& v , const int& w ){auto [i,j]=EnumHW(v);auto [k,h]=EnumHW(w);return DirectionNumberOnGrid(i,j,k,h);}
-// 方向番号の反転U<->D、R<->L
 inline int ReverseDirectionNumberOnGrid( const int& n ){assert(0<=n&&n<4);return(n+2)%4;}
 inline vector<int> EdgeOnGrid( const int& v ){vector<int>answer{};auto[i,j]=EnumHW(v);if(i>0&&wall_str[i-1][j]==walkable){answer.push_back(EnumHW_inv({i-1,j}));}if(i+1<H&&wall_str[i+1][j]==walkable){answer.push_back(EnumHW_inv({i+1,j}));}if(j>0&&wall_str[i][j-1]==walkable){answer.push_back(EnumHW_inv({i,j-1}));}if(j+1<W&&wall_str[i][j+1]==walkable){answer.push_back(EnumHW_inv({i,j+1}));}return answer;}
 inline vector<path> WeightedEdgeOnGrid( const int& v ){vector<path>answer{};auto[i,j]=EnumHW(v);if(i>0&&wall_str[i-1][j]==walkable){answer.push_back({EnumHW_inv({i-1,j}),1});}if(i+1<H&&wall_str[i+1][j]==walkable){answer.push_back({EnumHW_inv({i+1,j}),1});}if(j>0&&wall_str[i][j-1]==walkable){answer.push_back({EnumHW_inv({i,j-1}),1});}if(j+1<W&&wall_str[i][j+1]==walkable){answer.push_back({EnumHW_inv({i,j+1}),1});}return answer;}
-inline void SetWallOnGrid( const int& i , vector<bool>& wall ){auto&wall_str_i=wall_str[i];FOR(j,0,W){wall_i[j]=wall_str_i[j]==walkable?false:(assert(wall_str_i[j]==unwalkable),true);}}
+inline void SetWallStringOnGrid( const int& i , vector<string>& S ){if(S.empty()){S.resize(H);}cin>>S[i];assert(int(S[i].size())==W):}
+inline void SetWallOnGrid( const int& i , vector<vector<bool>>& b ){if(b.empty()){b.resize(H,vector<bool>(W));}auto&S_i=wall_str[i];auto&b_i=b[i];FOR(j,0,W){b_i[j]=S_i[j]==walkable?false:(assert(S_i[j]==unwalkable),true);}}
 
 // デバッグ用
 #ifdef DEBUG
