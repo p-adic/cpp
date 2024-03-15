@@ -813,8 +813,8 @@ AC( MinimisationSolvingMaze )
     CERR( "各操作をデータ構造に翻訳することでシンプルな最小化問題に帰着させましょう。" );
     CERR( "- 区間加算ならば、階差数列の２点加算に翻訳" );
     CERR( "- 部分木の白黒反転ならば、木上の階差数列の１点更新に翻訳" );
-    CERR( "- 無向グラフと非輪状有向グラフの合成ならば、有向グラフの有向辺に沿った動的計画法の" );
-    CERR( "  データ構造高速化" );
+    CERR( "- 無向グラフと非輪状有向グラフの合成ならば、有向グラフの有向辺に沿った" );
+    CERR( "  動的計画法のデータ構造高速化" );
     CERR( "その上で、操作を" );
     CERR( "- 選択部分（どこを操作するか、など）" );
     CERR( "- 決定的遷移（選択部分を決めたら最小コストを実現するために" );
@@ -1000,10 +1000,10 @@ AC( MaximisationArrayLength )
   CERR( "全順序か疎な半順序かで効率的な実装が違います。" );
   CERR( "- 全順序ならば、条件を満たす部分列の長さの最大値をインデックスに持つ" );
   CERR( "  配列を用いて、それらの部分列の末尾である項を記録すること" );
-  CERR( "  \\Mathematics\\Combinatorial\\Counting\\IncreasingSubsequence" );
+  CERR( "  \\Mathematics\\Combinatorial\\IncreasingSubsequence" );
   CERR( "- 疎な半順序ならば、条件を満たす部分列の末尾をインデックスに持つ" );
   CERR( "  連想配列を用いて、それら部分列の長さの最大値を記録すること" );
-  CERR( "  \\Mathematics\\Combinatorial\\Counting\\IncreasingSubsequence\\Subwalk" );
+  CERR( "  \\Mathematics\\Combinatorial\\IncreasingSubsequence\\Subwalk" );
   CERR( "を検討しましょう。" );
 }
 
@@ -1182,6 +1182,7 @@ AC( Counting )
 	     "与えられた集合の部分集合の数え上げ問題" ,
 	     "戦略／操作方法の数え上げ問題" ,
 	     "経路の数え上げ問題" ,
+	     "タイリング／塗り分けの数え上げ問題" ,
 	     "ヤング図形の数え上げ問題" ,
 	     "カタラン数の計算問題" ,
 	     "操作回数の計算問題"
@@ -1204,6 +1205,8 @@ AC( Counting )
     CALL_AC( CountingStrategy );
   } else if( num == num_temp++ ){
     CALL_AC( CountingPath );
+  } else if( num == num_temp++ ){
+    CALL_AC( CountingTiling );
   } else if( num == num_temp++ ){
     CALL_AC( CountingYoundDiagram );
   } else if( num == num_temp++ ){
@@ -1397,8 +1400,8 @@ AC( CountingRestrctedDiscontinuousSubArray )
   CERR( "「長さiで、任意の0<=l<=i-nに対しR_l(B)を満たし、" );
   CERR( "　末尾n-1項がsに対応するAの部分列Bの個数dp[i][s]」" );
   CERR( "を管理するi,sに関する動的計画法" );
-  CERR( "\\Mathematics\\Combinatorial\\Counting\\IncreasingSubsequence" );
-  CERR( "\\Mathematics\\Combinatorial\\Counting\\IncreasingSubsequence\\Subwalk" );
+  CERR( "\\Mathematics\\Combinatorial\\IncreasingSubsequence" );
+  CERR( "\\Mathematics\\Combinatorial\\IncreasingSubsequence\\Subwalk" );
   CERR( "を検討しましょう。" );
 }
 
@@ -1581,9 +1584,20 @@ AC( CountingPath )
   }
 }
 
+AC( CountingTiling )
+{
+  CERR( "- 端点や外周のサイズが小さいかタイル／色の種類数が少ないならば、" );
+  CERR( "  端点や外周のタイリング／塗り分けを固定することで小さいサイズに対する" );
+  CERR( "  数え上げとの関係式を導出し、サイズに関する動的計画法" );
+  CERR( "- 群の作用による同一視があるならば、コーシー・フロベニウスの補題" );
+  CERR( "  https://ja.wikipedia.org/wiki/コーシー・フロベニウスの補題" );
+  CERR( "を検討しましょう。" );
+}
+
 AC( CountingYoundDiagram )
 {
-  CERR( "標準ヤングタブローの個数はフック長公式で計算できます。")
+  CERR( "標準ヤングタブローの個数はフック長公式で計算できます。" );
+  CERR( "\\Mathematics\\Combinatorial\\YoungDiagram\\a.hpp" );
   CERR( "- 2×nの標準ヤングタブローと第nカタラン数の関係" );
   CERR( "- RS対応（型の等しいヤングタブローと順列の対応）" );
   CERR( "  https://en.wikipedia.org/wiki/Robinson%E2%80%93Schensted_correspondence" );

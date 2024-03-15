@@ -67,6 +67,7 @@ AC( CountingPartitionOfTree );
 AC( CountingSubset );
 AC( CountingStrategy );
 AC( CountingPath );
+AC( CountingTiling );
 AC( CountingYoundDiagram );
 AC( CountingParenthesisSequence );
 AC( Solving );
