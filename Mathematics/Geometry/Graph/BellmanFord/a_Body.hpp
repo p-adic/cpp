@@ -15,7 +15,6 @@ tuple<bool,vector<U>> AbstractBellmanFord<GRAPH,MONOID,U>::GetDistance( const in
 {
 
   BELLMAN_FORD_BODY( , );
-  m_G.Reset();
   return { valid , move( weight ) };
 
 }
@@ -56,9 +55,7 @@ tuple<bool,vector<U>,vector<list<inner_t<GRAPH>>>> AbstractBellmanFord<GRAPH,MON
 
   }
 
-  m_G.Reset();
   return { valid , move( weight ) , move( path ) };
-
 
 }
 

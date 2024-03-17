@@ -7,9 +7,9 @@
 #include "../../../Algebra/Monoid/a.hpp"
 
 // verify:
+// https://yukicoder.me/submissions/961440（GetDistance、many_edges=false）
 // https://yukicoder.me/submissions/961434（GetDistance、many_edges=true）
 // https://yukicoder.me/submissions/961385（SetDistance、many_edges=true）
-// https://yukicoder.me/submissions/949990（GetDistance、many_edges=false）
 // https://yukicoder.me/submissions/949988（自明なAbstract、GetDistance、many_edges=true）
 
 // GRAPHはグラフG=(V_G,E_G:T->(T \times U)^{< \omega})に相当する型。

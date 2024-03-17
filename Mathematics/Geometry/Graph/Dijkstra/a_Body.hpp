@@ -20,7 +20,6 @@ U AbstractDijkstra<GRAPH,COMM_MONOID,U>::GetDistance( const inner_t<GRAPH>& t_st
   auto&& i_final = m_G.Enumeration_inv( t_final );
   DIJKSTRA_BODY( , if( i == i_final ){ break; } , );
   U answer{ move( weight[i_final] ) };
-  m_G.Reset();
   return answer;
 
 }
@@ -34,7 +33,6 @@ vector<U> AbstractDijkstra<GRAPH,COMM_MONOID,U>::GetDistance( const inner_t<GRAP
   vector weight( size , infty );
   vector<bool> found( size );
   DIJKSTRA_BODY( , , );
-  m_G.Reset();
   return weight;
 
 }
@@ -48,7 +46,6 @@ void AbstractDijkstra<GRAPH,COMM_MONOID,U>::SetDistance( vector<U>& weight , vec
   assert( int( weight.size() ) == size );
   assert( int( found.size() ) == size );
   DIJKSTRA_BODY( , , );
-  m_G.Reset();
   return;
 
 }
@@ -79,7 +76,6 @@ pair<U,list<inner_t<GRAPH>>> AbstractDijkstra<GRAPH,COMM_MONOID,U>::GetPath( con
   }
 
   U answer{ move( weight[i_final] ) };
-  m_G.Reset();
   return { move( answer ) , move( path ) };
 
 }
@@ -119,7 +115,6 @@ pair<vector<U>,vector<list<inner_t<GRAPH>>>> AbstractDijkstra<GRAPH,COMM_MONOID,
 
   }
 
-  m_G.Reset();
   return { move( weight ) , move( path ) };
 
 }
