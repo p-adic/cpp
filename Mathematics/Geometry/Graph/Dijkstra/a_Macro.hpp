@@ -3,21 +3,23 @@
 #pragma once
 
 #define DIJKSTRA_PREP( INITIALISE_PREV )		\
-  const U& zero = m_M.Zero();				\
-  const U& infty = this->Infty();			\
-  assert( zero < infty );				\
-  const int& size = m_G.size();				\
+  const U& one = m_M.One();				\
+  assert( one < infty );				\
   auto&& i_start = m_G.Enumeration_inv( t_start );	\
   assert( 0 <= i_start && i_start < size );		\
-  vector<bool> found( size );				\
-  vector<U> weight( size , infty );			\
   INITIALISE_PREV;					\
 
 #define DIJKSTRA_BODY_1( SET_PREV )					\
-  weight[i_start] = zero;						\
+  if( walk_length == -1 ){						\
+									\
+    walk_length = size - 1;						\
+									\
+  }									\
+									\
+  weight[i_start] = one;						\
   int i = i_start;							\
 									\
-  for( int num = 0 ; num < size ; num++ ){				\
+  for( int num = 0 ; num < walk_length ; num++ ){			\
 									\
     const U& weight_i = weight[i];					\
     found[i] = true;							\
@@ -30,7 +32,7 @@
       if( !found[j] ){							\
 									\
 	const U& edge_ij = get<1>( *itr );				\
-	U temp = m_M.Sum( weight_i , edge_ij );				\
+	U temp = m_M.Product( weight_i , edge_ij );			\
 	assert( temp < infty );						\
 	U& weight_j = weight[j];					\
 									\
@@ -67,8 +69,9 @@
   }									\
 
 #define DIJKSTRA_BODY_2( CHECK_FINAL , SET_PREV )			\
+  assert( walk_length == -1 );						\
   set<pair<U,int>> vertex{};						\
-  vertex.insert( pair<U,int>( weight[i_start] = zero , i_start ) );	\
+  vertex.insert( pair<U,int>( weight[i_start] = one , i_start ) );	\
 									\
   while( ! vertex.empty() ){						\
 									\
@@ -87,7 +90,7 @@
       if( !found[j] ){							\
 									\
 	const U& edge_ij = get<1>( *itr );				\
-	U temp = m_M.Sum( weight_i , edge_ij );				\
+	U temp = m_M.Product( weight_i , edge_ij );			\
 	assert( temp < infty );						\
 	U& weight_j = weight[j];					\
 									\

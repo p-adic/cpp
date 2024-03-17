@@ -6,13 +6,17 @@
 #include "../a_Body.hpp"
 #include "../../../Algebra/Monoid/a_Body.hpp"
 
-template <typename GRAPH , typename MONOID , typename U> inline AbstractDijkstra<GRAPH,MONOID,U>::AbstractDijkstra( GRAPH& G , MONOID M , const U& infty ) : PointedSet<U>( infty ) , m_G( G ) , m_M( move( M ) ) { static_assert( ! is_same_v<U,int> ); }
+template <typename GRAPH , typename COMM_MONOID , typename U> inline AbstractDijkstra<GRAPH,COMM_MONOID,U>::AbstractDijkstra( GRAPH& G , COMM_MONOID M , const U& infty ) : PointedSet<U>( infty ) , m_G( G ) , m_M( move( M ) ) { static_assert( ! is_same_v<U,int> ); }
 template <typename GRAPH> inline Dijkstra<GRAPH>::Dijkstra( GRAPH& G ) : AbstractDijkstra<GRAPH,AdditiveMonoid<>,ll>( G , AdditiveMonoid<>() , 4611686018427387904 ) {}
 
-template <typename GRAPH , typename MONOID , typename U>
-U AbstractDijkstra<GRAPH,MONOID,U>::GetDistance( const inner_t<GRAPH>& t_start , const inner_t<GRAPH>& t_final , const bool& many_edges )
+template <typename GRAPH , typename COMM_MONOID , typename U>
+U AbstractDijkstra<GRAPH,COMM_MONOID,U>::GetDistance( const inner_t<GRAPH>& t_start , const inner_t<GRAPH>& t_final , const bool& many_edges , int walk_length )
 {
 
+  const int& size = m_G.size();
+  const U& infty = this->Infty();
+  vector weight( size , infty );
+  vector<bool> found( size );
   auto&& i_final = m_G.Enumeration_inv( t_final );
   DIJKSTRA_BODY( , if( i == i_final ){ break; } , );
   U answer{ move( weight[i_final] ) };
@@ -21,20 +25,42 @@ U AbstractDijkstra<GRAPH,MONOID,U>::GetDistance( const inner_t<GRAPH>& t_start ,
 
 }
 
-template <typename GRAPH , typename MONOID , typename U>
-vector<U> AbstractDijkstra<GRAPH,MONOID,U>::GetDistance( const inner_t<GRAPH>& t_start , const bool& many_edges )
+template <typename GRAPH , typename COMM_MONOID , typename U>
+vector<U> AbstractDijkstra<GRAPH,COMM_MONOID,U>::GetDistance( const inner_t<GRAPH>& t_start , const bool& many_edges , int walk_length )
 {
 
+  const int& size = m_G.size();
+  const U& infty = this->Infty();
+  vector weight( size , infty );
+  vector<bool> found( size );
   DIJKSTRA_BODY( , , );
   m_G.Reset();
   return weight;
 
 }
 
-template <typename GRAPH , typename MONOID , typename U>
-pair<U,list<inner_t<GRAPH>>> AbstractDijkstra<GRAPH,MONOID,U>::GetPath( const inner_t<GRAPH>& t_start , const inner_t<GRAPH>& t_final , const bool& many_edges )
+template <typename GRAPH , typename COMM_MONOID , typename U>
+void AbstractDijkstra<GRAPH,COMM_MONOID,U>::SetDistance( vector<U>& weight , vector<bool>& found , const inner_t<GRAPH>& t_start , const bool& many_edges , int walk_length )
 {
 
+  const int& size = m_G.size();
+  const U& infty = this->Infty();
+  assert( int( weight.size() ) == size );
+  assert( int( found.size() ) == size );
+  DIJKSTRA_BODY( , , );
+  m_G.Reset();
+  return;
+
+}
+
+template <typename GRAPH , typename COMM_MONOID , typename U>
+pair<U,list<inner_t<GRAPH>>> AbstractDijkstra<GRAPH,COMM_MONOID,U>::GetPath( const inner_t<GRAPH>& t_start , const inner_t<GRAPH>& t_final , const bool& many_edges , int walk_length )
+{
+
+  const int& size = m_G.size();
+  const U& infty = this->Infty();
+  vector weight( size , infty );
+  vector<bool> found( size );
   auto&& i_final = m_G.Enumeration_inv( t_final );
   DIJKSTRA_BODY( vector<int> prev( size ) , if( i == i_final ){ break; } , prev[j] = i );
   int i = i_final;
@@ -58,10 +84,14 @@ pair<U,list<inner_t<GRAPH>>> AbstractDijkstra<GRAPH,MONOID,U>::GetPath( const in
 
 }
 
-template <typename GRAPH , typename MONOID , typename U> template <template <typename...> typename V> 
-pair<vector<U>,vector<list<inner_t<GRAPH>>>> AbstractDijkstra<GRAPH,MONOID,U>::GetPath( const inner_t<GRAPH>& t_start , const V<inner_t<GRAPH>>& t_finals , const bool& many_edges )
+template <typename GRAPH , typename COMM_MONOID , typename U> template <template <typename...> typename V> 
+pair<vector<U>,vector<list<inner_t<GRAPH>>>> AbstractDijkstra<GRAPH,COMM_MONOID,U>::GetPath( const inner_t<GRAPH>& t_start , const V<inner_t<GRAPH>>& t_finals , const bool& many_edges , int walk_length )
 {
 
+  const int& size = m_G.size();
+  const U& infty = this->Infty();
+  vector weight( size , infty );
+  vector<bool> found( size );
   DIJKSTRA_BODY( vector<int> prev( size ) , , prev[j] = i );
   const int path_size = t_finals.size();
   vector<list<inner_t<GRAPH>>> path;
@@ -94,8 +124,8 @@ pair<vector<U>,vector<list<inner_t<GRAPH>>>> AbstractDijkstra<GRAPH,MONOID,U>::G
 
 }
 
-template <typename GRAPH , typename MONOID , typename U>
-pair<vector<U>,vector<list<inner_t<GRAPH>>>> AbstractDijkstra<GRAPH,MONOID,U>::GetPath( const inner_t<GRAPH>& t_start )
+template <typename GRAPH , typename COMM_MONOID , typename U>
+pair<vector<U>,vector<list<inner_t<GRAPH>>>> AbstractDijkstra<GRAPH,COMM_MONOID,U>::GetPath( const inner_t<GRAPH>& t_start , const bool& many_edges , int walk_length )
 {
 
   const int& size = m_G.size();
@@ -107,6 +137,6 @@ pair<vector<U>,vector<list<inner_t<GRAPH>>>> AbstractDijkstra<GRAPH,MONOID,U>::G
 
   }
 
-  return GetPath( t_start , t_finals );
+  return GetPath( t_start , t_finals , many_edges , walk_length );
 
 }
