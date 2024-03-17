@@ -3,15 +3,15 @@
 #pragma once
 #include "a.hpp"
 
-template <uint bound_L , uint bound_M>
-uint RowEchelonForm( bitset<bound_M> ( &A )[bound_L] , const uint& L , const uint& M )
+template <size_t bound_M>
+size_t RowEchelonForm( vector<bitset<bound_M>>& A  , const size_t& M )
 {
 
-  assert( L <= bound_L );
   assert( M <= bound_M );
-  uint i_min = 0;
-  uint i_curr;
-  uint j_curr = 0;
+  const size_t L = A.size();
+  size_t i_min = 0;
+  size_t i_curr;
+  size_t j_curr = 0;
 
   while( i_min < L && j_curr < M ){
 
@@ -50,47 +50,37 @@ uint RowEchelonForm( bitset<bound_M> ( &A )[bound_L] , const uint& L , const uin
   
 }
 
-template <uint bound_L , uint bound_M_N>
-pair<uint,bool> ExtendedReducedRowEchelonForm( bitset<bound_M_N> ( &A )[bound_L] , const uint& L , const uint& M , const uint& N )
+template <size_t bound_M_N>
+pair<size_t,bool> ExtendedReducedRowEchelonForm( vector<bitset<bound_M_N>>& A , const size_t& M , const size_t& N )
 {
 
-  DEFINITION_OF_EXTENDED_REDUCED_ROW_ECHELON_FORM_FOR_BITSET( uint j = 0 );
+  const size_t L = A.size();
+  DEFINITION_OF_EXTENDED_REDUCED_ROW_ECHELON_FORM_FOR_BITSET( size_t j = 0 );
   return { rank , solvable };
 
 }
 
-template <uint bound_L , uint bound_M , uint bound_N , uint bound_M_N>
-pair<uint,bool> ExtendedReducedRowEchelonForm( bitset<bound_M_N> ( &A )[bound_L] , bitset<bound_N> ( &solution )[bound_M] , const uint& L , const uint& M , const uint& N )
+template <size_t bound_N , size_t bound_M_N>
+pair<size_t,bool> ExtendedReducedRowEchelonForm( vector<bitset<bound_M_N>>& A , vector<bitset<bound_N>>& solution , const size_t& M , const size_t& N )
 {
 
-  assert( M <= bound_M );
   assert( N <= bound_N );
-  uint left[bound_L];
-  DEFINITION_OF_EXTENDED_REDUCED_ROW_ECHELON_FORM_FOR_BITSET( uint& j = left[i] = 0 );
+  const size_t L = A.size();
+  vector<size_t> left( L );
+  DEFINITION_OF_EXTENDED_REDUCED_ROW_ECHELON_FORM_FOR_BITSET( size_t& j = left[i] );
 
   if( solvable ){
 
-    for( uint j = 0 ; j < M ; j++ ){
-
-      bitset<bound_N>& solution_j = solution[j];
-      
-      for( uint k = 0 ; k < N ; k++ ){
-
-	solution_j[k] = 0;
-
-      }
-
-    }
-  
+    solution = vector( M , bitset<bound_N>() );
     i = rank;
   
     while( --i < rank ){
 
       const bitset<bound_M_N>& A_i = A[i];
-      const uint& j = left[i];
+      const size_t& j = left[i];
       bitset<bound_N>& solution_j = solution[j];
       
-      for( uint k = 0 ; k < N ; k++ ){
+      for( size_t k = 0 ; k < N ; k++ ){
 
 	solution_j[k] = A_i[M + k];
 
@@ -104,27 +94,29 @@ pair<uint,bool> ExtendedReducedRowEchelonForm( bitset<bound_M_N> ( &A )[bound_L]
 
 }
 
-template <uint bound_L , uint bound_M>
-inline uint ReducedRowEchelonForm( bitset<bound_M> ( &A )[bound_L] , const uint& L , const uint& M ) { bitset<1> dummy[bound_L] = {}; return ExtendedReducedRowEchelonForm<bound_L,bound_L,1,bound_M>( A , dummy , L , M , 0 ).first; }
+template <size_t bound_M> inline size_t ReducedRowEchelonForm( vector<bitset<bound_M>>& A , const size_t& M ) { const size_t L = A.size(); vector<bitset<0>> dummy( L ); return ExtendedReducedRowEchelonForm( A , dummy , M , 0 ).first; }
 
-template <uint bound_L>
-bool Invertible( const bitset<bound_L> ( &A )[bound_L] , bitset<bound_L> ( &A_inv )[bound_L] , const uint& L )
+template <size_t bound_L , size_t bound_M> inline bool LinearlyIndependent( const vector<bitset<bound_M>>& A , const size_t& M ) { const size_t L = A.size(); return L <= M ? ReducedRowEchelonForm( A , M ) == L : false; }
+
+template <size_t bound_L>
+bool Invertible( const vector<bitset<bound_L>>& A , vector<bitset<bound_L>>& A_inv )
 {
 
-  bitset<bound_L + bound_L> A_copy[bound_L];
+  const size_t L = A.size();
+  vector<bitset<bound_L + bound_L>> A_copy( L );
 
-  for( uint i = 0 ; i < L ; i++ ){
+  for( size_t i = 0 ; i < L ; i++ ){
 
     const bitset<bound_L>& A_i = A[i];
     bitset<bound_L + bound_L>& A_copy_i = A_copy[i];
 
-    for( uint j = 0 ; j < L ; j++ ){
+    for( size_t j = 0 ; j < L ; j++ ){
 
       A_copy_i[j] = A_i[j];
 
     }
 
-    for( uint j = 0 ; j < L ; j++ ){
+    for( size_t j = 0 ; j < L ; j++ ){
 
       A_copy_i[L + j] = i == j ? 1 : 0;
 
@@ -132,6 +124,6 @@ bool Invertible( const bitset<bound_L> ( &A )[bound_L] , bitset<bound_L> ( &A_in
     
   }
 
-  return ExtendedReducedRowEchelonForm<bound_L,bound_L,bound_L+bound_L>( A_copy , A_inv , L , L , L ).second;
+  return ExtendedReducedRowEchelonForm( A_copy , A_inv , L , L ).second;
 
 }

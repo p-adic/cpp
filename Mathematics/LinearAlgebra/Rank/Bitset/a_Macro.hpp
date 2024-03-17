@@ -3,12 +3,11 @@
 #pragma once
 
 #define DEFINITION_OF_EXTENDED_REDUCED_ROW_ECHELON_FORM_FOR_BITSET( DECL_J ) \
-  const uint M_N = M + N;						\
-  assert( L <= bound_L );						\
+  const size_t M_N = M + N;						\
   assert( M_N <= bound_M_N );						\
-  uint rank = RowEchelonForm<bound_L,bound_M_N>( A , L , M_N );		\
+  size_t rank = RowEchelonForm( A ,  M_N );				\
   bool solvable = true;							\
-  uint i = rank;							\
+  size_t i = rank;							\
 									\
   while( --i < rank ){							\
 									\
@@ -34,7 +33,7 @@
 									\
     } else {								\
 									\
-      uint i_curr = i;							\
+      size_t i_curr = i;						\
 									\
       while( --i_curr < i ){						\
 									\
