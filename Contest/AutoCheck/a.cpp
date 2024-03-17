@@ -759,7 +759,10 @@ AC( MinimisationMovingCost )
   if( num == num_temp++ ){
     CALL_AC( MinimisationSolvingMaze );
   } else if( num == num_temp++ ){
-    CERR( "辺を逆にすることで１始点多終点最小コスト移動（迷路）問題に帰着されます。" );
+    CERR( "- 最短経路の始点の特定が不要ならば、始点を１つ追加して元の始点へコスト0の" );
+    CERR( "  有向辺を追加" )
+    CERR( "- 最短経路の始点の特定が必要ならば、辺を反転" );
+    CERR( "により１始点多終点最小コスト移動（迷路）問題に帰着されます。" )
     CALL_AC( MinimisationSolvingMaze );
   } else if( num == num_temp++ ){
     CALL_AC( MinimisationSolvingOpenCovering );
@@ -793,20 +796,28 @@ AC( MinimisationSolvingMaze )
 {
   ASK_YES_NO( "Eが10^8オーダーで抑えられますか？" );
   if( reply == "y" ){
-    CERR( "- コストがなくO(V+E)が通りそうならば幅優先探索" );
+    CERR( "- コストが1のみでO(V+E)が通りそうならば幅優先探索" );
     CERR( "  \\Mathematics\\Geometry\\Graph\\BreadthFirst" );
-    CERR( "- コストが0か1でO(V+E)が通りそうならば01幅優先探索" );
+    CERR( "- コストが1のみでなく{0,1}値でO(V+E)が通りそうならば01幅優先探索" );
     CERR( "  \\Mathematics\\Geometry\\Graph\\BreadthFirst\\ZeroOne" );
-    CERR( "- コスト総和上限をCとしO((V+E)C)が間に合いそうならば" );
-    CERR( "  コストも状態に含めたグラフ上での幅優先探索" );
     CERR( "  \\Mathematics\\Geometry\\Graph\\BreadthFirst" );
-    CERR( "- コストが非負でO((V+E)log_2 E)が間に合いそうならばダイクストラ法" );
-    CERR( "  \\Mathematics\\Geometry\\Graph\\Dijkstra" );
-    CERR( "- コストが負になりえてO(VE)が間に合いそうならばベルマンフォード法" );
-    CERR( "  \\Mathematics\\Geometry\\Graph\\BellmanFord" );
-    CERR( "- コストが負になりえて辺の削除を行い繰り返し解く場合O(VE+Q(V+E)log_2 E)が" );
-    CERR( "  間に合いそうならばポテンシャル付きダイクストラ法" );
-    CERR( "  \\Mathematics\\Geometry\\Graph\\Dijkstra\\Potentialised" );
+    CERR( "- コストが{0,1}値でなくかつ非負ならば" );
+    CERR( "  - O(min(V^2,(V+E)log_2 E))が間に合いそうならばダイクストラ法" );
+    CERR( "    \\Mathematics\\Geometry\\Graph\\Dijkstra" );
+    CERR( "  - Gがグラフの非輪状グラフならば" );
+    CERR( "    - O(min(sum_i V_i^2,sum_i((V_i+E_i)log_2 E?i))が間に合いそうならば" );
+    CERR( "      分割統治ダイクストラ法またはそのデータ構造高速化" );
+    CERR( "      \\Mathematics\\Geometry\\Graph\\Acyclic\\Double" );
+    CERR( "    - 間に合わなさそうならば分割統治を動的計画法で書き直しデータ構造高速化" );
+    CERR( "  - コスト総和上限をCとしO((V+E)C)が間に合いそうならば" );
+    CERR( "    コスト総和も状態に含めたグラフ上での幅優先探索" );
+    CERR( "    \\Mathematics\\Geometry\\Graph\\BreadthFirst" );
+    CERR( "- コストが非負でないならば" );
+    CERR( "  - O(VE)が間に合いそうならばベルマンフォード法" );
+    CERR( "    \\Mathematics\\Geometry\\Graph\\BellmanFord" );
+    CERR( "  - 辺の削除を行い繰り返し解く場合O(VE+Q(V+E)log_2 E)が間に合いそうならば" );
+    CERR( "    ポテンシャル付きダイクストラ法" );
+    CERR( "    \\Mathematics\\Geometry\\Graph\\Dijkstra\\Potentialised" );
     CERR( "を検討しましょう。" );
   } else {
     CERR( "配列の書き換え問題やLightsOut問題のようにEが非常に大きいならば、" );
@@ -1275,7 +1286,7 @@ AC( CountingArray )
     CERR( "  - 複数条件の時は包除原理による更新" );
     CERR( "を検討しましょう。" );
   } else if( num == num_temp++ ){
-    ASK_NUMBER( "配列への格納順が関係ありますか？" );
+    ASK_YES_NO( "配列への格納順が関係ありますか？" );
     if( reply == "y" ){
       CERR( "半順序を構成しグラフの数え上げに帰着することを検討しましょう。" );
       CALL_AC( CountingGraph );
