@@ -84,6 +84,7 @@ AC( QueryArrayMagmaMonoid );
 AC( QueryArrayOrder );
 AC( QueryArrayImageSize );
 AC( QueryArrayMaxLinearFunction );
+AC( QueryArrayMinDistance );
 AC( QueryArrayMaxConstant );
 AC( QueryTree );
 AC( QueryGrid );

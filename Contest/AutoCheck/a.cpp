@@ -806,7 +806,7 @@ AC( MinimisationSolvingMaze )
     CERR( "    \\Mathematics\\Geometry\\Graph\\Dijkstra" );
     CERR( "  - Gがグラフの非輪状グラフならば" );
     CERR( "    - O(min(sum_i V_i^2,sum_i((V_i+E_i)log_2 E?i))が間に合いそうならば" );
-    CERR( "      分割統治ダイクストラ法またはそのデータ構造高速化" );
+    CERR( "      分割統治ダイクストラ法" );
     CERR( "      \\Mathematics\\Geometry\\Graph\\Acyclic\\Double" );
     CERR( "    - 間に合わなさそうならば分割統治を動的計画法で書き直しデータ構造高速化" );
     CERR( "  - コスト総和上限をCとしO((V+E)C)が間に合いそうならば" );
@@ -1136,7 +1136,7 @@ AC( MaximisationProbability )
 
 AC( MinimisationOperationCost )
 {
-  CERR( "操作コストの最小化は、操作による状態遷移をグラフ上の移動とみなすことで" );
+  CERR( "操作コストの最小化は、操作による状態遷移を有向グラフ上の移動とみなすことで" );
   CERR( "最短経路問題に帰着させることが可能です。" );
   CALL_AC( MinimisationMovingCost );
 }
@@ -1730,7 +1730,8 @@ AC( QueryArray )
 	     "モノイドへのマグマ作用(+,\\cdot)を使う問題" ,
 	     "序数を扱う問題" ,
 	     "像の要素数を扱う問題" ,
-	     "一次関数とのmaxを取った値を使う問題" ,
+	     "一次関数による区間max／min更新を使う問題" ,
+	     "距離関数と定数の和による区間min更新を使う問題" ,
 	     "定数とのmaxを取った値の区間演算取得を使う問題" ,
 	     );
   if( num == num_temp++ ){
@@ -1750,7 +1751,11 @@ AC( QueryArray )
   } else if( num == num_temp++ ){
     CALL_AC( QueryArrayOrder );
   } else if( num == num_temp++ ){
+    CALL_AC( QueryArrayImageSize );
+  } else if( num == num_temp++ ){
     CALL_AC( QueryArrayMaxLinearFunction );
+  } else if( num == num_temp++ ){
+    CALL_AC( QueryArrayMinDistance );
   } else if( num == num_temp++ ){
     CALL_AC( QueryArrayMaxConstant );
   }
@@ -1870,17 +1875,30 @@ AC( QueryArrayOrder )
 
 AC( QueryArrayImageSize )
 {
-  CERR( "- 区間での像の要素数取得が必要ならば莫のアルゴリズム" );
-  CERR( "  \\Mathematics\\SetTheory\\DirectProduct\\AfineSpace\\SqrtDecomposition\\Mo" );
+  CERR( "区間での像の要素数取得が必要ならば莫のアルゴリズム" );
+  CERR( "\\Mathematics\\SetTheory\\DirectProduct\\AfineSpace\\SqrtDecomposition\\Mo" );
   CERR( "を検討しましょう。" );
 }
 
 AC( QueryArrayMaxLinearFunction )
 {
+  CERR( "最小値は-1倍して最大値に帰着されます。" );
   CERR( "- 一次関数による全体max更新O(log N)／一点取得O(log N)が必要ならば" );
   CERR( "  Convex Hull Trick" );
   CERR( "  \\Mathematics\\Function\\MaxLinearFunction" );
+  CERR( "- 傾きの候補が高々C個のコンパイル時定数である一次関数による" );
+  CERR( "  区間max更新O(CN^{1/2})／一点取得O(C)が必要ならば" );
+  CERR( "  傾きごとにy切片の最大値を管理するベクトルに各点max演算を入れたモノイド" );
+  CERR( "  から(値,x座標)への区間作用を載せた双対平方分割" );
+  CERR( "  \\Mathematics\\SetTheory\\DirectProduct\\AfineSpace\\SqrtDecomposition\\Dual" );
   CERR( "を検討しましょう。" );
+}
+
+AC( QueryArrayMinDistance )
+{
+  CERR( "距離関数と定数の和による区間min更新は傾き±1の一次関数による区間min更新" );
+  CERR( "に他なりません。" );
+  CALL_AC( QueryArrayMaxLinearFunction );
 }
 
 AC( QueryArrayMaxConstant )
@@ -2265,6 +2283,11 @@ AC( DecisionPresentability )
     CERR( "  https://ja.wikipedia.org/wiki/三個の平方数の和#証明" );
     CERR( "  https://ja.wikipedia.org/wiki/四平方定理#ラグランジュの四平方定理の証明" );
     CERR( "  https://ja.wikipedia.org/wiki/多角数定理#証明" );
+    CERR( "- 数をXORで表すならば、" );
+    CERR( "  - 一般の数を表すならば拡大係数行列の簡約化" );
+    CERR( "  \\Mathematics\\LinearAlgebra\\Rank\\BitSet" );
+    CERR( "  - 0を非自明なXORで表すならば一次独立性判定" );
+    CERR( "  \\Mathematics\\LinearAlgebra\\Rank\\BitSet" );
   } else if( num == num_temp++ ){
     CERR( "- 左結合的に関数／演算を処理する場合は" );
     CERR( "  「第i成分／文字までで打ち切った時に表現できるもの全体の集合dp[i]」" );
