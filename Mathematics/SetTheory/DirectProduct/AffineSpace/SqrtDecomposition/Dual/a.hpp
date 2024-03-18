@@ -2,14 +2,15 @@
 
 #pragma once
 // verify:
-// https://yukicoder.me/submissions/950346（区間作用、一点取得）
-// https://yukicoder.me/submissions/950347（区間作用、一点取得）
+// https://yukicoder.me/submissions/961539（区間作用、一点取得）
+// https://yukicoder.me/submissions/961531（区間作用、一点取得）
+// https://yukicoder.me/submissions/961532（非結合的マグマ、区間作用、一点取得）
 
 // 入力の範囲内で要件
 // (1) LがRの基点付きマグマ構造である。
-// (2) XがUの「Lの基点がUの恒等変換に対応するUの左L作用構造」である。
+// (2) XがUの「Lの基点がUの恒等変換に対応する左L作用構造」である。
 // を満たす場合にのみサポート。
-// Mに可換性を課す場合は一点作用がO(1)のCommutativeDualSqrtDecompositionを使用。
+// Mに可換性を課す場合は一点作用がO(1)のCommutativeDualSqrtDecompositionが使用可。
 
 // 配列による初期化O(N)
 
@@ -33,7 +34,7 @@ protected:
   vector<R> m_b;
 
 public:
-  inline DualSqrtDecomposition( PT_MAGMA L , R_MODULE X , vector<U> a );
+  inline DualSqrtDecomposition( PT_MAGMA L , R_MODULE X , vector<U> a = {} );
   inline DualSqrtDecomposition( PT_MAGMA L , R_MODULE X , vector<U> a , const int& N_sqrt );
 
   template <typename...Args> inline void Initialise( Args&&... args );
@@ -50,5 +51,5 @@ protected:
   inline void Update( const int& d );
   
 };
-template <typename PT_MAGMA , typename U , typename R_MODULE , typename...Args> DualSqrtDecomposition( PT_MAGMA M , R_MODULE X , vector<U> a , Args&&... args ) -> DualSqrtDecomposition<inner_t<PT_MAGMA>,PT_MAGMA,U,R_MODULE>;
+template <typename PT_MAGMA , typename R_MODULE , typename...Args> DualSqrtDecomposition( PT_MAGMA M , R_MODULE X , Args&&... args ) -> DualSqrtDecomposition<inner_t<PT_MAGMA>,PT_MAGMA,inner_t<R_MODULE>,R_MODULE>;
 

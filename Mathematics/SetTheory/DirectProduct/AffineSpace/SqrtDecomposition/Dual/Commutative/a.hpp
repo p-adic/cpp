@@ -4,11 +4,11 @@
 #include "../a.hpp"
 
 // verify:
-// https://yukicoder.me/submissions/950348（一点作用、区間作用、一点取得）
+// https://yukicoder.me/submissions/961533（一点作用、区間作用、一点取得）
 
 // 入力の範囲内で要件
 // (1) LがRの基点付き可換マグマ構造である。
-// (2) XがUの「Lの基点がUの恒等変換に対応するUの左L作用構造」である。
+// (2) XがUの「Lの基点がUの恒等変換に対応する左L作用構造」である。
 // を満たす場合にのみサポート。
 
 // 配列による初期化O(N)
@@ -24,10 +24,10 @@ class CommutativeDualSqrtDecomposition :
 {
 
 public:
-  template <typename...Args> inline CommutativeDualSqrtDecomposition( PT_COMM_MAGMA L , R_MODULE X , vector<U> a , Args&&... args );
+  template <typename...Args> inline CommutativeDualSqrtDecomposition( PT_COMM_MAGMA L , R_MODULE X , Args&&... args );
 
   inline void Act( const int& i , const R& r );
   
 };
-template <typename PT_COMM_MAGMA , typename U , typename R_MODULE , typename...Args> CommutativeDualSqrtDecomposition( PT_COMM_MAGMA M , R_MODULE X , vector<U> a , Args&&... args ) -> CommutativeDualSqrtDecomposition<inner_t<PT_COMM_MAGMA>,PT_COMM_MAGMA,U,R_MODULE>;
+template <typename PT_COMM_MAGMA , typename R_MODULE , typename...Args> CommutativeDualSqrtDecomposition( PT_COMM_MAGMA M , R_MODULE X , Args&&... args ) -> CommutativeDualSqrtDecomposition<inner_t<PT_COMM_MAGMA>,PT_COMM_MAGMA,inner_t<R_MODULE>,R_MODULE>;
 
