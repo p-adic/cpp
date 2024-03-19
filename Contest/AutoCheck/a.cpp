@@ -1882,15 +1882,13 @@ AC( QueryArrayImageSize )
 
 AC( QueryArrayMaxLinearFunction )
 {
-  CERR( "最小値は-1倍して最大値に帰着されます。" );
+  CERR( "-1倍で最小値と最大値は互いに帰着されます。" );
   CERR( "- 一次関数による全体max更新O(log N)／一点取得O(log N)が必要ならば" );
   CERR( "  Convex Hull Trick" );
   CERR( "  \\Mathematics\\Function\\MaxLinearFunction" );
-  CERR( "- 傾きの候補が高々C個のコンパイル時定数である一次関数による" );
-  CERR( "  区間max更新O(CN^{1/2})／一点取得O(C)が必要ならば" );
-  CERR( "  傾きごとにy切片の最大値を管理するベクトルに各点max演算を入れたモノイド" );
-  CERR( "  から(値,x座標)への区間作用を載せた双対平方分割" );
-  CERR( "  \\Mathematics\\SetTheory\\DirectProduct\\AfineSpace\\SqrtDecomposition\\Dual" );
+  CERR( "- 傾きの候補がC個の一次関数による区間min更新O(N^{1/2})／一点取得O(C)が" );
+  CERR( "  必要ならば等比数列min更新双対平方分割" );
+  CERR( "  \\Mathematics\\SetTheory\\DirectProduct\\AfineSpace\\SqrtDecomposition\\Dual\\GeometricProgressionMin" );
   CERR( "を検討しましょう。" );
 }
 
