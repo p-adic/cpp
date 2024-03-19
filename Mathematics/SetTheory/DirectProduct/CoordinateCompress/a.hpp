@@ -4,7 +4,7 @@
 #include "../../../Function/Map/a.hpp"
 
 // verify:
-// https://yukicoder.me/submissions/947058（map、GetOrder）
+// https://yukicoder.me/submissions/961857（map、GetOrder）
 
 template <typename T , template <typename...> typename MAP = Map>
 class CoordinateCompress
