@@ -2,8 +2,9 @@
 
 #pragma once
 #include "a_macro.hpp"
+
 // verify:
-// https://yukicoder.me/submissions/955166（零初期化、一点加算、区間和）
+// https://yukicoder.me/submissions/961740（零初期化、一点加算、区間和）
 
 // 入力の範囲内で要件
 // (1) MがUの可換群構造である。

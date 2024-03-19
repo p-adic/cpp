@@ -3,8 +3,8 @@
 #pragma once
 
 // verify:
-// https://yukicoder.me/submissions/950088（零初期化、一点取得、矩形加算）
-// https://yukicoder.me/submissions/959652（零初期化、一点取得、矩形加算）
+// https://yukicoder.me/submissions/961862（零初期化、一点取得、矩形加算）
+// https://yukicoder.me/submissions/961857（零初期化、一点取得、矩形加算）
 
 // ２次元配列上の階差数列。基本的に２次元imos法
 // https://imoz.jp/algorithms/imos_method.html

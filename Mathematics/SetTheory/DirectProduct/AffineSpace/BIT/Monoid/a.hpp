@@ -4,7 +4,7 @@
 #include "../a_Macro.hpp"
 
 // verify:
-// https://yukicoder.me/submissions/959651（一点代入、区間積）
+// https://yukicoder.me/submissions/961779（一点代入、区間積）
 
 // 入力の範囲内で要件
 // (1) MがUのモノイド構造である。

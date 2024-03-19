@@ -5,7 +5,7 @@
 #include "../../../../../Algebra/Monoid/Group/Module/a.hpp"
 
 // verify:
-// https://yukicoder.me/submissions/950361（一点加算、区間加算、一点取得）
+// https://yukicoder.me/submissions/961776（一点加算、区間加算、一点取得）
 
 // 入力の範囲内で要件
 // (1) MがUのZ加群構造である。

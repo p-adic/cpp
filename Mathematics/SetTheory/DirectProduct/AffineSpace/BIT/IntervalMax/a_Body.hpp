@@ -39,7 +39,7 @@ template <typename U , typename COMM_IDEM_MONOID> inline IdempotentMonoidBIT<U,C
 
     while( j < j_ulim ){
 
-      fenwick_1i = m_M.Product( fenwick_1i , m_fenwick_1[j] );
+      fenwick_1i = m_M.Product( move( fenwick_1i ) , m_fenwick_1[j] );
       j += ( j & -j );
 
     }
@@ -64,7 +64,7 @@ template <typename U , typename COMM_IDEM_MONOID> inline void IdempotentMonoidBI
 
 }
 
-template <typename U , typename COMM_IDEM_MONOID> template <typename...Args> inline void IdempotentMonoidBIT<U,COMM_IDEM_MONOID>::Initialise( Args&&... args ) { *this = IdempotentMonoidBIT<U,COMM_IDEM_MONOID>( move( m_M ) , forward<Args>( args )... ); }
+template <typename U , typename COMM_IDEM_MONOID> template <typename...Args> inline void IdempotentMonoidBIT<U,COMM_IDEM_MONOID>::Initialise( Args&&... args ) { IdempotentMonoidBIT<U,COMM_IDEM_MONOID> temp{ m_M , forward<Args>( args )... };  m_size = temp.m_size; m_a = move( temp.m_a ); m_fenwick_0 = move( temp.m_fenwick_0 ); m_fenwick_1 = move( temp.m_fenwick_1 ); m_power = temp.m_power; }
 
 template <typename U , typename COMM_IDEM_MONOID>
 void IdempotentMonoidBIT<U,COMM_IDEM_MONOID>::Set( const int& i , const U& u )
@@ -98,7 +98,7 @@ void IdempotentMonoidBIT<U,COMM_IDEM_MONOID>::Set( const int& i , const U& u )
       }
 
       // 合計O((log_2 size)^2)
-      temp_right = m_M.Product( temp_right , IntervalProduct( j , j_next - 1 ) );
+      temp_right = m_M.Product( move( temp_right ) , IntervalProduct( j , j_next - 1 ) );
       j = j_next;
 
     }
@@ -119,7 +119,7 @@ void IdempotentMonoidBIT<U,COMM_IDEM_MONOID>::Set( const int& i , const U& u )
 
       if( j_plus != j_plus_next - 1 ){
 	// 合計O(log_2 size)
-	temp_right = m_M.Product( temp_right , IntervalProduct( j_plus , j_plus_next - 1 ) );
+	temp_right = m_M.Product( move( temp_right ) , IntervalProduct( j_plus , j_plus_next - 1 ) );
 	j_plus = j_plus_next;
 
       }
@@ -132,20 +132,20 @@ void IdempotentMonoidBIT<U,COMM_IDEM_MONOID>::Set( const int& i , const U& u )
 
 }
 
-template <typename U , typename COMM_IDEM_MONOID> inline IdempotentMonoidBIT<U,COMM_IDEM_MONOID>& IdempotentMonoidBIT<U,COMM_IDEM_MONOID>::operator+=( vector<U>&& a ) { IdempotentMonoidBIT<U,COMM_IDEM_MONOID> a_copy{ m_M , move( a ) }; assert( m_size == a_copy.m_size ); for( int j = 1 ; j <= m_size ; j++ ){ U& t0j = m_fenwick_0[j]; t0j = m_M.Product( t0j , a_copy.m_fenwick_0[j] ); U& t1j = m_fenwick_1[j]; t1j = m_M.Product( t1j , a_copy.m_fenwick_1[j] ); } }
+template <typename U , typename COMM_IDEM_MONOID> inline IdempotentMonoidBIT<U,COMM_IDEM_MONOID>& IdempotentMonoidBIT<U,COMM_IDEM_MONOID>::operator+=( vector<U>&& a ) { IdempotentMonoidBIT<U,COMM_IDEM_MONOID> a_copy{ m_M , move( a ) }; assert( m_size == a_copy.m_size ); for( int j = 1 ; j <= m_size ; j++ ){ U& t0j = m_fenwick_0[j]; t0j = m_M.Product( move( t0j ) , a_copy.m_fenwick_0[j] ); U& t1j = m_fenwick_1[j]; t1j = m_M.Product( move( t1j ) , a_copy.m_fenwick_1[j] ); } }
 
 template <typename U , typename COMM_IDEM_MONOID>
 void IdempotentMonoidBIT<U,COMM_IDEM_MONOID>::Multiply( const int& i , const U& u ) 
 {
 
   U& ai = m_a[i];
-  ai = m_M.Product( ai , u );
+  ai = m_M.Product( move( ai ) , u );
   int j = i + 1;
 
   while( j <= m_size ){
 
     U& tj = m_fenwick_0[j];
-    tj = m_M.Product( tj , u );
+    tj = m_M.Product( move( tj ) , u );
     j += ( j & -j );
 
   }
@@ -155,7 +155,7 @@ void IdempotentMonoidBIT<U,COMM_IDEM_MONOID>::Multiply( const int& i , const U& 
   while( j > 0 ){
 
     U& tj = m_fenwick_1[j];
-    tj = m_M.Product( tj , u );
+    tj = m_M.Product( move( tj ) , u );
     j -= ( j & -j );
 
   }
@@ -177,7 +177,7 @@ void IdempotentMonoidBIT<U,COMM_IDEM_MONOID>::IntervalMultiply( const int& i_sta
   for( int i = j_min - 1 ; i < j_max ; i++ ){
 
     U& ai = m_a[i];
-    ai = m_M.Product( ai , u );
+    ai = m_M.Product( move( ai ) , u );
 
   }
 
@@ -193,7 +193,7 @@ void IdempotentMonoidBIT<U,COMM_IDEM_MONOID>::IntervalMultiply( const int& i_sta
       if( j - ( j & -j ) < j_max ){
 
 	U& tj = m_fenwick_0[j];
-	tj = m_M.Product( tj , u );
+	tj = m_M.Product( move( tj ) , u );
   
       }
 
@@ -208,7 +208,7 @@ void IdempotentMonoidBIT<U,COMM_IDEM_MONOID>::IntervalMultiply( const int& i_sta
       if( j + ( j & -j ) > j_min ){
 
 	U& tj = m_fenwick_0[j];
-	tj = m_M.Product( tj , u );
+	tj = m_M.Product( move( tj ) , u );
 
       }
 
@@ -250,26 +250,27 @@ U IdempotentMonoidBIT<U,COMM_IDEM_MONOID>::IntervalProduct( const int& i_start ,
 
   while( j_next <= j_max ){
 
-    answer1 = m_M.Product( answer1 , m_fenwick_1[j] );
+    answer1 = m_M.Product( move( answer1 ) , m_fenwick_1[j] );
     j = j_next;
     j_next += ( j & -j );
 
   }
 
-  answer1 = m_M.Product( answer1 , m_a[j-1] ); 
+  answer1 = m_M.Product( move( answer1 ) , m_a[j-1] ); 
   U answer0 = m_M.One();
   j = j_max;
   j_next = j - ( j & -j );
 
   while( j_next >= j_min ){
 
-    answer0 = m_M.Product( m_fenwick_0[j] , answer0 );
+    // 可換性を使った。
+    answer0 = m_M.Product( move( answer0 ) , m_fenwick_0[j] );
     j = j_next;
     j_next -= ( j & -j );
 
   }
 
-  return m_M.Product( answer1 , answer0 );
+  return m_M.Product( move( answer1 ) , answer0 );
 
 }
 

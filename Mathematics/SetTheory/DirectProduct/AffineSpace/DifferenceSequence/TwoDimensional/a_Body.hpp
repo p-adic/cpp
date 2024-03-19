@@ -12,20 +12,20 @@ template <typename U , typename GROUP> inline void AbstractTwoDimensionalDiffere
 template <typename U , typename GROUP> inline const U& AbstractTwoDimensionalDifferenceSequence<U,GROUP>::Get( const int& i_x , const int& i_y ) { Update(); return m_a[i_x][i_y]; }
 template <typename U , typename GROUP> inline U& AbstractTwoDimensionalDifferenceSequence<U,GROUP>::Ref( const int& i_x , const int& i_y ) { return m_a[i_x][i_y]; }
 
-template <typename U , typename GROUP> inline void AbstractTwoDimensionalDifferenceSequence<U,GROUP>::Add( const int& i_x , const int& i_y , const U& u ) { m_a[i_x][i_y] = m_M.Sum( m_a[i_x][i_y] , u ); }
+template <typename U , typename GROUP> inline void AbstractTwoDimensionalDifferenceSequence<U,GROUP>::Add( const int& i_x , const int& i_y , const U& u ) { m_a[i_x][i_y] = m_M.Sum( move( m_a[i_x][i_y] ) , u ); }
   
 template <typename U , typename GROUP> inline void AbstractTwoDimensionalDifferenceSequence<U,GROUP>::RectangleAdd( const int& i_start_x , const int& i_start_y , const int& i_final_x , const int& i_final_y , const U& u )
 {
 
   m_updated = true;
   vector<U>& m_lazy_addition_i_start_x = m_lazy_addition[i_start_x];
-  m_lazy_addition_i_start_x[i_start_y] = m_M.Sum( m_lazy_addition_i_start_x[i_start_y] , u );
+  m_lazy_addition_i_start_x[i_start_y] = m_M.Sum( move( m_lazy_addition_i_start_x[i_start_y] ) , u );
   const int i_final_y_plus = i_final_y + 1;
   const U u_inv = m_M.Inverse( u );
 
   if( i_final_y_plus < m_size_Y ){
 
-    m_lazy_addition_i_start_x[i_final_y_plus] = m_M.Sum( m_lazy_addition_i_start_x[i_final_y_plus] , u_inv );
+    m_lazy_addition_i_start_x[i_final_y_plus] = m_M.Sum( move( m_lazy_addition_i_start_x[i_final_y_plus] ) , u_inv );
 
   }
 
@@ -34,11 +34,11 @@ template <typename U , typename GROUP> inline void AbstractTwoDimensionalDiffere
   if( i_final_x_plus < m_size_X ){
 
     vector<U>& m_lazy_addition_i_final_x_plus = m_lazy_addition[i_final_x_plus];
-    m_lazy_addition_i_final_x_plus[i_start_y] = m_M.Sum( m_lazy_addition_i_final_x_plus[i_start_y] , u_inv );
+    m_lazy_addition_i_final_x_plus[i_start_y] = m_M.Sum( move( m_lazy_addition_i_final_x_plus[i_start_y] ) , u_inv );
 
     if( i_final_y_plus < m_size_Y ){
 
-      m_lazy_addition_i_final_x_plus[i_final_y_plus] = m_M.Sum( m_lazy_addition_i_final_x_plus[i_final_y_plus] , u );
+      m_lazy_addition_i_final_x_plus[i_final_y_plus] = m_M.Sum( move( m_lazy_addition_i_final_x_plus[i_final_y_plus] ) , u );
 
     }
 
@@ -60,7 +60,7 @@ template <typename U , typename GROUP> inline AbstractTwoDimensionalDifferenceSe
 
     for( int y = 0 ; y < m_size_Y ; y++ ){
 
-      m_a_x[y] = m_M.Sum( m_a_x[y] , a_x[y] );
+      m_a_x[y] = m_M.Sum( move( m_a_x[y] ) , a_x[y] );
 
     }
   
@@ -91,9 +91,9 @@ template <typename U , typename GROUP> void AbstractTwoDimensionalDifferenceSequ
     for( int y = 0 ; y < m_size_Y ; y++ ){
 
       U& m_lazy_addition_xy = m_lazy_addition_x[y];
-      temp = m_M.Sum( temp , m_lazy_addition_xy );
-      diff[y] = m_M.Sum( diff[y] , temp );
-      m_a_x[y] = m_M.Sum( m_a_x[y] , diff[y] );
+      temp = m_M.Sum( move( temp ) , m_lazy_addition_xy );
+      diff[y] = m_M.Sum( move( diff[y] ) , temp );
+      m_a_x[y] = m_M.Sum( move( m_a_x[y] ) , diff[y] );
       m_lazy_addition_xy = zero;
 
     }

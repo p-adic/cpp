@@ -4,7 +4,7 @@
 #include "../a.hpp"
 
 // verify:
-// https://yukicoder.me/submissions/957505（一点加算、区間加算、一点取得）
+// https://yukicoder.me/submissions/961746（一点加算、区間加算、一点取得）
 
 // 入力の範囲内で要件
 // (1) MがUのZ加群構造である。

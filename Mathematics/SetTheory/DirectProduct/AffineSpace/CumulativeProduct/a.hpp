@@ -92,7 +92,7 @@ public:
   // a[i]をM.Product(a[i],u)に置き変える。
   inline void RightMultiply( const int& i , const U& u );
   // a[i]をM.Product(u,a[i])に置き変える。
-  inline void LeftMultiply( const int& i , const U& u );
+  inline void LeftMultiply( const int& i , U u );
 
   // 0 <= i_final < m_sizeの場合のみサポート。
   // 右始切片積a[0]...a[i_final]をMに関して計算する。

@@ -36,7 +36,7 @@ template <typename U , typename MONOID> inline MonoidBIT<U,MONOID>::MonoidBIT( M
 
     while( j < j_ulim ){
 
-      fenwick_1i = m_M.Product( fenwick_1i , m_fenwick_1[j] );
+      fenwick_1i = m_M.Product( move( fenwick_1i ) , m_fenwick_1[j] );
       j += ( j & -j );
 
     }
@@ -51,7 +51,7 @@ template <typename U , typename MONOID> inline MonoidBIT<U,MONOID>::MonoidBIT( M
 
 }
 
-template <typename U , typename MONOID> template <typename...Args> inline void MonoidBIT<U,MONOID>::Initialise( Args&&... args ) { *this = MonoidBIT<U,MONOID>( move( m_M ) , forward<decay_t<Args>>( args )... ); }
+template <typename U , typename MONOID> template <typename...Args> inline void MonoidBIT<U,MONOID>::Initialise( Args&&... args ) { MonoidBIT<U,MONOID> temp{ move( m_M ) , forward<decay_t<Args>>( args )... }; m_size = temp.m_size; m_a = move( temp.m_a ); m_fenwick_0 = move( temp.m_fenwick_0 ); m_fenwick_1 = move( temp.m_fenwick_1 ); m_power = temp.m_power; }
 
 template <typename U , typename MONOID>
 void MonoidBIT<U,MONOID>::Set( const int& i , const U& u )
@@ -77,7 +77,7 @@ void MonoidBIT<U,MONOID>::Set( const int& i , const U& u )
     }
 
     // çáåvO((log_2 size)^2)
-    temp_right = m_M.Product( temp_right , IntervalProduct( j , j_next - 1 ) );
+    temp_right = m_M.Product( move( temp_right ) , IntervalProduct( j , j_next - 1 ) );
     j = j_next;
 
   }
@@ -98,7 +98,7 @@ void MonoidBIT<U,MONOID>::Set( const int& i , const U& u )
 
     if( j_plus != j_plus_next - 1 ){
       // çáåvO(log_2 size)
-      temp_right = m_M.Product( temp_right , IntervalProduct( j_plus , j_plus_next - 1 ) );
+      temp_right = m_M.Product( move( temp_right ) , IntervalProduct( j_plus , j_plus_next - 1 ) );
       j_plus = j_plus_next;
 
     }
@@ -133,13 +133,13 @@ U MonoidBIT<U,MONOID>::IntervalProduct( const int& i_start , const int& i_final 
 
   while( j_next <= j_max ){
 
-    answer1 = m_M.Product( answer1 , m_fenwick_1[j] );
+    answer1 = m_M.Product( move( answer1 ) , m_fenwick_1[j] );
     j = j_next;
     j_next += ( j & -j );
 
   }
 
-  answer1 = m_M.Product( answer1 , m_a[j-1] );
+  answer1 = m_M.Product( move( answer1 ) , m_a[j-1] );
   U answer0 = m_M.One();
   j = j_max;
   j_next = j - ( j & -j );
@@ -152,7 +152,7 @@ U MonoidBIT<U,MONOID>::IntervalProduct( const int& i_start , const int& i_final 
 
   }
 
-  return m_M.Product( answer1 , answer0 );
+  return m_M.Product( move( answer1 ) , answer0 );
 
 }
 
@@ -170,7 +170,7 @@ template <typename U , typename MONOID> template <typename F , SFINAE_FOR_BIT_BS
 
     if( j_next <= m_size ){
       
-      sum_next = m_M.Product( sum_next , m_fenwick_0[j_next] );
+      sum_next = m_M.Product( move( sum_next ) , m_fenwick_0[j_next] );
 
       if( f( sum_next , j_next - 1 ) ){
 

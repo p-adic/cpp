@@ -53,9 +53,9 @@ template <typename U , typename GROUP> inline void AbstractCumulativeProduct<U,G
 
 }
 
-template <typename U , typename GROUP> inline void AbstractCumulativeProduct<U,GROUP>::RightMultiply( const int& i , const U& u ) { Set( i , this->m_M.Product( m_a[i] , u ) ); }
+template <typename U , typename GROUP> inline void AbstractCumulativeProduct<U,GROUP>::RightMultiply( const int& i , const U& u ) { Set( i , this->m_M.Product( move( m_a[i] ) , u ) ); }
 
-template <typename U , typename GROUP> inline void AbstractCumulativeProduct<U,GROUP>::LeftMultiply( const int& i , const U& u ) { Set( i , this->m_M.Product( u , m_a[i] ) ); }
+template <typename U , typename GROUP> inline void AbstractCumulativeProduct<U,GROUP>::LeftMultiply( const int& i , U u ) { Set( i , this->m_M.Product( move( u ) , m_a[i] ) ); }
 
 template <typename U> inline void CumulativeSum<U>::Add( const int& i , const U& u ) { this->RightMultiply( i , u ); }
 

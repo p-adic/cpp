@@ -2,9 +2,10 @@
 
 #pragma once
 #include "../a_Macro.hpp"
+
 // verify:
-// https://yukicoder.me/submissions/955169（零初期化、一点乗算、区間積）
-// https://yukicoder.me/submissions/950344（配列初期化、一点代入、区間積）
+// https://yukicoder.me/submissions/961753（配列初期化、一点代入、区間積）
+// https://yukicoder.me/submissions/961750（零初期化、一点乗算、区間積）
 
 // 入力の範囲内で要件
 // (1) MがUの可換モノイド構造である。

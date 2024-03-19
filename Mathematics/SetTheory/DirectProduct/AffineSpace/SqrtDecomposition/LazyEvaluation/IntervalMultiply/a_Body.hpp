@@ -23,7 +23,7 @@ template <typename R , typename PT_MAGMA , typename U , typename R_MODULE> inlin
 
     for( int i = i_min ; i < i_ulim ; i++ ){
 
-      m_bd = m_M.Product( m_bd , m_a[i] );
+      m_bd = m_M.Product( move( m_bd ) , m_a[i] );
 
     }
 
@@ -34,7 +34,7 @@ template <typename R , typename PT_MAGMA , typename U , typename R_MODULE> inlin
 
 }
 
-template <typename R , typename PT_MAGMA , typename U , typename R_MODULE> template <typename...Args> inline void IntervalMultiplyLazySqrtDecomposition<R,PT_MAGMA,U,R_MODULE>::Initialise( Args&&...args ) { *this = IntervalMultiplyLazySqrtDecomposition<R,PT_MAGMA,U,R_MODULE>( move( m_L ) , move( m_M ) , forward<Args>( args )... ); }
+template <typename R , typename PT_MAGMA , typename U , typename R_MODULE> template <typename...Args> inline void IntervalMultiplyLazySqrtDecomposition<R,PT_MAGMA,U,R_MODULE>::Initialise( Args&&...args ) { IntervalMultiplyLazySqrtDecomposition<R,PT_MAGMA,U,R_MODULE> temp{ m_L , m_M , forward<Args>( args )... };  m_N = temp.m_N; m_N_sqrt = temp.m_N_sqrt; m_N_d = temp.m_N_d; m_N_m = temp.m_N_m; m_a = move( temp.m_a ); m_b = move( temp.m_b ); m_lazy_substitution = move( temp.m_lazy_substitution ); m_suspended = move( temp.m_suspended ); m_lazy_action = move( temp.m_lazy_action ); m_lazy_multiplication = move( temp.m_lazy_multiplication ); }
 
 template <typename R , typename PT_MAGMA , typename U , typename R_MODULE> inline void IntervalMultiplyLazySqrtDecomposition<R,PT_MAGMA,U,R_MODULE>::Set( const int& i , const U& u )
 {
@@ -206,7 +206,7 @@ template <typename R , typename PT_MAGMA , typename U , typename R_MODULE> inlin
 	} else {
 	  
 	  IntervalAct_Body( d_0_N_sqrt_minus , i_min , m_lazy_action_d );
-	  IntervalAct_Body( i_min , i_0 , m_L.Product( r , m_lazy_action_d ) );
+	  IntervalAct_Body( i_min , i_0 , m_L.Action( r , m_lazy_action_d ) );
 	  IntervalAct_Body( i_0 , d_0_N_sqrt , m_lazy_action_d );
 	  m_lazy_action_d = point;
 
@@ -242,7 +242,7 @@ template <typename R , typename PT_MAGMA , typename U , typename R_MODULE> inlin
       } else {
       
 	R& m_lazy_action_d = m_lazy_action[d];
-	m_lazy_action_d = m_L.Product( r , m_lazy_action_d );
+	m_lazy_action_d = m_L.Action( r , m_lazy_action_d );
 	U& m_lazy_multiplication_d = m_lazy_multiplication[d];
 	m_lazy_multiplication_d = m_M.Action( r , m_lazy_multiplication_d );
 
@@ -279,7 +279,7 @@ template <typename R , typename PT_MAGMA , typename U , typename R_MODULE> inlin
 	} else {
 	  
 	  IntervalAct_Body( d_1_N_sqrt , i_1 , m_lazy_action_d );
-	  IntervalAct_Body( i_1 , i_ulim , m_L.Product( r , m_lazy_action_d ) );
+	  IntervalAct_Body( i_1 , i_ulim , m_L.Action( r , m_lazy_action_d ) );
 	  IntervalAct_Body( i_ulim , d_1_N_sqrt_plus , m_lazy_action_d );
 	  m_lazy_action_d = point;
 
@@ -332,7 +332,7 @@ template <typename R , typename PT_MAGMA , typename U , typename R_MODULE> inlin
       const int d_0_N_sqrt_minus = d_0_N_sqrt - m_N_sqrt;
       U& m_bd = m_b[d_0_minus];
       // N加群性を使った。
-      m_bd = m_M.Product( m_bd , m_M.Power( u , i_0 - i_min ) );
+      m_bd = m_M.Product( move( m_bd ) , m_M.Power( u , i_0 - i_min ) );
       vector<bool>::reference m_suspended_d = m_suspended[d_0_minus];
 
       if( m_suspended_d ){
@@ -379,17 +379,17 @@ template <typename R , typename PT_MAGMA , typename U , typename R_MODULE> inlin
 
       U& m_bd = m_b[d];
       // N加群性を使った。
-      m_bd = m_M.Product( m_bd , power );
+      m_bd = m_M.Product( move( m_bd ) , power );
 
       if( m_suspended[d] ){
 
 	U& m_lazy_substitution_d = m_lazy_substitution[d];
-	m_lazy_substitution_d = m_M.Product( m_lazy_substitution_d , u );
+	m_lazy_substitution_d = m_M.Product( move( m_lazy_substitution_d ) , u );
 
       } else {
       
 	U& m_lazy_multiplication_d = m_lazy_multiplication[d];
-	m_lazy_multiplication_d = m_M.Product( m_lazy_multiplication_d , u );
+	m_lazy_multiplication_d = m_M.Product( move( m_lazy_multiplication_d ) , u );
 
       }
 
@@ -401,7 +401,7 @@ template <typename R , typename PT_MAGMA , typename U , typename R_MODULE> inlin
       const int d_1_N_sqrt_plus = d_1_N_sqrt + m_N_sqrt;
       U& m_bd = m_b[d_1];
       // N加群性を使った。
-      m_bd = m_M.Product( m_bd , m_M.Power( u , i_ulim - i_1 ) );
+      m_bd = m_M.Product( move( m_bd ) , m_M.Power( u , i_ulim - i_1 ) );
       vector<bool>::reference m_suspended_d = m_suspended[d_1];
 
       if( m_suspended_d ){
@@ -473,7 +473,7 @@ template <typename R , typename PT_MAGMA , typename U , typename R_MODULE> inlin
   
   for( int d = d_0 ; d < d_1 ; d++ ){
 
-    answer = m_M.Product( answer , m_b[d] );
+    answer = m_M.Product( move( answer ) , m_b[d] );
 
   }
 
@@ -481,7 +481,7 @@ template <typename R , typename PT_MAGMA , typename U , typename R_MODULE> inlin
 
     // この時d_1 < m_N_dになる。
     // N加群性を使った。
-    answer = m_M.Product( answer , m_suspended[d_1] ? m_M.Power( m_lazy_substitution[d_1] , i_ulim - i_1 ) : m_M.Product( m_M.Action( m_lazy_action[d_1] , IntervalProduct_Body( i_1 , i_ulim ) ) , m_M.Power( m_lazy_multiplication[d_1] , i_ulim - i_1 ) ) );
+    answer = m_M.Product( move( answer ) , m_suspended[d_1] ? m_M.Power( m_lazy_substitution[d_1] , i_ulim - i_1 ) : m_M.Product( m_M.Action( m_lazy_action[d_1] , IntervalProduct_Body( i_1 , i_ulim ) ) , m_M.Power( m_lazy_multiplication[d_1] , i_ulim - i_1 ) ) );
 
   }
 
@@ -498,7 +498,7 @@ template <typename R , typename PT_MAGMA , typename U , typename R_MODULE> inlin
 
   for( int i = i_min ; i < i_ulim ; i++ ){
 
-    m_bd = m_M.Product( m_bd , m_a[i] );
+    m_bd = m_M.Product( move( m_bd ) , m_a[i] );
 
   }
 
@@ -552,7 +552,7 @@ template <typename R , typename PT_MAGMA , typename U , typename R_MODULE> inlin
     
     IntervalMultiply_Body( i_min , i_ulim , m_lazy_multiplication_d );
     // N加群性を使った。
-    m_bd = m_M.Product( m_bd , m_M.Power( m_lazy_multiplication_d , m_N_sqrt ) );
+    m_bd = m_M.Product( move( m_bd ) , m_M.Power( m_lazy_multiplication_d , m_N_sqrt ) );
     m_lazy_multiplication_d = one;
 
   }
@@ -581,7 +581,7 @@ template <typename R , typename PT_MAGMA , typename U , typename R_MODULE> inlin
   for( int i = i_min ; i < i_ulim ; i++ ){
 
     U& m_ai = m_a[i];
-    m_ai = m_M.Product( m_ai , u );
+    m_ai = m_M.Product( move( m_ai ) , u );
 
   }
 
@@ -596,7 +596,7 @@ template <typename R , typename PT_MAGMA , typename U , typename R_MODULE> inlin
   
   for( int i = i_min ; i < i_ulim ; i++ ){
 
-    answer = m_M.Product( answer , m_a[i] );
+    answer = m_M.Product( move( answer ) , m_a[i] );
 
   }
 

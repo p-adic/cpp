@@ -4,7 +4,7 @@
 #include "../a.hpp"
 
 // verify:
-// https://yukicoder.me/submissions/955170（一点乗算、区間乗算、一点取得）
+// https://yukicoder.me/submissions/961755（一点乗算、区間乗算、一点取得）
 
 // 入力の範囲内で要件
 // (1) MがUのN加群構造である。

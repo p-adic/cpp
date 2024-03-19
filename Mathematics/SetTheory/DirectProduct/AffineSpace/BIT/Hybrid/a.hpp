@@ -3,8 +3,8 @@
 #pragma once
 #include "../a.hpp"
 
-// https://yukicoder.me/submissions/950353（零初期化、一点加算、区間和）
-// https://yukicoder.me/submissions/950356（零初期化、配列初期化、始切片和）
+// https://yukicoder.me/submissions/961777（零初期化、一点加算、区間和）
+// https://yukicoder.me/submissions/961778（零初期化、配列初期化、始切片和）
 
 // 一点取得と一点代入の高速化のためだけに通常の配列とハイブリッドしたBIT。
 // メモリサイズは２倍になるので他の処理は遅くなる。

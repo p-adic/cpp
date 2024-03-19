@@ -5,7 +5,7 @@
 #include "../../../../../Algebra/Monoid/Semilattice/a.hpp"
 
 // verify:
-// https://yukicoder.me/submissions/955165（一点乗算、区間積取得）
+// https://yukicoder.me/submissions/961780（一点乗算、区間積取得）
 
 // 入力の範囲内で要件
 // (1) MがUの可換羃等モノイド構造である。

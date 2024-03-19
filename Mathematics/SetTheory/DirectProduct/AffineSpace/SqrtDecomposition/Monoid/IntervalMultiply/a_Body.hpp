@@ -7,7 +7,7 @@
 
 template <typename U , typename N_MODULE> template <typename...Args> inline IntervalMultiplySqrtDecomposition<U,N_MODULE>::IntervalMultiplySqrtDecomposition( N_MODULE M , Args&&... args ) : MonoidSqrtDecomposition<U,N_MODULE>( move( M ) , forward<Args>( args )... ) , m_lazy_multiplication( this->m_N_d , this->m_M.One() ) {}
 
-template <typename U , typename N_MODULE> template <typename...Args> inline void IntervalMultiplySqrtDecomposition<U,N_MODULE>::Initialise( Args&&... args ) { *this = IntervalMultiplySqrtDecomposition<U,N_MODULE>( move( this->m_M ) , forward<Args>( args )... ); }
+template <typename U , typename N_MODULE> template <typename...Args> inline void IntervalMultiplySqrtDecomposition<U,N_MODULE>::Initialise( Args&&... args ) { MonoidSqrtDecomposition<U,N_MODULE>::Initialise( forward<Args>( args )... ); m_lazy_multiplication = vector( this->m_N_d , this->m_M.One() ); }}
 
 template <typename U , typename N_MODULE> inline void IntervalMultiplySqrtDecomposition<U,N_MODULE>::Set( const int& i , const U& u )
 {
@@ -23,7 +23,7 @@ template <typename U , typename N_MODULE> inline void IntervalMultiplySqrtDecomp
     for( int j = j_min ; j < j_ulim ; j++ ){
 
       U& m_aj = this->m_a[j];
-      m_aj = this->m_M.Product( m_lazy_multiplication_d , m_aj );
+      m_aj = this->m_M.Product( move( m_aj ) , m_lazy_multiplication_d );
 
     }
 
@@ -36,7 +36,7 @@ template <typename U , typename N_MODULE> inline void IntervalMultiplySqrtDecomp
 
   for( int j = j_min ; j < j_ulim ; j++ ){
 
-    m_bd = this->m_M.Product( m_bd , this->m_a[j] );
+    m_bd = this->m_M.Product( move( m_bd ) , this->m_a[j] );
 
   }
 
@@ -65,7 +65,7 @@ template <typename U , typename N_MODULE> inline void IntervalMultiplySqrtDecomp
     for( int d = d_0 ; d < d_1 ; d++ ){
 
       U& m_lazy_multiplication_d = m_lazy_multiplication[d];
-      m_lazy_multiplication_d = this->m_M.Product( m_lazy_multiplication_d , u );
+      m_lazy_multiplication_d = this->m_M.Product( move( m_lazy_multiplication_d ) , u );
 
     }
 
@@ -97,7 +97,7 @@ template <typename U , typename N_MODULE> inline U IntervalMultiplySqrtDecomposi
 
   for( int d = d_0 ; d < d_1 ; d++ ){
 
-    answer = this->m_M.Product( answer , m_lazy_multiplication[d] );
+    answer = this->m_M.Product( move( answer ) , m_lazy_multiplication[d] );
 
   }
 
@@ -105,17 +105,17 @@ template <typename U , typename N_MODULE> inline U IntervalMultiplySqrtDecomposi
 
   if( d_0 > 0 ){
 
-    answer = this->m_M.Product( answer , this->m_M.Power( m_lazy_multiplication[d_0 - 1] , i_0 - i_min ) );
+    answer = this->m_M.Product( move( answer ) , this->m_M.Power( m_lazy_multiplication[d_0 - 1] , i_0 - i_min ) );
 
   }
 
   if( d_1 < this->m_N_d ){
   
-    answer = this->m_M.Product( answer , this->m_M.Power( m_lazy_multiplication[d_1] , i_ulim - i_1 ) );
+    answer = this->m_M.Product( move( answer ) , this->m_M.Power( m_lazy_multiplication[d_1] , i_ulim - i_1 ) );
 
   }
 
-  answer = this->m_M.Product( answer , MonoidSqrtDecomposition<U,N_MODULE>::IntervalProduct( i_start , i_final ) );
+  answer = this->m_M.Product( move( answer ) , MonoidSqrtDecomposition<U,N_MODULE>::IntervalProduct( i_start , i_final ) );
   return answer;
   
 }

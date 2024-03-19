@@ -22,7 +22,7 @@ template <typename U , typename COMM_MONOID> inline MonoidSqrtDecomposition<U,CO
   
     for( int i = i_min ; i < i_ulim ; i++ ){
 
-      m_bd = m_M.Product( m_bd , m_a[i] );
+      m_bd = m_M.Product( move( m_bd ) , m_a[i] );
 
     }
     
@@ -33,7 +33,7 @@ template <typename U , typename COMM_MONOID> inline MonoidSqrtDecomposition<U,CO
 
 }
 
-template <typename U , typename COMM_MONOID> template <typename...Args> inline void MonoidSqrtDecomposition<U,COMM_MONOID>::Initialise( Args&&... args ) { *this = MonoidSqrtDecomposition<U,COMM_MONOID>( move( m_M ) , forward<Args>( args )... ); }
+template <typename U , typename COMM_MONOID> template <typename...Args> inline void MonoidSqrtDecomposition<U,COMM_MONOID>::Initialise( Args&&... args ) { MonoidSqrtDecomposition<U,COMM_MONOID> temp{ m_M , forward<Args>( args )... };  m_N = temp.m_N; m_N_sqrt = temp.m_N_sqrt; m_N_d = temp.m_N_d; m_N_m = temp.m_N_m; m_a = move( temp.m_a ); m_b = move( temp.m_b ); }
 
 template <typename U , typename COMM_MONOID> inline void MonoidSqrtDecomposition<U,COMM_MONOID>::Set( const int& i , const U& u )
 {
@@ -46,7 +46,7 @@ template <typename U , typename COMM_MONOID> inline void MonoidSqrtDecomposition
 
   for( int i = i_min ; i < i_ulim ; i++ ){
 
-    m_bd = m_M.Product( m_bd , m_a[i] );
+    m_bd = m_M.Product( move( m_bd ) , m_a[i] );
 
   }
 
@@ -54,7 +54,7 @@ template <typename U , typename COMM_MONOID> inline void MonoidSqrtDecomposition
 
 }
 
-template <typename U , typename COMM_MONOID> inline void MonoidSqrtDecomposition<U,COMM_MONOID>::Multiply( const int& i , const U& u ) { U& m_ai = m_a[i]; U& m_bd = m_b[i / m_N_sqrt]; m_bd = m_M.Product( m_bd , u ); m_ai = m_M.Product( m_ai , u ); }
+template <typename U , typename COMM_MONOID> inline void MonoidSqrtDecomposition<U,COMM_MONOID>::Multiply( const int& i , const U& u ) { U& m_ai = m_a[i]; U& m_bd = m_b[i / m_N_sqrt]; m_bd = m_M.Product( move( m_bd ) , u ); m_ai = m_M.Product( move( m_ai ) , u ); }
 
 template <typename U , typename COMM_MONOID> inline const U& MonoidSqrtDecomposition<U,COMM_MONOID>::operator[]( const int& i ) const { assert( 0 <= i && i < m_N ); return m_a[i]; }
 template <typename U , typename COMM_MONOID> inline const U& MonoidSqrtDecomposition<U,COMM_MONOID>::Get( const int& i ) const { return operator[]( i ); }
@@ -72,19 +72,19 @@ template <typename U , typename COMM_MONOID> inline U MonoidSqrtDecomposition<U,
   
   for( int i = i_min ; i < i_0 ; i++ ){
 
-    answer = m_M.Product( answer , m_a[i] );
+    answer = m_M.Product( move( answer ) , m_a[i] );
 
   }
   
   for( int d = d_0 ; d < d_1 ; d++ ){
 
-    answer = m_M.Product( answer , m_b[d] );
+    answer = m_M.Product( move( answer ) , m_b[d] );
 
   }
 
   for( int i = i_1 ; i < i_ulim ; i++ ){
 
-    answer = m_M.Product( answer , m_a[i] );
+    answer = m_M.Product( move( answer ) , m_a[i] );
 
   }
 
@@ -104,7 +104,7 @@ template <typename U , typename COMM_MONOID> template <typename F> int MonoidSqr
   
   for( int i = i_min ; i < i_0 ; i++ ){
 
-    sum_temp = m_M.Product( sum_temp , m_a[i] );
+    sum_temp = m_M.Product( move( sum_temp ) , m_a[i] );
 
     if( f( sum_temp , i ) ){
 

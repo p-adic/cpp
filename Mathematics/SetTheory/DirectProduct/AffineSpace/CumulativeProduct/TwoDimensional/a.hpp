@@ -3,7 +3,7 @@
 #pragma once
 
 // verify:
-// https://yukicoder.me/submissions/959652（矩形和）
+// https://yukicoder.me/submissions/961862（矩形和）
 
 // ２次元配列上の累積和。
 // 入力の範囲内で要件

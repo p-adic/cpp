@@ -71,7 +71,7 @@ U AbstractSegmentTree<U,MONOID>::IntervalProduct( const int& i_start , const int
 
   while( j_min < j_ulim ){
 
-    ( j_min & 1 ) == 1 ? answer0 = m_M.Product( answer0 , m_a[j_min++] ) : answer0;
+    ( j_min & 1 ) == 1 ? answer0 = m_M.Product( move( answer0 ) , m_a[j_min++] ) : answer0;
     ( j_ulim & 1 ) == 1 ? answer1 = m_M.Product( m_a[--j_ulim] , answer1 ) : answer1;
     j_min >>= 1;
     j_ulim >>= 1;

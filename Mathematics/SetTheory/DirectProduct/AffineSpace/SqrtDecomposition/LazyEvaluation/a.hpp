@@ -1,18 +1,21 @@
 // c:/Users/user/Documents/Programming/Mathematics/SetTheory/DirectProduct/AffineSpace/SqrtDecomposition/LazyEvaluation/a.hpp
 
 #pragma once
+
 //verify:
-// https://onlinejudge.u-aizu.ac.jp/status/users/padic/submissions/1/DSL_2_I/judge/8901765/C++17（零初期化、区間代入、区間積取得）
+// https://onlinejudge.u-aizu.ac.jp/status/users/padic/submissions/1/DSL_2_I/judge/9004432/C++17（零初期化、区間代入、区間積取得）
 
 // 入力の範囲内で要件
-// (1) LがRの基点付きマグマ構造である。
-// (2) MがUの「Lの基点がUの恒等変換に対応するUの左L作用つきN加群構造」である。
-// (3) R!=intである。（L作用とN加群構造の区別のため）
+// (1) LがRの基点付き左作用構造（例えば基点付きマグマの正則左加群構造）である。
+// (2) MがUの左L作用構造であって以下を満たす：
+//     (2-1) Lの基点がMの恒等変換に対応する。
+//     (2-2) Lの左作用とMの左作用が結合的である。（例えばマグマ作用である）
+// (3) R=intならばL作用とN加群構造が整合的である。
 // を満たす場合にのみサポート。
 // 区間乗算を追加しても要件と計算量のオーダーは変わらないが、定数倍遅くなる。
 
-// 区間作用を行わない場合もm_R.Point()の作用を区間積に用いるため、
-// dummyにせずMultiplicativeMonoid(1)などを用いる必要があることに注意。
+// 区間作用を行わない場合もm_L.Point()の作用を区間積に用いるため、
+// dummyにせずRegularRSet(MultiplicativeMonoid(1))などを用いる必要があることに注意。
 
 // M.One()による初期化O(N)
 // 配列による初期化O(N)
@@ -42,6 +45,9 @@ protected:
   vector<R> m_lazy_action;
 
 public:
+  // vectorを構築する時は
+  // vector t( N , LazySqrtDecomposition{L,M} );
+  // としてInitialiseすればよい。
   inline LazySqrtDecomposition( PT_MAGMA L , R_MODULE M , const int& N = 0 );
   inline LazySqrtDecomposition( PT_MAGMA L , R_MODULE M , const int& N , const int& N_sqrt );
   inline LazySqrtDecomposition( PT_MAGMA L , R_MODULE M , vector<U> a );

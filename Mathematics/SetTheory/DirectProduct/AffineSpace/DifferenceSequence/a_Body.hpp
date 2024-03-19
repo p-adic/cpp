@@ -17,7 +17,7 @@ template <typename T , typename FOREST , typename PREV , typename U , typename G
 template <typename T , typename FOREST , typename PREV , typename U , typename GROUP> inline const U& AbstractDifferenceSequence<T,FOREST,PREV,U,GROUP>::Get( const T& t ) { Update(); return m_a[m_G.Enumeration_inv(t)]; }
 template <typename T , typename FOREST , typename PREV , typename U , typename GROUP> inline U& AbstractDifferenceSequence<T,FOREST,PREV,U,GROUP>::Ref( const T& t ) { return m_a[m_G.Enumeration_inv(t)]; }
 
-template <typename T , typename FOREST , typename PREV , typename U , typename GROUP> inline void AbstractDifferenceSequence<T,FOREST,PREV,U,GROUP>::Add( const T& t , const U& u ) { U& a_t = m_a[m_G.Enumeration_inv(t)]; a_t = m_M.Sum( a_t , u ); }
+template <typename T , typename FOREST , typename PREV , typename U , typename GROUP> inline void AbstractDifferenceSequence<T,FOREST,PREV,U,GROUP>::Add( const T& t , const U& u ) { U& a_t = m_a[m_G.Enumeration_inv(t)]; a_t = m_M.Sum( move( a_t ) , u ); }
 
 template <typename T , typename FOREST , typename PREV , typename U , typename GROUP>
 void AbstractDifferenceSequence<T,FOREST,PREV,U,GROUP>::SubTreeAdd( const T& t_start , const list<T>& t_final , const U& u )
@@ -31,7 +31,7 @@ void AbstractDifferenceSequence<T,FOREST,PREV,U,GROUP>::SubTreeAdd( const T& t_s
 
   m_updated = true;
   U& m_lazy_addition_t_start = m_lazy_addition[m_G.Enumeration_inv(t_start)];
-  m_lazy_addition_t_start = m_M.Sum( m_lazy_addition_t_start , u );
+  m_lazy_addition_t_start = m_M.Sum( move( m_lazy_addition_t_start ) , u );
   const U u_inv = m_M.Inverse( u );
   
   for( auto itr_t_final = t_final.begin() , end_t_final = t_final.end() ; itr_t_final != end_t_final ; itr_t_final++ ){
@@ -41,7 +41,7 @@ void AbstractDifferenceSequence<T,FOREST,PREV,U,GROUP>::SubTreeAdd( const T& t_s
     for( auto itr_edge = edge.begin() , end_edge = edge.end() ; itr_edge != end_edge ; itr_edge++ ){
 
       U& m_lazy_addition_t = m_lazy_addition[m_G.Enumeration_inv(*itr_edge)];
-      m_lazy_addition_t = m_M.Sum( m_lazy_addition_t , u_inv );
+      m_lazy_addition_t = m_M.Sum( move( m_lazy_addition_t ) , u_inv );
 
     }
 
@@ -64,7 +64,7 @@ AbstractDifferenceSequence<T,FOREST,PREV,U,GROUP>& AbstractDifferenceSequence<T,
 
   for( int i = 0 ; i < size ; i++ ){
 
-    m_a[i] = m_M.Sum( m_a[i] , a[i] );
+    m_a[i] = m_M.Sum( move( m_a[i] ) , a[i] );
     
   }
 
@@ -94,7 +94,7 @@ void AbstractDifferenceSequence<T,FOREST,PREV,U,GROUP>::Update()
       
       assert( j < i );
       auto& m_lazy_addition_j = m_lazy_addition[j];
-      m_lazy_addition_i = m_M.Sum( m_lazy_addition_j , m_lazy_addition_i );
+      m_lazy_addition_i = m_M.Sum( move( m_lazy_addition_j ) , m_lazy_addition_i );
 
     }
 
@@ -106,7 +106,7 @@ void AbstractDifferenceSequence<T,FOREST,PREV,U,GROUP>::Update()
 
     auto& m_lazy_addition_i = m_lazy_addition[i];
     U& m_ai = m_a[i];
-    m_ai = m_M.Sum( m_lazy_addition_i , m_ai );
+    m_ai = m_M.Sum( move( m_ai ) , m_lazy_addition_i );
     m_lazy_addition_i = zero;
 
   }

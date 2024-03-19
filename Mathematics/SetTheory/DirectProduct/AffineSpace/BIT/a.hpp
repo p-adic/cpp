@@ -5,9 +5,9 @@
 #include "../../../../Algebra/Monoid/Group/a.hpp"
 
 // verify:
-// https://yukicoder.me/submissions/950337（零初期化、一点加算、区間和）
-// https://yukicoder.me/submissions/950342（零初期化、配列初期化、始切片和）
-// https://yukicoder.me/submissions/956409（配列初期化、一点加算、通常の二分探索）
+// https://yukicoder.me/submissions/961771（零初期化、一点加算、区間和）
+// https://yukicoder.me/submissions/961772（零初期化、配列初期化、始切片和）
+// https://yukicoder.me/submissions/961774（配列初期化、一点加算、二分探索）
 
 // 入力の範囲内で要件
 // (1) MがUの可換群構造である。
@@ -45,7 +45,8 @@ protected:
 public:
   inline AbstractBIT( ABELIAN_GROUP M , const int& size = 0 );
   inline AbstractBIT( ABELIAN_GROUP M , const vector<U>& a );
-  
+
+  inline AbstractBIT<U,ABELIAN_GROUP>& operator=( AbstractBIT<U,ABELIAN_GROUP>&& bit );
   template <typename...Args> inline void Initialise( const Args&... args );
   inline void Set( const int& i , const U& u );
   inline AbstractBIT<U,ABELIAN_GROUP>& operator+=( const vector<U>& a );

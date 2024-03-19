@@ -24,7 +24,7 @@ template <typename U , typename ABELIAN_GROUP> inline void AbstractSqrtDecomposi
   
     for( int i = i_min ; i < i_ulim ; i++ ){
 
-      m_bd = m_M.Sum( m_bd , m_a[i] );
+      m_bd = m_M.Sum( move( m_bd ) , m_a[i] );
 
     }
     
@@ -37,9 +37,9 @@ template <typename U , typename ABELIAN_GROUP> inline void AbstractSqrtDecomposi
 
 template <typename U> template <typename...Args> inline SqrtDecomposition<U>::SqrtDecomposition( Args&&... args ) : AbstractSqrtDecomposition<U,AdditiveGroup<U>>( AdditiveGroup<U>() , forward<Args>( args )... ) {}
 
-template <typename U , typename ABELIAN_GROUP> template <typename...Args> inline void AbstractSqrtDecomposition<U,ABELIAN_GROUP>::Initialise( Args&&...args ) { *this = AbstractSqrtDecomposition<U,ABELIAN_GROUP>( move( m_M ) , forward<Args>( args )... ); }
-template <typename U , typename ABELIAN_GROUP> inline void AbstractSqrtDecomposition<U,ABELIAN_GROUP>::Set( const int& i , const U& u ) { U& m_ai = m_a[i]; U& m_bd = m_b[i / m_N_sqrt]; m_bd = m_M.Sum( m_bd , m_M.Sum( m_M.Inverse( m_ai ) , u ) ); m_ai = u; }
-template <typename U , typename ABELIAN_GROUP> inline void AbstractSqrtDecomposition<U,ABELIAN_GROUP>::Add( const int& i , const U& u ) { U& m_ai = m_a[i]; U& m_bd = m_b[i / m_N_sqrt]; m_bd = m_M.Sum( m_bd , u ); m_ai = m_M.Sum( m_ai , u ); }
+template <typename U , typename ABELIAN_GROUP> template <typename...Args> inline void AbstractSqrtDecomposition<U,ABELIAN_GROUP>::Initialise( Args&&...args ) { AbstractSqrtDecomposition<U,ABELIAN_GROUP> temp{ m_M , forward<Args>( args )... }; m_N = temp.m_N; m_N_sqrt = temp.m_N_sqrt; m_N_d = temp.m_N_d; m_N_m = temp.m_N_m; m_a = move( temp.m_a ); m_b = move( temp.m_b ); }
+template <typename U , typename ABELIAN_GROUP> inline void AbstractSqrtDecomposition<U,ABELIAN_GROUP>::Set( const int& i , const U& u ) { U& m_ai = m_a[i]; U& m_bd = m_b[i / m_N_sqrt]; m_bd = m_M.Sum( move( m_bd ) , m_M.Sum( m_M.Inverse( m_ai ) , u ) ); m_ai = u; }
+template <typename U , typename ABELIAN_GROUP> inline void AbstractSqrtDecomposition<U,ABELIAN_GROUP>::Add( const int& i , const U& u ) { U& m_ai = m_a[i]; U& m_bd = m_b[i / m_N_sqrt]; m_bd = m_M.Sum( move( m_bd ) , u ); m_ai = m_M.Sum( move( m_ai ) , u ); }
 
 template <typename U , typename ABELIAN_GROUP> inline const U& AbstractSqrtDecomposition<U,ABELIAN_GROUP>::operator[]( const int& i ) const { assert( 0 <= i && i < m_N ); return m_a[i]; }
 template <typename U , typename ABELIAN_GROUP> inline const U& AbstractSqrtDecomposition<U,ABELIAN_GROUP>::Get( const int& i ) const { return operator[]( i ); }
@@ -57,19 +57,19 @@ template <typename U , typename ABELIAN_GROUP> inline U AbstractSqrtDecompositio
   
   for( int i = i_min ; i < i_0 ; i++ ){
 
-    answer = m_M.Sum( answer , m_a[i] );
+    answer = m_M.Sum( move( answer ) , m_a[i] );
 
   }
   
   for( int d = d_0 ; d < d_1 ; d++ ){
 
-    answer = m_M.Sum( answer , m_b[d] );
+    answer = m_M.Sum( move( answer ) , m_b[d] );
 
   }
 
   for( int i = i_1 ; i < i_ulim ; i++ ){
 
-    answer = m_M.Sum( answer , m_a[i] );
+    answer = m_M.Sum( move( answer ) , m_a[i] );
 
   }
 
@@ -89,7 +89,7 @@ template <typename U , typename ABELIAN_GROUP> template <typename F> int Abstrac
   
   for( int i = i_min ; i < i_0 ; i++ ){
 
-    sum_temp = m_M.Sum( sum_temp , m_a[i] );
+    sum_temp = m_M.Sum( move( sum_temp ) , m_a[i] );
 
     if( f( sum_temp , i ) ){
 
