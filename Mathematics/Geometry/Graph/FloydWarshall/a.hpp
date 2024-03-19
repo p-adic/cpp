@@ -5,7 +5,7 @@
 #include "../../../Algebra/Monoid/Semirng/a.hpp"
 
 // verify:
-// https://yukicoder.me/submissions/946106（経路復元なし）
+// https://yukicoder.me/submissions/961834（経路復元なし）
 
 // weightに値を格納する関係で、dを関数テンプレートで置き換えてもメモリ削減は見込めない。
 

@@ -3,9 +3,9 @@
 #pragma once
 
 #define BELLMAN_FORD_BODY( INITIALISE_PREV , SET_PREV )			\
-  const U& zero = m_M.Zero();						\
+  const U& one = m_M.One();						\
   const U& infty = this->Infty();					\
-  assert( zero < infty );						\
+  assert( one < infty );						\
   const int& size = m_G.size();						\
   auto&& i_start = m_G.Enumeration_inv( t_start );			\
   assert( 0 <= i_start && i_start < size );				\
@@ -29,7 +29,7 @@
 									\
 	  auto&& j = m_G.Enumeration_inv( itr->first );			\
 	  const U& edge_ij = itr->second;				\
-	  U temp = m_M.Sum( weight_i , edge_ij );			\
+	  U temp = m_M.Product( weight_i , edge_ij );			\
 	  U& weight_j = weight[j];					\
 									\
 	  if( weight_j > temp ){					\
@@ -62,7 +62,7 @@
 	auto&& j = m_G.Enumeration_inv( itr->first );			\
 	const U& edge_ij = itr->second;					\
 	U& weight_j = weight[j];					\
-	const U temp = m_M.Sum( weight_i , edge_ij );			\
+	const U temp = m_M.Product( weight_i , edge_ij );		\
 									\
 	if( weight_j > temp ){						\
 									\

@@ -22,14 +22,14 @@
   for( int num = 0 ; num < walk_length ; num++ ){			\
 									\
     const U& weight_i = weight[i];					\
-    found[i] = true;							\
+    fixed[i] = true;							\
     auto&& edge_i = m_G.Edge( m_G.Enumeration( i ) );			\
 									\
     for( auto itr = edge_i.begin() , end = edge_i.end() ; itr != end ; itr++ ){ \
 									\
       auto&& j = m_G.Enumeration_inv( itr->first );			\
       									\
-      if( !found[j] ){							\
+      if( !fixed[j] ){							\
 									\
 	const U& edge_ij = get<1>( *itr );				\
 	U temp = m_M.Product( weight_i , edge_ij );			\
@@ -51,7 +51,7 @@
 									\
     for( int j = 0 ; j < size ; j++ ){					\
 									\
-      if( !found[j] ){							\
+      if( !fixed[j] ){							\
 									\
 	U& weight_j = weight[j];					\
 									\
@@ -78,7 +78,7 @@
     auto begin = vertex.begin();					\
     auto [weight_i,i] = *begin;						\
     CHECK_FINAL;							\
-    found[i] = true;							\
+    fixed[i] = true;							\
     vertex.erase( begin );						\
     auto&& edge_i = m_G.Edge( m_G.Enumeration( i ) );			\
     list<pair<U,int>> changed_vertex{};					\
@@ -87,7 +87,7 @@
 									\
       auto&& j = m_G.Enumeration_inv( itr->first );			\
       									\
-      if( !found[j] ){							\
+      if( !fixed[j] ){							\
 									\
 	const U& edge_ij = get<1>( *itr );				\
 	U temp = m_M.Product( weight_i , edge_ij );			\

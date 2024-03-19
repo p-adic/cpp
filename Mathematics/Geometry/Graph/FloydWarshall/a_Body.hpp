@@ -33,7 +33,7 @@ void FloydWarshall( IDEMPOTENT_SEMIRNG R , const vector<vector<U>>& d , vector<v
 	  if( i != j && k != j && weight_kj != infty ){
 
 	    U& weight_ij = weight_i[j];
-	    weight_ij = R.Meet( weight_ij , R.Product( weight_ik , weight_kj ) );
+	    weight_ij = R.Meet( move( weight_ij ) , R.Product( weight_ik , weight_kj ) );
 
 	  }
 
