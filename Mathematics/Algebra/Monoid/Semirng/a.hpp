@@ -8,9 +8,9 @@ class VirtualSemirng
 {
 
 public:
-  virtual U Sum( const U& u0 , const U& u1 ) = 0;
+  virtual U Sum( U u0 , const U& u1 ) = 0;
   virtual const U& Zero() const noexcept = 0;
-  virtual U Product( const U& u0 , const U& u1 ) = 0;
+  virtual U Product( U u0 , const U& u1 ) = 0;
   virtual MONOID& AdditiveMonoid() noexcept = 0;
   virtual SEMIGROUP& MultiplicativeSemigroup() noexcept = 0;
   using type = U;
@@ -29,9 +29,9 @@ protected:
 
 public:
   inline AbstractSemirng( MONOID R0 , SEMIGROUP R1 );
-  inline U Sum( const U& u0 , const U& u1 );
+  inline U Sum( U u0 , const U& u1 );
   inline const U& Zero() const noexcept;
-  inline U Product( const U& u0 , const U& u1 );
+  inline U Product( U u0 , const U& u1 );
   inline MONOID& AdditiveMonoid() noexcept;
   inline SEMIGROUP& MultiplicativeSemigroup() noexcept;
 

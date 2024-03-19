@@ -39,6 +39,6 @@ virtual public AbstractRing<U,AdditiveGroup<U>,MultiplicativeMonoid<U>>
 {
 
 public:
-inline Ring( const U& one_U );
+inline Ring( U one_U );
 
 };

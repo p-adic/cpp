@@ -14,7 +14,7 @@ class VirtualMeetSemirng :
 
 public:
   inline const U& Infty();
-  inline U Meet( const U& u0 , const U& u1 );
+  inline U Meet( U u0 , const U& u1 );
 
 };
 
@@ -25,8 +25,8 @@ class AbstractTropicalSemirng :
 {
 
 public:
-  inline AbstractTropicalSemirng( const U& infty_U , SEMIGROUP M );
-  inline U Product( const U& u0 , const U& u1 );
+  inline AbstractTropicalSemirng( U infty_U , SEMIGROUP M );
+  inline U Product( U u0 , const U& u1 );
 
 };
 
@@ -36,7 +36,7 @@ class AdditiveTropicalSemirng :
 {
 
 public:
-  inline AdditiveTropicalSemirng( const U& infty_U );
+  inline AdditiveTropicalSemirng( U infty_U );
 
 };
 
@@ -46,6 +46,6 @@ class MultiplicativeTropicalSemirng :
 {
 
 public:
-  inline MultiplicativeTropicalSemirng( const U& infty_U );
+  inline MultiplicativeTropicalSemirng( U infty_U );
 
 };

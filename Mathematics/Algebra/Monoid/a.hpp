@@ -27,7 +27,7 @@ class MultiplicativeMonoid :
 {
 
 public:
-  inline MultiplicativeMonoid( const U& e_U );
+  inline MultiplicativeMonoid( U e_U );
 
 };
 
@@ -39,6 +39,6 @@ class AbstractMonoid :
 {
 
 public:
-  inline AbstractMonoid( M_U m_U , const U& e_U );
+  inline AbstractMonoid( M_U m_U , U e_U );
 
 };

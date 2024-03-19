@@ -54,7 +54,7 @@ private:
   U m_b_U;
 
 public:
-  inline PointedSet( const U& b_u = U() );
+  inline PointedSet( U b_u = U() );
   inline const U& Point() const noexcept;
   inline U& Point() noexcept;
 
@@ -91,8 +91,8 @@ class VirtualMagma :
 {
 
 public:
-  virtual U Product( const U& u0 , const U& u1 ) = 0;
-  inline U Sum( const U& u0 , const U& u1 );
+  virtual U Product( U u0 , const U& u1 ) = 0;
+  inline U Sum( U u0 , const U& u1 );
 
 };
 
@@ -102,7 +102,7 @@ class AdditiveMagma :
 {
 
 public:
-  inline U Product( const U& u0 , const U& u1 );
+  inline U Product( U u0 , const U& u1 );
 
 };
 
@@ -112,7 +112,7 @@ class MultiplicativeMagma :
 {
 
 public:
-  inline U Product( const U& u0 , const U& u1 );
+  inline U Product( U u0 , const U& u1 );
 
 };
 
@@ -126,6 +126,6 @@ private:
 
 public:
   inline AbstractMagma( M_U m_U );
-  inline U Product( const U& u0 , const U& u1 );
+  inline U Product( U u0 , const U& u1 );
 
 };

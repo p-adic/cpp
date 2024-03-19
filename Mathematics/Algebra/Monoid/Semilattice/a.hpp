@@ -5,7 +5,6 @@
 
 // verify:
 // https://yukicoder.me/submissions/946106（MinSemilattice）
-// https://yukicoder.me/submissions/947872（MaxSemilattice）
 
 template <typename U>
 class VirtualMeetSemilattice :
@@ -13,7 +12,7 @@ class VirtualMeetSemilattice :
 {
 
 public:
-  inline U Meet( const U& u0 , const U& u1 );
+  inline U Meet( U u0 , const U& u1 );
 
 };
 
@@ -24,8 +23,8 @@ class MinSemilattice :
 {
 
 public:
-  inline MinSemilattice( const U& infty_U );
-  inline U Product( const U& u0 , const U& u1 );
+  inline MinSemilattice( U infty_U );
+  inline U Product( U u0 , const U& u1 );
   
 };
 
@@ -36,8 +35,8 @@ class MaxSemilattice :
 {
 
 public:
-  inline MaxSemilattice( const U& zero_U );
-  inline U Product( const U& u0 , const U& u1 );
+  inline MaxSemilattice( U zero_U );
+  inline U Product( U u0 , const U& u1 );
   
 };
 
