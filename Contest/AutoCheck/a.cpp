@@ -2050,6 +2050,8 @@ AC( QueryTimeAddition )
 
 AC( Decision )
 {
+  CERR( "場合分けの複雑な問題は証明の概略をコメントしないとバグを倦めやすいです。" );
+  CERR( "なるべくコメントを書くようにしましょう。" );
   ASK_NUMBER(
 	     "0次連結性問題" ,
 	     "高次連結性問題" ,
@@ -2152,6 +2154,7 @@ AC( DecisionContinuingGame )
 AC( DecisionAccessibility )
 {
   CERR( "移動の前後で変化しない値がある場合、その値が等しい点に絞って考えましょう。" );
+  CERR( "コストのパリティに制限がある場合は往復による調整を検討しましょう。" );
   ASK_NUMBER(
 	     "矩形領域の到達可能性（迷路）問題" ,
 	     "グラフ上の到達可能性問題" ,
@@ -2179,18 +2182,21 @@ AC( DecisionAccessibility )
 
 AC( DecisionDrawability )
 {
+  CERR( "まずは描画領域内にどのように図形を置くかを決定しましょう。" );
   CERR( "- サイズ固定の図形による描画可能性を考える場合は、" );
-  CERR( "  図形を必要ならば回転させた上で、図形をいくつかの矩形領域の和集合に分解し、" );
-  CERR( "  描画領域内に図形を置けるか否かを図形の位置ごとに２次元累積和や木上の累積和などで" );
-  CERR( "  判定" );
+  CERR( "  図形を必要ならば回転させた上で、図形をいくつかの矩形領域の和集合に分解し" );
+  CERR( "  描画領域内に図形を置けるか否かを図形の位置ごとに２次元累積和や" );
+  CERR( "  木上の累積和などで判定" );
   CERR( "  \\Mathematics\\SetTheory\\DirectProduct\\AffineSpace\\CumulativeProduct\\Tree" );
   CERR( "  \\Mathematics\\SetTheory\\DirectProduct\\AffineSpace\\CumulativeProduct\\TwoDimensional" );
   CERR( "- サイズ可変の図形による描画可能性を考える場合は、" );
-  CERR( "  描画領域内に図形を置けるサイズの最大値を図形の位置ごとに尺取り法などで計算" );
+  CERR( "  描画領域内に図形を置けるサイズの最大値を図形の位置ごとに尺取り法などで" );
+  CERR( "  前計算" );
   CERR( "を検討しましょう。" );
   CERR( "" );
-  CERR( "描画領域内にどのように図形を置くかを決めた後は、２次元階差数列や森上の階差数列などで" );
-  CERR( "実際に描画をし、描画したい図形と一致するかを判定しましょう。" );
+  CERR( "描画領域内にどのように図形を置くかを決めた後は、２次元階差数列や" );
+  CERR( "森上の階差数列などで実際に描画をし、描画したい図形と一致するかを" );
+  CERR( "判定しましょう。" );
   CERR( "\\Mathematics\\SetTheory\\DirectProduct\\AffineSpace\\DifferenceSequence" );
   CERR( "\\Mathematics\\SetTheory\\DirectProduct\\AffineSpace\\DifferenceSequence\\TwoDimensional" );
 }
