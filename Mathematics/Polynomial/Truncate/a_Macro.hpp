@@ -246,7 +246,7 @@
 
 #define DEFINITION_OF_MULTIPLICATION_FOR_TRUNCATED_POLYNOMIAL( RETURN_LINE_0 , RETURN_LINE_1 , RETURN_LINE_2 , RETURN_LINE_3 , RETURN_LINE_4 , MULTIPLICATION , ACCESS_ENTRY , N_OUTPUT_START , FIX_N_OUTPUT_LIM ) \
   constexpr const uint& border_0 = FFT_Multiplication_border_0<T>;	\
-  const T& zero = Polynomial<T>::const_zero();				\
+  const T& zero = Polynomial<T>::c_zero();				\
   bool searching = true;						\
 									\
   if( Polynomial<T>::m_size < border_0 && f.Polynomial<T>::m_size < border_0 ){ \
@@ -269,7 +269,7 @@
 
 #define DEFINITION_OF_FFT_MULTIPLICATION_FOR_TRUNCATED_POLYNOMIAL( RETURN_LINE_0 , RETURN_LINE_1 , RETURN_LINE_2 , RETURN_LINE_3 , RETURN_LINE_4 , RETURN_LINE_5 , MULTIPLICATION , ACCESS_ENTRY , N_OUTPUT_START , N_OUTPUT_START_SHIFTED , FIX_N_OUTPUT_LIM , DECLARATION_OF_F0 , N_INPUT_START_0 , N_INPUT_LIM_0 , DECLARATION_OF_F1 , N_INPUT_START_1 , N_INPUT_LIM_1 , VECTOR_FOR_IFFT , RESIZE_VECTOR_FOR_IFFT , I_START , MULTIPLICATiON_FORMULA , SET_ANSWER ) \
   constexpr const uint& border_0 = FFT_Multiplication_border_0<T>;	\
-  const T& zero = Polynomial<T>::const_zero();				\
+  const T& zero = Polynomial<T>::c_zero();				\
   bool searching = true;						\
 									\
   if( Polynomial<T>::m_size < border_0 && f.Polynomial<T>::m_size < border_0 ){ \
@@ -331,7 +331,7 @@
   const uint& N = f.GetTruncation();					\
   uint power;								\
   uint power_2 = 1;							\
-  TruncatedPolynomial< TYPE > f_inv{ power_2 , Polynomial< TYPE >::const_one() / f[0] }; \
+  TruncatedPolynomial< TYPE > f_inv{ power_2 , Polynomial< TYPE >::c_one() / f[0] }; \
 									\
   while( power_2 < N ){							\
   									\
@@ -349,11 +349,11 @@
 
 
 #define DEFINITION_OF_EXP_FOR_TRUNCATED_POLYNOMIAL( TYPE , RECURSION )	\
-  assert( f[0] == Polynomial< TYPE >::const_zero() );			\
+  assert( f[0] == Polynomial< TYPE >::c_zero() );			\
   const uint& N = f.GetTruncation();					\
   uint power;								\
   uint power_2 = 1;							\
-  TruncatedPolynomial< TYPE > f_exp{ power_2 , Polynomial< TYPE >::const_one() }; \
+  TruncatedPolynomial< TYPE > f_exp{ power_2 , Polynomial< TYPE >::c_one() }; \
 									\
   while( power_2 < N ){							\
   									\
@@ -398,16 +398,13 @@
   }									\
 									\
 
-#define DEFINITION_OF_PARTIAL_SPECIALISATION_OF_MULTIPLICATION_OF_POLYNOMIAL_PROTH_MOD( MOD , BORDER_1_2_INV ) \
-  DEFINITION_OF_PARTIAL_SPECIALISATION_OF_MULTIPLICATION_OF_TRUNCATED_POLYNOMIAL( Mod<MOD> , 17 , 512 , 1024 , 10 , BORDER_1_2_INV ); \
-  DEFINITION_OF_PARTIAL_SPECIALISATION_OF_MULTIPLICATION_OF_TRUNCATED_POLYNOMIAL( Montgomery<MOD> , 17 , 512 , 1024 , 10 , BORDER_1_2_INV ); \
-  DEFINITION_BODY_OF_PARTIAL_SPECIALISATION_OF_MULTIPLICATION_OF_POLYNOMIAL_PROTH_MOD( Mod<MOD> , const Polynomial<Mod<MOD> >& , this == &f ? this_copy : f ); \
-  DEFINITION_BODY_OF_PARTIAL_SPECIALISATION_OF_MULTIPLICATION_OF_POLYNOMIAL_PROTH_MOD( Mod<MOD> , Polynomial<Mod<MOD> >&& , move( f ) ); \
-  DEFINITION_BODY_OF_PARTIAL_SPECIALISATION_OF_MULTIPLICATION_OF_POLYNOMIAL_PROTH_MOD( Montgomery<MOD> , const Polynomial<Montgomery<MOD> >& , this == &f ? this_copy : f ); \
-  DEFINITION_BODY_OF_PARTIAL_SPECIALISATION_OF_MULTIPLICATION_OF_POLYNOMIAL_PROTH_MOD( Montgomery<MOD> , Polynomial<Montgomery<MOD> >&& , move( f ) ); \
+#define DEFINITION_OF_PARTIAL_SPECIALISATION_OF_MULTIPLICATION_OF_POLYNOMIAL_PROTH_MOD( MOD , BORDER_1_2_INV , MINT ) \
+  DEFINITION_OF_PARTIAL_SPECIALISATION_OF_MULTIPLICATION_OF_TRUNCATED_POLYNOMIAL( MINT<MOD> , 17 , 512 , 1024 , 10 , BORDER_1_2_INV ); \
+  DEFINITION_BODY_OF_PARTIAL_SPECIALISATION_OF_MULTIPLICATION_OF_POLYNOMIAL_PROTH_MOD( MINT<MOD> , const Polynomial<MINT<MOD> >& , this == &f ? this_copy : f ); \
+  DEFINITION_BODY_OF_PARTIAL_SPECIALISATION_OF_MULTIPLICATION_OF_POLYNOMIAL_PROTH_MOD( MINT<MOD> , Polynomial<MINT<MOD> >&& , move( f ) ); \
 
 
-#define DEFINITION_BODY_OF_PARTIAL_SPECIALISATION_OF_MULTIPLICATION_OF_POLYNOMIAL_ARBITRARY_MOD( TYPE , ARG ) \
+#define DEFINITION_BODY_OF_PARTIAL_SPECIALISATION_OF_MULTIPLICATION_OF_POLYNOMIAL_ARBITRARY_MOD( TYPE , ARG , MINT ) \
   template <>								\
   Polynomial<TYPE>& Polynomial<TYPE>::operator*=( ARG f )		\
   {									\
@@ -424,9 +421,9 @@
 	constexpr INT_TYPE_FOR_MOD P0 = 167772161;			\
 	constexpr INT_TYPE_FOR_MOD P1 = 469762049;			\
 	constexpr INT_TYPE_FOR_MOD P2 = 998244353;			\
-	using M0 = Montgomery<P0>;					\
-	using M1 = Montgomery<P1>;					\
-	using M2 = Montgomery<P2>;					\
+	using M0 = MINT<P0>;					\
+	using M1 = MINT<P1>;					\
+	using M2 = MINT<P2>;					\
 	vector<M0> v0{};						\
 	vector<M1> v1{};						\
 	vector<M2> v2{};						\
@@ -478,7 +475,6 @@
 	constexpr M2 P01_mod_P2_inv = M2::Derepresent( 575867115 );	\
 	static_assert( ( M1::Derepresent( P0 ) *= P0_mod_P1_inv ) == M1::Derepresent( 1 ) ); \
 	static_assert( ( M2::Derepresent( P0 ) *= M2::DeRP( P1 ) *= P01_mod_P2_inv ) == M2::Derepresent( 1 ) ); \
-
 									\
 	for( uint d = 0 ; d < m_size ; d++ ){				\
 									\
@@ -499,9 +495,6 @@
 									\
   }									\
 
-#define DEFINITION_OF_PARTIAL_SPECIALISATION_OF_MULTIPLICATION_OF_POLYNOMIAL_ARBITRARY_MOD( MOD ) \
-  DEFINITION_BODY_OF_PARTIAL_SPECIALISATION_OF_MULTIPLICATION_OF_POLYNOMIAL_ARBITRARY_MOD( Mod<MOD> , const Polynomial<Mod<MOD> >& ); \
-  DEFINITION_BODY_OF_PARTIAL_SPECIALISATION_OF_MULTIPLICATION_OF_POLYNOMIAL_ARBITRARY_MOD( Mod<MOD> , Polynomial<Mod<MOD> >&& ); \
-  DEFINITION_BODY_OF_PARTIAL_SPECIALISATION_OF_MULTIPLICATION_OF_POLYNOMIAL_ARBITRARY_MOD( Montgomery<MOD> , const Polynomial<Montgomery<MOD> >& ); \
-  DEFINITION_BODY_OF_PARTIAL_SPECIALISATION_OF_MULTIPLICATION_OF_POLYNOMIAL_ARBITRARY_MOD( Montgomery<MOD> , Polynomial<Montgomery<MOD> >&& ); \
-
+#define DEFINITION_OF_PARTIAL_SPECIALISATION_OF_MULTIPLICATION_OF_POLYNOMIAL_ARBITRARY_MOD( MOD , MINT ) \
+  DEFINITION_BODY_OF_PARTIAL_SPECIALISATION_OF_MULTIPLICATION_OF_POLYNOMIAL_ARBITRARY_MOD( MINT<MOD> , const Polynomial<MINT<MOD> >& , MINT ); \
+  DEFINITION_BODY_OF_PARTIAL_SPECIALISATION_OF_MULTIPLICATION_OF_POLYNOMIAL_ARBITRARY_MOD( MINT<MOD> , Polynomial<MINT<MOD> >&& , MINT ); \

@@ -33,7 +33,7 @@ template <typename T , uint D>
 void DevideNoRedundantZero( MultivariablePolynomial<T,D>& f , const vector<MultivariablePolynomial<T,D> >& F , const vector<MultivariablePolynomialIndex<D> >& LT_F , const vector<T>& LC_F )
 {
   
-  const T& z = MultivariablePolynomial<T,0>::const_zero();
+  const T& z = MultivariablePolynomial<T,0>::c_zero();
   MultivariablePolynomialIndex<D> LT = LeadingTermNoRedundantZero<T,D>( f );
   MultivariablePolynomial<T,D> residue{};
   const uint& size_f = f.size();
@@ -71,7 +71,7 @@ template <typename T , uint D>
 void DevideNoRedundantZero( MultivariablePolynomial<T,D>& f , const vector<MultivariablePolynomial<T,D> >& F , const vector<MultivariablePolynomialIndex<D> >& LT_F , const vector<T>& LC_F , const vector<uint>& use )
 {
   
-  const T& z = MultivariablePolynomial<T,0>::const_zero();
+  const T& z = MultivariablePolynomial<T,0>::c_zero();
   MultivariablePolynomialIndex<D> LT = LeadingTermNoRedundantZero<T,D>( f );
   MultivariablePolynomial<T,D> residue{};
   const uint& size_f = f.size();
@@ -225,8 +225,8 @@ MultivariablePolynomial<T,D> SMultivariablePolynomialNoRedundantZero( const Mult
   }
 
 
-  const T& zero = MultivariablePolynomial<T,0>::const_zero();
-  const T& one = MultivariablePolynomial<T,0>::const_one();
+  const T& zero = MultivariablePolynomial<T,0>::c_zero();
+  const T& one = MultivariablePolynomial<T,0>::c_one();
   const MultivariablePolynomial<T,D> g0 = ( LC0 == zero ? f0 : f0 * MultivariablePolynomial<T,D>( I0 , one / LC0 ) );
   const MultivariablePolynomial<T,D> g1 = ( LC1 == zero ? f1 : f1 * MultivariablePolynomial<T,D>( I1 , one / LC1 ) );
   MultivariablePolynomial<T,D> g = g0 - g1;

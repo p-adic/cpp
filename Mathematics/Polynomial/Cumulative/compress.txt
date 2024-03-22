@@ -1,0 +1,37 @@
+// ../Truncate/compress.txtÇêÊÇ…ì\ÇÈÅB
+
+#define EXPRESSION1_FOR_RATIONAL_SUM {PO<T>::zero(),PO<T>::one()}
+#define EXPRESSION2_FOR_RATIONAL_SUM {t.first * IT->second + t.second * IT->first,t.second * IT->second}
+#define EXPRESSION3_FOR_RATIONAL_SUM {TRPO<T>(),TRPO<T>(1,PO<T>::one())}
+// ëçòa
+TE <TY T,TE <TY...> TY V> PO<T>& Sum(V<PO<T>>& f){DF_OF_PROD(Sum(f),PO<T>::zero(),t += *IT);}
+// óLóùéÆÇÃëçòa
+TE <TY T,TE <TY...> TY V> pair<PO<T>,PO<T>>& RationalSum(V<pair<PO<T>,PO<T>>>& f){DF_OF_PROD(RationalSum(f),EXPRESSION1_FOR_RATIONAL_SUM,t = EXPRESSION2_FOR_RATIONAL_SUM);}
+// óLóùéÆÇÃëçòaÇÃNéüë≈ÇøêÿÇË
+TE <TY T,TE <TY...> TY V> pair<TRPO<T>,TRPO<T>>& RationalSum(V<pair<TRPO<T>,TRPO<T>>>& f){DF_OF_PROD(RationalSum(f),EXPRESSION3_FOR_RATIONAL_SUM,t = EXPRESSION2_FOR_RATIONAL_SUM);}
+
+
+#define DF_OF_PROD(RECURSION,UNIT,APPLY)if(f.empty()){f.push_back(UNIT);}if(f.SZ()== 1){RE f.front();}auto IT = f.BE(),EN = f.EN();WH(IT != EN){auto& t = *IT;IT++;if(IT != EN){APPLY;IT = f.erase(IT);}}RE RECURSION;
+// ëçèÊ
+TE <TY T,TE <TY...> TY V> PO<T>& Prod(V<PO<T>>& f){DF_OF_PROD(Prod(f),PO<T>::one(),t *= *IT);}
+// ëçèÊÇÃNéüë≈ÇøêÿÇË
+TE <TY T,TE <TY...> TY V> TRPO<T>& Prod(V<TRPO<T>>& f){DF_OF_PROD(Prod(f),TRPO<T>(1,PO<T>::one()),t *= *IT);}
+
+
+// ôpèÊ
+TE <TY T>PO<T> PW(PO<T> f,uint e){PO<T> AN = Polynomial<T>::one();WH(e > 0){(e & 1)== 0?AN:AN *= f;f *= f;e >>= 1;}RE AN;}
+// TÇ…ägí£Ç≥ÇÍÇΩôpèÊÇÃNéüë≈ÇøêÿÇËÅB
+TE <TY T> IN TRPO<T> PW(CO TRPO<T>& f,CO T& t){RE Exp(Log(f)*= t);}
+// ôpèÊÇÃNéüë≈ÇøêÿÇËÅB
+TE <TY T> TRPO<T> PW(CO TRPO<T>& f,CRUI e){CO T& one = PO<T>::c_one();if(f[0] == one){RE PW(f,T(e));}CO T& zero = PO<T>::c_zero();CRUI SZ = f.SZ();uint v = 0;WH(v < SZ?f[v] == zero:false){v++;}CO uint ve = v * e;CRUI N = f.GetTruncation();if(v == SZ || ve >= N){RE TRPO<T>(N);}TRPO<T> g(N - ve);CO T fv_inv = one / f[v];for(uint d = v;d < SZ;d++){g[d - v] = f[d] * fv_inv;}g = Exp(Log(g) *= T(e)) * PW(f[v],e);g.SetTruncation(N);for(uint d = N - 1;d >= ve;d--){g[d] = g[d - ve];}for(uint d = 0;d < ve;d++){g[d] = zero;}RE g;}
+
+
+// éwêîä÷êîÇÃê¸å`åãçáÇÃNéüë≈ÇøêÿÇËÅióLóùéÆÇÃëçòaÇÃNéüë≈ÇøêÿÇËÇópÇ¢ÇÈÅj
+TE <TY T,TE <TY...> TY V> TRPO<T> EXialSum(CRUI N,CO V<pair<T,T>>& coef){ V<pair<TRPO<T>,TRPO<T>>> f{};for(auto IT = coef.BE(),EN = coef.EN();IT != EN;IT++){f.push_back({TRPO<T>(N,IT->first),TRPO<T>(N,1,- IT->second)+ PO<T>::one()});}auto&[g,h]= RationalSum(f);g /= h;CO uint& SZ = g.SZ();for(uint d = 0;d < SZ;d++){g[d]*= T::FactorialInverse(d);}RE MO(g);}
+
+
+// ó›êœòa
+TE <TY T,int LE>CL BernulliNumberCalculator{PU:T m_val[LE];IN BernulliNumberCalculator(CO bool& negative = true);IN CO T& OP[](CRI i)CO;};
+TE <TY T,int LE> IN BernulliNumberCalculator<T,LE>::BernulliNumberCalculator(CO bool& negative):m_val(){TRPO<T> f{LE};for(int i = 0;i < LE;i++){f[i] = T::FactorialInverse(i + 1);}f = Inverse(f);for(int i = 0;i < LE;i++){m_val[i] = MO(f[i] *= T::Factorial(i));}if(!negative && LE > 1){m_val[1] *= -1;}}TE <TY T,int LE> IN CO T& BernulliNumberCalculator<T,LE>::OP[](CRI i)CO{assert(i < LE);RE m_val[i];}
+
+TE <TY T,uint deg_max>PO<T> CumulativeSum(PO<T> f,CO bool& EXial = false){CO uint f_SZ = f.SZ();if(f_SZ == 0){RE f;}CO uint deg = f_SZ - 1;assert(deg <= deg_max);CO T f0 = f[0];CO uint deg_half =(deg + 1)/ 2;if(!EXial){for(uint d = 1;d <= deg;d++){f[d]*= T::Factorial(d);}}for(uint d = 0;d < deg_half;d++){swap(f[d],f[deg - d]);}f.reSZ(deg);TRPO<T> f_transpose{f_SZ,MO(f)};ST CO BernulliNumberCalculator<T,deg_max+1> B{false};ST PO<T> g{};ST uint g_SZ = 0;WH(deg >= g_SZ){g[g_SZ]= B[g_SZ]* T::FactorialInverse(g_SZ);g_SZ++;}f_transpose *= g;f_transpose.SetTruncation(f_SZ + 1);CO uint f_SZ_half =(f_SZ + 1)/ 2;for(uint d = 0;d < f_SZ_half;d++){swap(f_transpose[d],f_transpose[f_SZ - d]);}if(!EXial){for(uint d = 1;d<= f_SZ;d++){f_transpose[d]*= T::FactorialInverse(d);}}f_transpose[1]+= f_transpose[0]= f0;RE f_transpose;}

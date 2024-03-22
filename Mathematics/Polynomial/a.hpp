@@ -27,24 +27,18 @@ protected:
   
 public:
   inline Polynomial();
-  inline Polynomial( const T& t );
-  inline Polynomial( T&& t );
-  template <SFINAE_FOR_POLYNOMIAL( = nullptr )> inline Polynomial( const Arg& n );
   inline Polynomial( const Polynomial<T>& f );
   inline Polynomial( Polynomial<T>&& f );
-  inline Polynomial( const uint& i , const T& t );
-  inline Polynomial( const uint& i , T&& t );
-  template <SFINAE_FOR_POLYNOMIAL( = nullptr )> inline Polynomial( const uint& i , const Arg& n );
-  inline Polynomial( const vector<T>& f );
-  inline Polynomial( vector<T>&& f );
+  inline Polynomial( TruncatedPolynomial<T> f );
+  inline Polynomial( vector<T> f );
+  inline Polynomial( T t );
+  template <SFINAE_FOR_POLYNOMIAL( = nullptr )> inline Polynomial( Arg n );
+  inline Polynomial( const uint& i , T t );
+  template <SFINAE_FOR_POLYNOMIAL( = nullptr )> inline Polynomial( const uint& i , Arg n );
 
-  inline Polynomial<T>& operator=( const T& t );
-  inline Polynomial<T>& operator=( T&& t );
-  template <SFINAE_FOR_POLYNOMIAL( = nullptr )> inline Polynomial<T>& operator=( const Arg& n );
-  inline Polynomial<T>& operator=( const Polynomial<T>& f );
-  inline Polynomial<T>& operator=( Polynomial<T>&& f );
-  inline Polynomial<T>& operator=( const vector<T>& f );
-  inline Polynomial<T>& operator=( vector<T>&& f );
+  template <SFINAE_FOR_POLYNOMIAL( = nullptr )> inline Polynomial<T>& operator=( Arg n );
+  inline Polynomial<T>& operator=( Polynomial<T> f );
+  inline Polynomial<T>& operator=( vector<T> f );
 
   // 係数を参照。capacity変更時に不正な参照となるのでこの返り値を参照型の引数に渡す時は注意。
   inline const T& operator[]( const uint& i ) const;
@@ -56,13 +50,25 @@ public:
   Polynomial<T>& operator+=( const Polynomial<T>& f );
   Polynomial<T>& operator-=( const Polynomial<T>& f );
   Polynomial<T>& operator*=( const Polynomial<T>& f );
+  // 部分特殊化用
   Polynomial<T>& operator*=( Polynomial<T>&& f );
-  Polynomial<T>& operator/=( const T& t );
   inline Polynomial<T>& operator/=( const Polynomial<T>& f );
-  Polynomial<T>& operator%=( const T& t );
+  Polynomial<T>& operator/=( const T& t );
   Polynomial<T>& operator%=( const Polynomial<T>& f );
+  Polynomial<T>& operator%=( const T& t );
 
+  bool operator==( const Polynomial<T>& f ) const;
+  bool operator==( const T& t ) const;
+  template <typename P> inline bool operator!=( const P& f ) const;
+
+  DECLARATION_OF_ARITHMETIC_FOR_POLYNOMIAL( + );
   inline Polynomial<T> operator-() const;
+  DECLARATION_OF_ARITHMETIC_FOR_POLYNOMIAL( - );
+  DECLARATION_OF_ARITHMETIC_FOR_POLYNOMIAL( * );
+  inline Polynomial<T> operator/( const Polynomial<T>& f ) const;
+  inline Polynomial<T> operator/( const T& t ) const;
+  inline Polynomial<T> operator%( const Polynomial<T>& f ) const;
+  inline Polynomial<T> operator%( const T& t ) const;
 
   inline const vector<T>& GetCoefficient() const noexcept;
   inline const uint& size() const noexcept;
@@ -80,24 +86,15 @@ public:
 
   static inline const Polynomial<T>& zero();
   static inline const Polynomial<T>& one();
-  static inline const T& const_zero();
-  static inline const T& const_one();
-  static inline const T& const_minus_one();
+  static inline const T& c_zero();
+  static inline const T& c_one();
+  static inline const T& c_minus_one();
+
+private:
+  inline Polynomial<T>& SignInvert();
 
 };
 
-template <typename T>
-bool operator==( const Polynomial<T>& f0 , const T& t1 );
-template <typename T>
-bool operator==( const Polynomial<T>& f0 , const Polynomial<T>& f1 );
-template <typename T , typename P> inline bool operator!=( const Polynomial<T>& f0 , const P& f1 );
-
-template <typename T , typename P> inline Polynomial<T> operator+( const Polynomial<T>& f0 , const P& f1 );
-template <typename T , typename P> inline Polynomial<T> operator-( const Polynomial<T>& f );
-template <typename T , typename P> inline Polynomial<T> operator-( const Polynomial<T>& f0 , const P& f1 );
-template <typename T , typename P> inline Polynomial<T> operator*( const Polynomial<T>& f0 , const P& f1 );
-template <typename T> inline Polynomial<T> operator/( const Polynomial<T>& f0 , const T& t1 );
-template <typename T> inline Polynomial<T> operator/( const Polynomial<T>& f0 , const Polynomial<T>& f1 );
-template <typename T , typename P> inline Polynomial<T> operator%( const Polynomial<T>& f0 , const P& f1 );
-
 template <typename T> Polynomial<T> Differential( const uint& n , const Polynomial<T>& f );
+
+// PowerはCumulative/a_Body.hppで定義。

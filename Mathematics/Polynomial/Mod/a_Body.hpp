@@ -9,8 +9,8 @@ template <typename T>
 Polynomial<T> ModularInverse( Polynomial<T> f , Polynomial<T> g )
 {
 
-  const T& zero = Polynomial<T>::const_zero();
-  Polynomial<T> coeff_f{ 0 , Polynomial<T>::const_one() };
+  const T& zero = Polynomial<T>::c_zero();
+  Polynomial<T> coeff_f{ 0 , Polynomial<T>::c_one() };
   Polynomial<T> coeff_g{ Polynomial<T>::zero() };
   f %= g;
 
@@ -48,7 +48,7 @@ Polynomial<T> ModularInverse( Polynomial<T> f , Polynomial<T> g )
   }
 
   assert( f.size() == 1u );
-  const T& one = Polynomial<T>::const_one();
+  const T& one = Polynomial<T>::c_one();
   const uint& coeff_f_size = coeff_f.size();
   const T r = one / f[0];
     

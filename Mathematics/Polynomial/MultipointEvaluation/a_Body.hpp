@@ -61,7 +61,7 @@ void SetPointTree( const V1<T>& point , V2<V3<Polynomial<T> > >& point_tree )
 
   for( auto itr = point.begin() , end = point.end() ; itr != end ; itr++ ){
 
-    static const Polynomial<T> x{ 1 , Polynomial<T>::const_one() };
+    static const Polynomial<T> x{ 1 , Polynomial<T>::c_one() };
     linear.push_back( x );
     linear.back()[0] -= *itr;
 

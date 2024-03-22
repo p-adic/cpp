@@ -16,7 +16,7 @@ TruncatedPolynomial<T> Composite( const TruncatedPolynomial<T>& f  , const Trunc
 {
 
   const uint& N = f.GetTruncation();
-  assert( N > 0 && g[0] == Polynomial<T>::const_zero() );
+  assert( N > 0 && g[0] == Polynomial<T>::c_zero() );
   const uint N_minus = N - 1;
 
   if( N_minus == 0 ){
@@ -99,10 +99,10 @@ void Shift( Polynomial<T>& f , const T& t , const bool& exponential = false )
   f.RemoveRedundantZero();
   const uint& size = f.size();
   
-  if( size > 0 && t != Polynomial<T>::const_zero() ){
+  if( size > 0 && t != Polynomial<T>::c_zero() ){
 
     TruncatedPolynomial<T> exp_t_transpose{ size * 2 };
-    T power_t = Polynomial<T>::const_one();
+    T power_t = Polynomial<T>::c_one();
   
     for( uint d = 0 ; d < size ; d++ ){
 
@@ -151,7 +151,7 @@ void AffineTransformation( Polynomial<T>& f , const T& t , const T& u , const bo
 
   Shift( f , u , exponential );
   const uint& size = f.size();
-  T power = Polynomial<T>::const_one();
+  T power = Polynomial<T>::c_one();
 
   for( uint d = 0 ; d < size ; d++ ){
 
@@ -168,8 +168,8 @@ template <typename T>
 tuple<Polynomial<T>,T,T,uint> MoeviusComposition( Polynomial<T> f , T a , T b , T c , T d )
 {
 
-  const T& zero = Polynomial<T>::const_zero();
-  const T& one = Polynomial<T>::const_one();
+  const T& zero = Polynomial<T>::c_zero();
+  const T& one = Polynomial<T>::c_one();
   
   if( c == zero ){
 
@@ -203,8 +203,8 @@ template <typename T>
 TrucatedPolynomial<T> MoeviusComposition( const uint& N , Polynomial<T> f , T a , T b , T c , T d )
 {
 
-  const T& zero = Polynomial<T>::const_zero();
-  const T& one = Polynomial<T>::const_one();
+  const T& zero = Polynomial<T>::c_zero();
+  const T& one = Polynomial<T>::c_one();
   
   if( c == zero ){
 
@@ -255,7 +255,7 @@ TruncatedPolynomial<T> ExponentialComposition( const uint& N , const Polynomial<
 
   const uint& size = f.size();
   list<pair<T,T>> coef{};
-  T temp = Polynomial<T>::const_zero();
+  T temp = Polynomial<T>::c_zero();
 
   for( uint d = 0 ; d < size ; d++ ){
 
@@ -295,7 +295,7 @@ TruncatedPolynomial<T> LogarithmComposition( const uint& N , Polynomial<T> f , c
     
   }
 
-  const T& zero = Polynomial<T>::const_zero();
+  const T& zero = Polynomial<T>::c_zero();
   
   if( t == zero ){
 
@@ -323,7 +323,7 @@ TruncatedPolynomial<T> LogarithmComposition( const uint& N , Polynomial<T> f , c
   SetPartialFractionDecomposition( size , f , point , coef );
   point.clear();
   f = move( coef );
-  const T& one = Polynomial<T>::const_one();
+  const T& one = Polynomial<T>::c_one();
   const T t_inv_minus = -one / t;
   T temp = t_inv_minus;
   
@@ -343,7 +343,7 @@ template <typename T>
 TruncatedPolynomial<T> MoeviusLogarithmComposition( const uint& N , Polynomial<T> f , T a , T b , T c , const T& t )
 {
 
-  const T& zero = Polynomial<T>::const_zero();
+  const T& zero = Polynomial<T>::c_zero();
   assert( b != zero );
   f = LogarithmComposition( N , move( f ) , t );
   a -= c;

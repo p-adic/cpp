@@ -38,22 +38,18 @@ public:
   inline TruncatedPolynomial( const uint& N = 0 );
   inline TruncatedPolynomial( const TruncatedPolynomial<T>& f );
   inline TruncatedPolynomial( TruncatedPolynomial<T>&& f );
-  inline TruncatedPolynomial( const uint& N , const T& t );
+  inline TruncatedPolynomial( const uint& N , T t );
+  // Nとfのサイズの大小次第でfをコピーしないので両方のコンストラクタを用意する。
   inline TruncatedPolynomial( const uint& N , const Polynomial<T>& f );
   inline TruncatedPolynomial( const uint& N , Polynomial<T>&& f );
-  inline TruncatedPolynomial( const uint& N , const uint& i , const T& t );
-  inline TruncatedPolynomial( const uint& N , const uint& i , T&& t );
-  template <SFINAE_FOR_POLYNOMIAL( = nullptr )> inline TruncatedPolynomial( const uint& N , const uint& i , const Arg& t );
   inline TruncatedPolynomial( const uint& N , vector<T>&& f );
+  inline TruncatedPolynomial( const uint& N , const uint& i , T t );
+  template <SFINAE_FOR_POLYNOMIAL( = nullptr )> inline TruncatedPolynomial( const uint& N , const uint& i , const Arg& t );
 
   // m_Nも代入されることに注意
-  inline TruncatedPolynomial<T>& operator=( const TruncatedPolynomial<T>& f );
-  inline TruncatedPolynomial<T>& operator=( TruncatedPolynomial<T>&& f );
-  inline TruncatedPolynomial<T>& operator=( const T& t );
-  inline TruncatedPolynomial<T>& operator=( T&& t );
-  template <SFINAE_FOR_POLYNOMIAL( = nullptr )> inline TruncatedPolynomial<T>& operator=( const Arg& n );
-  inline TruncatedPolynomial<T>& operator=( const Polynomial<T>& f );
-  inline TruncatedPolynomial<T>& operator=( Polynomial<T>&& f );
+  inline TruncatedPolynomial<T>& operator=( TruncatedPolynomial<T> f );
+  template <SFINAE_FOR_POLYNOMIAL( = nullptr )> inline TruncatedPolynomial<T>& operator=( Arg n );
+  inline TruncatedPolynomial<T>& operator=( Polynomial<T> f );
 
   // m_Nは変化しないことに注意
   inline TruncatedPolynomial<T>& operator+=( const T& t );
@@ -167,3 +163,5 @@ TruncatedPolynomial<T> Exp( const TruncatedPolynomial<T>& f );
 
 // Tが標数0またはf.m_N以上の体でかつf[0] == 1の場合のみサポート。
 template <typename T> inline TruncatedPolynomial<T> Log( const TruncatedPolynomial<T>& f );
+
+// PowerはCumulative/a_Body.hppで定義。

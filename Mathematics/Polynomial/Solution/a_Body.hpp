@@ -32,7 +32,7 @@ void CheckSolvableNoRedundantZero( vector<MultivariablePolynomial<Mod<P>,D> >& F
 {
   
   F = ReducedGroebnerBasisNoRedundantZero( F , LT_F , LC_F , size_F );
-  const Mod<P>& one = MultivariablePolynomial<Mod<P>,0>::const_one();
+  const Mod<P>& one = MultivariablePolynomial<Mod<P>,0>::c_one();
   
   if( size_F == 1 ? F.front() == one : false ){
 
@@ -85,7 +85,7 @@ template <INT_TYPE_FOR_MOD P , uint D>
 void FindSolutionFromReducedGroebnerBasis( vector<MultivariablePolynomial<Mod<P>,D> >& F , vector<MultivariablePolynomialIndex<D> >& LT_F , vector<Mod<P> >& LC_F , uint& size_F , AffineSpace<Mod<P>,D>& x )
 {
   
-  const Mod<P>& one = MultivariablePolynomial<Mod<P>,0>::const_one();
+  const Mod<P>& one = MultivariablePolynomial<Mod<P>,0>::c_one();
 
   for( uint d = 0 ; d < D ; d++ ){
 

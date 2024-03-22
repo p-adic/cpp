@@ -12,34 +12,20 @@
 
 template <typename T> inline TruncatedPolynomial<T>::TruncatedPolynomial( const uint& N ) : Polynomial<T>() , m_N( N ) {}
 template <typename T> inline TruncatedPolynomial<T>::TruncatedPolynomial( const TruncatedPolynomial<T>& f ) : Polynomial<T>( f ) , m_N( f.m_N ) {}
-template <typename T> inline TruncatedPolynomial<T>::TruncatedPolynomial( TruncatedPolynomial<T>&& f ) : Polynomial<T>( move( f ) ) , m_N( move( f.m_N ) ) {}
-template <typename T> inline TruncatedPolynomial<T>::TruncatedPolynomial( const uint& N , const T& t ) : Polynomial<T>( t ) , m_N( N ) {}
-
-template <typename T> inline TruncatedPolynomial<T>::TruncatedPolynomial( const uint& N , const Polynomial<T>& f ) : Polynomial<T>() , m_N( N ) { Polynomial<T>::m_size = f.Polynomial<T>::m_size < m_N ? f.Polynomial<T>::m_size : m_N; Polynomial<T>::m_f = vector<T>( Polynomial<T>::m_size ); for( uint i = 0 ; i < Polynomial<T>::m_size ; i++ ){ Polynomial<T>::m_f[i] = f.Polynomial<T>::m_f[i]; }}
-
+template <typename T> inline TruncatedPolynomial<T>::TruncatedPolynomial( TruncatedPolynomial<T>&& f ) : Polynomial<T>( move( f.m_f ) ) , m_N( f.m_N ) {}
+template <typename T> inline TruncatedPolynomial<T>::TruncatedPolynomial( const uint& N , T t ) : Polynomial<T>( move( t ) ) , m_N( N ) {}
+template <typename T> inline TruncatedPolynomial<T>::TruncatedPolynomial( const uint& N , const Polynomial<T>& f ) : Polynomial<T>() , m_N( N ) { Polynomial<T>::m_size = f.Polynomial<T>::m_size < m_N ? f.Polynomial<T>::m_size : m_N; Polynomial<T>::m_f = vector<T>( Polynomial<T>::m_size ); for( uint i = 0 ; i < Polynomial<T>::m_size ; i++ ){ Polynomial<T>::m_f[i] = f.Polynomial<T>::m_f[i]; } }
 template <typename T> inline TruncatedPolynomial<T>::TruncatedPolynomial( const uint& N , Polynomial<T>&& f ) : Polynomial<T>() , m_N( N ) { if( f.Polynomial<T>::m_size < m_N * 2 ){ Polynomial<T>::operator=( move( f ) ); if( f.Polynomial<T>::m_size > m_N ){ TruncateFinal( m_N ); } } else { Polynomial<T>::m_f = vector<T>( m_N ); for( uint i = 0 ; i < m_N ; i++ ){ Polynomial<T>::m_f[i] = move( f.Polynomial<T>::m_f[i] ); } Polynomial<T>::m_size = m_N; } }
-
-template <typename T> inline TruncatedPolynomial<T>::TruncatedPolynomial( const uint& N , const uint& i , const T& t ) : Polynomial<T>() , m_N( N ) { if( i < m_N ? t != Polynomial<T>::const_zero() : false ){ Polynomial<T>::operator[]( i ) = t; }}
-
-template <typename T> inline TruncatedPolynomial<T>::TruncatedPolynomial( const uint& N , const uint& i , T&& t ) : Polynomial<T>() , m_N( N ) { if( i < m_N ? t != Polynomial<T>::const_zero() : false ){ Polynomial<T>::operator[]( i ) = move( t ); }}
-
+template <typename T> inline TruncatedPolynomial<T>::TruncatedPolynomial( const uint& N , vector<T>&& f ) : Polynomial<T>() , m_N( N ) { const uint f_size = f.size(); if( f_size < m_N * 2 ){ Polynomial<T>::operator=( move( f ) ); if( f_size > m_N ){ TruncateFinal( m_N ); } } else { Polynomial<T>::m_f = vector<T>( m_N ); for( uint i = 0 ; i < m_N ; i++ ){ Polynomial<T>::m_f[i] = move( f[i] ); }} }
+template <typename T> inline TruncatedPolynomial<T>::TruncatedPolynomial( const uint& N , const uint& i , T t ) : Polynomial<T>() , m_N( N ) { if( i < m_N ? t != Polynomial<T>::c_zero() : false ){ Polynomial<T>::operator[]( i ) = move( t ); }}
 template <typename T> template <SFINAE_FOR_POLYNOMIAL()> inline TruncatedPolynomial<T>::TruncatedPolynomial( const uint& N , const uint& i , const Arg& n ) : TruncatedPolynomial( N , i , T( n ) ) {}
 
-template <typename T> inline TruncatedPolynomial<T>::TruncatedPolynomial( const uint& N , vector<T>&& f ) : Polynomial<T>() , m_N( N ) { const uint f_size = f.size(); if( f_size < m_N * 2 ){ Polynomial<T>::operator=( move( f ) ); if( f_size > m_N ){ TruncateFinal( m_N ); } } else { Polynomial<T>::m_f = vector<T>( m_N ); for( uint i = 0 ; i < m_N ; i++ ){ Polynomial<T>::m_f[i] = move( f[i] ); }} }
-
-
-template <typename T> inline TruncatedPolynomial<T>& TruncatedPolynomial<T>::operator=( const TruncatedPolynomial<T>& f ) { Polynomial<T>::operator=( f ); m_N = f.m_N;return *this; }
-template <typename T> inline TruncatedPolynomial<T>& TruncatedPolynomial<T>::operator=( TruncatedPolynomial<T>&& f ) { Polynomial<T>::operator=( move( f ) ); m_N = move( f.m_N ); return *this; }
-template <typename T> inline TruncatedPolynomial<T>& TruncatedPolynomial<T>::operator=( const T& t ) { Polynomial<T>::operator=( t ); return *this; }
-template <typename T> inline TruncatedPolynomial<T>& TruncatedPolynomial<T>::operator=( T&& t ) { Polynomial<T>::operator=( move( t ) ); return *this; }
-template <typename T> template <SFINAE_FOR_POLYNOMIAL()> inline TruncatedPolynomial<T>& TruncatedPolynomial<T>::operator=( const Arg& n ) { Polynomial<T>::operator=( T( n ) ); return *this; }
-template <typename T> inline TruncatedPolynomial<T>& TruncatedPolynomial<T>::operator=( const Polynomial<T>& f ) { return operator=( TruncatedPolynomial<T>( m_N , f ) ); }
-template <typename T> inline TruncatedPolynomial<T>& TruncatedPolynomial<T>::operator=( Polynomial<T>&& f ) { return operator=( TruncatedPolynomial<T>( m_N , move( f ) ) ); }
+template <typename T> inline TruncatedPolynomial<T>& TruncatedPolynomial<T>::operator=( TruncatedPolynomial<T> f ) { Polynomial<T>::operator=( move( f.m_f ) ); m_N = f.m_N; return *this; }
+template <typename T> template <SFINAE_FOR_POLYNOMIAL()> inline TruncatedPolynomial<T>& TruncatedPolynomial<T>::operator=( Arg n ) { Polynomial<T>::operator=( move( n ) ); return *this; }
+template <typename T> inline TruncatedPolynomial<T>& TruncatedPolynomial<T>::operator=( Polynomial<T> f ) { return operator=( TruncatedPolynomial<T>( m_N , move( f ) ) ); }
 
 template <typename T> inline TruncatedPolynomial<T>& TruncatedPolynomial<T>::operator+=( const T& t ) { Polynomial<T>::operator+=( t ); return *this; }
-
 template <typename T> inline TruncatedPolynomial<T>& TruncatedPolynomial<T>::operator+=( const Polynomial<T>& f ) { return TruncatedPlus( f , 0 , f.m_size ); }
-
 template <typename T> inline TruncatedPolynomial<T>& TruncatedPolynomial<T>::operator+=( const TruncatedPolynomial<T>& f ) { return m_N == 0 ? operator=( f ) : TruncatedPlus( f , 0 , f.Polynomial<T>::m_size ); }
 
 template <typename T>
@@ -315,15 +301,15 @@ TruncatedPolynomial<T> Exp( const TruncatedPolynomial<T>& f )
   
 }
 
-template <typename T> inline TruncatedPolynomial<T> Log( const TruncatedPolynomial<T>& f ) { assert( f[0] == Polynomial<T>::const_one() ); return Integral<T>( Differential<T>( f ) /= f ); }
+template <typename T> inline TruncatedPolynomial<T> Log( const TruncatedPolynomial<T>& f ) { assert( f[0] == Polynomial<T>::c_one() ); return Integral<T>( Differential<T>( f ) /= f ); }
 
 template <typename T> inline TruncatedPolynomial<T>& TruncatedPolynomial<T>::operator*=( const T& t ) { Polynomial<T>::operator*=( t ); return *this; }
 
 
-DEFINITION_OF_PARTIAL_SPECIALISATION_OF_MULTIPLICATION_OF_POLYNOMIAL_PROTH_MOD( 998244353 , 997269505 );
-DEFINITION_OF_PARTIAL_SPECIALISATION_OF_MULTIPLICATION_OF_POLYNOMIAL_PROTH_MOD( 167772161 , 167608321 );
-DEFINITION_OF_PARTIAL_SPECIALISATION_OF_MULTIPLICATION_OF_POLYNOMIAL_PROTH_MOD( 469762049 , 469303297 );
-DEFINITION_OF_PARTIAL_SPECIALISATION_OF_MULTIPLICATION_OF_POLYNOMIAL_PROTH_MOD( 754974721 , 754237441 );
+DEFINITION_OF_PARTIAL_SPECIALISATION_OF_MULTIPLICATION_OF_POLYNOMIAL_PROTH_MOD( 998244353 , 997269505 , Mod );
+DEFINITION_OF_PARTIAL_SPECIALISATION_OF_MULTIPLICATION_OF_POLYNOMIAL_PROTH_MOD( 167772161 , 167608321 , Mod );
+DEFINITION_OF_PARTIAL_SPECIALISATION_OF_MULTIPLICATION_OF_POLYNOMIAL_PROTH_MOD( 469762049 , 469303297 , Mod );
+DEFINITION_OF_PARTIAL_SPECIALISATION_OF_MULTIPLICATION_OF_POLYNOMIAL_PROTH_MOD( 754974721 , 754237441 , Mod );
 
 // プロス素数以外の法で畳み込みをFFTで計算したい場合、このマクロで完全特殊化する。
 // - 2663300644以下の法で高々8388607次以下の多項式の積（高々16777214次）
@@ -333,6 +319,6 @@ DEFINITION_OF_PARTIAL_SPECIALISATION_OF_MULTIPLICATION_OF_POLYNOMIAL_PROTH_MOD( 
 // - 0以上10^6以下の整数を係数に持つ高々10^6次の多項式の積はガーナーのアルゴリズムで
 //   最後に法を取らないように変更する。
 // など、このマクロそのものを使わない方法も検討。
-DEFINITION_OF_PARTIAL_SPECIALISATION_OF_MULTIPLICATION_OF_POLYNOMIAL_ARBITRARY_MOD( 1000000007 );
+DEFINITION_OF_PARTIAL_SPECIALISATION_OF_MULTIPLICATION_OF_POLYNOMIAL_ARBITRARY_MOD( 1000000007 , Mod );
 
 #include "../a_Body.hpp"

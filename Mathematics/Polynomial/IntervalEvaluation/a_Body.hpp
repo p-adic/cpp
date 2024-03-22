@@ -33,7 +33,7 @@ void SetIntervalEvaluation( const uint& deg , const T& t_start , const uint& len
 
   if( deg_f == 0 ){
 
-    eval = vector<T>( length , Polynomial<T>::const_zero() );
+    eval = vector<T>( length , Polynomial<T>::c_zero() );
     return;
     
   }
@@ -56,7 +56,7 @@ void SetIntervalEvaluation( const uint& deg , const T& t_start , const uint& len
   }
 
   Polynomial<T> exp_t_Mahler{};
-  T t_Mahler = Polynomial<T>::const_one();
+  T t_Mahler = Polynomial<T>::c_one();
 
   for( uint d = 0 ; d <= deg_f ; d++ ){
 
@@ -253,7 +253,7 @@ void SetPRecursiveMatrixAction( const Matrix<Y,Y,Polynomial<T> >& M , Matrix<Y,1
     interval_num_max = interval_num_lim - 1;
     t_rest_start = interval_length * interval_num_lim;
     uint subinterval_num_max = deg;
-    T subinterval_length = Polynomial<T>::const_one();
+    T subinterval_length = Polynomial<T>::c_one();
     SET_MATRIX_MULTIPOINT_EVALUATION( subinterval_num_max , interval_num_lim , t * interval_length );
     
     for( int e = 1 ; e < exponent ; e++ ){
@@ -348,7 +348,7 @@ void SetPRecursiveMatrixAction( const TwoByTwoMatrix<Polynomial<T> >& M , TwoByO
     interval_num_max = interval_num_lim - 1;
     t_rest_start = interval_length * interval_num_lim;
     uint subinterval_num_max = deg;
-    T subinterval_length = Polynomial<T>::const_one();
+    T subinterval_length = Polynomial<T>::c_one();
     SET_2by2MATRIX_MULTIPOINT_EVALUATION( subinterval_num_max , interval_num_lim , t * interval_length );
     
     for( int e = 1 ; e < exponent ; e++ ){
