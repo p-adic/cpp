@@ -145,6 +145,7 @@ AC( DebugHintWA )
   CERR( "    いませんか？" );
   CERR( "  - 要素数Kの部分集合を探す代わりに部分集合全体を探していませんか？" );
   CERR( "- 変数名の衝突した局所変数による秘匿化を受けていませんか？" );
+  CERR( "- l^1距離とl^∞距離を間違えていませんか？" );
   CERR( "- 誤差評価をし忘れていませんか？" );
   CERR( "  - 整数型へのキャスト時の切り捨てが適切かを確認しましょう。" );
   CERR( "  - 二分探索等で厳密値を扱う時は代数方程式を解いて誤差を消しましょう。" );
@@ -604,14 +605,21 @@ AC( ExplicitExpressionProbability )
   CERR( "- 確率計算は" );
   CERR( "  - 余事象や包除原理（高速ゼータ変換／メビウス変換）" );;
   CERR( "    \\Mathematics\\Combinatorial\\ZetaTransform" );
+  CERR( "  - 対象を独立変数の積で表して乗法性" );
+  CERR( "    - グリッドのマスなどの直積集合の要素が矩形領域に属すか否かの確率は" );
+  CERR( "      成分ごとの確率の積に帰着" );
   CERR( "  - 同様に確からしい事象の特定" );
   CERR( "  - ベイズの定理" );
   CERR( "- 期待値計算は" );
-  CERR( "  - 上記方法での確率計算" );
-  CERR( "  - 対象を独立な和で表して線形性" );
+  CERR( "  - 確率を用いた愚直な計算" );
+  CERR( "  - 対象を和で表して線形性" );
+  CERR( "    - 転倒数やグリッドの黒マスの個数など、部分集合の要素数の期待値は" );
+  CERR( "      各要素が部分集合に属す確率の和に帰着" );
   CERR( "  - 操作／遷移回数なら期待値間の関係式を求め行列累乗やボスタン森法" );
   CERR( "    \\Mathematics\\LinearAlgebra" );
   CERR( "    \\Mathematics\\Polynomial\\BostanMori" );
+  CERR( "  - グリッドの塗り潰しならベルヌーイ数前計算による冪乗関数の総和を用いた明示式" );
+  CERR( "    \\Mathematics\\Polynomial\\Cumulative\\GridStampCoveringExpectation" );
   CERR( "を検討しましょう。" );
 }
 
@@ -1780,8 +1788,8 @@ AC( QueryArrayAbelianGroup )
   CERR( "- 一点加算O(1)／区間加算O(√N)／一点代入O(1)／一点取得O(1)／区間取得O(√N)" );
   CERR( "  が必要ならば区間加算平方分割" );
   CERR( "  \\Mathematics\\SetTheory\\DirectProduct\\AffineSpace\\SqrtDecomposition\\IntervalAdd" );
-  CERR( "- 区間代入O(√N)／一点取得O(1)／区間取得O(√N)が必要ならば遅延平方分割" );
-  CERR( "  \\Mathematics\\SetTheory\\DirectProduct\\AffineSpace\\SqrtDecomposition\\LazyEvaluation" );
+  CERR( "- 区間代入O(√N)／一点取得O(1)／区間取得O(√N)が必要ならば区間代入モノイド平方分割" );
+  CERR( "  \\Mathematics\\SetTheory\\DirectProduct\\AffineSpace\\SqrtDecomposition\\Monoid\\IntervalSet" );
   CERR( "- 区間加算O(√N)／区間代入O(√N)／一点取得O(1)／区間取得O(√N)が必要ならば" );
   CERR( "  区間乗算遅延平方分割" );
   CERR( "  \\Mathematics\\SetTheory\\DirectProduct\\AffineSpace\\SqrtDecomposition\\LazyEvaluation\\IntervalMultiply" );
@@ -1803,12 +1811,14 @@ AC( QueryArrayMonoid )
 {
   CERR( "- 一点代入O((log N)^2)／区間取得O(log N)が必要ならばモノイドBIT" );
   CERR( "  \\Mathematics\\SetTheory\\DirectProduct\\AffineSpace\\BIT\\Monoid" );
+  CERR( "- 区間代入O(√N)／一点取得O(1)／区間取得O(√N)が必要ならば区間代入モノイド平方分割" );
+  CERR( "  \\Mathematics\\SetTheory\\DirectProduct\\AffineSpace\\SqrtDecomposition\\Monoid\\IntervalSet" );
   CERR( "- 一点乗算O(1)／一点代入O(√N)／一点取得O(1)／区間取得O(√N)が必要ならば" );
-  CERR( "  モノイド平方分割" );
-  CERR( "  \\Mathematics\\SetTheory\\DirectProduct\\AffineSpace\\SqrtDecomposition\\Monoid" );
+  CERR( "  可換モノイド平方分割" );
+  CERR( "  \\Mathematics\\SetTheory\\DirectProduct\\AffineSpace\\SqrtDecomposition\\Monoid\\Commutative" );
   CERR( "- 一点乗算O(1)／区間乗算O(√N)／一点代入O(√N)／一点取得O(1)／区間取得O(√N)" );
-  CERR( "  が必要ならば区間乗算モノイド平方分割" );
-  CERR( "  \\Mathematics\\SetTheory\\DirectProduct\\AffineSpace\\SqrtDecomposition\\Monoid\\IntervalMultiply" );
+  CERR( "  が必要ならば区間乗算可換モノイド平方分割" );
+  CERR( "  \\Mathematics\\SetTheory\\DirectProduct\\AffineSpace\\SqrtDecomposition\\Monoid\\Commutative\\IntervalMultiply" );
   CERR( "- 一点代入O(log N)／区間取得O(log N)が必要ならばセグメント木" );
   CERR( "  \\Mathematics\\SetTheory\\DirectProduct\\AffineSpace\\SegmentTree" );
   CERR( "を検討しましょう。" );
