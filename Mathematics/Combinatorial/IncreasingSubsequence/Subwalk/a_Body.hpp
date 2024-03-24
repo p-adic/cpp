@@ -3,34 +3,58 @@
 #pragma once
 #include "a.hpp"
 
-template <typename T , list<T> E_inv(const T&) , int V_max> ll CountSubwalk( const T ( &a )[V_max] , const int& V )
+#include "../../../Function/Map/a_Body.hpp"
+
+template <typename T , typename GRAPH , typename INT> INT CountSubwalk( GRAPH& G , const vector<T>& a , const INT& dummy )
 {
 
-  COUNT_SUBWALK( count_temp += count_curr , count_i += count_temp , count_temp += itr->second );
+  const int& size = a.size();
+  Map<T,INT> count{};
 
-}
-
-template <typename T , list<T> E_inv(const T&) , int V_max> ll CountSubwalk( const T ( &a )[V_max] , const int& V , const ll& mod )
-{
-
-  COUNT_SUBWALK( ( count_temp += count_curr ) < mod ? count_temp : count_temp -= mod , ( count_i += count_temp ) < mod ? count_i : count_i -= mod , ( count_temp += itr->second ) < mod ? count_temp : count_temp -= mod );
-
-}
-
-template <typename T , list<T> E_inv(const T&) , int V_max>
-int LongestSubwalk( const T ( &a )[V_max] , const int& V )
-{
-
-  assert( V <= V_max );
-  map<T,int> length_max{};
-
-  for( int i = 0 ; i < V ; i++ ){
+  for( int i = 0 ; i < size ; i++ ){
 
     const T& a_i = a[i];
-    const list<T> edge_inv_i = E_inv( a_i );
+    auto&& edge_i = G.Edge( a_i );
+    INT count_temp = 1;
+
+    for( auto itr = edge_i.begin() , end = edge_i.end() ; itr != end ; itr++ ){
+
+      const INT& count_curr = count[*itr];
+      count_temp += count_curr;
+
+    }
+
+    INT& count_i = count[a_i];
+    count_i += count_temp;
+
+  }
+
+  INT count_temp = 0;
+
+  for( auto itr = count.begin() , end = count.end() ; itr != end ; itr++ ){
+
+    count_temp += itr->second;
+
+  }
+
+  return count_temp
+
+}
+
+template <typename T , typename GRAPH>
+int LongestSubwalk( GRAPH& G , const vector<T>& a x)
+{
+
+  const int& size = a.size();
+  Map<T,int> length_max{};
+
+  for( int i = 0 ; i < size ; i++ ){
+
+    const T& a_i = a[i];
+    auto&& edge_i = G.Edge( a_i );
     int length_temp = 0;
 
-    for( auto itr = edge_inv_i.begin() , end = edge_inv_i.end() ; itr != end ; itr++ ){
+    for( auto itr = edge_i.begin() , end = edge_i.end() ; itr != end ; itr++ ){
 
       const int& length_curr = length_max[*itr];
       length_temp < length_curr ? length_temp = length_curr : length_temp;

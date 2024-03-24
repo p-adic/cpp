@@ -6,11 +6,10 @@
 // Tがbool operator<(const T&,const T&)に関して全順序である場合にのみサポート。
 
 // O(size log size)でaの連続とは限らない非空単調増加部分列を数え上げる。
-template <typename T , int size_max> ll CountStrictlyIncreasingSubsequence( const T ( &a )[size_max] , const int& size );
-template <typename T , int size_max> ll CountNonStrictlyIncreasingSubsequence( const T ( &a )[size_max] , const int& size );
-template <typename T , int size_max> ll CountStrictlyIncreasingSubsequence( const T ( &a )[size_max] , const int& size , const ll& mod );
-template <typename T , int size_max> ll CountNonStrictlyIncreasingSubsequence( const T ( &a )[size_max] , const int& size , const ll& mod );
-
+template <typename T> ll CountStrictlyIncreasingSubsequence( const vector<T>& a );
+template <typename T> ll CountNonStrictlyIncreasingSubsequence( const vector<T>& a );
+template <typename T> ll CountStrictlyIncreasingSubsequence( const vector<T>& a , const ll& mod );
+template <typename T> ll CountNonStrictlyIncreasingSubsequence( const vector<T>& a , const ll& mod );
 
 // 入力の範囲内で
 // (1) bool operator<=(const T&,const T&)が等号つき全順序である。
@@ -20,5 +19,5 @@ template <typename T , int size_max> ll CountNonStrictlyIncreasingSubsequence( c
 
 // O(size log size)でaの連続とは限らない非空部分列であって任意の隣接２成分s,tに対し
 // f(s) <= tであるものの長さの最大値を返す。
-template <typename T , T f(const T&) , int size_max> int LongestIncreasingSubsequence( const T ( &a )[size_max] , const int& size , const T& infty );
+template <typename T , T f(const T&)> int LongestIncreasingSubsequence( const vector<T>& a , const T& infty );
 

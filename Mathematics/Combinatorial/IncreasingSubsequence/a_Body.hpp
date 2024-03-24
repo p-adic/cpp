@@ -3,58 +3,51 @@
 #pragma once
 #include "a.hpp"
 
-
 // Count(Non)StrictlyIncreasingSubsequenceに使う。
 #include "../../../SetTheory/DirectProduct/AffineSpace/BIT/a_Body.hpp"
 // modつきのCount(Non)StrictlyIncreasingSubsequenceに使う。
 #include "../../../Arithmetic/Mod/QuotientRing/a_Body.hpp"
 
-template <typename T , int size_max>
-ll CountStrictlyIncreasingSubsequence( const T ( &a )[size_max] , const int& size )
+template <typename T>
+ll CountStrictlyIncreasingSubsequence( const vector<T>& a )
 {
 
   COUNT_INCREASING_SUBSEQUENCE( ll , n - 1 , answer , 1 );
 
 }
 
-template <typename T , int size_max>
-ll CountNonStrictlyIncreasingSubsequence( const T ( &a )[size_max] , const int& size )
+template <typename T>
+ll CountNonStrictlyIncreasingSubsequence( const vector<T>& a )
 {
 
   COUNT_INCREASING_SUBSEQUENCE( ll , n , answer , 1 );
 
 }
 
-template <typename T , int size_max>
-ll CountStrictlyIncreasingSubsequence( const T ( &a )[size_max] , const int& size , const ll& mod )
+template <typename T>
+ll CountStrictlyIncreasingSubsequence( const vector<T>& a , const ll& mod )
 {
 
   COUNT_INCREASING_SUBSEQUENCE( QuotientRing<ll> , n - 1 , answer.Represent() < 0 ? answer.Represent() + mod : answer.Represent() , 1 , &mod );
 
 }
 
-template <typename T , int size_max>
-ll CountNonStrictlyIncreasingSubsequence( const T ( &a )[size_max] , const int& size , const ll& mod )
+template <typename T>
+ll CountNonStrictlyIncreasingSubsequence( const vector<T>& a , const ll& mod )
 {
 
   COUNT_INCREASING_SUBSEQUENCE( QuotientRing<ll> , n , answer.Represent() < 0 ? answer.Represent() + mod : answer.Represent() , 1 , &mod );
 
 }
 
-template <typename T , T f(const T&) , int size_max>
-int LongestIncreasingSubsequence( const T ( &a )[size_max] , const int& size , const T& infty )
+template <typename T , T f(const T&)>
+int LongestIncreasingSubsequence( const vector<T>& a , const T& infty )
 {
 
-  assert( size <= size_max && infty <= f( infty ) );
-  T t_min[size_max];
-
-  for( int n = 0 ; n < size ; n++ ){
-
-    t_min[n] = infty;
-
-  }
-
+  assert( infty <= f( infty ) );
+  const int size = a.size();
   const int size_minus = size - 1;
+  vector<T> t_min( size , infty );
 
   for( int i = 0 ; i < size ; i++ ){
 
@@ -81,6 +74,6 @@ int LongestIncreasingSubsequence( const T ( &a )[size_max] , const int& size , c
   }
 
   abort();
-  return 0;
+  return -1;
   
 }
