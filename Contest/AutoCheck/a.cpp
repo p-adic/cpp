@@ -1016,13 +1016,17 @@ AC( MaximisationArrayFunction )
 
 AC( MaximisationArrayLength )
 {
-  CERR( "全順序か疎な半順序かで効率的な実装が違います。" );
-  CERR( "- 全順序ならば、条件を満たす部分列の長さの最大値をインデックスに持つ" );
-  CERR( "  配列を用いて、それらの部分列の末尾である項を記録すること" );
+  CERR( "配列のサイズをN、配列の各成分の下界の要素数の総和をE、順序集合の要素数をCと置きます。" );
+  CERR( "- 全順序でO(N log_2 N)が間に合いそうならば、条件を満たす部分列の長さの最大値を" );
+  CERR( "  インデックスに持つBITを用いて、それらの部分列の末尾である項を記録" );
   CERR( "  \\Mathematics\\Combinatorial\\IncreasingSubsequence" );
-  CERR( "- 疎な半順序ならば、条件を満たす部分列の末尾をインデックスに持つ" );
-  CERR( "  連想配列を用いて、それら部分列の長さの最大値を記録すること" );
+  CERR( "- 疎な半順序でO(E log_2 N)が間に合いそうならば、条件を満たす部分列の末尾を" );
+  CERR( "  インデックスに持つ連想配列を用いて、それら部分列の長さの最大値を記録" );
   CERR( "  \\Mathematics\\Combinatorial\\IncreasingSubsequence\\Subwalk" );
+  CERR( "- O(N + C^2 N^{1/2})が間に合いそうならば、順序集合の各要素c < dに対する" );
+  CERR( "  「始端の値がc、終端の値がd以下である単調増大部分列の長さ」を管理する" );
+  CERR( "  C次上半行列を載せたモノイド平方分割" );
+  CERR( "  \\Mathematics\\SetTheory\\DirectProduct\\AffineSpace\\SqrtDecomposition\\Monoid" );
   CERR( "を検討しましょう。" );
 }
 
@@ -1419,8 +1423,14 @@ AC( CountingRestrctedDiscontinuousSubArray )
   CERR( "「長さiで、任意の0<=l<=i-nに対しR_l(B)を満たし、" );
   CERR( "　末尾n-1項がsに対応するAの部分列Bの個数dp[i][s]」" );
   CERR( "を管理するi,sに関する動的計画法" );
-  CERR( "\\Mathematics\\Combinatorial\\IncreasingSubsequence" );
-  CERR( "\\Mathematics\\Combinatorial\\IncreasingSubsequence\\Subwalk" );
+  CERR( "- 全順序でO(N log_2 N)が間に合いそうならば、通常の配列で二分探索" );
+  CERR( "  \\Mathematics\\Combinatorial\\IncreasingSubsequence" );
+  CERR( "- 疎な半順序でO((N+E)log_2 N)が間に合いそうならば、連想配列" );
+  CERR( "  \\Mathematics\\Combinatorial\\IncreasingSubsequence\\Subwalk" );
+  CERR( "- O(N + C^2 N^{1/2})が間に合いそうならば、順序集合の各要素c < dに対する" );
+  CERR( "  「始端の値がc、終端の値がd以下である単調増大部分列の個数」を管理する" );
+  CERR( "  C次上半行列を載せたモノイド平方分割" );
+  CERR( "  \\Mathematics\\SetTheory\\DirectProduct\\AffineSpace\\SqrtDecomposition\\Monoid" );
   CERR( "を検討しましょう。" );
 }
 
