@@ -41,7 +41,7 @@ private:
   vector<U> m_b;
   
 public:
-  inline AbstractSqrtDecomposition( ABELIAN_GROUP M , const int& N );
+  inline AbstractSqrtDecomposition( ABELIAN_GROUP M , const int& N = 0 );
   inline AbstractSqrtDecomposition( ABELIAN_GROUP M , const int& N , const int& N_sqrt );
   inline AbstractSqrtDecomposition( ABELIAN_GROUP M , vector<U> a );
   inline AbstractSqrtDecomposition( ABELIAN_GROUP M , vector<U> a , const int& N_sqrt );
