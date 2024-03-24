@@ -3,6 +3,9 @@
 #pragma once
 #include "a_Macro.hpp"
 
+// verify:
+// https://yukicoder.me/submissions/964836（トロピカル半環上の4次正方行列）
+
 template <uint Y , uint X , typename T>
 class Matrix
 {
@@ -40,12 +43,11 @@ public:
   inline Matrix<X,Y,T> Transpose() const noexcept;
   inline T Trace() const noexcept;
   
-  inline const T ( &GetTable() const noexcept )[Y][X];
-  inline T ( &RefTable() noexcept )[Y][X];
+  inline const T ( &operator[]( const uint& y ) const )[X];
+  inline T ( &operator[]( const uint& y ) )[X];
 
   static inline const Matrix<Y,X,T>& Zero() noexcept;
-  static inline const Matrix<Y,X,T>& Unit() noexcept;
-  static inline Matrix<Y,X,T> Scalar( const T& t ) noexcept;
+  static inline const Matrix<Y,X,T>& One() noexcept;
 
 private:
   static inline void SetArray( T ( &M )[Y][X] , T ( &&array )[Y * X] ) noexcept;

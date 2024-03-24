@@ -4,7 +4,7 @@
 #include "a.hpp"
 
 template <uint Y , uint X , typename T> inline Matrix<Y,X,T>::Matrix() noexcept : m_M() {}
-template <uint Y , uint X , typename T> inline Matrix<Y,X,T>::Matrix( const T& t ) noexcept : m_M() { operator=( Scalar( t ) ); }
+template <uint Y , uint X , typename T> inline Matrix<Y,X,T>::Matrix( const T& t ) noexcept : m_M() { constexpr const uint minXY = Y < X ? Y : X; for( uint y = 0 ; y < minXY ; y++ ){ m_M[y][y] = t; }; }
 template <uint Y , uint X , typename T> inline Matrix<Y,X,T>::Matrix( const int& t ) noexcept : Matrix( T( t ) ) {}
 
 template <uint Y , uint X , typename T> template <typename Arg0 , typename Arg1 , typename... Args> inline Matrix<Y,X,T>::Matrix( Arg0&& t0 , Arg1&& t1 ,  Args&&... args ) noexcept : m_M() { T array[Y * X] = { T( forward<Arg0>( t0 ) ) , T( forward<Arg1>( t1 ) ) , T( forward<Args>( args ) )... }; SetArray( m_M , move( array ) ); }
@@ -40,12 +40,11 @@ template <uint Y , uint X , typename T> inline Matrix<X,Y,T> Matrix<Y,X,T>::Tran
 
 template <uint Y , uint X , typename T> inline T Matrix<Y,X,T>::Trace() const noexcept { constexpr const uint minXY = Y < X ? Y : X; T answer{}; for( uint y = 0 ; y < minXY ; y++ ){ answer += m_M[y][y]; } return answer; }
 
-template <uint Y , uint X , typename T> inline T ( &Matrix<Y,X,T>::RefTable() noexcept  )[Y][X]{ return m_M; }
-template <uint Y , uint X , typename T> inline const T ( &Matrix<Y,X,T>::GetTable() const noexcept )[Y][X] { return m_M; }
+template <uint Y , uint X , typename T> inline const T ( &Matrix<Y,X,T>::operator[]( const uint& y ) )[X] const { assert( y < Y ); return m_M[y]; }
+template <uint Y , uint X , typename T> inline T ( &Matrix<Y,X,T>::operator[]( const uint& y ) )[X]{ assert( y < Y ); return m_M[y]; }
 
 template <uint Y , uint X , typename T> inline const Matrix<Y,X,T>& Matrix<Y,X,T>::Zero() noexcept { static const Matrix<Y,X,T> zero{}; return zero; }
-template <uint Y , uint X , typename T> inline const Matrix<Y,X,T>& Matrix<Y,X,T>::Unit() noexcept { static const Matrix<Y,X,T> unit{ 1 }; return unit; }
-template <uint Y , uint X , typename T> inline Matrix<Y,X,T> Matrix<Y,X,T>::Scalar( const T& t ) noexcept { constexpr const uint minXY = Y < X ? Y : X; Matrix<Y,X,T> M{}; for( uint y = 0 ; y < minXY ; y++ ){ M.m_M[y][y] = t; } return M; }
+template <uint Y , uint X , typename T> inline const Matrix<Y,X,T>& Matrix<Y,X,T>::One() noexcept { static const Matrix<Y,X,T> one{ 1 }; return one; }
 
 template <uint Y , uint X , typename T> inline void Matrix<Y,X,T>::SetArray( T ( &M )[Y][X] , T ( &&array )[Y * X] ) noexcept { uint i = 0; for( uint y = 0 ; y < Y ; y++ ){ T ( &M_y )[X] = M[y]; for( uint x = 0 ; x < X ; x++ ){ M_y[x] = move( array[i + x] ); } i += X; } }
 
