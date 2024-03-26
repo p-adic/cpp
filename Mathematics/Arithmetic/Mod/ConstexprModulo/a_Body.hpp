@@ -15,7 +15,7 @@ template <INT_TYPE_FOR_MOD M> inline constexpr Mod<M>& Mod<M>::operator=( Mod<M>
 
 template <INT_TYPE_FOR_MOD M> inline constexpr Mod<M>& Mod<M>::operator+=( const Mod<M>& n ) noexcept { return Ref( Normalise( m_n += n.m_n ) ); }
 template <INT_TYPE_FOR_MOD M> inline constexpr Mod<M>& Mod<M>::operator-=( const Mod<M>& n ) noexcept { return Ref( m_n < n.m_n ? ( m_n += M ) -= n.m_n : m_n -= n.m_n ); }
-template <INT_TYPE_FOR_MOD M> inline constexpr Mod<M>& Mod<M>::operator*=( const Mod<M>& n ) noexcept { return Ref( m_n = Residue<M>( ull( m_n ) * n.m_n ) ); }
+template <INT_TYPE_FOR_MOD M> inline constexpr Mod<M>& Mod<M>::operator*=( const Mod<M>& n ) noexcept { return Ref( m_n = Residue<M>( move( ull( m_n ) *= n.m_n ) ) ); }
 template <> inline constexpr Mod<998244353>& Mod<998244353>::operator*=( const Mod<998244353>& n ) noexcept { ull m_n_copy = m_n; return Ref( m_n = move( ( m_n_copy *= n.m_n ) < 998244353 ? m_n_copy : Residue998244353( m_n_copy ) ) ); }
 
 template <INT_TYPE_FOR_MOD M> inline Mod<M>& Mod<M>::operator/=( Mod<M> n ) { return operator*=( n.Invert() ); }
@@ -68,7 +68,7 @@ template <INT_TYPE_FOR_MOD M> template <typename T> inline constexpr Mod<M>& Mod
 template <INT_TYPE_FOR_MOD M> inline constexpr INT_TYPE_FOR_MOD& Mod<M>::Normalise( INT_TYPE_FOR_MOD& n ) noexcept { return n < M ? n : n -= M; }
 
 template <INT_TYPE_FOR_MOD M> inline Mod<M> Inverse( const Mod<M>& n ) { return move( Mod<M>( n ).Invert() ); }
-template <INT_TYPE_FOR_MOD M> inline constexpr Mod<M> Inverse_constexpr( Mod<M> n ) noexcept { return move( n.NonNegativePower( M - 2 ) ); }
+template <INT_TYPE_FOR_MOD M> inline constexpr Mod<M> Inverse_constexpr( Mod<M> n ) { return move( n.NonNegativePower( M - 2 ) ); }
 
 template <INT_TYPE_FOR_MOD M , typename INT> inline constexpr Mod<M> Power( Mod<M> n , INT exponent ) { return move( n.Power( move( exponent ) ) ); }
 
