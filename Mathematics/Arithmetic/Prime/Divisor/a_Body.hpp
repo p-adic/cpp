@@ -97,7 +97,7 @@ int MoeviusFunction( const PrimeEnumeration<INT,val_limit,length_max>& prime , I
 
   while( i < prime.m_length && n > 1 ){
 
-    const int& p = prime.m_val[i++];
+    const int& p = prime[i++];
 
     if( n % p == 0 ){
 

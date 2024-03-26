@@ -6,7 +6,7 @@
 #include "../a.hpp"
 #include "../Constexpr/a.hpp"
 
-
+// verify: https://yukicoder.me/submissions/915737
 
 // O(Å„n)
 template <typename INT> INT CountDivisor( const INT& n ) noexcept;

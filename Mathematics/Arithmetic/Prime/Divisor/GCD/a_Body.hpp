@@ -7,19 +7,20 @@ template <typename INT>
 INT GCD( const INT& b_0 , const INT& b_1 )
 {
 
-  INT b[2] = { b_0 , b_1 };
-  int i_0 = ( b_0 >= b_1 ? 0 : 1 );
-  int i_1 = 1 - i_0;
+  INT a_0 = abs( b_0 );
+  INT a_1 = abs( b_1 );
 
-  while( b[i_1] != 0 ){
+  while( a_1 != 0 ){
 
-    b[i_0] %= b[i_1];
-    swap( i_0 , i_1 );
+    swap( a_0 %= a_1 , a_1 );
 
   }
 
-  return b[i_0];
+  return a_0;
 
 }
+
+DEFINITION_OF_UNSIGNED_GCD( uint );
+DEFINITION_OF_UNSIGNED_GCD( ull );
 
 template <typename INT> inline INT LCM( const INT& b_0 , const INT& b_1 ) { return ( b_0 == 0 && b_1 == 0 ) ? 0 : ( b_0 / GCD( b_0 , b_1 ) ) * b_1; }

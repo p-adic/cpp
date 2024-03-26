@@ -270,7 +270,7 @@ void SetPrimeFactorisation( const INT1& n , vector<INT2>& P , vector<INT3>& expo
 }
 
 template <typename INT , INT val_limit , int length_max , typename INT1 , typename INT2 , typename INT3 , typename INT4>
-void SetPrimeFactorisation( const PrimeEnumeration<INT,val_limit,length_max>& prime  const INT1& n , vector<INT2>& P , vector<INT3>& exponent , vector<INT4>& P_power )
+void SetPrimeFactorisation( const PrimeEnumeration<INT,val_limit,length_max>& prime , const INT1& n , vector<INT2>& P , vector<INT3>& exponent , vector<INT4>& P_power )
 {
 
   INT1 n_copy = n;
