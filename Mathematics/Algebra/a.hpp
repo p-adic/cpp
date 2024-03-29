@@ -1,6 +1,7 @@
 // c:/Users/user/Documents/Programming/Mathematics/Algebra/a.hpp
 
 #pragma once
+#include "a_Macro.hpp"
 
 // - インタフェースをなるべく抽象型で与えて仮想継承する。
 //   - 具体的構造が２種類以上あるものはもちろん抽象型を仮想継承する。
