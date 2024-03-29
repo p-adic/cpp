@@ -3,8 +3,8 @@
 #pragma once
 #include "a.hpp"
 
-#includ "../../Algebra/a_Body.hpp"
-#includ "../../Funcion/Map/a_Body.hpp"
+#include "../../Algebra/a_Body.hpp"
+#include "../../Function/Map/a_Body.hpp"
 
 template <typename T , typename R1 , typename R2 , typename E> inline EdgeImplimentation<T,R1,R2,E>::EdgeImplimentation( const int& size , E edge ) : m_size( size ) , m_edge( move( edge ) ) { static_assert( is_constructible_v<T,R1> && is_constructible_v<int,R2> && is_invocable_v<E,T> ); }
 template <typename E> inline Graph<E>::Graph( const int& size , E edge ) : EdgeImplimentation<int,const int&,const int&,E>( size , move( edge ) ) {}
@@ -43,5 +43,5 @@ template <typename T , typename R1 , typename R2 , typename E> inline E& EdgeImp
 template <typename T , typename R1 , typename R2 , typename E> inline ret_t<E,T> EdgeImplimentation<T,R1,R2,E>::Edge( const T& t ) { return m_edge( t ); }
 
 template <typename E> template <typename F> inline Graph<F> Graph<E>::GetGraph( F edge ) const { return Graph<F>( this->size() , move( edge ) ); }
-template <typename T , typename Enum_T , typename Enum_T_inv , typename E> template <typename F> inline EnumerationGraph<T,Enum_T,Enum_T_inv,F> EnumerationGraph<T,Enum_T,Enum_T_inv,E>::GetGraph( F edge ) const { return EnumerationGraph( this->size() , m_enum_T , m_enum_T_inv , move( edge ) ); }
-template <typename T , typename E> template <typename F> inline MemorisationGraph<T,F> MemorisationGraph<T,E>::GetGraph( F edge ) const { return MemorisationGraph( this->size() , move( edge ) ); }
+template <typename T , typename Enum_T , typename Enum_T_inv , typename E> template <typename F> inline EnumerationGraph<T,Enum_T,Enum_T_inv,F> EnumerationGraph<T,Enum_T,Enum_T_inv,E>::GetGraph( F edge ) const { return EnumerationGraph<T,Enum_T,Enum_T_inv,F>( this->size() , m_enum_T , m_enum_T_inv , move( edge ) ); }
+template <typename T , typename E> template <typename F> inline MemorisationGraph<T,F> MemorisationGraph<T,E>::GetGraph( F edge ) const { return MemorisationGraph<T,F>( this->size() , move( edge ) ); }

@@ -2,8 +2,8 @@
 
 #pragma once
 #include "a_Macro.hpp"
-#includ "../../Algebra/a.hpp"
-#includ "../../Function/Map/a.hpp"
+#include "../../Algebra/a.hpp"
+#include "../../Function/Map/a.hpp"
 
 // verify:
 // https://yukicoder.me/submissions/957306iGraphAE:int->list<int>j
