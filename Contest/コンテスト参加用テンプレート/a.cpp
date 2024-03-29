@@ -32,8 +32,8 @@ IN VO Solve()
   //   // uff.Graft( uj , vj );
   // }
   // Graph graph{ N , Get( e ) };
-  // BreadthFirstSearch bfs{ graph , 0 };
-  // // DepthFirstSearchOnTree dfst{ graph , 0 };
+  // BreadthFirstSearch bfs{ graph , -1 , 0 };
+  // // DepthFirstSearchOnTree dfst{ graph , -1 , 0 };
   
   // // 重み付きグラフ
   // CIN( int , N , M );
@@ -343,9 +343,9 @@ TE <CL Traits,TY Arg1,TY Arg2,TY... ARGS> IN basic_ostream<char,Traits>& Variadi
 
 
 // 算術用
-TE <TY T> CE T PositiveBaseRS(CO T& a,CO T& p){RE a >= 0?a % p:p - 1 -((-(a + 1))% p);}
-TE <TY T> CE T RS(CO T& a,CO T& p){RE PositiveBaseRS(a,p < 0?-p:p);}
-TE <TY T> CE T PositiveBaseQuotient(CO T& a,CO T& p){RE(a - PositiveBaseRS(a,p))/ p;}
+TE <TY T> CE T PositiveBaseModulo(T a,CO T& p){RE MO(a < 0?((((++a)*= -1)%= p)*= -1)+= p - 1:a < p?a:a %= p);}
+TE <TY T> CE T Modulo(T a,CO T& p){RE PositiveBaseRS(MO(a),p < 0?-p:p);}
+TE <TY T> CE T PositiveBaseQuotient(CO T& a,CO T& p){RE(a - PositiveBaseModulo(a,p))/ p;}
 TE <TY T> CE T Quotient(CO T& a,CO T& p){RE p < 0?PositiveBaseQuotient(-a,-p):PositiveBaseQuotient(a,p);}
 
 #define POWER( ANSWER , ARGUMENT , EXPONENT )				\
@@ -454,32 +454,40 @@ TE <TY T> IN TY set<T>::iterator MinimumGeq(set<T>& S,CO T& t){RE S.lower_bound(
 TE <TY T> IN TY set<T>::iterator MinimumGt(set<T>& S,CO T& t){RE S.upper_bound(t);}
 
 // 尺取り法用
-// VAR_TPAがINITからUPDATEを繰り返しCONTINUE_CONDITIONを満たす限り、ON_CONDITIONを判定して
-// trueならON、falseならOFFとなる。直近のONの区間を[VAR_TPA_L,VAR_TPA_R)で管理する。
-#define TPA( VAR_TPA , INIT , UPDATE , CONTINUE_CONDITION , ON_CONDITION , ONON , ONOFF , OFFON , OFFOFF , FINISH ) \
+// VAR_TPA_LとVAR_TPA_RをINITで初期化し、VAR_TPA_RがCONTINUE_CONDITIONを満たす限り、
+// 閉区間[VAR_TPA_L,VAR_TPA_R]が条件ON_CONDITIONを満たすか否かを判定し、
+// trueになるかVAR_TAR_LがVAR_TAR_Rに追い付くまでVAR_TPA_Lの更新操作UPDATE_Lを繰り返し、
+// その後VAR_TPA_Rの更新操作UPDATE_Rを行う。
+// ON_CONDITIONがtrueとなる極大閉区間とその時点でのINFOをANSWERに格納する。
+#define TPA( ANSWER , VAR_TPA , INIT , CONTINUE_CONDITION , UPDATE_L , UPDATE_R , ON_CONDITION , INFO ) \
+  VE<tuple<decldecay_t( INIT ),decldecay_t( INIT ),decldecay_t( INFO )>> ANSWER{}; \
   {									\
-    auto VAR_TPA = INIT;						\
-    auto VAR_TPA ## _L = VAR_TPA;					\
-    auto VAR_TPA ## _R = VAR_TPA;					\
-    bool on_TPA = false;						\
-    int state_TPA = 3;							\
-    WH( CONTINUE_CONDITION ){						\
-      bool on_TPA_next = ON_CONDITION;					\
-      state_TPA = ( ( on_TPA ? 1 : 0 ) << 1 ) | ( on_TPA_next ? 1 : 0 ); \
-      CERR( "尺取り中： [L,R) = [" , VAR_TPA ## _L , "," , VAR_TPA ## _R , ") ," , #VAR_TPA , "=" , VAR_TPA , "," , ( ( state_TPA >> 1 ) & 1 ) == 1 ? "on" : "off" , " ->" , ( state_TPA & 1 ) == 1 ? "on" : "off" ); \
-      if( state_TPA == 0 ){						\
-	OFFOFF; VAR_TPA ## _L = VAR_TPA ## _R = VAR_TPA; UPDATE;	\
-      } else if( state_TPA == 1 ){					\
-	OFFON; VAR_TPA ## _L = VAR_TPA; UPDATE; VAR_TPA ## _R = VAR_TPA; \
-      } else if( state_TPA == 2 ){					\
-	ONOFF; VAR_TPA ## _L = VAR_TPA ## _R = VAR_TPA; UPDATE;		\
-      } else {								\
-	ONON; UPDATE; VAR_TPA ## _R = VAR_TPA;				\
+    auto init_TPA = INIT;						\
+    decldecay_t( ANSWER.front() ) ANSWER ## _temp = { init_TPA , init_TPA , INFO }; \
+    auto ANSWER ## _prev = ANSWER ## _temp;				\
+    auto& VAR_TPA ## _L = get<0>( ANSWER ## _temp );			\
+    auto& VAR_TPA ## _R = get<1>( ANSWER ## _temp );			\
+    auto& VAR_TPA ## _info = get<2>( ANSWER ## _temp );			\
+    bool on_TPA_prev = false;						\
+    WH( true ){								\
+      bool continuing = CONTINUE_CONDITION;				\
+      bool on_TPA = continuing && ( ON_CONDITION );			\
+      CERR( continuing ? "尺取り中" : "尺取り終了" , "： [L,R] = [" , VAR_TPA ## _L , "," , VAR_TPA ## _R , "] ," , on_TPA_prev ? "on" : "off" , "->" , on_TPA ? "on" : "off" , ", info =" , VAR_TPA ## _info );	\
+      if( on_TPA_prev && ! on_TPA ){					\
+	ANSWER.push_back( ANSWER ## _prev );				\
       }									\
-      on_TPA = on_TPA_next;						\
+      if( continuing ){							\
+	if( on_TPA || VAR_TPA ## _L == VAR_TPA ## _R ){			\
+	  ANSWER ## _prev = ANSWER ## _temp;				\
+	  UPDATE_R;							\
+	} else {							\
+	  UPDATE_L;							\
+	}								\
+      } else {								\
+	break;								\
+      }									\
+      on_TPA_prev = on_TPA;						\
     }									\
-    CERR( "尺取り終了： [L,R) = [" , VAR_TPA ## _L , "," , VAR_TPA ## _R , ") ," , #VAR_TPA , "=" , VAR_TPA ); \
-    FINISH;								\
   }									\
 
 // データ構造用
@@ -564,24 +572,23 @@ TE <TY T,TY R1,TY R2,TY E> IN EdgeImplimentation<T,R1,R2,E>::EdgeImplimentation(
 
 // ConstexprModulo (7KB)
 // c:/Users/user/Documents/Programming/Mathematics/Arithmetic/Mod/ConstexprModulo/compress.txt
+CEXPR(uint,P,998244353);
+#ifdef DEBUG
+  #include "c:/Users/user/Documents/Programming/Mathematics/Arithmetic/Mod/ConstexprModulo/Debug/a_Body.hpp"
+  US MP = Mod<P>;
+#else
 #define RP Represent
 #define DeRP Derepresent
-CEXPR(uint,P,998244353);
 TE <uint M,TY INT> CE INT RS(INT n)NE{RE MO(n < 0?((((++n)*= -1)%= M)*= -1)+= M - 1:n < INT(M)?n:n %= M);}TE <TY INT> CE INT& RSP(INT& n)NE{CE CO uint trunc =(1 << 23)- 1;INT n_u = n >> 23;n &= trunc;INT n_uq =(n_u / 7)/ 17;n_u -= n_uq * 119;n += n_u << 23;RE n < n_uq?n += P - n_uq:n -= n_uq;}
+TE <uint M> CL Mod;TE <uint M>CL COantsForMod{PU:COantsForMod()= delete;ST CE CO uint g_memory_bound = 1e6;ST CE CO uint g_memory_LE = M < g_memory_bound?M:g_memory_bound;ST CE uint g_M_minus = M - 1;ST CE int g_order_minus_1 = M - 2;ST CE int g_order_minus_1_neg = -g_order_minus_1;};
 #define DC_OF_CM_FOR_MOD(OPR)CE bool OP OPR(CO Mod<M>& n)CO NE
 #define DC_OF_AR_FOR_MOD(OPR,EX)CE Mod<M> OP OPR(Mod<M> n)CO EX;
 #define DF_OF_CM_FOR_MOD(OPR)TE <uint M> CE bool Mod<M>::OP OPR(CO Mod<M>& n)CO NE{RE m_n OPR n.m_n;}
 #define DF_OF_AR_FOR_MOD(OPR,EX,LEFT,OPR2)TE <uint M> CE Mod<M> Mod<M>::OP OPR(Mod<M> n)CO EX{RE MO(LEFT OPR2 ## = *TH);}TE <uint M,TY T> CE Mod<M> OP OPR(T n0,CO Mod<M>& n1)EX{RE MO(Mod<M>(MO(n0))OPR ## = n1);}
-TE <uint M>CL Mod{PU:uint m_n;CE Mod()NE;CE Mod(CO Mod<M>& n)NE;CE Mod(Mod<M>&& n)NE;TE <TY T> CE Mod(T n)NE;CE Mod<M>& OP=(Mod<M> n)NE;CE Mod<M>& OP+=(CO Mod<M>& n)NE;CE Mod<M>& OP-=(CO Mod<M>& n)NE;CE Mod<M>& OP*=(CO Mod<M>& n)NE;IN Mod<M>& OP/=(Mod<M> n);TE <TY INT> CE Mod<M>& OP<<=(INT n);TE <TY INT> CE Mod<M>& OP>>=(INT n);CE Mod<M>& OP++()NE;CE Mod<M> OP++(int)NE;CE Mod<M>& OP--()NE;CE Mod<M> OP--(int)NE;DC_OF_CM_FOR_MOD(==);DC_OF_CM_FOR_MOD(!=);DC_OF_CM_FOR_MOD(<);DC_OF_CM_FOR_MOD(<=);DC_OF_CM_FOR_MOD(>);DC_OF_CM_FOR_MOD(>=);DC_OF_AR_FOR_MOD(+,NE);DC_OF_AR_FOR_MOD(-,NE);DC_OF_AR_FOR_MOD(*,NE);DC_OF_AR_FOR_MOD(/,);TE <TY INT> CE Mod<M> OP^(INT EX)CO;TE <TY INT> CE Mod<M> OP<<(INT n)CO;TE <TY INT> CE Mod<M> OP>>(INT n)CO;CE Mod<M> OP-()CO NE;CE Mod<M>& SignInvert()NE;IN Mod<M>& Invert();TE <TY INT> CE Mod<M>& PW(INT EX);CE VO swap(Mod<M>& n)NE;CE CO uint& RP()CO NE;ST CE Mod<M> DeRP(CO uint& n)NE;ST IN CO Mod<M>& Inverse(CO uint& n);ST IN CO Mod<M>& Factorial(CO uint& n);ST IN CO Mod<M>& FactorialInverse(CO uint& n);ST IN Mod<M> Combination(CO uint& n,CO uint& i);ST IN CO Mod<M>& zero()NE;ST IN CO Mod<M>& one()NE;TE <TY INT> CE Mod<M>& PositivePW(INT EX)NE;TE <TY INT> CE Mod<M>& NonNegativePW(INT EX)NE;TE <TY T> CE Mod<M>& Ref(T&& n)NE;ST CE uint& Normalise(uint& n)NE;};
+TE <uint M>CL Mod{PU:uint m_n;CE Mod()NE;CE Mod(CO Mod<M>& n)NE;CE Mod(Mod<M>&& n)NE;TE <TY T> CE Mod(T n)NE;CE Mod<M>& OP=(Mod<M> n)NE;CE Mod<M>& OP+=(CO Mod<M>& n)NE;CE Mod<M>& OP-=(CO Mod<M>& n)NE;CE Mod<M>& OP*=(CO Mod<M>& n)NE;IN Mod<M>& OP/=(Mod<M> n);TE <TY INT> CE Mod<M>& OP<<=(INT n);TE <TY INT> CE Mod<M>& OP>>=(INT n);CE Mod<M>& OP++()NE;CE Mod<M> OP++(int)NE;CE Mod<M>& OP--()NE;CE Mod<M> OP--(int)NE;DC_OF_CM_FOR_MOD(==);DC_OF_CM_FOR_MOD(!=);DC_OF_CM_FOR_MOD(<);DC_OF_CM_FOR_MOD(<=);DC_OF_CM_FOR_MOD(>);DC_OF_CM_FOR_MOD(>=);DC_OF_AR_FOR_MOD(+,NE);DC_OF_AR_FOR_MOD(-,NE);DC_OF_AR_FOR_MOD(*,NE);DC_OF_AR_FOR_MOD(/,);TE <TY INT> CE Mod<M> OP^(INT EX)CO;TE <TY INT> CE Mod<M> OP<<(INT n)CO;TE <TY INT> CE Mod<M> OP>>(INT n)CO;CE Mod<M> OP-()CO NE;CE Mod<M>& SignInvert()NE;IN Mod<M>& Invert();TE <TY INT> CE Mod<M>& PW(INT EX);CE VO swap(Mod<M>& n)NE;CE CRUI RP()CO NE;ST CE Mod<M> DeRP(uint n)NE;ST IN CO Mod<M>& Inverse(CRUI n);ST IN CO Mod<M>& Factorial(CRUI n);ST IN CO Mod<M>& FactorialInverse(CRUI n);ST IN Mod<M> Combination(CRUI n,CRUI i);ST IN CO Mod<M>& zero()NE;ST IN CO Mod<M>& one()NE;TE <TY INT> CE Mod<M>& PositivePW(INT EX)NE;TE <TY INT> CE Mod<M>& NonNegativePW(INT EX)NE;US COants = COantsForMod<M>;};
 US MP = Mod<P>;
-TE <uint M> CL Mod;TE <uint M>CL COantsForMod{PU:COantsForMod()= delete;ST CE CO uint g_memory_bound =
-#ifdef DEBUG
-1e3;
-#else
-1e6;
+TE <uint M> CE Mod<M>::Mod()NE:m_n(){}TE <uint M> CE Mod<M>::Mod(CO Mod<M>& n)NE:m_n(n.m_n){}TE <uint M> CE Mod<M>::Mod(Mod<M>&& n)NE:m_n(MO(n.m_n)){}TE <uint M> TE <TY T> CE Mod<M>::Mod(T n)NE:m_n(RS<M>(MO(n))){ST_AS(is_COructible_v<uint,decay_t<T> >);}TE <uint M> CE Mod<M>& Mod<M>::OP=(Mod<M> n)NE{m_n = MO(n.m_n);RE *TH;}TE <uint M> CE Mod<M>& Mod<M>::OP+=(CO Mod<M>& n)NE{(m_n += n.m_n)< M?m_n:m_n -= M;RE *TH;}TE <uint M> CE Mod<M>& Mod<M>::OP-=(CO Mod<M>& n)NE{m_n < n.m_n?(m_n += M)-= n.m_n:m_n -= n.m_n;RE *TH;}TE <uint M> CE Mod<M>& Mod<M>::OP*=(CO Mod<M>& n)NE{m_n = MO(ull(m_n)* n.m_n)% M;RE *TH;}TE <> CE MP& MP::OP*=(CO MP& n)NE{ull m_n_copy = m_n;m_n = MO((m_n_copy *= n.m_n)< P?m_n_copy:RSP(m_n_copy));RE *TH;}TE <uint M> IN Mod<M>& Mod<M>::OP/=(Mod<M> n){RE OP*=(n.Invert());}TE <uint M> TE <TY INT> CE Mod<M>& Mod<M>::OP<<=(INT n){AS(n >= 0);RE *TH *= Mod<M>(2).NonNegativePW(MO(n));}TE <uint M> TE <TY INT> CE Mod<M>& Mod<M>::OP>>=(INT n){AS(n >=0);WH(n-- > 0){((m_n & 1)== 0?m_n:m_n += M)>>= 1;}RE *TH;}TE <uint M> CE Mod<M>& Mod<M>::OP++()NE{m_n < COants::g_M_minus?++m_n:m_n = 0;RE *TH;}TE <uint M> CE Mod<M> Mod<M>::OP++(int)NE{Mod<M> n{*TH};OP++();RE n;}TE <uint M> CE Mod<M>& Mod<M>::OP--()NE{m_n == 0?m_n = COants::g_M_minus:--m_n;RE *TH;}TE <uint M> CE Mod<M> Mod<M>::OP--(int)NE{Mod<M> n{*TH};OP--();RE n;}DF_OF_CM_FOR_MOD(==);DF_OF_CM_FOR_MOD(!=);DF_OF_CM_FOR_MOD(>);DF_OF_CM_FOR_MOD(>=);DF_OF_CM_FOR_MOD(<);DF_OF_CM_FOR_MOD(<=);DF_OF_AR_FOR_MOD(+,NE,n,+);DF_OF_AR_FOR_MOD(-,NE,n.SignInvert(),+);DF_OF_AR_FOR_MOD(*,NE,n,*);DF_OF_AR_FOR_MOD(/,,n.Invert(),*);TE <uint M> TE <TY INT> CE Mod<M> Mod<M>::OP^(INT EX)CO{RE MO(Mod<M>(*TH).PW(MO(EX)));}TE <uint M> TE <TY INT> CE Mod<M> Mod<M>::OP<<(INT n)CO{RE MO(Mod<M>(*TH)<<= MO(n));}TE <uint M> TE <TY INT> CE Mod<M> Mod<M>::OP>>(INT n)CO{RE MO(Mod<M>(*TH)>>= MO(n));}TE <uint M> CE Mod<M> Mod<M>::OP-()CO NE{RE MO(Mod<M>(*TH).SignInvert());}TE <uint M> CE Mod<M>& Mod<M>::SignInvert()NE{m_n > 0?m_n = M - m_n:m_n;RE *TH;}TE <uint M> IN Mod<M>& Mod<M>::Invert(){AS(m_n != 0);uint m_n_neg;RE m_n < COants::g_memory_LE?(m_n = Inverse(m_n).m_n,*TH):((m_n_neg = M - m_n)< COants::g_memory_LE)?(m_n = M - Inverse(m_n_neg).m_n,*TH):NonNegativePW(COants::g_order_minus_1);}TE <uint M> TE <TY INT> CE Mod<M>& Mod<M>::PositivePW(INT EX)NE{Mod<M> PW{*TH};EX--;WH(EX != 0){(EX & 1)== 1?*TH *= PW:*TH;EX >>= 1;PW *= PW;}RE *TH;}TE <uint M> TE <TY INT> CE Mod<M>& Mod<M>::NonNegativePW(INT EX)NE{RE EX == 0?(m_n = 1,*TH):PositivePW(MO(EX));}TE <uint M> TE <TY INT> CE Mod<M>& Mod<M>::PW(INT EX){bool neg = EX < 0;AS(!(neg && m_n == 0));RE neg?PositivePW(MO(EX *= COants::g_order_minus_1_neg)):NonNegativePW(MO(EX));}TE <uint M> CE VO Mod<M>::swap(Mod<M>& n)NE{std::swap(m_n,n.m_n);}TE <uint M> IN CO Mod<M>& Mod<M>::Inverse(CRUI n){AS(n < COants::g_memory_LE);ST Mod<M> memory[COants::g_memory_LE]={zero(),one()};ST uint LE_curr = 2;WH(LE_curr <= n){memory[LE_curr].m_n = M - memory[M % LE_curr].m_n * ull(M / LE_curr)% M;LE_curr++;}RE memory[n];}TE <uint M> IN CO Mod<M>& Mod<M>::Factorial(CRUI n){if(M <= n){RE zero();}AS(n < COants::g_memory_LE);ST Mod<M> memory[COants::g_memory_LE]={one(),one()};ST uint LE_curr = 2;WH(LE_curr <= n){(memory[LE_curr]= memory[LE_curr - 1])*= LE_curr;LE_curr++;}RE memory[n];}TE <uint M> IN CO Mod<M>& Mod<M>::FactorialInverse(CRUI n){ST Mod<M> memory[COants::g_memory_LE]={one(),one()};ST uint LE_curr = 2;WH(LE_curr <= n){(memory[LE_curr]= memory[LE_curr - 1])*= Inverse(LE_curr);LE_curr++;}RE memory[n];}TE <uint M> IN Mod<M> Mod<M>::Combination(CRUI n,CRUI i){RE i <= n?Factorial(n)* FactorialInverse(i)* FactorialInverse(n - i):zero();}TE <uint M> CE CRUI Mod<M>::RP()CO NE{RE m_n;}TE <uint M> CE Mod<M> Mod<M>::DeRP(uint n)NE{Mod<M> n_copy{};n_copy.m_n = MO(n);RE n_copy;}TE <uint M> IN CO Mod<M>& Mod<M>::zero()NE{ST CE CO Mod<M> z{};RE z;}TE <uint M> IN CO Mod<M>& Mod<M>::one()NE{ST CE CO Mod<M> o{1};RE o;}TE <uint M> IN Mod<M> Inverse(CO Mod<M>& n){RE MO(Mod<M>(n).Invert());}TE <uint M,TY INT> CE Mod<M> PW(Mod<M> n,INT EX){RE MO(n.PW(MO(EX)));}TE <uint M> CE VO swap(Mod<M>& n0,Mod<M>& n1)NE{n0.swap(n1);}TE <uint M> IN string to_string(CO Mod<M>& n)NE{RE to_string(n.RP())+ " + " + to_string(M)+ "Z";}TE <uint M,CL Traits> IN basic_istream<char,Traits>& OP>>(basic_istream<char,Traits>& is,Mod<M>& n){ll m;is >> m;n = m;RE is;}TE <uint M,CL Traits> IN basic_ostream<char,Traits>& OP<<(basic_ostream<char,Traits>& os,CO Mod<M>& n){RE os << n.RP();}
 #endif
-ST CE CO uint g_memory_LE = M < g_memory_bound?M:g_memory_bound;ST CE uint g_M_minus = M - 1;ST CE uint g_M_minus_2 = M - 2;ST CE uint g_M_minus_2_neg = 2 - M;};
-TE <uint M> CE Mod<M>::Mod()NE:m_n(){}TE <uint M> CE Mod<M>::Mod(CO Mod<M>& n)NE:m_n(n.m_n){}TE <uint M> CE Mod<M>::Mod(Mod<M>&& n)NE:m_n(MO(n.m_n)){}TE <uint M> TE <TY T> CE Mod<M>::Mod(T n)NE:m_n(RS<M>(MO(n))){ST_AS(is_COructible_v<uint,decay_t<T> >);}TE <uint M> CE Mod<M>& Mod<M>::OP=(Mod<M> n)NE{RE Ref(m_n = MO(n.m_n));}TE <uint M> CE Mod<M>& Mod<M>::OP+=(CO Mod<M>& n)NE{RE Ref(Normalise(m_n += n.m_n));}TE <uint M> CE Mod<M>& Mod<M>::OP-=(CO Mod<M>& n)NE{RE Ref(m_n < n.m_n?(m_n += M)-= n.m_n:m_n -= n.m_n);}TE <uint M> CE Mod<M>& Mod<M>::OP*=(CO Mod<M>& n)NE{RE Ref(m_n = RS<M>(ull(m_n)* n.m_n));}TE <> CE MP& MP::OP*=(CO MP& n)NE{ull m_n_copy = m_n;RE Ref(m_n = MO((m_n_copy *= n.m_n)< P?m_n_copy:RSP(m_n_copy)));}TE <uint M> IN Mod<M>& Mod<M>::OP/=(Mod<M> n){RE OP*=(n.Invert());}TE <uint M> TE <TY INT> CE Mod<M>& Mod<M>::OP<<=(INT n){AS(n >= 0);RE *TH *= Mod<M>(2).NonNegativePW(MO(n));}TE <uint M> TE <TY INT> CE Mod<M>& Mod<M>::OP>>=(INT n){AS(n >=0);WH(n-- > 0){((m_n & 1)== 0?m_n:m_n += M)>>= 1;}RE *TH;}TE <uint M> CE Mod<M>& Mod<M>::OP++()NE{RE Ref(m_n < COantsForMod<M>::g_M_minus?++m_n:m_n = 0);}TE <uint M> CE Mod<M> Mod<M>::OP++(int)NE{Mod<M> n{*TH};OP++();RE n;}TE <uint M> CE Mod<M>& Mod<M>::OP--()NE{RE Ref(m_n == 0?m_n = COantsForMod<M>::g_M_minus:--m_n);}TE <uint M> CE Mod<M> Mod<M>::OP--(int)NE{Mod<M> n{*TH};OP--();RE n;}DF_OF_CM_FOR_MOD(==);DF_OF_CM_FOR_MOD(!=);DF_OF_CM_FOR_MOD(>);DF_OF_CM_FOR_MOD(>=);DF_OF_CM_FOR_MOD(<);DF_OF_CM_FOR_MOD(<=);DF_OF_AR_FOR_MOD(+,NE,n,+);DF_OF_AR_FOR_MOD(-,NE,n.SignInvert(),+);DF_OF_AR_FOR_MOD(*,NE,n,*);DF_OF_AR_FOR_MOD(/,,n.Invert(),*);TE <uint M> TE <TY INT> CE Mod<M> Mod<M>::OP^(INT EX)CO{RE MO(Mod<M>(*TH).PW(MO(EX)));}TE <uint M> TE <TY INT> CE Mod<M> Mod<M>::OP<<(INT n)CO{RE MO(Mod<M>(*TH)<<= MO(n));}TE <uint M> TE <TY INT> CE Mod<M> Mod<M>::OP>>(INT n)CO{RE MO(Mod<M>(*TH)>>= MO(n));}TE <uint M> CE Mod<M> Mod<M>::OP-()CO NE{RE MO(Mod<M>(*TH).SignInvert());}TE <uint M> CE Mod<M>& Mod<M>::SignInvert()NE{RE Ref(m_n > 0?m_n = M - m_n:m_n);}TE <uint M> IN Mod<M>& Mod<M>::Invert(){AS(m_n != 0);uint m_n_neg;RE m_n < COantsForMod<M>::g_memory_LE?Ref(m_n = Inverse(m_n).m_n):((m_n_neg = M - m_n)< COantsForMod<M>::g_memory_LE)?Ref(m_n = M - Inverse(m_n_neg).m_n):PositivePW(uint(COantsForMod<M>::g_M_minus_2));}TE <uint M> TE <TY INT> CE Mod<M>& Mod<M>::PositivePW(INT EX)NE{Mod<M> PW{*TH};EX--;WH(EX != 0){(EX & 1)== 1?*TH *= PW:*TH;EX >>= 1;PW *= PW;}RE *TH;}TE <uint M> TE <TY INT> CE Mod<M>& Mod<M>::NonNegativePW(INT EX)NE{RE EX == 0?Ref(m_n = 1):Ref(PositivePW(MO(EX)));}TE <uint M> TE <TY INT> CE Mod<M>& Mod<M>::PW(INT EX){bool neg = EX < 0;AS(!(neg && m_n == 0));RE neg?PositivePW(MO(EX *= COantsForMod<M>::g_M_minus_2_neg)):NonNegativePW(MO(EX));}TE <uint M> CE VO Mod<M>::swap(Mod<M>& n)NE{std::swap(m_n,n.m_n);}TE <uint M> IN CO Mod<M>& Mod<M>::Inverse(CO uint& n){AS(n < COantsForMod<M>::g_memory_LE);ST Mod<M> memory[COantsForMod<M>::g_memory_LE]={zero(),one()};ST uint LE_curr = 2;WH(LE_curr <= n){memory[LE_curr].m_n = M - memory[M % LE_curr].m_n * ull(M / LE_curr)% M;LE_curr++;}RE memory[n];}TE <uint M> IN CO Mod<M>& Mod<M>::Factorial(CO uint& n){AS(n < COantsForMod<M>::g_memory_LE);ST Mod<M> memory[COantsForMod<M>::g_memory_LE]={one(),one()};ST uint LE_curr = 2;WH(LE_curr <= n){(memory[LE_curr]= memory[LE_curr - 1])*= LE_curr;LE_curr++;}RE memory[n];}TE <uint M> IN CO Mod<M>& Mod<M>::FactorialInverse(CO uint& n){ST Mod<M> memory[COantsForMod<M>::g_memory_LE]={one(),one()};ST uint LE_curr = 2;WH(LE_curr <= n){(memory[LE_curr]= memory[LE_curr - 1])*= Inverse(LE_curr);LE_curr++;}RE memory[n];}TE <uint M> IN Mod<M> Mod<M>::Combination(CO uint& n,CO uint& i){RE i <= n?Factorial(n)* FactorialInverse(i)* FactorialInverse(n - i):zero();}TE <uint M> CE CO uint& Mod<M>::RP()CO NE{RE m_n;}TE <uint M> CE Mod<M> Mod<M>::DeRP(CO uint& n)NE{Mod<M> n_copy{};n_copy.m_n = n;RE n_copy;}TE <uint M> IN CO Mod<M>& Mod<M>::zero()NE{ST CE CO Mod<M> z{};RE z;}TE <uint M> IN CO Mod<M>& Mod<M>::one()NE{ST CE CO Mod<M> o{1};RE o;}TE <uint M> TE <TY T> CE Mod<M>& Mod<M>::Ref(T&& n)NE{RE *TH;}TE <uint M> CE uint& Mod<M>::Normalise(uint& n)NE{RE n < M?n:n -= M;}TE <uint M> IN Mod<M> Inverse(CO Mod<M>& n){RE MO(Mod<M>(n).Invert());}TE <uint M> CE Mod<M> Inverse_CE(Mod<M> n)NE{RE MO(n.NonNegativePW(M - 2));}TE <uint M,TY INT> CE Mod<M> PW(Mod<M> n,INT EX){RE MO(n.PW(MO(EX)));}TE <uint M> CE VO swap(Mod<M>& n0,Mod<M>& n1)NE{n0.swap(n1);}TE <uint M> IN string to_string(CO Mod<M>& n)NE{RE to_string(n.RP())+ " + " + to_string(M)+ "Z";}TE <uint M,CL Traits> IN basic_istream<char,Traits>& OP>>(basic_istream<char,Traits>& is,Mod<M>& n){ll m;is >> m;n = m;RE is;}TE <uint M,CL Traits> IN basic_ostream<char,Traits>& OP<<(basic_ostream<char,Traits>& os,CO Mod<M>& n){RE os << n.RP();}
 // AAA 常設ライブラリは以上に挿入する。
 
 #define INCLUDE_LIBRARY
