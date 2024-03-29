@@ -12,6 +12,18 @@ INT PartitionOfUnity( const INT& b_0 , const INT& b_1 , INT& u_0 ,  INT& u_1 )
 
   INT a[2][2] = { { 1 , 0 } , { 0 , 1 } };
   INT b[2] = { b_0 , b_1 };
+
+  for( int i = 0 ; i < 2 ; i++ ){
+
+    if( b[i] < 0 ){
+
+      a[i][i] = -1;
+      b[i] *= -1;
+
+    }
+
+  }
+  
   int i_0 = ( b_0 >= b_1 ? 0 : 1 );
   int i_1 = 1 - i_0;
 

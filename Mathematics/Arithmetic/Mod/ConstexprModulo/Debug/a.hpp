@@ -5,16 +5,15 @@
 
 #include "../a_Alias.hpp"
 
-template <INT_TYPE_FOR_MOD M> class Mod;
-template <INT_TYPE_FOR_MOD M> inline constexpr Mod<M> Inverse_constexpr( Mod<M> n );
+#include "../Constant/a.hpp"
 
 template <INT_TYPE_FOR_MOD M>
 class Mod
 {
 
-  friend constexpr Mod<M> Inverse_constexpr<M>( Mod<M> n );
-
 private:
+  // 符号
+  bool m_non_negative;
   // 分子
   INT_TYPE_FOR_MOD m_n;
   // 分母
@@ -69,12 +68,13 @@ public:
   // グローバルスコープでswapを定義するためのもの。
   inline constexpr void swap( Mod<M>& n ) noexcept;
 
+  inline constexpr const bool& GetSign() const noexcept;
   inline constexpr const INT_TYPE_FOR_MOD& GetNumerator() const noexcept;
   inline constexpr const INT_TYPE_FOR_MOD& GetDenominator() const noexcept;
   // 非DEBUG時に型が違うのでauto&&などで受け取ることに注意。
   inline constexpr INT_TYPE_FOR_MOD Represent() const noexcept;
   // 0 <= n < Mの場合のみサポート。定数倍高速化のためにassertなし。
-  static inline constexpr Mod<M> Derepresent( const INT_TYPE_FOR_MOD& n ) noexcept;
+  static inline constexpr Mod<M> Derepresent( INT_TYPE_FOR_MOD n ) noexcept;
   
   // Mが素数かつn < g_memory_lengthである場合のみサポート。
   static inline const Mod<M>& Inverse( const INT_TYPE_FOR_MOD& n );
@@ -92,14 +92,14 @@ private:
   template <typename INT> inline constexpr Mod<M>& PositivePower( INT exponent ) noexcept;
   template <typename INT> inline constexpr Mod<M>& NonNegativePower( INT exponent ) noexcept;
 
-  template <typename T> inline constexpr Mod<M>& Ref( T&& n ) noexcept;
-  static inline constexpr INT_TYPE_FOR_MOD& Normalise( INT_TYPE_FOR_MOD& n ) noexcept;
+  static constexpr ull GCD( ull n0 , ull n1_) noexcept;
+
+  using Constants = ConstantsForMod<M>;
 
 };
 
 // Mが素数でありnが0でない場合にのみサポート。
 template <INT_TYPE_FOR_MOD M> inline Mod<M> Inverse( const Mod<M>& n );
-template <INT_TYPE_FOR_MOD M> inline constexpr Mod<M> Inverse_constexpr( Mod<M> n );
 
 // Mが素数であるかexponent>=0である場合にのみサポート。
 template <INT_TYPE_FOR_MOD M , typename T> inline constexpr Mod<M> Power( Mod<M> n , T exponent );

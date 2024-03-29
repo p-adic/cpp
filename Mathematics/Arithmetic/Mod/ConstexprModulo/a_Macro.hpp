@@ -5,10 +5,10 @@
 #define DECLARATION_OF_COMPARISON_FOR_MOD( OPR )			\
   inline constexpr bool operator OPR( const Mod<M>& n ) const noexcept	\
 
-#define DECLARATION_OF_ARITHMETIC_FOR_MOD( OPR , EX )		   \
-  inline constexpr Mod<M> operator OPR( Mod<M> n ) const EX; \
+#define DECLARATION_OF_ARITHMETIC_FOR_MOD( OPR , EX )		\
+  inline constexpr Mod<M> operator OPR( Mod<M> n ) const EX;	\
 
-#define DEFINITION_OF_COMPARISON_FOR_MOD( OPR )			\
+#define DEFINITION_OF_COMPARISON_FOR_MOD( OPR )				\
   template <INT_TYPE_FOR_MOD M> inline constexpr bool Mod<M>::operator OPR( const Mod<M>& n ) const noexcept { return m_n OPR n.m_n; } \
 
 #define DEFINITION_OF_ARITHMETIC_FOR_MOD( OPR , EX , LEFT , OPR2 )	\

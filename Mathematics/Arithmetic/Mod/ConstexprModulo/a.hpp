@@ -5,12 +5,13 @@
 
 #include "a_Alias.hpp"
 
+#include "Constants/a.hpp"
+
 // 非常によくバグるので、更新したら必ずverifyすること！
 // verify:
-// https://yukicoder.me/submissions/959511
-// （Derepresent,+=,-=,*,Combination,one）
-// https://yukicoder.me/submissions/959509
-// （Derepresent,+=,-=,*=,SignInvert,+,*,^,++,--,Combination,zero,one）
+// https://yukicoder.me/submissions/965330（+=,*,/,Power）
+// https://yukicoder.me/submissions/965328（Derepresent,+=,-=,*,Combination,one）
+// https://yukicoder.me/submissions/965332（Derepresent,+=,-=,*=,SignInvert,+,*,^,++,--,Combination,zero,one）
 
 template <INT_TYPE_FOR_MOD M>
 class Mod
@@ -70,7 +71,7 @@ public:
 
   inline constexpr const INT_TYPE_FOR_MOD& Represent() const noexcept;
   // 0 <= n < Mの場合のみサポート。定数倍高速化のためにassertなし。
-  static inline constexpr Mod<M> Derepresent( const INT_TYPE_FOR_MOD& n ) noexcept;
+  static inline constexpr Mod<M> Derepresent( INT_TYPE_FOR_MOD n ) noexcept;
   
   // Mが素数かつn < g_memory_lengthである場合のみサポート。
   static inline const Mod<M>& Inverse( const INT_TYPE_FOR_MOD& n );
@@ -88,14 +89,12 @@ private:
   template <typename INT> inline constexpr Mod<M>& PositivePower( INT exponent ) noexcept;
   template <typename INT> inline constexpr Mod<M>& NonNegativePower( INT exponent ) noexcept;
 
-  template <typename T> inline constexpr Mod<M>& Ref( T&& n ) noexcept;
-  static inline constexpr INT_TYPE_FOR_MOD& Normalise( INT_TYPE_FOR_MOD& n ) noexcept;
+  using Constants = ConstantsForMod<M>;
 
 };
 
 // Mが素数でありnが0でない場合にのみサポート。
 template <INT_TYPE_FOR_MOD M> inline Mod<M> Inverse( const Mod<M>& n );
-template <INT_TYPE_FOR_MOD M> inline constexpr Mod<M> Inverse_constexpr( Mod<M> n );
 
 // Mが素数であるかexponent>=0である場合にのみサポート。
 template <INT_TYPE_FOR_MOD M , typename T> inline constexpr Mod<M> Power( Mod<M> n , T exponent );

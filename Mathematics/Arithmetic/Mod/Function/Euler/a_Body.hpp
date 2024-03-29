@@ -44,7 +44,7 @@ void MemoriseEulerFunction( const PrimeEnumeration<INT,val_limit,length_max>& pr
 
   for( int i = 0 ; i < prime.m_length ; i++ ){
     
-    const INT& p_i = prime.m_val[i];
+    const INT& p_i = prime[i];
     int n = 0;
 
     while( ( n += p_i ) < size ){

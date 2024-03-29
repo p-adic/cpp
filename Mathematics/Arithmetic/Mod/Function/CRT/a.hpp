@@ -2,7 +2,7 @@
 
 #pragma once
 
-// b_0とb_1が
+// GCDやLCMは../../../Prime/Divisor/GCDで定義。
 
 // gcd(b_0,b_1)を返し、u_0,u_1にu_0*b_0+u_1*b_1==gcd(b_0,b_1)を満たす値を格納する。
 template <typename INT>
