@@ -4,7 +4,7 @@
 #include "../TwoByTwo/a.hpp"
 
 // verify:
-// https://yukicoder.me/submissions/959497（+=,-=,*=,Act）
+// https://yukicoder.me/submissions/965332（+=,-=,*=,Act）
 
 template <typename T>
 class TwoByOneMatrix
