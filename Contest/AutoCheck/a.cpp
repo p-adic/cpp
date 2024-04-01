@@ -3,6 +3,8 @@
 #include "../Header.hpp"
 #include "a_Body.hpp"
 
+#include "../../Utility/StdStream/a_Body.hpp"
+
 void AutoCheck( int& exec_mode , const bool& use_getline )
 {
   int num = 0;
@@ -705,6 +707,7 @@ AC( Maximisation )
   ASK_NUMBER(
 	     "移動コストの最小化問題" ,
 	     "移動長の最大化問題" ,
+	     "ナップサック問題" ,
 	     "配列上の関数に関する最大／最小化問題" ,
 	     "配列の隣接成分間関係式を満たす部分列の最長化問題" ,
 	     "低次元アフィン空間上の関数の最大／最小化問題" ,
@@ -717,13 +720,15 @@ AC( Maximisation )
 	     "操作コストの最小化問題" ,
 	     "操作回数の最大化問題" ,
 	     "描画サイズ／個数の最大／最小化問題" ,
-	     "最大値／総和の最小化問題" ,
-	     "最小値／総和の最大化問題"
+	     "最小値の最大化問題" ,
+	     "部分和の最小化問題"
 	     );
   if( num == num_temp++ ){
     CALL_AC( MinimisationMovingCost );
   } else if( num == num_temp++ ){
     CALL_AC( MaximisationMovingDistance );
+  } else if( num == num_temp++ ){
+    CALL_AC( MaximisationSubArraySum );
   } else if( num == num_temp++ ){
     CALL_AC( MaximisationFunctionOnArray );
   } else if( num == num_temp++ ){
@@ -751,7 +756,7 @@ AC( Maximisation )
   } else if( num == num_temp++ ){
     CALL_AC( MaximisationMinimum );
   } else if( num == num_temp++ ){
-    CALL_AC( MinimisationMaximum );
+    CALL_AC( MinimisationSubsetSum );
   }
 }
 
@@ -768,9 +773,9 @@ AC( MinimisationMovingCost )
     CALL_AC( MinimisationSolvingMaze );
   } else if( num == num_temp++ ){
     CERR( "- 最短経路の始点の特定が不要ならば、始点を１つ追加して元の始点へコスト0の" );
-    CERR( "  有向辺を追加" )
+    CERR( "  有向辺を追加" );
     CERR( "- 最短経路の始点の特定が必要ならば、辺を反転" );
-    CERR( "により１始点多終点最小コスト移動（迷路）問題に帰着されます。" )
+    CERR( "により１始点多終点最小コスト移動（迷路）問題に帰着されます。" );
     CALL_AC( MinimisationSolvingMaze );
   } else if( num == num_temp++ ){
     CALL_AC( MinimisationSolvingOpenCovering );
@@ -918,15 +923,15 @@ AC( MaximisationFunctionOnArray )
 	     );
   if( num == num_temp++ ){
     ASK_NUMBER(
-	       "成分を受け取る関数の部分最大値／部分和の最大化問題" ,
+	       "成分を受け取る関数の部分和の最大化問題" ,
 	       "成分を受け取る関数の部分和と補部分和の差の最小化問題" ,
 	       "0/1倍以外の配列の変更と配列を受け取る関数の合成の最大化問題"
 	       );
     if( num == num_temp++ ){
       CALL_AC( MaximisationSubArraySum );
     } else if( num == num_temp++ ){
-      CERR( "部分和と総和の半分の差の最小化を行いましょう。" )
-      CERR( "これは小さい方を考えることで上限付き部分和の最大化問題となります。" )
+      CERR( "部分和と総和の半分の差の最小化を行いましょう。" );
+      CERR( "これは小さい方を考えることで上限付き部分和の最大化問題となります。" );
       CALL_AC( MaximisationSubArraySum );
     } else if( num == num_temp++ ){
       CALL_AC( MaximisationArrayFunction );
@@ -945,55 +950,173 @@ AC( MaximisationFunctionOnArray )
 
 AC( MaximisationSubArraySum )
 {
-  CERR( "最大値／総和を取る値を価値と呼ぶことにします。" );
-  CERR( "配列の項数N、第i成分の価値A_i、価値の最大値／総和の上限Vとします。" );
-  CERR( "{0,...,N-1}の部分集合Iであって、" );
+  CERR( "総和を取る値を価値と呼ぶことにします。" );
+  CERR( "配列の項数N、第i成分の価値A_i、価値の総和の上限Vとします。" );
+  CERR( "{0,...,N-1}の部分集合または集合として含まれる多重集合Iであって、" );
   CERR( "- sum(i in I){A_i} = v" );
   CERR( "- その他の条件" );
   CERR( "を満たすものが存在するv <= Vの最大化を考えます。" );
-  ASK_NUMBER(
-	     "Iにコスト制約があり重複した選択を許す場合" ,
-	     "Iにコスト制約があり重複した選択を許さない場合" ,
-	     "Iが固定長の区間である場合" ,
-	     "Iに追加の制約がない場合"
-	     );
-  if( num == num_temp++ ){
-    CERR( "各選択のコスト上限が存在する場合、その上限以下の項だけを考えましょう。" );
-    CERR( "コストの次元をK<=2、n項目のコストをC_nとし、" );
-    CERR( "m選択目ではC_n[k_m]<=D_mを満たす項nを選べるとします。" );
-    CERR( "" );
-    CERR( "項{C_n,n}と選択{k_m,D_m}をそれぞれ辞書式順序でソートし、" );
-    CERR( "以下の手順で選択を昇順に決定していきましょう。" );
-    CERR( "- K=1の場合、各選択では可能な選択の中で最大のものを採用しましょう。" );
-    CERR( "- K=2の場合、各選択では可能な選択の{第2成分,項番号}をsetで管理しつつ" );
-    CERR( "  その中で最大のものを採用しましょう。" );
-  } else if( num == num_temp++ ){
-    CERR( "各選択のコスト上限が存在する場合、その上限以下の項だけを考えましょう。" );
-    CERR( "コストの最大値／総和上限C<∞とします。Cの次元は自由です。" );
-    CERR( "- Cが十分小さいならば、コストの大きい選択回数の全探策や二分探索" );
-    CERR( "- O(NC)が通りそうならば" );
-    CERR( "  「i番目の項まで使ってコストの最大値／総和がc以下の時の価値の最大値dp[i][c]」" );
-    CERR( "  を管理するcに関する動的計画法" );
-    CERR( "- O(C^2)が通りそうならば" );
-    CERR( "  「コストcの項の価値の最大値v[c]」" );
-    CERR( "  を前計算し" );
-    CERR( "  「コストの最大値／総和がc以下の時の価値の最大値dp[c]」" );
-    CERR( "  を管理するcに関する動的計画法" );
-    CERR( "を検討しましょう。" );
-  } else if( num == num_temp++ ){
-    CERR( "区間をスライドしていき、両端の更新値を用いて最大値を管理しましょう。" );
-  } else if( num == num_temp++ ){
-    CERR( "- O(2^N)が通りそうならば愚直に全探策" );
-    CERR( "- O(N 2^{N/2})が通りそうならば半分全列挙" );
-    CERR( "- O(NV)が通りそうならば[v-V,v+V]での実現可能性を" );
-    CERR( "  遷移する動的計画法" );
-    CERR( "  https://stackoverflow.com/a/18949218" );
-    CERR( "- O((N+V)log_2 V)が通りそうでVが10^5オーダーで" );
-    CERR( "  プロス素数Pを法とするならば法Pでの高速フーリエ変換による" );
-    CERR( "  exp(logの総和)計算" );
-    CERR( "  \\Mathematics\\Polynomial\\Truncate" );
-    CERR( "を検討しましょう。" );
+  ASK_YES_NO( "Iが区間に限られますか？" );
+  if( reply == "y" ){
+    CALL_AC( MaximisationSubIntervalSum );
+  } else {
+    ASK_YES_NO( "コスト総和上限がありますか？" );
+    if( reply == "y" ){
+      CALL_AC( MaximisationSubArraySumBoundedCostSum );
+    } else {
+      ASK_YES_NO( "各選択にコスト上限がありますか？" );
+      if( reply == "y" ){
+	CALL_AC( MaximisationSubArraySumBoundedCost );
+      } else {
+	CALL_AC( MaximisationSubArraySumRestrictionFree );
+      }
+    }
   }
+}
+
+AC( MaximisationSubIntervalSum )
+{
+  ASK_YES_NO( "区間長は固定ですか？" );
+  if( reply == "y" ){
+    CERR( "区間をスライドしていき、両端の更新値を用いて最大値を管理しましょう。" );
+  } else {
+    CERR( "尺取り法で区間を伸ばしていき、両端の更新値を用いて最大値を管理しましょう。" );
+  }
+  CERR( "\\Mathematics\\Combinatorial\\KnapsackProblem\\Interval" );
+}
+
+AC( MaximisationSubArraySumBoundedCostSum )
+{
+  CERR( "各選択のコスト上限が存在する場合、その上限以下の項だけを考えましょう。" );
+  CERR( "コストの総和上限Cとします。コストの半順序モノイドにおけるC以下の元" );
+  CERR( "全体の集合の要素数を|C|と置きます。" );
+  ASK_YES_NO( "選択に重複が許されますか？" );
+  if( reply == "y" ){
+   CALL_AC( MaximisationSubArraySumBoundedCostSumMultipleChoice );
+  } else {
+    ASK_YES_NO( "ナップサックが複数ありますか？" );
+    if( reply == "y" ){
+      CALL_AC( MaximisationSubArraySumBoundedCostSumSingleChoiceMultipleKnapsack );
+    } else {
+      CALL_AC( MaximisationSubArraySumBoundedCostSumSingleChoiceSingleKnapsack );
+    }
+  }
+}
+
+AC( MaximisationSubArraySumBoundedCostSumMultipleChoice )
+{
+  ASK_YES_NO( "選択回数に上限がありますか？" );
+  if( reply == "y" ){
+    CALL_AC( MaximisationSubArraySumBoundedCostSumBoundedChoice );
+  } else {
+    CALL_AC( MaximisationSubArraySumBoundedCostSumUnboundedChoice );
+  }
+}
+
+AC( MaximisationSubArraySumBoundedCostSumBoundedChoice )
+{
+  CERR( "- O(N+|C|^2)が通りそうならば" );
+  CERR( " 「コストcの項の価値の最大値v[c]」" );
+  CERR( "  を前計算し" );
+  CERR( " 「コストの総和がc以下の時の価値の最大値dp[c]」" );
+  CERR( "  を管理するcに関する動的計画法" );
+  CERR( "  \\Mathematics\\Combinatorial\\KnapsackProblem\\Multichoice\\Bounded" );
+  CERR( "- O(N min(|C|,V,2^{(N log_2 |C|)/2}) log_2 |C|)が通りそうかつ" );
+  CERR( "  コストに変動がないならば" );
+  CERR( "  重複回数を二進法で分解してまとめ、重複がない場合に帰着" );
+  CERR( "  \\Mathematics\\Combinatorial\\KnapsackProblem\\Multichoice\\Bounded" );
+  CERR( "- O(N^2 v^2 log_2 v)が通りそうかつコストに変動がないならば" );
+  CERR( "  v個上限の問題とそれ以外の単位コスト当たりの価値順の貪欲法に分割" );
+  CERR( "  \\Mathematics\\Combinatorial\\KnapsackProblem\\Multichoice\\Bounded" );
+  CERR( "を検討しましょう。" );
+}
+
+AC( MaximisationSubArraySumBoundedCostSumUnboundedChoice )
+{
+  CERR( "- O(N+|C|^2)が通りそうならば" );
+  CERR( " 「コストcの項の価値の最大値v[c]」" );
+  CERR( "  を前計算し" );
+  CERR( " 「コストの総和がc以下の時の価値の最大値dp[c]」" );
+  CERR( "  を管理するcに関する動的計画法" );
+  CERR( "  \\Mathematics\\Combinatorial\\KnapsackProblem\\Multichoice\\Unbounded" );
+  CERR( "を検討しましょう。" );
+}
+
+AC( MaximisationSubArraySumBoundedCostSumSingleChoiceMultipleKnapsack )
+{
+  CERR( "容量上限の小さいナップサックが複数個あり個々の容量上限が十分小さいならば、" );
+  CERR( "コストの大きい順に選択回数の全探策や二分探索を検討しましょう。" );
+  CERR( "参考：https://yukicoder.me/problems/no/2617/editorial" );
+}
+
+AC( MaximisationSubArraySumBoundedCostSumSingleChoiceSingleKnapsack )
+{
+  CERR( "- O(2^N)が通りそうならば全探索" );
+  CERR( "  \\Mathematics\\Combinatorial\\KnapsackProblem\\Negative" );
+  CERR( "- O(N 2^{N/2})が通りそうかつ非負ならば半分全列挙" );
+  CERR( "  \\Mathematics\\Combinatorial\\KnapsackProblem" );
+  CERR( "- O(N |C|)が通りそうかつ非負ならば、" );
+  CERR( "  「i番目の項まで使ってコストの総和がcの時の価値の最大値dp[i][c]」" );
+  CERR( "  を管理するi,cに関する動的計画法" );
+  CERR( "  \\Mathematics\\Combinatorial\\KnapsackProblem" );
+  CERR( "- O(N V)が通りそうかつ非負ならば、" );
+  CERR( "  「i番目の項まで使って価値の総和がvの時のコストの最小値dp[i][c]」" );
+  CERR( "  を管理するi,vに関する動的計画法" );
+  CERR( "  \\Mathematics\\Combinatorial\\KnapsackProblem" );
+  CERR( "を検討しましょう。" );
+}
+
+AC( MaximisationSubArraySumBoundedCost )
+{
+  ASK_YES_NO( "何個目に選ばれたかによって項目のコストが変動しますか？" );
+  if( reply == "y" ){
+    CALL_AC( MaximisationSubArraySumBoundedCostUnstableCost );
+  } else {
+    CALL_AC( MaximisationSubArraySumBoundedCostStableCost );
+  }
+  CERR( "\\Mathematics\\Combinatorial\\KnapsackProblem\\Ordered" );
+}
+
+AC( MaximisationSubArraySumBoundedCostUnstableCost )
+{
+  CERR( "1 <= m <= M個目の選択におけるコスト上限をD_mとし、" );
+  CERR( "項iのコストが取りうる値をC_{i,1},C_{i,2}の2通りとし、" );
+  CERR( "全体でm回目の選択における項iのコストがiに依存しない数1 <= k_m <= Kを用いて" );
+  CERR( "C_{i,k_m}と表せるとします。つまりC_{i,k_m}<=D_mが項iの選択制約です。" );
+  CERR( "ただしk_1 = 1としても一般性を失いません。" );
+  CERR( "" );
+  CERR( "O((N log_2 N)+M)が間に合いそうならば、(C_{i,k},i)_iの辞書順ソートを" );
+  CERR( "sC(k)と置き、(k_m,D_m,m)_mの辞書順ソートを(k_{m_j},D_{m_j},m_j)_jと置き、" );
+  CERR( "1 <= j <= Mを小さい順に探索し、以下の手順でm_j個目の選択を決定しましょう。" );
+  CERR( "- sC(k_{m_j})を用いて選択可能な項iに対する{A_i,C_{i,2},i}をsetで管理し、" );
+  CERR( "  その中で最大の要素を採用し、集合から削除する。" );
+}
+
+AC( MaximisationSubArraySumBoundedCostStableCost )
+{
+  CERR( "1 <= m <= M個目の選択におけるコスト上限をD_mとし、" );
+  CERR( "項iのコストをC_iとします。つまりC_i<=D_mが項iの選択制約です。" );
+  CERR( "" );
+  CERR( "O((N log_2 N)+M)が間に合いそうならば、(C_i,i)_iの辞書順ソートをsC、" );
+  CERR( "(D_m)_mの辞書順ソートを(D_{m_j})_jと置き、" );
+  CERR( "1 <= j <= Mを小さい順に探索し、以下の手順でm_j個目の選択を決定します。" );
+  CERR( "- sCを用いて選択可能な項iに対する{A_i,i}をsetで管理し、" );
+  CERR( "  その中で最大の要素を採用し、集合から削除する。" );
+}
+
+AC( MaximisationSubArraySumRestrictionFree )
+{
+  CERR( "- O(2^N)が通りそうならば愚直に全探策" );
+  CERR( "  \\Mathematics\\Combinatorial\\KnapsackProblem\\Negative" );
+  CERR( "- O(N 2^{N/2})が通りそうかつ非負ならば半分全列挙" );
+  CERR( "  \\Mathematics\\Combinatorial\\KnapsackProblem\\Costfree" );
+  CERR( "- O(NV)が通りそうかつ非負ならば[v-V,v+V]での実現可能性を管理する動的計画法" );
+  CERR( "  \\Mathematics\\Combinatorial\\KnapsackProblem\\Costfree" );
+  CERR( "- O((N+V)log_2 V)が通りそうかつ非負かつVが10^5オーダーで" );
+  CERR( "  プロス素数Pを法とするならば法Pでの高速フーリエ変換による" );
+  CERR( "  exp(logの総和)計算" );
+  CERR( "  \\Mathematics\\Polynomial\\Truncate" );
+  CERR( "を検討しましょう。" );
 }
 
 AC( MaximisationArrayFunction )
@@ -1174,21 +1297,21 @@ AC( MaximisationDrawingImage )
 
 AC( MaximisationMinimum )
 {
-  CERR( "全てを-1倍することで最大値／総和の最小化問題に帰着させます。" );
-  CALL_AC( MinimisationMaximum );
+  CERR( "全てを-1倍することで最大値を演算とする総和の最小化問題に帰着させます。" );
+  CALL_AC( MinimisationSubsetSum );
 }
 
-AC( MinimisationMaximum )
+AC( MinimisationSubsetSum )
 {
   ASK_NUMBER(
-	     "グラフの辺集合E上の関数の部分最大値／部分和の最小化問題" ,
-	     "一般の集合上の関数の部分最大値／部分和の最小化問題"
+	     "グラフの辺集合E上の関数の部分和の最小化問題" ,
+	     "一般の集合上の関数の部分和の最小化問題"
 	     );
   if( num == num_temp++ ){
-    CERR( "max／+を演算とする最短経路問題に帰着させましょう。" );
+    CERR( "最短経路問題に帰着させましょう。" );
     CALL_AC( MinimisationMovingCost );
   } else if( num == num_temp++ ){
-    CERR( "部分最大値／部分和を固定して部分集合の存在を判定する" );
+    CERR( "部分和を固定して部分集合の存在を判定する" );
     CERR( "二分探索を検討しましょう。" );
   }
 }
@@ -1631,7 +1754,7 @@ AC( CountingYoundDiagram )
   CERR( "- RS対応（型の等しいヤングタブローと順列の対応）" );
   CERR( "  https://en.wikipedia.org/wiki/Robinson%E2%80%93Schensted_correspondence" );
   CERR( "- 半標準ヤングタブローと非交叉なパスの組との対応" );
-  CERR( "を検討しましょう。")
+  CERR( "を検討しましょう。" );
 }
 
 AC( CountingParenthesisSequence )
@@ -2375,7 +2498,7 @@ AC( ConstructionMap )
   CERR( "  \\Mathematics\\Geometry\\Graph\\HopcroftKarp" );
   CERR( "  https://ja.wikipedia.org/wiki/ベルンシュタインの定理#証明" );
   CERR( "- 全射の構築には部分集合を制限して全単射の構築の反復" );
-  CERR( "を検討しましょう。" )
+  CERR( "を検討しましょう。" );
 }
 
 AC( ConstructionPath )
