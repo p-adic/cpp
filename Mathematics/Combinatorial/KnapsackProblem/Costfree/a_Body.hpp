@@ -131,15 +131,18 @@ INT CostfreeKnapsackFewValues( const int& N , const vector<INT>& value , const I
 
 }
 
-template <typename INT>
-INT CostfreeKnapsackFewItems( const int& N , const vector<INT>& value , const INT& value_bound , const INT& value_sum_bound )
+template <typename U , typename COMM_MONOID>
+U AbstractCostfreeKnapsackFewItems( COMM_MONOID M , const vector<U>& value , const U& value_bound , const U& value_sum_bound )
 {
 
-  INT answer = 0;
+  const int N = value.size();
+  const U& one = M.One();
+  assert( !( value_sum_bound < one ) );
+  U answer = one;
 
   if( N == 1 ){
 
-    if( value[0] <= value_sum_bound ){
+    if( !( value_sum_bound < value[0] ) ){
       
       answer = value[0];
 
@@ -158,23 +161,23 @@ INT CostfreeKnapsackFewItems( const int& N , const vector<INT>& value , const IN
     }
     
     const int power_left = 1 << N_half_left;
-    vector<INT> value_sum_left( power_left );
+    vector<U> value_sum_left( power_left ), one ;
 
     for( int s = 1 ; s < power_left ; s++ ){
 
       const int lsb = s & -s;
-      value_sum_left[s] = value_sum_left[s ^ lsb] + value[valuation[lsb]];
+      value_sum_left[s] = M.Product( value_sum_left[s ^ lsb] , value[valuation[lsb]] );
 
     }
 
     const int power_right = 1 << N_half_right;
-    vector<INT> value_sum_right( power_right );
+    vector<U> value_sum_right( power_right , one );
 
     for( int s = 1 ; s < power_right ; s++ ){
 
       const int lsb = s & -s;
-      auto& value_sum_right_s = value_sum_right[s] = value_sum_right[s ^ lsb] + value[N_half_left + valuation[lsb]];
-      value_sum_right_s <= value_sum_bound ? value_sum_right_s : value_sum_right_s = 0;
+      auto& value_sum_right_s = value_sum_right[s] = M.Product( value_sum_right[s ^ lsb] , value[N_half_left + valuation[lsb]] );
+      value_sum_bound < value_sum_right_s ? value_sum_right_s = one : value_sum_right_s;
 
     }
 
@@ -182,12 +185,12 @@ INT CostfreeKnapsackFewItems( const int& N , const vector<INT>& value , const IN
 
     for( int s = 0 ; s < power_left ; s++ ){
 
-      const INT diff = value_sum_bound - value_sum_left[s];
+      auto& value_sum_left_s = value_sum_left[s];
 
-      if( diff >= 0 ){
+      if( !( value_sum_bound < value_sum_left_s ) ){
 	
-	BS2( t , 0 , power_right - 1 , value_sum_right[t] , diff );
-	answer = max( answer , value_sum_left[s] + value_sum_right[t] );
+	BS2( t , 0 , power_right - 1 , M.Product( value_sum_left_s , value_sum_right[t] ) , value_sum_bound );
+	answer = max( answer , M.Product( value_sum_left_s , value_sum_right[t] ) );
 
       }
 
@@ -199,5 +202,5 @@ INT CostfreeKnapsackFewItems( const int& N , const vector<INT>& value , const IN
   
 }
 
-template <typename INT> inline INT CostfreeKnapsack( const vector<INT>& value , const INT& value_bound , const INT& value_sum_bound ) { assert( 1 <= value_bound && value_bound <= value_sum_bound ); const int N = value.size(); return value_bound >> ( N >> 1 ) == 0 ? CostfreeKnapsackFewValues( value , value_bound , value_sum_bound ) : CostfreeKnapsackFewItems( value , value_bound , value_sum_bound ); }
+template <typename INT> inline INT CostfreeKnapsack( const vector<INT>& value , const INT& value_bound , const INT& value_sum_bound ) { assert( 1 <= value_bound && value_bound <= value_sum_bound ); const int N = value.size(); return value_bound >> ( N >> 1 ) == 0 ? CostfreeKnapsackFewValues( value , value_bound , value_sum_bound ) : AbstractCostfreeKnapsackFewItems( AdditiveMonoid<INT>() , value , value_bound , value_sum_bound ); }
 
