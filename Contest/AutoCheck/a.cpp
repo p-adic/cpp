@@ -1005,6 +1005,7 @@ AC( MaximisationSubArraySumBoundedCostSum )
 
 AC( MaximisationSubArraySumBoundedCostSumMultipleChoice )
 {
+  CERR( "価値やコストが負の場合も部分的に扱えますが、正である場合の考察のみまとめます。" );
   ASK_YES_NO( "選択回数に上限がありますか？" );
   if( reply == "y" ){
     CALL_AC( MaximisationSubArraySumBoundedCostSumBoundedChoice );
@@ -1051,15 +1052,13 @@ AC( MaximisationSubArraySumBoundedCostSumSingleChoiceMultipleKnapsack )
 
 AC( MaximisationSubArraySumBoundedCostSumSingleChoiceSingleKnapsack )
 {
-  CERR( "- O(2^N)が通りそうならば全探索" );
-  CERR( "  \\Mathematics\\Combinatorial\\KnapsackProblem\\Negative" );
-  CERR( "- O(N 2^{N/2})が通りそうかつ非負ならば半分全列挙" );
+  CERR( "- O(N 2^{N/2})が通りそうならば半分全列挙" );
   CERR( "  \\Mathematics\\Combinatorial\\KnapsackProblem" );
-  CERR( "- O(N |C|)が通りそうかつ非負ならば、" );
+  CERR( "- O(N |C|)が通りそうかつコストが非負ならば、" );
   CERR( "  「i番目の項まで使ってコストの総和がcの時の価値の最大値dp[i][c]」" );
   CERR( "  を管理するi,cに関する動的計画法" );
   CERR( "  \\Mathematics\\Combinatorial\\KnapsackProblem" );
-  CERR( "- O(N V)が通りそうかつ非負ならば、" );
+  CERR( "- O(N V)が通りそうかつ価値が非負ならば、" );
   CERR( "  「i番目の項まで使って価値の総和がvの時のコストの最小値dp[i][c]」" );
   CERR( "  を管理するi,vに関する動的計画法" );
   CERR( "  \\Mathematics\\Combinatorial\\KnapsackProblem" );
@@ -1106,11 +1105,9 @@ AC( MaximisationSubArraySumBoundedCostStableCost )
 
 AC( MaximisationSubArraySumRestrictionFree )
 {
-  CERR( "- O(2^N)が通りそうならば愚直に全探策" );
-  CERR( "  \\Mathematics\\Combinatorial\\KnapsackProblem\\Negative" );
-  CERR( "- O(N 2^{N/2})が通りそうかつ非負ならば半分全列挙" );
+  CERR( "- O(N 2^{N/2})が通りそうならば半分全列挙" );
   CERR( "  \\Mathematics\\Combinatorial\\KnapsackProblem\\Costfree" );
-  CERR( "- O(NV)が通りそうかつ非負ならば[v-V,v+V]での実現可能性を管理する動的計画法" );
+  CERR( "- O(N V)が通りそうかつ非負ならば[v-V,v+V]での実現可能性を管理する動的計画法" );
   CERR( "  \\Mathematics\\Combinatorial\\KnapsackProblem\\Costfree" );
   CERR( "- O((N+V)log_2 V)が通りそうかつ非負かつVが10^5オーダーで" );
   CERR( "  プロス素数Pを法とするならば法Pでの高速フーリエ変換による" );
