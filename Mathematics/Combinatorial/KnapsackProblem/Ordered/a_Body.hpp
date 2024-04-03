@@ -4,7 +4,7 @@
 #include "a.hpp"
 
 template <typename U1 , typename COMM_MONOID1 , typename U2 , typename COMM_MONOID2 >
-pair<U1,U2> AbstractOrderedUnstableCostUnboundedSumKnapsack( COMM_MONOID1 M1 , COMM_MONOID2 M2 , const vector<U1>& value , const vector<U2>& cost0 , const vector<U2>& cost1 , const vector<bool>& chosen_zero , const vector<U2>& cost_bound )
+pair<U1,U2> AbstractOrderedUnstableCostKnapsack( COMM_MONOID1 M1 , COMM_MONOID2 M2 , const vector<U1>& value , const vector<U2>& cost0 , const vector<U2>& cost1 , const vector<bool>& chosen_zero , const vector<U2>& cost_bound )
 {
 
   const int N = value.size();
@@ -74,10 +74,10 @@ pair<U1,U2> AbstractOrderedUnstableCostUnboundedSumKnapsack( COMM_MONOID1 M1 , C
 
 }
 
-template <typename INT1 , typename INT2> inline INT2 OrderedUnstableCostUnboundedSumKnapsack( const vector<INT1>& value , const vector<INT2>& cost0 , const vector<INT2>& cost1 , const vector<bool>& chosen_zero , const vector<INT2>& cost_bound ) { return AbstractOrderedUnstableCostUnboundedSumKnapsack( AdditiveMoonid<INT1>() , AdditiveMonoid<INT2>() , value , cost0 , cost1 , chosen_zero , cost_bound ); }
+template <typename INT1 , typename INT2> inline INT2 OrderedUnstableCostKnapsack( const vector<INT1>& value , const vector<INT2>& cost0 , const vector<INT2>& cost1 , const vector<bool>& chosen_zero , const vector<INT2>& cost_bound ) { return AbstractOrderedUnstableCostKnapsack( AdditiveMoonid<INT1>() , AdditiveMonoid<INT2>() , value , cost0 , cost1 , chosen_zero , cost_bound ); }
 
 template <typename U1 , typename COMM_MONOID1 , typename U2 , typename COMM_MONOID2 >
-pair<U1,U2> AbstractOrderedUnboundedSumKnapsack( COMM_MONOID1 M1 , COMM_MONOID2 M2 , const vector<U1>& value , const vector<U2>& cost , const vector<U2>& cost_bound )
+pair<U1,U2> AbstractOrderedKnapsack( COMM_MONOID1 M1 , COMM_MONOID2 M2 , const vector<U1>& value , const vector<U2>& cost , const vector<U2>& cost_bound )
 {
 
   const int N = value.size();
@@ -132,6 +132,6 @@ pair<U1,U2> AbstractOrderedUnboundedSumKnapsack( COMM_MONOID1 M1 , COMM_MONOID2 
 
 }
 
-template <typename INT1 , typename INT2> inline pair<INT1,INT2> OrderedUnboundedSumKnapsack( const vector<INT1>& value , const vector<INT2>& cost , const vector<INT2>& cost_bound ) { return AbstractOrderedUnboundedSumKnapsack( AdditiveMonoid<INT1>() , AdditiveMonoid<INT2>() , value , cost , cost_bound ); }
+template <typename INT1 , typename INT2> inline pair<INT1,INT2> OrderedKnapsack( const vector<INT1>& value , const vector<INT2>& cost , const vector<INT2>& cost_bound ) { return AbstractOrderedKnapsack( AdditiveMonoid<INT1>() , AdditiveMonoid<INT2>() , value , cost , cost_bound ); }
 
 

@@ -6,7 +6,7 @@
 #include "../a_Body.hpp"
 
 template <typename INT>
-vector<bool> UnboundedChoiceCostfreeConstructibiilityKnapsack( const vector<INT>& value , const INT& value_sum_bound )
+vector<bool> UnboundedChoiceCostfreeConstructibiilityBoundedValueSumKnapsack( const vector<INT>& value , const INT& value_sum_bound )
 {
 
   assert( 0 <= value_sum_bound );
@@ -50,4 +50,4 @@ vector<bool> UnboundedChoiceCostfreeConstructibiilityKnapsack( const vector<INT>
 
 }
 
-template <typename INT> inline INT UnboundedChoiceCostfreeKnapsack( const vector<INT>& value , const INT& value_sum_bound ) { INT answer = 0; auto constructible = UnboundedChoiceCostfreeMulticaseKnapsack( value , value_sum_bound ); for( INT v = 0 ; v <= value_sum_bound ; v++ ){ constructible[v] ? answer = v : answer; } return answer; }
+template <typename INT> inline INT UnboundedChoiceCostfreeBoundedValueSumKnapsack( const vector<INT>& value , const INT& value_sum_bound ) { INT answer = 0; auto constructible = UnboundedChoiceCostfreeMulticaseBoundedValueSumKnapsack( value , value_sum_bound ); for( INT v = 0 ; v <= value_sum_bound ; v++ ){ constructible[v] ? answer = v : answer; } return answer; }

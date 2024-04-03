@@ -7,7 +7,7 @@
 // を満たす場合にのみサポート。
 // 計算量O(N * value_sum_bound)で
 // 価値0 <= v <= value_sum_boundごとにvがvalueの部分和で表せるか否かを判定する。
-template <typename INT> inline vector<bool> CostfreeConstructibilityKnapsack( const vector<INT>& value , const INT& value_sum_bound );
+template <typename INT> inline vector<bool> CostfreeConstructibilityBoundedValueSumKnapsack( const vector<INT>& value , const INT& value_sum_bound );
 
 
 // 入力の範囲内で要件
@@ -20,4 +20,4 @@ template <typename INT> inline vector<bool> CostfreeConstructibilityKnapsack( co
 // をもとに実装。
 // 計算量O(N min(value_bound,2^{N/2}))で
 // 価値の総和のvalue_sum_bound以下における最大値を求める。
-template <typename INT> inline INT CostfreeKnapsack( const vector<INT>& value , const INT& value_bound , const INT& value_sum_bound );
+template <typename INT> inline INT CostfreeBoundedValueSumKnapsack( const vector<INT>& value , const INT& value_bound , const INT& value_sum_bound );

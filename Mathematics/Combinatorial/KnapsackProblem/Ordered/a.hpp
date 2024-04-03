@@ -13,8 +13,8 @@
 // (chosen_zero[k]?cost0:cost1)[i]とする状況で、高々K回の選択をする時の
 // 価値の総和の最大値を求める。
 template <typename U1 , typename COMM_MONOID1 , typename U2 , typename COMM_MONOID2 >
-pair<U1,U2> AbstractOrderedUnstableCostUnboundedSumKnapsack( COMM_MONOID1 M1 , COMM_MONOID2 M2 , const vector<U1>& value , const vector<U2>& cost0 , const vector<U2>& cost1 , const vector<bool>& chosen_zero , const vector<U2>& cost_bound );
-template <typename INT1 , typename INT2> inline pair<INT1,INT2> OrderedUnstableCostUnboundedSumKnapsack( const vector<INT1>& value , const vector<INT2>& cost0 , const vector<INT2>& cost1 , const vector<bool>& chosen_zero , const vector<INT2>& cost_bound );
+pair<U1,U2> AbstractOrderedUnstableCostKnapsack( COMM_MONOID1 M1 , COMM_MONOID2 M2 , const vector<U1>& value , const vector<U2>& cost0 , const vector<U2>& cost1 , const vector<bool>& chosen_zero , const vector<U2>& cost_bound );
+template <typename INT1 , typename INT2> inline pair<INT1,INT2> OrderedUnstableCostKnapsack( const vector<INT1>& value , const vector<INT2>& cost0 , const vector<INT2>& cost1 , const vector<bool>& chosen_zero , const vector<INT2>& cost_bound );
 
 
 // cost_boundのサイズをKと置く。
@@ -24,6 +24,6 @@ template <typename INT1 , typename INT2> inline pair<INT1,INT2> OrderedUnstableC
 // 1 <= k <= K個目の選択のコスト上限をcost_bound[k-1]とし、高々K回の選択をする時の
 // 価値の総和の最大値を求める。
 template <typename U1 , typename COMM_MONOID1 , typename U2 , typename COMM_MONOID2 >
-pair<U1,U2> AbstractOrderedUnboundedSumKnapsack( COMM_MONOID1 M1 , COMM_MONOID2 M2 , const vector<U1>& value , const vector<U2>& cost , const vector<U2>& cost_bound );
-template <typename INT1 , typename INT2> inline pair<INT1,INT2> OrderedUnboundedSumKnapsack( const vector<INT1>& value , const vector<INT2>& cost , const vector<INT2>& cost_bound )x;
+pair<U1,U2> AbstractOrderedKnapsack( COMM_MONOID1 M1 , COMM_MONOID2 M2 , const vector<U1>& value , const vector<U2>& cost , const vector<U2>& cost_bound );
+template <typename INT1 , typename INT2> inline pair<INT1,INT2> OrderedKnapsack( const vector<INT1>& value , const vector<INT2>& cost , const vector<INT2>& cost_bound )x;
 

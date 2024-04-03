@@ -10,8 +10,8 @@
 // 各iに対し項目iを無制限に重複選択できるとして、
 // 価値0 <= v <= value_sum_boundごとにvがvalueの部分和で表せるか否かを判定する。
 template <typename INT>
-vector<bool> UnboundedChoiceCostfreeConstructibiilityKnapsack( const vector<INT>& value , const INT& value_sum_bound );
+vector<bool> UnboundedChoiceCostfreeConstructibiilityBoundedValueSumKnapsack( const vector<INT>& value , const INT& value_sum_bound );
 // 計算量O(N + value_sum_bound^2)で
 // 各iに対し項目iを無制限に重複選択できるとして、
 // value_sum_bound以下における価値の最大値を求める。
-template <typename INT> inline INT UnboundedChoiceCostfreeKnapsack( const vector<INT>& value , const INT& value_sum_bound );
+template <typename INT> inline INT UnboundedChoiceCostfreeBoundedValueSumKnapsack( const vector<INT>& value , const INT& value_sum_bound );

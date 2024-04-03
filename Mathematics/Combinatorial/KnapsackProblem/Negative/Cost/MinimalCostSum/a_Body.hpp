@@ -4,7 +4,7 @@
 #include "a.hpp"
 
 template <typename INT , typename U , typename COMM_MONOID>
-vector<U> AbstractNegativeCostMulticaseMinimalCostSumKnapsack( COMM_MONOID M , const vector<INT>& value , const INT& value_sum_bound , const vector<U>& cost , const U& cost_sum_lbound , const U& exceptional )
+vector<U> AbstractNegativeCostMulticaseMinimalCostSumBoundedValueSumKnapsack( COMM_MONOID M , const vector<INT>& value , const INT& value_sum_bound , const vector<U>& cost , const U& cost_sum_lbound , const U& exceptional )
 {
 
   assert( value_sum_bound >= 0 );
@@ -46,4 +46,4 @@ vector<U> AbstractNegativeCostMulticaseMinimalCostSumKnapsack( COMM_MONOID M , c
 
 }
 
-template <typename INT1 , typename INT2> inline vector<INT2> NegativeCostMulticaseMinimalCostSumKnapsack( const vector<INT1>& value , const INT1& value_sum_bound , const vector<INT2>& cost , const INT2& cost_sum_lbound , const INT2& exceptional ) { return AbstractNegativeCostMulticaseMinimalCostSumKnapsack( AdditiveMonoid<INT2>() , value , value_sum_bound , cost , cost_sum_lbound , exceptional ); }
+template <typename INT1 , typename INT2> inline vector<INT2> NegativeCostMulticaseMinimalCostSumBoundedValueSumKnapsack( const vector<INT1>& value , const INT1& value_sum_bound , const vector<INT2>& cost , const INT2& cost_sum_lbound , const INT2& exceptional ) { return AbstractNegativeCostMulticaseMinimalCostSumBoundedValueSumKnapsack( AdditiveMonoid<INT2>() , value , value_sum_bound , cost , cost_sum_lbound , exceptional ); }

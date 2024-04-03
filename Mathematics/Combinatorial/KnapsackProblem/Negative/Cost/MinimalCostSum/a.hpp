@@ -11,5 +11,5 @@
 // 計算量O(N * value_sum_bound)で
 // 価値の総和0 <= v <= value_sum_boundごとにコストの総和の最小値を求める。
 template <typename INT , typename U , typename COMM_MONOID>
-vector<U> AbstractNegativeCostMulticaseMinimalCostSumKnapsack( COMM_MONOID M , const vector<INT>& value , const INT& value_sum_bound , const vector<U>& cost , const U& exceptional );
-template <typename INT1 , typename INT2> inline vector<INT2> NegativeCostMulticaseMinimalCostSumKnapsack( const vector<INT1>& value , const INT1& value_sum_bound , const vector<INT2>& cost , const INT2& exceptional );
+vector<U> AbstractNegativeCostMulticaseMinimalCostSumBoundedValueSumKnapsack( COMM_MONOID M , const vector<INT>& value , const INT& value_sum_bound , const vector<U>& cost , const U& exceptional );
+template <typename INT1 , typename INT2> inline vector<INT2> NegativeCostMulticaseMinimalCostSumBoundedValueSumKnapsack( const vector<INT1>& value , const INT1& value_sum_bound , const vector<INT2>& cost , const INT2& exceptional );

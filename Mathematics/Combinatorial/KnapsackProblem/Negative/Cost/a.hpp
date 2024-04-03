@@ -12,5 +12,5 @@
 // 計算量O(N min(value_sum_bound,2^{N/2}))で
 // コストの総和cost_sum_bound以下における価値の総和のvalue_sum_bound以下での最大値と
 // それを実現するコストの最小値を求める。
-template <typename INT , typename U , typename COMM_MONOID> inline pair<INT,U> AbstractNegativeCostKnapsack( COMM_MONOID M , const vector<INT>& value , const INT& value_sum_bound , const vector<U>& cost , const U& cost_sum_bound , const U& exceptional );
-template <typename INT1 , typename INT2> inline pair<INT1,INT2> NegativeCostKnapsack( const vector<INT1>& value , const INT1& value_sum_bound , const vector<INT2>& cost , const INT2& cost_sum_bound , const INT2& exceptional );
+template <typename INT , typename U , typename COMM_MONOID> inline pair<INT,U> AbstractNegativeCostBoundedValueSumKnapsack( COMM_MONOID M , const vector<INT>& value , const INT& value_sum_bound , const vector<U>& cost , const U& cost_sum_bound , const U& exceptional );
+template <typename INT1 , typename INT2> inline pair<INT1,INT2> NegativeCostBoundedValueSumKnapsack( const vector<INT1>& value , const INT1& value_sum_bound , const vector<INT2>& cost , const INT2& cost_sum_bound , const INT2& exceptional );

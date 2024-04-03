@@ -4,8 +4,8 @@
 
 // verify:
 // BoundedChoiceKnapsack（N,v_max,value_sum_bound,cost_sum_bound,choice_num_bound_max）
-// https://onlinejudge.u-aizu.ac.jp/status/users/padic/submissions/1/DPL_1_G/judge/9055582/C++17（100,1e3,1e9,1e4,1e4）
-// https://onlinejudge.u-aizu.ac.jp/status/users/padic/submissions/1/DPL_1_I/judge/9055587/C++17（50,50,25e11,1e9,1e9）
+// https://onlinejudge.u-aizu.ac.jp/status/users/padic/submissions/1/DPL_1_G/judge/9056997/C++17（100,1e3,1e9,1e4,1e4）
+// https://onlinejudge.u-aizu.ac.jp/status/users/padic/submissions/1/DPL_1_I/judge/9056999/C++17（50,50,25e11,1e9,1e9）
 
 // max_i value[i]をv_maxと置き、max_i choice_num_bound[i]をcn_maxと置く。
 

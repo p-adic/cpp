@@ -13,5 +13,5 @@
 // コストの総和cost_sum_lbound以上かつcost_sum_ubound以下を保ったまま遷移させる制約下で
 // 価値の総和のvalue_sum_bound以下での最大値とそれを実現するコストの最小値を求める。
 template <typename U1 , typename COMM_MONOID1 , typename U2 , typename COMM_MONOID2>
-pair<U1,U2> AbstractNegativeRestrictiveKnapsack( COMM_MONOID1 M1 , COMM_MONOID2 M2 , const vector<U1>& value , const U1& value_sum_ubound , const U1& exceptional , const vector<U2>& cost , const U2& cost_sum_lbound , const U2& cost_sum_ubound );
-template <typename INT1 , typename INT2> inline pair<INT1,INT2> NegativeStrictRestrictiveKnapsack( const vector<INT1>& value , const INT1& value_sum_ubound , const INT1& exceptional , const vector<INT2>& cost , const INT2& cost_sum_lbound , const INT2& cost_sum_ubound );
+pair<U1,U2> AbstractNegativeRestrictiveBoundedValueSumKnapsack( COMM_MONOID1 M1 , COMM_MONOID2 M2 , const vector<U1>& value , const U1& value_sum_ubound , const U1& exceptional , const vector<U2>& cost , const U2& cost_sum_lbound , const U2& cost_sum_ubound );
+template <typename INT1 , typename INT2> inline pair<INT1,INT2> NegativeStrictRestrictiveBoundedValueSumKnapsack( const vector<INT1>& value , const INT1& value_sum_ubound , const INT1& exceptional , const vector<INT2>& cost , const INT2& cost_sum_lbound , const INT2& cost_sum_ubound );
