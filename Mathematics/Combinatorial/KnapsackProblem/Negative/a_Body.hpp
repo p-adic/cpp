@@ -4,11 +4,11 @@
 #include "a.hpp"
 
 #include "../../../Algebra/Monoid/a_Body.hpp"
-// AbstractNegativeKnapsackに使う。
+// AbstractNegativeBoundedValueSumKnapsackに使う。
 #include "../../../../Utility/BinarySearch/a_Body.hpp"
 
 template <typename U1 , typename COMM_MONOID1 , typename U2 , typename COMM_MONOID2>
-pair<U1,U2> AbstractNegativeKnapsack( COMM_MONOID1 M1 , COMM_MONOID2 M2 , const vector<U1>& value , const U1& value_sum_bound , const vector<U2>& cost , const U2& cost_sum_bound )
+pair<U1,U2> AbstractNegativeBoundedValueSumKnapsack( COMM_MONOID1 M1 , COMM_MONOID2 M2 , const vector<U1>& value , const U1& value_sum_bound , const vector<U2>& cost , const U2& cost_sum_bound )
 {
 
   const int N = value.size();
@@ -103,4 +103,4 @@ pair<U1,U2> AbstractNegativeKnapsack( COMM_MONOID1 M1 , COMM_MONOID2 M2 , const 
   
 }
 
-template <typename INT1 , typename INT2> inline pair<INT1,INT2> NegativeKnapsack( const vector<INT1>& value , const INT1& value_sum_bound , const vector<INT2>& cost , const INT2& cost_sum_bound ) { return AbstractNegativeKnapsack( AdditiveMonoid<INT1>() , AdditiveMonoid<INT2>() , value , value_sum_bound , cost , cost_sum_bound ); }
+template <typename INT1 , typename INT2> inline pair<INT1,INT2> NegativeBoundedValueSumKnapsack( const vector<INT1>& value , const INT1& value_sum_bound , const vector<INT2>& cost , const INT2& cost_sum_bound ) { return AbstractNegativeBoundedValueSumKnapsack( AdditiveMonoid<INT1>() , AdditiveMonoid<INT2>() , value , value_sum_bound , cost , cost_sum_bound ); }
