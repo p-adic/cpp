@@ -4,10 +4,11 @@
 #include "a.hpp"
 
 template <typename U , typename COMM_MONOID , typename VALUE , typename INT1 , typename COST , typename INT2>
-vector<U> AbstractNegativeValueUnboundedChoiceMulticaseUnstableKnapsack( COMM_MONOID M , const int& N , VALUE value , const U& exceptional , COST cost , const INT1& cost_sum_bound , const vector<INT2>& choice_stability_num )
+vector<U> AbstractNegativeValueUnboundedChoiceMulticaseUnstableKnapsack( COMM_MONOID M , VALUE value , const U& exceptional , COST cost , const INT1& cost_sum_bound , const vector<INT2>& choice_stability_num )
 {
 
-  static_assert( is_invocable_r_v<U,VALUE,const int&,const int&> && is_invocable_r_v<INT1,COST,const int&,const int&> );
+  static_assert( is_invocable_r_v<U,VALUE,const int&,const ll&> && is_invocable_r_v<INT1,COST,const int&,const ll&> );
+  const int N = choice_stability_num.size();
   auto& one = M.One();
   vector answer( cost_sum_bound + 1 , exceptional );
   answer[0] = one;
@@ -33,7 +34,7 @@ vector<U> AbstractNegativeValueUnboundedChoiceMulticaseUnstableKnapsack( COMM_MO
 
 	if( temp_c_i != exceptional ){
 
-	  auto& temp_next_c = temp_next[c] = M.Product( temp_c_i , value_i );
+	  auto& temp_next_c = temp_next[c] = M.Product( temp_c_i , v_i );
 	  auto& answer_c = answer[c];
 	  answer_c = answer_c == exceptional ? temp_next_c : max( answer_c , temp_next_c );
 
@@ -76,6 +77,7 @@ vector<U> AbstractNegativeValueUnboundedChoiceMulticaseUnstableKnapsack( COMM_MO
 
 }
 
-template <typename VALUE , typename INT1 , typename COST , typename INT2> inline vector<ret_t<VALUE,int,int>> NegativeValueUnboundedChoiceMulticaseUnstableKnapsack( const int& N , VALUE value , COST cost , const INT1& cost_sum_bound , const vector<INT2>& choice_stability_num ) { return AbstractNegativeValueUnboundedChoiceMulticaseUnstableKnapsack( AdditiveMonoid<ret_t<VALUE,int,int>>() , value , ret_t<VALUE,int,int>( -1 ) , move( cost ) , cost_sum_bound , choice_stability_num ); }
-template <typename U , typename COMM_MONOID , typename VALUE , typename INT1 , typename COST , typename INT2> inline pair<U,INT1> AbstractNegativeValueUnboundedChoiceUnstableKnapsack( COMM_MONOID M , const int& N , VALUE value , const U& exceptional , COST cost , const INT1& cost_sum_bound , const vector<INT2>& choice_stability_num ) { pair<U,INT1> answer = { M.One() , 0 }; auto value_max = AbstractUnboundedChoiceMulticaseUnstableKnapsack( move( M ) , move( value ) , exceptional , move( cost ) , cost_sum_bound , choice_stability_num ); for( INT c = 0 ; c <= cost_sum_bound ; c++ ){ auto& v_c = value_max[c]; v_c != exceptional && answer.first < v_c ? answer = { move( v_c ) , c } : answer; } return answer; }
-template <typename VALUE , typename INT1 , typename COST , typename INT2> inline pair<ret_t<VALUE,int,int>,INT1> NegativeValueUnboundedChoiceUnstableKnapsack( const int& N , VALUE value , COST cost , const INT1& cost_sum_bound , const vector<INT2>& choice_stability_num ) { return AbstractNegativeValueUnboundedChoiceUnstableKnapsack( AdditiveMonoid<ret_t<VALUE,int,int>>() , move( value ) , ret_t<VALUE,int,int>( -1 ) , move( cost ) , cost_sum_bound , choice_stability_num ); }
+template <typename INT1 , typename VALUE , typename INT2 , typename COST , typename INT3> inline vector<INT1> NegativeValueUnboundedChoiceMulticaseUnstableKnapsack( VALUE value , const INT1& exceptional , COST cost , const INT2& cost_sum_bound , const vector<INT3>& choice_stability_num ) { return AbstractNegativeValueUnboundedChoiceMulticaseUnstableKnapsack( AdditiveMonoid<INT1>() , value , exceptional , move( cost ) , cost_sum_bound , choice_stability_num ); }
+template <typename U , typename COMM_MONOID , typename VALUE , typename INT1 , typename COST , typename INT2> inline pair<U,INT1> AbstractNegativeValueUnboundedChoiceUnstableKnapsack( COMM_MONOID M , VALUE value , const U& exceptional , COST cost , const INT1& cost_sum_bound , const vector<INT2>& choice_stability_num ) { pair<U,INT1> answer = { M.One() , 0 }; auto value_max = AbstractUnboundedChoiceMulticaseUnstableKnapsack( move( M ) , move( value ) , exceptional , move( cost ) , cost_sum_bound , choice_stability_num ); for( INT1 c = 0 ; c <= cost_sum_bound ; c++ ){ auto& v_c = value_max[c]; v_c != exceptional && answer.first < v_c ? answer = { move( v_c ) , c } : answer; } return answer; }
+template <typename INT1 , typename VALUE , typename INT2 , typename COST , typename INT3> inline pair<INT1,INT2> NegativeValueUnboundedChoiceUnstableKnapsack( VALUE value , const INT1& exceptional , COST cost , const INT2& cost_sum_bound , const vector<INT3>& choice_stability_num ) { return AbstractNegativeValueUnboundedChoiceUnstableKnapsack( AdditiveMonoid<ret_t<VALUE,int,ll>>() , move( value ) , exceptional , move( cost ) , cost_sum_bound , choice_stability_num ); }
+
