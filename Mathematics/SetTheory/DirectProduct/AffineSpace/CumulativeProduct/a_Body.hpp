@@ -5,7 +5,7 @@
 
 #include "../../../../Algebra/Monoid/Group/a_Body.hpp"
 
-#include "../../../../Function/Map/a_Body.hpp"
+#include "../../../../../Utility/Set/a_Body.hpp"
 
 template <typename U , typename GROUP> inline PathProductImplementation<U,GROUP>::PathProductImplementation( GROUP M , const int& size ) : m_M( move( M ) ) , m_size( size ) , m_right( m_size , m_M.One() ) , m_left( m_right ) {}
 template <typename U , typename GROUP> inline AbstractCumulativeProduct<U,GROUP>::AbstractCumulativeProduct( GROUP M , const int& size ) : AbstractCumulativeProduct( M , vector<U>( size , M.One() ) ) {}
