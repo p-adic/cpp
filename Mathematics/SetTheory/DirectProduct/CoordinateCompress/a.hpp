@@ -1,7 +1,7 @@
 // c:/Users/user/Documents/Programming/Mathematics/SetTheory/DirectProduct/CoordinateCompress/a.hpp
 
 #pragma once
-#include "../../../Function/Map/a.hpp"
+#include "../../../../Utility/Set/a.hpp"
 
 // verify:
 // https://yukicoder.me/submissions/961857ÅimapÅAGetOrderÅj

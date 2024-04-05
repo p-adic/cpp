@@ -3,7 +3,7 @@
 #pragma once
 #include "a.hpp"
 
-#include "../../../Function/Map/a_Body.hpp"
+#include "../../../../Utility/Set/a_Body.hpp"
 
 template <typename T , template <typename...> typename MAP> inline CoordinateCompress<T,MAP>::CoordinateCompress() : m_a() , m_enum() , m_compressed() , m_size() {}
 template <typename T , template <typename...> typename MAP> template <typename U> inline CoordinateCompress<T,MAP>::CoordinateCompress( const vector<U>& a ) : CoordinateCompress() { insert( a ); }
