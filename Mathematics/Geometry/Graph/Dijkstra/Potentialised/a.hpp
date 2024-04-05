@@ -17,7 +17,7 @@
 // \’zO(|V_G| |E_G|)/O(|V_G|)
 // ’Pˆên“_‘SI“_Å’ZŒo˜H’Tõ^Œo˜H•œŒ³‚È‚µO((min(|V_G|^2+|E_G|,|V_G|+|E_G|)log |V_G|))
 // ’Pˆên“_‘SI“_Å’ZŒo˜H’Tõ^Œo˜H•œŒ³‚ ‚èO(|V_G|^2+|E_G|)
-template <typename T , typename GRAPH , typename GROUP , typename U , typename On>
+template <typename T , typename GRAPH , typename U , typename GROUP , typename On>
 class AbstractPotentialisedDijkstra :
   public PointedSet<U>
 {
@@ -56,7 +56,7 @@ public:
 
 template <typename T , typename GRAPH , typename On>
 class PotentialisedDijkstra :
-  public AbstractPotentialisedDijkstra<T,GRAPH,AdditiveGroup<>,ll,On>
+  public AbstractPotentialisedDijkstra<T,GRAPH,ll,AdditiveGroup<>,On>
 {
 
 public:

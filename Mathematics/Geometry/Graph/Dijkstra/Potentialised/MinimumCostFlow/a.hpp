@@ -4,7 +4,7 @@
 #include "../../../../../Algebra/Monoid/Semirng/Ring/a.hpp"
 
 // verify:
-// https://yukicoder.me/submissions/969227（many_edges=false）
+// https://yukicoder.me/submissions/969256（many_edges=false）
 
 // GRAPHはグラフG=(V_G,E_G:T->(T \times U(コスト) \times U(容量))^{< \omega})に相当する型。
 
@@ -16,7 +16,7 @@
 // が成り立つ場合にのみサポート。
 
 // 単一始点単一終点最小費用流路探索O(F min(|V_G|^2+|E_G|,(|V_G|+|E_G|)log |V_G|))
-template <typename GRAPH , typename RING , typename U>
+template <typename T , typename GRAPH , typename U , typename RING>
 class AbstractMinimumCostFlow :
   public PointedSet<U>
 {
@@ -32,16 +32,18 @@ public:
   // (1) many_edges=trueかつpath_length!=-1ならば、始点からのパスの辺の本数はpath_length以下。
   // (2) many_edges=falseならば、path_length=-1。
   // を満す場合にのみサポート。
-  pair<U,vector<vector<tuple<inner_t<GRAPH>,U>>>> GetFlow( const inner_t<GRAPH>& t_start , const inner_t<GRAPH>& t_final , U f , const bool& many_edges = true , int path_length = -1 );
+  pair<U,vector<vector<tuple<T,U>>>> GetFlow( const T& t_start , const T& t_final , U f , const bool& many_edges = true , int path_length = -1 );
 
 };
+template <typename GRAPH , typename U , typename RING>  AbstractMinimumCostFlow( GRAPH& G , RING R , const U& infty ) -> AbstractMinimumCostFlow<inner_t<GRAPH>,GRAPH,U,RING>;
 
-template <typename GRAPH , typename U>
+template <typename T , typename GRAPH , typename U>
 class MinimumCostFlow :
-  public AbstractMinimumCostFlow<GRAPH,Ring<U>,U>
+  public AbstractMinimumCostFlow<T,GRAPH,U,Ring<U>>
 {
 
 public:
   inline MinimumCostFlow( GRAPH& G , const U& one_U , const U& infty );
 
 };
+template <typename GRAPH , typename U> MinimumCostFlow( GRAPH& G , const U& one_U , const U& infty ) -> MinimumCostFlow<inner_t<GRAPH>,GRAPH,U>;

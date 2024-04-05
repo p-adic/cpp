@@ -10,6 +10,7 @@
 // https://onlinejudge.u-aizu.ac.jp/status/users/padic/submissions/1/GRL_1_B/judge/9062333/C++17（GetDistance）
 // https://yukicoder.me/submissions/969226（GetDistance）
 
+
 // GRAPHはグラフG=(V_G,E_G:T->(T \times U)^{< \omega})に相当する型。
 
 // 入力の範囲内で要件

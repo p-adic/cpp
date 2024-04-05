@@ -81,7 +81,7 @@
     fixed[i] = true;							\
     vertex.erase( begin );						\
     auto&& edge_i = m_G.Edge( m_G.Enumeration( i ) );			\
-    list<pair<U,int>> changed_vertex{};					\
+    vector<pair<U,int>> changed_vertex{};					\
 									\
     for( auto itr = edge_i.begin() , end = edge_i.end() ; itr != end ; itr++ ){ \
 									\
@@ -111,9 +111,9 @@
 									\
     }									\
 									\
-    for( auto itr_changed = changed_vertex.begin() , end_changed = changed_vertex.end() ; itr_changed != end_changed ; itr_changed++ ){ \
+    for( auto& v : changed_vertex ){					\
 									\
-      vertex.insert( *itr_changed );					\
+      vertex.insert( v );						\
 									\
     }									\
 									\

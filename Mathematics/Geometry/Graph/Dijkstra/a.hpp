@@ -7,10 +7,11 @@
 #include "../../../Algebra/Monoid/a.hpp"
 
 // verify:
-// https://yukicoder.me/submissions/961782（GetDistance、many_edges=false）
+// https://yukicoder.me/submissions/969250（GetDistance、many_edges=false）
 // https://yukicoder.me/submissions/961784（GetDistance、many_edges=true）
 // https://yukicoder.me/submissions/961385（SetDistance、many_edges=true）
 // https://yukicoder.me/submissions/961826（GetPath、many_edged=false）
+
 
 // GRAPHはグラフG=(V_G,E_G:T->(T \times U)^{< \omega})に相当する型。
 
@@ -24,7 +25,7 @@
 // 単一始点単一終点最短経路探索／経路復元ありO(min(|V_G|^2+|E_G|),(|V_G|+|E_G|)log |E_G|))
 // 単一始点全終点最短経路探索／経路復元なしO(min(|V_G|^2+|E_G|),(|V_G|+|E_G|)log |E_G|))
 // 単一始点全終点最短経路探索／経路復元ありO(|V_G|^2+|E_G|)
-template <typename GRAPH , typename COMM_MONOID , typename U>
+template <typename T , typename GRAPH , typename U , typename COMM_MONOID>
 class AbstractDijkstra :
   public PointedSet<U>
 {
@@ -63,13 +64,15 @@ public:
   pair<vector<U>,vector<list<inner_t<GRAPH>>>> GetPath( const inner_t<GRAPH>& t_start , const bool& many_edges = true , int path_length = -1 );
   
 };
+template <typename GRAPH , typename U , typename COMM_MONOID> AbstractDijkstra( GRAPH& G , COMM_MONOID M , const U& infty ) -> AbstractDijkstra<inner_t<GRAPH>,GRAPH,U,COMM_MONOID>;
 
-template <typename GRAPH>
+template <typename T , typename GRAPH>
 class Dijkstra :
-  public AbstractDijkstra<GRAPH,AdditiveMonoid<>,ll>
+  public AbstractDijkstra<T,GRAPH,ll,AdditiveMonoid<>>
 {
 
 public:
   inline Dijkstra( GRAPH& G );
 
 };
+template <typename GRAPH> Dijkstra( GRAPH& G ) -> Dijkstra<inner_t<GRAPH>,GRAPH>;

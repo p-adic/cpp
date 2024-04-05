@@ -6,14 +6,13 @@
 #include "../a_Body.hpp"
 #include "../../../../../Algebra/Monoid/Semirng/Ring/a_Body.hpp"
 
-template <typename GRAPH , typename RING , typename U> inline AbstractMinimumCostFlow<GRAPH,RING,U>::AbstractMinimumCostFlow( GRAPH& G , RING R , const U& infty ) : PointedSet<U>( infty ) , m_G( G ) , m_R( move( R ) ) {}
-template <typename GRAPH , typename U> inline MinimumCostFlow<GRAPH,U>::MinimumCostFlow( GRAPH& G , const U& one_U , const U& infty ) : AbstractMinimumCostFlow<GRAPH,Ring<U>,U>( G , Ring<U>( one_U ) , infty ) {}
+template <typename T , typename GRAPH , typename U , typename RING> inline AbstractMinimumCostFlow<T,GRAPH,U,RING>::AbstractMinimumCostFlow( GRAPH& G , RING R , const U& infty ) : PointedSet<U>( infty ) , m_G( G ) , m_R( move( R ) ) {}
+template <typename T , typename GRAPH , typename U> inline MinimumCostFlow<T,GRAPH,U>::MinimumCostFlow( GRAPH& G , const U& one_U , const U& infty ) : AbstractMinimumCostFlow<T,GRAPH,U,Ring<U>>( G , Ring<U>( one_U ) , infty ) {}
 
-template <typename GRAPH , typename RING , typename U>
-pair<U,vector<vector<tuple<inner_t<GRAPH>,U>>>> AbstractMinimumCostFlow<GRAPH,RING,U>::GetFlow( const inner_t<GRAPH>& t_start , const inner_t<GRAPH>& t_final , U f , const bool& many_edges , int path_length )
+template <typename T , typename GRAPH , typename U , typename RING>
+pair<U,vector<vector<tuple<T,U>>>> AbstractMinimumCostFlow<T,GRAPH,U,RING>::GetFlow( const T& t_start , const T& t_final , U f , const bool& many_edges , int path_length )
 {
 
-  using T = inner_t<GRAPH>;
   const U& zero = m_R.Zero();
   const U& infty = this->Infty();
   const int& size = m_G.size();
@@ -26,9 +25,8 @@ pair<U,vector<vector<tuple<inner_t<GRAPH>,U>>>> AbstractMinimumCostFlow<GRAPH,RI
     auto&& ui = m_G.Enumeration( i );
     auto&& edge_i = m_G.Edge( ui );
 
-    for( auto itr = edge_i.begin() , end = edge_i.end() ; itr != end ; itr++ ){
+    for( auto& [vj,wj,fj] : edge_i ){
 
-      const auto& [vj,wj,fj] = *itr;
       assert( ui != vj && !( wj < zero ) && wj < infty && !( fj < zero ) && fj < infty );
       auto&& j = m_G.Enumeration_inv( vj );
       rest[i].push_back( { j , wj , fj , false , edge_num } );
@@ -92,7 +90,7 @@ pair<U,vector<vector<tuple<inner_t<GRAPH>,U>>>> AbstractMinimumCostFlow<GRAPH,RI
     auto itr_path = path.begin() , itr_path_prev = itr_path , end_path = path.end();
     assert( itr_path != end_path );
     int i = i_start;
-    list<tuple<int,int,int,int>> flow_num{};
+    vector<tuple<int,int,int,int>> flow_num{};
     U f_min = f;
 
     while( ++itr_path != end_path ){
@@ -152,9 +150,8 @@ pair<U,vector<vector<tuple<inner_t<GRAPH>,U>>>> AbstractMinimumCostFlow<GRAPH,RI
     const U f_min_minus = m_R.Inverse( f_min );
     U w_diff = zero;
 
-    for( auto itr = flow_num.begin() , end = flow_num.end() ; itr != end ; itr++ ){
+    for( auto& [i_curr,i_next,j_1,j_2] : flow_num ){
 
-      const auto& [i_curr,i_next,j_1,j_2] = *itr;
       auto& [vj,wj,fj,rj,numj] = rest[i_curr][j_1];
       const auto& edge_pair_i = edge_pair[numj];
       const int& j_3 = get<0>( edge_pair_i ) == i_curr ? get<3>( edge_pair_i ) : get<1>( edge_pair_i );
