@@ -4,7 +4,7 @@
 #include "a.hpp"
 
 #include "../../Algebra/a_Body.hpp"
-#include "../../Function/Map/a_Body.hpp"
+#include "../../../Utility/Set/a_Body.hpp"
 
 template <typename T , typename R1 , typename R2 , typename E> inline EdgeImplimentation<T,R1,R2,E>::EdgeImplimentation( const int& size , E edge ) : m_size( size ) , m_edge( move( edge ) ) { static_assert( is_constructible_v<T,R1> && is_constructible_v<int,R2> && is_invocable_v<E,T> ); }
 template <typename E> inline Graph<E>::Graph( const int& size , E edge ) : EdgeImplimentation<int,const int&,const int&,E>( size , move( edge ) ) {}
