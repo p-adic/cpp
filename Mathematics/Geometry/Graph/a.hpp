@@ -27,7 +27,7 @@ public:
   virtual ret_t<E,T> Edge( const T& t ) = 0;
 
 private:
-  virtual inline R2 Enumeration_inv_Body( const T& t ) = 0;
+  virtual R2 Enumeration_inv_Body( const T& t ) = 0;
 
 };
 

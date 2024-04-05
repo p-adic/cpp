@@ -6,65 +6,78 @@
 #include "../a_Body.hpp"
 #include "../../../Algebra/Monoid/a_Body.hpp"
 
-template <typename GRAPH , typename MONOID , typename U> inline AbstractBellmanFord<GRAPH,MONOID,U>::AbstractBellmanFord( GRAPH& G , MONOID M , const U& infty ) : PointedSet<U>( infty ) , m_G( G ) , m_M( move( M ) ) { static_assert( ! is_same_v<U,int> ); }
-
-template <typename GRAPH> inline BellmanFord<GRAPH>::BellmanFord( GRAPH& G ) : AbstractBellmanFord<GRAPH,AdditiveMonoid<>,ll>( G , AdditiveMonoid<>() , 4611686018427387904 ) {}
-
-template <typename GRAPH , typename MONOID , typename U>
-tuple<bool,vector<U>> AbstractBellmanFord<GRAPH,MONOID,U>::GetDistance( const inner_t<GRAPH>& t_start , const bool& dummy )
+template <typename T , typename GRAPH , typename U , typename MONOID>
+AbstractBellmanFord<T,GRAPH,U,MONOID>::AbstractBellmanFord( GRAPH& G , MONOID M , const U& infty ) : PointedSet<U>( infty ) , m_G( G ) , m_M( move( M ) ) , m_edge()
 {
 
-  BELLMAN_FORD_BODY( , );
-  return { valid , move( weight ) };
+  static_assert( is_same_v<T,inner_t<GRAPH>> && is_same_v<U,inner_t<MONOID>> && !is_same_v<U,int> );
+  const int& size = m_G.size();
 
-}
+  for( int i = 0 ; i < size ; i++ ){
 
-template <typename GRAPH , typename MONOID , typename U> template <template <typename...> typename V>
-tuple<bool,vector<U>,vector<list<inner_t<GRAPH>>>> AbstractBellmanFord<GRAPH,MONOID,U>::GetPath( const inner_t<GRAPH>& t_start , const V<inner_t<GRAPH>>& t_finals , const bool& dummy )
-{
+    auto&& edge_i = m_G.Edge( m_G.Enumeration( i ) );
 
-  BELLMAN_FORD_BODY( vector<int> prev( size ) , prev[j] = i );
-  vector<list<inner_t<GRAPH>>> path{};
+    for( auto& edge_ij : edge_i ){
 
-  if( valid ){
-    
-    const int path_size = t_finals.size();
-    path.reserve( path_size );
-    
-    for( auto itr = t_finals.begin() , end = t_finals.end() ; itr != end ; itr++ ){
-
-      list<inner_t<GRAPH>> path_j{};
-      const inner_t<GRAPH>& t_final = *itr;
-      path_j.push_back( t_final );
-      int i = m_G.Enumeration_inv( t_final );
-
-      if( found[i] ){
-
-	while( i != i_start ){
-
-	  i = prev[i];
-	  path_j.push_front( m_G.Enumeration( i ) );
-
-	}
-
-      }
-
-      path.push_back( path_j );
+      m_edge.push_back( { i , m_G.Enumeration_inv( get<0>( edge_ij ) ) , get<1>( edge_ij ) } );
 
     }
 
   }
 
-  return { valid , move( weight ) , move( path ) };
+}
+
+template <typename T , typename GRAPH> inline BellmanFord<T,GRAPH>::BellmanFord( GRAPH& G ) : AbstractBellmanFord<T,GRAPH,ll,AdditiveMonoid<>>( G , AdditiveMonoid<>() , 4611686018427387904 ) {}
+
+template <typename T , typename GRAPH , typename U , typename MONOID>
+tuple<vector<bool>,vector<U>> AbstractBellmanFord<T,GRAPH,U,MONOID>::GetDistance( const T& t_start , const bool& many_edges , int path_length )
+{
+
+  BELLMAN_FORD_BODY( , );
+  return { move( valid ) , move( weight ) };
 
 }
 
-template <typename GRAPH , typename MONOID , typename U>
-tuple<bool,vector<U>,vector<list<inner_t<GRAPH>>>> AbstractBellmanFord<GRAPH,MONOID,U>::GetPath( const inner_t<GRAPH>& t_start , const bool& dummy )
+template <typename T , typename GRAPH , typename U , typename MONOID> template <template <typename...> typename V>
+tuple<vector<bool>,vector<U>,vector<list<T>>> AbstractBellmanFord<T,GRAPH,U,MONOID>::GetPath( const T& t_start , const V<T>& t_finals , const bool& many_edges , int path_length )
+{
+
+  BELLMAN_FORD_BODY( vector<int> prev( size ) , prev[j] = i );
+  vector<list<T>> path{};
+  const int path_size = t_finals.size();
+  path.reserve( path_size );
+    
+  for( auto& t_final : t_finals ){
+
+    list<T> path_j{};
+    path_j.push_back( t_final );
+    int i = m_G.Enumeration_inv( t_final );
+
+    if( found[i] && valid[i] ){
+
+      while( i != i_start ){
+
+	i = prev[i];
+	path_j.push_front( m_G.Enumeration( i ) );
+
+      }
+
+    }
+
+    path.push_back( path_j );
+
+  }
+
+  return { move( valid ) , move( weight ) , move( path ) };
+
+}
+
+template <typename T , typename GRAPH , typename U , typename MONOID>
+tuple<vector<bool>,vector<U>,vector<list<T>>> AbstractBellmanFord<T,GRAPH,U,MONOID>::GetPath( const T& t_start , const bool& many_edges , int path_length )
 {
 
   const int& size = m_G.size();
-  vector<inner_t<GRAPH>> t_finals( size );
+  vector<T> t_finals( size );
 
   for( int i = 0 ; i < size ; i++ ){
 

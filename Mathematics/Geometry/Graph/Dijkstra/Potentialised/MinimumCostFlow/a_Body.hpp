@@ -4,13 +4,13 @@
 #include "a.hpp"
 
 #include "../a_Body.hpp"
-#include "../../../Algebra/Monoid/Semirng/Ring/a_Body.hpp"
+#include "../../../../../Algebra/Monoid/Semirng/Ring/a_Body.hpp"
 
 template <typename GRAPH , typename RING , typename U> inline AbstractMinimumCostFlow<GRAPH,RING,U>::AbstractMinimumCostFlow( GRAPH& G , RING R , const U& infty ) : PointedSet<U>( infty ) , m_G( G ) , m_R( move( R ) ) {}
 template <typename GRAPH , typename U> inline MinimumCostFlow<GRAPH,U>::MinimumCostFlow( GRAPH& G , const U& one_U , const U& infty ) : AbstractMinimumCostFlow<GRAPH,Ring<U>,U>( G , Ring<U>( one_U ) , infty ) {}
 
 template <typename GRAPH , typename RING , typename U>
-pair<U,vector<vector<tuple<inner_t<GRAPH>,U>>>> AbstractMinimumCostFlow<GRAPH,RING,U>::GetFlow( const inner_t<GRAPH>& t_start , const inner_t<GRAPH>& t_final , U f , const bool& many_edges )
+pair<U,vector<vector<tuple<inner_t<GRAPH>,U>>>> AbstractMinimumCostFlow<GRAPH,RING,U>::GetFlow( const inner_t<GRAPH>& t_start , const inner_t<GRAPH>& t_final , U f , const bool& many_edges , int path_length )
 {
 
   using T = inner_t<GRAPH>;
@@ -79,15 +79,15 @@ pair<U,vector<vector<tuple<inner_t<GRAPH>,U>>>> AbstractMinimumCostFlow<GRAPH,RI
   auto on = [&]( const tuple<T,U,U,bool,int>& e ) { return zero < get<2>( e ); };
   auto G = m_G.GetGraph( move( edge ) );
   AbstractPotentialisedDijkstra pd{ G , m_R.AdditiveGroup() , t_start , infty , move( on ) , false };
+  assert( pd.Valid() );
   auto&& i_start = m_G.Enumeration_inv( t_start );
-  list<T> t_finals = { t_final };
+  const vector<T> t_finals = { t_final };
   U w = zero;
 
   while( zero < f ){
 
-    auto [valid,weight,paths] = pd.GetPath( t_finals , many_edges );
-    assert( valid );
-    pd.SetPotential( valid , move( weight ) );
+    auto [valid,weight,paths] = pd.GetPath( t_finals , many_edges , path_length );
+    pd.SetPotential( true , move( weight ) );
     auto& path = paths.front();
     auto itr_path = path.begin() , itr_path_prev = itr_path , end_path = path.end();
     assert( itr_path != end_path );

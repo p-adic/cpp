@@ -1,11 +1,10 @@
 // c:/Users/user/Documents/Programming/Mathematics/Geometry/Graph/Dijkstra/Potentialised/MinimumCostFlow/a.hpp
 
 #pragma once
-#include "../a.hpp"
-#include "../../../Algebra/Monoid/Semirng/Ring/a.hpp"
+#include "../../../../../Algebra/Monoid/Semirng/Ring/a.hpp"
 
 // verify:
-// https://yukicoder.me/submissions/961826（many_edges=false）
+// https://yukicoder.me/submissions/969227（many_edges=false）
 
 // GRAPHはグラフG=(V_G,E_G:T->(T \times U(コスト) \times U(容量))^{< \omega})に相当する型。
 
@@ -28,7 +27,12 @@ private:
 
 public:
   inline AbstractMinimumCostFlow( GRAPH& G , RING R , const U& infty );
-  pair<U,vector<vector<tuple<inner_t<GRAPH>,U>>>> GetFlow( const inner_t<GRAPH>& t_start , const inner_t<GRAPH>& t_final , U f , const bool& many_edges = true );
+
+  // 入力の範囲内で要件
+  // (1) many_edges=trueかつpath_length!=-1ならば、始点からのパスの辺の本数はpath_length以下。
+  // (2) many_edges=falseならば、path_length=-1。
+  // を満す場合にのみサポート。
+  pair<U,vector<vector<tuple<inner_t<GRAPH>,U>>>> GetFlow( const inner_t<GRAPH>& t_start , const inner_t<GRAPH>& t_final , U f , const bool& many_edges = true , int path_length = -1 );
 
 };
 

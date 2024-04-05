@@ -4,6 +4,7 @@
 
 #define POTENTIALISED_DIJKSTRA_BODY( GET , WEIGHT , ... )		\
   const U& infty = this->Infty();					\
+									\
   if( m_valid ){							\
 									\
     const U& zero = m_M.Zero();						\
@@ -54,7 +55,7 @@
 									\
     }									\
 									\
-    return { m_valid , __VA_ARGS__ };					\
+    return { vector( size , m_valid ) , __VA_ARGS__ };			\
 									\
   }									\
 									\
@@ -80,3 +81,4 @@
   auto G = m_G.GetGraph( move( edge ) );				\
   AbstractBellmanFord d{ G , m_M , infty };				\
   return d.GET;								\
+

@@ -3,12 +3,12 @@
 #pragma once
 #include "a.hpp"
 
-#include "../a_Body.hpp"
-#include "../../../Algebra/Monoid/Group/a_Body.hpp"
+#include "../../../../Algebra/Monoid/Group/a_Body.hpp"
 
+#include "../a_Body.hpp"
 #include "../../BellmanFord/a_Body.hpp"
 
-template <typename T , typename GRAPH , typename GROUP , typename U , typename On> inline AbstractPotentialisedDijkstra<T,GRAPH,GROUP,U,On>::AbstractPotentialisedDijkstra( GRAPH& G , GROUP M , const T& t_start , const U& infty , On on , const bool& negative ) : AbstractPotentialisedDijkstra( G , move( M ) , t_start , infty , move( on ) , true , vector<U>()  )
+template <typename T , typename GRAPH , typename GROUP , typename U , typename On> inline AbstractPotentialisedDijkstra<T,GRAPH,GROUP,U,On>::AbstractPotentialisedDijkstra( GRAPH& G , GROUP M , const T& t_start , const U& infty , On on , const bool& negative ) : AbstractPotentialisedDijkstra( G , move( M ) , t_start , infty , move( on ) , true , vector<U>() )
 {
 
   if( negative ){
@@ -32,7 +32,14 @@ template <typename T , typename GRAPH , typename GROUP , typename U , typename O
     auto G_full = m_G.GetGraph( move( edge ) );
     AbstractBellmanFord bf{ G_full , m_M , infty };
     auto [valid,potential] = bf.GetDistance( m_t_start );
-    m_valid = valid;
+    const int& size = m_G.size();
+
+    for( int i = 0 ; i < size ; i++ ){
+
+      m_valid &= valid[i];
+
+    }
+    
     m_potential = move( potential );
 
   } else {
@@ -51,5 +58,5 @@ template <typename T , typename GRAPH , typename GROUP , typename U , typename O
 template <typename T , typename GRAPH , typename GROUP , typename U , typename On> inline const vector<U>& AbstractPotentialisedDijkstra<T,GRAPH,GROUP,U,On>::Potential() const noexcept { return m_potential; }
 template <typename T , typename GRAPH , typename GROUP , typename U , typename On> inline void AbstractPotentialisedDijkstra<T,GRAPH,GROUP,U,On>::SetPotential( const bool& valid , vector<U> potential ) { assert( int( potential.size() ) == m_G.size() ); m_valid = valid; m_potential = move( potential ); }
 
-template <typename T , typename GRAPH , typename GROUP , typename U , typename On> tuple<bool,vector<U>> AbstractPotentialisedDijkstra<T,GRAPH,GROUP,U,On>::GetDistance( const bool& many_edges ) { POTENTIALISED_DIJKSTRA_BODY( GetDistance( m_t_start , many_edges ) , value , move( value ) ); }
-template <typename T , typename GRAPH , typename GROUP , typename U , typename On> template <typename...Args> tuple<bool,vector<U>,vector<list<T>>> AbstractPotentialisedDijkstra<T,GRAPH,GROUP,U,On>::GetPath( const Args&... args ) { POTENTIALISED_DIJKSTRA_BODY( GetPath( m_t_start , args... ) , get<0>( value ) , move( get<0>( value ) ) , move( get<1>( value ) ) ); }
+template <typename T , typename GRAPH , typename GROUP , typename U , typename On> template <typename...Args> tuple<vector<bool>,vector<U>> AbstractPotentialisedDijkstra<T,GRAPH,GROUP,U,On>::GetDistance( Args&&... args ) { POTENTIALISED_DIJKSTRA_BODY( GetDistance( m_t_start , forward<Args>( args )... ) , value , move( value ) ); }
+template <typename T , typename GRAPH , typename GROUP , typename U , typename On> template <typename...Args> tuple<vector<bool>,vector<U>,vector<list<T>>> AbstractPotentialisedDijkstra<T,GRAPH,GROUP,U,On>::GetPath( Args&&... args ) { POTENTIALISED_DIJKSTRA_BODY( GetPath( m_t_start , forward<Args>( args )... ) , get<0>( value ) , move( get<0>( value ) ) , move( get<1>( value ) ) ); }

@@ -10,16 +10,16 @@
   INITIALISE_PREV;					\
 
 #define DIJKSTRA_BODY_1( SET_PREV )					\
-  if( walk_length == -1 ){						\
+  if( path_length == -1 ){						\
 									\
-    walk_length = size - 1;						\
+    path_length = size - 1;						\
 									\
   }									\
 									\
   weight[i_start] = one;						\
   int i = i_start;							\
 									\
-  for( int num = 0 ; num < walk_length ; num++ ){			\
+  for( int num = 0 ; num < path_length ; num++ ){			\
 									\
     const U& weight_i = weight[i];					\
     fixed[i] = true;							\
@@ -69,7 +69,7 @@
   }									\
 
 #define DIJKSTRA_BODY_2( CHECK_FINAL , SET_PREV )			\
-  assert( walk_length == -1 );						\
+  assert( path_length == -1 );						\
   set<pair<U,int>> vertex{};						\
   vertex.insert( pair<U,int>( weight[i_start] = one , i_start ) );	\
 									\
