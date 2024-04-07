@@ -1,30 +1,35 @@
 // c:/Users/user/Documents/Programming/Mathematics/Arithmetic/Prime/Divisor/a.hpp
 
 #pragma once
-#include "a_Macro.hpp"
 
-#include "../a.hpp"
-#include "../Constexpr/a.hpp"
+// verify:
+// https://yukicoder.me/submissions/970583（CountDivisor）
 
-// verify: https://yukicoder.me/submissions/915737
+
+// PEはPrimeEnumerationを特殊化して得られる型。
 
 // O(√n)
 template <typename INT> INT CountDivisor( const INT& n ) noexcept;
 // sqrt( n )以下の最大の素数 < val_limit の時のみサポート。
 // O(√n/(log n))
-template <typename INT , INT val_limit , int length_max> INT CountDivisor( const PrimeEnumeration<INT,val_limit,length_max>& prime , INT n ) noexcept;
+template <typename INT , typename PE> INT CountDivisor( const PE& pe , INT n ) noexcept;
+
+// O(size log log size)
+template <typename INT> vector<INT> GetLeastDivisor( const INT& size ) noexcept;
 
 // O(√n)
-template <typename INT> list<int> EnumerateDivisor( const INT& n ) noexcept;
+template <typename INT> vector<int> EnumerateDivisor( INT n ) noexcept;
 // sqrt( n )以下の最大の素数 < val_limit の時のみサポート。
 // O(√n/(log n))
-template <typename INT , INT val_limit , int length_max> list<INT> EnumerateDivisor( const PrimeEnumeration<INT,val_limit,length_max>& prime , INT n ) noexcept;
+template <typename INT , typename PE> vector<INT> EnumerateDivisor( const PE& pe , INT n ) noexcept;
+// O(d(n)) = O(log n / log log n)
+template <typename INT1 , typename INT2> vector<INT2> EnumerateDivisor( const vector<INT1>& least_divisor , INT2 n ) noexcept;
 
-// O(size_max log size_max)
-template <int size_max> void MemoriseEnumerateDivisor( list<int> ( &memory )[size_max] ) noexcept;
+// O(size log size)
+template <typename INT> vector<vector<INT>> TotalEnumerateDivisor( const INT& size ) noexcept;
 
 // O(√n)
 template <typename INT> int MoeviusFunction( const INT& n ) noexcept;
 // sqrt( n )以下の最大の素数 < val_limit の時のみサポート。
 // O(√n/(log n))
-template <typename INT , INT val_limit , int length_max> int MoeviusFunction( const PrimeEnumeration<INT,val_limit,length_max>& prime , INT n ) noexcept;
+template <typename PE> int MoeviusFunction( const PE& pe , INT n ) noexcept;
