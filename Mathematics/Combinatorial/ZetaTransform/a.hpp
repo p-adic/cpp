@@ -1,251 +1,134 @@
 // c:/Users/user/Documents/Programming/Mathematics/Combinatorial/ZetaTransform/a.hpp
 
 #pragma once
-#include "a_Macro.hpp"
-
-// Tの各要素tに対し、t以下の要素を渡る総和を管理。
-template <typename T , typename U , int size_max>
-class ZetaTransformBody
-{
-
-private:
-  int m_length;
-  map<T,int> m_memory;
-  vector<T> m_memory_inv;
-
-protected:
-  int m_size;
-  U m_val[size_max];
-
-public:
-  // 仮想継承用にダミーのデフォルトコンストラクタを設定。
-  inline ZetaTransformBody( const int& size = 0 );
-
-  inline void Add( const T& t , const U& u );
-  inline void AddAll( const U& u );
-  inline ZetaTransformBody<T,U,size_max>& operator+=( const ZetaTransformBody<T,U,size_max>& a );
-  inline void MultiplyAll( const U& u );
-  inline ZetaTransformBody<T,U,size_max>& operator*=( const ZetaTransformBody<T,U,size_max>& a );
-
-  // 子クラスの半順序のメビウス関数のデフォルトの再帰式を使うため、
-  // 再帰深度が浅い場合にしか使えない。
-  inline U Get( const T& t );
-  // muは子クラスの半順序メビウス関数のユーザー定義版。
-  template <int mu(const T&,const T&)> inline U Get( const T& t );
-  inline const U& InitialSegmentSum( const T& t );
-
-  // f_inv_maxは定義域にr(s)を含む部分写像T->Sであり、要件
-  // (1) Sは半順序集合である。
-  // (2) r(s)は重複を持たない。（よって集合とみなす）
-  // (3) sはr(s)の最大元である。
-  // (4) 像f_inv_max(s)の要素を上界に持つTの要素全体Rへのfの制限f_Rは順序保存写像R->r(s)である。
-  // (5) r(s)の任意の要素tに対しf_inv_max(t)が逆像f_R^{-1}(t)の最大元である。
-  // を満たすfが存在する場合にのみ以下の２つをサポート。
-
-  // f( t ) = sを満たすRの要素t全体を渡る総和取得。
-  // 子クラスの半順序のメビウス関数のデフォルトの再帰式を使うため、
-  // 再帰深度が浅い場合にしか使えない。
-  template <typename S , T f_inv_max(const S&) , list<S> r(const S&)> inline U InverseImageSum( const S& s );
-  // muは子クラスの半順序メビウス関数のユーザー定義版。
-  template <typename S , T f_inv_max(const S&) , list<S> r(const S&) , int mu(const T&,const T&)> inline U InverseImageSum( const S& s );
-
-  // f( t ) <= sを満たすRの要素t全体を渡る総和取得。（結果的にrは使わないが要件上はrの存在が必要） 
-  template <typename S , T f_inv_max(const S&)> inline const U& InitialSegmentInverseImageSum( const S& s );
-
-  virtual T e( const int& i );
-  virtual int e_inv( const T& t );
-  
-private:
-  virtual const U& Zero() const = 0;
-  virtual U Sum( const U& u0 , const U& u1 ) const = 0;
-  virtual U Prod( const U& u0 , const U& u1 ) const = 0;
-  virtual list<T> Sub( const T& t ) const = 0;
-  virtual list<T> Sup( const T& t ) const = 0;
-  virtual int Moevius( const T& t0 , const T& t1 ) = 0;
-
-};
-
-template <typename T , typename U , U a_U(const U&,const U&) , const U& z_U() , U m_U(const U&,const U&) , int size_max>
-class SemiRingForZetaTransform :
-  virtual public ZetaTransformBody<T,U,size_max>
-{
-public:
-  inline SemiRingForZetaTransform( const int& dummy );
-  
-private:
-  inline const U& Zero() const;
-  inline U Sum( const U& u0 , const U& u1 ) const;
-  inline U Prod( const U& u0 , const U& u1 ) const;
-
-};
-
-// E_invはAdd（privateにはSup）にのみ使用。
-template <typename T , list<T> E(const T&) , list<T> E_inv(const T&) , typename U , int size_max>
-class PartiallyOrderedSetForZetaTransform :
-  virtual public ZetaTransformBody<T,U,size_max>
-{
-
-private:
-  map<int,map<int,int> > m_moevius;
-
-  inline list<T> Sub( const T& t ) const;
-  inline list<T> Sup( const T& t ) const;
-  // デフォルトの再帰式であるため、再帰深度が浅い場合にしか使えない。
-  inline int Moevius( const T& t0 , const T& t1 );
-  
-};
-
-template <typename U , int size_max>
-class EnumerationForZetaTransform :
-  virtual public ZetaTransformBody<int,U,size_max>
-{
-
-private:
-  inline int e( const int& i );
-  inline int e_inv( const int& t );
-  
-};
 
 // 入力の範囲内で要件
-// (1) Eがint上の半順序<のグラフでE_invが(int,>)のグラフである。
-// を満たす場合にのみ以下をサポート。ただしE_invはAdd（privateにはSup）にのみ使用。
+// (1) GはTの等号付き半順序構造<=のグラフ（s<=t <=> s <- t）である。
+// (2) G_invはGの辺を逆にしたグラフである。
+// (3) RはUの非単位的Z代数構造である。
+// を満たす場合にのみサポート。
+// ただし全体加算や一点取得を行わないならばRはダミーのZ作用を持つ非単位的環でも良い。
 
-// 0による初期化O(size_max)
-// ゼータ変換前の配列による初期化O(size_max+始切片のサイズの総和)
-// ゼータ変換後の配列による初期化O(size_max)
+// R.Zero()による初期化O(size)
+// ゼータ変換前の配列による初期化O(size+始切片のサイズの総和)（可換加法モノイド性を使う）
+// ゼータ変換後の配列による初期化O(1)
+
+// 一点加算O(終切片[t,∞)のサイズ)（m_G_invと可換加法モノイド性を使う）
+// 全体加算O(size)（可換加法モノイド性だけでも実装できるが高速化のために非単位的Z代数性を使う）
+// 加法O(size)（m_G.Edgeが非参照ならばO(size + |m_G.Edge|)、可換加法モノイド性を使う）
+
+// 全体乗算O(size)（半環性を使う）
+// (T,<)がjoin半束である場合の畳み込み乗法O(size)（半環性を使う）
+
+// 一点取得O(始切片(-∞,t]のサイズ * メビウス関数の計算量)（非単位的Z代数性を使う）
+// 始切片和取得O(1)（可換加法モノイド性を使う）
+
+// 逆像和取得O(始切片(-∞,f_inv_max(r_max)]のサイズ * メビウス関数の計算量)（非単位的Z代数性を使う）
+// 始切片逆像和取得O(1)（可換加法モノイド性を使う）
+template <typename T , typename GRAPH , typename GRAPH_INV , typename U , typename Z_ALG>
+class VirtualZetaTransform
+{
+
+protected:
+  GRAPH m_G;
+  GRAPH_INV m_G_inv;
+  Z_ALG m_R;
+  // Tの各要素tに対し、t以下の要素を渡る総和をm_val[m_G.Enumeration_inv( t )]に管理。
+  vector<U> m_val;
+
+public:
+  inline VirtualZetaTransform( GRAPH G , GRAPH_INV G_inv , Z_ALG R );
+  inline VirtualZetaTransform( GRAPH G , GRAPH_INV G_inv , Z_ALG R , vector<U> a , const bool& transformed = false );
+
+  template <typename...Args> inline void Initialise( Args&&... args );
+
+  inline void Add( const T& t , const U& u );
+  inline void TotalAdd( const U& u );
+  inline VirtualZetaTransform<T,GRAPH,GRAPH_INV,U,Z_ALG>& operator+=( const VirtualZetaTransform<T,GRAPH,GRAPH_INV,U,Z_ALG>& a );
+  
+  inline void TotalMultiply( const U& u );
+  inline VirtualZetaTransform<T,GRAPH,GRAPH_INV,U,Z_ALG>& operator*=( const VirtualZetaTransform<T,GRAPH,GRAPH_INV,U,Z_ALG>& a );
+
+  // 半順序に付随するメビウス関数のデフォルトの再帰式を使うため、
+  // 再帰深度が浅い場合にしか使えない。
+  U operator[]( const T& t );
+  inline U Get( const T& t );
+  inline const U& InitialSegmentSum( const T& t );
+
+  // 半順序集合Sと部分写像f_inv_max:S->Tと写像range:S->S^{<∞}と引数であるSの要素sが要件
+  // (1) f_inv_maxは定義域にrange(s)を含む
+  // (2) range(s)は重複を持たない。（よってSの部分集合とみなす）
+  // (3) sはrange(s)の最大元である。
+  // を満たし、かつ要件
+  // (4) f_inv_max(s)を上界に持つTの要素全体R_sへのfの制限f_sは順序保存写像R_s->r(s)である。
+  // (5) range(s)の任意の要素s'に対しf_inv_max(s')が逆像f_s^{-1}(s')の最大元である。
+  //    （従って特にf_sは全射）
+  // を満たす写像f:T->Sが存在する場合にのみ以下の２つをサポート。
+
+  // f(t)=sを満たすR_sの要素t全体を渡るm_val[t]の総和取得。
+  // 半順序に付随するメビウス関数のデフォルトの再帰式を使うため、
+  // 再帰深度が浅い場合にしか使えない。
+  template <typename S , typename F_INV_MAX , typename RANGE> U InverseImageSum( F_INV_MAX&& f_inv_max , RANGE&& range , const S& s );
+  // 例１：S=T=int、<=:任意の等号つき半順序
+  //      f=各点の逆像が「非空かつ上に有界」を満たす単調減少写像、
+  //      f_inv_max=fの逆像の最大値、range(x)=[1,x]
+  //      -> f^{-1}({f(s)})の各点tをわたるm_val[t]の総和取得。
+  // 例２：S=T=[1,size)、s <= t: sはtの約数 
+  //      f=gcd(lcm(a,-),b)（a,bはaがbの約数である定数in S）、f_inv_max=id_S、s=b、
+  //      range=aの倍数であるbの約数全体の集合を返す定数関数
+  //      -> lcm(a,t)がbの倍数であるsize未満の各正整数tをわたるm_val[t]の総和取得。
+  // 例３：S=T=[1,size)、s <= t: sはtの倍数
+  //      f=gcd(a,-)（aは定数in S）、f_inv_max=id_S、s=1、
+  //      range=aの約数全体の集合を返す定数関数
+  //      -> aと互いに素なsize未満の各正整数tをわたるm_val[t]の総和取得。
+  
+  // f(t) <= sを満たすR_sの要素t全体を渡るm_val[t]の総和取得。
+  //（結果的にrangeは使わないが要件上はrの存在が必要） 
+  template <typename S , typename F_INV_MAX> inline const U& InitialSegmentInverseImageSum( F_INV_MAX&& f_inv_max , const S& s );
+ 
+private:
+  virtual int Moevius( const T& t0 , const T& t1 );
+
+};
+template <typename GRAPH , typename GRAPH_INV , typename Z_ALG> VirtualZetaTransform( GRAPH& , GRAPH_INV& , Z_ALG ) -> VirtualZetaTransform<inner_t<GRAPH>,GRAPH,GRAPH_INV,inner_t<Z_ALG>,Z_ALG>;
+
+// 入力の範囲内で要件
+// (1) GはTの等号付き半順序構造<=のグラフ（s<=t <=> s <- t）である。
+// (2) G_invはGの辺を逆にしたグラフである。
+// (3) RはUの非単位的Z代数構造である。
+// (4) muは(T,<=)のメビウス関数である。
+// を満たす場合にのみサポート。一点取得と逆像和取得にのみmuを使う。
+// ただし全体加算や一点取得を行わないならばRはダミーのZ作用を持つ非単位的環でも良い。
+
+// R.Zero()による初期化O(size)
+// ゼータ変換前の配列による初期化O(始切片のサイズの総和)
+// ゼータ変換後の配列による初期化O(1)
 
 // 一点加算O(終切片[t,∞)のサイズ)
 // 全体加算O(size)
-// 各点加法O(size)
+// 各点加法O(size)（m_G_invを用いる）
 // 全体乗算O(size)
-// (int,<)がjoin半束である場合の畳み込み乗法O(size)
+// (int,<=)がjoin半束である場合の畳み込み乗法O(size)
 
-// 一点取得O(始切片(-∞,t]のサイズ×メビウス関数の計算量)
+// 一点取得O(始切片(-∞,t]のサイズ)
 // 始切片和取得O(1)
 
-// 逆像和取得O(始切片(-∞,f_inv_max(r_max)]のサイズ×メビウス関数の計算量)
+// 逆像和取得O(始切片(-∞,f_inv_max(r_max)]のサイズ)
 // 始切片逆像和取得O(1)
-template <list<int> E(const int&) , list<int> E_inv(const int&) , int size_max>
-class ZetaTransform :
-  public PartiallyOrderedSetForZetaTransform<int,E,E_inv,ll,size_max> ,
-  public EnumerationForZetaTransform<ll,size_max>
-{
-
-public:
-  inline ZetaTransform( const int& size );
-  inline ZetaTransform( const int& size , const ll ( &a )[size_max] , const bool& transformed );
-
-private:
-  inline const ll& Zero() const;
-  inline ll Sum( const ll& u0 , const ll& u1 ) const;
-  inline ll Prod( const ll& u0 , const ll& u1 ) const;
-
-};
-
-// 入力の範囲内で要件
-// (1) 2^digit <= size_max
-// (2) (U,a_U:U^2->U,z_U:1->U,m_U:U^2->U)が単位的環である。
-// を満たす場合にのみ以下をサポート。
-
-// z_U()による初期化O(size_max)
-// ゼータ変換前の配列による初期化O(size_max + digit 2^digit)（可換加法モノイド性を使う）
-// ゼータ変換後の配列による初期化O(size_max)
-
-// 一点加算O(2^digit)（可換加法モノイド性を使う）
-// 全体加算O(2^digit)（可換加法モノイド性だけでも実装できるが単位的半環性を使う）
-// 各点加法O(2^digit)（加法モノイド性を使う）
-// 全体乗算O(2^digit)（半環性を使う）
-// 畳み込み乗法O(2^digit)（半環性を使う）
-
-// 一点取得O(2^digit)（単位的環性を使う。愚直と同じオーダー）
-// 多点取得O(digit 2^digit)（単位的環性を使う）
-// 始切片和取得O(1)（可換加法モノイド性を使う）
-// 逆像和取得O(始切片(-∞,f_inv_max(r_max)]のサイズ)（単位的環性を使う）
-// 始切片逆像和取得O(1)（可換加法モノイド性を使う）
-template <typename U , U a_U(const U&,const U&) , const U& z_U() , U m_U(const U&,const U&) , int size_max>
-class FastZetaTransform :
-  public SemiRingForZetaTransform<int,U,a_U,z_U,m_U,size_max> ,
-  public EnumerationForZetaTransform<U,size_max>
+template <typename T , typename GRAPH , typename GRAPH_INV , typename U , typename Z_ALG , typename MU>
+class AbstractZetaTransform :
+  // コンストラクタが非自明なので仮想継承を避ける。
+  public VirtualZetaTransform<T,GRAPH,GRAPH_INV,U,Z_ALG>
 {
 
 private:
-  int m_digit;
+  MU m_mu;
   
 public:
-  inline FastZetaTransform( const int& digit );
-  inline FastZetaTransform( const int& digit , const U ( &a )[size_max] , const bool& transformed );
-
-  inline FastZetaTransform<U,a_U,z_U,m_U,size_max>& operator+=( const FastZetaTransform<U,a_U,z_U,m_U,size_max>& a );
-  inline FastZetaTransform<U,a_U,z_U,m_U,size_max>& operator*=( const FastZetaTransform<U,a_U,z_U,m_U,size_max>& a );
-
-  inline void FastMoeviusTransform( U ( &a )[size_max] );
-
+  template <typename...Args> inline AbstractZetaTransform( GRAPH G , GRAPH_INV G_inv , Z_ALG R , MU mu , Args&&... args );
+  
 private:
-  inline list<int> Sub( const int& t ) const;
-  inline list<int> Sup( const int& t ) const;
-  inline int Moevius( const int& t0 , const int& t1 );
+  inline int Moevius( const T& t0 , const T& t1 );
 
 };
-
-// 入力の範囲内で要件
-// (1) EがT上の半順序<のグラフでE_invが(T,>)のグラフである。
-// (2) (U,a_U:U^2->U,z_U:1->U,m_U:U^2->U)が単位的環である。
-// を満たす場合にのみ以下をサポート。ただしE_invはAdd（privateにはSup）にのみ使用。
-
-// z_U()による初期化O(size_max)
-
-// 一点加算O(終切片[t,∞)のサイズ×log_2(size))（可換加法モノイド性を使う）
-// 全体加算O(size)（可換加法モノイド性だけでも実装できるが単位的半環性を使う）
-// 各点加法O(size)（加法モノイド性を使う）
-// 全体乗算O(size)（半環性を使う）
-// (T,<)がjoin半束である場合の畳み込み乗法O(size)（半環性を使う）
-
-// 一点取得O(始切片(-∞,t]のサイズ×メビウス関数の計算量×log_2(size))（単位的環性を使う）
-// 始切片和取得O(log_2(size))（可換加法モノイド性を使う）
-
-// 逆像和取得O(始切片(-∞,f_inv_max(r_max)]のサイズ×メビウス関数の計算量×log_2(size))（単位的環性を使う）
-// 始切片逆像和取得O(log_2(size))（可換加法モノイド性を使う）
-template <typename T , list<T> E(const T&) , list<T> E_inv(const T&) , typename U , U a_U(const U&,const U&) , const U& z_U() , U m_U(const U&,const U&) , int size_max>
-class MemorisationZetaTransform :
-  public SemiRingForZetaTransform<T,U,a_U,z_U,m_U,size_max> ,
-  public PartiallyOrderedSetForZetaTransform<T,E,E_inv,U,size_max>
-{
-
-public:
-  inline MemorisationZetaTransform( const int& size );
-
-};
-
-// 入力の範囲内で要件
-// (1) EがT上の半順序<のグラフでE_invが(T,>)のグラフである。
-// (2) (U,a_U:U^2->U,z_U:1->U,m_U:U^2->U)が単位的環である。
-// (3) enum_T:int->Tとenum_T_inv:int->Tが互いに逆写像である。
-// を満たす場合にのみ以下をサポート。ただしE_invはAdd（privateにはSup）にのみ使用。
-
-// z_U()による初期化O(size_max)
-
-// 一点加算O(終切片[t,∞)のサイズ)（可換加法モノイド性を使う）
-// 全体加算O(size)（可換加法モノイド性だけでも実装できるが単位的半環性を使う）
-// 各点加法O(size)（加法モノイド性を使う）
-// 全体乗算O(size)（半環性を使う）
-// (T,<)がjoin半束である場合の畳み込み乗法O(size)（半環性を使う）
-
-// 一点取得O(始切片(-∞,t]のサイズ×メビウス関数の計算量)（単位的環性を使う）
-// 始切片和取得O(1)（可換加法モノイド性を使う）
-
-// 逆像和取得O(始切片(-∞,f_inv_max(r_max)]のサイズ×メビウス関数の計算量)（単位的環性を使う）
-// 始切片逆像和取得O(1)（可換加法モノイド性を使う）
-template <typename T , list<T> E(const T&) , list<T> E_inv(const T&) , typename U , U a_U(const U&,const U&) , const U& z_U() , U m_U(const U&,const U&) , int size_max , T enum_T(const int&) , int enum_T_inv(const T&)>
-class EnumerationZetaTransform :
-  public SemiRingForZetaTransform<T,U,a_U,z_U,m_U,size_max> ,
-  public PartiallyOrderedSetForZetaTransform<T,E,E_inv,U,size_max>
-{
-
-public:
-  inline EnumerationZetaTransform( const int& size );
-
-private:
-  inline T e( const int& i );
-  inline int e_inv( const T& t );
-
-};
+template <typename GRAPH , typename GRAPH_INV , typename Z_ALG , typename MU> AbstractZetaTransform( GRAPH& , GRAPH_INV& , Z_ALG , MU ) -> AbstractZetaTransform<inner_t<GRAPH>,GRAPH,GRAPH_INV,inner_t<Z_ALG>,Z_ALG,MU>;
