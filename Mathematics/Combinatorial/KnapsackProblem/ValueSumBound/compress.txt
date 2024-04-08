@@ -1,0 +1,5 @@
+#ifdef DEBUG
+  #inclde "c:/Users/user/Documents/Programming/Mathematics/Combinatorial/KnapsackProblem/ValueSumBound/a_Body.hpp"
+#else
+TE <TY U,TY COMM_MONOID>U AbstractValueSumBound(COMM_MONOID M,CO VE<U>& value){CO U& one = M.One();U AN = one;for(auto& v:value){one < v?AN = M.Product(MO(AN),v):AN;}RE AN;}TE <TY INT> IN INT ValueSumBound(CO VE<INT>& value){RE AbstractValueSumBound(AdditiveMonoid<INT>(),value);}
+#endif
