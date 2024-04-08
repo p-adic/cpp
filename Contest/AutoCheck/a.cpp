@@ -967,15 +967,15 @@ AC( Knapsack )
     if( reply == "y" ){
       CALL_AC( KnapsackMultipleChoice );
     } else {
-      ASK_YES_NO( "負数も許容されますか？" );
+      ASK_YES_NO( "何個目に選ばれたかによって項目のコストが変動しますか？" );
       if( reply == "y" ){
-	CALL_AC( KnapsackNegative );
+	CALL_AC( KnapsackOrdered );
       } else {
-	ASK_YES_NO( "何個目に選ばれたかによって項目のコストが変動しますか？" );
+	ASK_YES_NO( "ナップサックは１つですか？" );
 	if( reply == "y" ){
-	  CALL_AC( KnapsackOrdered );
+	  CALL_AC( SingleKnapsack );
 	} else {
-	  CALL_AC( KnapsackCostfree );
+	  CALL_AC( MultipleKnapsack );
 	}
       }
     }
@@ -1020,7 +1020,7 @@ AC( KnapsackUnboundedChoice )
   CERR( "O(N S |C|)が通りそうならば" );
   CERR( " 「i個目までの項を使ってコストの総和がc以下の時の価値の最大値dp[i][c]」" );
   CERR( "  を管理するi,cに関する動的計画法" );
-  CERR( "  \\Mathematics\\Combinatorial\\KnapsackProblem\\BoundedChoice\\UnboundedValueSum\\Unstable" );
+  CERR( "  \\Mathematics\\Combinatorial\\KnapsackProblem\\BoundedChoice\\Unstable" );
   CERR( "を検討しましょう。" );
 }
 
@@ -1037,7 +1037,7 @@ AC( KnapsackUnboundedChoiceStable )
   CERR( "  を前計算し" );
   CERR( " 「コストの総和がc以下の時の価値の最大値dp[c]」" );
   CERR( "  を管理するcに関する動的計画法" );
-  CERR( "  \\Mathematics\\Combinatorial\\KnapsackProblem\\UnboundedChoice\\UnboundedValueSum\\NegativeValue" );
+  CERR( "  \\Mathematics\\Combinatorial\\KnapsackProblem\\UnboundedChoice\\NegativeValue" );
   CERR( "を検討しましょう。" );
 }
 
@@ -1046,7 +1046,7 @@ AC( KnapsackBoundedChoiceNegativeValue )
   CERR( "- O(N min(|C|,H 2^{N/2}) log_2 H)が通りそうならば" );
   CERR( "  重複回数を二進法で分解してまとめ、重複がない場合に帰着させましょう、" );
   CERR( "  \\Mathematics\\Combinatorial\\KnapsackProblem\\Boundedchoice\\NegativeValue" );
-  CALL_AC( KnapsackNegative );
+  CALL_AC( SingleKnapsack );
 }
 
 AC( KnapsackBoundedChoiceUnstable )
@@ -1055,7 +1055,7 @@ AC( KnapsackBoundedChoiceUnstable )
   CERR( "O(N S |C|)が通りそうならば" );
   CERR( " 「i個目までの項を使ってコストの総和がc以下の時の価値の最大値dp[i][c]」" );
   CERR( "  を管理するi,cに関する動的計画法" );
-  CERR( "  \\Mathematics\\Combinatorial\\KnapsackProblem\\BoundedChoice\\UnboundedValueSum\\Unstable" );
+  CERR( "  \\Mathematics\\Combinatorial\\KnapsackProblem\\BoundedChoice\\Unstable" );
   CERR( "を検討しましょう。" );
 }
 
@@ -1063,24 +1063,6 @@ AC( KnapsackBoundedChoiceCostfree )
 {
   CERR( "価値をコストとみなしてコストがある場合に帰着させましょう。" );
   CERR( "\\Mathematics\\Combinatorial\\KnapsackProblem\\BoundedChoice\\Costfree" );
-}
-
-AC( KnapsackNegative )
-{
-  CERR( "- O(N 2^{N/2})が通りそうならば半分全列挙" );
-  CERR( "  \\Mathematics\\Combinatorial\\KnapsackProblem\\Negative" );
-  CERR( "- O(N |C|)が通りそうかつコストが非負ならば、" );
-  CERR( "  「i番目の項まで使ってコストの総和がcの時の価値の最大値dp[i][c]」" );
-  CERR( "  を管理するi,cに関する動的計画法" );
-  CERR( "  \\Mathematics\\Combinatorial\\KnapsackProblem\\Negative\\Value" );
-  CERR( "- O(N V)が通りそうかつ価値が非負ならば、" );
-  CERR( "  「i番目の項まで使って価値の総和がvの時のコストの最小値dp[i][c]」" );
-  CERR( "  を管理するi,vに関する動的計画法" );
-  CERR( "  \\Mathematics\\Combinatorial\\KnapsackProblem\\Negative\\Cost" );
-  CERR( "- O(N 2^N)が通りそうかつコストの動く範囲が遷移途中も制限されているならば、" );
-  CERR( "  bit全探策" );
-  CERR( "  \\Mathematics\\Combinatorial\\KnapsackProblem\\Negative\\Restrictive" );
-  CERR( "を検討しましょう。" );
 }
 
 AC( KnapsackOrdered )
@@ -1122,7 +1104,35 @@ AC( KnapsackOrderedStable )
   CERR( "\\Mathematics\\Combinatorial\\KnapsackProblem\\Ordered" );
 }
 
-AC( KnapsackCostfree )
+AC( SingleKnapsack )
+{
+  ASK_YES_NO( "コストがありますか？" );
+  if( reply == "y" ){
+    CALL_AC( SingleKnapsackWithCost );
+  } else {
+    CALL_AC( SingleKnapsackCostfree );
+  }
+}
+
+AC( SingleKnapsackWithCost )
+{
+  CERR( "- O(N 2^{N/2})が通りそうならば半分全列挙" );
+  CERR( "  \\Mathematics\\Combinatorial\\KnapsackProblem\\Negative" );
+  CERR( "- O(N |C|)が通りそうかつコストが非負ならば、" );
+  CERR( "  「i番目の項まで使ってコストの総和がcの時の価値の最大値dp[i][c]」" );
+  CERR( "  を管理するi,cに関する動的計画法" );
+  CERR( "  \\Mathematics\\Combinatorial\\KnapsackProblem\\Negative\\Value" );
+  CERR( "- O(N V)が通りそうかつ価値が非負ならば、" );
+  CERR( "  「i番目の項まで使って価値の総和がvの時のコストの最小値dp[i][c]」" );
+  CERR( "  を管理するi,vに関する動的計画法" );
+  CERR( "  \\Mathematics\\Combinatorial\\KnapsackProblem\\Negative\\Cost" );
+  CERR( "- O(N 2^N)が通りそうかつコストの動く範囲が遷移途中も制限されているならば、" );
+  CERR( "  bit全探策" );
+  CERR( "  \\Mathematics\\Combinatorial\\KnapsackProblem\\Negative\\Restrictive" );
+  CERR( "を検討しましょう。" );
+}
+
+AC( SingleKnapsackCostfree )
 {
   CERR( "価値をコストとみなしてコストがある場合に帰着させましょう。" );
   CERR( "\\Mathematics\\Combinatorial\\KnapsackProblem\\Costfree" );
@@ -1133,6 +1143,17 @@ AC( KnapsackCostfree )
   CERR( "  プロス素数Pを法とするならば法Pでの高速フーリエ変換による" );
   CERR( "  exp(logの総和)計算" );
   CERR( "  \\Mathematics\\Polynomial\\Truncate" );
+  CERR( "を検討しましょう。" );
+}
+
+AC( MultipleKnapsack )
+{
+  CERR( "ナップサックの個数をKと置きます。" );
+  CERR( "- O(K(N 2^N + K^N))が通りそうならば、高速ゼータ変換" );
+  CERR( "  \\Mathematics\\Combinatorial\\KnapsackProblem\\Negative\\Subsetwise\\Multiknapsack" );
+  CERR( "- 各ナップサックの容量が非常に小さいならば、コストの大きさで項目を分けて" );
+  CERR( "  コストの大きい順にそれらの選択数を全探策または二分探索" );
+  CERR( "  参考：https://yukicoder.me/problems/no/2617/editorial" );
   CERR( "を検討しましょう。" );
 }
 
@@ -2465,6 +2486,8 @@ AC( DecisionPresentability )
 AC( Construction )
 {
   CERR( "存在定理に帰着できる問題は構成的証明を実装しましょう。" );
+  CERR( "入力に関して再帰的に構築する方法を探すために、入力制約より一般化して" );
+  CERR( "（例えば多変数化して）考察し、小さいケースの実験をしましょう。" );
   ASK_NUMBER(
 	     "数や配列や文字列の構築" ,
 	     "方程式の解の構築" ,
