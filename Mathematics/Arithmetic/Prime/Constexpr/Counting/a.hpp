@@ -14,5 +14,7 @@ public:
 
   // min(iˆÈ‰º‚Ì‘f”‚ÌŒÂ”,length_max)‚ğ•Ô‚·B
   inline constexpr const int& Pi( const int& i ) const;
+  inline constexpr const int& Get( const int& i ) const;
+  inline constexpr const int& operator[]( const int& i ) const;
 
 };

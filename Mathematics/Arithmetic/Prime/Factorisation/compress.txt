@@ -1,0 +1,10 @@
+#ifdef DEBUG
+  #include "c:/Users/user/Documents/Programming/Mathematics/Arithmetic/Prime/Factorisation/a_Body.hpp"
+#else
+// nÇÃëfàˆêîï™âÅFSetPrimeFactorisation(CO PrimeEnumeration<INT,val_limit,LE_max>& prime,CO INT& n,VE<INT>& P,VE<INT>& EX)
+
+TE <TY INT,INT val_limit,int LE_max = val_limit>CL PrimeEnumeration{PU:bool m_is_composite[val_limit];INT m_val[LE_max];int m_LE;CE PrimeEnumeration();IN CO INT& OP[](CRI i)CO;CE CO INT& Get(CRI i)CO;CE CO bool& IsComposite(CRI n)CO;CE CRI LE()CO NE;};
+TE <TY INT,INT val_limit,int LE_max> CE PrimeEnumeration<INT,val_limit,LE_max>::PrimeEnumeration():m_is_composite(),m_val(),m_LE(0){for(INT i = 2;i < val_limit;i++){if(! m_is_composite[i]){for(INT j = i * i;j < val_limit;j += i){m_is_composite[j]= true;}m_val[m_LE++]= i;if(m_LE >= LE_max){break;}}}}TE <TY INT,INT val_limit,int LE_max> IN CO INT& PrimeEnumeration<INT,val_limit,LE_max>::OP[](CRI i)CO{AS(0 <= i && i < m_LE);RE m_val[i];}TE <TY INT,INT val_limit,int LE_max> CE CO INT& PrimeEnumeration<INT,val_limit,LE_max>::Get(CRI i)CO{RE m_val[i];}TE <TY INT,INT val_limit,int LE_max> CE CO bool& PrimeEnumeration<INT,val_limit,LE_max>::IsComposite(CRI n)CO{RE m_is_composite[n];}TE <TY INT,INT val_limit,int LE_max> CE CRI PrimeEnumeration<INT,val_limit,LE_max>::LE()CO NE{RE m_LE;}
+
+TE <TY INT,INT val_limit,int LE_max,TY INT1,TY INT2,TY INT3>VO SetPrimeFactorisation(CO PrimeEnumeration<INT,val_limit,LE_max>& prime,INT1 n,VE<INT2>& P,VE<INT3>& EX){int i = 0;WH(i < prime.m_LE){CO INT2& p = prime[i];if(p * p > n){break;}if(n % p == 0){P.push_back(p);EX.push_back(1);INT3& EX_back = EX.back();n /= p;WH(n % p == 0){EX_back++;n /= p;}}i++;}if(n != 1){P.push_back(n);EX.push_back(1);}RE;}
+#endif

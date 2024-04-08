@@ -2,6 +2,8 @@
 
 #pragma once
 
+// verify: https://yukicoder.me/submissions/915737
+
 // m_length‚Ì’l‚Í
 // val_limit = 316 -> 65
 // val_limit = 10^3 -> 168
@@ -26,10 +28,11 @@ public:
   inline constexpr PrimeEnumeration();
 
   // 1+nŒÂ–Ú‚Ì‘f”‚ğ•Ô‚·B
-  inline constexpr const INT& Get( const int& n ) const;
+  inline const INT& operator[]( const int& i ) const;
+  inline constexpr const INT& Get( const int& i ) const;
 
   // length_maxŒÂ–Ú‚Ì‘f”‚Ü‚Å‚ÅŠ„‚èØ‚ê‚é‡¬”‚Å‚ ‚é‚©”Û‚©‚ğ”»’è‚·‚éB
-  inline constexpr const bool& IsComposite( const int& i ) const;
+  inline constexpr const bool& IsComposite( const int& n ) const;
 
   // val_limit–¢–‚Ì‘f”‚ÌŒÂ”Pi(val_limit)‚ğ•Ô‚·B
   inline constexpr const int& length() const noexcept;

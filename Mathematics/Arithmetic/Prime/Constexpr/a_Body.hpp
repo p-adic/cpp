@@ -10,9 +10,7 @@ template <typename INT , INT val_limit , int length_max> inline constexpr PrimeE
 
     if( ! m_is_composite[i] ){
 
-      INT j = i;
-
-      while( ( j += i ) < val_limit ){
+      for( INT j = i * i ; j < val_limit ; j += i ){
 
 	m_is_composite[j] = true;
 
@@ -32,8 +30,10 @@ template <typename INT , INT val_limit , int length_max> inline constexpr PrimeE
 
 }
 
-template <typename INT , INT val_limit , int length_max> inline constexpr const INT& PrimeEnumeration<INT,val_limit,length_max>::Get( const int& n ) const { assert( n < m_length ); return m_val[n]; }
-template <typename INT , INT val_limit , int length_max> inline constexpr const bool& PrimeEnumeration<INT,val_limit,length_max>::IsComposite( const int& i ) const { assert( i < val_limit ); return m_is_composite[i]; }
+template <typename INT , INT val_limit , int length_max> inline const INT& PrimeEnumeration<INT,val_limit,length_max>::operator[]( const int& i ) const { assert( 0 <= i && i < m_length ); return m_val[i]; }
+template <typename INT , INT val_limit , int length_max> inline constexpr const INT& PrimeEnumeration<INT,val_limit,length_max>::Get( const int& i ) const { return m_val[i];}
+
+template <typename INT , INT val_limit , int length_max> inline constexpr const bool& PrimeEnumeration<INT,val_limit,length_max>::IsComposite( const int& n ) const { return m_is_composite[n]; }
 template <typename INT , INT val_limit , int length_max> inline constexpr const int& PrimeEnumeration<INT,val_limit,length_max>::length() const noexcept { return m_length; }
 
 

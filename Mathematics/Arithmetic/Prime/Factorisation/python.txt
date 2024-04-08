@@ -1,0 +1,42 @@
+# エラトステネスの篩O(L log log L)
+# PにL未満の素数を、Cに合成数か否かを、pにPi関数の値（引数以下の素数の個数）を格納する。
+L=11**5
+P=[]
+C=[0]*L
+p=[0]*L
+for i in R(2,L):
+	if C[i]<1:
+		P+=[i]
+		j=i*i
+		while j<L:C[j],j=1,j+i
+	p[i]=len(P)
+
+// ポラードのρ法O(N^{1/4})（ヒューリスティック）
+// PにNの素因数分解を格納する。ただし反復回数の見積もりはヒューリスティックな未解決問題であり
+// N>=10**9の時はPが実際に素数のみからなるかは不明。
+P,n=set(),N
+for i in R(2,min(N+1,31623)):
+	if n%i<1:P.add(i)
+	while n%i<1:n//=i
+D=[n]*(n>1)
+def G(a,b):
+	while a:a,b=b%a,a
+	return b
+def r(n):
+	for j in R(len(D)):
+		while D[j]%n<1:D[j]//=n
+	P.add(n)
+while D:
+	n=D.pop()
+	c=int(n**0.25)*9
+	if n<10**9:r(n)
+	else:
+		while c:
+			x,d=c,1
+			y=(x*x+1)%n
+			while (d<2)*c:x,y,d,c=(x*x+1)%n,(y**4+2*y*y+2)%n,G(abs(x-y),n),c-1
+			if d<n and c:
+				D+=[n//d,d]
+				break
+		else:r(n)
+P=list(P)
