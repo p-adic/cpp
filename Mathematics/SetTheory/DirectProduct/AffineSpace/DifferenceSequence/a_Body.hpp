@@ -3,117 +3,36 @@
 #pragma once
 #include "a.hpp"
 
-#include "../../../../Graph/Array/a_Body.hpp"
+#include "../../../../Geometry/Graph/Array/Prev/a_Body.hpp"
 
-template <typename T , typename FOREST , typename PREV , typename U , typename GROUP> inline AbstractDifferenceSequence<T,FOREST,PREV,U,GROUP>::AbstractDifferenceSequence( FOREST G , PREV Prev , GROUP M ) : m_G( move( G ) ) , m_Prev( move( Prev ) ) , m_M( move( M ) ) , m_a( m_G.size() , m_M.Zero() ) , m_lazy_addition( m_a ) , m_updated( false ) { static_assert( is_invocable_r_v<T,PREV,const T&> ); }
+template <typename T , typename FOREST , typename PREV , typename U , typename GROUP> inline AbstractDifferenceSequence<T,FOREST,PREV,U,GROUP>::AbstractDifferenceSequence( FOREST G , PREV prev , GROUP M , int degree ) : AbstractDifferenceSequence( G , prev , M , vector( G.size() , M.Zero() ) , move( degree ) , 0 ) {}
+template <typename T , typename FOREST , typename PREV , typename U , typename GROUP> inline AbstractDifferenceSequence<T,FOREST,PREV,U,GROUP>::AbstractDifferenceSequence( FOREST& G , PREV& prev , GROUP& M , vector<U> a , int degree , int dummy ) : AbstractDifferenceSequence( move( G ) , move( prev ) , move( M ) , move( a ) , move( degree ) ) {}
+template <typename T , typename FOREST , typename PREV , typename U , typename GROUP> inline AbstractDifferenceSequence<T,FOREST,PREV,U,GROUP>::AbstractDifferenceSequence( FOREST G , PREV prev , GROUP M , vector<U> a , int degree ) : m_G( move( G ) ) , m_prev( move( prev ) ) , m_M( move( M ) ) , m_a( move( a ) ) , m_degree( move( degree ) ) { static_assert( is_invocable_r_v<int,PREV,const int&> ); }
 
-template <typename T , typename FOREST , typename PREV , typename U , typename GROUP> inline AbstractDifferenceSequence<T,FOREST,PREV,U,GROUP>::AbstractDifferenceSequence( FOREST G , PREV Prev , GROUP M , vector<U> a ) : m_G( move( G ) ) , m_Prev( move( m_Prev ) ) , m_M( move( M ) ) , m_a( move( a ) ) , m_lazy_addition( m_G.size() , m_M.Zero() ) , m_updated( false ) { static_assert( !is_same_v<U,int> && is_invocable_r_v<T,PREV,const T&> ); }
+template <typename U> inline DifferenceSequence<U>::DifferenceSequence( const int& size , int degree ) : DifferenceSequence( vector<U>( size ) , move( degree ) ) {}
+template <typename U> inline DifferenceSequence<U>::DifferenceSequence( vector<U> a , int degree ) : DifferenceSequence<U>( a.size() , a , move( degree ) ) {}
+template <typename U> inline DifferenceSequence<U>::DifferenceSequence( const int& size , vector<U>& a , int degree ) : AbstractDifferenceSequence<int,LinearGraph,LinearPrev,U,AdditiveGroup<U>>( LinearGraph( size , true ) , LinearPrev() , AdditiveGroup<U>() , move( a ) , move( degree ) ) {}
 
-template <typename U> inline DifferenceSequence<U>::DifferenceSequence( const int& size ) : DifferenceSequence( vector<U>( size ) ) {}
-template <typename U> inline DifferenceSequence<U>::DifferenceSequence( vector<U> a ) : AbstractDifferenceSequence<int,LinearGraph,int(const int&)noexcept,U,AdditiveGroup<U>>( LinearGraph( a.size() , true ) , PrevOf , AdditiveGroup<U>() , move( a ) ) {}
+template <typename T , typename FOREST , typename PREV , typename U , typename GROUP> template <typename...Args> inline void AbstractDifferenceSequence<T,FOREST,PREV,U,GROUP>::Initialise( Args&&... args ) { AbstractDifferenceSequence<T,FOREST,PREV,U,GROUP> temp{ m_G , m_M , move( args )... }; m_a = move( temp.m_a ); m_degree = temp.m_degree; }
 
-template <typename T , typename FOREST , typename PREV , typename U , typename GROUP> inline void AbstractDifferenceSequence<T,FOREST,PREV,U,GROUP>::Initialise( vector<U> a ) { *this = AbstractDifferenceSequence<T,FOREST,PREV,U,GROUP>( move( m_G ) , move( m_Prev ) , move( m_M ) , move( a ) ); }
-template <typename T , typename FOREST , typename PREV , typename U , typename GROUP> inline void AbstractDifferenceSequence<T,FOREST,PREV,U,GROUP>::Set( const T& t , const U& u ) { Update(); m_a[m_G.Enumeration_inv(t)] = u; }
-template <typename T , typename FOREST , typename PREV , typename U , typename GROUP> inline const U& AbstractDifferenceSequence<T,FOREST,PREV,U,GROUP>::Get( const T& t ) { Update(); return m_a[m_G.Enumeration_inv(t)]; }
-template <typename T , typename FOREST , typename PREV , typename U , typename GROUP> inline U& AbstractDifferenceSequence<T,FOREST,PREV,U,GROUP>::Ref( const T& t ) { return m_a[m_G.Enumeration_inv(t)]; }
+template <typename T , typename FOREST , typename PREV , typename U , typename GROUP> inline void AbstractDifferenceSequence<T,FOREST,PREV,U,GROUP>::Set( const T& t , const U& u  , const int& degree ) { Add( t , m_M.Sum( m_M.Inverse( operator[]( t ) ) , u ) , degree ); }
+template <typename T , typename FOREST , typename PREV , typename U , typename GROUP> inline void AbstractDifferenceSequence<T,FOREST,PREV,U,GROUP>::Add( const T& t , const U& u , const int& degree ) { if( u == m_M.Zero() ){ return; } Shift( degree ); auto&& i = m_G.Enumeration_inv( t ); m_a[i] = m_M.Sum( move( m_a[i] ) , u ); }
 
-template <typename T , typename FOREST , typename PREV , typename U , typename GROUP> inline void AbstractDifferenceSequence<T,FOREST,PREV,U,GROUP>::Add( const T& t , const U& u ) { U& a_t = m_a[m_G.Enumeration_inv(t)]; a_t = m_M.Sum( move( a_t ) , u ); }
+template <typename T , typename FOREST , typename PREV , typename U , typename GROUP> inline void AbstractDifferenceSequence<T,FOREST,PREV,U,GROUP>::FinalSegmentAdd( const T& t_start , const U& u , const int& degree ) { if( u == m_M.Zero() ){ return; } Shift( degree + 1 ); U& m_a_i = m_a[m_G.Enumeration_inv( t_start )]; m_a_i = m_M.Sum( move( m_a_i ) , u ); }
+template <typename T , typename FOREST , typename PREV , typename U , typename GROUP> inline void AbstractDifferenceSequence<T,FOREST,PREV,U,GROUP>::SubtreeAdd( const T& t_start , const vector<T>& t_outsides , const U& u , const int& degree ) { FinalSegmentAdd( t_start , u , degree ); const U u_inv = m_M.Inverse( u ); for( auto& t_outside : t_outsides ){ FinalSegmentAdd( t_outside , u_inv , degree ); } }
+template <typename U> inline void DifferenceSequence<U>::IntervalAdd( const int& t_start , const int& t_final , const U& u , const int& degree ) { if( t_start <= t_final ){ this->SubtreeAdd( t_start , vector( t_final + 1 < this->m_G.size() ? 1 : 0 , t_final + 1 ) , u , degree ); } }
 
-template <typename T , typename FOREST , typename PREV , typename U , typename GROUP>
-void AbstractDifferenceSequence<T,FOREST,PREV,U,GROUP>::SubTreeAdd( const T& t_start , const list<T>& t_final , const U& u )
-{
+template <typename T , typename FOREST , typename PREV , typename U , typename GROUP> inline const U& AbstractDifferenceSequence<T,FOREST,PREV,U,GROUP>::operator[]( const T& t ) { return Get( t , 0 ); }
+template <typename T , typename FOREST , typename PREV , typename U , typename GROUP> inline const U& AbstractDifferenceSequence<T,FOREST,PREV,U,GROUP>::Get( const T& t , const int& degree ) { Shift( degree ); return m_a[m_G.Enumeration_inv( t )]; }
 
-  if( u == m_M.Zero() ){
+template <typename T , typename FOREST , typename PREV , typename U , typename GROUP> inline const U& AbstractDifferenceSequence<T,FOREST,PREV,U,GROUP>::InitialSegmentSum( const T& t_final , const int& degree ) { return Get( t_final , degree - 1 ); }
+template <typename T , typename FOREST , typename PREV , typename U , typename GROUP> inline U AbstractDifferenceSequence<T,FOREST,PREV,U,GROUP>::IntervalSum( const T& t_start , const T& t_final , const int& degree ) { U answer = InitialSegmentSum( t_final , degree ); auto&& i_prev = m_prev( m_G.Enumeration_inv( t_start ) ); i_prev != -1 ? answer = m_M.Sum( move( answer ) , m_M.Inverse( m_a[i_prev] ) ): answer; return answer; }
 
-    return;
+template <typename T , typename FOREST , typename PREV , typename U , typename GROUP> inline void AbstractDifferenceSequence<T,FOREST,PREV,U,GROUP>::Shift( const int& degree ) { Shift( degree , degree ); }
+template <typename T , typename FOREST , typename PREV , typename U , typename GROUP> inline void AbstractDifferenceSequence<T,FOREST,PREV,U,GROUP>::Shift( const int& degree_min , const int& degree_max ) { while( m_degree < degree_min ){ Differentiate(); } while( m_degree > degree_max ){ Integrate(); } }
 
-  }
+template <typename T , typename FOREST , typename PREV , typename U , typename GROUP> inline void AbstractDifferenceSequence<T,FOREST,PREV,U,GROUP>::Integrate() { m_degree--; const int& size = m_G.size(); for( int i = 1; i < size ; i++ ){ auto&& i_prev = this->m_prev( i ); if( i_prev != -1 ){ m_a[i] = m_M.Sum( move( m_a[i] ) , m_a[i_prev] ); } } }
+template <typename T , typename FOREST , typename PREV , typename U , typename GROUP> inline void AbstractDifferenceSequence<T,FOREST,PREV,U,GROUP>::Differentiate() { m_degree++; for( int i = m_G.size() - 1; i > 0 ; i-- ){ auto&& i_prev = this->m_prev( i ); if( i_prev != -1 ){ m_a[i_prev] = m_M.Sum( move( m_a[i_prev] ) , m_M.Inverse( m_a[i] ) ); } } }
 
-  m_updated = true;
-  U& m_lazy_addition_t_start = m_lazy_addition[m_G.Enumeration_inv(t_start)];
-  m_lazy_addition_t_start = m_M.Sum( move( m_lazy_addition_t_start ) , u );
-  const U u_inv = m_M.Inverse( u );
-  
-  for( auto itr_t_final = t_final.begin() , end_t_final = t_final.end() ; itr_t_final != end_t_final ; itr_t_final++ ){
-
-    auto&& edge = m_G.Edge( *itr_t_final );
-
-    for( auto itr_edge = edge.begin() , end_edge = edge.end() ; itr_edge != end_edge ; itr_edge++ ){
-
-      U& m_lazy_addition_t = m_lazy_addition[m_G.Enumeration_inv(*itr_edge)];
-      m_lazy_addition_t = m_M.Sum( move( m_lazy_addition_t ) , u_inv );
-
-    }
-
-  }
-
-  return;
-  
-}
-
-template <typename U> inline void DifferenceSequence<U>::InitialSegmentAdd( const int& t_start , const U& u ) { SubTreeAdd( t_start , {} , u ); }
-template <typename U> inline void DifferenceSequence<U>::FinalSegmentAdd( const int& t_final , const U& u ) { IntervalAdd( 0 , t_final , u ); }
-template <typename U> inline void DifferenceSequence<U>::IntervalAdd( const int& t_start , const int& t_final , const U& u ) { SubTreeAdd( t_start , { t_final } , u ); }
-
-template <typename T , typename FOREST , typename PREV , typename U , typename GROUP>
-AbstractDifferenceSequence<T,FOREST,PREV,U,GROUP>& AbstractDifferenceSequence<T,FOREST,PREV,U,GROUP>::operator+=( const vector<U>& a )
-{
-
-  const int& size = m_G.size();
-  assert( size == int( a.size() ) );
-
-  for( int i = 0 ; i < size ; i++ ){
-
-    m_a[i] = m_M.Sum( move( m_a[i] ) , a[i] );
-    
-  }
-
-  return *this;
-  
-}
-
-template <typename T , typename FOREST , typename PREV , typename U , typename GROUP>
-void AbstractDifferenceSequence<T,FOREST,PREV,U,GROUP>::Update()
-{
-
-  if( !m_updated ){
-
-    return;
-
-  }
-
-  const int& size = m_G.size();
-
-  for( int i = 0 ; i < size ; i++ ){
-
-    auto& m_lazy_addition_i = m_lazy_addition[i];
-    // listを経由すると定数倍重い。
-    auto&& j = m_G.Enumeration_inv( m_Prev( m_G.Enumeration( i ) ) );
-
-    if( j != i ){
-      
-      assert( j < i );
-      auto& m_lazy_addition_j = m_lazy_addition[j];
-      m_lazy_addition_i = m_M.Sum( move( m_lazy_addition_j ) , m_lazy_addition_i );
-
-    }
-
-  }
-  
-  const U& zero = m_M.Zero();
-
-  for( int i = 0 ; i < size ; i++ ){
-
-    auto& m_lazy_addition_i = m_lazy_addition[i];
-    U& m_ai = m_a[i];
-    m_ai = m_M.Sum( move( m_ai ) , m_lazy_addition_i );
-    m_lazy_addition_i = zero;
-
-  }
-
-  m_updated = false;
-  return;
-  
-}
-
-template <typename U> inline int DifferenceSequence<U>::PrevOf( const int& t_start ) noexcept { return max( t_start - 1 , 0 ); }
+// 要件(4)を満たさない時用。
+#include "../../../../Geometry/Graph/Acyclic/DirectedForest/a_Body.hpp"
