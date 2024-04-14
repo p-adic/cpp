@@ -1,0 +1,5 @@
+#ifdef DEBUG
+  #include "c:/Users/user/Documents/Programming/Utility/Vector/a_Body.hpp"
+#else
+IN void VariadicResize(CRI SZ){}TE <TY Arg,TY... ARGS> IN void VariadicResize(CRI SZ,Arg& arg,ARGS&... args){arg.resize(SZ);VariadicResize(SZ,args...);}
+#endif
