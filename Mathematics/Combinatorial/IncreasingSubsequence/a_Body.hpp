@@ -4,9 +4,11 @@
 #include "a.hpp"
 
 // Count(Non)StrictlyIncreasingSubsequenceに使う。
-#include "../../../SetTheory/DirectProduct/AffineSpace/BIT/a_Body.hpp"
+#include "../../SetTheory/DirectProduct/AffineSpace/BIT/a_Body.hpp"
 // modつきのCount(Non)StrictlyIncreasingSubsequenceに使う。
-#include "../../../Arithmetic/Mod/QuotientRing/a_Body.hpp"
+#include "../../Arithmetic/Mod/QuotientRing/a_Body.hpp"
+// LongestIncreasingSubsequenceに使う。
+#include "../../../Uility/BinarySearch/a_Body.hpp"
 
 template <typename T>
 ll CountStrictlyIncreasingSubsequence( const vector<T>& a )
