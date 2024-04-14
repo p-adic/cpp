@@ -5,50 +5,24 @@
 #include "../../../../Algebra/Monoid/Group/a.hpp"
 
 // verify:
-// https://yukicoder.me/submissions/950143（Abstract、配列初期化、左累積積）
-// https://yukicoder.me/submissions/950139（配列初期化、区間和）
-// https://atcoder.jp/contests/agc023/submissions/50204861（配列初期化、区間和逆像数え上げ）
+// https://yukicoder.me/submissions/972299（配列初期化、区間和）
+// https://atcoder.jp/contests/agc023/submissions/52375150（配列初期化、区間和逆像数え上げ）
+// https://yukicoder.me/submissions/972330（Abstract、配列初期化、左累積積）
 
-// 木上で群に値を持つ関数の累積積を計算する。
-template <typename U>
-class VirtualCumulativeProduct
-{
-
-public:
-  // 0 <= i,j < m_sizeの場合のみサポート。
-  // iからへのpathがi=v_0->...->v_k=jの時、初期化に用いた配列aに対する
-  // 右総乗a[v_0]...a[v_k]を計算する。
-  virtual U PathProduct( const int& i , const int& j ) = 0;
-
-protected:
-  virtual int Parent( const int& i ) = 0;
-  virtual int LCA( const int& i , const int& j ) = 0;
-
-};
-
-template <typename U , typename GROUP>
-class PathProductImplementation :
-  virtual public VirtualCumulativeProduct<U>
-{
-
-protected:
-  GROUP m_M;
-  int m_size;
-  vector<U> m_right;
-  vector<U> m_left;
-
-public:
-  inline PathProductImplementation( GROUP M , const int& size );
-  inline U PathProduct( const int& i_start , const int& i_final );
-
-};
-
-// 木が特に通常の配列である場合。
 // 入力の範囲内で要件
 // (1) MがUの群構造である。
 // が成り立つ場合にのみサポート。
+
+// 群に値を持つ配列の累積積を計算する。
 // ただし区間積か区間積の二分探索を用いない場合はモノイド構造にidなどのダミーで
 // Inverseを定めたものでよい。
+
+// 木構造に抽象化する場合は
+// - 可換群で部分木和が必要ならばAbstractDifferenceSequence
+// - 可換群で区間和が必要ならばAbstractReversedDifferenceSequence
+// - モノイドで経路和が必要ならばDepthFirstSearchOnWeightedTree
+// を用いるので、ここでは非可換群と配列に特化させた累積積を扱う。
+
 
 // M.one()による初期化O(size)（モノイド構造を使う）
 // 配列による初期化O(size)（半群構造を使う）
@@ -75,20 +49,26 @@ public:
 // 左区間積がu以上となる要素の添字の最小値の二分探索O(log_2 size)（全順序群構造を使う）
 // 右区間積がu以上となる要素の添字の最小値の二分探索O(log_2 size)（全順序群構造を使う）
 template <typename U , typename GROUP>
-class AbstractCumulativeProduct :
-  public PathProductImplementation<U,GROUP>
+class AbstractCumulativeProduct
 {
 
 private:
+  GROUP m_M;
+  int m_size;
+  // 元の配列を格納。
   vector<U> m_a;
+  // 右区間積a[0]*...*a[i-1]を格納。
+  vector<U> m_right;
+  // 左区間積a[0]*...*a[i-1]を格納。
+  vector<U> m_left;
 
 public:
   inline AbstractCumulativeProduct( GROUP M , const int& size = 0 );
   inline AbstractCumulativeProduct( GROUP M , vector<U> a );
 
-  inline void Initialise( const vector<U>& a );
+  template <typename...Args> inline void Initialise( Args&&... args );
   // a[i]をuに置き変える。
-  inline void Set( const int& i , const U& u );
+  inline void Set( const int& i , U u );
   // a[i]をM.Product(a[i],u)に置き変える。
   inline void RightMultiply( const int& i , const U& u );
   // a[i]をM.Product(u,a[i])に置き変える。
@@ -137,12 +117,8 @@ public:
   // その最小値を2進法で探索。存在しない場合はNを返す。
   int LeftBinarySearch( const int& i_start , const U& u );
   
-private:
-  inline int Parent( const int& i );
-  inline int LCA( const int& i , const int& j );
-
 };
-template <typename GROUP , typename...Args> AbstractCumulativeProduct( GROUP M , const Args&... args ) -> AbstractCumulativeProduct<inner_t<GROUP>,GROUP>;
+template <typename GROUP , typename...Args> AbstractCumulativeProduct( GROUP M , Args&&... args ) -> AbstractCumulativeProduct<inner_t<GROUP>,GROUP>;
 
 template <typename U>
 class CumulativeSum :
@@ -150,8 +126,7 @@ class CumulativeSum :
 {
 
 public:
-  inline CumulativeSum( const int& size = 0 );
-  inline CumulativeSum( vector<U> a );
+  template <typename...Args> inline CumulativeSum( Args&&... args );
 
   // a[i]をM.Sum(u,a[i])に置き変える。
   inline void Add( const int& i , const U& u );
@@ -168,6 +143,8 @@ public:
   template <typename...Args> int BinarySearch( const Args&... args );
 
 };
+template <typename U> CumulativeSum( vector<U> ) -> CumulativeSum<U>;
+
 
 // 乗法群に使いたい状況と乗法モノイドに使いたい状況が同程度であるため
 // 非AbstractなCumulativeProductは定義せずAbstractを使う。
