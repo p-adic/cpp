@@ -25,6 +25,10 @@ public:
   virtual const int& size() const noexcept = 0;
   virtual E& edge() noexcept = 0;
   virtual ret_t<E,T> Edge( const T& t ) = 0;
+  template <typename PATH> inline ret_t<E,T> Edge( const PATH& p );
+
+  static inline const T& Vertex( const T& t  ) noexcept;
+  template <typename PATH> static inline const T& Vertex( const PATH& e ) noexcept;
 
 private:
   virtual R2 Enumeration_inv_Body( const T& t ) = 0;

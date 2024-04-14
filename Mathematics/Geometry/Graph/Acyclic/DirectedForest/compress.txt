@@ -1,0 +1,9 @@
+#ifdef DEBUG
+  #include "c:/Users/user/Documents/Programming/Mathematics/Geometry/Graph/Acyclic/DirectedTree/a_Body.hpp"
+#else
+TE <TY ACYCLIC_GRAPH>VE<inner_t<ACYCLIC_GRAPH>> TopologicalSort(ACYCLIC_GRAPH& G){CRI SZ = G.SZ();VE<inner_t<ACYCLIC_GRAPH>> AN(SZ);VE<bool> edged(SZ),fixed(SZ);int num = SZ - 1;for(int i = 0;i < SZ;i++){if(!fixed[i]){VE<VE<int>> dfs ={{i}};WH(!dfs.empty()){auto& e = dfs.back();if(e.empty()){dfs.pop_back();}else{CRI j = e.back();if(fixed[j]){e.pop_back();}else{auto&& t = G.Enumeration(j);if(edged[j]){fixed[j]= true;AN[num--]= t;e.pop_back();}else{edged[j]= true;auto&& edge_t = G.Edge(t);VE<int> edge_j{};for(auto& u:edge_t){auto&& k = G.Enumeration_inv(u);if(!fixed[k]){edge_j.push_back(k);}}dfs.push_back(MO(edge_j));}}}}}}RE AN;}
+
+TE <TY DIRECTED_FOREST>tuple<VE<inner_t<DIRECTED_FOREST>>,VE<int>,VE<int>,VE<VE<int>>> TopologicalSortedForest(DIRECTED_FOREST& G){VE<inner_t<DIRECTED_FOREST>> ts = TopologicalSort(G);CRI SZ = G.SZ();VE<int> ts_inv(SZ);VE<int> prev(SZ,-1);VE<VE<int>> edge(SZ);for(int i = SZ - 1;i >= 0;i--){auto& t = ts[i];auto&& edge_t = G.Edge(t);auto& edge_i = edge[i];edge_i.reserve(edge_t.SZ());for(auto& u:edge_t){CRI j = ts_inv[G.Enumeration_inv(u)];prev[j]= i;edge_i.push_back(j);}ts_inv[G.Enumeration_inv(t)]= i;}RE{MO(ts),MO(ts_inv),MO(prev),MO(edge)};}
+
+TE <TY UNDIRECTED_TREE> tuple<VE<inner_t<UNDIRECTED_TREE>>,VE<int>,VE<int>,VE<VE<int>>> TopologicalSortedTree(UNDIRECTED_TREE& G,CO inner_t<UNDIRECTED_TREE>& root){CRI SZ = G.SZ();US T = inner_t<UNDIRECTED_TREE>;VE<VE<T>> edge(SZ);VE<T> dfs{root};WH(!dfs.empty()){CO T t = dfs.back();dfs.pop_back();auto& edge_i = edge[G.Enumeration_inv(t)];auto&& edge_t = G.Edge(t);for(auto& u:edge_t){auto&& j = G.Enumeration_inv(u);if(edge[j].empty()){edge_i.push_back(u);dfs.push_back(u);}}}auto G_dir = G.GetGraph([&](CO T& t)-> CO VE<T>&{RE edge[G.Enumeration_inv(t)];});RE TopologicalSortedForest(G_dir);}
+#endif

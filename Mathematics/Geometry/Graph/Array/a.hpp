@@ -12,7 +12,7 @@ private:
 
 public:
   inline LinearEdge( const int& size , const bool& directed = true );
-  inline list<int> operator()( const int& t );
+  inline vector<int> operator()( const int& t );
 
 };
 

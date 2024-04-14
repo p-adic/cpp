@@ -1,0 +1,6 @@
+#ifdef DEBUG
+  #include "c:/Users/user/Documents/Programming/Mathematics/Geometry/Graph/Array/a_Body.hpp"
+#else
+CL LinearEdge{PU:int m_SZ;bool m_directed;IN LinearEdge(CRI SZ,CO bool& directed = true);IN VE<int> OP()(CRI t);};CL LinearGraph:PU Graph<LinearEdge>{PU:IN LinearGraph(CRI SZ,CO bool& directed = true);};
+IN LinearEdge::LinearEdge(CRI SZ,CO bool& directed):m_SZ(SZ),m_directed(directed){}IN VE<int> LinearEdge::OP()(CRI t){VE<int> AN{};if(!m_directed && t > 0){AN.push_back(t - 1);}if(t + 1 < m_SZ){AN.push_back(t + 1);}RE AN;}IN LinearGraph::LinearGraph(CRI SZ,CO bool& directed):Graph<LinearEdge>(SZ,LinearEdge(SZ,directed)){}
+#endif

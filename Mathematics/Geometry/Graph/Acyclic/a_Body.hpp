@@ -5,34 +5,47 @@
 
 #include "../a_Body.hpp"
 
-template <typename T , typename PATH , typename ACYCLIC_GRAPH> inline void TopologicalSort_Body( ACYCLIC_GRAPH& G , vector<T>& answer , const PATH& e , vector<bool>& found , int& num );
-template <typename T , typename ACYCLIC_GRAPH> inline void TopologicalSort_Body( ACYCLIC_GRAPH& G , vector<T>& answer , const T& t , vector<bool>& found , int& num );
+// template <typename T , typename PATH , typename ACYCLIC_GRAPH>
+// void TopologicalSort_Body( ACYCLIC_GRAPH& G , vector<T>& answer , const PATH& t , const int& i , vector<bool>& found , int& num )
+// {
 
-template <typename T , typename ACYCLIC_GRAPH>
-void TopologicalSort_Body( ACYCLIC_GRAPH& G , vector<T>& answer , const T& t , const int& i , vector<bool>& found , int& num )
-{
+//   if( !found[i] ){
 
-  if( !found[i] ){
+//     found[i] = true;
+//     auto&& edge_i = G.Edge( t );
 
-    found[i] = true;
-    auto&& edge_i = G.Edge( t );
+//     for( auto& u : edge_i ){
 
-    for( auto itr = edge_i.begin() , end = edge_i.end() ; itr != end ; itr++ ){
+//       TopologicalSort_Body( G , answer , u , G.Enumeration_inv( u ) , found , num );
 
-      TopologicalSort_Body( G , answer , *itr , found , num );
+//     }
 
-    }
+//     answer[num--] = t;
 
-    answer[num--] = t;
+//   }
 
-  }
+//   return;
 
-  return;
+// }
 
-}
+// template <typename ACYCLIC_GRAPH>
+// vector<inner_t<ACYCLIC_GRAPH>> TopologicalSort( ACYCLIC_GRAPH& G )
+// {
 
-template <typename T , typename PATH , typename ACYCLIC_GRAPH> inline void TopologicalSort_Body( ACYCLIC_GRAPH& G , vector<T>& answer , const PATH& e , vector<bool>& found , int& num ) { TopologicalSort_Body( G , answer , get<0>( e ) , found , num ); }
-template <typename T , typename ACYCLIC_GRAPH> inline void TopologicalSort_Body( ACYCLIC_GRAPH& G , vector<T>& answer , const T& t , vector<bool>& found , int& num ) { TopologicalSort_Body( G , answer , t , G.Enumeration_inv( t ) , found , num ); }
+//   const int& size = G.size();
+//   vector<inner_t<ACYCLIC_GRAPH>> answer( size );
+//   vector<bool> found( size );
+//   int num = size - 1;
+
+//   for( int i = 0 ; i < size ; i++ ){
+
+//     TopologicalSort_Body( G , answer , G.Enumeration( i ) , i , found , num );
+
+//   }
+
+//   return answer;
+
+// }
 
 template <typename ACYCLIC_GRAPH>
 vector<inner_t<ACYCLIC_GRAPH>> TopologicalSort( ACYCLIC_GRAPH& G )
@@ -40,52 +53,66 @@ vector<inner_t<ACYCLIC_GRAPH>> TopologicalSort( ACYCLIC_GRAPH& G )
 
   const int& size = G.size();
   vector<inner_t<ACYCLIC_GRAPH>> answer( size );
-  vector<bool> found( size );
+  vector<bool> edged( size ) , fixed( size );
   int num = size - 1;
 
   for( int i = 0 ; i < size ; i++ ){
 
-    TopologicalSort_Body( G , answer , G.Enumeration( i ) , i , found , num );
+    if( !fixed[i] ){
 
-  }
+      vector<vector<int>> dfs = { { i } };
 
-  return answer;
+      while( !dfs.empty() ){
 
-}
+	auto& e = dfs.back();
 
-template <typename ACYCLIC_GRAPH , typename MONOID> pair<inner_t<MONOID>,list<inner_t<ACYCLIC_GRAPH>>> GetLongestWalk( ACYCLIC_GRAPH& G , MONOID M )
-{
+	if( e.empty() ){
 
-  using T = inner_t<ACYCLIC_GRAPH>;
-  using U = inner_t<MONOID>;
-  const int& size = G.size();
-  const U& one = M.One();
+	  dfs.pop_back();
 
-  if( size == 0 ){
+	} else {
+	  
+	  const int& j = e.back();
 
-    return { one , list<T>() };
+	  if( fixed[j] ){
 
-  }
-  
-  vector<T> top_sort = TopologicalSort( G );
-  vector<U> dp( size , one );
-  vector<int> prev( size , -1 );
+	    e.pop_back();
 
-  for( auto itr_vertex = top_sort.begin() , end_vertex = top_sort.end() ; itr_vertex != end_vertex ; itr_vertex++ ){
+	  } else {
+	  
+	    auto&& t = G.Enumeration( j );
 
-    auto&& edge_i = G.Edge( *itr_vertex );
-    auto&& i = G.Enumeration_inv( *itr_vertex );
-    const U& dp_i = dp[i];
+	    if( edged[j] ){
 
-    for( auto itr_edge_i = edge_i.begin() , end_edge_i = edge_i.end() ; itr_edge_i != end_edge_i ; itr_edge_i++ ){
-      auto& [t,u] = *itr_edge_i;
-      auto&& j = G.Enumeration_inv( t );
-      U& dp_j = dp[j];
+	      fixed[j] = true;
+	      answer[num--] = t;
+	      e.pop_back();
 
-      if( !( dp_i < dp_j ) ){
+	    } else {
 
-	dp_j = M.Product( dp_i , u );
-	prev[j]	= i;
+	      edged[j] = true;
+	      auto&& edge_t = G.Edge( t );
+	      vector<int> edge_j{};
+
+	      for( auto& u : edge_t ){
+
+		auto&& k = G.Enumeration_inv( u );
+
+		if( !fixed[k] ){
+		
+		  edge_j.push_back( k );
+
+		}
+
+	      }
+
+	      dfs.push_back( move( edge_j ) );
+
+	    }
+
+	  }
+
+	}
 
       }
 
@@ -93,31 +120,37 @@ template <typename ACYCLIC_GRAPH , typename MONOID> pair<inner_t<MONOID>,list<in
 
   }
 
-  U answer = one;
-  int end_num = -1;
+  return answer;
 
-  for( int i = 0 ; i < size ; i++ ){
+}
 
-    const U& dp_i = dp[i];
+template <typename ACYCLIC_GRAPH>
+tuple<vector<inner_t<ACYCLIC_GRAPH>>,vector<int>,vector<vector<int>>> TopologicalSortedGraph( ACYCLIC_GRAPH& G )
+{
 
-    if( end_num == -1 || answer < dp_i ){
-      
-      answer = dp_i;
-      end_num = i;
+  vector<inner_t<ACYCLIC_GRAPH>> ts = TopologicalSort( G );
+  const int& size = G.size();
+  vector<int> ts_inv( size );
+  vector<vector<int>> edge( size );
+
+  for( int i = size - 1 ; i >= 0 ; i-- ){
+
+    auto& t = ts[i];
+    auto&& edge_t = G.Edge( t );
+    auto& edge_i = edge[i];
+    edge_i.reserve( edge_t.size() );
+
+    for( auto& u : edge_t ){
+
+      const int& j = ts_inv[G.Enumeration_inv( u )];
+      edge_i.push_back( j );
 
     }
 
-  }
-
-  list<T> path{};
-
-  while( end_num != -1 ){
-
-    path.push_front( G.Enumeration( end_num ) );
-    end_num = prev[end_num];
+    ts_inv[G.Enumeration_inv( t )] = i;
 
   }
 
-  return { move( answer ) , move( path ) };
+  return { move( ts ) , move( ts_inv ) , move( edge ) };
 
 }

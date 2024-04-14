@@ -3,18 +3,12 @@
 #pragma once
 #include "../a.hpp"
 
-// verify:
-// https://yukicoder.me/submissions/953259（GetLongestWalk）
-
 // 入力の範囲内で要件
 // (1) Gが辺Edge:T->(T \times ...)^{< \omega}を持ち閉路を持たない有向グラフである。
 // を満たす場合にのみサポート。
-// GのトポロジカルソートをO(|V_G|+|E_G|)で計算する。
+// Gのトポロジカルソートts:N->TをO(|V_G|+|E_G|)で計算する。
 template <typename ACYCLIC_GRAPH> vector<inner_t<ACYCLIC_GRAPH>> TopologicalSort( ACYCLIC_GRAPH& G );
-
-// 入力の範囲内で要件
-// (1) Gが辺Edge:T->(T \times U)^{< \omega}を持ち閉路を持たない有向グラフである。
-// (2) Mがoperator<(const U&,const U&)に関してUの順序モノイド構造である。
-// を満たす場合にのみサポート。
-// Gの最長歩道をO(|V_G|+|E_G|)で計算する。
-template <typename ACYCLIC_GRAPH , typename MONOID> pair<inner_t<MONOID>,vector<inner_t<ACYCLIC_GRAPH>>> GetLongestWalk( ACYCLIC_GRAPH& G , MONOID M );
+// {Gのトポロジカルソートts:N->T,G.Enumeration_invとtsの合成:N->Nの逆写像ts_inv,
+// tsによる番号付けに関する次ノード対応}を
+// O(|V_G|+|E_G|)で計算する。
+template <typename ACYCLIC_GRAPH> tuple<vector<inner_t<ACYCLIC_GRAPH>>,vector<int>,vector<vector<int>>> TopologicalSortedGraph( ACYCLIC_GRAPH& G );

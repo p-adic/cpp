@@ -41,7 +41,12 @@ template <typename T , typename E> inline void MemorisationGraph<T,E>::Reset() {
 template <typename T , typename R1 , typename R2 , typename E> inline const int& EdgeImplimentation<T,R1,R2,E>::size() const noexcept { return m_size; }
 template <typename T , typename R1 , typename R2 , typename E> inline E& EdgeImplimentation<T,R1,R2,E>::edge() noexcept { return m_edge; }
 template <typename T , typename R1 , typename R2 , typename E> inline ret_t<E,T> EdgeImplimentation<T,R1,R2,E>::Edge( const T& t ) { return m_edge( t ); }
+template <typename T , typename R1 , typename R2 , typename E> template <typename PATH> inline ret_t<E,T> VirtualGraph<T,R1,R2,E>::Edge( const PATH& p ) { return Edge( get<0>( p ) ); }
 
 template <typename E> template <typename F> inline Graph<F> Graph<E>::GetGraph( F edge ) const { return Graph<F>( this->size() , move( edge ) ); }
 template <typename T , typename Enum_T , typename Enum_T_inv , typename E> template <typename F> inline EnumerationGraph<T,Enum_T,Enum_T_inv,F> EnumerationGraph<T,Enum_T,Enum_T_inv,E>::GetGraph( F edge ) const { return EnumerationGraph<T,Enum_T,Enum_T_inv,F>( this->size() , m_enum_T , m_enum_T_inv , move( edge ) ); }
 template <typename T , typename E> template <typename F> inline MemorisationGraph<T,F> MemorisationGraph<T,E>::GetGraph( F edge ) const { return MemorisationGraph<T,F>( this->size() , move( edge ) ); }
+
+template <typename T , typename R1 , typename R2 , typename E> inline const T& VirtualGraph<T,R1,R2,E>::Vertex( const T& t  ) noexcept { return t; }
+template <typename T , typename R1 , typename R2 , typename E> template <typename PATH> inline const T& VirtualGraph<T,R1,R2,E>::Vertex( const PATH& e ) noexcept { return Vertex( get<0>( e ) ); }
+

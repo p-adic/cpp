@@ -3,7 +3,7 @@
 #pragma once
 
 // verify:
-// https://yukicoder.me/submissions/961435（GetDistance）
+// https://yukicoder.me/submissions/971281（GetDistance）
 
 // 入力の範囲内で要件
 // (1) G1が辺T1->(T1 \times ...)^{< \omega}を持ち閉路を持たない有向グラフである。
