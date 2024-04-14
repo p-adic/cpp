@@ -1,3 +1,4 @@
+// 想定解に用いるので削除しない。
 #ifndef INCLUDE_MODE
   #define INCLUDE_MODE
   // #define REACTIVE
@@ -6,7 +7,7 @@
 
 #ifdef INCLUDE_MAIN
 
-IN VO Solve()
+inline void Solve()
 {
   // // 数・配列・文字列
   // CIN( ll , N , M , K );
@@ -115,7 +116,7 @@ ll Answer( ll N , ll M , ll K )
 }
 
 // 圧縮時は中身だけ削除する。
-IN VO Experiment()
+inline void Experiment()
 {
   // CEXPR( int , bound , 10 );
   // FOREQ( N , 0 , bound ){
@@ -129,7 +130,7 @@ IN VO Experiment()
 }
 
 // 圧縮時は中身だけ削除する。
-IN VO SmallTest()
+inline void SmallTest()
 {
   // CEXPR( int , bound , 10 );
   // FOREQ( N , 0 , bound ){
@@ -142,7 +143,7 @@ IN VO SmallTest()
 }
 
 // 圧縮時は中身だけ削除する。
-IN VO RandomTest()
+inline void RandomTest()
 {
   // CEXPR( int , bound_N , 1e5 ); CIN_ASSERT( N , 1 , bound_N );
   // CEXPR( ll , bound_M , 1e18 ); CIN_ASSERT( M , 1 , bound_M );
@@ -223,25 +224,166 @@ c:/Users/user/Documents/Programming/Mathematics/Geometry/Graph/UnionFindForest/c
 using namespace std;
 #define ATT __attribute__( ( target( "sse4.2,fma,avx2,popcnt,lzcnt,bmi2" ) ) )
 #define START_MAIN int main(){ ios_base::sync_with_stdio( false ); cin.tie( nullptr )
-#define FINISH_MAIN REPEAT( test_case_num ){ if CE( bound_test_case_num > 1 ){ CERR( "testcase " , VARIABLE_FOR_REPEAT_test_case_num , ":" ); } Solve(); CERR( "" ); } }
+#define FINISH_MAIN REPEAT( test_case_num ){ if constexpr( bound_test_case_num > 1 ){ CERR( "testcase " , VARIABLE_FOR_REPEAT_test_case_num , ":" ); } Solve(); CERR( "" ); } }
 #define START_WATCH chrono::system_clock::time_point watch = chrono::system_clock::now()
 #define CURRENT_TIME static_cast<double>( chrono::duration_cast<chrono::microseconds>( chrono::system_clock::now() - watch ).count() / 1000.0 )
 #define CHECK_WATCH( TL_MS ) ( CURRENT_TIME < TL_MS - 100.0 )
-#define CEXPR( LL , BOUND , VALUE ) CE LL BOUND = VALUE
+#define CEXPR( LL , BOUND , VALUE ) constexpr LL BOUND = VALUE
 #define SET_A_ASSERT( A , N , MIN , MAX ) FOR( VARIABLE_FOR_SET_A , 0 , N ){ SET_ASSERT( A[VARIABLE_FOR_SET_A] , MIN , MAX ); }
 #define CIN_ASSERT( A , MIN , MAX ) decldecay_t( MAX ) A; SET_ASSERT( A , MIN , MAX )
-#define CIN_A_ASSERT( A , N , MIN , MAX ) vector<decldecay_t( MAX )> A( N ); SET_A_ASSERT( A , N , MIN , MAX )
 #define FOR( VAR , INITIAL , FINAL_PLUS_ONE ) for( decldecay_t( FINAL_PLUS_ONE ) VAR = INITIAL ; VAR < FINAL_PLUS_ONE ; VAR ++ )
 #define FOREQ( VAR , INITIAL , FINAL ) for( decldecay_t( FINAL ) VAR = INITIAL ; VAR <= FINAL ; VAR ++ )
 #define FOREQINV( VAR , INITIAL , FINAL ) for( decldecay_t( INITIAL ) VAR = INITIAL ; VAR + 1 > FINAL ; VAR -- )
-#define AUTO_ITR( ARRAY ) auto itr_ ## ARRAY = ARRAY .BE() , end_ ## ARRAY = ARRAY .EN()
+#define AUTO_ITR( ARRAY ) auto itr_ ## ARRAY = ARRAY .begin() , end_ ## ARRAY = ARRAY .end()
 #define FOR_ITR( ARRAY ) for( AUTO_ITR( ARRAY ) , itr = itr_ ## ARRAY ; itr_ ## ARRAY != end_ ## ARRAY ; itr_ ## ARRAY ++ , itr++ )
 #define REPEAT( HOW_MANY_TIMES ) FOR( VARIABLE_FOR_REPEAT_ ## HOW_MANY_TIMES , 0 , HOW_MANY_TIMES )
 #define SET_PRECISION( DECIMAL_DIGITS ) cout << fixed << setprecision( DECIMAL_DIGITS )
 #define OUTPUT_ARRAY( OS , A , N ) FOR( VARIABLE_FOR_OUTPUT_ARRAY , 0 , N ){ OS << A[VARIABLE_FOR_OUTPUT_ARRAY] << (VARIABLE_FOR_OUTPUT_ARRAY==N-1?"":" "); } OS
-#define OUTPUT_ITR( OS , A ) { auto ITERATOR_FOR_OUTPUT_ITR = A.BE() , EN_FOR_OUTPUT_ITR = A.EN(); bool VARIABLE_FOR_OUTPUT_ITR = ITERATOR_FOR_COUT_ITR != END_FOR_COUT_ITR; WH( VARIABLE_FOR_OUTPUT_ITR ){ OS << *ITERATOR_FOR_COUT_ITR; ( VARIABLE_FOR_OUTPUT_ITR = ++ITERATOR_FOR_COUT_ITR != END_FOR_COUT_ITR ) ? OS : OS << " "; } } OS
-#define RETURN( ... ) SOLVE_ONLY; COUT( __VA_ARGS__ ); RE
-#define COMPARE( ... ) auto naive = Naive( __VA_ARGS__ ); auto answer = Answer( __VA_ARGS__ ); bool match = naive == answer; COUT( "(" , #__VA_ARGS__ , ") == (" , __VA_ARGS__ , ") : Naive == " , naive , match ? "==" : "!=" , answer , "== Answer" ); if( !match ){ RE; }
+#define OUTPUT_ITR( OS , A ) { auto ITERATOR_FOR_OUTPUT_ITR = A.begin() , END_FOR_OUTPUT_ITR = A.end(); bool VARIABLE_FOR_OUTPUT_ITR = ITERATOR_FOR_COUT_ITR != END_FOR_COUT_ITR; while( VARIABLE_FOR_OUTPUT_ITR ){ OS << *ITERATOR_FOR_COUT_ITR; ( VARIABLE_FOR_OUTPUT_ITR = ++ITERATOR_FOR_COUT_ITR != END_FOR_COUT_ITR ) ? OS : OS << " "; } } OS
+#define RETURN( ... ) SOLVE_ONLY; COUT( __VA_ARGS__ ); return;
+#define COMPARE( ... ) auto naive = Naive( __VA_ARGS__ ); auto answer = Answer( __VA_ARGS__ ); bool match = naive == answer; COUT( "(" , #__VA_ARGS__ , ") == (" , __VA_ARGS__ , ") : Naive == " , naive , match ? "==" : "!=" , answer , "== Answer" ); if( !match ){ return; }
+
+// 型のエイリアス
+#define decldecay_t( VAR ) decay_t<decltype( VAR )>
+template <typename F , typename...Args> using ret_t = decltype( declval<F>()( declval<Args>()... ) );
+template <typename T> using inner_t = typename T::type;
+using uint = unsigned int;
+using ll = long long;
+using ull = unsigned long long;
+using ld = long double;
+using lld = __float128;
+template <typename INT> using T2 = pair<INT,INT>;
+template <typename INT> using T3 = tuple<INT,INT,INT>;
+template <typename INT> using T4 = tuple<INT,INT,INT,INT>;
+using path = pair<int,ll>;
+
+// 算術用
+template <typename T> constexpr T PositiveBaseModulo( T a , const T& p ) { return move( a < 0 ? ( ( ( ( ++a ) *= -1 ) %= p ) *= -1 ) += p - 1 : a < p ? a : a %= p ); }
+template <typename T> constexpr T Modulo( T a , const T& p ) { return PositiveBaseModulo( move( a ) , p < 0 ? -p : p ); }
+template <typename T> constexpr T PositiveBaseQuotient( const T& a , const T& p ){ return ( a - PositiveBaseModulo( a , p ) ) / p; }
+template <typename T> constexpr T Quotient( const T& a , const T& p ){ return p < 0 ? PositiveBaseQuotient( -a , -p ) : PositiveBaseQuotient( a , p ); }
+
+// 二分探索用
+// EXPRESSIONがANSWERの広義単調関数の時、EXPRESSION >= CONST_TARGETの整数解を格納。
+#define BS( ANSWER , MINIMUM , MAXIMUM , EXPRESSION , DESIRED_INEQUALITY , CONST_TARGET , INEQUALITY_FOR_CHECK , UPDATE_U , UPDATE_L , UPDATE_ANSWER ) \
+  static_assert( ! is_same<decldecay_t( CONST_TARGET ),uint>::value && ! is_same<decldecay_t( CONST_TARGET ),ull>::value ); \
+  ll ANSWER = MINIMUM;							\
+  {									\
+    ll L_BS = MINIMUM;							\
+    ll U_BS = MAXIMUM;							\
+    ANSWER = UPDATE_ANSWER;						\
+    ll EXPRESSION_BS;							\
+    const ll CONST_TARGET_BS = ( CONST_TARGET );			\
+    ll DIFFERENCE_BS;							\
+    while( L_BS < U_BS ){						\
+      DIFFERENCE_BS = ( EXPRESSION_BS = ( EXPRESSION ) ) - CONST_TARGET_BS; \
+      CERR( "二分探索中：" , "L_BS =" , L_BS , "<=" , #ANSWER , "=" , ANSWER , "<=" , U_BS , "= U_BS :" , #EXPRESSION , "=" , EXPRESSION_BS , DIFFERENCE_BS > 0 ? ">" : DIFFERENCE_BS < 0 ? "<" : "=" , CONST_TARGET_BS , "=" , #CONST_TARGET ); \
+      if( DIFFERENCE_BS INEQUALITY_FOR_CHECK 0 ){			\
+	U_BS = UPDATE_U;						\
+      } else {								\
+	L_BS = UPDATE_L;						\
+      }									\
+      ANSWER = UPDATE_ANSWER;						\
+    }									\
+    if( L_BS > U_BS ){							\
+      CERR( "二分探索失敗：" , "L_BS =" , L_BS , ">" , U_BS , "= U_BS :" , #ANSWER , ":=" , #MAXIMUM , "+ 1 =" , MAXIMUM + 1  ); \
+      CERR( "二分探索マクロにミスがある可能性があります。変更前の版に戻してください。" ); \
+      ANSWER = MAXIMUM + 1;						\
+    } else {								\
+      CERR( "二分探索終了：" , "L_BS =" , L_BS , "<=" , #ANSWER , "=" , ANSWER , "<=" , U_BS , "= U_BS" ); \
+      CERR( "二分探索が成功したかを確認するために" , #EXPRESSION , "を計算します。" ); \
+      CERR( "成功判定が不要な場合はこの計算を削除しても構いません。" );	\
+      EXPRESSION_BS = ( EXPRESSION );					\
+      CERR( "二分探索結果：" , #EXPRESSION , "=" , EXPRESSION_BS , ( EXPRESSION_BS > CONST_TARGET_BS ? ">" : EXPRESSION_BS < CONST_TARGET_BS ? "<" : "=" ) , CONST_TARGET_BS ); \
+      if( EXPRESSION_BS DESIRED_INEQUALITY CONST_TARGET_BS ){		\
+	CERR( "二分探索成功：" , #ANSWER , ":=" , ANSWER );		\
+      } else {								\
+	CERR( "二分探索失敗：" , #ANSWER , ":=" , #MAXIMUM , "+ 1 =" , MAXIMUM + 1 ); \
+	CERR( "単調でないか、単調増加性と単調減少性を逆にしてしまったか、探索範囲内に解が存在しません。" ); \
+	ANSWER = MAXIMUM + 1;						\
+      }									\
+    }									\
+  }									\
+
+// 単調増加の時にEXPRESSION >= CONST_TARGETの最小解を格納。
+#define BS1( ANSWER , MINIMUM , MAXIMUM , EXPRESSION , CONST_TARGET ) BS( ANSWER , MINIMUM , MAXIMUM , EXPRESSION , >= , CONST_TARGET , >= , ANSWER , ANSWER + 1 , ( L_BS + U_BS ) / 2 )
+// 単調増加の時にEXPRESSION <= CONST_TARGETの最大解を格納。
+#define BS2( ANSWER , MINIMUM , MAXIMUM , EXPRESSION , CONST_TARGET ) BS( ANSWER , MINIMUM , MAXIMUM , EXPRESSION , <= , CONST_TARGET , > , ANSWER - 1 , ANSWER , ( L_BS + 1 + U_BS ) / 2 )
+// 単調減少の時にEXPRESSION >= CONST_TARGETの最大解を格納。
+#define BS3( ANSWER , MINIMUM , MAXIMUM , EXPRESSION , CONST_TARGET ) BS( ANSWER , MINIMUM , MAXIMUM , EXPRESSION , >= , CONST_TARGET , < , ANSWER - 1 , ANSWER , ( L_BS + 1 + U_BS ) / 2 )
+// 単調減少の時にEXPRESSION <= CONST_TARGETの最小解を格納。
+#define BS4( ANSWER , MINIMUM , MAXIMUM , EXPRESSION , CONST_TARGET ) BS( ANSWER , MINIMUM , MAXIMUM , EXPRESSION , <= , CONST_TARGET , <= , ANSWER , ANSWER + 1 , ( L_BS + U_BS ) / 2 )
+
+// 尺取り法用
+// VAR_TPA_LとVAR_TPA_RをINITで初期化し、VAR_TPA_RがCONTINUE_CONDITIONを満たす限り、
+// 閉区間[VAR_TPA_L,VAR_TPA_R]が条件ON_CONDITIONを満たすか否かを判定し、
+// trueになるかVAR_TAR_LがVAR_TAR_Rに追い付くまでVAR_TPA_Lの更新操作UPDATE_Lを繰り返し、
+// その後VAR_TPA_Rの更新操作UPDATE_Rを行う。
+// ON_CONDITIONがtrueとなる極大閉区間とその時点でのINFOをANSWERに格納する。
+#define TPA( ANSWER , VAR_TPA , INIT , CONTINUE_CONDITION , UPDATE_L , UPDATE_R , ON_CONDITION , INFO ) \
+  vector<tuple<decldecay_t( INIT ),decldecay_t( INIT ),decldecay_t( INFO )>> ANSWER{}; \
+  {									\
+    auto init_TPA = INIT;						\
+    decldecay_t( ANSWER.front() ) ANSWER ## _temp = { init_TPA , init_TPA , INFO }; \
+    auto ANSWER ## _prev = ANSWER ## _temp;				\
+    auto& VAR_TPA ## _L = get<0>( ANSWER ## _temp );			\
+    auto& VAR_TPA ## _R = get<1>( ANSWER ## _temp );			\
+    auto& VAR_TPA ## _info = get<2>( ANSWER ## _temp );			\
+    bool on_TPA_prev = false;						\
+    while( true ){							\
+      bool continuing = CONTINUE_CONDITION;				\
+      bool on_TPA = continuing && ( ON_CONDITION );			\
+      CERR( continuing ? "尺取り中" : "尺取り終了" , "： [L,R] = [" , VAR_TPA ## _L , "," , VAR_TPA ## _R , "] ," , on_TPA_prev ? "on" : "off" , "->" , on_TPA ? "on" : "off" , ", info =" , VAR_TPA ## _info );	\
+      if( on_TPA_prev && ! on_TPA ){					\
+	ANSWER.push_back( ANSWER ## _prev );				\
+      }									\
+      if( continuing ){							\
+	if( on_TPA || VAR_TPA ## _L == VAR_TPA ## _R ){			\
+	  ANSWER ## _prev = ANSWER ## _temp;				\
+	  UPDATE_R;							\
+	} else {							\
+	  UPDATE_L;							\
+	}								\
+      } else {								\
+	break;								\
+      }									\
+      on_TPA_prev = on_TPA;						\
+    }									\
+  }									\
+
+// データ構造用
+template <typename T , template <typename...> typename V> inline auto operator+( const V<T>& a0 , const V<T>& a1 ) -> decldecay_t( ( declval<V<T>>().push_back( declval<T>() ) , a0 ) ) { if( a0.empty() ){ return a1; } if( a1.empty() ){ return a0; } assert( a0.size() == a1.size() ); V<T> answer{}; for( auto itr0 = a0.begin() , itr1 = a1.begin() , end0 = a0.end(); itr0 != end0 ; itr0++ , itr1++ ){ answer.push_back( *itr0 + *itr1 ); } return answer; }
+template <typename T , typename U> inline pair<T,U> operator+( const pair<T,U>& t0 , const pair<T,U>& t1 ) { return { t0.first + t1.first , t0.second + t1.second }; }
+template <typename T , typename U , typename V> inline tuple<T,U,V> operator+( const tuple<T,U,V>& t0 , const tuple<T,U,V>& t1 ) { return { get<0>( t0 ) + get<0>( t1 ) , get<1>( t0 ) + get<1>( t1 ) , get<2>( t0 ) + get<2>( t1 ) }; }
+template <typename T , typename U , typename V , typename W> inline tuple<T,U,V,W> operator+( const tuple<T,U,V,W>& t0 , const tuple<T,U,V,W>& t1 ) { return { get<0>( t0 ) + get<0>( t1 ) , get<1>( t0 ) + get<1>( t1 ) , get<2>( t0 ) + get<2>( t1 ) , get<3>( t0 ) + get<3>( t1 ) }; }
+template <typename T> inline T Addition( const T& t0 , const T& t1 ) { return t0 + t1; }
+template <typename T> inline T Xor( const T& t0 , const T& t1 ){ return t0 ^ t1; }
+template <typename T> inline T Multiplication( const T& t0 , const T& t1 ) { return t0 * t1; }
+template <typename T> inline const T& Zero() { static const T z{}; return z; }
+template <typename T> inline const T& One() { static const T o = 1; return o; }\
+template <typename T> inline T AdditionInv( const T& t ) { return -t; }
+template <typename T> inline T Id( const T& v ) { return v; }
+template <typename T> inline T Min( const T& a , const T& b ){ return a < b ? a : b; }
+template <typename T> inline T Max( const T& a , const T& b ){ return a < b ? b : a; }
+
+// グラフ用
+template <typename T , template <typename...> typename V> inline auto Get( const V<T>& a ) { return [&]( const int& i = 0 ){ return a[i]; }; }
+template <typename T = int> inline vector<T> id( const int& size ) { vector<T> answer( size ); FOR( i , 0 , size ){ answer[i] = i; } return answer; }
+
+// グリッド問題用
+int H , W , H_minus , W_minus , HW;
+vector<string> wall_str; vector<vector<bool> > non_wall;
+char walkable = '.' , unwalkable = '#';
+inline T2<int> EnumHW( const int& v ) { return { v / W , v % W }; }
+inline int EnumHW_inv( const T2<int>& ij ) { auto& [i,j] = ij; return i * W + j; }
+const string direction[4] = {"U","R","D","L"};
+inline int DirectionNumberOnGrid( const int& i , const int& j , const int& k , const int& h ){return i<k?2:i>k?0:j<h?1:j>h?3:(assert(false),-1);}
+inline int DirectionNumberOnGrid( const int& v , const int& w ){auto [i,j]=EnumHW(v);auto [k,h]=EnumHW(w);return DirectionNumberOnGrid(i,j,k,h);}
+inline int ReverseDirectionNumberOnGrid( const int& n ){assert(0<=n&&n<4);return(n+2)%4;}
+inline vector<int> EdgeOnGrid( const int& v ){vector<int>answer{};auto[i,j]=EnumHW(v);if(i>0&&wall_str[i-1][j]==walkable){answer.push_back(EnumHW_inv({i-1,j}));}if(i+1<H&&wall_str[i+1][j]==walkable){answer.push_back(EnumHW_inv({i+1,j}));}if(j>0&&wall_str[i][j-1]==walkable){answer.push_back(EnumHW_inv({i,j-1}));}if(j+1<W&&wall_str[i][j+1]==walkable){answer.push_back(EnumHW_inv({i,j+1}));}return answer;}
+inline vector<path> WeightedEdgeOnGrid( const int& v ){vector<path>answer{};auto[i,j]=EnumHW(v);if(i>0&&wall_str[i-1][j]==walkable){answer.push_back({EnumHW_inv({i-1,j}),1});}if(i+1<H&&wall_str[i+1][j]==walkable){answer.push_back({EnumHW_inv({i+1,j}),1});}if(j>0&&wall_str[i][j-1]==walkable){answer.push_back({EnumHW_inv({i,j-1}),1});}if(j+1<W&&wall_str[i][j+1]==walkable){answer.push_back({EnumHW_inv({i,j+1}),1});}return answer;}
+inline void SetWallStringOnGrid( const int& i , vector<string>& S ){if(S.empty()){S.resize(H);}cin>>S[i];assert(int(S[i].size())==W):}
+inline void SetWallOnGrid( const int& i , vector<vector<bool>>& b ){if(b.empty()){b.resize(H,vector<bool>(W));}auto&S_i=wall_str[i];auto&b_i=b[i];FOR(j,0,W){b_i[j]=S_i[j]==walkable?false:(assert(S_i[j]==unwalkable),true);}}
 
 // 圧縮用
 #define TE template
@@ -280,147 +422,6 @@ using namespace std;
 #define rBE rbegin
 #define reSZ resize
 
-// 型のエイリアス
-#define decldecay_t(VAR)decay_t<decltype(VAR)>
-TE <TY F,TY...Args> US ret_t = decltype(declval<F>()(declval<Args>()...));
-TE <TY T> US inner_t = TY T::type;
-US uint = unsigned int;
-US ll = long long;
-US ull = unsigned long long;
-US ld = long double;
-US lld = __float128;
-TE <TY INT> US T2 = pair<INT,INT>;
-TE <TY INT> US T3 = tuple<INT,INT,INT>;
-TE <TY INT> US T4 = tuple<INT,INT,INT,INT>;
-US path = pair<int,ll>;
-
-// 算術用
-TE <TY T> CE T PositiveBaseModulo(T a,CO T& p){RE MO(a < 0?((((++a)*= -1)%= p)*= -1)+= p - 1:a < p?a:a %= p);}
-TE <TY T> CE T Modulo(T a,CO T& p){RE PositiveBaseModulo(MO(a),p < 0?-p:p);}
-TE <TY T> CE T PositiveBaseQuotient(CO T& a,CO T& p){RE(a - PositiveBaseModulo(a,p))/ p;}
-TE <TY T> CE T Quotient(CO T& a,CO T& p){RE p < 0?PositiveBaseQuotient(-a,-p):PositiveBaseQuotient(a,p);}
-
-// 二分探索用
-// EXPRESSIONがANSWERの広義単調関数の時、EXPRESSION >= CO_TARGETの整数解を格納。
-#define BS( ANSWER , MINIMUM , MAXIMUM , EXPRESSION , DESIRED_INEQUALITY , CO_TARGET , INEQUALITY_FOR_CHECK , UPDATE_U , UPDATE_L , UPDATE_ANSWER ) \
-  ST_AS( ! is_same<decldecay_t( CO_TARGET ),uint>::value && ! is_same<decldecay_t( CO_TARGET ),ull>::value ); \
-  ll ANSWER = MINIMUM;							\
-  {									\
-    ll L_BS = MINIMUM;							\
-    ll U_BS = MAXIMUM;							\
-    ANSWER = UPDATE_ANSWER;						\
-    ll EXPRESSION_BS;							\
-    CO ll CO_TARGET_BS = ( CO_TARGET );			\
-    ll DIFFERENCE_BS;							\
-    WH( L_BS < U_BS ){						\
-      DIFFERENCE_BS = ( EXPRESSION_BS = ( EXPRESSION ) ) - CO_TARGET_BS; \
-      CERR( "二分探索中：" , "L_BS =" , L_BS , "<=" , #ANSWER , "=" , ANSWER , "<=" , U_BS , "= U_BS :" , #EXPRESSION , "=" , EXPRESSION_BS , DIFFERENCE_BS > 0 ? ">" : DIFFERENCE_BS < 0 ? "<" : "=" , CO_TARGET_BS , "=" , #CO_TARGET ); \
-      if( DIFFERENCE_BS INEQUALITY_FOR_CHECK 0 ){			\
-	U_BS = UPDATE_U;						\
-      } else {								\
-	L_BS = UPDATE_L;						\
-      }									\
-      ANSWER = UPDATE_ANSWER;						\
-    }									\
-    if( L_BS > U_BS ){							\
-      CERR( "二分探索失敗：" , "L_BS =" , L_BS , ">" , U_BS , "= U_BS :" , #ANSWER , ":=" , #MAXIMUM , "+ 1 =" , MAXIMUM + 1  ); \
-      CERR( "二分探索マクロにミスがある可能性があります。変更前の版に戻してください。" ); \
-      ANSWER = MAXIMUM + 1;						\
-    } else {								\
-      CERR( "二分探索終了：" , "L_BS =" , L_BS , "<=" , #ANSWER , "=" , ANSWER , "<=" , U_BS , "= U_BS" ); \
-      CERR( "二分探索が成功したかを確認するために" , #EXPRESSION , "を計算します。" ); \
-      CERR( "成功判定が不要な場合はこの計算を削除しても構いません。" );	\
-      EXPRESSION_BS = ( EXPRESSION );					\
-      CERR( "二分探索結果：" , #EXPRESSION , "=" , EXPRESSION_BS , ( EXPRESSION_BS > CO_TARGET_BS ? ">" : EXPRESSION_BS < CO_TARGET_BS ? "<" : "=" ) , CO_TARGET_BS ); \
-      if( EXPRESSION_BS DESIRED_INEQUALITY CO_TARGET_BS ){		\
-	CERR( "二分探索成功：" , #ANSWER , ":=" , ANSWER );		\
-      } else {								\
-	CERR( "二分探索失敗：" , #ANSWER , ":=" , #MAXIMUM , "+ 1 =" , MAXIMUM + 1 ); \
-	CERR( "単調でないか、単調増加性と単調減少性を逆にしてしまったか、探索範囲内に解が存在しません。" ); \
-	ANSWER = MAXIMUM + 1;						\
-      }									\
-    }									\
-  }									\
-
-// 単調増加の時にEXPRESSION >= CO_TARGETの最小解を格納。
-#define BS1( ANSWER , MINIMUM , MAXIMUM , EXPRESSION , CO_TARGET ) BS( ANSWER , MINIMUM , MAXIMUM , EXPRESSION , >= , CO_TARGET , >= , ANSWER , ANSWER + 1 , ( L_BS + U_BS ) / 2 )
-// 単調増加の時にEXPRESSION <= CO_TARGETの最大解を格納。
-#define BS2( ANSWER , MINIMUM , MAXIMUM , EXPRESSION , CO_TARGET ) BS( ANSWER , MINIMUM , MAXIMUM , EXPRESSION , <= , CO_TARGET , > , ANSWER - 1 , ANSWER , ( L_BS + 1 + U_BS ) / 2 )
-// 単調減少の時にEXPRESSION >= CO_TARGETの最大解を格納。
-#define BS3( ANSWER , MINIMUM , MAXIMUM , EXPRESSION , CO_TARGET ) BS( ANSWER , MINIMUM , MAXIMUM , EXPRESSION , >= , CO_TARGET , < , ANSWER - 1 , ANSWER , ( L_BS + 1 + U_BS ) / 2 )
-// 単調減少の時にEXPRESSION <= CO_TARGETの最小解を格納。
-#define BS4( ANSWER , MINIMUM , MAXIMUM , EXPRESSION , CO_TARGET ) BS( ANSWER , MINIMUM , MAXIMUM , EXPRESSION , <= , CO_TARGET , <= , ANSWER , ANSWER + 1 , ( L_BS + U_BS ) / 2 )
-
-// 尺取り法用
-// VAR_TPA_LとVAR_TPA_RをINITで初期化し、VAR_TPA_RがCONTINUE_CONDITIONを満たす限り、
-// 閉区間[VAR_TPA_L,VAR_TPA_R]が条件ON_CONDITIONを満たすか否かを判定し、
-// trueになるかVAR_TAR_LがVAR_TAR_Rに追い付くまでVAR_TPA_Lの更新操作UPDATE_Lを繰り返し、
-// その後VAR_TPA_Rの更新操作UPDATE_Rを行う。
-// ON_CONDITIONがtrueとなる極大閉区間とその時点でのINFOをANSWERに格納する。
-#define TPA( ANSWER , VAR_TPA , INIT , CONTINUE_CONDITION , UPDATE_L , UPDATE_R , ON_CONDITION , INFO ) \
-  VE<tuple<decldecay_t( INIT ),decldecay_t( INIT ),decldecay_t( INFO )>> ANSWER{}; \
-  {									\
-    auto init_TPA = INIT;						\
-    decldecay_t( ANSWER.front() ) ANSWER ## _temp = { init_TPA , init_TPA , INFO }; \
-    auto ANSWER ## _prev = ANSWER ## _temp;				\
-    auto& VAR_TPA ## _L = get<0>( ANSWER ## _temp );			\
-    auto& VAR_TPA ## _R = get<1>( ANSWER ## _temp );			\
-    auto& VAR_TPA ## _info = get<2>( ANSWER ## _temp );			\
-    bool on_TPA_prev = false;						\
-    WH( true ){								\
-      bool continuing = CONTINUE_CONDITION;				\
-      bool on_TPA = continuing && ( ON_CONDITION );			\
-      CERR( continuing ? "尺取り中" : "尺取り終了" , "： [L,R] = [" , VAR_TPA ## _L , "," , VAR_TPA ## _R , "] ," , on_TPA_prev ? "on" : "off" , "->" , on_TPA ? "on" : "off" , ", info =" , VAR_TPA ## _info );	\
-      if( on_TPA_prev && ! on_TPA ){					\
-	ANSWER.push_back( ANSWER ## _prev );				\
-      }									\
-      if( continuing ){							\
-	if( on_TPA || VAR_TPA ## _L == VAR_TPA ## _R ){			\
-	  ANSWER ## _prev = ANSWER ## _temp;				\
-	  UPDATE_R;							\
-	} else {							\
-	  UPDATE_L;							\
-	}								\
-      } else {								\
-	break;								\
-      }									\
-      on_TPA_prev = on_TPA;						\
-    }									\
-  }									\
-
-// データ構造用
-TE <TY T,TE <TY...> TY V> IN auto OP+(CO V<T>& a0,CO V<T>& a1)-> decldecay_t((declval<V<T>>().push_back(declval<T>()),a0)){if(a0.empty()){RE a1;}if(a1.empty()){RE a0;}AS(a0.SZ()== a1.SZ());V<T> AN{};for(auto IT0 = a0.BE(),IT1 = a1.BE(),EN0 = a0.EN();IT0 != EN0;IT0++,IT1++){AN.push_back(*IT0 + *IT1);}RE AN;}
-TE <TY T,TY U> IN pair<T,U> OP+(CO pair<T,U>& t0,CO pair<T,U>& t1){RE{t0.first + t1.first,t0.second + t1.second};}
-TE <TY T,TY U,TY V> IN tuple<T,U,V> OP+(CO tuple<T,U,V>& t0,CO tuple<T,U,V>& t1){RE{get<0>(t0)+ get<0>(t1),get<1>(t0)+ get<1>(t1),get<2>(t0)+ get<2>(t1)};}
-TE <TY T,TY U,TY V,TY W> IN tuple<T,U,V,W> OP+(CO tuple<T,U,V,W>& t0,CO tuple<T,U,V,W>& t1){RE{get<0>(t0)+ get<0>(t1),get<1>(t0)+ get<1>(t1),get<2>(t0)+ get<2>(t1),get<3>(t0)+ get<3>(t1)};}
-TE <TY T> IN T Addition(CO T& t0,CO T& t1){RE t0 + t1;}
-TE <TY T> IN T Xor(CO T& t0,CO T& t1){RE t0 ^ t1;}
-TE <TY T> IN T MU(CO T& t0,CO T& t1){RE t0 * t1;}
-TE <TY T> IN CO T& Zero(){ST CO T z{};RE z;}
-TE <TY T> IN CO T& One(){ST CO T o = 1;RE o;}TE <TY T> IN T AdditionInv(CO T& t){RE -t;}
-TE <TY T> IN T Id(CO T& v){RE v;}
-TE <TY T> IN T Min(CO T& a,CO T& b){RE a < b?a:b;}
-TE <TY T> IN T Max(CO T& a,CO T& b){RE a < b?b:a;}
-
-// グラフ用
-TE <TY T,TE <TY...> TY V> IN auto Get(CO V<T>& a){RE[&](CRI i = 0){RE a[i];};}
-TE <TY T = int> IN VE<T> id(CRI SZ){VE<T> AN(SZ);FOR(i,0,SZ){AN[i]= i;}RE AN;}
-
-// グリッド問題用
-int H,W,H_minus,W_minus,HW;
-VE<string> wall_str;VE<VE<bool> > non_wall;
-char walkable = '.',unwalkable = '#';
-IN T2<int> EnumHW(CRI v){RE{v / W,v % W};}
-IN int EnumHW_inv(CO T2<int>& ij){auto&[i,j]= ij;RE i * W + j;}
-CO string direction[4]={"U","R","D","L"};
-IN int DirectionNumberOnGrid(CRI i,CRI j,CRI k,CRI h){RE i<k?2:i>k?0:j<h?1:j>h?3:(AS(false),-1);}
-IN int DirectionNumberOnGrid(CRI v,CRI w){auto[i,j]=EnumHW(v);auto[k,h]=EnumHW(w);RE DirectionNumberOnGrid(i,j,k,h);}
-IN int ReverseDirectionNumberOnGrid(CRI n){AS(0<=n&&n<4);RE(n+2)%4;}
-IN VE<int> EdgeOnGrid(CRI v){VE<int>AN{};auto[i,j]=EnumHW(v);if(i>0&&wall_str[i-1][j]==walkable){AN.push_back(EnumHW_inv({i-1,j}));}if(i+1<H&&wall_str[i+1][j]==walkable){AN.push_back(EnumHW_inv({i+1,j}));}if(j>0&&wall_str[i][j-1]==walkable){AN.push_back(EnumHW_inv({i,j-1}));}if(j+1<W&&wall_str[i][j+1]==walkable){AN.push_back(EnumHW_inv({i,j+1}));}RE AN;}
-IN VE<path> WeightedEdgeOnGrid(CRI v){VE<path>AN{};auto[i,j]=EnumHW(v);if(i>0&&wall_str[i-1][j]==walkable){AN.push_back({EnumHW_inv({i-1,j}),1});}if(i+1<H&&wall_str[i+1][j]==walkable){AN.push_back({EnumHW_inv({i+1,j}),1});}if(j>0&&wall_str[i][j-1]==walkable){AN.push_back({EnumHW_inv({i,j-1}),1});}if(j+1<W&&wall_str[i][j+1]==walkable){AN.push_back({EnumHW_inv({i,j+1}),1});}RE AN;}
-IN VO SetWallStringOnGrid(CRI i,VE<string>& S){if(S.empty()){S.reSZ(H);}cin>>S[i];AS(int(S[i].SZ())==W);}
-IN VO SetWallOnGrid(CRI i,VE<VE<bool>>& b){if(b.empty()){b.reSZ(H,VE<bool>(W));}auto&S_i=wall_str[i];auto&b_i=b[i];FOR(j,0,W){b_i[j]=S_i[j]==walkable?false:(AS(S_i[j]==unwalkable),true);}}
-
 // VVV 常設ライブラリは以下に挿入する。
 #ifdef DEBUG
   #include "C:/Users/user/Documents/Programming/Contest/Template/include/a_Body.hpp"
@@ -428,9 +429,9 @@ IN VO SetWallOnGrid(CRI i,VE<VE<bool>>& b){if(b.empty()){b.reSZ(H,VE<bool>(W));}
 #pragma GCC optimize ( "O3" )
 #pragma GCC optimize ( "unroll-loops" )
 // #pragma GCC target ( "sse4.2,fma,avx2,popcnt,lzcnt,bmi2" )
-#define REPEAT_MAIN( BOUND ) START_MAIN; CEXPR( int , bound_test_case_num , BOUND ); int test_case_num = 1; if CE( bound_test_case_num > 1 ){ SET_ASSERT( test_case_num , 1 , bound_test_case_num ); } FINISH_MAIN
+#define REPEAT_MAIN( BOUND ) START_MAIN; CEXPR( int , bound_test_case_num , BOUND ); int test_case_num = 1; if constexpr( bound_test_case_num > 1 ){ SET_ASSERT( test_case_num , 1 , bound_test_case_num ); } FINISH_MAIN
 #define DEXPR( LL , BOUND , VALUE1 , VALUE2 ) CEXPR( LL , BOUND , VALUE1 )
-#define ASSERT( A , MIN , MAX ) AS( ( MIN ) <= A && A <= ( MAX ) )
+#define ASSERT( A , MIN , MAX ) assert( ( MIN ) <= A && A <= ( MAX ) )
 #define SET_ASSERT( A , MIN , MAX ) SET_LL( A ); ASSERT( A , MIN , MAX )
 #define SOLVE_ONLY 
 #define CERR( ... ) 
