@@ -1,7 +1,0 @@
-#define MD 998244353
-ll@N,@M,@A[N],x=0;
-rep(i,N)x+=A[i],wtSp(x);
-rep[A](a,N)x+=a,wtLn(x);
-x=sum[ll][i,0,N@i‚Ì–‚½‚·ğŒ$ğŒ‚ğ–‚½‚·i‚ª‚È‚¢‚Ì•Ô‚è’l](A[i]);
-if(OR[i,0,N](A[i]==1))x=1;
-wt(x);
