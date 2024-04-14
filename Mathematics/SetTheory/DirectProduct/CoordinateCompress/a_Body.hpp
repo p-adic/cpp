@@ -3,21 +3,58 @@
 #pragma once
 #include "a.hpp"
 
-#include "../../../../Utility/Set/a_Body.hpp"
+template <typename INT> inline CoordinateCompress<INT>::CoordinateCompress() : m_r() , m_l() {}
 
-template <typename T , template <typename...> typename MAP> inline CoordinateCompress<T,MAP>::CoordinateCompress() : m_a() , m_enum() , m_compressed() , m_size() {}
-template <typename T , template <typename...> typename MAP> template <typename U> inline CoordinateCompress<T,MAP>::CoordinateCompress( const vector<U>& a ) : CoordinateCompress() { insert( a ); }
+template <typename INT> inline void CoordinateCompress<INT>::SetR( INT t ) { m_r.insert( move( t ) ); }
+template <typename INT> template <typename U , template <typename...> typename V > inline void CoordinateCompress<INT>::SetR( V<U> a ) { for( auto& t : a ){ SetR( move( t ) ); } }
 
-template <typename T , template <typename...> typename MAP> inline void CoordinateCompress<T,MAP>::insert( const T& t ) { m_enum[t]; m_size = m_enum.size(); m_compressed = false; }
-template <typename T , template <typename...> typename MAP> template <typename U> inline void CoordinateCompress<T,MAP>::insert( const vector<U>& a ) { const int length = a.size(); if( length > 0 ){ for( int i = 0 ; i < length ; i++ ){ m_enum[ a[i] ]; } m_size = m_enum.size(); m_compressed = false; } }
+template <typename INT>
+pair<vector<INT>,unordered_map<INT,int>> CoordinateCompress<INT>::GetR()
+{
 
-template <typename T , template <typename...> typename MAP> inline const T& CoordinateCompress<T,MAP>::operator[]( const int& i ) { return GetSmallest( i ); }
-template <typename T , template <typename...> typename MAP> inline const T& CoordinateCompress<T,MAP>::GetSmallest( const int& i ) { if( ! m_compressed ){ Compress(); } assert( i < m_size ); return m_a[i]; }
-template <typename T , template <typename...> typename MAP> inline const T& CoordinateCompress<T,MAP>::GetLargest( const int& i ) { if( ! m_compressed ){ Compress(); } assert( i < m_size ); return m_a[m_size - i - 1]; }
-template <typename T , template <typename...> typename MAP> inline int CoordinateCompress<T,MAP>::GetOrder( const T& t ) { if( ! m_compressed ){ Compress(); } return m_enum.count( t ) == 1 ? m_enum[t] : -1; }
-template <typename T , template <typename...> typename MAP> inline const int& CoordinateCompress<T,MAP>::size() { return m_size; }
+  pair<vector<INT>,unordered_map<INT,int>> answer{};
+  answer.first.resize( m_r.size() );
+  int i = 0;
+    
+  for( auto t : m_r ){
 
-template <typename T , template <typename...> typename MAP> inline typename MAP<T,int>::iterator CoordinateCompress<T,MAP>::begin() { return m_enum.begin(); }
-template <typename T , template <typename...> typename MAP> inline typename MAP<T,int>::iterator CoordinateCompress<T,MAP>::end() { return m_enum.end(); }
+    answer.first[i] = t;
+    answer.second[t] = i++;
 
-template <typename T , template <typename...> typename MAP> inline void CoordinateCompress<T,MAP>::Compress() { m_a.resize( m_size ); m_size = 0; for( auto itr = m_enum.begin() , end = m_enum.end() ; itr != end ; itr++ ){ m_a[itr->second = m_size++] = itr->first; } m_compressed = true; }
+  }
+
+  return answer;
+
+}
+
+template <typename INT> inline void CoordinateCompress<INT>::clearR() { m_r.clear(); }
+
+template <typename INT> inline void CoordinateCompress<INT>::SetL( INT& t ) { m_l.push_back( &t ); }
+template <typename INT> template <typename U , template <typename...> typename V > inline void CoordinateCompress<INT>::SetL( V<U>& a ) { for( auto& t : a ){ SetL( t ); } }
+
+template <typename INT>
+int CoordinateCompress<INT>::GetL()
+{
+
+  int i = -1;
+
+  if( !m_l.empty() ){
+
+    auto comp = []( INT* const& p0 , INT* const& p1 ) { return *p0 < *p1; };
+    sort( m_l.begin() , m_l.end() , comp );
+    INT temp = *( m_l[0] ) - 1;
+
+    for( auto p : m_l ){
+
+      *p = temp == *p ? i : ( temp = *p , ++i );
+
+    }
+
+  }
+
+  return ++i;
+
+}
+
+template <typename INT> inline void CoordinateCompress<INT>::clearL() { m_l.clear(); }
+

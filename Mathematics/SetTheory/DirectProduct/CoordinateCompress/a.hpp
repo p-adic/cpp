@@ -1,39 +1,44 @@
 // c:/Users/user/Documents/Programming/Mathematics/SetTheory/DirectProduct/CoordinateCompress/a.hpp
 
 #pragma once
-#include "../../../../Utility/Set/a.hpp"
 
 // verify:
-// https://yukicoder.me/submissions/961857（map、GetOrder）
+// https://yukicoder.me/submissions/971107（R）
+// https://yukicoder.me/submissions/971181（L）
 
-template <typename T , template <typename...> typename MAP = Map>
+// Set回数をQ、Setされた項の種類数をNと置く。
+
+// 右辺値登録O(log N)
+// 右辺値圧縮結果取得O(N)
+// 右辺値圧縮結果使用O(1)（expected）
+// 合計O(Q log N)（expected）
+
+// 左辺値登録O(1)
+// 左辺値圧縮O(Q log Q)
+// 合計O(Q log Q)
+
+// 上界の評価は右辺値圧縮の方が小さいが、NがQに近い時は左辺値圧縮の方が軽い。
+template <typename INT = ll>
 class CoordinateCompress
 {
 
 private:
-  vector<T> m_a;
-  MAP<T,int> m_enum;
-  bool m_compressed;
-  int m_size;
+  set<INT> m_r;
+  vector<INT*> m_l;
 
 public:
   inline CoordinateCompress();
-  template <typename U> inline CoordinateCompress( const vector<U>& a );
 
-  inline void insert( const T& t );
-  template <typename U> inline void insert( const vector<U>& a );
+  inline void SetR( INT t );
+  template <typename U , template <typename...> typename V > inline void SetR( V<U> a );
+  pair<vector<INT>,unordered_map<INT,int>> GetR();
+  // 右辺値の圧縮データを返す。
+  inline void clearR();
 
-  inline const T& operator[]( const int& i );
-  inline const T& GetSmallest( const int& i = 0 );
-  inline const T& GetLargest( const int& i = 0 );
-  // MAP = mapの時は大小順、MAP = unordered_mapの時は格納順
-  inline int GetOrder( const T& t );
-  inline const int& size();
+  inline void SetL( INT& t );
+  template <typename U , template <typename...> typename V > inline void SetL( V<U>& a );
+  // 左辺値を圧縮して種類数を返す。
+  int GetL();
+  inline void clearL();
 
-  inline typename MAP<T,int>::iterator begin();
-  inline typename MAP<T,int>::iterator end();
-
-private:
-  inline void Compress();
-  
 };
