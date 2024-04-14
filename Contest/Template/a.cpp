@@ -8,20 +8,20 @@
 
 IN VO Solve()
 {
-  // // ”
+  // // æ•°
   // CIN( ll , N , M , K );
   // ll answer = 0;
   // RETURN( answer );
 
-  // // ”z—ñ
+  // // é…åˆ—
   // CIN( int , N );
   // CIN_A( ll , A , N );
   // // vector<ll> A( N ) , B( N ); FOR( i , 0 , N ){ cin >> A[i] >> B[i]; }
 
-  // // •¶š—ñ
+  // // æ–‡å­—åˆ—
   // CIN( int , N ); CIN( string , S );
   
-  // // ƒOƒ‰ƒt
+  // // ã‚°ãƒ©ãƒ•
   // CIN( int , N , M );
   // // CIN( int , N ); int M = N - 1;
   // vector<vector<int>> e( N );
@@ -35,7 +35,7 @@ IN VO Solve()
   // BreadthFirstSearch bfs{ graph , -1 , 0 };
   // // DepthFirstSearchOnTree dfst{ graph , -1 , 0 };
   
-  // // d‚İ•t‚«ƒOƒ‰ƒt
+  // // é‡ã¿ä»˜ãã‚°ãƒ©ãƒ•
   // CIN( int , N , M );
   // // CIN( int , N ); int M = N - 1;
   // vector<vector<path>> e( N );
@@ -55,7 +55,7 @@ IN VO Solve()
   // Dijkstra dijk{ graph };
   // // vector<vector<ll>> weight; FloydWarshall( AdditiveTropicalSemirng( ll( 1e18 ) ) , d , weight );
  
-  // // ˆê”Ê‚ÌƒNƒGƒŠ
+  // // ä¸€èˆ¬ã®ã‚¯ã‚¨ãƒª
   // CIN( int , Q );
   // // BIT t{ N };
   // // vector<T3<int>> query( Q );
@@ -76,7 +76,7 @@ IN VO Solve()
   // // sort( query.begin() , query.end() );
   // // Mo mo{ query };
 
-  // // ƒOƒŠƒbƒh
+  // // ã‚°ãƒªãƒƒãƒ‰
   // // CEXPR( int , bound_H , 2e3 ); CEXPR( int , bound_W , bound_H );
   // // ST_AS( ll( bound_H ) * bound_W < ll( 1 ) << 31 );
   // // CEXPR( int , bound_HW , bound_H * bound_W );
@@ -87,11 +87,11 @@ IN VO Solve()
   //   SetWallStringOnGrid( i , wall_str );
   //   // SetWallOnGrid( i , wall );
   // }
-  // // {i,j}‚ÖƒfƒR[ƒh: EnumHW( v )
-  // // {i,j}‚ğƒR[ƒh: EnumHW_inv( { i , j } );
-  // // (i,j)->(k,h)‚Ì•ûŒü”Ô†‚ğæ“¾: DirectionNumberOnGrid( i , j , k , h );
-  // // v->w‚Ì•ûŒü”Ô†‚ğæ“¾: DirectionNumberOnGrid( v , w );
-  // // •ûŒü”Ô†‚Ì”½“]U<->DAR<->L: ReverseDirectionNumberOnGrid( n );
+  // // {i,j}ã¸ãƒ‡ã‚³ãƒ¼ãƒ‰: EnumHW( v )
+  // // {i,j}ã‚’ã‚³ãƒ¼ãƒ‰: EnumHW_inv( { i , j } );
+  // // (i,j)->(k,h)ã®æ–¹å‘ç•ªå·ã‚’å–å¾—: DirectionNumberOnGrid( i , j , k , h );
+  // // v->wã®æ–¹å‘ç•ªå·ã‚’å–å¾—: DirectionNumberOnGrid( v , w );
+  // // æ–¹å‘ç•ªå·ã®åè»¢U<->Dã€R<->L: ReverseDirectionNumberOnGrid( n );
 }
 REPEAT_MAIN(1);
 
@@ -99,20 +99,20 @@ REPEAT_MAIN(1);
 
 #ifdef INCLUDE_SUB
 
-// COMPARE‚Ég—pBˆ³k‚Ííœ‚·‚éB
+// COMPAREã«ä½¿ç”¨ã€‚åœ§ç¸®æ™‚ã¯å‰Šé™¤ã™ã‚‹ã€‚
 ll Naive( ll N , ll M , ll K )
 {
   ll answer = N + M + K;
   return answer;
 }
 
-// COMPARE‚Ég—pBˆ³k‚Ííœ‚·‚éB
+// COMPAREã«ä½¿ç”¨ã€‚åœ§ç¸®æ™‚ã¯å‰Šé™¤ã™ã‚‹ã€‚
 ll Answer( ll N , ll M , ll K )
 {
   // START_WATCH;
   ll answer = N + M + K;
 
-  // // TL‚É€‚¶‚é—‘ğ‚â‘S’TõBƒfƒtƒHƒ‹ƒg‚Ì—P—\‚Í100.0[ms]B
+  // // TLã«æº–ã˜ã‚‹ä¹±æŠã‚„å…¨æ¢ç´¢ã€‚ãƒ‡ãƒ•ã‚©ãƒ«ãƒˆã®çŒ¶äºˆã¯100.0[ms]ã€‚
   // CEXPR( double , TL , 2000.0 );
   // while( CHECK_WATCH( TL ) ){
 
@@ -120,7 +120,7 @@ ll Answer( ll N , ll M , ll K )
   return answer;
 }
 
-// ˆ³k‚Í’†g‚¾‚¯íœ‚·‚éB
+// åœ§ç¸®æ™‚ã¯ä¸­èº«ã ã‘å‰Šé™¤ã™ã‚‹ã€‚
 IN VO Experiment()
 {
   // CEXPR( int , bound , 10 );
@@ -134,7 +134,7 @@ IN VO Experiment()
   // }
 }
 
-// ˆ³k‚Í’†g‚¾‚¯íœ‚·‚éB
+// åœ§ç¸®æ™‚ã¯ä¸­èº«ã ã‘å‰Šé™¤ã™ã‚‹ã€‚
 IN VO SmallTest()
 {
   // CEXPR( int , bound , 10 );
@@ -147,7 +147,7 @@ IN VO SmallTest()
   // }
 }
 
-// ˆ³k‚Í’†g‚¾‚¯íœ‚·‚éB
+// åœ§ç¸®æ™‚ã¯ä¸­èº«ã ã‘å‰Šé™¤ã™ã‚‹ã€‚
 IN VO RandomTest()
 {
   // CEXPR( int , bound_N , 1e5 ); CIN_ASSERT( N , 1 , bound_N );
@@ -165,7 +165,7 @@ IN VO RandomTest()
 
 /*
 
-C-x 3 C-x o C-x C-f‚É‚æ‚éƒtƒ@ƒCƒ‹‘€ì—p
+C-x 3 C-x o C-x C-fã«ã‚ˆã‚‹ãƒ•ã‚¡ã‚¤ãƒ«æ“ä½œç”¨
 
 BFS (5KB)
 c:/Users/user/Documents/Programming/Mathematics/Geometry/Graph/BreadthFirstSearch/compress.txt
@@ -190,7 +190,7 @@ c:/Users/user/Documents/Programming/Mathematics/Geometry/Graph/UnionFindForest/c
 
 */
 
-// VVV íİ‚Å‚È‚¢ƒ‰ƒCƒuƒ‰ƒŠ‚ÍˆÈ‰º‚É‘}“ü‚·‚éB
+// VVV å¸¸è¨­ã§ãªã„ãƒ©ã‚¤ãƒ–ãƒ©ãƒªã¯ä»¥ä¸‹ã«æŒ¿å…¥ã™ã‚‹ã€‚
 
 
 
@@ -203,7 +203,7 @@ c:/Users/user/Documents/Programming/Mathematics/Geometry/Graph/UnionFindForest/c
 
 
 
-// AAA íİ‚Å‚È‚¢ƒ‰ƒCƒuƒ‰ƒŠ‚ÍˆÈã‚É‘}“ü‚·‚éB
+// AAA å¸¸è¨­ã§ãªã„ãƒ©ã‚¤ãƒ–ãƒ©ãƒªã¯ä»¥ä¸Šã«æŒ¿å…¥ã™ã‚‹ã€‚
 
 #define INCLUDE_SUB
 #include __FILE__
@@ -212,17 +212,17 @@ c:/Users/user/Documents/Programming/Mathematics/Geometry/Graph/UnionFindForest/c
 
 #ifdef DEBUG
   #define _GLIBCXX_DEBUG
-  #define REPEAT_MAIN( BOUND ) START_MAIN; signal( SIGABRT , &AlertAbort ); AutoCheck( exec_mode , use_getline ); CEXPR( int , bound_test_case_num , BOUND ); int test_case_num = 1; if( exec_mode == solve_mode ){ if CE( bound_test_case_num > 1 ){ CERR( "ƒeƒXƒgƒP[ƒX‚ÌŒÂ”‚ğ“ü—Í‚µ‚Ä‚­‚¾‚³‚¢B" ); SET_ASSERT( test_case_num , 1 , bound_test_case_num ); } } else { if( exec_mode == experiment_mode ){ Experiment(); } else if( exec_mode == small_test_mode ){ SmallTest(); } else if( exec_mode == random_test_mode ){ CERR( "ƒ‰ƒ“ƒ_ƒ€ƒeƒXƒg‚ğs‚¤‰ñ”‚ğw’è‚µ‚Ä‚­‚¾‚³‚¢B" ); SET_LL( test_case_num ); REPEAT( test_case_num ){ RandomTest(); } } RE 0; } FINISH_MAIN
+  #define REPEAT_MAIN( BOUND ) START_MAIN; signal( SIGABRT , &AlertAbort ); AutoCheck( exec_mode , use_getline ); CEXPR( int , bound_test_case_num , BOUND ); int test_case_num = 1; if( exec_mode == solve_mode ){ if CE( bound_test_case_num > 1 ){ CERR( "ãƒ†ã‚¹ãƒˆã‚±ãƒ¼ã‚¹ã®å€‹æ•°ã‚’å…¥åŠ›ã—ã¦ãã ã•ã„ã€‚" ); SET_ASSERT( test_case_num , 1 , bound_test_case_num ); } } else { if( exec_mode == experiment_mode ){ Experiment(); } else if( exec_mode == small_test_mode ){ SmallTest(); } else if( exec_mode == random_test_mode ){ CERR( "ãƒ©ãƒ³ãƒ€ãƒ ãƒ†ã‚¹ãƒˆã‚’è¡Œã†å›æ•°ã‚’æŒ‡å®šã—ã¦ãã ã•ã„ã€‚" ); SET_LL( test_case_num ); REPEAT( test_case_num ){ RandomTest(); } } RE 0; } FINISH_MAIN
   #define DEXPR( LL , BOUND , VALUE1 , VALUE2 ) CEXPR( LL , BOUND , VALUE2 )
-  #define ASSERT( A , MIN , MAX ) CERR( "ASSERTƒ`ƒFƒbƒNF " , ( MIN ) , ( ( MIN ) <= A ? "<=" : ">" ) , A , ( A <= ( MAX ) ? "<=" : ">" ) , ( MAX ) ); AS( ( MIN ) <= A && A <= ( MAX ) )
+  #define ASSERT( A , MIN , MAX ) CERR( "ASSERTãƒã‚§ãƒƒã‚¯ï¼š " , ( MIN ) , ( ( MIN ) <= A ? "<=" : ">" ) , A , ( A <= ( MAX ) ? "<=" : ">" ) , ( MAX ) ); AS( ( MIN ) <= A && A <= ( MAX ) )
   #define SET_ASSERT( A , MIN , MAX ) if( exec_mode == solve_mode ){ SET_LL( A ); ASSERT( A , MIN , MAX ); } else if( exec_mode == random_test_mode ){ CERR( #A , " = " , ( A = GetRand( MIN , MAX ) ) ); } else { AS( false ); }
   #define SOLVE_ONLY ST_AS( __FUNCTION__[0] == 'S' )
   #define CERR( ... ) VariadicCout( cerr , __VA_ARGS__ ) << endl
-  #define COUT( ... ) VariadicCout( cout << "o—ÍF " , __VA_ARGS__ ) << endl
+  #define COUT( ... ) VariadicCout( cout << "å‡ºåŠ›ï¼š " , __VA_ARGS__ ) << endl
   #define CERR_A( A , N ) OUTPUT_ARRAY( cerr , A , N ) << endl
-  #define COUT_A( A , N ) cout << "o—ÍF "; OUTPUT_ARRAY( cout , A , N ) << endl
+  #define COUT_A( A , N ) cout << "å‡ºåŠ›ï¼š "; OUTPUT_ARRAY( cout , A , N ) << endl
   #define CERR_ITR( A ) OUTPUT_ITR( cerr , A ) << endl
-  #define COUT_ITR( A ) cout << "o—ÍF "; OUTPUT_ITR( cout , A ) << endl
+  #define COUT_ITR( A ) cout << "å‡ºåŠ›ï¼š "; OUTPUT_ITR( cout , A ) << endl
 #else
   #pragma GCC optimize ( "O3" )
   #pragma GCC optimize ( "unroll-loops" )
@@ -278,7 +278,7 @@ using namespace std;
 #define RETURN( ... ) SOLVE_ONLY; COUT( __VA_ARGS__ ); RE
 #define COMPARE( ... ) auto naive = Naive( __VA_ARGS__ ); auto answer = Answer( __VA_ARGS__ ); bool match = naive == answer; COUT( "(" , #__VA_ARGS__ , ") == (" , __VA_ARGS__ , ") : Naive == " , naive , match ? "==" : "!=" , answer , "== Answer" ); if( !match ){ RE; }
 
-// ˆ³k—p
+// åœ§ç¸®ç”¨
 #define TE template
 #define TY typename
 #define US using
@@ -313,7 +313,7 @@ using namespace std;
 #define rBE rbegin
 #define reSZ resize
 
-// Œ^‚ÌƒGƒCƒŠƒAƒX
+// å‹ã®ã‚¨ã‚¤ãƒªã‚¢ã‚¹
 #define decldecay_t(VAR)decay_t<decltype(VAR)>
 TE <TY F,TY...Args> US ret_t = decltype(declval<F>()(declval<Args>()...));
 TE <TY T> US inner_t = TY T::type;
@@ -327,7 +327,7 @@ TE <TY INT> US T3 = tuple<INT,INT,INT>;
 TE <TY INT> US T4 = tuple<INT,INT,INT,INT>;
 US path = pair<int,ll>;
 
-// “üo—Í—p
+// å…¥å‡ºåŠ›ç”¨
 #define DF_OF_COUT_FOR_VE(V)TE <CL Traits,TY Arg> IN basic_ostream<char,Traits>& OP<<(basic_ostream<char,Traits>& os,CO V<Arg>& arg){auto BE = arg.BE(),EN = arg.EN();auto IT = BE;WH(IT != EN){(IT == BE?os:os << " ")<< *IT;IT++;}RE os;}
 TE <CL Traits> IN basic_istream<char,Traits>& VariadicCin(basic_istream<char,Traits>& is){RE is;}
 TE <CL Traits,TY Arg,TY... ARGS> IN basic_istream<char,Traits>& VariadicCin(basic_istream<char,Traits>& is,Arg& arg,ARGS&... args){RE VariadicCin(is >> arg,args...);}
@@ -342,7 +342,7 @@ TE <CL Traits,TY Arg> IN basic_ostream<char,Traits>& VariadicCout(basic_ostream<
 TE <CL Traits,TY Arg1,TY Arg2,TY... ARGS> IN basic_ostream<char,Traits>& VariadicCout(basic_ostream<char,Traits>& os,CO Arg1& arg1,CO Arg2& arg2,CO ARGS&... args){RE VariadicCout(os << arg1 << " ",arg2,args...);}
 
 
-// Zp—p
+// ç®—è¡“ç”¨
 TE <TY T> CE T PositiveBaseModulo(T a,CO T& p){RE MO(a < 0?((((++a)*= -1)%= p)*= -1)+= p - 1:a < p?a:a %= p);}
 TE <TY T> CE T Modulo(T a,CO T& p){RE PositiveBaseRS(MO(a),p < 0?-p:p);}
 TE <TY T> CE T PositiveBaseQuotient(CO T& a,CO T& p){RE(a - PositiveBaseModulo(a,p))/ p;}
@@ -394,8 +394,8 @@ TE <TY T> CE T Quotient(CO T& a,CO T& p){RE p < 0?PositiveBaseQuotient(-a,-p):Po
     }									\
   }									\
 
-// “ñ•ª’Tõ—p
-// EXPRESSION‚ªANSWER‚ÌL‹`’P’²ŠÖ”‚ÌAEXPRESSION >= CO_TARGET‚Ì®”‰ğ‚ğŠi”[B
+// äºŒåˆ†æ¢ç´¢ç”¨
+// EXPRESSIONãŒANSWERã®åºƒç¾©å˜èª¿é–¢æ•°ã®æ™‚ã€EXPRESSION >= CO_TARGETã®æ•´æ•°è§£ã‚’æ ¼ç´ã€‚
 #define BS( ANSWER , MINIMUM , MAXIMUM , EXPRESSION , DESIRED_INEQUALITY , CO_TARGET , INEQUALITY_FOR_CHECK , UPDATE_U , UPDATE_L , UPDATE_ANSWER ) \
   ST_AS( ! is_same<decldecay_t( CO_TARGET ),uint>::value && ! is_same<decldecay_t( CO_TARGET ),ull>::value ); \
   ll ANSWER = MINIMUM;							\
@@ -408,7 +408,7 @@ TE <TY T> CE T Quotient(CO T& a,CO T& p){RE p < 0?PositiveBaseQuotient(-a,-p):Po
     ll DIFFERENCE_BS;							\
     WH( L_BS < U_BS ){						\
       DIFFERENCE_BS = ( EXPRESSION_BS = ( EXPRESSION ) ) - CO_TARGET_BS; \
-      CERR( "“ñ•ª’Tõ’†F" , "L_BS =" , L_BS , "<=" , #ANSWER , "=" , ANSWER , "<=" , U_BS , "= U_BS :" , #EXPRESSION , "=" , EXPRESSION_BS , DIFFERENCE_BS > 0 ? ">" : DIFFERENCE_BS < 0 ? "<" : "=" , CO_TARGET_BS , "=" , #CO_TARGET ); \
+      CERR( "äºŒåˆ†æ¢ç´¢ä¸­ï¼š" , "L_BS =" , L_BS , "<=" , #ANSWER , "=" , ANSWER , "<=" , U_BS , "= U_BS :" , #EXPRESSION , "=" , EXPRESSION_BS , DIFFERENCE_BS > 0 ? ">" : DIFFERENCE_BS < 0 ? "<" : "=" , CO_TARGET_BS , "=" , #CO_TARGET ); \
       if( DIFFERENCE_BS INEQUALITY_FOR_CHECK 0 ){			\
 	U_BS = UPDATE_U;						\
       } else {								\
@@ -417,48 +417,48 @@ TE <TY T> CE T Quotient(CO T& a,CO T& p){RE p < 0?PositiveBaseQuotient(-a,-p):Po
       ANSWER = UPDATE_ANSWER;						\
     }									\
     if( L_BS > U_BS ){							\
-      CERR( "“ñ•ª’Tõ¸”sF" , "L_BS =" , L_BS , ">" , U_BS , "= U_BS :" , #ANSWER , ":=" , #MAXIMUM , "+ 1 =" , MAXIMUM + 1  ); \
-      CERR( "“ñ•ª’Tõƒ}ƒNƒ‚Éƒ~ƒX‚ª‚ ‚é‰Â”\«‚ª‚ ‚è‚Ü‚·B•ÏX‘O‚Ì”Å‚É–ß‚µ‚Ä‚­‚¾‚³‚¢B" ); \
+      CERR( "äºŒåˆ†æ¢ç´¢å¤±æ•—ï¼š" , "L_BS =" , L_BS , ">" , U_BS , "= U_BS :" , #ANSWER , ":=" , #MAXIMUM , "+ 1 =" , MAXIMUM + 1  ); \
+      CERR( "äºŒåˆ†æ¢ç´¢ãƒã‚¯ãƒ­ã«ãƒŸã‚¹ãŒã‚ã‚‹å¯èƒ½æ€§ãŒã‚ã‚Šã¾ã™ã€‚å¤‰æ›´å‰ã®ç‰ˆã«æˆ»ã—ã¦ãã ã•ã„ã€‚" ); \
       ANSWER = MAXIMUM + 1;						\
     } else {								\
-      CERR( "“ñ•ª’TõI—¹F" , "L_BS =" , L_BS , "<=" , #ANSWER , "=" , ANSWER , "<=" , U_BS , "= U_BS" ); \
-      CERR( "“ñ•ª’Tõ‚ª¬Œ÷‚µ‚½‚©‚ğŠm”F‚·‚é‚½‚ß‚É" , #EXPRESSION , "‚ğŒvZ‚µ‚Ü‚·B" ); \
-      CERR( "¬Œ÷”»’è‚ª•s—v‚Èê‡‚Í‚±‚ÌŒvZ‚ğíœ‚µ‚Ä‚à\‚¢‚Ü‚¹‚ñB" );	\
+      CERR( "äºŒåˆ†æ¢ç´¢çµ‚äº†ï¼š" , "L_BS =" , L_BS , "<=" , #ANSWER , "=" , ANSWER , "<=" , U_BS , "= U_BS" ); \
+      CERR( "äºŒåˆ†æ¢ç´¢ãŒæˆåŠŸã—ãŸã‹ã‚’ç¢ºèªã™ã‚‹ãŸã‚ã«" , #EXPRESSION , "ã‚’è¨ˆç®—ã—ã¾ã™ã€‚" ); \
+      CERR( "æˆåŠŸåˆ¤å®šãŒä¸è¦ãªå ´åˆã¯ã“ã®è¨ˆç®—ã‚’å‰Šé™¤ã—ã¦ã‚‚æ§‹ã„ã¾ã›ã‚“ã€‚" );	\
       EXPRESSION_BS = ( EXPRESSION );					\
-      CERR( "“ñ•ª’TõŒ‹‰ÊF" , #EXPRESSION , "=" , EXPRESSION_BS , ( EXPRESSION_BS > CO_TARGET_BS ? ">" : EXPRESSION_BS < CO_TARGET_BS ? "<" : "=" ) , CO_TARGET_BS ); \
+      CERR( "äºŒåˆ†æ¢ç´¢çµæœï¼š" , #EXPRESSION , "=" , EXPRESSION_BS , ( EXPRESSION_BS > CO_TARGET_BS ? ">" : EXPRESSION_BS < CO_TARGET_BS ? "<" : "=" ) , CO_TARGET_BS ); \
       if( EXPRESSION_BS DESIRED_INEQUALITY CO_TARGET_BS ){		\
-	CERR( "“ñ•ª’Tõ¬Œ÷F" , #ANSWER , ":=" , ANSWER );		\
+	CERR( "äºŒåˆ†æ¢ç´¢æˆåŠŸï¼š" , #ANSWER , ":=" , ANSWER );		\
       } else {								\
-	CERR( "“ñ•ª’Tõ¸”sF" , #ANSWER , ":=" , #MAXIMUM , "+ 1 =" , MAXIMUM + 1 ); \
-	CERR( "’P’²‚Å‚È‚¢‚©A’P’²‘‰Á«‚Æ’P’²Œ¸­«‚ğ‹t‚É‚µ‚Ä‚µ‚Ü‚Á‚½‚©A’Tõ”ÍˆÍ“à‚É‰ğ‚ª‘¶İ‚µ‚Ü‚¹‚ñB" ); \
+	CERR( "äºŒåˆ†æ¢ç´¢å¤±æ•—ï¼š" , #ANSWER , ":=" , #MAXIMUM , "+ 1 =" , MAXIMUM + 1 ); \
+	CERR( "å˜èª¿ã§ãªã„ã‹ã€å˜èª¿å¢—åŠ æ€§ã¨å˜èª¿æ¸›å°‘æ€§ã‚’é€†ã«ã—ã¦ã—ã¾ã£ãŸã‹ã€æ¢ç´¢ç¯„å›²å†…ã«è§£ãŒå­˜åœ¨ã—ã¾ã›ã‚“ã€‚" ); \
 	ANSWER = MAXIMUM + 1;						\
       }									\
     }									\
   }									\
 
-// ’P’²‘‰Á‚Ì‚ÉEXPRESSION >= CO_TARGET‚ÌÅ¬‰ğ‚ğŠi”[B
+// å˜èª¿å¢—åŠ ã®æ™‚ã«EXPRESSION >= CO_TARGETã®æœ€å°è§£ã‚’æ ¼ç´ã€‚
 #define BS1( ANSWER , MINIMUM , MAXIMUM , EXPRESSION , CO_TARGET ) BS( ANSWER , MINIMUM , MAXIMUM , EXPRESSION , >= , CO_TARGET , >= , ANSWER , ANSWER + 1 , ( L_BS + U_BS ) / 2 )
-// ’P’²‘‰Á‚Ì‚ÉEXPRESSION <= CO_TARGET‚ÌÅ‘å‰ğ‚ğŠi”[B
+// å˜èª¿å¢—åŠ ã®æ™‚ã«EXPRESSION <= CO_TARGETã®æœ€å¤§è§£ã‚’æ ¼ç´ã€‚
 #define BS2( ANSWER , MINIMUM , MAXIMUM , EXPRESSION , CO_TARGET ) BS( ANSWER , MINIMUM , MAXIMUM , EXPRESSION , <= , CO_TARGET , > , ANSWER - 1 , ANSWER , ( L_BS + 1 + U_BS ) / 2 )
-// ’P’²Œ¸­‚Ì‚ÉEXPRESSION >= CO_TARGET‚ÌÅ‘å‰ğ‚ğŠi”[B
+// å˜èª¿æ¸›å°‘ã®æ™‚ã«EXPRESSION >= CO_TARGETã®æœ€å¤§è§£ã‚’æ ¼ç´ã€‚
 #define BS3( ANSWER , MINIMUM , MAXIMUM , EXPRESSION , CO_TARGET ) BS( ANSWER , MINIMUM , MAXIMUM , EXPRESSION , >= , CO_TARGET , < , ANSWER - 1 , ANSWER , ( L_BS + 1 + U_BS ) / 2 )
-// ’P’²Œ¸­‚Ì‚ÉEXPRESSION <= CO_TARGET‚ÌÅ¬‰ğ‚ğŠi”[B
+// å˜èª¿æ¸›å°‘ã®æ™‚ã«EXPRESSION <= CO_TARGETã®æœ€å°è§£ã‚’æ ¼ç´ã€‚
 #define BS4( ANSWER , MINIMUM , MAXIMUM , EXPRESSION , CO_TARGET ) BS( ANSWER , MINIMUM , MAXIMUM , EXPRESSION , <= , CO_TARGET , <= , ANSWER , ANSWER + 1 , ( L_BS + U_BS ) / 2 )
-// tˆÈ‰º‚Ì’l‚ª‘¶İ‚·‚ê‚Î‚»‚ÌÅ‘å’l‚ÌiteratorA‘¶İ‚µ‚È‚¯‚ê‚Îend()‚ğ•Ô‚·B
+// tä»¥ä¸‹ã®å€¤ãŒå­˜åœ¨ã™ã‚Œã°ãã®æœ€å¤§å€¤ã®iteratorã€å­˜åœ¨ã—ãªã‘ã‚Œã°end()ã‚’è¿”ã™ã€‚
 TE <TY T> IN TY set<T>::iterator MaximumLeq(set<T>& S,CO T& t){CO auto EN = S.EN();if(S.empty()){RE EN;}auto IT = S.upper_bound(t);RE IT == EN?S.find(*(S.rBE())):IT == S.BE()?EN:--IT;}
-// t–¢–‚Ì’l‚ª‘¶İ‚·‚ê‚Î‚»‚ÌÅ‘å’l‚ÌiteratorA‘¶İ‚µ‚È‚¯‚ê‚Îend()‚ğ•Ô‚·B
+// tæœªæº€ã®å€¤ãŒå­˜åœ¨ã™ã‚Œã°ãã®æœ€å¤§å€¤ã®iteratorã€å­˜åœ¨ã—ãªã‘ã‚Œã°end()ã‚’è¿”ã™ã€‚
 TE <TY T> IN TY set<T>::iterator MaximumLt(set<T>& S,CO T& t){CO auto EN = S.EN();if(S.empty()){RE EN;}auto IT = S.lower_bound(t);RE IT == EN?S.find(*(S.rBE())):IT == S.BE()?EN:--IT;}
-// tˆÈã‚Ì’l‚ª‘¶İ‚·‚ê‚Î‚»‚ÌÅ¬’l‚ÌiteratorA‘¶İ‚µ‚È‚¯‚ê‚Îend()‚ğ•Ô‚·B
+// tä»¥ä¸Šã®å€¤ãŒå­˜åœ¨ã™ã‚Œã°ãã®æœ€å°å€¤ã®iteratorã€å­˜åœ¨ã—ãªã‘ã‚Œã°end()ã‚’è¿”ã™ã€‚
 TE <TY T> IN TY set<T>::iterator MinimumGeq(set<T>& S,CO T& t){RE S.lower_bound(t);}
-// t‚æ‚è‘å‚«‚¢’l‚ª‘¶İ‚·‚ê‚Î‚»‚ÌÅ¬’l‚ÌiteratorA‘¶İ‚µ‚È‚¯‚ê‚Îend()‚ğ•Ô‚·B
+// tã‚ˆã‚Šå¤§ãã„å€¤ãŒå­˜åœ¨ã™ã‚Œã°ãã®æœ€å°å€¤ã®iteratorã€å­˜åœ¨ã—ãªã‘ã‚Œã°end()ã‚’è¿”ã™ã€‚
 TE <TY T> IN TY set<T>::iterator MinimumGt(set<T>& S,CO T& t){RE S.upper_bound(t);}
 
-// Úæ‚è–@—p
-// VAR_TPA_L‚ÆVAR_TPA_R‚ğINIT‚Å‰Šú‰»‚µAVAR_TPA_R‚ªCONTINUE_CONDITION‚ğ–‚½‚·ŒÀ‚èA
-// •Â‹æŠÔ[VAR_TPA_L,VAR_TPA_R]‚ªğŒON_CONDITION‚ğ–‚½‚·‚©”Û‚©‚ğ”»’è‚µA
-// true‚É‚È‚é‚©VAR_TAR_L‚ªVAR_TAR_R‚É’Ç‚¢•t‚­‚Ü‚ÅVAR_TPA_L‚ÌXV‘€ìUPDATE_L‚ğŒJ‚è•Ô‚µA
-// ‚»‚ÌŒãVAR_TPA_R‚ÌXV‘€ìUPDATE_R‚ğs‚¤B
-// ON_CONDITION‚ªtrue‚Æ‚È‚é‹É‘å•Â‹æŠÔ‚Æ‚»‚Ì“_‚Å‚ÌINFO‚ğANSWER‚ÉŠi”[‚·‚éB
+// å°ºå–ã‚Šæ³•ç”¨
+// VAR_TPA_Lã¨VAR_TPA_Rã‚’INITã§åˆæœŸåŒ–ã—ã€VAR_TPA_RãŒCONTINUE_CONDITIONã‚’æº€ãŸã™é™ã‚Šã€
+// é–‰åŒºé–“[VAR_TPA_L,VAR_TPA_R]ãŒæ¡ä»¶ON_CONDITIONã‚’æº€ãŸã™ã‹å¦ã‹ã‚’åˆ¤å®šã—ã€
+// trueã«ãªã‚‹ã‹VAR_TAR_LãŒVAR_TAR_Rã«è¿½ã„ä»˜ãã¾ã§VAR_TPA_Lã®æ›´æ–°æ“ä½œUPDATE_Lã‚’ç¹°ã‚Šè¿”ã—ã€
+// ãã®å¾ŒVAR_TPA_Rã®æ›´æ–°æ“ä½œUPDATE_Rã‚’è¡Œã†ã€‚
+// ON_CONDITIONãŒtrueã¨ãªã‚‹æ¥µå¤§é–‰åŒºé–“ã¨ãã®æ™‚ç‚¹ã§ã®INFOã‚’ANSWERã«æ ¼ç´ã™ã‚‹ã€‚
 #define TPA( ANSWER , VAR_TPA , INIT , CONTINUE_CONDITION , UPDATE_L , UPDATE_R , ON_CONDITION , INFO ) \
   VE<tuple<decldecay_t( INIT ),decldecay_t( INIT ),decldecay_t( INFO )>> ANSWER{}; \
   {									\
@@ -472,7 +472,7 @@ TE <TY T> IN TY set<T>::iterator MinimumGt(set<T>& S,CO T& t){RE S.upper_bound(t
     WH( true ){								\
       bool continuing = CONTINUE_CONDITION;				\
       bool on_TPA = continuing && ( ON_CONDITION );			\
-      CERR( continuing ? "Úæ‚è’†" : "Úæ‚èI—¹" , "F [L,R] = [" , VAR_TPA ## _L , "," , VAR_TPA ## _R , "] ," , on_TPA_prev ? "on" : "off" , "->" , on_TPA ? "on" : "off" , ", info =" , VAR_TPA ## _info );	\
+      CERR( continuing ? "å°ºå–ã‚Šä¸­" : "å°ºå–ã‚Šçµ‚äº†" , "ï¼š [L,R] = [" , VAR_TPA ## _L , "," , VAR_TPA ## _R , "] ," , on_TPA_prev ? "on" : "off" , "->" , on_TPA ? "on" : "off" , ", info =" , VAR_TPA ## _info );	\
       if( on_TPA_prev && ! on_TPA ){					\
 	ANSWER.push_back( ANSWER ## _prev );				\
       }									\
@@ -490,7 +490,7 @@ TE <TY T> IN TY set<T>::iterator MinimumGt(set<T>& S,CO T& t){RE S.upper_bound(t
     }									\
   }									\
 
-// ƒf[ƒ^\‘¢—p
+// ãƒ‡ãƒ¼ã‚¿æ§‹é€ ç”¨
 TE <TY T,TE <TY...> TY V> IN auto OP+(CO V<T>& a0,CO V<T>& a1)-> decldecay_t((declval<V<T>>().push_back(declval<T>()),a0)){if(a0.empty()){RE a1;}if(a1.empty()){RE a0;}AS(a0.SZ()== a1.SZ());V<T> AN{};for(auto IT0 = a0.BE(),IT1 = a1.BE(),EN0 = a0.EN();IT0 != EN0;IT0++,IT1++){AN.push_back(*IT0 + *IT1);}RE AN;}
 TE <TY T,TY U> IN pair<T,U> OP+(CO pair<T,U>& t0,CO pair<T,U>& t1){RE{t0.first + t1.first,t0.second + t1.second};}
 TE <TY T,TY U,TY V> IN tuple<T,U,V> OP+(CO tuple<T,U,V>& t0,CO tuple<T,U,V>& t1){RE{get<0>(t0)+ get<0>(t1),get<1>(t0)+ get<1>(t1),get<2>(t0)+ get<2>(t1)};}
@@ -504,11 +504,11 @@ TE <TY T> IN T Id(CO T& v){RE v;}
 TE <TY T> IN T Min(CO T& a,CO T& b){RE a < b?a:b;}
 TE <TY T> IN T Max(CO T& a,CO T& b){RE a < b?b:a;}
 
-// ƒOƒ‰ƒt—p
+// ã‚°ãƒ©ãƒ•ç”¨
 TE <TY T,TE <TY...> TY V> IN auto Get(CO V<T>& a){RE[&](CRI i = 0){RE a[i];};}
 TE <TY T = int> IN VE<T> id(CRI SZ){VE<T> AN(SZ);FOR(i,0,SZ){AN[i]= i;}RE AN;}
 
-// ƒOƒŠƒbƒh–â‘è—p
+// ã‚°ãƒªãƒƒãƒ‰å•é¡Œç”¨
 int H,W,H_minus,W_minus,HW;
 VE<string> wall_str;VE<VE<bool> > non_wall;
 char walkable = '.',unwalkable = '#';
@@ -523,9 +523,9 @@ IN VE<path> WeightedEdgeOnGrid(CRI v){VE<path>AN{};auto[i,j]=EnumHW(v);if(i>0&&w
 IN VO SetWallStringOnGrid(CRI i,VE<string>& S){if(S.empty()){S.reSZ(H);}cin>>S[i];AS(int(S[i].SZ())==W);}
 IN VO SetWallOnGrid(CRI i,VE<VE<bool>>& b){if(b.empty()){b.reSZ(H,VE<bool>(W));}auto&S_i=wall_str[i];auto&b_i=b[i];FOR(j,0,W){b_i[j]=S_i[j]==walkable?false:(AS(S_i[j]==unwalkable),true);}}
 
-// ƒfƒoƒbƒO—p
+// ãƒ‡ãƒãƒƒã‚°ç”¨
 #ifdef DEBUG
-  IN VO AlertAbort( int n ) { CERR( "abortŠÖ”‚ªŒÄ‚Î‚ê‚Ü‚µ‚½Bassertƒ}ƒNƒ‚ÌƒƒbƒZ[ƒW‚ªo—Í‚³‚ê‚Ä‚¢‚È‚¢ê‡‚ÍƒI[ƒo[ƒtƒ[‚Ì—L–³‚ğŠm”F‚ğ‚µ‚Ä‚­‚¾‚³‚¢B" ); }
+  IN VO AlertAbort( int n ) { CERR( "aborté–¢æ•°ãŒå‘¼ã°ã‚Œã¾ã—ãŸã€‚assertãƒã‚¯ãƒ­ã®ãƒ¡ãƒƒã‚»ãƒ¼ã‚¸ãŒå‡ºåŠ›ã•ã‚Œã¦ã„ãªã„å ´åˆã¯ã‚ªãƒ¼ãƒãƒ¼ãƒ•ãƒ­ãƒ¼ã®æœ‰ç„¡ã‚’ç¢ºèªã‚’ã—ã¦ãã ã•ã„ã€‚" ); }
   VO AutoCheck( int& exec_mode , CO bool& use_getline );
   IN VO Solve();
   IN VO Experiment();
@@ -550,7 +550,7 @@ IN VO SetWallOnGrid(CRI i,VE<VE<bool>>& b){if(b.empty()){b.reSZ(H,VE<bool>(W));}
   ll GetRand( CRL Rand_min , CRL Rand_max ) { ll answer = time( NULL ); RE answer * rand() % ( Rand_max + 1 - Rand_min ) + Rand_min; }
 #endif
 
-// VVV íİƒ‰ƒCƒuƒ‰ƒŠ‚ÍˆÈ‰º‚É‘}“ü‚·‚éB
+// VVV å¸¸è¨­ãƒ©ã‚¤ãƒ–ãƒ©ãƒªã¯ä»¥ä¸‹ã«æŒ¿å…¥ã™ã‚‹ã€‚
 // Map (1KB)
 // c:/Users/user/Documents/Programming/Mathematics/Function/Map/compress.txt
 CL is_ordered{PU:is_ordered()= delete;TE <TY T> ST CE auto Check(CO T& t)-> decltype(t < t,true_type());ST CE false_type Check(...);TE <TY T> ST CE CO bool value = is_same_v< decltype(Check(declval<T>())),true_type >;};
@@ -589,7 +589,7 @@ TE <uint M>CL Mod{PU:uint m_n;CE Mod()NE;CE Mod(CO Mod<M>& n)NE;CE Mod(Mod<M>&& 
 US MP = Mod<P>;
 TE <uint M> CE Mod<M>::Mod()NE:m_n(){}TE <uint M> CE Mod<M>::Mod(CO Mod<M>& n)NE:m_n(n.m_n){}TE <uint M> CE Mod<M>::Mod(Mod<M>&& n)NE:m_n(MO(n.m_n)){}TE <uint M> TE <TY T> CE Mod<M>::Mod(T n)NE:m_n(RS<M>(MO(n))){ST_AS(is_COructible_v<uint,decay_t<T> >);}TE <uint M> CE Mod<M>& Mod<M>::OP=(Mod<M> n)NE{m_n = MO(n.m_n);RE *TH;}TE <uint M> CE Mod<M>& Mod<M>::OP+=(CO Mod<M>& n)NE{(m_n += n.m_n)< M?m_n:m_n -= M;RE *TH;}TE <uint M> CE Mod<M>& Mod<M>::OP-=(CO Mod<M>& n)NE{m_n < n.m_n?(m_n += M)-= n.m_n:m_n -= n.m_n;RE *TH;}TE <uint M> CE Mod<M>& Mod<M>::OP*=(CO Mod<M>& n)NE{m_n = MO(ull(m_n)* n.m_n)% M;RE *TH;}TE <> CE MP& MP::OP*=(CO MP& n)NE{ull m_n_copy = m_n;m_n = MO((m_n_copy *= n.m_n)< P?m_n_copy:RSP(m_n_copy));RE *TH;}TE <uint M> IN Mod<M>& Mod<M>::OP/=(Mod<M> n){RE OP*=(n.Invert());}TE <uint M> TE <TY INT> CE Mod<M>& Mod<M>::OP<<=(INT n){AS(n >= 0);RE *TH *= Mod<M>(2).NonNegativePW(MO(n));}TE <uint M> TE <TY INT> CE Mod<M>& Mod<M>::OP>>=(INT n){AS(n >=0);WH(n-- > 0){((m_n & 1)== 0?m_n:m_n += M)>>= 1;}RE *TH;}TE <uint M> CE Mod<M>& Mod<M>::OP++()NE{m_n < COants::g_M_minus?++m_n:m_n = 0;RE *TH;}TE <uint M> CE Mod<M> Mod<M>::OP++(int)NE{Mod<M> n{*TH};OP++();RE n;}TE <uint M> CE Mod<M>& Mod<M>::OP--()NE{m_n == 0?m_n = COants::g_M_minus:--m_n;RE *TH;}TE <uint M> CE Mod<M> Mod<M>::OP--(int)NE{Mod<M> n{*TH};OP--();RE n;}DF_OF_CM_FOR_MOD(==);DF_OF_CM_FOR_MOD(!=);DF_OF_CM_FOR_MOD(>);DF_OF_CM_FOR_MOD(>=);DF_OF_CM_FOR_MOD(<);DF_OF_CM_FOR_MOD(<=);DF_OF_AR_FOR_MOD(+,NE,n,+);DF_OF_AR_FOR_MOD(-,NE,n.SignInvert(),+);DF_OF_AR_FOR_MOD(*,NE,n,*);DF_OF_AR_FOR_MOD(/,,n.Invert(),*);TE <uint M> TE <TY INT> CE Mod<M> Mod<M>::OP^(INT EX)CO{RE MO(Mod<M>(*TH).PW(MO(EX)));}TE <uint M> TE <TY INT> CE Mod<M> Mod<M>::OP<<(INT n)CO{RE MO(Mod<M>(*TH)<<= MO(n));}TE <uint M> TE <TY INT> CE Mod<M> Mod<M>::OP>>(INT n)CO{RE MO(Mod<M>(*TH)>>= MO(n));}TE <uint M> CE Mod<M> Mod<M>::OP-()CO NE{RE MO(Mod<M>(*TH).SignInvert());}TE <uint M> CE Mod<M>& Mod<M>::SignInvert()NE{m_n > 0?m_n = M - m_n:m_n;RE *TH;}TE <uint M> IN Mod<M>& Mod<M>::Invert(){AS(m_n != 0);uint m_n_neg;RE m_n < COants::g_memory_LE?(m_n = Inverse(m_n).m_n,*TH):((m_n_neg = M - m_n)< COants::g_memory_LE)?(m_n = M - Inverse(m_n_neg).m_n,*TH):NonNegativePW(COants::g_order_minus_1);}TE <uint M> TE <TY INT> CE Mod<M>& Mod<M>::PositivePW(INT EX)NE{Mod<M> PW{*TH};EX--;WH(EX != 0){(EX & 1)== 1?*TH *= PW:*TH;EX >>= 1;PW *= PW;}RE *TH;}TE <uint M> TE <TY INT> CE Mod<M>& Mod<M>::NonNegativePW(INT EX)NE{RE EX == 0?(m_n = 1,*TH):PositivePW(MO(EX));}TE <uint M> TE <TY INT> CE Mod<M>& Mod<M>::PW(INT EX){bool neg = EX < 0;AS(!(neg && m_n == 0));RE neg?PositivePW(MO(EX *= COants::g_order_minus_1_neg)):NonNegativePW(MO(EX));}TE <uint M> CE VO Mod<M>::swap(Mod<M>& n)NE{std::swap(m_n,n.m_n);}TE <uint M> IN CO Mod<M>& Mod<M>::Inverse(CRUI n){AS(n < COants::g_memory_LE);ST Mod<M> memory[COants::g_memory_LE]={zero(),one()};ST uint LE_curr = 2;WH(LE_curr <= n){memory[LE_curr].m_n = M - memory[M % LE_curr].m_n * ull(M / LE_curr)% M;LE_curr++;}RE memory[n];}TE <uint M> IN CO Mod<M>& Mod<M>::Factorial(CRUI n){if(M <= n){RE zero();}AS(n < COants::g_memory_LE);ST Mod<M> memory[COants::g_memory_LE]={one(),one()};ST uint LE_curr = 2;WH(LE_curr <= n){(memory[LE_curr]= memory[LE_curr - 1])*= LE_curr;LE_curr++;}RE memory[n];}TE <uint M> IN CO Mod<M>& Mod<M>::FactorialInverse(CRUI n){ST Mod<M> memory[COants::g_memory_LE]={one(),one()};ST uint LE_curr = 2;WH(LE_curr <= n){(memory[LE_curr]= memory[LE_curr - 1])*= Inverse(LE_curr);LE_curr++;}RE memory[n];}TE <uint M> IN Mod<M> Mod<M>::Combination(CRUI n,CRUI i){RE i <= n?Factorial(n)* FactorialInverse(i)* FactorialInverse(n - i):zero();}TE <uint M> CE CRUI Mod<M>::RP()CO NE{RE m_n;}TE <uint M> CE Mod<M> Mod<M>::DeRP(uint n)NE{Mod<M> n_copy{};n_copy.m_n = MO(n);RE n_copy;}TE <uint M> IN CO Mod<M>& Mod<M>::zero()NE{ST CE CO Mod<M> z{};RE z;}TE <uint M> IN CO Mod<M>& Mod<M>::one()NE{ST CE CO Mod<M> o{1};RE o;}TE <uint M> IN Mod<M> Inverse(CO Mod<M>& n){RE MO(Mod<M>(n).Invert());}TE <uint M,TY INT> CE Mod<M> PW(Mod<M> n,INT EX){RE MO(n.PW(MO(EX)));}TE <uint M> CE VO swap(Mod<M>& n0,Mod<M>& n1)NE{n0.swap(n1);}TE <uint M> IN string to_string(CO Mod<M>& n)NE{RE to_string(n.RP())+ " + " + to_string(M)+ "Z";}TE <uint M,CL Traits> IN basic_istream<char,Traits>& OP>>(basic_istream<char,Traits>& is,Mod<M>& n){ll m;is >> m;n = m;RE is;}TE <uint M,CL Traits> IN basic_ostream<char,Traits>& OP<<(basic_ostream<char,Traits>& os,CO Mod<M>& n){RE os << n.RP();}
 #endif
-// AAA íİƒ‰ƒCƒuƒ‰ƒŠ‚ÍˆÈã‚É‘}“ü‚·‚éB
+// AAA å¸¸è¨­ãƒ©ã‚¤ãƒ–ãƒ©ãƒªã¯ä»¥ä¸Šã«æŒ¿å…¥ã™ã‚‹ã€‚
 
 #define INCLUDE_LIBRARY
 #include __FILE__
