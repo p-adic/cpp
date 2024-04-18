@@ -11,10 +11,13 @@
 // 入力の範囲内で要件
 // (0) Mは全順序アーベル群構造である。
 // (1) inftyが「E_Gの値の各成分の第2成分と2点間ポテンシャル差の和」の|V_G|個以下の和で表せるいかなる数よりも大きい。
+// (2) 許容する辺はポテンシャルに対し三角不等式を満たす。（従って負の閉路が存在しない）
 // が成り立つ場合にのみサポート。
 
-// 負辺を含む場合/含まない場合
-// 構築O(|V_G| |E_G|)/O(|V_G|)
+// 負辺を許容する場合はポテンシャルを自分で渡す必要あり。
+// BellmanFord法で自動で計算する場合はAbstractBellmanFordPotentialisedDijkstraを用いる。
+
+// 構築O(|V_G|)
 // 単一始点全終点最短経路探索／経路復元なしO((min(|V_G|^2+|E_G|,|V_G|+|E_G|)log |V_G|))
 // 単一始点全終点最短経路探索／経路復元ありO(|V_G|^2+|E_G|)
 template <typename T , typename GRAPH , typename U , typename GROUP , typename On>
@@ -28,28 +31,22 @@ private:
   T m_t_start;
   // どの辺を許容するかを決める関数オブジェクト。
   On m_on;
-  // 「全ての辺を許容する場合に始点から負のループに到達可能でない」の真偽。
-  bool m_valid;
-  // 全ての辺を許容する場合の始点からのコスト。
+  // （次にSetPotentialをするまでの間に）許容しうる辺を全て許容する場合の始点からのコスト。
   vector<U> m_potential;
 
 public:
-  inline AbstractPotentialisedDijkstra( GRAPH& G , GROUP M , const T& t_start , const U& infty , On on , const bool& negative = true );
-  inline AbstractPotentialisedDijkstra( GRAPH& G , GROUP M , const T& t_start , const U& infty , On on , const bool& valid , vector<U> potential );
+  // potentialのデフォルト引数使用は（次にSetPotentialをするまでの間に）負辺を許容しない
+  // 場合のみサポート。
+  inline AbstractPotentialisedDijkstra( GRAPH& G , GROUP M , const T& t_start , const U& infty , On on , vector<U> potential = {} );
 
-  inline const bool& Valid() const noexcept;
   inline const vector<U>& Potential() const noexcept;
-  inline void SetPotential( const bool& valid , vector<U> potential );
+  inline void SetPotential( vector<U> potential );
 
-  // 「到達可能かつ負の閉路を経由できない」の真偽を格納した配列を第1成分に、
-  // 「到達可能?負の閉路が存在する?辺の本数path_length以下での最短経路長:最短経路長:infty」を
-  //  格納した配列を第2成分に返す。
-  template <typename...Args> tuple<vector<bool>,vector<U>> GetDistance( Args&&... args );
-  // 「到達可能かつ負の閉路を経由できない」の真偽を格納した配列を第1成分に、
-  // 「到達可能?負の閉路を経由する?辺の本数path_length以下での最短経路長:最短経路長:infty」を
-  //  格納した配列を第2成分に、
-  // 「到達可能かつ負の閉路を経由できない?最短経路:空列」を格納した配列を第3成分に返す。
-  template <typename...Args> tuple<vector<bool>,vector<U>,vector<list<T>>> GetPath( Args&&... args );
+  // 「到達可能?最短経路長:infty」を格納した配列を返す。
+  template <typename...Args> vector<U> GetDistance( Args&&... args );
+  // 「到達可能?最短経路長:infty」を格納した配列を第1成分に、
+  // 「到達可能?最短経路:空列」を格納した配列を第2成分に返す。
+  template <typename...Args> pair<vector<U>,vector<list<T>>> GetPath( Args&&... args );
   // 返り値の都合、t_finalが１つである特殊化は存在せず、配列化したt_finalsを渡す。
 
 };
@@ -61,4 +58,5 @@ class PotentialisedDijkstra :
 
 public:
   template <typename...Args> inline PotentialisedDijkstra( GRAPH& G , const T& t_start , On on , Args&&... args );
+  
 };

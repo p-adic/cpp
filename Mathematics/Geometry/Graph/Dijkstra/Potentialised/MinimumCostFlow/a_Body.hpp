@@ -16,22 +16,26 @@ pair<U,vector<vector<tuple<T,U>>>> AbstractMinimumCostFlow<T,GRAPH,U,RING>::GetF
   const U& zero = m_R.Zero();
   const U& infty = this->Infty();
   const int& size = m_G.size();
+  // rest[i]に、m_G.Enumeration(i)を始点とする辺m_G.Enumeration(i)->m_G.Enumeration(j)
+  // または辺m_G.Enumeration(j)->m_G.Enumeration(i)の反転ごとに
+  // {j,重み,まだ流せる量,反転した辺か否か,反転を無視した辺番号}のデータを格納する。
   vector<vector<tuple<int,U,U,bool,int>>> rest( size );
+  // flow[i]に、m_G.Enumeration(i)を始点とする辺m_G.Enumeration(i)->m_G.Enumeration(j)
+  // ごとに{m_G.Enumeration(j),既に流した量}のデータを格納する。
   vector<vector<tuple<T,U>>> flow( size );
   int edge_num = 0;
 
   for( int i = 0 ; i < size ; i++ ){
 
-    auto&& ui = m_G.Enumeration( i );
-    auto&& edge_i = m_G.Edge( ui );
+    auto&& vi = m_G.Enumeration( i );
 
-    for( auto& [vj,wj,fj] : edge_i ){
+    for( auto& [vj,wj,fj] : m_G.Edge( vi ) ){
 
-      assert( ui != vj && !( wj < zero ) && wj < infty && !( fj < zero ) && fj < infty );
+      assert( vi != vj && !( wj < zero ) && wj < infty && !( fj < zero ) && fj < infty );
       auto&& j = m_G.Enumeration_inv( vj );
       rest[i].push_back( { j , wj , fj , false , edge_num } );
       rest[j].push_back( { i , m_R.Inverse( wj ) , zero , true , edge_num } );
-      flow[i].push_back( { vj , 0 } );
+      flow[i].push_back( { vj , zero } );
       edge_num++;
       
     }
@@ -45,6 +49,10 @@ pair<U,vector<vector<tuple<T,U>>>> AbstractMinimumCostFlow<T,GRAPH,U,RING>::GetF
 
   }
 
+  // 辺番号jの辺uj->vjごとに、
+  // - {m_G.Enumeration_inv(uj),uj->vjがrest[m_G.Enumeration_inv(uj)]の何本目か}
+  // - {m_G.Enumeration_inv(vj),uj->vjの反転がrest[m_G.Enumeration_inv(vj)]の何本目か}
+  // を適当な順に結合したデータを格納する。
   vector<tuple<int,int,int,int>> edge_pair( edge_num , { -1 , -1 , -1 , -1 } );
   
   for( int i = 0 ; i < size ; i++ ){
@@ -76,16 +84,15 @@ pair<U,vector<vector<tuple<T,U>>>> AbstractMinimumCostFlow<T,GRAPH,U,RING>::GetF
   auto edge = [&]( const T& t ) -> const vector<tuple<int,U,U,bool,int>>& { return rest[m_G.Enumeration_inv( t )]; };
   auto on = [&]( const tuple<T,U,U,bool,int>& e ) { return zero < get<2>( e ); };
   auto G = m_G.GetGraph( move( edge ) );
-  AbstractPotentialisedDijkstra pd{ G , m_R.AdditiveGroup() , t_start , infty , move( on ) , false };
-  assert( pd.Valid() );
+  AbstractPotentialisedDijkstra pd{ G , m_R.AdditiveGroup() , t_start , infty , move( on ) };
   auto&& i_start = m_G.Enumeration_inv( t_start );
   const vector<T> t_finals = { t_final };
   U w = zero;
 
   while( zero < f ){
 
-    auto [valid,weight,paths] = pd.GetPath( t_finals , many_edges , path_length );
-    pd.SetPotential( true , move( weight ) );
+    auto [weight,paths] = pd.GetPath( t_finals , many_edges , path_length );
+    pd.SetPotential( move( weight ) );
     auto& path = paths.front();
     auto itr_path = path.begin() , itr_path_prev = itr_path , end_path = path.end();
     assert( itr_path != end_path );
