@@ -4,7 +4,7 @@
 #include "../../../../../Algebra/Monoid/Semirng/Ring/a.hpp"
 
 // verify:
-// https://yukicoder.me/submissions/973369（many_edges=false）
+// https://yukicoder.me/submissions/973370（many_edges=false）
 
 // GRAPHはグラフG=(V_G,E_G:T->(T \times U(コスト) \times U(容量))^{< \omega})に相当する型。
 
@@ -16,15 +16,26 @@
 // (3) Vの各要素u,vに対し、辺u->vが複数存在しない。
 // が成り立つ場合にのみサポート。
 
+// 構築O(|V_G|^2)
 // 単一始点単一終点最小費用流路探索O(F min(|V_G|^2+|E_G|,(|V_G|+|E_G|)log |V_G|))
 template <typename T , typename GRAPH , typename U , typename RING>
-class AbstractMinimumCostFlow :
-  public PointedSet<U>
+class AbstractMinimumCostFlow
 {
 
 private:
   GRAPH& m_G;
   RING m_R;
+
+  U m_infty;
+  // m_full[i]に、m_G.Enumeration(i)を始点とする辺m_G.Enumeration(i)->m_G.Enumeration(j)
+  // または辺m_G.Enumeration(j)->m_G.Enumeration(i)の反転ごとに
+  // {j,重み,まだ流せる量,m_flow[反転?j:i]における位置}のデータを格納する。
+  vector<vector<tuple<int,U,U,int>>> m_full;
+  // m_flow[i]に、m_G.Enumeration(i)を始点とする辺m_G.Enumeration(i)->m_G.Enumeration(j)
+  // ごとに{m_G.Enumeration(j),既に流した量}のデータを格納する。
+  vector<vector<tuple<T,U>>> m_flow;
+  vector<vector<int>> m_edge_num;
+  vector<vector<int>> m_edge_rev_num;
 
 public:
   inline AbstractMinimumCostFlow( GRAPH& G , RING R , const U& infty );
