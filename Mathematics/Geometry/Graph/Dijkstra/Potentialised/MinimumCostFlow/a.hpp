@@ -4,7 +4,7 @@
 #include "../../../../../Algebra/Monoid/Semirng/Ring/a.hpp"
 
 // verify:
-// https://yukicoder.me/submissions/973222（many_edges=false）
+// https://yukicoder.me/submissions/973369（many_edges=false）
 
 // GRAPHはグラフG=(V_G,E_G:T->(T \times U(コスト) \times U(容量))^{< \omega})に相当する型。
 
