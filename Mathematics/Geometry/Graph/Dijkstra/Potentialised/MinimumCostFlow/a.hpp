@@ -17,7 +17,7 @@
 // が成り立つ場合にのみサポート。
 
 // 構築O(|V_G|^2)
-// 単一始点単一終点最小費用流路探索O(F min(|V_G|^2+|E_G|,(|V_G|+|E_G|)log |V_G|))
+// 単一始点単一終点最小費用流路探索O(|V_G|^2 + F min(|V_G|^2+|E_G|,(|V_G|+|E_G|)log |V_G|))
 template <typename T , typename GRAPH , typename U , typename RING>
 class AbstractMinimumCostFlow
 {
