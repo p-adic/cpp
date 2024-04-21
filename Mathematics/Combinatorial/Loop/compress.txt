@@ -1,0 +1,5 @@
+#ifdef DEBUG
+  #include "c:/Users/user/Documents/Programming/Mathematics/Combinatorial/Loop/a_Body.hpp"
+#else
+bool NextLoop(CRI SZ,CO VE<int>& lower_bound,CO VE<int>& upper_limit,VE<int>& index){int depth = 0;WH(depth < SZ){if(++index[depth]< upper_limit[depth]){break;}index[depth]= lower_bound[depth];depth++;}RE depth < SZ;}
+#endif
