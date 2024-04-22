@@ -4,13 +4,13 @@
 
 // verify:
 // Knapsack（N,value_sum_bound,cost_sum_bound）
-// https://yukicoder.me/submissions/968899（1e3,1e6,1e3）
+// https://yukicoder.me/submissions/976637（1e3,1e6,1e3）
 // https://onlinejudge.u-aizu.ac.jp/status/users/padic/submissions/1/DPL_1_B/judge/9056881/C++17（100,1e5,1e4）
 // https://onlinejudge.u-aizu.ac.jp/status/users/padic/submissions/1/DPL_1_F/judge/9056887/C++17（100,1e4,1e9）
 // https://onlinejudge.u-aizu.ac.jp/status/users/padic/submissions/1/DPL_1_H/judge/9056888/C++17（40,4e16,1e15）
 
 
-// 以下valueをNと置き、costを用いる場合はcostのサイズがNと等しいとする。
+// 以下valueのサイズをNと置き、costを用いる場合はcostのサイズがNと等しいとする。
 // ValueSumBound(value)をvalue_sum_boundと置く。
 
 // 入力の範囲内で要件
