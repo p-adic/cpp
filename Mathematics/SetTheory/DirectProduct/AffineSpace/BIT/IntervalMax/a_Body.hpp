@@ -3,7 +3,7 @@
 #pragma once
 #include "a.hpp"
 
-#include "../../../../../Algebra/Monoid/Semilattice/a_Bod.hpp"
+#include "../../../../../Algebra/Monoid/Semilattice/a_Body.hpp"
 
 template <typename U , typename COMM_IDEM_MONOID> inline IdempotentMonoidBIT<U,COMM_IDEM_MONOID>::IdempotentMonoidBIT( COMM_IDEM_MONOID M , const int& size ) : m_M( move( M ) ) , m_size( size ) , m_a( size , m_M.One() ) , m_fenwick_0( m_size + 1 , m_M.One() ) , m_fenwick_1( m_size + 1 , m_M.One() ) , m_power( 1 ) { Construct(); }
 

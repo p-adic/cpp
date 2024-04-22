@@ -5,29 +5,29 @@
 #include "../../../../../Algebra/Monoid/Semilattice/a.hpp"
 
 // verify:
-// https://yukicoder.me/submissions/961780（一点乗算、区間積取得）
+// https://yukicoder.me/submissions/961780�i��_��Z�A��Ԑώ擾�j
 
-// 入力の範囲内で要件
-// (1) MがUの可換羃等モノイド構造である。
-// を満たす場合にのみサポート。
+// ���͈͓͂̔��ŗv��
+// (1) M��U�̉�㰓����m�C�h�\���ł���B
+// �𖞂����ꍇ�ɂ̂݃T�|�[�g�B
 
-// 配列による初期化O(size)
+// �z��ɂ�鏉����O(size)
 
-// 一点取得O(1)
-// M.Product()に関するLSB切片積取得O(1)（left:a[j-(j&-j)]*...*a[j-1]、right:a[j-1]*...*a[j+(j&-j)-1]）
-// M.Product()に関する区間積取得O(log_2 size)
+// ��_�擾O(1)
+// M.Product()�Ɋւ���LSB�ؕАώ擾O(1)�ileft:a[j-(j&-j)]*...*a[j-1]�Aright:a[j-1]*...*a[j+(j&-j)-1]�j
+// M.Product()�Ɋւ����Ԑώ擾O(log_2 size)
 
-// 一点代入O((log_2 size)^2)
-// M.Product()に関する一点乗算O(log_2 size)（可換性と羃等性を用いる）
-// M.Product()に関する区間乗算O(i_final-i_start+log_2 size)（可換性と羃等性を用いる）
-// M.Product()に関する乗法O(size)（可換性と羃等性を用いる）
+// ��_���O((log_2 size)^2)
+// M.Product()�Ɋւ����_��ZO(log_2 size)�i������㰓�����p����j
+// M.Product()�Ɋւ����ԏ�ZO(i_final-i_start+log_2 size)�i������㰓�����p����j
+// M.Product()�Ɋւ����@O(size)�i������㰓�����p����j
 
-// uを吸収する（uに吸収される）要素の添字の最小値の二分探索O(log_2 size)
-// （存在しない場合はsize以上の最小の2羃×2-1を返すので、size以上であることで判定可能）
+// u���z������iu�ɋz�������j�v�f�̓Y���̍ŏ��l�̓񕪒T��O(log_2 size)
+// �i���݂��Ȃ��ꍇ��size�ȏ�̍ŏ���2㰁~2-1��Ԃ��̂ŁAsize�ȏ�ł��邱�ƂŔ���\�j
 
-// そのうちの区間積取得と一点乗算は
+// ���̂����̋�Ԑώ擾�ƈ�_��Z��
 // M. Dima, R. Ceterchi, Efficient Range Minimum Queries using Binary Indexed Trees, Olympiads in Informatics, 2015, Vol. 9, 39--44
-// の手法を一般の可換羃等モノイドに拡張することで実装
+// �̎�@����ʂ̉�㰓����m�C�h�Ɋg�����邱�ƂŎ���
 template <typename U , typename COMM_IDEM_MONOID>
 class IdempotentMonoidBIT
 {
@@ -56,12 +56,12 @@ public:
   inline const U& LSBSegmentProduct( const int& j , const bool& left = true ) const;
   U IntervalProduct( const int& i_start , const int& i_final );
 
-  // Fは積順序に関して単調な写像f:U \times int -> {0,1}に相当する型。
-  // f( IntervalProduct( 0 , i ) , i )がtrueとなるiが存在する場合にその最小値を
-  // 2進法で探索。存在しない場合はNを返す。
+  // F�͐Ϗ����Ɋւ��ĒP���Ȏʑ�f:U \times int -> {0,1}�ɑ�������^�B
+  // f( IntervalProduct( 0 , i ) , i )��true�ƂȂ�i�����݂���ꍇ�ɂ��̍ŏ��l��
+  // 2�i�@�ŒT���B���݂��Ȃ��ꍇ��N��Ԃ��B
   template <typename F , SFINAE_FOR_BIT_BS = nullptr> int BinarySearch( const F& f );
-  // IntervalProduct( 0 , i )がuを吸収する（max演算ならu以上、min演算ならu以下となる）
-  // iが存在する場合にその最小値を2進法で探索。存在しない場合はNを返す。
+  // IntervalProduct( 0 , i )��u���z������imax���Z�Ȃ�u�ȏ�Amin���Z�Ȃ�u�ȉ��ƂȂ�j
+  // i�����݂���ꍇ�ɂ��̍ŏ��l��2�i�@�ŒT���B���݂��Ȃ��ꍇ��N��Ԃ��B
   int BinarySearch( const U& u );
 
 private:
@@ -70,9 +70,9 @@ private:
 };
 template <typename COMM_IDEM_MONOID> IdempotentMonoidBIT( COMM_IDEM_MONOID M ) -> IdempotentMonoidBIT<inner_t<COMM_IDEM_MONOID>,COMM_IDEM_MONOID>;
 
-// 以下は入力の範囲で要件
-// (1)' bool operator<(const U&,const U&)が全順序である。
-// を満たす場合にのみサポート。
+// �ȉ��͓��͈͂̔͂ŗv��
+// (1)' bool operator<(const U&,const U&)���S�����ł���B
+// �𖞂����ꍇ�ɂ̂݃T�|�[�g�B
 template <typename U>
 class IntervalMaxBIT :
   public IdempotentMonoidBIT<U,MaxSemilattice<U>>
