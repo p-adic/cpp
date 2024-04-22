@@ -1,5 +1,0 @@
-#ifdef DEBUG
-  #include "c:/Users/user/Documents/Programming/Mathematics/Combinatorial/KnapsackProblem/Costwise/a_Body.hpp"
-#else
-TE <TY U,TY COMM_MONOID,TY INT>VE<U> AbstractValueCostwiseKnapsack(COMM_MONOID M,CO VE<U>& value,CO U& exceptional,CO VE<INT>& cost,CO INT& cost_sum_bound){CO int N = value.SZ();AS(int(cost.SZ())== N);auto& one = M.One();VE AN(cost_sum_bound + 1,exceptional);AN[0]= one;for(int i = 0;i < N;i++){auto& value_i = value[i];AS(!(value_i < one));auto& cost_i = cost[i];AS(cost_i >= 0);for(INT c = cost_sum_bound;c >= cost_i;c--){auto temp = M.Product(AN[c - cost_i],value_i);AS(temp != exceptional);auto& AN_c = AN[c];AN_c = AN_c == exceptional?MO(temp):max(AN_c,temp);}}RE AN;}TE <TY INT1,TY INT2> IN VE<INT1> CostwiseKnapsack(CO VE<INT1>& value,CO VE<INT2>& cost,CO INT2& cost_sum_bound){RE AbstractValueCostwiseKnapsack(AdditiveMonoid<INT1>(),value,INT1(-1),cost,cost_sum_bound);}
-#endif
