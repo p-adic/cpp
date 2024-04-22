@@ -1,7 +1,7 @@
 #ifdef DEBUG
   #include "c:/Users/user/Documents/Programming/Mathematics/Geometry/Graph/BreadthFirstSearch/AdicExhausiveSearch/a_Body.hpp"
 #else
-bool NextLoop(CRI SZ,CO VE<int>& lower_bound,CO VE<int>& upper_limit,VE<int>& index){int depth = 0;WH(depth < SZ){if(++index[depth]< upper_limit[depth]){break;}index[depth]= lower_bound[depth];depth++;}RE depth < SZ;}
+TE <TY INT> bool NextLoop(CRI SZ,CO VE<INT>& lower_bound,CO VE<INT>& upper_limit,VE<INT>& index){int depth = 0;WH(depth < SZ){if(++index[depth]< upper_limit[depth]){break;}index[depth]= lower_bound[depth];depth++;}RE depth < SZ;}TE <TY INT> bool NextLoop(CO VE<INT>& lower_bound,CO VE<INT>& upper_limit,VE<INT>& index){RE NextLoop(index.SZ(),lower_bound,upper_limit,index);}
 
 TE <TY T,TY GRAPH>CL VirtualBreadthFirstSearch{PU:GRAPH& m_G;T m_not_found;bool m_initialised;LI<T> m_next;VE<bool> m_found;VE<T> m_prev;IN VirtualBreadthFirstSearch(GRAPH& G,CO T& not_found);TE <TY Arg> IN VirtualBreadthFirstSearch(GRAPH& G,CO T& not_found,Arg&& init);IN VO Initialise();IN VO Initialise(CO T& init);IN VO Initialise(LI<T> inits);IN VO Shift(CO T& init);IN VO Shift(LI<T> inits);IN CRI SZ()CO NE;IN VE<bool>::reference found(CO T& t);IN CO T& prev(CO T& t);IN T Next();VE<int> GetDistance();VO SetConnectedComponent(VE<int>& cc_num,int& count);VI VO Push(LI<T>& next,CO T& t)= 0;TE <TY PATH> IN VO Push(LI<T>& next,CO PATH& p);};
 TE <TY T,TY GRAPH>CL BreadthFirstSearch:PU VirtualBreadthFirstSearch<T,GRAPH>{PU:TE <TY...Args> IN BreadthFirstSearch(GRAPH& G,CO T& not_found,Args&&... args);IN VO Push(LI<T>& next,CO T& t);};
