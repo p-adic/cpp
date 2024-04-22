@@ -1,6 +1,9 @@
 // c:/Users/user/Documents/Programming/Mathematics/Combinatorial/KnapsackProblem/Negative/Value/Costwise/a.hpp
 
 #pragma once
+// verify:
+// NegativeValueCostwiseKnapsack（N,cost_sum_bound）
+// https://yukicoder.me/submissions/976636（100,1e5）
 
 // 入力の範囲内で要件
 // (1) Mはoperator<(const U&,const U&)に関してUの全順序可換モノイド構造である。

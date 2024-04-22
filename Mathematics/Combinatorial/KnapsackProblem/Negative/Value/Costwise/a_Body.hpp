@@ -17,14 +17,21 @@ vector<U> AbstractNegativeValueCostwiseKnapsack( COMM_MONOID M , const vector<U>
 
     auto& value_i = value[i];
     auto& cost_i = cost[i];
+    assert( value_i != exceptional );
     assert( cost_i >= 0 );
 
     for( INT c = cost_sum_bound ; c >= cost_i ; c-- ){
 
-      auto temp = M.Product( answer[c - cost_i] , value_i );
-      assert( temp != exceptional );
-      auto& answer_c = answer[c];
-      answer_c = answer_c == exceptional ? move( temp ) : max( answer_c , temp );
+      auto& answer_c_minus = answer[c - cost_i];
+
+      if( answer_c_minus != exceptional ){
+	
+	auto temp = M.Product( answer_c_minus , value_i );
+	assert( temp != exceptional );
+	auto& answer_c = answer[c];
+	answer_c = answer_c == exceptional ? move( temp ) : max( answer_c , temp );
+
+      }
       
     }
 
