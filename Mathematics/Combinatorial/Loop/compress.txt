@@ -1,5 +1,5 @@
 #ifdef DEBUG
   #include "c:/Users/user/Documents/Programming/Mathematics/Combinatorial/Loop/a_Body.hpp"
 #else
-bool NextLoop(CRI SZ,CO VE<int>& lower_bound,CO VE<int>& upper_limit,VE<int>& index){int depth = 0;WH(depth < SZ){if(++index[depth]< upper_limit[depth]){break;}index[depth]= lower_bound[depth];depth++;}RE depth < SZ;}
+TE <TY INT> bool NextLoop(CRI SZ,CO VE<INT>& lower_bound,CO VE<INT>& upper_limit,VE<INT>& index){int depth = 0;WH(depth < SZ){if(++index[depth]< upper_limit[depth]){break;}index[depth]= lower_bound[depth];depth++;}RE depth < SZ;}TE <TY INT> bool NextLoop(CO VE<INT>& lower_bound,CO VE<INT>& upper_limit,VE<INT>& index){RE NextLoop(index.SZ(),lower_bound,upper_limit,index);}TE <TY INT> bool NextLoopEq(CRI SZ,CO VE<INT>& lower_bound,CO VE<INT>& upper_bound,VE<INT>& index){int depth = 0;WH(depth < SZ){if(++index[depth]<= upper_bound[depth]){break;}index[depth]= lower_bound[depth];depth++;}RE depth < SZ;}TE <TY INT> bool NextLoopEq(CO VE<INT>& lower_bound,CO VE<INT>& upper_bound,VE<INT>& index){RE NextLoopEq(index.SZ(),lower_bound,upper_bound,index);}
 #endif
