@@ -1,0 +1,5 @@
+#ifdef DEBUG
+  #include "c:/Users/user/Documents/Programming/Utility/Sort/Query/a_Body.hpp"
+#else
+TE <TY Query>VE<pair<CO Query*,int>> QuerySort(CO VE<Query>& query,CO bool& sorted){US SQuery = pair<CO Query*,int>;CO int Q = query.SZ();VE<SQuery> AN(Q);for(int q = 0;q < Q;q++){AN[q]={&(query[q]),q};}ST auto comp =[](CO SQuery& q0,CO SQuery& q1){RE *(q0.first)< *(q1.first)?true:q0.second < q1.second && *(q0.first)== *(q1.first);};if(!sorted){sort(AN.BE(),AN.EN(),comp);}RE AN;}
+#endif
