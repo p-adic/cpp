@@ -54,8 +54,8 @@ public:
 
   inline const int& size() const noexcept;
   // constéQè∆Ç≈Ç»Ç¢Ç±Ç∆Ç…íçà”ÅB
-  inline U operator[]( const int& i ) const;
-  inline U Get( const int& i ) const;
+  inline U operator[]( const int& i );
+  inline U Get( const int& i );
   inline const U& LSBSegmentSum( const int& j ) const;
   U InitialSegmentSum( const int& i_final );
   inline U IntervalSum( const int& i_start , const int& i_final );

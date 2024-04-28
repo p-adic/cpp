@@ -42,7 +42,7 @@ template <typename U , typename ABELIAN_GROUP> inline void AbstractBIT<U,ABELIAN
   
 }
   
-template <typename U> template <typename...Args> inline BIT<U>::BIT( const Args&... args ) : AbstractBIT<U,AdditiveGroup<U>>( AdditiveGroup<U>() , args... ) { static_assert( !is_same_v<U,int> ); }
+template <typename U> template <typename...Args> inline BIT<U>::BIT( const Args&... args ) : AbstractBIT<U,AdditiveGroup<U>>( AdditiveGroup<U>() , args... ) {}
 
 template <typename U , typename ABELIAN_GROUP> inline AbstractBIT<U,ABELIAN_GROUP>& AbstractBIT<U,ABELIAN_GROUP>::operator=( AbstractBIT<U,ABELIAN_GROUP>&& bit ) { m_size = bit.m_size; m_fenwick = move( bit.m_fenwick ); m_power = bit.m_power; return *this; }
 template <typename U , typename ABELIAN_GROUP> template <typename...Args> inline void AbstractBIT<U,ABELIAN_GROUP>::Initialise( const Args&... args ) { *this = AbstractBIT<U,ABELIAN_GROUP>{ m_M , args... }; }
@@ -68,8 +68,8 @@ void AbstractBIT<U,ABELIAN_GROUP>::Add( const int& i , const U& u )
 }
 
 template <typename U , typename ABELIAN_GROUP> inline const int& AbstractBIT<U,ABELIAN_GROUP>::size() const noexcept { return m_size; }
-template <typename U , typename ABELIAN_GROUP> inline U AbstractBIT<U,ABELIAN_GROUP>::operator[]( const int& i ) const { assert( i < m_size ); return IntervalSum( i , i ); }
-template <typename U , typename ABELIAN_GROUP> inline U AbstractBIT<U,ABELIAN_GROUP>::Get( const int& i ) const { return operator[]( i ); }
+template <typename U , typename ABELIAN_GROUP> inline U AbstractBIT<U,ABELIAN_GROUP>::operator[]( const int& i ) { assert( i < m_size ); return IntervalSum( i , i ); }
+template <typename U , typename ABELIAN_GROUP> inline U AbstractBIT<U,ABELIAN_GROUP>::Get( const int& i ) { return operator[]( i ); }
 
 template <typename U , typename ABELIAN_GROUP> inline const U& AbstractBIT<U,ABELIAN_GROUP>::LSBSegmentSum( const int& j ) const { assert( 0 < j && j <= m_size ); return m_fenwick[j]; }
 
