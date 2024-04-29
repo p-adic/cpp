@@ -4,36 +4,40 @@
 #include "a.hpp"
 
 #include "../a_Body.hpp"
-#include "../../../Algebra/Monoid/Semirng/a_Body.hpp"
+#include "../../../Algebra/Monoid/Semirng/MeetSemirng/a_Body.hpp"
+
+template <typename U , typename IDEMPOTENT_SEMIRNG> inline AbstractFloydWarshall<U,IDEMPOTENT_SEMIRNG>::AbstractFloydWarshall( IDEMPOTENT_SEMIRNG R , const vector<vector<U>>& d ) : m_R( move( R ) ) , m_size() , m_p_d() { static_assert( is_same_v<U,inner_t<IDEMPOTENT_SEMIRNG>> ); Initialise( d ); }
+template <typename U> inline FloydWarshall<U>::FloydWarshall( U infty_U , const vector<vector<U>>& d ) : AbstractFloydWarshall<U,AdditiveTropicalSemirng<U>>( move( infty_U ) , d ) {}
+
+template <typename U , typename IDEMPOTENT_SEMIRNG> inline void AbstractFloydWarshall<U,IDEMPOTENT_SEMIRNG>::Initialise( const vector<vector<U>>& d ) { m_p_d = ( m_size = d.size() ) == 0 ? nullptr : &d; assert( m_size == 0 || m_size == int( d[0].size() ) ); }
 
 template <typename U , typename IDEMPOTENT_SEMIRNG>
-void FloydWarshall( IDEMPOTENT_SEMIRNG R , const vector<vector<U>>& d , vector<vector<U>>& weight )
+vector<vector<U>> AbstractFloydWarshall<U,IDEMPOTENT_SEMIRNG>::GetDistance()
 {
 
-  const int size = d.size();
-  assert( size > 0 ? size == int( d[0].size() ) : true );
-  weight = d;
-  const U& infty = R.Infty();
+  auto& d = *m_p_d;
+  auto answer = d;
+  const U& infty = m_R.Infty();
 
-  for( int k = 0 ; k < size ; k++ ){
+  for( int k = 0 ; k < m_size ; k++ ){
 
-    auto& weight_k = weight[k];
+    auto& answer_k = answer[k];
 
-    for( int i = 0 ; i < size ; i++ ){
+    for( int i = 0 ; i < m_size ; i++ ){
 
-      auto& weight_i = weight[i];
-      const U& weight_ik = weight_i[k];
+      auto& answer_i = answer[i];
+      const U& answer_ik = answer_i[k];
     
-      if( i != k && weight_ik != infty ){
+      if( i != k && answer_ik != infty ){
 	
-	for( int j = 0 ; j < size ; j++ ){
+	for( int j = 0 ; j < m_size ; j++ ){
 
-	  const U& weight_kj = weight_k[j];
+	  const U& answer_kj = answer_k[j];
 
-	  if( i != j && k != j && weight_kj != infty ){
+	  if( i != j && k != j && answer_kj != infty ){
 
-	    U& weight_ij = weight_i[j];
-	    weight_ij = R.Meet( move( weight_ij ) , R.Product( weight_ik , weight_kj ) );
+	    U& answer_ij = answer_i[j];
+	    answer_ij = m_R.Meet( move( answer_ij ) , m_R.Product( answer_ik , answer_kj ) );
 
 	  }
 
@@ -45,25 +49,24 @@ void FloydWarshall( IDEMPOTENT_SEMIRNG R , const vector<vector<U>>& d , vector<v
 
   }
 
-  return;
+  return answer;
 
 }
 
-template <typename U , typename TROPICAL_SEMIRNG>
-void FloydWarshall( TROPICAL_SEMIRNG R , const vector<vector<U>>& d , vector<vector<U>>& weight , vector<vector<int>>& path )
+template <typename U , typename IDEMPOTENT_SEMIRNG>
+pair<vector<vector<U>>,vector<vector<int>>> AbstractFloydWarshall<U,IDEMPOTENT_SEMIRNG>::GetPath()
 {
 
-  const int size = d.size();
-  assert( size > 0 ? size == int( d[0].size() ) : true );
-  weight = d;
-  path = vector<vector<int>>( size , vector<int>( size , -1 ) );
-  const U& infty = R.Infty();
+  auto& d = *m_p_d;
+  auto weight = d;
+  auto path = vector( m_size , vector( m_size , -1 ) );
+  const U& infty = m_R.Infty();
 
-  for( int k = 0 ; k < size ; k++ ){
+  for( int k = 0 ; k < m_size ; k++ ){
 
     auto& weight_k = weight[k];
 
-    for( int i = 0 ; i < size ; i++ ){
+    for( int i = 0 ; i < m_size ; i++ ){
 
       auto& weight_i = weight[i];
       auto& path_i = path[i];
@@ -71,14 +74,14 @@ void FloydWarshall( TROPICAL_SEMIRNG R , const vector<vector<U>>& d , vector<vec
     
       if( i != k && weight_ik != infty ){
 	
-	for( int j = 0 ; j < size ; j++ ){
+	for( int j = 0 ; j < m_size ; j++ ){
 
 	  const U& weight_kj = weight_k[j];
 
 	  if( i != j && k != j && weight_kj != infty ){
 
 	    U& weight_ij = weight_i[j];
-	    U weight_curr = R.Product( weight_ik , weight_kj );
+	    U weight_curr = m_R.Product( weight_ik , weight_kj );
 
 	    if( weight_ij > weight_curr ){
 
@@ -97,6 +100,6 @@ void FloydWarshall( TROPICAL_SEMIRNG R , const vector<vector<U>>& d , vector<vec
 
   }
 
-  return;
+  return { move( weight ) , move( path ) };
 
 }
