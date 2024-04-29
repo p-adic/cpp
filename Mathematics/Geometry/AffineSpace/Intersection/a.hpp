@@ -2,7 +2,7 @@
 
 #pragma once
 // verify:
-// https://yukicoder.me/submissions/942861（Intersect）
+// https://yukicoder.me/submissions/978050（Intersect）
 
 // xy平面内の２線分（１点に潰れている場合含む）の交差判定
 // 返り値1：交差する

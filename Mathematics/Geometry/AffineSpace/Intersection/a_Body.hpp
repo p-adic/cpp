@@ -3,6 +3,8 @@
 #pragma once
 #include "a.hpp"
 
+#include "../Area/a_Body.hpp"
+
 template <typename INT> inline int Intersect( const INT& x0 , const INT& y0 , const INT& x1 , const INT& y1 , const INT& z0 , const INT& w0 , const INT& z1 , const INT& w1 )
 {
 

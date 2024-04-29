@@ -1,0 +1,10 @@
+#ifdef DEBUG
+  #include "c:/Users/user/Documents/Programming/Mathematics/Geometry/AffineSpace/Intersection/a_Body.hpp"
+#else
+#define AREA_OF_TRIANGLE (x1 - x0)*(y2 - y0)-(y1 - y0)*(x2 - x0)
+#define CALL_AREA_OF_TRIANGLE Area(v0.first,v0.second,v1.first,v1.second,v2.first,v2.second)
+IN ll Area_ll(CRL x0,CRL y0,CRL x1,CRL y1,CRL x2,CRL y2){RE AREA_OF_TRIANGLE;}TE <TY INT> IN ll Area(CO INT& x0,CO INT& y0,CO INT& x1,CO INT& y1,CO INT& x2,CO INT& y2){RE Area_ll(x0,y0,x1,y1,x2,y2);}IN double Area(CO double& x0,CO double& y0,CO double& x1,CO double& y1,CO double& x2,CO double& y2){RE AREA_OF_TRIANGLE;}TE <TY INT> IN ll Area(CO pair<INT,INT>& v0,CO pair<INT,INT>& v1,CO pair<INT,INT>& v2){RE CALL_AREA_OF_TRIANGLE;}IN double Area(CO pair<double,double>& v0,CO pair<double,double>& v1,CO pair<double,double>& v2){RE CALL_AREA_OF_TRIANGLE;}
+
+TE <TY INT> IN int Intersect(CO INT& x0,CO INT& y0,CO INT& x1,CO INT& y1,CO INT& z0,CO INT& w0,CO INT& z1,CO INT& w1){ST_AS(! is_same<INT,double>::value);CO ll sign0 = Area(x0,y0,x1,y1,z0,w0)* Area(x0,y0,x1,y1,z1,w1);CO ll sign1 = Area(z0,w0,z1,w1,x0,y0)* Area(z0,w0,z1,w1,x1,y1);RE(sign0 < 0 && sign1 < 0)?1:(sign0 == 0 || sign1 == 0)?0:-1;}IN int Intersect(CO double& x0,CO double& y0,CO double& x1,CO double& y1,CO double& z0,CO double& w0,CO double& z1,CO double& w1,CO double& epsilon){CO double sign0 = Area(x0,y0,x1,y1,z0,w0)* Area(x0,y0,x1,y1,z1,w1);CO double sign1 = Area(z0,w0,z1,w1,x0,y0)* Area(z0,w0,z1,w1,x1,y1);RE(sign0 <= -epsilon && sign1 <= -epsilon)?1:((-epsilon < sign0 && sign0 < epsilon)||(-epsilon < sign1 && sign1 < epsilon))?0:-1;}TE <TY INT> IN int Intersect(CO pair<INT,INT>& v0,CO pair<INT,INT>& v1,CO pair<INT,INT>& w0,CO pair<INT,INT>& w1){RE Intersect(v0.first,v0.second,v1.first,v1.second,w0.first,w0.second,w1.first,w1.second);}IN int Intersect(CO pair<double,double>& v0,CO pair<double,double>& v1,CO pair<double,double>& w0,CO pair<double,double>& w1,CO double& epsilon){RE Intersect(v0.first,v0.second,v1.first,v1.second,w0.first,w0.second,w1.first,w1.second,epsilon);}
+#endif
+
