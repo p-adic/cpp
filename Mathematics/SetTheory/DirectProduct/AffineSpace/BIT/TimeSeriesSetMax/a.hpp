@@ -8,11 +8,12 @@
 // https://atcoder.jp/contests/abc351/submissions/52928503（MaxIntervalSum+AbstractBIT）
 
 // 入力の範囲内で要件
-// (1) Rは全順序集合である。
-// (2) MはUのZ加群構造である。
+// (1) bool operator<(const R&,const R&)は全順序である。
+// (2) bool operator<(const U&,const U&)は全順序である。
+// (3) MはUのZ加群構造である。（<と整合的である必要はない）
 // を満たす場合にのみサポート。
 // ただしABSTRACT_BITとしてAbstractMonoidBITやAbstractSegtreeを使う場合は(2)の代わりに
-// (2)' MはUのN加群構造である。
+// (3)' MはUのN加群構造である。
 // を満たせば良い。
 
 // 配列の各成分を全体max更新させた時に更新済みか否かを管理するデータ構造。
@@ -65,8 +66,8 @@ public:
 };
 
 // 入力の範囲内で要件
-// (1) Rは全順序集合である。
-// (2) MはUのZ加群構造である。
+// (1) bool operator<(const U&,const U&)は全順序である。
+// (2) MはUのZ加群構造である。（<と整合的である必要はない）
 // を満たす場合にのみサポート。
 // ただしABSTRACT_BITとしてAbstractMonoidBITやAbstractSegtreeを使う場合は(2)の代わりに
 // (2)' MはUのN加群構造である。
