@@ -1,15 +1,19 @@
 // c:/Users/user/Documents/Programming/Mathematics/SetTheory/DirectProduct/AffineSpace/BIT/TimeSeriesSetMax/a.hpp
 
 #pragma once
-#include "../../../../../Algebra/Monoid/Group/Module/a_Body.hpp"
+#include "../a.hpp"
+#include "../../../../../Algebra/Monoid/Group/Module/a.hpp"
 
 // verify:
-// https://atcoder.jp/contests/abc351/submissions/52923417（MaxIntervalSum）
+// https://atcoder.jp/contests/abc351/submissions/52928503（MaxIntervalSum+AbstractBIT）
 
 // 入力の範囲内で要件
 // (1) Rは全順序集合である。
 // (2) MはUのZ加群構造である。
 // を満たす場合にのみサポート。
+// ただしABSTRACT_BITとしてAbstractMonoidBITやAbstractSegtreeを使う場合は(2)の代わりに
+// (2)' MはUのN加群構造である。
+// を満たせば良い。
 
 // 配列の各成分を全体max更新させた時に更新済みか否かを管理するデータ構造。
 
@@ -44,7 +48,7 @@ public:
   inline void Set( const R& t , const U& u );
 
   // 各クエリ{t,l,r}ごとに、時刻t（全体max更新後）における区間[l,r]での総和を取得。
-  template <typename INT> vector<U> IntervalSum( const vector<tuple<R,INT,INT>>& query , const bool& sorted = false );
+  template <typename INT , typename ABSTRACT_BIT = AbstractBIT<U,Z_MODULE>> vector<U> IntervalSum( const vector<tuple<R,INT,INT>>& query , const bool& sorted = false );
 
 };
 template <typename R , typename Z_MODULE , typename...Args> AbstractTimeSeriesSetMaxBIT( Z_MODULE , R , Args&&... ) -> AbstractTimeSeriesSetMaxBIT<R,inner_t<Z_MODULE>,Args...>;
@@ -64,7 +68,10 @@ public:
 // (1) Rは全順序集合である。
 // (2) MはUのZ加群構造である。
 // を満たす場合にのみサポート。
+// ただしABSTRACT_BITとしてAbstractMonoidBITやAbstractSegtreeを使う場合は(2)の代わりに
+// (2)' MはUのN加群構造である。
+// を満たせば良い。
 
 // 各クエリ{u,l,r}ごとに、max(a[-],u)の区間[l,r]での総和を取得。（O((N+Q)log N + Q log Q)）
-template <typename U , typename Z_MODULE , typename INT> vector<U> AbstractMaxIntervalSum( Z_MODULE M , vector<U> a , const vector<tuple<U,INT,INT>>& query , const bool& sorted = false );
-template <typename U , typename INT> inline vector<U> MaxIntervalSum( vector<U> a , const vector<tuple<U,INT,INT>>& query , const bool& sorted = false );
+template <typename U , typename Z_MODULE , typename INT , typename ABSTRACT_BIT = AbstractBIT<U,Z_MODULE>> vector<U> AbstractMaxIntervalSum( Z_MODULE M , vector<U> a , const vector<tuple<U,INT,INT>>& query , const bool& sorted = false );
+template <typename U , typename INT , typename ABSTRACT_BIT = AbstractBIT<U,Module<int,U>>> inline vector<U> MaxIntervalSum( vector<U> a , const vector<tuple<U,INT,INT>>& query , const bool& sorted = false );

@@ -18,7 +18,7 @@ template <typename R , typename U , typename Z_MODULE> template <typename...Args
 
 template <typename R , typename U , typename Z_MODULE> inline void AbstractTimeSeriesSetMaxBIT<R,U,Z_MODULE>::Set( const R& t , const U& u ) { const bool b = m_event.count( t ) == 1; auto& m_event_t = m_event[t]; m_event_t = b ? max( m_event_t , u ) : u; }
 
-template <typename R , typename U , typename Z_MODULE> template <typename INT>
+template <typename R , typename U , typename Z_MODULE> template <typename INT , typename ABSTRACT_BIT>
 vector<U> AbstractTimeSeriesSetMaxBIT<R,U,Z_MODULE>::IntervalSum( const vector<tuple<R,INT,INT>>& query , const bool& sorted )
 {
 
@@ -37,8 +37,9 @@ vector<U> AbstractTimeSeriesSetMaxBIT<R,U,Z_MODULE>::IntervalSum( const vector<t
     a_sorted.insert( { m_a[i] , i } );
 
   }
-  
-  AbstractBIT a{ m_M , m_a };
+
+  const U& zero = m_M.Zero();
+  ABSTRACT_BIT a{ m_M , m_a };
   BIT<int> b{ m_N };
   auto itr = m_event.begin() , end = m_event.end();
   vector<U> answer( query.size() );
@@ -62,7 +63,7 @@ vector<U> AbstractTimeSeriesSetMaxBIT<R,U,Z_MODULE>::IntervalSum( const vector<t
 
       if( ai < temp ){
 
-	a.Add( i , m_M.Inverse( ai ) );
+	a.Set( i , zero );
 	b.Add( i , 1 );
 	a_sorted.erase( itr_a );
 
@@ -83,7 +84,7 @@ vector<U> AbstractTimeSeriesSetMaxBIT<R,U,Z_MODULE>::IntervalSum( const vector<t
 }
 
 
-template <typename U , typename Z_MODULE , typename INT>
+template <typename U , typename Z_MODULE , typename INT , typename ABSTRACT_BIT>
 vector<U> AbstractMaxIntervalSum( Z_MODULE M , vector<U> a , const vector<tuple<U,INT,INT>>& query , const bool& sorted )
 {
 
@@ -100,7 +101,7 @@ vector<U> AbstractMaxIntervalSum( Z_MODULE M , vector<U> a , const vector<tuple<
 
   }
 
-  auto answer_sorted = bit.IntervalSum( query_time , true );
+  auto answer_sorted = bit.template IntervalSum<int,ABSTRACT_BIT>( query_time , true );
   vector<U> answer( Q );
   
   for( int q = 0 ; q < Q ; q++ ){
@@ -113,4 +114,4 @@ vector<U> AbstractMaxIntervalSum( Z_MODULE M , vector<U> a , const vector<tuple<
 
 }
 
-template <typename U , typename INT> inline vector<U> MaxIntervalSum( vector<U> a , const vector<tuple<U,INT,INT>>& query , const bool& sorted ) { return AbstractMaxIntervalSum( Module<int,U>() , move( a ) , query , sorted ); }
+template <typename U , typename INT , typename ABSTRACT_BIT> inline vector<U> MaxIntervalSum( vector<U> a , const vector<tuple<U,INT,INT>>& query , const bool& sorted ) { return AbstractMaxIntervalSum<U,Module<int,U>,INT,ABSTRACT_BIT>( Module<int,U>() , move( a ) , query , sorted ); }
