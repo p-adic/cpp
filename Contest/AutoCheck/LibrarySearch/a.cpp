@@ -2075,30 +2075,14 @@ AC( QueryTime )
 AC( QueryTimeMax )
 {
   ASK_NUMBER(
-	     "全体max更新／区間max取得" ,
+	     "全体max更新／区間和取得" ,
 	     "範囲max更新／一点取得"
 	     );
   if( num == num_temp++ ){
-    CERR( "与えられた配列を(A_i)_i、クエリで全体max更新を取る値を(M_q)_q、" );
-    CERR( "クエリで区間演算を取る範囲を(I_q)_q、と置きます。" );
-    CERR( "- (A_i)_iで初期化された配列(a_i)_i（説明の都合。実際は(A_i)_iを使う）" );
-    CERR( "- (A_i,i)_iをソートした配列A'（構築O(N log N)）" );
-    CERR( "- 0で初期化された{0,1}値配列(B_i)_i（構築O(N)）" );
-    CERR( "- (A_i)_iと(M_q)_qの最小値より小さい値で初期化された整数変数M" );
-    CERR( "を用意します。" );
-    CERR( "" );
-    CERR( "各qごとに、以下の処理を行います：" );
-    CERR( "- M < M_qならば、以下の処理を行う：" );
-    CERR( "  - MをM_qに変更する。" );
-    CERR( "  - A'の先頭(x,i)がx < Mを満たす限り以下の処理を繰り返す：" );
-    CERR( "    - a_iを区間演算の単位元に変更する。（クエリ合計O(N log N)）" );
-    CERR( "    - B_iを1に変更する。（クエリ合計O(N log N)）" );
-    CERR( "    - A'から(x,i)を削除する。（クエリ合計O(N log N)）" );
-    CERR( "- 各i in Sに対するmax(A_i,M)を" );
-    CERR( "  - 区間和が必要ならばa_i+B_i*M" );
-    CERR( "  - 区間積が必要ならばa_i*M^{B_i}" );
-    CERR( "  に読み替えてI_qでの区間演算取得をする。（各クエリO(log N)）" );
-    CERR( "これにより合計O((N + Q)log N)で処理できます。" );
+    CERR( "全体max更新クエリと区間和取得クエリを時系列順に並べ番号を振ります。" );
+    CERR( "これにより配列の特定時刻での区間和を求める問題に帰着され、" );
+    CERR( "合計O((N + Q)log N + Q log Q)で処理できます。" );
+    CERR( "\\Mathematics\\SetTheory\\DirectProduct\\AfineSpace\\BIT\\TimeSeriesSetMax" );
   } else {
     CERR( "時刻tにおける第i成分をA[t][i]と置きます。" );
     CERR( "A[-][i]が単調増大することに注目してxがA[t][i]>=xを満たす条件を決定し、" );
@@ -2111,17 +2095,15 @@ AC( QueryTimeMax )
 
 AC( QueryTimeAddition )
 {
-  CERR( "第i成分が変化し続ける区間たちの個数をIと置きます。" );
-  CERR( "各区間を更に変化の仕方の違いで細分したものの個数をJと置きます。" );
-  CERR( "- JがO(N)ならば各細分での変化量を求めましょう。" );
-  CERR( "- JがO(N)でなくIがO(N)ならば各区間での変化量を求めましょう。" );
-  CERR( "変化量の計算は" );
+  CERR( "各成分を時刻の関数とみなした時、グラフがO(N)個の単純なパーツに分かれるとします。" );
+  CERR( "各パーツでの変化量の累積値を" );
   CERR( "- 階差数列や累積和やBIT" );
   CERR( "  \\Mathematics\\SetTheory\\DirectProduct\\AfineSpace\\DifferenceSeqeuence" );
   CERR( "  \\Mathematics\\SetTheory\\DirectProduct\\AfineSpace\\CumulativeProd" );
   CERR( "  \\Mathematics\\SetTheory\\DirectProduct\\AffineSpace\\BIT" );
   CERR( "- イベントソート" );
-  CERR( "を検討しましょう。" );
+  CERR( "  \\Mathematics\\SetTheory\\DirectProduct\\AffineSpace\\BIT\\TimeSeriesAdd" );
+  CERR( "で計算しましょう。" );
 }
 
 AC( Decision )
