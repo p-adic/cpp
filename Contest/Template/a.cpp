@@ -9,9 +9,9 @@
 IN VO Solve()
 {
   // // 数・配列・文字列
-  // CIN( ll , N , M , K );
+  // CIN( ll , N );
   // CIN_A( ll , N , A );
-  // CIN( string , S , T );
+  // // CIN( string , S );
 
   // // グラフ
   // CIN( int , N , M );
@@ -19,36 +19,37 @@ IN VO Solve()
   // vector<vector<int>> e( N );
   // // UnionFindForest uff{ N };
   // FOR( j , 0 , M ){
-  //   CIN( int , uj , vj ); uj--; vj--;
+  //   CIN( int , uj , vj ); --uj; --vj;
   //   e[uj].push_back( vj ); e[vj].push_back( uj );
   //   // uff.Graft( uj , vj );
   // }
   // Graph graph{ N , Get( e ) };
-  // // auto [ts,ts_inv,prev,dir_edge] = TopologicalSortedTree( graph , 0 );
-  // // Graph graph_dir{ N , Get( dir_edge ) };
-  // // Graph graph_dir_rev{ N , [&]( const int& i ){ return vector( prev[i] >= 0 ? 1 : 0 , prev[i] ); } };
   // BreadthFirstSearch bfs{ graph , -1 , 0 }; vector<int> d = dijk.GetDistance( 0 );
   // // DepthFirstSearchOnTree dfst{ graph , 0 };
+  // // auto [ts,ts_inv,prev,dir_edge] = TopologicalSortedTree( graph , 0 );
+  // // Graph graph_dir{ N , Get( dir_edge ) }; // 無向木をトポロジカルソートで0が根の有向化
+  // // Graph graph_dir_rev{ N , [&]( const int& i ){ return vector( prev[i] >= 0 ? 1 : 0 , prev[i] ); } };
   
   // // 重み付きグラフ
   // CIN( int , N , M );
   // // CIN( int , N ); int M = N - 1;
+  // CEXPR( ll , infty , 1e18 );
   // vector<vector<path>> e( N );
-  // // vector w( N , vector( N , ll(1e18) ) ); FOR( i , 0 , N ){ w[i][i] = 0; }
+  // // vector w( N , vector( N , infty ) ); FOR( i , 0 , N ){ w[i][i] = 0; }
   // // UnionFindForest uff{ N };
   // FOR( j , 0 , M ){
-  //   CIN( ll , uj , vj , wj ); uj--; vj--;
+  //   CIN( ll , uj , vj , wj ); --uj; --vj;
   //   e[uj].push_back( { vj , wj } ); e[vj].push_back( { uj , wj } );
   //   // w[uj][vj] = w[vj][uj] = wj;
   //   // uff.Graft( uj , vj , wj );
   // }
-  // auto edge = [&]( const int& i ){
-  //   vector<path> answer = e[i];
-  //   return answer;
-  // };
-  // Graph graph{ N , edge };
+  // // auto edge = [&]( const int& i ){
+  // //   vector<path> answer = e[i];
+  // //   return answer;
+  // // };
+  // Graph graph{ N , Get( e ) };
   // Dijkstra dijk{ graph }; vector<ll> d = dijk.GetDistance( 0 );
-   // // FloydWarshall fw{ ll(1e18) , w }; vector<vector<ll>> d = fw.GetDistance();
+  // // FloydWarshall fw{ infty , w }; vector<vector<ll>> d = fw.GetDistance();
 
   // 一般のクエリ
   // CIN( int , Q );
@@ -57,9 +58,9 @@ IN VO Solve()
   // FOR( q , 0 , Q ){
   //   CIN( int , type );
   //   if( type == 1 ){
-  //     CIN( ll , l , r , x ); l--; r--;
+  //     CIN( ll , l , r , x ); --l; --r;
   //   } else if( type == 2 ){
-  //     CIN( ll , l , r ); l--; r--;
+  //     CIN( ll , l , r ); --l; --r;
   //     COUT( t.IntervalSum( l , r ) );
   //   }
   // }
@@ -176,6 +177,9 @@ c:/Users/user/Documents/Programming/Mathematics/SetTheory/DirectProduct/AffineSp
 
 IntervalMultiplyLazySqrtDecomposition (18KB)
 c:/Users/user/Documents/Programming/Mathematics/SetTheory/DirectProduct/AffineSpace/SqrtDecomposition/LazyEvaluation/IntervalMultiply/compress.txt
+
+Knapsack (8KB)
+c:/Users/user/Documents/Programming/Mathematics/Combinatorial/KnapsackProblem/compress.txt
 
 MinimumCostFlow/PotentialisedDijkstra/Dijkstra (16KB)
 c:/Users/user/Documents/Programming/Mathematics/Geometry/Graph/Dijkstra/Potentialised/MinimumCostFlow/compress.txt
@@ -414,7 +418,7 @@ TE <TY T> IN T Min(CO T& a,CO T& b){RE a < b?a:b;}
 TE <TY T> IN T Max(CO T& a,CO T& b){RE a < b?b:a;}
 
 // グラフ用
-TE <TY T,TE <TY...> TY V> IN auto Get(CO V<T>& a){RE[&](CRI i = 0){RE a[i];};}
+TE <TY T,TE <TY...> TY V> IN auto Get(CO V<T>& a){RE[&](CRI i = 0)->CO T&{RE a[i];};}
 TE <TY T = int> IN VE<T> id(CRI SZ){VE<T> AN(SZ);FOR(i,0,SZ){AN[i]= i;}RE AN;}
 
 // グリッド問題用
@@ -436,8 +440,8 @@ IN VO SetWallStringOnGrid(CRI i,VE<string>& S){if(S.empty()){S.reSZ(H);}cin>>S[i
   #include "C:/Users/user/Documents/Programming/Contest/Template/include/a_Body.hpp"
 #else
 // Tuple（3KB）
-#define DF_OF_OP_FOR_TUPLE(OPR)TE <TY T,TY U,TE <TY...> TY V> IN auto OP OPR ## =(V<T,U>& t0,CO V<T,U>& t1)-> decltype((get<0>(t0),t0))&{get<0>(t0)OPR ## = get<0>(t1);get<1>(t0)OPR ## = get<1>(t1);RE t0;}TE <TY T,TY U,TY V> IN tuple<T,U,V>& OP OPR ## =(tuple<T,U,V>& t0,CO tuple<T,U,V>& t1){get<0>(t0)OPR ## = get<0>(t1);get<1>(t0)OPR ## = get<1>(t1);get<2>(t0)OPR ## = get<2>(t1);RE t0;}TE <TY T,TY U,TY V,TY W> IN tuple<T,U,V,W>& OP OPR ## =(tuple<T,U,V,W>& t0,CO tuple<T,U,V,W>& t1){get<0>(t0)OPR ## = get<0>(t1);get<1>(t0)OPR ## = get<1>(t1);get<2>(t0)OPR ## = get<2>(t1);get<3>(t0)OPR ## = get<3>(t1);RE t0;}TE <TE <TY...> TY V,TY...ARGS> IN auto OP OPR(CO V<ARGS...>& t0,CO V<ARGS...>& t1)-> decltype((get<0>(t0),t0)){RE MO(V<ARGS...>{t0}OPR ## = t1);}
-#define DF_OF_INCREMENT_FOR_TUPLE(INCR)TE <TY T,TY U,TE <TY...> TY V> IN auto OP INCR(V<T,U>& t)-> decltype((get<0>(t),t))&{INCR get<0>(t);INCR get<1>(t);RE t;}TE <TY T,TY U,TY V> IN tuple<T,U,V>& OP INCR(tuple<T,U,V>& t){INCR get<0>(t);INCR get<1>(t);INCR get<2>(t);RE t;}TE <TY T,TY U,TY V,TY W> IN tuple<T,U,V,W>& OP INCR(tuple<T,U,V,W>& t){INCR get<0>(t);INCR get<1>(t);INCR get<2>(t);INCR get<3>(t);RE t;}
+#define DF_OF_OP_FOR_TUPLE(OPR)TE <TY T,TY U,TE <TY...> TY V> IN auto OP OPR ## =(V<T,U>& t0,CO V<T,U>& t1)-> decltype((get<0>(t0),t0))&{get<0>(t0)OPR ## = get<0>(t1);get<1>(t0)OPR ## = get<1>(t1);RE t0;}TE <TY T,TY U,TY V> IN tuple<T,U,V>& OP OPR ## =(tuple<T,U,V>& t0,CO tuple<T,U,V>& t1){get<0>(t0)OPR ## = get<0>(t1);get<1>(t0)OPR ## = get<1>(t1);get<2>(t0)OPR ## = get<2>(t1);RE t0;}TE <TY T,TY U,TY V,TY W> IN tuple<T,U,V,W>& OP OPR ## =(tuple<T,U,V,W>& t0,CO tuple<T,U,V,W>& t1){get<0>(t0)OPR ## = get<0>(t1);get<1>(t0)OPR ## = get<1>(t1);get<2>(t0)OPR ## = get<2>(t1);get<3>(t0)OPR ## = get<3>(t1);RE t0;}TE <TE <TY...> TY V,TY...ARGS> IN auto OP OPR(CO V<ARGS...>& t0,CO V<ARGS...>& t1)-> decldecay_t((get<0>(t0),t0)){auto t = t0;RE MO(t OPR ## = t1);}
+#define DF_OF_INCREMENT_FOR_TUPLE(INCR)TE <TY T,TY U,TE <TY...> TY V> IN auto OP INCR(V<T,U>& t)-> decldecay_t((get<0>(t),t))&{INCR get<0>(t);INCR get<1>(t);RE t;}TE <TY T,TY U,TY V> IN tuple<T,U,V>& OP INCR(tuple<T,U,V>& t){INCR get<0>(t);INCR get<1>(t);INCR get<2>(t);RE t;}TE <TY T,TY U,TY V,TY W> IN tuple<T,U,V,W>& OP INCR(tuple<T,U,V,W>& t){INCR get<0>(t);INCR get<1>(t);INCR get<2>(t);INCR get<3>(t);RE t;}
 TE <CL Traits,TY T,TY U,TE <TY...> TY V> IN auto OP>>(IS& is,V<T,U>& arg)-> decltype((get<0>(arg),is))&{RE is >> get<0>(arg)>> get<1>(arg);}TE <CL Traits,TY T,TY U,TY V> IN IS& OP>>(IS& is,tuple<T,U,V>& arg){RE is >> get<0>(arg)>> get<1>(arg)>> get<2>(arg);}TE <CL Traits,TY T,TY U,TY V,TY W> IN IS& OP>>(IS& is,tuple<T,U,V,W>& arg){RE is >> get<0>(arg)>> get<1>(arg)>> get<2>(arg)>> get<3>(arg);}TE <CL Traits,TY T,TY U,TE <TY...> TY V> IN auto OP<<(OS& os,CO V<T,U>& arg)-> decltype((get<0>(arg),os))&{RE os << get<0>(arg)<< " " << get<1>(arg);}TE <CL Traits,TY T,TY U,TY V> IN OS& OP<<(OS& os,CO tuple<T,U,V>& arg){RE os << get<0>(arg)<< " " << get<1>(arg)<< " " << get<2>(arg);}TE <CL Traits,TY T,TY U,TY V,TY W> IN OS& OP<<(OS& os,CO tuple<T,U,V,W>& arg){RE os << get<0>(arg)<< " " << get<1>(arg)<< " " << get<2>(arg)<< " " << get<3>(arg);}DF_OF_OP_FOR_TUPLE(+);DF_OF_OP_FOR_TUPLE(-);DF_OF_OP_FOR_TUPLE(*);DF_OF_OP_FOR_TUPLE(/);DF_OF_OP_FOR_TUPLE(%);DF_OF_INCREMENT_FOR_TUPLE(++);DF_OF_INCREMENT_FOR_TUPLE(--);
 
 // Vector（2KB）
