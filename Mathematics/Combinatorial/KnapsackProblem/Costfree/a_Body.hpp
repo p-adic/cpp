@@ -6,35 +6,9 @@
 #include "../../../Algebra/Monoid/a_Body.hpp"
 
 template <typename INT>
-vector<bool> CostfreeConstructibilityKnapsack( const vector<INT>& value , const INT& value_sum_bound )
+INT CostfreeKnapsackFewValues( const int& N , const vector<INT>& value , const INT& value_bound , const INT& value_sum_bound )
 {
 
-  const int N = value.size();
-  vector<bool> answer( value_sum_bound + 1 );
-  answer[0] = true;
-
-  for( int i = 0 ; i < N ; i++ ){
-
-    auto& value_i= value[i];
-    assert( 0 <= value_i );
-
-    for( INT v = value_sum_bound ; v >= value_i ; v-- ){
-
-      answer[v] |= answer[v - value_i];
-
-    }
-
-  }
-
-  return answer;
-
-}
-
-template <typename INT>
-INT CostfreeBoundedValueSumKnapsackFewValues( const int& N , const vector<INT>& value , const INT& value_bound , const INT& value_sum_bound )
-{
-
-  const INT value_sum_min = value_sum_bound - value_bound;
   INT answer = 0;
   int i = -1;
 
@@ -120,9 +94,9 @@ INT CostfreeBoundedValueSumKnapsackFewValues( const int& N , const vector<INT>& 
 
     if( u[v] != -1 ){
 
-      return v + ( value_sum_bound - value_bound + 1 )
+      return v + ( value_sum_bound - value_bound + 1 );
 
-	}
+    }
 
   }
   
@@ -132,7 +106,7 @@ INT CostfreeBoundedValueSumKnapsackFewValues( const int& N , const vector<INT>& 
 }
 
 template <typename U , typename COMM_MONOID>
-U AbstractCostfreeBoundedValueSumKnapsackFewItems( COMM_MONOID M , const vector<U>& value , const U& value_bound , const U& value_sum_bound )
+U AbstractCostfreeKnapsackFewItems( COMM_MONOID M , const vector<U>& value , const U& value_bound , const U& value_sum_bound )
 {
 
   const int N = value.size();
@@ -161,7 +135,7 @@ U AbstractCostfreeBoundedValueSumKnapsackFewItems( COMM_MONOID M , const vector<
     }
     
     const int power_left = 1 << N_half_left;
-    vector<U> value_sum_left( power_left ), one ;
+    vector<U> value_sum_left( power_left , one );
 
     for( int s = 1 ; s < power_left ; s++ ){
 
@@ -202,6 +176,5 @@ U AbstractCostfreeBoundedValueSumKnapsackFewItems( COMM_MONOID M , const vector<
   
 }
 
-template <typename INT> inline INT CostfreeBoundedValueSumKnapsack( const vector<INT>& value , const INT& value_bound , const INT& value_sum_bound ) { assert( 1 <= value_bound && value_bound <= value_sum_bound ); const int N = value.size(); return value_bound >> ( N >> 1 ) == 0 ? CostfreeBoundedValueSumKnapsackFewValues( value , value_bound , value_sum_bound ) : AbstractCostfreeBoundedValueSumKnapsackFewItems( AdditiveMonoid<INT>() , value , value_bound , value_sum_bound ); }
+template <typename INT> inline INT CostfreeKnapsack( const vector<INT>& value , const INT& value_bound , const INT& value_sum_bound ) { assert( 1 <= value_bound && value_bound <= value_sum_bound ); const int N = value.size(); return value_bound >> ( N >> 1 ) == 0 ? CostfreeKnapsackFewValues( N , value , value_bound , value_sum_bound ) : AbstractCostfreeKnapsackFewItems( AdditiveMonoid<INT>() , value , value_bound , value_sum_bound ); }
 
-#include "../ValueSumBound/a_Body.hpp"
