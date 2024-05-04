@@ -3,10 +3,11 @@
 #pragma once
 #include "a.hpp"
 
-#include "../../Sort/a_Body.hpp"
 #include "../../VLArray/a_Body.hpp"
-#include "../../../Error/IllegalInput/a_Body.hpp"
 #include "../../../Mathematics/SetTheory/DirectProduct/a_Body.hpp"
+
+#include "../../VLArray/Sort/a_Body.hpp"
+#include "../../../Error/IllegalInput/a_Body.hpp"
 
 template <typename T , typename Key1 , typename... Key2> inline LabeledList<T,Key1,Key2...>::LabeledList() : m_v() {}
 template <typename T , typename Key1 , typename... Key2> inline LabeledList<T,Key1,Key2...>::LabeledList( const WrappedType<DirectProduct<DirectProduct<Key1,Key2...>,T> >& v ) :
