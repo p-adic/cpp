@@ -4,7 +4,7 @@
 #include "a.hpp"
 
 #include "../../Mathematics/SetTheory/Singleton/a_Body.hpp"
-#include "../List/LabeledList/a_Body.hpp"
+#include "../List/Labeled/a_Body.hpp"
 #include "../SmartPointer/a_Body.hpp"
 
 inline ofstream& FileHolder::operator()( const string& filename ) const { return *( OfstreamTable()( filename ) ); }

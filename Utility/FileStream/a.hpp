@@ -2,7 +2,7 @@
 
 #pragma once
 #include "../../Mathematics/SetTheory/Singleton/a.hpp"
-#include "../List/LabeledList/a.hpp"
+#include "../List/Labeled/a.hpp"
 #include "../SmartPointer/a.hpp"
 #include <fstream>
 
