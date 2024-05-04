@@ -15,3 +15,5 @@ DECLARATION_OF_OPERATORS_FOR_VECTOR( vector );
 
 inline void VariadicResize( const int& size );
 template <typename Arg , typename... ARGS> inline void VariadicResize( const int& size , Arg& arg , ARGS&... args );
+
+template <typename T> void sort( vector<T>& a , const bool& reversed = false );

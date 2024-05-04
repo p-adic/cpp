@@ -13,3 +13,5 @@ DEFINITION_OF_OPERATORS_FOR_VECTOR( vector );
 inline void VariadicResize( const int& size ) {}
 template <typename Arg , typename... ARGS> inline void VariadicResize( const int& size , Arg& arg , ARGS&... args ) { arg.resize( size ); VariadicResize( size , args... ); }
 
+template <typename T> void sort( vector<T>& a , const bool& reversed ) { if( reversed ){ static auto comp = []( const T& t0 , const T& t1 ) { return t1 < t0; }; sort( a.begin() , a.end() , comp ); } else { sort( a.begin() , a.end() ); } }
+

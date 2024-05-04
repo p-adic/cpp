@@ -5,5 +5,5 @@
 #define DF_OF_OP_FOR_VE(V,OPR)TE <TY T> IN V<T>& OP OPR ## =(V<T>& a,CO T& t){for(auto& s:a){s OPR ## = t;}RE a;}TE <TY T> IN V<T>& OP OPR ## =(V<T>& a0,CO V<T>& a1){CO size_t SZ = a0.SZ();AS(a0.SZ()<= a1.SZ());auto IT0 = a0.BE(),EN0 = a0.EN(),IT1 = a1.BE();WH(IT0 != EN0){IT0 OPR ## = IT1;}RE a0;}TE <TY T,TY U> IN V<T> OP OPR(V<T> a,CO U& u){RE MO(a OPR ## = u);}
 #define DF_OF_INCREMENT_FOR_VE(V,INCR)TE <TY T> IN V<T>& OP INCR(V<T>& a){for(auto& i:a){INCR i;}RE a;}
 #define DF_OF_OPS_FOR_VE(V)DF_OF_OP_FOR_VE(V,+);DF_OF_OP_FOR_VE(V,-);DF_OF_OP_FOR_VE(V,*);DF_OF_OP_FOR_VE(V,/);DF_OF_OP_FOR_VE(V,%);DF_OF_INCREMENT_FOR_VE(V,++);DF_OF_INCREMENT_FOR_VE(V,--)
-DF_OF_COUT_FOR_VE(VE);DF_OF_COUT_FOR_VE(LI);DF_OF_COUT_FOR_VE(set);DF_OF_COUT_FOR_VE(unordered_set);DF_OF_OPS_FOR_VE(VE);IN VO VariadicResize(CRI SZ){}TE <TY Arg,TY... ARGS> IN VO VariadicResize(CRI SZ,Arg& arg,ARGS&... args){arg.resize(SZ);VariadicResize(SZ,args...);}
+DF_OF_COUT_FOR_VE(VE);DF_OF_COUT_FOR_VE(LI);DF_OF_COUT_FOR_VE(set);DF_OF_COUT_FOR_VE(unordered_set);DF_OF_OPS_FOR_VE(VE);IN VO VariadicResize(CRI SZ){}TE <TY Arg,TY... ARGS> IN VO VariadicResize(CRI SZ,Arg& arg,ARGS&... args){arg.resize(SZ);VariadicResize(SZ,args...);}TE <TY T> VO sort(VE<T>& a,CO bool& reversed = false){if(reversed){ST auto comp =[](CO T& t0,CO T& t1){RE t1 < t0;};sort(a.BE(),a.EN(),comp);}else{sort(a.BE(),a.EN());}}
 #endif
