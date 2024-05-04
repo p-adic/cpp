@@ -4,16 +4,16 @@
 #include "a_Body.hpp"
 
 #include "../WriteInSamples/a_Body.hpp"
-#include "../../Random/a_Body.hpp"
+#include "../../../Utility/Random/a_Body.hpp"
 
 void GenerateSamples( const string& directory_name )
 {
 
   ofstream ofs_input_list;
-  const string input_file_list_name = "/" + directory_name + "/ã‚µãƒ³ãƒ—ãƒ«å…¥åŠ›/ä¸€è¦§.txt";
-  cout << "LLã¯" << WhatIsLL << "ã¨ã—ã¦å®šç¾©ã•ã‚Œã¦ã„ã¾ã™ã€‚" << endl;
-  cout << "ã‚¸ã‚§ãƒãƒ¬ãƒ¼ã‚¿ã‚³ãƒ¼ãƒ‰ã§ã‚µãƒ³ãƒ—ãƒ«ã‚’ç”Ÿæˆã—ã¾ã™ã€‚"  << endl;
-  SEARCH_SAMPLE_LIST_DIRECTORY( ofs , ios::app , cout << "ã‚¸ã‚§ãƒãƒ¬ãƒ¼ã‚¿ã‚³ãƒ¼ãƒ‰ã§ã‚µãƒ³ãƒ—ãƒ«ã‚’ç”Ÿæˆã™ã‚‹å›žæ•°ã‚’å…¥åŠ›ã—ã¦ãã ã•ã„ã€‚" << endl );
+  const string input_file_list_name = "/" + directory_name + "/ƒTƒ“ƒvƒ‹“ü—Í/ˆê——.txt";
+  cout << "LL_TYPE‚Í" << WhatIsLL_TYPE << "‚Æ‚µ‚Ä’è‹`‚³‚ê‚Ä‚¢‚Ü‚·B" << endl;
+  cout << "ƒWƒFƒlƒŒ[ƒ^ƒR[ƒh‚ÅƒTƒ“ƒvƒ‹‚ð¶¬‚µ‚Ü‚·B"  << endl;
+  SEARCH_SAMPLE_LIST_DIRECTORY( ofs , ios::app , cout << "ƒWƒFƒlƒŒ[ƒ^ƒR[ƒh‚ÅƒTƒ“ƒvƒ‹‚ð¶¬‚·‚é‰ñ”‚ð“ü—Í‚µ‚Ä‚­‚¾‚³‚¢B" << endl );
   CEXPR( int , bound_T , 100 );
   CIN_ASSERT( T , 1 , bound_T );
   GetRand( 0 , 1 );
