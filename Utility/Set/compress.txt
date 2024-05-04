@@ -1,8 +1,8 @@
 #ifdef DEBUG
   #include "c:/Users/user/Documents/Programming/Mathematics/Utility/Set/a_Body.hpp"
 #else
-CL is_ordered{PU:is_ordered()= delete;TE <TY T> ST CE auto Check(CO T& t)-> decltype(t < t,true_type());ST CE false_type Check(...);TE <TY T> ST CE CO bool value = is_same_v< decltype(Check(declval<T>())),true_type >;};TE <TY T,TE <TY...> TY MOD>struct hash<MOD<T>>{IN size_t OP()(CO MOD<T>& n)CO;};TE <TY T1,TY T2,TE <TY...> TY PAIR>struct hash<PAIR<T1,T2>>{IN size_t OP()(CO PAIR<T1,T2>& n)CO;};TE <TY T1,TY T2,TY T3>struct hash<tuple<T1,T2,T3>>{IN size_t OP()(CO tuple<T1,T2,T3>& n)CO;};
+#define DC_OF_HASH(...)struct hash<__VA_ARGS__>{IN size_t OP()(CO __VA_ARGS__& n)CO;};
+CL is_ordered{PU:is_ordered()= delete;TE <TY T> ST CE auto Check(CO T& t)-> decltype(t < t,true_type());ST CE false_type Check(...);TE <TY T> ST CE CO bool value = is_same_v< decltype(Check(declval<T>())),true_type >;};
 TE <TY T>US Set = conditional_t<is_COructible_v<unordered_set<T>>,unordered_set<T>,conditional_t<is_ordered::value<T>,set<T>,VO>>;TE <TY T,TY U>US Map = conditional_t<is_COructible_v<unordered_map<T,int>>,unordered_map<T,U>,conditional_t<is_ordered::value<T>,map<T,U>,VO>>;
-TE <TY T,TE <TY...> TY MOD> IN size_t hash<MOD<T>>::OP()(CO MOD<T>& n)CO{ST CO hash<T> h;RE h(n.RP());}TE <TY T0,TY T1,TE <TY...> TY PAIR> IN size_t hash<PAIR<T0,T1>>::OP()(CO PAIR<T0,T1>& n)CO{ST CO size_t seed = GetRand(1e3,1e8);ST CO hash<T0> h0;ST CO hash<T1> h1;RE(h0(get<0>(n))+ seed)^ h1(get<1>(n));}TE <TY T0,TY T1,TY T2> IN size_t hash<tuple<T0,T1,T2>>::OP()(CO tuple<T0,T1,T2>& n)CO{ST CO size_t seed = GetRand(1e3,1e8);ST CO hash<pair<T0,T1>> h01;ST CO hash<T2> h2;RE(h01({get<0>(n),get<1>(n)})+ seed)^ h2(get<2>(n));}
 #endif
 
