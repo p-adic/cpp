@@ -105,3 +105,6 @@ template <INT_TYPE_FOR_MOD M> inline string to_string( const Mod<M>& n ) noexcep
 
 template <INT_TYPE_FOR_MOD M , class Traits> inline basic_istream<char,Traits>& operator>>( basic_istream<char,Traits>& is , Mod<M>& n );
 template <INT_TYPE_FOR_MOD M , class Traits> inline basic_ostream<char,Traits>& operator<<( basic_ostream<char,Traits>& os , const Mod<M>& n );
+
+#include "../Hash/a.hpp"
+template <INT_TYPE_FOR_MOD M> DECLARATION_OF_HASH( Mod<M> );

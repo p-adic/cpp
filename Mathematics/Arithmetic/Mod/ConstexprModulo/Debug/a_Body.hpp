@@ -89,3 +89,6 @@ template <INT_TYPE_FOR_MOD M> inline string to_string( const Mod<M>& n ) noexcep
 
 template <INT_TYPE_FOR_MOD M , class Traits> inline basic_istream<char,Traits>& operator>>( basic_istream<char,Traits>& is , Mod<M>& n ) { ll m; is >> m; n = m; return is; }
 template <INT_TYPE_FOR_MOD M , class Traits> inline basic_ostream<char,Traits>& operator<<( basic_ostream<char,Traits>& os , const Mod<M>& n ) { return os << ( n.GetSign() ? "" : "-" ) << n.GetNumerator() << "/" << n.GetDenominator() << " ( ß " << n.Represent() << " )"; }
+
+#include "../../Hash/a_Body.hpp"
+template <INT_TYPE_FOR_MOD M> DEFINITION_OF_HASH_FOR_MOD( Mod<M> );
