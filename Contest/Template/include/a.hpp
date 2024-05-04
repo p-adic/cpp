@@ -3,14 +3,14 @@
 #pragma once
 #include "a_Macro.hpp"
 
-#include "c:/Users/user/Documents/Programming/Utility/StdStream/a_Body.hpp"
-#include "c:/Users/user/Documents/Programming/Utility/Vector/a_Body.hpp"
-#include "c:/Users/user/Documents/Programming/Contest/Random/a_Body.hpp"
+#include "c:/Users/user/Documents/Programming/Utility/Set/a.hpp"
+#include "c:/Users/user/Documents/Programming/Utility/Tuple/a.hpp"
+#include "c:/Users/user/Documents/Programming/Utility/Vector/a.hpp"
+#include "c:/Users/user/Documents/Programming/Utility/StdStream/a.hpp"
 
-#include "c:/Users/user/Documents/Programming/Utility/Set/a_Body.hpp"
-#include "c:/Users/user/Documents/Programming/Mathematics/Algebra/Monoid/Group/a_Body.hpp"
-#include "c:/Users/user/Documents/Programming/Mathematics/Geometry/Graph/a_Body.hpp"
-#include "c:/Users/user/Documents/Programming/Mathematics/Arithmetic/Mod/ConstexprModulo/Debug/a_Body.hpp"
+#include "c:/Users/user/Documents/Programming/Mathematics/Algebra/Monoid/Group/a.hpp"
+#include "c:/Users/user/Documents/Programming/Mathematics/Geometry/Graph/a.hpp"
+#include "c:/Users/user/Documents/Programming/Mathematics/Arithmetic/Mod/ConstexprModulo/Debug/a.hpp"
 
 CEXPR( uint , P , 998244353 );
 using MP = Mod<P>;
