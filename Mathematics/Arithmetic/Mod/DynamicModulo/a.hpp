@@ -8,7 +8,7 @@
 // verify:
 // https://yukicoder.me/submissions/965301（+=,*,/,Power）
 // https://yukicoder.me/submissions/965343（Derepresent,+=,-=,*,Combination,one）
-// https://yukicoder.me/submissions/965341（Derepresent,+=,-=,*=,SignInvert,+,*,^,++,--,Combination,zero,one）
+// https://yukicoder.me/submissions/965376（Derepresent,+=,-=,*=,SignInvert,+,*,^,++,--,Combination,zero,one）
 
 template <int NUM>
 class DynamicMods
@@ -70,13 +70,12 @@ public:
   // 0 <= n < Mの場合のみサポート。定数倍高速化のためにassertなし。
   static inline DynamicMods<NUM> Derepresent( uint n ) noexcept;
   
-  // Mが素数かつn < g_memory_lengthである場合のみサポート。
+  // 0 < n < MかつMが素数である場合のみサポート。
   static inline const DynamicMods<NUM>& Inverse( const uint& n );
-  // n < g_memory_lengthである場合のみサポート。
   static inline const DynamicMods<NUM>& Factorial( const uint& n );
-  // Mが素数かつn < g_memory_lengthである場合のみサポート。
+  // 0 < n < MかつMが素数である場合のみサポート。
   static inline const DynamicMods<NUM>& FactorialInverse( const uint& n );
-  // Mが素数かつn < g_memory_lengthである場合のみサポート。
+  // 0 < n < MかつMが素数である場合のみサポート。
   static inline DynamicMods<NUM> Combination( const uint& n , const uint& i );
 
   static inline const DynamicMods<NUM>& zero() noexcept;
@@ -106,3 +105,6 @@ template <int NUM> inline string to_string( const DynamicMods<NUM>& n ) noexcept
 
 template <int NUM , class Traits> inline basic_istream<char,Traits>& operator>>( basic_istream<char,Traits>& is , DynamicMods<NUM>& n );
 template <int NUM , class Traits> inline basic_ostream<char,Traits>& operator<<( basic_ostream<char,Traits>& os , const DynamicMods<NUM>& n );
+
+#include "../Hash/a.hpp"
+template <int NUM> DECLARATION_OF_HASH( DynamicMods<NUM> );

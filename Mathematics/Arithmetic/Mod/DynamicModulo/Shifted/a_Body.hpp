@@ -57,3 +57,6 @@ template <int NUM> inline string to_string( const ShiftedMods<NUM>& n ) noexcept
 
 template <int NUM , class Traits> inline basic_istream<char,Traits>& operator>>( basic_istream<char,Traits>& is , ShiftedMods<NUM>& n ) { ll m; is >> m; n = m; return is; }
 template <int NUM , class Traits> inline basic_ostream<char,Traits>& operator<<( basic_ostream<char,Traits>& os , const ShiftedMods<NUM>& n ) { return os << n.Represent(); }
+
+#include "../../Hash/a_Body.hpp"
+template <int NUM> DEFINITION_OF_HASH_FOR_MOD( ShiftedMods<NUM> );

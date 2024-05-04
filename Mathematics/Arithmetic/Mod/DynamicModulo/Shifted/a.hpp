@@ -86,3 +86,6 @@ template <int NUM> inline string to_string( const ShiftedMods<NUM>& n ) noexcept
 
 template <int NUM , class Traits> inline basic_istream<char,Traits>& operator>>( basic_istream<char,Traits>& is , ShiftedMods<NUM>& n );
 template <int NUM , class Traits> inline basic_ostream<char,Traits>& operator<<( basic_ostream<char,Traits>& os , const ShiftedMods<NUM>& n );
+
+#include "../../Hash/a.hpp"
+template <int NUM> DECLARATION_OF_HASH( ShiftedMods<NUM> );

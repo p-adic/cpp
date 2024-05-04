@@ -52,8 +52,8 @@ template <int NUM> template <typename INT> inline DynamicMods<NUM>& DynamicMods<
 template <int NUM> inline void DynamicMods<NUM>::swap( DynamicMods<NUM>& n ) noexcept { std::swap( m_n , n.m_n ); }
 
 template <int NUM> inline const DynamicMods<NUM>& DynamicMods<NUM>::Inverse( const uint& n ) { static vector<DynamicMods<NUM>> memory = { zero() , one() }; static uint length_curr = 2; while( length_curr <= n ){ memory.push_back( 1 ); memory.back().m_d = length_curr++; } return memory[n]; }
-template <int NUM> inline const DynamicMods<NUM>& DynamicMods<NUM>::Factorial( const uint& n ) { static vector<DynamicMods<NUM>> memory = { one() , one() }; static uint length_curr = 2; if( Constants::g_M <= n ){ return zero(); } memory.reserve( n + 1 ); while( length_curr <= n ){ memory.push_back( memory[length_curr - 1] ); auto& temp = memory.back().m_n; temp = ull( temp ) * length_curr++ % Constants::g_M; } return memory[n]; }
-template <int NUM> inline const DynamicMods<NUM>& DynamicMods<NUM>::FactorialInverse( const uint& n ) { static vector<DynamicMods<NUM>> memory = { one() , one() }; static uint length_curr = 2; memory.reserve( n + 1 ); while( length_curr <= n ){ memory.push_back( memory[length_curr - 1] ); auto& temp = memory.back().m_d; temp = ull( temp ) * length_curr++ % Constants::g_M; } return memory[n]; }
+template <int NUM> inline const DynamicMods<NUM>& DynamicMods<NUM>::Factorial( const uint& n ) { static vector<DynamicMods<NUM>> memory = { one() , one() }; static uint length_curr = 2; if( Constants::g_M <= n ){ return zero(); } while( length_curr <= n ){ memory.push_back( memory[length_curr - 1] ); auto& temp = memory.back().m_n; temp = ull( temp ) * length_curr++ % Constants::g_M; } return memory[n]; }
+template <int NUM> inline const DynamicMods<NUM>& DynamicMods<NUM>::FactorialInverse( const uint& n ) { static vector<DynamicMods<NUM>> memory = { one() , one() }; static uint length_curr = 2; while( length_curr <= n ){ memory.push_back( memory[length_curr - 1] ); auto& temp = memory.back().m_d; temp = ull( temp ) * length_curr++ % Constants::g_M; } return memory[n]; }
 template <int NUM> inline DynamicMods<NUM> DynamicMods<NUM>::Combination( const uint& n , const uint& i ) { return i <= n ? Factorial( n ) * FactorialInverse( i ) * FactorialInverse( n - i ) : zero(); }
 
 template <int NUM> inline const bool& DynamicMods<NUM>::GetSign() const noexcept { return m_non_negative; }
@@ -78,3 +78,6 @@ template <int NUM> inline string to_string( const DynamicMods<NUM>& n ) noexcept
 
 template <int NUM , class Traits> inline basic_istream<char,Traits>& operator>>( basic_istream<char,Traits>& is , DynamicMods<NUM>& n ) { ll m; is >> m; n = m; return is; }
 template <int NUM , class Traits> inline basic_ostream<char,Traits>& operator<<( basic_ostream<char,Traits>& os , const DynamicMods<NUM>& n ) { return os << ( n.GetSign() ? "" : "-" ) << n.GetNumerator() << "/" << n.GetDenominator() << " ( ß " << n.Represent() << " )"; }
+
+#include "../../Hash/a_Body.hpp"
+template <int NUM> DEFINITION_OF_HASH( DynamicMods<NUM> );
