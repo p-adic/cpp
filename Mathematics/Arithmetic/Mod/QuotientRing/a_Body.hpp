@@ -68,3 +68,6 @@ template <typename U , int NUM> inline string to_string( QuotientRings<U,NUM>& n
 
 template <typename U , int NUM , class Traits> inline basic_istream<char,Traits>& operator>>( basic_istream<char,Traits>& is , QuotientRings<U,NUM>& n ) { ll m; is >> m; n = m; return is; }
 template <typename U , int NUM , class Traits> inline basic_ostream<char,Traits>& operator<<( basic_ostream<char,Traits>& os , const QuotientRings<U,NUM>& n ) { return os << n.Represent(); }
+
+#include "../Hash/a_Body.hpp"
+template <typename U , int NUM> DEFINITION_OF_HASH_FOR_MOD( QuotientRings<U,NUM> );

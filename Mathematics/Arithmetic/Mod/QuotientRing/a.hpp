@@ -94,3 +94,7 @@ template <typename U , int NUM> inline string to_string( QuotientRings<U,NUM>& n
 
 template <typename U , int NUM , class Traits> inline basic_istream<char,Traits>& operator>>( basic_istream<char,Traits>& is , QuotientRings<U,NUM>& n );
 template <typename U , int NUM , class Traits> inline basic_ostream<char,Traits>& operator<<( basic_ostream<char,Traits>& os , const QuotientRings<U,NUM>& n );
+
+#include "../Hash/a.hpp"
+template <typename U , int NUM> DECLARATION_OF_HASH( QuotientRings<U,NUM> );
+
