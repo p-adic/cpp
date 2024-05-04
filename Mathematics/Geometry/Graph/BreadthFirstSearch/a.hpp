@@ -1,11 +1,14 @@
 // c:/Users/user/Documents/Programming/Mathematics/Geometry/Graph/BreadthFirstSearch/a.hpp
 
 #pragma once
+#include "../a.hpp"
+#include "../../../../Utility/Set/a.hpp"
+
 // verify:
-// https://yukicoder.me/submissions/957306（一始点Shiftの反復による多点BFSでの全探索）
-// https://yukicoder.me/submissions/957304（↑でEdgeにダミー変数がついたもの）
-// https://yukicoder.me/submissions/953226（SetConnectedComponent）
-// https://yukicoder.me/submissions/953225（一始点のGetDistance）
+// https://yukicoder.me/submissions/978898（一始点Shiftの反復による多点BFSでの全探索）
+// https://yukicoder.me/submissions/978899（GetConnectedComponent）
+// https://yukicoder.me/submissions/978904（一始点のGetDistance、EnumerationGraph）
+// https://yukicoder.me/submissions/978910（一始点のGetDistance、MemorisationGraph）
 
 // GRAPHは辺Edge:T->(T \times ...)^{< \omega}を持つグラフに相当する型。
 
@@ -52,13 +55,15 @@ public:
 
   inline T Next();
 
-  // 以下T==intかつGRAPHがGraphである場合にのみサポート。
-  // m_nextに格納されている未到達点（初期化時点ではinit/inits）から到達できる未到達点の深さを格納し、
+  // m_nextに格納されている未到達点（初期化時点ではinit/inits）から到達できる未到達点の深さを
+  // 格納する。
+  template <typename U = T> auto GetDistance() -> enable_if_t<is_same_v<GRAPH,MemorisationGraph<U,decldecay_t(declval<GRAPH>().edge())>>,Map<T,int>>;
   // 到達できない未到達点や既到達点は深さの代わりに-1を格納。
-  vector<int> GetDistance();
-  // 無向グラフである場合にのみサポート。
+  template <typename U = T> auto GetDistance() -> enable_if_t<!is_same_v<GRAPH,MemorisationGraph<U,decldecay_t(declval<GRAPH>().edge())>>,vector<int>>;
+  
+  // GRAPHがMemorisationGraphでない無向グラフである場合にのみサポート。
   // 未到達点の全体のなす部分グラフにおける連結成分の色分けと連結成分数を格納。
-  void SetConnectedComponent( vector<int>& cc_num , int& count );
+  pair<vector<int>,int> GetConnectedComponent();
 
 private:
   virtual void Push( list<T>& next , const T& t ) = 0;

@@ -3,6 +3,9 @@
 #pragma once
 #include "a.hpp"
 
+#include "../a_Body.hpp"
+#include "../../../../Utility/Set/a_Body.hpp"
+
 template <typename T , typename GRAPH> inline VirtualBreadthFirstSearch<T,GRAPH>::VirtualBreadthFirstSearch( GRAPH& G , const T& not_found ) : m_G( G ) , m_not_found( not_found ) , m_initialised( false ) , m_next() , m_found() , m_prev() {}
 template <typename T , typename GRAPH> template <typename Arg> inline VirtualBreadthFirstSearch<T,GRAPH>::VirtualBreadthFirstSearch( GRAPH& G , const T& not_found , Arg&& init ) : VirtualBreadthFirstSearch<T,GRAPH>( G , not_found ) { Initialise( forward<Arg>( init ) ); }
 
@@ -48,57 +51,82 @@ template <typename T , typename GRAPH> inline T VirtualBreadthFirstSearch<T,GRAP
 
 }
 
-template <typename T , typename GRAPH>
-vector<int> VirtualBreadthFirstSearch<T,GRAPH>::GetDistance()
+template <typename T , typename GRAPH> template <typename U>
+auto VirtualBreadthFirstSearch<T,GRAPH>::GetDistance() -> enable_if_t<is_same_v<GRAPH,MemorisationGraph<U,decldecay_t(declval<GRAPH>().edge())>>,Map<T,int>>
 {
 
-  static_assert( is_same_v<T,int> && is_same_v<GRAPH,Graph<decldecay_t( m_G.edge() )>> );
-  vector<int> depth{};
-  depth = vector<int>( size() , -1 );
+  Map<T,int> answer{};
 
   for( auto itr = m_next.begin() , end = m_next.end() ; itr != end ; itr++ ){
 
-    depth[*itr] = 0;
+    answer[*itr] = 0;
 
   }
   
-  int i;
+  T t;
   
-  while( ( i = Next() ) != m_not_found ){
+  while( ( t = Next() ) != m_not_found ){
 
-    int& depth_i = depth[i];
-    depth_i == -1 ? depth_i = depth[prev( i )] + 1 : depth_i;
+    if( answer.count( t ) == 0 ){
+      
+      answer[t] = answer[m_prev[m_G.Enumeration_inv( t )]] + 1;
+
+    }
 
   }
 
-  return depth;
+  return answer;
+  
+}
+
+template <typename T , typename GRAPH> template <typename U>
+auto VirtualBreadthFirstSearch<T,GRAPH>::GetDistance() -> enable_if_t<!is_same_v<GRAPH,MemorisationGraph<U,decldecay_t(declval<GRAPH>().edge())>>,vector<int>>
+{
+
+  vector answer( size() , -1 );
+
+  for( auto itr = m_next.begin() , end = m_next.end() ; itr != end ; itr++ ){
+
+    answer[m_G.Enumeration_inv( *itr )] = 0;
+
+  }
+  
+  T t;
+  
+  while( ( t = Next() ) != m_not_found ){
+
+    auto&& i = m_G.Enumeration_inv( t );
+    int& answer_i = answer[i];
+    answer_i == -1 ? answer_i = answer[m_G.Enumeration_inv( m_prev[i] )] + 1 : answer_i;
+
+  }
+
+  return answer;
   
 }
 
 template <typename T , typename GRAPH>
-void VirtualBreadthFirstSearch<T,GRAPH>::SetConnectedComponent( vector<int>& cc_num , int& count )
+pair<vector<int>,int> VirtualBreadthFirstSearch<T,GRAPH>::GetConnectedComponent()
 {
 
-  static_assert( is_same_v<T,int> && is_same_v<GRAPH,Graph<decldecay_t( m_G.edge() )>> );
+  static_assert( !is_same_v<GRAPH,MemorisationGraph<T,decldecay_t( m_G.edge() )>> );
   const int& V = size();
-  cc_num = vector<int>( V , -1 );
-  count = 0;
+  vector cc_num( V , -1 );
+  int count = 0;
 
   for( int i = 0 ; i < V ; i++ ){
 
     if( cc_num[i] == -1 ){
 
-      Shift( i );
-      int j = Next();
+      Shift( m_G.Enumeration( i ) );
+      T t = Next();
 
-      if( j != m_not_found ){
+      if( t != m_not_found ){
 
-	while( j != m_not_found ){
+	while( t != m_not_found ){
 
-	  // –³ŒüƒOƒ‰ƒt‚Å‚ ‚éê‡‚Íí‚ÉtrueB
-	  assert( cc_num[j] == -1 );
-	  cc_num[j] = count;
-	  j = Next();
+	  cc_num[m_G.Enumeration_inv( t )] = count;
+	  t = Next();
 
 	}
 
@@ -110,7 +138,7 @@ void VirtualBreadthFirstSearch<T,GRAPH>::SetConnectedComponent( vector<int>& cc_
 
   }
 
-  return;
+  return { move( cc_num ) , move( count ) };
 
 }
 

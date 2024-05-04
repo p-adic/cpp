@@ -1,7 +1,7 @@
 // c:/Users/user/Documents/Programming/Mathematics/Geometry/Graph/DepthFirstSearch/a.hpp
 
 #pragma once
-#include "../BreadthFirst/a.hpp"
+#include "../BreadthFirstSearch/a.hpp"
 
 // verify:
 // https://yukicoder.me/submissions/955873（一始点のShiftによる多点DFSでの全探索）

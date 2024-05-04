@@ -27,7 +27,7 @@ public:
   virtual ret_t<E,T> Edge( const T& t ) = 0;
   template <typename PATH> inline ret_t<E,T> Edge( const PATH& p );
 
-  static inline const T& Vertex( const T& t  ) noexcept;
+  static inline const T& Vertex( const T& t ) noexcept;
   template <typename PATH> static inline const T& Vertex( const PATH& e ) noexcept;
 
 private:
@@ -89,7 +89,6 @@ private:
 };
 template <typename Enum_T , typename Enum_T_inv , typename E> EnumerationGraph( const int& size , Enum_T enum_T , Enum_T_inv enum_T_inv , E edge ) -> EnumerationGraph<decldecay_t(declval<Enum_T>()(0)),Enum_T,Enum_T_inv,E>;
 
-// 推論補助のためにE::operator()はデフォルト引数が必要。
 template <typename T , typename E>
 class MemorisationGraph :
   public EdgeImplimentation<T,T,const int&,E>
@@ -101,7 +100,8 @@ private:
   Map<T,int> m_memory_inv;
   
 public:
-  inline MemorisationGraph( const int& size , E edge );
+  // 型推論のためにdummyを渡す。Eの戻り値の型から推論させると重み付き辺の時に機能しない。
+  inline MemorisationGraph( const int& size , const T& dummy , E edge );
   // push_backする可能性のあるvectorなので参照にしないように注意
   inline T Enumeration( const int& i );
   inline void Reset();
@@ -111,5 +111,3 @@ private:
   inline const int& Enumeration_inv_Body( const T& t );
   
 };
-template <typename E> MemorisationGraph( const int& size , E edge ) -> MemorisationGraph<decldecay_t(declval<E>()().back()),E>;
-template <typename E> MemorisationGraph( const int& size , E edge ) -> MemorisationGraph<decldecay_t(get<0>(declval<E>()().back())),E>;

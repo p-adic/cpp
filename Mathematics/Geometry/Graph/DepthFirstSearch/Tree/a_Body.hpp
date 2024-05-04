@@ -236,7 +236,7 @@ ret_t<F> DepthFirstSearchOnTree<TREE>::RootingDP( F& f )
 {
 
   using U = ret_t<F>;
-  static_assert( is_invocable_r_v<U,F,list<U>,int> );
+  static_assert( is_invocable_r_v<U,F,vector<U>,int> );
 
   if( ! m_set_children ){
 
@@ -245,7 +245,7 @@ ret_t<F> DepthFirstSearchOnTree<TREE>::RootingDP( F& f )
   }
   
   const int& V = this->size();
-  vector<list<U>> children_value( V );
+  vector<vector<U>> children_value( V );
   U temp;
   
   for( int n = 0 ; n < V ; n++ ){

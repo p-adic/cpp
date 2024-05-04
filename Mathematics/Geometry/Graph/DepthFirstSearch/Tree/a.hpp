@@ -10,7 +10,7 @@
 // https://yukicoder.me/submissions/957400（RerootingDP）
 
 // TREEはGraph<Edge>と表せる、木T=(V_T,E_T)に相当する型。特にV_Tの型はintに限られる。
-// E_Tは辺V_T -> (V_T \times ...)^{< \omega}に相当する関数オブジェクト。
+// ただしE_Tは辺V_T -> (V_T \times ...)^{< \omega}に相当する関数オブジェクト。
 
 // 入力の範囲内で
 // (1) Tが無向グラフとしての木である。

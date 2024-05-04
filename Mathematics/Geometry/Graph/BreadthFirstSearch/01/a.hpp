@@ -4,7 +4,7 @@
 #include "../a.hpp"
 
 // verify:
-// https://yukicoder.me/submissions/953236（経路復元なし）
+// https://yukicoder.me/submissions/953236（GetWeight）
 
 // GRAPHは{0,1}彩色付き辺Edge:T->(T \times \{0,1\})^{< \omega}を持つグラフに相当する型。
 
