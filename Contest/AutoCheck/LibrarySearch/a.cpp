@@ -1,4 +1,4 @@
-// c:/Users/user/Documents/Programming/Contest/AutoCheck/DebugHint/a.cpp
+// c:/Users/user/Documents/Programming/Contest/AutoCheck/LibrarySearch/a.cpp
 
 #include "../../Header.hpp"
 #include "a_Body.hpp"
