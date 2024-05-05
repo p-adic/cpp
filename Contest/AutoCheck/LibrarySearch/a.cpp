@@ -820,9 +820,18 @@ AC( Knapsack )
   CERR( "" );
   CERR( "コストの総和上限Cとします。コストの半順序モノイドにおけるC以下の元" );
   CERR( "全体の集合の要素数を|C|と置きます。" );
-  ASK_YES_NO( "Iは始切片とは限らない区間ですか？" );
-  if( reply == "y" ){
+  ASK_NUMBER(
+	     "Iを始切片に限る場合" ,
+	     "そうでなくIを区間に限る場合" ,
+	     "そうでなくIの連結成分長に上限がある場合" ,
+	     "そうでない場合"
+	     );
+  if( num == num_temp++ ){
+    CALL_AC( KnapsackInitialSegment );
+  } else if( num == num_temp++ ){
     CALL_AC( KnapsackInterval );
+  } else if( num == num_temp++ ){
+    CALL_AC( KnapsackBoundedIntervalLength );
   } else {
     ASK_YES_NO( "各項目が複数回選択できますか？" );
     if( reply == "y" ){
@@ -843,6 +852,34 @@ AC( Knapsack )
   }
 }
 
+AC( KnapsackInitialSegment )
+{
+  CERR( "価値が非負ならば、先頭から何項選べるかだけが重要であるため" );
+  CERR( "価値とコストの組を価値とみなし直すことでコストのないナップサック問題とみなせます。" );
+  CERR( "価値(A_i)_iの部分和で表せない価値全体の集合が有限の上限Lを持つとします。" );
+  ASK_YES_NO( "ナップサックは１つですか？" );
+  if( reply == "y" ){
+    CERR( "V>Lの場合はVが答えになるので場合分けでV<=Lの場合に帰着し、" );
+    CERR( "後は愚直に求めるか式変形で解きましょう。" );
+  } else {
+    CERR( "ナップサックが２つであるとし、それらの価値上限をそれぞれV_1 <= V_2と置き、" );
+    CERR( "必要ならばソートして(A_i)_iが昇順であるとし、各非負整数nに対し" );
+    CERR( "s_n := sum_{i=0}^{n} A_i" );
+    CERR( "と置き、A_n > 2Lを満たす最小のnをN_1と置き、s_n > V_1を満たす" );
+    CERR( "最大のnをN_2と置き、A_n > V_1を満たす最大のnをN_3と置きます。" );
+    CERR( "選択する項目全体の集合が始切片でなければならないならば、" );
+    CERR( "- N_1 <= N_2ならばmax(V_1-s_n,s_{n+1}-V_1) > Lなのでn+1までの" );
+    CERR( "  項目をうまく組み合わせてV_1が表せるため価値上限V = V_1 + V_2の" );
+    CERR( "  場合に帰着" );
+    CERR( "- N_1 > N_2ならば、N_3未満の各iに対し[0,i]までの選択可能性及び" );
+    CERR( "  選択可能時のナップサック１のみの価値の最大値をV_1'とすると、" );
+    CERR( "  N_3未満の制約を外してもV_1より大きい値はナップサック１に入らない" );
+    CERR( "  ため価値上限V = V_1' + V_2の場合に帰着" );
+    CERR( "を検討しましょう。" );
+  }
+  CERR( "\\Mathematics\\Combinatorial\\KnapsackProblem\\Costfree\\InitialSegment" );
+}
+
 AC( KnapsackInterval )
 {
   ASK_YES_NO( "区間長は固定ですか？" );
@@ -853,7 +890,22 @@ AC( KnapsackInterval )
   }
   CERR( "\\Mathematics\\Combinatorial\\KnapsackProblem\\Interval" );
 }
- 
+
+AC( KnapsackBoundedIntervalLength )
+{
+  CERR( "Iの各連結成分の長さの上限がLであるとします。選択する項目の価値総和の最大化は" );
+  CERR( "選択しない価値総和の最小化に帰着されるので、N未満の各iに対し、" );
+  CERR( "dp[i] = 「[0,i)で選択しない項目の価値総和の最小値」" );
+  CERR( "と定め、漸化式" );
+  CERR( "dp[i+L] = (min_{j=i}^{i+L-1} dp[j]) + A[i+L]" );
+  CERR( "を" );
+  CERR( "- O(N log N)が間に合いそうならば、IntervalMinBITによる一点min更新と" );
+  CERR( "  区間min取得" );
+  CERR( "  \\Mathematics\\SetTheory\\DirectProduct\\AffineSpace\\BIT\\IntervalMax" );
+  CERR( "- O(N log L)が間に合いそうならば、map<値,個数>による直近L個の管理" );
+  CERR( "で高速化することでiに関する動的計画法を処理しましょう。" );
+}
+
 AC( KnapsackMultipleChoice )
 {
   ASK_YES_NO( "各項目が無制限に選択できますか？" );
@@ -1014,9 +1066,6 @@ AC( SingleKnapsackWithMultiCost )
 
 AC( SingleKnapsackCostfree )
 {
-  CERR( "- (A_i)_iの部分和で表せない整数全体の集合が有限の上限Lを持ち" );
-  CERR( "  選択が始切片に限られるならば、V>Lの場合はVが答えになるので" );
-  CERR( "  場合分けでV<=Lの場合に帰着" );
   CERR( "- O(N 2^{N/2})が通りそうならば半分全列挙" );
   CERR( "  \\Mathematics\\Combinatorial\\KnapsackProblem\\Costfree" );
   CERR( "- O(N v_max)が通りそうかつ非負ならば[V-v_max,V+v_max]での実現可能性を" );
@@ -1034,33 +1083,13 @@ AC( SingleKnapsackCostfree )
 
 AC( MultipleKnapsack )
 {
-  ASK_YES_NO( "コストがなく、ナップサックが２つで、選択は始切片に限られますか？" );
-  if( reply == "y" ){
-    CERR( "(A_i)_iの部分和で表せない整数全体の集合が有限の上限Lを持つとします。" );
-    CERR( "ナップサック２つの価値上限をそれぞれV_1 <= V_2と置き、" );
-    CERR( "必要ならばソートして(A_i)_iが昇順であるとし、各非負整数nに対し" );
-    CERR( "s_n := sum_{i=0}^{n} A_i" );
-    CERR( "と置き、A_n > 2Lを満たす最小のnをN_1と置き、s_n > V_1を満たす" );
-    CERR( "最大のnをN_2と置き、A_n > V_1を満たす最大のnをN_3と置きます。" );
-    CERR( "選択する項目全体の集合が始切片でなければならないならば、" );
-    CERR( "- N_1 <= N_2ならばmax(V_1-s_n,s_{n+1}-V_1) > Lなのでn+1までの" );
-    CERR( "  項目をうまく組み合わせてV_1が表せるため価値上限V = V_1 + V_2の" );
-    CERR( "  場合に帰着" );
-    CERR( "- N_1 > N_2ならば、N_3未満の各iに対し[0,i]までの選択可能性及び" );
-    CERR( "  選択可能時のナップサック１のみの価値の最大値をV_1'とすると、" );
-    CERR( "  N_3未満の制約を外してもV_1より大きい値はナップサック１に入らない" );
-    CERR( "  ため価値上限V = V_1' + V_2の場合に帰着" );
-    CERR( "\\Mathematics\\Combinatorial\\KnapsackProblem\\Costfree\\InitialSegment" );
-    CERR( "を検討しましょう。" );
-  } else {
-    CERR( "ナップサックの個数をKと置きます。" );
-    CERR( "- O(K(N 2^N + K^N))が通りそうならば、高速ゼータ変換" );
-    CERR( "  \\Mathematics\\Combinatorial\\KnapsackProblem\\Negative\\Subsetwise\\Multiknapsack" );
-    CERR( "- 各ナップサックの容量が非常に小さいならば、コストの大きさで項目を分けて" );
-    CERR( "  コストの大きい順にそれらの選択数を全探策または二分探索" );
-    CERR( "  参考：https://yukicoder.me/problems/no/2617/editorial" );
-    CERR( "を検討しましょう。" );
-  }
+  CERR( "ナップサックの個数をKと置きます。" );
+  CERR( "- O(K(N 2^N + K^N))が通りそうならば、高速ゼータ変換" );
+  CERR( "  \\Mathematics\\Combinatorial\\KnapsackProblem\\Negative\\Subsetwise\\Multiknapsack" );
+  CERR( "- 各ナップサックの容量が非常に小さいならば、コストの大きさで項目を分けて" );
+  CERR( "  コストの大きい順にそれらの選択数を全探策または二分探索" );
+  CERR( "  参考：https://yukicoder.me/problems/no/2617/editorial" );
+  CERR( "を検討しましょう。" );
 }
 
 AC( MaximisationArrayFunction )
