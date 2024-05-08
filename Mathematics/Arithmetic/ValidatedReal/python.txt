@@ -3,6 +3,7 @@ class VaridatedReal:
 	digit=256
 	scale=1<<digit
 	precision=10
+	epsilon=10**(-precision-1)
 	one=None
 	zero=None
 
@@ -144,6 +145,18 @@ class VaridatedReal:
 		return a
 	def __str__(self):
 		return self.to_str(__class__.precision).__str__()
+
+	def set_precision(d):
+		__class__.precision=d
+		__class__.epsilon=10**(-d-1)
+	def eval(self):
+		if self.err()>__class__.epsilon:
+			print("TooBigError:")
+			print("self ->",self)
+			print("self.err() ->",self.err())
+			raise NameError("TooBigError")
+		a=self.to_str(__class__.precision+1)
+		return a[1 if a[1][-2]=='0'else 0][:-1]
 VaridatedReal.one=VaridatedReal(1)
 VaridatedReal.zero=VaridatedReal()
 
