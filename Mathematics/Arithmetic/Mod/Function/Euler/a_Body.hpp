@@ -5,53 +5,51 @@
 
 #include "../../../Prime/Constexpr/a_Body.hpp"
 
-#include "../CRT/a_Body.hpp"
-#include "../../../Prime/a_Body.hpp"
-
-
-template <typename INT> inline INT EulerFunction( const INT& n ) { vector<INT> P{}; vector<INT> exponent{}; return EulerFunction( n , P , exponent ); }
-template <typename INT , INT val_limit , int length_max> inline INT EulerFunction( const PrimeEnumeration<INT,val_limit,length_max>& prime , const INT& n ) { vector<INT> P{}; vector<INT> exponent{}; return EulerFunction( prime , n , P , exponent ); }
-
-template <typename INT>
-INT EulerFunction( const INT& n , vector<INT>& P , vector<INT>& exponent )
+template <typename PF , typename INT>
+INT EulerFunction_Body( PF pf , const INT& n )
 {
 
-  SetPrimeFactorisation( n , P , exponent );
-  EULER_FUNCTION;
+  auto [P,E] = pf( n );
+  INT answer = n;
 
-}
+  for( auto& p : P ){
 
-template <typename INT , INT val_limit , int length_max>
-INT EulerFunction( const PrimeEnumeration<INT,val_limit,length_max>& prime , const INT& n , vector<INT>& P , vector<INT>& exponent )
-{
-
-  SetPrimeFactorisation( prime , n , P , exponent );
-  EULER_FUNCTION;
-
-}
-
-template <typename INT , INT val_limit , int length_max , int size , typename INT2>
-void MemoriseEulerFunction( const PrimeEnumeration<INT,val_limit,length_max>& prime , INT2 ( &memory )[size] )
-{
-
-  static INT quotient[size];
-  
-  for( int n = 1 ; n < size ; n++ ){
-
-    memory[n] = quotient[n] = n;
+    answer -= answer / p;
 
   }
 
-  for( int i = 0 ; i < prime.m_length ; i++ ){
+  return { answer , move( P ) , move( E ) };
+
+}
+
+template <typename INT> inline INT EulerFunction( const INT& n ) { return EulerFunction_Body( PrimeFactorisation , n ); }
+template <typename INT1 , INT1 val_limit , int length_max , typename INT2> inline tuple<INT2,vector<INT1>,vector<int>> EulerFunction( const PrimeEnumeration<INT1,val_limit,length_max>& pe , const INT2& n ) { return EulerFunction_Body( [&]( const int& i ){ return PrimeFactorisation( pe , i ); } , n ); }
+
+template <typename INT1 , INT1 val_limit , int length_max , int size , typename INT2>
+vector<INT2> TotalEulerFunction( const PrimeEnumeration<INT1,val_limit,length_max>& pe , const INT2& n_max )
+{
+
+  vector<INT2> answer( n_max + 1 );
+  
+  for( INT2 n = 1 ; n <= n_max ; n++ ){
+
+    answer[n] = n;
+
+  }
+
+  auto quotient = answer;
+  const int& length = pe.length();
+
+  for( int i = 0 ; i < length ; i++ ){
     
-    const INT& p_i = prime[i];
-    int n = 0;
+    const INT2& p_i = pe[i];
+    INT2 n = 0;
 
-    while( ( n += p_i ) < size ){
+    while( ( n += p_i ) <= n_max ){
 
-      INT2& memory_n = memory[n];
-      INT& quotient_n = quotient[n];
-      memory_n -= memory_n / p_i;
+      INT2& answer_n = answer[n];
+      INT2& quotient_n = quotient[n];
+      answer_n -= answer_n / p_i;
 
       while( ( quotient_n /= p_i ) % p_i == 0 ){}
 
@@ -59,46 +57,20 @@ void MemoriseEulerFunction( const PrimeEnumeration<INT,val_limit,length_max>& pr
 
   }
   
-  for( int n = val_limit ; n < size ; n++ ){
+  for( INT2 n = val_limit ; n <= n_max ; n++ ){
 
-    const INT& quotient_n = quotient[n];
+    const INT2& quotient_n = quotient[n];
 
     if( quotient_n != 1 ){
 
-      INT2& memory_n = memory[n];
-      memory_n -= memory_n / quotient_n;
+      INT2& answer_n = answer[n];
+      answer_n -= answer_n / quotient_n;
       
     }
 
   }
 
-  return;
+  return answer;
 
 }
 
-template <typename INT> inline INT CarmichaelFunction( const INT& n ) { vector<INT> P{}; vector<INT> exponent{}; vector<INT> P_power{}; return CarmichaelFunction( n , P , exponent , P_power ); }
-template <typename INT , INT val_limit , int length_max> inline INT CarmichaelFunction( const PrimeEnumeration<INT,val_limit,length_max>& prime , const INT& n ) { vector<INT> P{}; vector<INT> exponent{}; vector<INT> P_power{}; return CarmichaelFunction( prime , n , P , exponent , P_power ); }
-
-template <typename INT>
-INT CarmichaelFunction( const INT& n , vector<INT>& P , vector<INT>& exponent , vector<INT>& P_power )
-{
-
-  vector<INT> P{};
-  vector<INT> exponent{};
-  vector<INT> P_power{};
-  SetPrimeFactorisation( n , P , exponent , P_power );
-  CARMICHAEL_FUNCTION;
-
-}
-
-template <typename INT , INT val_limit , int length_max>
-INT CarmichaelFunction( const PrimeEnumeration<INT,val_limit,length_max>& prime , const INT& n , vector<INT>& P , vector<INT>& exponent , vector<INT>& P_power )
-{
-
-  vector<INT> P{};
-  vector<INT> exponent{};
-  vector<INT> P_power{};
-  SetPrimeFactorisation( prime , n , P , exponent , P_power );
-  CARMICHAEL_FUNCTION;
-
-}
