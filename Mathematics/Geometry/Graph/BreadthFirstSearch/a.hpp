@@ -49,6 +49,7 @@ public:
   inline void Shift( const T& init );
   inline void Shift( list<T> inits );
 
+  // Gのサイズを取得。
   inline const int& size() const noexcept;
   inline vector<bool>::reference found( const T& t );
   inline const T& prev( const T& t );
