@@ -16,5 +16,6 @@ private:
   static uint g_M_minus;
   static int g_order_minus_1;
   static int g_order_minus_1_neg;
+  static bool g_M_is_prime;
 
 };

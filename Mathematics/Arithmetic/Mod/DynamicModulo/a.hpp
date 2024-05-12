@@ -70,7 +70,7 @@ public:
   // 0 <= n < Mの場合のみサポート。定数倍高速化のためにassertなし。
   static inline DynamicMods<NUM> Derepresent( uint n ) noexcept;
   
-  // 0 < n < MかつMが素数である場合のみサポート。
+  // M==1であるか、または0 < n < MかつnがMと互いに素である場合のみサポート。
   static inline const DynamicMods<NUM>& Inverse( const uint& n );
   static inline const DynamicMods<NUM>& Factorial( const uint& n );
   // 0 < n < MかつMが素数である場合のみサポート。
