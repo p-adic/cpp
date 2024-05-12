@@ -17,15 +17,14 @@ IN VO Solve()
   // CIN( int , N , M );
   // // CIN( int , N ); int M = N - 1;
   // vector<vector<int>> e( N );
-  // // UnionFindForest uff{ N };
   // FOR( j , 0 , M ){
   //   CIN( int , uj , vj ); --uj; --vj;
   //   e[uj].push_back( vj ); e[vj].push_back( uj );
-  //   // uff.Graft( uj , vj );
   // }
   // Graph graph{ N , Get( e ) };
-  // BreadthFirstSearch bfs{ graph , -1 , 0 }; vector<int> d = dijk.GetDistance( 0 );
+  // BreadthFirstSearch bfs{ graph , -1 , 0 }; vector<int> d = bfs.GetDistance();
   // // DepthFirstSearchOnTree dfst{ graph , 0 };
+  // // AbstractUnionFindForest uff{ graph , AdditiveGroup<int>() };
   // // auto [ts,ts_inv,prev,dir_edge] = TopologicalSortedTree( graph , 0 );
   // // Graph graph_dir{ N , Get( dir_edge ) }; // 無向木をトポロジカルソートで0が根の有向化
   // // Graph graph_dir_rev{ N , [&]( const int& i ){ return vector( prev[i] >= 0 ? 1 : 0 , prev[i] ); } };
@@ -36,19 +35,15 @@ IN VO Solve()
   // CEXPR( ll , infty , 1e18 );
   // vector<vector<path>> e( N );
   // // vector w( N , vector( N , infty ) ); FOR( i , 0 , N ){ w[i][i] = 0; }
-  // // UnionFindForest uff{ N };
   // FOR( j , 0 , M ){
   //   CIN( ll , uj , vj , wj ); --uj; --vj;
-  //   e[uj].push_back( { vj , wj } ); e[vj].push_back( { uj , wj } );
+  //   e[uj].push_back( { vj , wj } );
+  //   e[vj].push_back( { uj , wj } );
   //   // w[uj][vj] = w[vj][uj] = wj;
-  //   // uff.Graft( uj , vj , wj );
   // }
-  // // auto edge = [&]( const int& i ){
-  // //   vector<path> answer = e[i];
-  // //   return answer;
-  // // };
   // Graph graph{ N , Get( e ) };
   // Dijkstra dijk{ graph }; vector<ll> d = dijk.GetDistance( 0 );
+  // // AbstractUnionFindForest uff{ graph , AdditiveGroup<ll>() };
   // // FloydWarshall fw{ infty , w }; vector<vector<ll>> d = fw.GetDistance();
 
   // 一般のクエリ
@@ -418,7 +413,7 @@ TE <TY T> IN T Min(CO T& a,CO T& b){RE a < b?a:b;}
 TE <TY T> IN T Max(CO T& a,CO T& b){RE a < b?b:a;}
 
 // グラフ用
-TE <TY T,TE <TY...> TY V> IN auto Get(CO V<T>& a){RE[&](CRI i = 0)->CO T&{RE a[i];};}
+TE <TY V> IN auto Get(V& a){RE[&](CRI i = 0)->CO decldecay_t(a[0])&{RE a[i];};}
 TE <TY T = int> IN VE<T> id(CRI SZ){VE<T> AN(SZ);FOR(i,0,SZ){AN[i]= i;}RE AN;}
 
 // グリッド問題用
