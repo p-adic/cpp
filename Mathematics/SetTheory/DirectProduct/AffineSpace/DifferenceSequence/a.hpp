@@ -2,7 +2,7 @@
 
 #pragma once
 
-#include "../../../../Geometry/Graph/Array/Prev/a.hpp"
+#include "../../../../Geometry/Graph/Linear/Prev/a.hpp"
 
 // verify:
 // https://yukicoder.me/submissions/972270（零初期化、部分木加算、一点取得）

@@ -3,7 +3,7 @@
 #pragma once
 #include "a.hpp"
 
-#include "../../../../Geometry/Graph/Array/Prev/a_Body.hpp"
+#include "../../../../Geometry/Graph/Linear/Prev/a_Body.hpp"
 
 template <typename T , typename FOREST , typename PREV , typename U , typename GROUP> inline AbstractDifferenceSequence<T,FOREST,PREV,U,GROUP>::AbstractDifferenceSequence( FOREST G , PREV prev , GROUP M , int degree ) : AbstractDifferenceSequence( G , prev , M , vector( G.size() , M.Zero() ) , move( degree ) , 0 ) {}
 template <typename T , typename FOREST , typename PREV , typename U , typename GROUP> inline AbstractDifferenceSequence<T,FOREST,PREV,U,GROUP>::AbstractDifferenceSequence( FOREST& G , PREV& prev , GROUP& M , vector<U> a , int degree , int dummy ) : AbstractDifferenceSequence( move( G ) , move( prev ) , move( M ) , move( a ) , move( degree ) ) {}

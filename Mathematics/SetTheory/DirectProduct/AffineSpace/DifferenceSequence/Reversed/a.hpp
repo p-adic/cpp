@@ -2,7 +2,7 @@
 
 #pragma once
 
-#include "../../../../../Geometry/Graph/Array/Prev/a.hpp"
+#include "../../../../../Geometry/Graph/Linear/Prev/a.hpp"
 
 // verify:
 // https://yukicoder.me/submissions/972253（零初期化、区間加算、部分木取得）
