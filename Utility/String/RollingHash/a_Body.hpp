@@ -3,43 +3,23 @@
 #pragma once
 #include "a.hpp"
 
-template <ll p , ll r , int length_max> inline constexpr RollingHash<p,r,length_max>::RollingHash() : m_power() , m_p_inv( 1 )
+template <typename MODINT , typename INT> inline RollingHash<MODINT,INT>::RollingHash( MODINT r ) : m_size( 1 ) , m_power{ 1 } , m_r( move( r ) ) , m_r_inv( m_r ) { m_r_inv.Invert(); }
+
+template <typename MODINT , typename INT> template <typename STR> inline tuple<MODINT,MODINT,INT> RollingHash<MODINT,INT>::Encode( const STR& s ) { return Encode( s , Enumeration<decldecay_t( s[0] )> ); }
+
+template <typename MODINT , typename INT> template <typename STR, typename Enum>
+tuple<MODINT,MODINT,INT> RollingHash<MODINT,INT>::Encode( const STR& s , Enum& e )
 {
 
-  ll power = 1;
+  static_assert( is_invocable_r_v<MODINT,Enum,const decldecay_t( s[0] )&> );
+  const int size = s.size();
+  CheckSize( size + 1 );
   
-  for( int i = 0 ; i <= length_max ; i++ ){
-
-    m_power[i] = power;
-    ( power *= r ) %= p;
-
-  }
-
-  power = r;
-  ll exponent = p - 2;
-  
-  while( exponent > 0 ){
-
-    ( exponent & 1 ) == 1 ? ( m_p_inv *= power ) %= p : m_p_inv;
-    ( power *= power ) %= p;
-    exponent >>= 1;
-
-  }
-
-}
-
-template <ll p , ll r , int length_max>
-tuple<ll,ll,int> RollingHash<p,r,length_max>::Encode( const string& s ) const
-{
-
-  int size = s.size();
-  assert( size <= length_max );
-  
-  ll answer = 0;
+  MODINT answer = 0;
 
   for( int i = 0 ; i < size ; i++ ){
 
-    ( answer += s[i] * m_power[i] ) %= p;
+    answer += e( s[i] ) * m_power[i];
 
   }
 
@@ -47,17 +27,33 @@ tuple<ll,ll,int> RollingHash<p,r,length_max>::Encode( const string& s ) const
 
 }
 
-template <ll p , ll r , int length_max>
-inline tuple<ll,ll,int> RollingHash<p,r,length_max>::Concatenate( const tuple<ll,ll,int>& code0 , const tuple<ll,ll,int>& code1 ) const { return { ( get<0>( code0 ) + get<0>( code1 ) * get<1>( code0 ) ) % p , ( get<1>( code0 ) * get<1>( code1 ) ) % p , get<2>( code0 ) + get<2>( code1 ) }; }
+template <typename MODINT , typename INT> inline tuple<MODINT,MODINT,INT> RollingHash<MODINT,INT>::Concatenate( const tuple<MODINT,MODINT,INT>& code0 , const tuple<MODINT,MODINT,INT>& code1 ) const { return { get<0>( code0 ) + get<0>( code1 ) * get<1>( code0 ) , get<1>( code0 ) * get<1>( code1 ) , get<2>( code0 ) + get<2>( code1 ) }; }
 
-template <ll p , ll r , int length_max>
-int RollingHash<p,r,length_max>::CountContain( const string& s , const tuple<ll,ll,int>& code ) const
+template <typename MODINT , typename INT> inline tuple<MODINT,MODINT,INT> RollingHash<MODINT,INT>::Fold( tuple<MODINT,MODINT,INT> code , INT n ) const { assert( n >= 0 ); tuple<MODINT,MODINT,INT> answer{ 0 , 1 , 0 }; auto& [h,p,s] = code; while( n > 0 ){ ( n & 1 ) == 1 ? answer = Concatenate( answer , code ) : answer; h *= p + 1; p *= p; s += s; n >>= 1; } return answer; }
+
+template <typename MODINT , typename INT> template <typename CHAR> inline tuple<MODINT,MODINT,INT> RollingHash<MODINT,INT>::Replace( tuple<MODINT,MODINT,INT> code , const INT& i , const CHAR& c_prev , const CHAR& c_next ) const { return Replace( code , i , c_prev , c_next , Enumeration<CHAR> ); }
+template <typename MODINT , typename INT> template <typename CHAR , typename Enum>
+tuple<MODINT,MODINT,INT> RollingHash<MODINT,INT>::Replace( tuple<MODINT,MODINT,INT> code , const INT& i , const CHAR& c_prev , const CHAR& c_next , Enum& e ) const
 {
 
-  const int& size0 = s.size();
-  assert( size0 <= length_max );
-  const ll& n = get<0>( code );
-  const int& size1 = get<2>( code );
+  auto& [h,p,s] = code;
+  assert( i < s );
+  h += ( e( c_next ) -= e( c_prev ) ) *= ( i < m_size ? m_power[i] : Power( m_r , i ) );
+  return move( code );
+
+}
+
+template <typename MODINT , typename INT> template <typename STR> inline INT RollingHash<MODINT,INT>::CountContain( const STR& s , const tuple<MODINT,MODINT,INT>& code ) { return CountContain( s , code , Enumeration<decldecay_t( s[0] )> ); }
+
+template <typename MODINT , typename INT> template <typename STR , typename Enum>
+INT RollingHash<MODINT,INT>::CountContain( const STR& s , const tuple<MODINT,MODINT,INT>& code , Enum& e )
+{
+
+  static_assert( is_invocable_r_v<MODINT,Enum,const decldecay_t( s[0] )&> );
+  const INT size0 = s.size();
+  CheckSize( size0 );
+  const MODINT& n = get<0>( code );
+  const INT& size1 = get<2>( code );
 
   if( size1 == 0 ){
 
@@ -65,16 +61,21 @@ int RollingHash<p,r,length_max>::CountContain( const string& s , const tuple<ll,
     
   }
   
-  const ll& power = m_power[size1 - 1];
-  int answer = 0;
-  ll temp = 0;
+  CheckSize( size1 );
+  const MODINT& power = m_power[size1 - 1];
+  INT answer = 0;
+  MODINT temp = 0;
 
-  for( int i = 0 ; i < size0 ; i++ ){
+  for( INT i = 0 ; i < size0 ; i++ ){
 
-    ( ( i < size1 ? temp += s[i] * m_power[i] : ( ( ( temp -= s[i - size1] ) < 0 ? temp += p : temp ) *= m_p_inv ) += s[i] * power ) %= p ) == n ? ++answer : answer;
+    ( i < size1 ? temp += e( s[i] ) * m_power[i] : ( ( temp -= e( s[i - size1] ) ) *= m_r_inv ) += e( s[i] ) * power ) == n ? ++answer : answer;
 
   }
 
   return answer;
 
 }
+
+template <typename MODINT , typename INT> void RollingHash<MODINT,INT>::CheckSize( const INT& size ) { m_power.reserve( size ); while( m_size < size ){ m_power.push_back( m_power[m_size++ - 1] * m_r ); } }
+
+template <typename MODINT , typename INT> template <typename CHAR> inline MODINT RollingHash<MODINT,INT>::Enumeration( const CHAR& c ) { return MODINT{ c }; }
