@@ -5,10 +5,8 @@
 
 #include "../Sqrt/a_Body.hpp"
 
-template <typename U , typename MONOID> inline MonoidSqrtDecomposition<U,MONOID>::MonoidSqrtDecomposition( MONOID M , const int& N ) : MonoidSqrtDecomposition( move( M ) , N , Sqrt( N ) ) {}
-template <typename U , typename MONOID> inline MonoidSqrtDecomposition<U,MONOID>::MonoidSqrtDecomposition( MONOID M , const int& N , const int& N_sqrt ) : m_M( move( M ) ) , m_N( N ) , m_N_sqrt( N_sqrt ) , m_N_d( ( m_N + m_N_sqrt - 1 ) / m_N_sqrt ) , m_N_m( m_N_d * m_N_sqrt ) , m_a( m_N_m , m_M.Zero() ) , m_b( m_N_d , m_M.Zero() ) { static_assert( ! is_same_v<U,int> && is_same_v<U,inner_t<MONOID>> ); }
-template <typename U , typename MONOID> inline MonoidSqrtDecomposition<U,MONOID>::MonoidSqrtDecomposition( MONOID M , vector<U> a ) : MonoidSqrtDecomposition( move( M ) , move( a ) , Sqrt( a.size() ) ) {}
-template <typename U , typename MONOID> inline MonoidSqrtDecomposition<U,MONOID>::MonoidSqrtDecomposition( MONOID M , vector<U> a , const int& N_sqrt ) : m_M( move( M ) ) , m_N( a.size() ) , m_N_sqrt( N_sqrt ) , m_N_d( ( m_N + m_N_sqrt - 1 ) / m_N_sqrt ) , m_N_m( m_N_d * m_N_sqrt ) , m_a( move( a ) ) , m_b( m_N_d , m_M.Zero() )
+template <typename U , typename MONOID> template <typename...Args> inline MonoidSqrtDecomposition<U,MONOID>::MonoidSqrtDecomposition( MONOID M , const int& N , const Args&... args ) : SqrtDecompositionCoordinate( N , args... ) , m_M( move( M ) ) , m_a( m_N_m , m_M.Zero() ) , m_b( m_N_d , m_M.Zero() ) { static_assert( ! is_same_v<U,int> && is_same_v<U,inner_t<MONOID>> ); }
+template <typename U , typename MONOID> template <typename...Args> inline MonoidSqrtDecomposition<U,MONOID>::MonoidSqrtDecomposition( MONOID M , vector<U> a , const Args&... args ) : SqrtDecompositionCoordinate( a.size() , args... ) , m_M( move( M ) ) , m_a( move( a ) ) , m_b( m_N_d , m_M.Zero() )
 {
 
   static_assert( ! is_same_v<U,int> && is_same_v<U,inner_t<MONOID>> );
@@ -33,7 +31,7 @@ template <typename U , typename MONOID> inline MonoidSqrtDecomposition<U,MONOID>
 
 }
 
-template <typename U , typename MONOID> template <typename...Args> inline void MonoidSqrtDecomposition<U,MONOID>::Initialise( Args&&... args ) { MonoidSqrtDecomposition<U,MONOID> temp{ m_M , forward<Args>( args )... };  m_N = temp.m_N; m_N_sqrt = temp.m_N_sqrt; m_N_d = temp.m_N_d; m_N_m = temp.m_N_m; m_a = move( temp.m_a ); m_b = move( temp.m_b ); }
+template <typename U , typename MONOID> template <typename...Args> inline void MonoidSqrtDecomposition<U,MONOID>::Initialise( Args&&... args ) { MonoidSqrtDecomposition<U,MONOID> temp{ m_M , forward<Args>( args )... }; SqrtDecompositionCoordinate::operator=( temp ); m_a = move( temp.m_a ); m_b = move( temp.m_b ); }
 
 template <typename U , typename MONOID> inline void MonoidSqrtDecomposition<U,MONOID>::Set( const int& i , const U& u )
 {

@@ -3,7 +3,10 @@
 #pragma once
 #include "a.hpp"
 
-inline constexpr int Sqrt( const int& N ) noexcept
+inline SqrtDecompositionCoordinate::SqrtDecompositionCoordinate( const int& N ) : SqrtDecompositionCoordinate( N , Sqrt( N ) ) {};
+inline SqrtDecompositionCoordinate::SqrtDecompositionCoordinate( const int& N , const int& N_sqrt ) : m_N( N ) , m_N_sqrt( N_sqrt ) , m_N_d( ( m_N + m_N_sqrt - 1 ) / m_N_sqrt ) , m_N_m( m_N_d * m_N_sqrt ) {}
+
+inline int SqrtDecompositionCoordinate::Sqrt( const int& N ) noexcept
 {
 
   if( N <= 1 ){
@@ -12,16 +15,15 @@ inline constexpr int Sqrt( const int& N ) noexcept
     
   }
   
-  int left = 0;
-  int right = N;
+  int l = 0 , r = N;
 
-  while( left + 1 < right ){
+  while( l + 1 < r ){
 
-    int m = ( left + right ) / 2;
-    ( m <= ( N - 1 ) / m ? left : right ) = m;
+    int m = ( l + r ) >> 1;
+    ( m <= ( N - 1 ) / m ? l : r ) = m;
 
   }
 
-  return right;
+  return r;
 
 }

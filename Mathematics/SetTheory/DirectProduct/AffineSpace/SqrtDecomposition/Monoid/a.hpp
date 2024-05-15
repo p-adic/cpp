@@ -3,8 +3,10 @@
 #pragma once
 #include "../a_Macro.hpp"
 
+#include "../Sqrt/a.hpp"
+
 // verify:
-// https://yukicoder.me/submissions/964778（配列初期化、一点代入、区間積）
+// https://yukicoder.me/submissions/981581（配列初期化、一点代入、区間積）
 
 // 入力の範囲内で要件
 // (1) MがUのモノイド構造である。
@@ -25,23 +27,18 @@
 // を満たす場合にのみサポート。
 // M.Product()に関する区間積の値探索O(N^{1/2})
 template <typename U , typename MONOID>
-class MonoidSqrtDecomposition
+class MonoidSqrtDecomposition :
+  public SqrtDecompositionCoordinate
 {
 
 protected:
   MONOID m_M;
-  int m_N;
-  int m_N_sqrt;
-  int m_N_d;
-  int m_N_m;
   vector<U> m_a;
   vector<U> m_b;
   
 public:
-  inline MonoidSqrtDecomposition( MONOID M , const int& N = 0 );
-  inline MonoidSqrtDecomposition( MONOID M , const int& N , const int& N_sqrt );
-  inline MonoidSqrtDecomposition( MONOID M , vector<U> a );
-  inline MonoidSqrtDecomposition( MONOID M , vector<U> a , const int& N_sqrt );
+  template <typename...Args> inline MonoidSqrtDecomposition( MONOID M , const int& N = 0 , const Args&... args );
+  template <typename...Args> inline MonoidSqrtDecomposition( MONOID M , vector<U> a , const Args&... args );
 
   template <typename...Args> inline void Initialise( Args&&... args );
   inline void Set( const int& i , const U& u );

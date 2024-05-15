@@ -1,8 +1,10 @@
 // c:/Users/user/Documents/Programming/Mathematics/SetTheory/DirectProduct/AffineSpace/SqrtDecomposition/Dual/a.hpp
 
 #pragma once
+#include "../Sqrt/a.hpp"
+
 // verify:
-// https://yukicoder.me/submissions/961729（区間作用、一点取得）
+// https://yukicoder.me/submissions/981583（区間作用、一点取得）
 // https://yukicoder.me/submissions/961738（非結合的マグマ、区間作用、一点取得）
 
 // 入力の範囲内で要件
@@ -21,22 +23,18 @@
 // X.Action()による一点作用はなし（一点代入か区間作用を使う）
 // X.Action()による区間作用O(N^{1/2})
 template <typename R , typename PT_MAGMA , typename U , typename R_SET>
-class DualSqrtDecomposition
+class DualSqrtDecomposition :
+  public SqrtDecompositionCoordinate
 {
 
 protected:
   PT_MAGMA m_L;
   R_SET m_X;
-  int m_N;
-  int m_N_sqrt;
-  int m_N_d;
-  int m_N_m;
   vector<U> m_a;
   vector<R> m_b;
 
 public:
-  inline DualSqrtDecomposition( PT_MAGMA L , R_SET X , vector<U> a = {} );
-  inline DualSqrtDecomposition( PT_MAGMA L , R_SET X , vector<U> a , const int& N_sqrt );
+  template <typename...Args> inline DualSqrtDecomposition( PT_MAGMA L , R_SET X , vector<U> a = {} , const Args&... args );
 
   template <typename...Args> inline void Initialise( Args&&... args );
   inline void Set( const int& i , const U& u );

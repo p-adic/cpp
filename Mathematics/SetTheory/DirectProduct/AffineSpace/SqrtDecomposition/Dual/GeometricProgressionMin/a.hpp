@@ -2,10 +2,10 @@
 
 #pragma once
 #include "../a.hpp"
-#include "../../../../../../Algebra/Monoid/Modulea.hpp"
+#include "../../../../../../Algebra/Monoid/Group/Module/a.hpp"
 
 // verify:
-// https://yukicoder.me/submissions/961726
+// https://yukicoder.me/submissions/981585
 
 // é©óRUâ¡åQÇÃç\ë¢éÀÇ∆ââéZÇÃçáê¨
 template <typename U>
@@ -28,10 +28,10 @@ class GeometricProgressionMinAction :
   
 private:
   N_MODULE m_M;
-  const vector<U>* m_p_memory;
+  const vector<U>* m_p_memor_r;
 
 public:
-  inline GeometricProgressionMinAction( N_MODULE M , const vector<U>& memory );
+  inline GeometricProgressionMinAction( N_MODULE M , const vector<U>& memor_r );
   pair<U,int> Action( const vector<U>& y , pair<U,int> u );
 
 };
@@ -56,7 +56,8 @@ class GeometricProgressionMinDualSqrtDecomposition :
 {
 
 private:
-  vector<U> m_memory;
+  // ÉNÉGÉäÇ≈àµÇ§åˆî‰ÇéñëOÇ…äiî[Ç∑ÇÈÅB
+  vector<U> m_memor_r;
   
 public:
   template <typename...Args> inline GeometricProgressionMinDualSqrtDecomposition( N_MODULE M , const U& infty , vector<U> memory_r , vector<U> a = {} , Args&&... args );

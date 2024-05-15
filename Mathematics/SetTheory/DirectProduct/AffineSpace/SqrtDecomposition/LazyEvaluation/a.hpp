@@ -1,9 +1,10 @@
 // c:/Users/user/Documents/Programming/Mathematics/SetTheory/DirectProduct/AffineSpace/SqrtDecomposition/LazyEvaluation/a.hpp
 
 #pragma once
+#include "../Sqrt/a.hpp"
 
 //verify:
-// https://onlinejudge.u-aizu.ac.jp/status/users/padic/submissions/1/DSL_2_I/judge/9004432/C++17（零初期化、区間代入、区間積取得）
+// https://onlinejudge.u-aizu.ac.jp/status/users/padic/submissions/1/DSL_2_I/judge/9207257/C++17（零初期化、区間代入、区間積取得）
 
 // 入力の範囲内で要件
 // (1) LがRの基点付き左作用構造（例えば基点付きマグマの正則左加群構造）である。
@@ -29,16 +30,13 @@
 // 一点取得O(1)
 // M.Product()に関する区間積取得O(N^{1/2})（Mのモノイド性を使う）
 template <typename R , typename PT_MAGMA , typename U , typename R_MODULE>
-class LazySqrtDecomposition
+class LazySqrtDecomposition :
+  public SqrtDecompositionCoordinate
 {
 
 protected:
   PT_MAGMA m_L;
   R_MODULE m_M;
-  int m_N;
-  int m_N_sqrt;
-  int m_N_d;
-  int m_N_m;
   vector<U> m_a;
   vector<U> m_b;
   vector<U> m_lazy_substitution;
@@ -49,10 +47,8 @@ public:
   // vectorを構築する時は
   // vector t( N , LazySqrtDecomposition{L,M} );
   // としてInitialiseすればよい。
-  inline LazySqrtDecomposition( PT_MAGMA L , R_MODULE M , const int& N = 0 );
-  inline LazySqrtDecomposition( PT_MAGMA L , R_MODULE M , const int& N , const int& N_sqrt );
-  inline LazySqrtDecomposition( PT_MAGMA L , R_MODULE M , vector<U> a );
-  inline LazySqrtDecomposition( PT_MAGMA L , R_MODULE M , vector<U> a , const int& N_sqrt );
+  template <typename...Args> inline LazySqrtDecomposition( PT_MAGMA L , R_MODULE M , const int& N = 0 , const Args&... args );
+  template <typename...Args> inline LazySqrtDecomposition( PT_MAGMA L , R_MODULE M , vector<U> a , const Args&... args );
   
   template <typename...Args> inline void Initialise( Args&&... args );
   inline void Set( const int& i , const U& u );

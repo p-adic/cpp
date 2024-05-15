@@ -3,8 +3,10 @@
 #pragma once
 #include "a_macro.hpp"
 
+#include "Sqrt/a.hpp"
+
 // verify:
-// https://yukicoder.me/submissions/961740（零初期化、一点加算、区間和）
+// https://yukicoder.me/submissions/981574（零初期化、一点加算、区間和）
 
 // 入力の範囲内で要件
 // (1) MがUの可換群構造である。
@@ -28,23 +30,18 @@
 // を満たす場合にのみサポート。
 // M.Sum()に関する区間和の値探索O(N^{1/2})
 template <typename U , typename ABELIAN_GROUP>
-class AbstractSqrtDecomposition
+class AbstractSqrtDecomposition :
+  public SqrtDecompositionCoordinate
 {
 
 private:
   ABELIAN_GROUP m_M;
-  int m_N;
-  int m_N_sqrt;
-  int m_N_d;
-  int m_N_m;
   vector<U> m_a;
   vector<U> m_b;
   
 public:
-  inline AbstractSqrtDecomposition( ABELIAN_GROUP M , const int& N = 0 );
-  inline AbstractSqrtDecomposition( ABELIAN_GROUP M , const int& N , const int& N_sqrt );
-  inline AbstractSqrtDecomposition( ABELIAN_GROUP M , vector<U> a );
-  inline AbstractSqrtDecomposition( ABELIAN_GROUP M , vector<U> a , const int& N_sqrt );
+  template <typename...Args> inline AbstractSqrtDecomposition( ABELIAN_GROUP M , const int& N = 0 , const Args&... args );
+  template <typename...Args> inline AbstractSqrtDecomposition( ABELIAN_GROUP M , vector<U> a , const Args&... args );
 
   template <typename...Args> inline void Initialise( Args&&... args );
   inline void Set( const int& i , const U& u );

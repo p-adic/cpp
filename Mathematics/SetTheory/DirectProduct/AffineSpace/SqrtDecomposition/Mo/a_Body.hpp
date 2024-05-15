@@ -29,7 +29,7 @@ inline void Mo::Set( const vector<pair<int,int>>& query , int y_dif_sqrt )
     const int x_dif = x_final - x_start + 1;
     const int x_div = x_dif / m_Q;
     const int y_dif = y_final - y_start + 1;
-    y_dif_sqrt == 0 ? y_dif_sqrt = Sqrt( y_dif ) : y_dif_sqrt;
+    y_dif_sqrt == 0 ? y_dif_sqrt = SqrtDecompositionCoordinate::Sqrt( y_dif ) : y_dif_sqrt;
     m_query.resize( m_Y_d = y_dif / y_dif_sqrt + 1 );
 
     // ΔXとQ log_2 Qの比較を行ってソート方法を決定する。

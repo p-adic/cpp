@@ -5,10 +5,9 @@
 
 #include "../Sqrt/a_Body.hpp"
 
-template <typename R , typename PT_MAGMA , typename U , typename R_SET> inline DualSqrtDecomposition<R,PT_MAGMA,U,R_SET>::DualSqrtDecomposition( PT_MAGMA L , R_SET X , vector<U> a ) : m_L( move( L ) ) , m_X( move( X ) ) , m_N( a.size() ) , m_N_sqrt( Sqrt( m_N ) ) , m_N_d( ( m_N + m_N_sqrt - 1 ) / m_N_sqrt ) , m_N_m( m_N_d * m_N_sqrt ) , m_a( move( a ) ) , m_b( m_N_d , m_L.Point() ) { static_assert( is_same_v<R,inner_t<PT_MAGMA>> && is_same_v<U,inner_t<R_SET>> ); }
-template <typename R , typename PT_MAGMA , typename U , typename R_SET> inline DualSqrtDecomposition<R,PT_MAGMA,U,R_SET>::DualSqrtDecomposition( PT_MAGMA L , R_SET X , vector<U> a , const int& N_sqrt ) : m_L( move( L ) ) , m_X( move( X ) ) , m_N( a.size() ) , m_N_sqrt( N_sqrt ) , m_N_d( ( m_N + m_N_sqrt - 1 ) / m_N_sqrt ) , m_N_m( m_N_d * m_N_sqrt ) , m_a( move( a ) ) , m_b( m_N_d , m_L.Point() ) { static_assert( is_same_v<R,inner_t<PT_MAGMA>> && is_same_v<U,inner_t<R_SET>> ); }
+template <typename R , typename PT_MAGMA , typename U , typename R_SET> template <typename...Args> inline DualSqrtDecomposition<R,PT_MAGMA,U,R_SET>::DualSqrtDecomposition( PT_MAGMA L , R_SET X , vector<U> a , const Args&... args ) : SqrtDecompositionCoordinate( a.size() , args... ) , m_L( move( L ) ) , m_X( move( X ) ) , m_a( move( a ) ) , m_b( m_N_d , m_L.Point() ) { static_assert( is_same_v<R,inner_t<PT_MAGMA>> && is_same_v<U,inner_t<R_SET>> ); }
 
-template <typename R , typename PT_MAGMA , typename U , typename R_SET> template <typename...Args> inline void DualSqrtDecomposition<R,PT_MAGMA,U,R_SET>::Initialise( Args&&... args ) { DualSqrtDecomposition<R,PT_MAGMA,U,R_SET> temp{ m_L , m_X , forward<decay_t<Args>>( args )... }; m_N = temp.m_N; m_N_sqrt = temp.m_N_sqrt; m_N_d = temp.m_N_d; m_N_m = temp.m_N_m; m_a = move( temp.m_a ); m_b = move( temp.m_b ); }
+template <typename R , typename PT_MAGMA , typename U , typename R_SET> template <typename...Args> inline void DualSqrtDecomposition<R,PT_MAGMA,U,R_SET>::Initialise( Args&&... args ) { DualSqrtDecomposition<R,PT_MAGMA,U,R_SET> temp{ m_L , m_X , forward<decay_t<Args>>( args )... }; SqrtDecompositionCoordinate::operator=( temp ); m_a = move( temp.m_a ); m_b = move( temp.m_b ); }
 template <typename R , typename PT_MAGMA , typename U , typename R_SET> inline void DualSqrtDecomposition<R,PT_MAGMA,U,R_SET>::Set( const int& i , const U& u ) { U& m_ai = m_a[i]; if( m_ai != u ){ Update( i / m_N_sqrt ); m_ai = u; } }
 
 template <typename R , typename PT_MAGMA , typename U , typename R_SET> template <typename Arg> inline void DualSqrtDecomposition<R,PT_MAGMA,U,R_SET>::IntervalAct( const int& i_start , const int& i_final , const Arg& r )
@@ -87,3 +86,5 @@ template <typename R , typename PT_MAGMA , typename U , typename R_SET> inline v
   return;
 
 }
+
+#include "../../../../../Algebra/Monoid/Group/Module/a_Body.hpp"

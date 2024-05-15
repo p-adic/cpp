@@ -3,10 +3,10 @@
 #pragma once
 #include "a.hpp"
 
-template <typename U , typename N_MODULE> inline IntervalMultiplySqrtDecomposition<U,N_MODULE>::IntervalMultiplySqrtDecomposition( N_MODULE M , const int& N ) : IntervalMultiplySqrtDecomposition( move( M ) , N , Sqrt( N ) ) {}
-template <typename U , typename N_MODULE> inline IntervalMultiplySqrtDecomposition<U,N_MODULE>::IntervalMultiplySqrtDecomposition( N_MODULE M , const int& N , const int& N_sqrt ) : m_M( move( M ) ) , m_N( N ) , m_N_sqrt( N_sqrt ) , m_N_d( ( m_N + m_N_sqrt - 1 ) / m_N_sqrt ) , m_N_m( m_N_d * m_N_sqrt ) , m_a( m_N_m , m_M.Zero() ) , m_b( m_N_d , m_M.Zero() ) , m_lazy_multiplication( m_N_d , m_M.One() ) { static_assert( ! is_same_v<U,int> && is_same_v<U,inner_t<N_MODULE>> ); }
-template <typename U , typename N_MODULE> inline IntervalMultiplySqrtDecomposition<U,N_MODULE>::IntervalMultiplySqrtDecomposition( N_MODULE M , vector<U> a ) : IntervalMultiplySqrtDecomposition( move( M ) , move( a ) , Sqrt( a.size() ) ) {}
-template <typename U , typename N_MODULE> inline IntervalMultiplySqrtDecomposition<U,N_MODULE>::IntervalMultiplySqrtDecomposition( N_MODULE M , vector<U> a , const int& N_sqrt ) : m_M( move( M ) ) , m_N( a.size() ) , m_N_sqrt( N_sqrt ) , m_N_d( ( m_N + m_N_sqrt - 1 ) / m_N_sqrt ) , m_N_m( m_N_d * m_N_sqrt ) , m_a( move( a ) ) , m_b( m_N_d , m_M.Zero() ) , m_lazy_multiplication( m_N_d , m_M.One() )
+#include "../../../Sqrt/a_Body.hpp"
+
+template <typename U , typename N_MODULE> template <typename...Args> inline IntervalMultiplySqrtDecomposition<U,N_MODULE>::IntervalMultiplySqrtDecomposition( N_MODULE M , const int& N , const Args&... args ) : SqrtDecompositionCoordinate( N , args... ) , m_M( move( M ) ) , m_a( m_N_m , m_M.Zero() ) , m_b( m_N_d , m_M.Zero() ) , m_lazy_multiplication( m_N_d , m_M.One() ) { static_assert( ! is_same_v<U,int> && is_same_v<U,inner_t<N_MODULE>> ); }
+template <typename U , typename N_MODULE> template <typename...Args> inline IntervalMultiplySqrtDecomposition<U,N_MODULE>::IntervalMultiplySqrtDecomposition( N_MODULE M , vector<U> a , const Args&... args ) : SqrtDecompositionCoordinate( a.size() , args... ) , m_M( move( M ) ) , m_a( move( a ) ) , m_b( m_N_d , m_M.Zero() ) , m_lazy_multiplication( m_N_d , m_M.One() )
 {
 
   static_assert( ! is_same_v<U,int> && is_same_v<U,inner_t<N_MODULE>> );
@@ -31,7 +31,7 @@ template <typename U , typename N_MODULE> inline IntervalMultiplySqrtDecompositi
 
 }
 
-template <typename U , typename N_MODULE> template <typename...Args> inline void IntervalMultiplySqrtDecomposition<U,N_MODULE>::Initialise( Args&&... args ) { IntervalMultiplySqrtDecomposition<U,N_MODULE> temp{ m_M , forward<Args>( args )... };  m_N = temp.m_N; m_N_sqrt = temp.m_N_sqrt; m_N_d = temp.m_N_d; m_N_m = temp.m_N_m; m_a = move( temp.m_a ); m_b = move( temp.m_b ); m_lazy_multiplication = vector( m_N_d , m_M.One() ); }
+template <typename U , typename N_MODULE> template <typename...Args> inline void IntervalMultiplySqrtDecomposition<U,N_MODULE>::Initialise( Args&&... args ) { IntervalMultiplySqrtDecomposition<U,N_MODULE> temp{ m_M , forward<Args>( args )... }; SqrtDecompositionCoordinate::operator=( temp ); m_a = move( temp.m_a ); m_b = move( temp.m_b ); m_lazy_multiplication = vector( m_N_d , m_M.One() ); }
 
 template <typename U , typename N_MODULE> inline void IntervalMultiplySqrtDecomposition<U,N_MODULE>::Set( const int& i , const U& u )
 {
@@ -178,3 +178,5 @@ template <typename U , typename N_MODULE> inline U IntervalMultiplySqrtDecomposi
   return answer;
   
 }
+
+#include "../../../../../../../Algebra/Monoid/Group/Module/a_Body.hpp"

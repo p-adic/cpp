@@ -1,9 +1,11 @@
 // c:/Users/user/Documents/Programming/Mathematics/SetTheory/DirectProduct/AffineSpace/SqrtDecomposition/LazyEvaluation/IntervalMultiply/a.hpp
 
 #pragma once
+#include "../../Sqrt/a.hpp"
 
 // verify:
-// https://judge.yosupo.jp/submission/198759（配列初期化、区間作用、区間乗算、区間積取得）
+// https://judge.yosupo.jp/submission/209174（配列初期化、区間作用、区間乗算、区間積取得）
+// https://yukicoder.me/submissions/959027（配列初期化、区間代入、区間乗算、区間積取得）
 
 // 入力の範囲内で要件
 // (1) LがRの基点付き左作用構造（例えば基点付きマグマの正則左加群構造）である。
@@ -29,16 +31,13 @@
 // M.Act()による一点作用はなし。
 // M.Act()による区間作用O(N^{1/2})
 template <typename R , typename PT_MAGMA , typename U , typename R_MODULE>
-class IntervalMultiplyLazySqrtDecomposition
+class IntervalMultiplyLazySqrtDecomposition :
+  public SqrtDecompositionCoordinate
 {
 
 protected:
   PT_MAGMA m_L;
   R_MODULE m_M;
-  int m_N;
-  int m_N_sqrt;
-  int m_N_d;
-  int m_N_m;
   vector<U> m_a;
   vector<U> m_b;
   vector<U> m_lazy_substitution;
@@ -50,10 +49,8 @@ public:
   // vectorを構築する時は
   // vector t( N , IntervalMultiplyLazySqrtDecomposition{L,M} );
   // としてInitialiseすればよい。
-  inline IntervalMultiplyLazySqrtDecomposition( PT_MAGMA L , R_MODULE M , const int& N = 0 );
-  inline IntervalMultiplyLazySqrtDecomposition( PT_MAGMA L , R_MODULE M , const int& N , const int& N_sqrt );
-  inline IntervalMultiplyLazySqrtDecomposition( PT_MAGMA L , R_MODULE M , vector<U> a );
-  inline IntervalMultiplyLazySqrtDecomposition( PT_MAGMA L , R_MODULE M , vector<U> a , const int& N_sqrt );
+  template <typename...Args> inline IntervalMultiplyLazySqrtDecomposition( PT_MAGMA L , R_MODULE M , const int& N = 0 , const Args&... args );
+  template <typename...Args> inline IntervalMultiplyLazySqrtDecomposition( PT_MAGMA L , R_MODULE M , vector<U> a , const Args&... args );
   
   template <typename...Args> inline void Initialise( Args&&... args );
   inline void Set( const int& i , const U& u );

@@ -3,8 +3,10 @@
 #pragma once
 #include "../../../a_Macro.hpp"
 
+#include "../../../Sqrt/a.hpp"
+
 // verify:
-// https://yukicoder.me/submissions/964789（一点乗算、区間乗算、一点取得）
+// https://yukicoder.me/submissions/981582（一点乗算、区間乗算、一点取得）
 
 // 入力の範囲内で要件
 // (1) MがUのN加群構造である。
@@ -21,25 +23,20 @@
 // M.Product()による一点乗算O(1)（可換性を使う）
 // M.Product()による区間乗算O(N^{1/2})（N加群構造を使う）
 template <typename U , typename N_MODULE>
-class IntervalMultiplySqrtDecomposition
+class IntervalMultiplySqrtDecomposition :
+  public SqrtDecompositionCoordinate
 {
 
 protected:
   N_MODULE m_M;
-  int m_N;
-  int m_N_sqrt;
-  int m_N_d;
-  int m_N_m;
   vector<U> m_a;
   vector<U> m_b;
   vector<U> m_lazy_multiplication;
   
 public:
   // MonoidSqrtDecompositionのコンストラクタとm_lazy_multiplicationの零初期化
-  inline IntervalMultiplySqrtDecomposition( N_MODULE M , const int& N = 0 );
-  inline IntervalMultiplySqrtDecomposition( N_MODULE M , const int& N , const int& N_sqrt );
-  inline IntervalMultiplySqrtDecomposition( N_MODULE M , vector<U> a );
-  inline IntervalMultiplySqrtDecomposition( N_MODULE M , vector<U> a , const int& N_sqrt );
+  template <typename...Args> inline IntervalMultiplySqrtDecomposition( N_MODULE M , const int& N = 0 , const Args&... args );
+  template <typename...Args> inline IntervalMultiplySqrtDecomposition( N_MODULE M , vector<U> a , const Args&... args );
 
   template <typename...Args> inline void Initialise( Args&&... args );
   inline void Set( const int& i , const U& u );

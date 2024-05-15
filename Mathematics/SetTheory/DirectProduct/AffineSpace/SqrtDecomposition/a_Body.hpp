@@ -5,10 +5,9 @@
 
 #include "Sqrt/a_Body.hpp"
 
-template <typename U , typename ABELIAN_GROUP> inline AbstractSqrtDecomposition<U,ABELIAN_GROUP>::AbstractSqrtDecomposition( ABELIAN_GROUP M , const int& N ) : AbstractSqrtDecomposition( move( M ) , N , Sqrt( N ) ) {}
-template <typename U , typename ABELIAN_GROUP> inline AbstractSqrtDecomposition<U,ABELIAN_GROUP>::AbstractSqrtDecomposition( ABELIAN_GROUP M , const int& N , const int& N_sqrt ) : m_M( move( M ) ) , m_N( N ) , m_N_sqrt( N_sqrt ) , m_N_d( ( m_N + m_N_sqrt - 1 ) / m_N_sqrt ) , m_N_m( m_N_d * m_N_sqrt ) , m_a( m_N_m , m_M.Zero() ) , m_b( m_N_d , m_M.Zero() ) { static_assert( ! is_same_v<U,int> && is_same_v<U,inner_t<ABELIAN_GROUP>> ); }
-template <typename U , typename ABELIAN_GROUP> inline AbstractSqrtDecomposition<U,ABELIAN_GROUP>::AbstractSqrtDecomposition( ABELIAN_GROUP M , vector<U> a ) : m_M( move( M ) ) , m_N( a.size() ) , m_N_sqrt( Sqrt( m_N ) ) , m_N_d( ( m_N + m_N_sqrt - 1 ) / m_N_sqrt ) , m_N_m( m_N_d * m_N_sqrt ) , m_a( move( a ) ) , m_b( m_N_d , m_M.Zero() ) { Construct(); }
-template <typename U , typename ABELIAN_GROUP> inline AbstractSqrtDecomposition<U,ABELIAN_GROUP>::AbstractSqrtDecomposition( ABELIAN_GROUP M , vector<U> a , const int& N_sqrt ) : m_M( move( M ) ) , m_N( a.size() ) , m_N_sqrt( N_sqrt ) , m_N_d( ( m_N + m_N_sqrt - 1 ) / m_N_sqrt ) , m_N_m( m_N_d * m_N_sqrt ) , m_a( move( a ) ) , m_b( m_N_d , m_M.Zero() ) { Construct(); }
+template <typename U , typename ABELIAN_GROUP> template <typename...Args> inline AbstractSqrtDecomposition<U,ABELIAN_GROUP>::AbstractSqrtDecomposition( ABELIAN_GROUP M , const int& N , const Args&... args ) : SqrtDecompositionCoordinate( N , args... ) , m_M( move( M ) ) , m_a( m_N_m , m_M.Zero() ) , m_b( m_N_d , m_M.Zero() ) { static_assert( ! is_same_v<U,int> && is_same_v<U,inner_t<ABELIAN_GROUP>> ); }
+template <typename U , typename ABELIAN_GROUP> template <typename...Args> inline AbstractSqrtDecomposition<U,ABELIAN_GROUP>::AbstractSqrtDecomposition( ABELIAN_GROUP M , vector<U> a , const Args&... args ) : SqrtDecompositionCoordinate( a.size() , args... ) , m_M( move( M ) ) , m_a( move( a ) ) , m_b( m_N_d , m_M.Zero() ) { Construct(); }
+template <typename U> template <typename...Args> inline SqrtDecomposition<U>::SqrtDecomposition( Args&&... args ) : AbstractSqrtDecomposition<U,AdditiveGroup<U>>( AdditiveGroup<U>() , forward<Args>( args )... ) {}
 
 template <typename U , typename ABELIAN_GROUP> inline void AbstractSqrtDecomposition<U,ABELIAN_GROUP>::Construct()
 {
@@ -35,9 +34,7 @@ template <typename U , typename ABELIAN_GROUP> inline void AbstractSqrtDecomposi
 
 }
 
-template <typename U> template <typename...Args> inline SqrtDecomposition<U>::SqrtDecomposition( Args&&... args ) : AbstractSqrtDecomposition<U,AdditiveGroup<U>>( AdditiveGroup<U>() , forward<Args>( args )... ) {}
-
-template <typename U , typename ABELIAN_GROUP> template <typename...Args> inline void AbstractSqrtDecomposition<U,ABELIAN_GROUP>::Initialise( Args&&...args ) { AbstractSqrtDecomposition<U,ABELIAN_GROUP> temp{ m_M , forward<Args>( args )... }; m_N = temp.m_N; m_N_sqrt = temp.m_N_sqrt; m_N_d = temp.m_N_d; m_N_m = temp.m_N_m; m_a = move( temp.m_a ); m_b = move( temp.m_b ); }
+template <typename U , typename ABELIAN_GROUP> template <typename...Args> inline void AbstractSqrtDecomposition<U,ABELIAN_GROUP>::Initialise( Args&&... args ) { AbstractSqrtDecomposition<U,ABELIAN_GROUP> temp{ m_M , forward<Args>( args )... }; SqrtDecompositionCoordinate::operator=( temp ); m_a = move( temp.m_a ); m_b = move( temp.m_b ); }
 template <typename U , typename ABELIAN_GROUP> inline void AbstractSqrtDecomposition<U,ABELIAN_GROUP>::Set( const int& i , const U& u ) { U& m_ai = m_a[i]; U& m_bd = m_b[i / m_N_sqrt]; m_bd = m_M.Sum( move( m_bd ) , m_M.Sum( m_M.Inverse( m_ai ) , u ) ); m_ai = u; }
 template <typename U , typename ABELIAN_GROUP> inline void AbstractSqrtDecomposition<U,ABELIAN_GROUP>::Add( const int& i , const U& u ) { U& m_ai = m_a[i]; U& m_bd = m_b[i / m_N_sqrt]; m_bd = m_M.Sum( move( m_bd ) , u ); m_ai = m_M.Sum( move( m_ai ) , u ); }
 

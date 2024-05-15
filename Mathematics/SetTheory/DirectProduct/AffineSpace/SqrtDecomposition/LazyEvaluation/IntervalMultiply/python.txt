@@ -1,3 +1,6 @@
+#verify:
+#https://yukicoder.me/submissions/959055（IntervalSet,IntervalMultiply,IntervalProuct）
+
 #基点付きマグマ
 class L:
 	point=None
