@@ -2,15 +2,16 @@
 
 #pragma once
 
-// verify: https://yukicoder.me/submissions/908941
+// verify:
+// https://yukicoder.me/submissions/981573
 
 // 基本的に下記URLのConvex Hull Trickに準じる。
 // https://rsk0315.hatenablog.com/entry/2022/04/29/141726
 
 // 定数関数0による構築O(1)
-// 一次関数とのmaxによる更新O(log size)
+// 一次関数とのmaxによる全体更新O(log size)
 // 一点取得O(log size)
-template <typename INT , INT llim_a , INT ulim_a , INT llim_b , INT ulim_b , INT llim_c , INT ulim_c>
+template <typename INT>
 class MaxLinearFunction
 {
 
@@ -19,9 +20,11 @@ private:
   map<INT,pair<INT,INT> > m_abc;
   // m_ca[最大値を取る区間左端のx座標c] = 傾きa として管理。
   map<INT,INT> m_ca;
+  INT m_llim_c;
+  INT m_ulim_c;
 
 public:
-  inline MaxLinearFunction();
+  inline MaxLinearFunction( const INT& llim_c , const INT& ulim_c );
 
   void SetMax( const INT& a , const INT& b );
   INT Get( const INT& x ) const;
@@ -31,13 +34,13 @@ private:
   
 };
 
-template <typename INT , INT llim_a , INT ulim_a , INT llim_b , INT ulim_b , INT llim_c , INT ulim_c>
+template <typename INT>
 class MinLinearFunction :
-  public MaxLinearFunction<INT,-ulim_a,-llim_a,-ulim_b,-llim_b,llim_c,ulim_c>
+  public MaxLinearFunction<INT>
 {
 
 public:
-  inline MinLinearFunction();
+  inline MinLinearFunction( const INT& llim_c , const INT& ulim_c );
 
   inline void SetMin( const INT& a , const INT& b );
   inline INT Get( const INT& x ) const;
