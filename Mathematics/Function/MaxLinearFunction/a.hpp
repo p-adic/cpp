@@ -3,12 +3,12 @@
 #pragma once
 
 // verify:
-// https://yukicoder.me/submissions/981573
+// https://yukicoder.me/submissions/981590
 
 // 基本的に下記URLのConvex Hull Trickに準じる。
 // https://rsk0315.hatenablog.com/entry/2022/04/29/141726
 
-// 定数関数0による構築O(1)
+// 一次関数ax+bによる構築O(1)
 // 一次関数とのmaxによる全体更新O(log size)
 // 一点取得O(log size)
 template <typename INT>
@@ -24,7 +24,7 @@ private:
   INT m_ulim_c;
 
 public:
-  inline MaxLinearFunction( const INT& llim_c , const INT& ulim_c );
+  inline MaxLinearFunction( const INT& llim_c , const INT& ulim_c , const INT& a = 0 , const INT& b = 0 );
 
   void SetMax( const INT& a , const INT& b );
   INT Get( const INT& x ) const;
@@ -40,7 +40,7 @@ class MinLinearFunction :
 {
 
 public:
-  inline MinLinearFunction( const INT& llim_c , const INT& ulim_c );
+  inline MinLinearFunction( const INT& llim_c , const INT& ulim_c , const INT& a = 0 , const INT& b = 0 );
 
   inline void SetMin( const INT& a , const INT& b );
   inline INT Get( const INT& x ) const;

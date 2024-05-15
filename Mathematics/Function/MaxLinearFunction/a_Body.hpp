@@ -3,21 +3,14 @@
 #pragma once
 #include "a.hpp"
 
-template <typename INT> inline MaxLinearFunction<INT>::MaxLinearFunction( const INT& llim_c , const INT& ulim_c ) : m_abc() , m_ca() , m_llim_c( llim_c ) , m_ulim_c( ulim_c ) { static_assert( !is_same<INT,int>::value ); assert( m_llim_c <= m_ulim_c ); }
-template <typename INT> inline MinLinearFunction<INT>::MinLinearFunction( const INT& llim_c , const INT& ulim_c ) : MaxLinearFunction<INT>( llim_c , ulim_c ) { static_assert( !is_same<INT,unsigned int>::value && !is_same<INT,unsigned long long>::value ); }
+template <typename INT> inline MaxLinearFunction<INT>::MaxLinearFunction( const INT& llim_c , const INT& ulim_c , const INT& a , const INT& b ) : m_abc() , m_ca() , m_llim_c( llim_c ) , m_ulim_c( ulim_c ) { static_assert( !is_same<INT,int>::value ); assert( m_llim_c <= m_ulim_c ); m_abc[a] = { b , m_llim_c }; m_ca[m_llim_c] = a; }
+template <typename INT> inline MinLinearFunction<INT>::MinLinearFunction( const INT& llim_c , const INT& ulim_c , const INT& a , const INT& b ) : MaxLinearFunction<INT>( llim_c , ulim_c , a , b ) { static_assert( !is_same<INT,unsigned int>::value && !is_same<INT,unsigned long long>::value ); }
 
 template <typename INT>
 void MaxLinearFunction<INT>::SetMax( const INT& a , const INT& b )
 {
 
-  if( m_abc.empty() ){
-
-    m_abc[a] = { b , m_llim_c };
-    m_ca[m_llim_c] = a;
-    return;
-    
-  }
-  
+  assert( !m_abc.empty() );
   auto itr_right = m_abc.lower_bound( a ) , begin = m_abc.begin();
   const auto end = m_abc.end();
 
@@ -101,16 +94,7 @@ void MaxLinearFunction<INT>::SetMax( const INT& a , const INT& b )
       m_ca.erase( c0 );
       c0 = Intersection( a , b , a0 , b0 );
 
-      if( itr_right == end ){
-
-	m_ca[c0] = a0;
-	break;
-      
-      }
-
-      const auto& [b1,c1] = itr_right->second;
-
-      if( c0 < c1 ){
+      if( itr_right == end || c0 < itr_right->second.second ){
 
 	m_ca[c0] = a0;
 	break;
@@ -123,21 +107,16 @@ void MaxLinearFunction<INT>::SetMax( const INT& a , const INT& b )
 
   }
 
-  INT c;
+  INT c = m_llim_c;
 
-  if( itr_left == end ){
-
-    c = m_llim_c;
-
-  } else {
+  if( itr_left != end ){
 
     while( true ){
 
       const INT& a1 = itr_left->first;
       const auto& [b1,c1] = itr_left->second;
-      c = Intersection( a1 , b1 , a , b );
 
-      if( c1 < c ){
+      if( c1 < ( c = Intersection( a1 , b1 , a , b ) ) ){
 
 	break;
 	
