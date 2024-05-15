@@ -3,7 +3,7 @@
 #pragma once
 #include "a.hpp"
 
-#include "../../../Utility/Order/a_Body.hpp"
+#include "../../../Utility/Reverse/a_Body.hpp"
 
 template <typename U , typename V , typename X , typename FUNC> inline VirtualMaxTwoAryHierarchy<U,V,X,FUNC>::VirtualMaxTwoAryHierarchy( FUNC func , const X& x_min , const X& x_max , const U& u , const V& v ) : m_func( move( func ) ) , m_x_min( x_min ) , m_x_max( x_max ) , m_uvx() , m_xu() { assert( m_x_min <= m_x_max ); m_uvx[u] = { v , m_x_min }; m_xu[m_x_min] = u; }
 template <typename U , typename V , typename X , typename FUNC> inline VirtualMinTwoAryHierarchy<U,V,X,FUNC>::VirtualMinTwoAryHierarchy( FUNC func , const X& x_min , const X& x_max , const U& u , const V& v ) : VirtualMaxTwoAryHierarchy<Reversed<U>,Reversed<V>,X,ReversedTwoAryHierarchy<U,V,X,FUNC>>( move( func ) , x_min , x_max , u , v ) {}
