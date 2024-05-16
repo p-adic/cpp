@@ -1856,7 +1856,7 @@ AC( QueryArray )
 	     "モノイドへのマグマ作用(+,\\cdot)を使う問題" ,
 	     "序数を扱う問題" ,
 	     "像の要素数を扱う問題" ,
-	     "一次関数による区間max／min更新を使う問題" ,
+	     "2引数関数による区間max／min更新を使う問題" ,
 	     "距離関数と定数の和による区間min更新を使う問題" ,
 	     "定数とのmaxを取った値の区間演算取得を使う問題" ,
 	     );
@@ -2010,10 +2010,12 @@ AC( QueryArrayImageSize )
 
 AC( QueryArrayMaxLinearFunction )
 {
-  CERR( "-1倍で最小値と最大値は互いに帰着されます。" );
-  CERR( "- 一次関数による全体max更新O(log N)／一点取得O(log N)が必要ならば" );
-  CERR( "  Convex Hull Trick" );
-  CERR( "  \\Mathematics\\Function\\MaxLinearFunction" );
+  CERR( "- 最小値を最大値に帰着させるには、二分探索が不要であればReversed<T>を、" );
+  CERR( "  二分探索が不要であれば-1倍を合成しましょう。" );
+  CERR( "  \\Utility\\Reverse" );
+  CERR( "- 一次関数や支配関係を満たすより一般の2パラメータ関数階層による" );
+  CERR( "  全体max更新O(log N)／一点取得O(log N)が必要ならばConvex Hull Trick" );
+  CERR( "  \\Mathematics\\Function\\MaxTwoAryHierarchy" );
   CERR( "- 傾きの候補がC個の一次関数による区間min更新O(N^{1/2})／一点取得O(C)が" );
   CERR( "  必要ならば等比数列min更新双対平方分割" );
   CERR( "  \\Mathematics\\SetTheory\\DirectProduct\\AfineSpace\\SqrtDecomposition\\Dual\\GeometricProgressionMin" );
