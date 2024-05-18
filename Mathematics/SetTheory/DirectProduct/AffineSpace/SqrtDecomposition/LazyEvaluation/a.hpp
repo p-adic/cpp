@@ -49,7 +49,6 @@ public:
   // Ç∆ÇµÇƒInitialiseÇ∑ÇÍÇŒÇÊÇ¢ÅB
   template <typename...Args> inline LazySqrtDecomposition( PT_MAGMA L , R_MODULE M , const int& N = 0 , const Args&... args );
   template <typename...Args> inline LazySqrtDecomposition( PT_MAGMA L , R_MODULE M , vector<U> a , const Args&... args );
-  inline LazySqrtDecomposition( const LazySqrtDecomposition<R,PT_MAGMA,U,R_MODULE>& bit );
   
   template <typename...Args> inline void Initialise( Args&&... args );
   inline void Set( const int& i , const U& u );

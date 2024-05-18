@@ -7,7 +7,6 @@
 
 template <typename R , typename PT_MAGMA , typename U , typename R_MODULE> template <typename...Args> inline LazySqrtDecomposition<R,PT_MAGMA,U,R_MODULE>::LazySqrtDecomposition( PT_MAGMA L , R_MODULE M , const int& N , const Args&... args ) : SqrtDecompositionCoordinate( N , args... ) , m_L( move( L ) ) , m_M( move( M ) ) , m_a( N , m_M.One() ) , m_b( m_N_d , m_M.One() ) , m_lazy_substitution( m_b ) , m_suspended( m_N_d ) , m_lazy_action( m_N_d , m_L.Point() ) { Construct(); }
 template <typename R , typename PT_MAGMA , typename U , typename R_MODULE> template <typename...Args> inline LazySqrtDecomposition<R,PT_MAGMA,U,R_MODULE>::LazySqrtDecomposition( PT_MAGMA L , R_MODULE M , vector<U> a , const Args&... args ) : SqrtDecompositionCoordinate( a.size() , args... ) , m_L( move( L ) ) , m_M( move( M ) ) , m_a( move( a ) ) , m_b( m_N_d , m_M.One() ) , m_lazy_substitution( m_b ) , m_suspended( m_N_d ) , m_lazy_action( m_N_d , m_L.Point() ) { Construct(); }
-template <typename R , typename PT_MAGMA , typename U , typename R_MODULE> inline LazySqrtDecomposition<R,PT_MAGMA,U,R_MODULE>::LazySqrtDecomposition( const LazySqrtDecomposition<R,PT_MAGMA,U,R_MODULE>& bit ) : SqrtDecompositionCoordinate( bit ) , m_L( bit.m_L ) , m_M( bit.m_M ) , m_a( bit.m_a ) , m_b( bit.m_b ) , m_lazy_substitution( bit.m_lazy_substitution ) , m_suspended( bit.m_suspended ) , m_lazy_action( bit.m_lazy_action ) {}
 
 template <typename R , typename PT_MAGMA , typename U , typename R_MODULE> inline void LazySqrtDecomposition<R,PT_MAGMA,U,R_MODULE>::Construct()
 {
