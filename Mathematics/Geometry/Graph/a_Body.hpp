@@ -1,52 +1,148 @@
-// c:/Users/user/Documents/Programming/Mathematics/Geometry/Graph/a_Body.hpp
+// c:/Users/user/Documents/Programming/Mathematics/Geometry/Graph/BreadthFirstSearch/a_Body.hpp
 
 #pragma once
 #include "a.hpp"
 
-#include "../../Algebra/a_Body.hpp"
-#include "../../../Utility/Set/a_Body.hpp"
+#include "../a_Body.hpp"
+#include "../../../../Utility/Set/Map/a_Body.hpp"
 
-template <typename T , typename R1 , typename R2 , typename E> inline EdgeImplimentation<T,R1,R2,E>::EdgeImplimentation( const int& size , E edge ) : m_size( size ) , m_edge( move( edge ) ) { static_assert( is_constructible_v<T,R1> && is_constructible_v<int,R2> && is_invocable_v<E,T> ); }
-template <typename E> inline Graph<E>::Graph( const int& size , E edge ) : EdgeImplimentation<int,const int&,const int&,E>( size , move( edge ) ) {}
-template <typename T , typename Enum_T , typename Enum_T_inv , typename E> inline EnumerationGraph<T,Enum_T,Enum_T_inv,E>::EnumerationGraph( const int& size , Enum_T enum_T , Enum_T_inv enum_T_inv , E edge ) : EdgeImplimentation<T,ret_t<Enum_T,int>,ret_t<Enum_T_inv,T>,E>( size , move( edge ) ) , m_enum_T( move( enum_T ) ) , m_enum_T_inv( move( enum_T_inv ) ) {}
-template <typename T , typename E> inline MemorisationGraph<T,E>::MemorisationGraph( const int& size , E edge ) : EdgeImplimentation<T,T,const int&,E>( size , move( edge ) ) , m_length() , m_memory() , m_memory_inv() { static_assert( is_invocable_v<E> && is_invocable_v<E,T> ); }
+template <typename T , typename GRAPH> inline VirtualBreadthFirstSearch<T,GRAPH>::VirtualBreadthFirstSearch( GRAPH& G , const T& not_found ) : m_G( G ) , m_not_found( not_found ) , m_initialised( false ) , m_next() , m_found() , m_prev() { static_assert( is_same_v<inner_t<GRAPH>,T> ); }
+template <typename T , typename GRAPH> template <typename Arg> inline VirtualBreadthFirstSearch<T,GRAPH>::VirtualBreadthFirstSearch( GRAPH& G , const T& not_found , Arg&& init ) : VirtualBreadthFirstSearch<T,GRAPH>( G , not_found ) { Initialise( forward<Arg>( init ) ); }
 
-template <typename E> inline const int& Graph<E>::Enumeration( const int& i ) { return i; }
-template <typename T , typename Enum_T , typename Enum_T_inv , typename E> inline ret_t<Enum_T,int> EnumerationGraph<T,Enum_T,Enum_T_inv,E>::Enumeration( const int& i ) { return m_enum_T( i ); }
-template <typename T , typename E> inline T MemorisationGraph<T,E>::Enumeration( const int& i ) { assert( 0 <= i && i < m_length ); return m_memory[i]; }
+template <typename T , typename GRAPH> inline void VirtualBreadthFirstSearch<T,GRAPH>::Initialise() { m_initialised = true; const int& V = size(); m_next.clear(); m_found = vector<bool>( V ); m_prev = vector<T>( V , m_not_found ); }
+template <typename T , typename GRAPH> inline void VirtualBreadthFirstSearch<T,GRAPH>::Initialise( const T& init ) { auto&& i = m_G.Enumeration_inv( init ); assert( 0 <= i && i < size() ); Initialise(); m_next.push_back( init ); m_found[i] = true; }
+template <typename T , typename GRAPH> inline void VirtualBreadthFirstSearch<T,GRAPH>::Initialise( list<T> inits ) { Initialise(); m_next = move( inits ); const int& V = size(); for( auto& u : m_next ){ auto&& i = m_G.Enumeration_inv( u ); assert( 0 <= i && i < V ); m_found[i] = true; } }
+template <typename T , typename GRAPH> inline void VirtualBreadthFirstSearch<T,GRAPH>::Shift( const T& init ) { if( m_initialised ){ const int& V = size(); auto&& i = m_G.Enumeration_inv( init ); assert( 0 <= i && i < V ); m_next.clear(); if( ! m_found[i] ){ m_next.push_back( init ); m_found[i] = true; } } else { Initialise( init ); } }
+template <typename T , typename GRAPH> inline void VirtualBreadthFirstSearch<T,GRAPH>::Shift( list<T> inits ) { if( m_initialised ){ m_next.clear(); const int& V = size(); for( auto& u : m_next ){ auto&& i = m_G.Enumeration_inv( u ); assert( 0 <= i && i < V ); if( ! m_found[i] ){ m_next.push_back( u ); m_found[i] = true; } } } else { Initialise( move( inits ) ); } }
 
-template <typename T , typename R1 , typename R2 , typename E> inline R2 VirtualGraph<T,R1,R2,E>::Enumeration_inv( const T& t ) { return Enumeration_inv_Body( t ); }
-template <typename T , typename R1 , typename R2 , typename E> template <typename PATH> inline R2 VirtualGraph<T,R1,R2,E>::Enumeration_inv( const PATH& p ) { return Enumeration_inv_Body( get<0>( p ) ); }
-template <typename E> inline const int& Graph<E>::Enumeration_inv_Body( const int& i ) { return i; }
-template <typename T , typename Enum_T , typename Enum_T_inv , typename E> inline ret_t<Enum_T_inv,T> EnumerationGraph<T,Enum_T,Enum_T_inv,E>::Enumeration_inv_Body( const T& t ) { return m_enum_T_inv( t ); }
+template <typename T , typename GRAPH> inline const int& VirtualBreadthFirstSearch<T,GRAPH>::size() const noexcept { return m_G.size(); }
+template <typename T , typename GRAPH> inline vector<bool>::reference VirtualBreadthFirstSearch<T,GRAPH>::found( const T& t ) { auto&& i = m_G.Enumeration_inv( t ); assert( 0 <= i && i < size() ); if( !m_initialised ){ Initialise(); } return m_found[i]; }
+template <typename T , typename GRAPH> inline const T& VirtualBreadthFirstSearch<T,GRAPH>::prev( const T& t ) { auto&& i = m_G.Enumeration_inv( t ); assert( 0 <= i && i < size() ); if( !m_initialised ){ Initialise(); } return m_prev[i]; }
 
-template <typename T , typename E> inline const int& MemorisationGraph<T,E>::Enumeration_inv_Body( const T& t )
+template <typename T , typename GRAPH> inline T VirtualBreadthFirstSearch<T,GRAPH>::Next()
 {
 
-  if( m_memory_inv.count( t ) == 0 ){
+  if( m_next.empty() ){
 
-    assert( m_length < this->size() );
-    m_memory.push_back( t );
-    return m_memory_inv[t] = m_length++;
+    return m_not_found;
 
   }
-  
-  return m_memory_inv[t];
+
+  const T t_curr = m_next.front();
+  m_next.pop_front();
+  auto&& edge = m_G.Edge( t_curr );
+
+  for( auto& t : edge ){
+
+    auto&& i = m_G.Enumeration_inv( t );
+    auto&& found_i = m_found[i];
+
+    if( ! found_i ){
+
+      Push( m_next , t );
+      m_prev[i] = t_curr;
+      found_i = true;
+
+    }
+
+  }
+
+  return t_curr;
 
 }
 
-template <typename T , typename R1 , typename R2 , typename E> void VirtualGraph<T,R1,R2,E>::Reset() {}
-template <typename T , typename E> inline void MemorisationGraph<T,E>::Reset() { m_length = 0; m_memory.clear(); m_memory_inv.clear(); }
+template <typename T , typename GRAPH> template <typename U>
+auto VirtualBreadthFirstSearch<T,GRAPH>::GetDistance() -> enable_if_t<is_same_v<GRAPH,MemorisationGraph<U,decldecay_t(declval<GRAPH>().edge())>>,Map<T,int>>
+{
 
-template <typename T , typename R1 , typename R2 , typename E> inline const int& EdgeImplimentation<T,R1,R2,E>::size() const noexcept { return m_size; }
-template <typename T , typename R1 , typename R2 , typename E> inline E& EdgeImplimentation<T,R1,R2,E>::edge() noexcept { return m_edge; }
-template <typename T , typename R1 , typename R2 , typename E> inline ret_t<E,T> EdgeImplimentation<T,R1,R2,E>::Edge( const T& t ) { return m_edge( t ); }
-template <typename T , typename R1 , typename R2 , typename E> template <typename PATH> inline ret_t<E,T> VirtualGraph<T,R1,R2,E>::Edge( const PATH& p ) { return Edge( get<0>( p ) ); }
+  Map<T,int> answer{};
 
-template <typename E> template <typename F> inline Graph<F> Graph<E>::GetGraph( F edge ) const { return Graph<F>( this->size() , move( edge ) ); }
-template <typename T , typename Enum_T , typename Enum_T_inv , typename E> template <typename F> inline EnumerationGraph<T,Enum_T,Enum_T_inv,F> EnumerationGraph<T,Enum_T,Enum_T_inv,E>::GetGraph( F edge ) const { return EnumerationGraph<T,Enum_T,Enum_T_inv,F>( this->size() , m_enum_T , m_enum_T_inv , move( edge ) ); }
-template <typename T , typename E> template <typename F> inline MemorisationGraph<T,F> MemorisationGraph<T,E>::GetGraph( F edge ) const { return MemorisationGraph<T,F>( this->size() , move( edge ) ); }
+  for( auto itr = m_next.begin() , end = m_next.end() ; itr != end ; itr++ ){
 
-template <typename T , typename R1 , typename R2 , typename E> inline const T& VirtualGraph<T,R1,R2,E>::Vertex( const T& t  ) noexcept { return t; }
-template <typename T , typename R1 , typename R2 , typename E> template <typename PATH> inline const T& VirtualGraph<T,R1,R2,E>::Vertex( const PATH& e ) noexcept { return Vertex( get<0>( e ) ); }
+    answer[*itr] = 0;
 
+  }
+  
+  T t;
+  
+  while( ( t = Next() ) != m_not_found ){
+
+    if( answer.count( t ) == 0 ){
+      
+      answer[t] = answer[m_prev[m_G.Enumeration_inv( t )]] + 1;
+
+    }
+
+  }
+
+  return answer;
+  
+}
+
+template <typename T , typename GRAPH> template <typename U>
+auto VirtualBreadthFirstSearch<T,GRAPH>::GetDistance() -> enable_if_t<!is_same_v<GRAPH,MemorisationGraph<U,decldecay_t(declval<GRAPH>().edge())>>,vector<int>>
+{
+
+  vector answer( size() , -1 );
+
+  for( auto itr = m_next.begin() , end = m_next.end() ; itr != end ; itr++ ){
+
+    answer[m_G.Enumeration_inv( *itr )] = 0;
+
+  }
+  
+  T t;
+  
+  while( ( t = Next() ) != m_not_found ){
+
+    auto&& i = m_G.Enumeration_inv( t );
+    int& answer_i = answer[i];
+    answer_i == -1 ? answer_i = answer[m_G.Enumeration_inv( m_prev[i] )] + 1 : answer_i;
+
+  }
+
+  return answer;
+  
+}
+
+template <typename T , typename GRAPH>
+pair<vector<int>,int> VirtualBreadthFirstSearch<T,GRAPH>::GetConnectedComponent()
+{
+
+  static_assert( !is_same_v<GRAPH,MemorisationGraph<T,decldecay_t( m_G.edge() )>> );
+  const int& V = size();
+  vector cc_num( V , -1 );
+  int count = 0;
+
+  for( int i = 0 ; i < V ; i++ ){
+
+    if( cc_num[i] == -1 ){
+
+      Shift( m_G.Enumeration( i ) );
+      T t = Next();
+
+      if( t != m_not_found ){
+
+	while( t != m_not_found ){
+
+	  cc_num[m_G.Enumeration_inv( t )] = count;
+	  t = Next();
+
+	}
+
+	count++;
+
+      }
+
+    }
+
+  }
+
+  return { move( cc_num ) , move( count ) };
+
+}
+
+template <typename T , typename GRAPH> template <typename PATH> inline void VirtualBreadthFirstSearch<T,GRAPH>::Push( list<T>& next , const PATH& p ) { Push( next , get<0>( p ) ); }
+
+template <typename T , typename GRAPH> template <typename...Args> inline BreadthFirstSearch<T,GRAPH>::BreadthFirstSearch( GRAPH& G , const T& not_found , Args&&... args ) : VirtualBreadthFirstSearch<T,GRAPH>( G , not_found , forward<Args>( args )... ) {}
+template <typename T , typename GRAPH> inline void BreadthFirstSearch<T,GRAPH>::Push( list<T>& next , const T& t ) { next.push_back( t ); }

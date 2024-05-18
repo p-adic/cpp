@@ -1,113 +1,87 @@
-// c:/Users/user/Documents/Programming/Mathematics/Geometry/Graph/a.hpp
+// c:/Users/user/Documents/Programming/Mathematics/Geometry/Graph/BreadthFirstSearch/a.hpp
 
 #pragma once
-#include "a_Macro.hpp"
-#include "../../Algebra/a.hpp"
-#include "../../../Utility/Set/a.hpp"
+#include "../a.hpp"
+#include "../../../../Utility/Set/Map/a.hpp"
 
 // verify:
-// https://yukicoder.me/submissions/957306（Graph、E:int->list<int>）
-// https://yukicoder.me/submissions/957304（Graph、E:int->list<pair<int,dummy>>）
-// https://yukicoder.me/submissions/957307（EnumerationGraph、E:int->list<int>）
-// https://yukicoder.me/submissions/957308（MemorisationGraph、E:T->list<T>）
+// https://yukicoder.me/submissions/978898（一始点Shiftの反復による多点BFSでの全探索）
+// https://yukicoder.me/submissions/978899（GetConnectedComponent）
+// https://yukicoder.me/submissions/978904（一始点のGetDistance、EnumerationGraph）
+// https://yukicoder.me/submissions/978910（一始点のGetDistance、MemorisationGraph）
 
-// Enumeration:N->R1-->TとEnumeration_inv:T->R2-->Nは互いに逆写像である仮想関数。
-template <typename T , typename R1 , typename R2 , typename E>
-class VirtualGraph :
-  virtual public UnderlyingSet<T>
+// GRAPHは辺Edge:T->(T \times ...)^{< \omega}を持つグラフに相当する型。
+
+// 構築 O(1)/O(|V_G|)（未初期化/初期化）
+// Next()の反復でinitから到達可能な頂点を全探索 O(initの連結成分における辺の本数)
+// Next()の反復とShift()で全探索 O(|V_G|+|E_G|)
+// initからの到達可能性判定と深さ計算 O(initの連結成分における辺の本数)
+// 連結成分の色分けと数え上げ O(|V_G|+|E_G|) 
+template <typename T , typename GRAPH>
+class VirtualBreadthFirstSearch
 {
 
-public:
-  virtual R1 Enumeration( const int& i ) = 0;
-  inline R2 Enumeration_inv( const T& t );
-  template <typename PATH> inline R2 Enumeration_inv( const PATH& p );
-  inline void Reset();
-  virtual const int& size() const noexcept = 0;
-  virtual E& edge() noexcept = 0;
-  virtual ret_t<E,T> Edge( const T& t ) = 0;
-  template <typename PATH> inline ret_t<E,T> Edge( const PATH& p );
+protected:
+  GRAPH& m_G;
+  // 未訪問点のm_prevに格納するための変数。m_nextが空の時のNext()の戻り値。
+  T m_not_found;
+  bool m_initialised;
+  // 次の探索点たちを格納。
+  list<T> m_next;
 
-  static inline const T& Vertex( const T& t ) noexcept;
-  template <typename PATH> static inline const T& Vertex( const PATH& e ) noexcept;
-
-private:
-  virtual R2 Enumeration_inv_Body( const T& t ) = 0;
-
-};
-
-template <typename T , typename R1 , typename R2 , typename E>
-class EdgeImplimentation :
-  virtual public VirtualGraph<T,R1,R2,E>
-{
-
-private:
-  int m_size;
-  // 配列への参照を返す関数オブジェクトを構築して返す関数の返り値などの右辺値を受け取ることを
-  // 許容したいので左辺値参照にはしない。
-  E m_edge;
+  // 以下GRAPHがGraphでない場合は添字にEnumerationが絡むことに注意。
+  // m_nextに格納されたことがあるか否か。
+  vector<bool> m_found;
+  // 到達済みかつ到達済みの点から辺を辿ってNext()で到達した場合、その点を格納。
+  // GRAPHがGraphでない場合は添字にEnumerationが絡むことに注意。
+  vector<T> m_prev;
 
 public:
-  inline EdgeImplimentation( const int& size , E edge );
+  inline VirtualBreadthFirstSearch( GRAPH& G , const T& not_found );
+  template <typename Arg> inline VirtualBreadthFirstSearch( GRAPH& G , const T& not_found , Arg&& init );
+
+  // m_nextとm_foundとm_prevを初期化する。
+  inline void Initialise();
+  // m_nextとm_foundとm_prevを初期化した上でinitを最初の探索点に設定する。
+  inline void Initialise( const T& init );
+  inline void Initialise( list<T> inits );
+  // m_nextを初期化した上でm_foundとm_prevを非初期化せずinitを次の探索点に設定する。
+  inline void Shift( const T& init );
+  inline void Shift( list<T> inits );
+
+  // Gのサイズを取得。
   inline const int& size() const noexcept;
-  inline E& edge() noexcept;
-  inline ret_t<E,T> Edge( const T& t );
+  inline vector<bool>::reference found( const T& t );
+  inline const T& prev( const T& t );
 
-};
+  inline T Next();
 
-template <typename E>
-class Graph :
-  public EdgeImplimentation<int,const int&,const int&,E>
-{
+  // m_nextに格納されている未到達点（初期化時点ではinit/inits）から到達できる未到達点の深さを
+  // 格納する。
+  template <typename U = T> auto GetDistance() -> enable_if_t<is_same_v<GRAPH,MemorisationGraph<U,decldecay_t(declval<GRAPH>().edge())>>,Map<T,int>>;
+  // 到達できない未到達点や既到達点は深さの代わりに-1を格納。
+  template <typename U = T> auto GetDistance() -> enable_if_t<!is_same_v<GRAPH,MemorisationGraph<U,decldecay_t(declval<GRAPH>().edge())>>,vector<int>>;
   
-public:
-  inline Graph( const int& size , E edge );
-  inline const int& Enumeration( const int& i );
-  template <typename F> inline Graph<F> GetGraph( F edge ) const;
+  // GRAPHがMemorisationGraphでない無向グラフである場合にのみサポート。
+  // 未到達点の全体のなす部分グラフにおける連結成分の色分けと連結成分数を格納。
+  pair<vector<int>,int> GetConnectedComponent();
 
 private:
-  inline const int& Enumeration_inv_Body( const int& t );
+  virtual void Push( list<T>& next , const T& t ) = 0;
+  template <typename PATH> inline void Push( list<T>& next , const PATH& p );
 
 };
 
-template <typename T , typename Enum_T , typename Enum_T_inv , typename E>
-class EnumerationGraph :
-  public EdgeImplimentation<T,ret_t<Enum_T,int>,ret_t<Enum_T_inv,T>,E>
-{
-
-private:
-  Enum_T m_enum_T;
-  Enum_T_inv m_enum_T_inv;
-  
-public:
-  inline EnumerationGraph( const int& size , Enum_T enum_T , Enum_T_inv enum_T_inv , E edge );
-  inline ret_t<Enum_T,int> Enumeration( const int& i );
-  template <typename F> inline EnumerationGraph<T,Enum_T,Enum_T_inv,F> GetGraph( F edge ) const;
-
-private:
-  inline ret_t<Enum_T_inv,T> Enumeration_inv_Body( const T& t );
-
-};
-template <typename Enum_T , typename Enum_T_inv , typename E> EnumerationGraph( const int& size , Enum_T enum_T , Enum_T_inv enum_T_inv , E edge ) -> EnumerationGraph<decldecay_t(declval<Enum_T>()(0)),Enum_T,Enum_T_inv,E>;
-
-template <typename T , typename E>
-class MemorisationGraph :
-  public EdgeImplimentation<T,T,const int&,E>
+template <typename T , typename GRAPH>
+class BreadthFirstSearch :
+  public VirtualBreadthFirstSearch<T,GRAPH>
 {
 
-private:
-  int m_length;
-  vector<T> m_memory;
-  Map<T,int> m_memory_inv;
-  
 public:
-  // 型推論のためにdummyを渡す。Eの戻り値の型から推論させると重み付き辺の時に機能しない。
-  inline MemorisationGraph( const int& size , const T& dummy , E edge );
-  // push_backする可能性のあるvectorなので参照にしないように注意
-  inline T Enumeration( const int& i );
-  inline void Reset();
-  template <typename F> inline MemorisationGraph<T,F> GetGraph( F edge ) const;
+  template <typename...Args> inline BreadthFirstSearch( GRAPH& G , const T& not_found , Args&&... args );
 
 private:
-  inline const int& Enumeration_inv_Body( const T& t );
-  
+  inline void Push( list<T>& next , const T& t );
+
 };
+
