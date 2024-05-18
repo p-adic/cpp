@@ -11,11 +11,11 @@ template <class Traits , typename T , typename U , template <typename...> typena
 template <class Traits , typename T , typename U , typename V> inline basic_ostream<char,Traits>& operator<<( basic_ostream<char,Traits>& os , const tuple<T,U,V>& arg );
 template <class Traits , typename T , typename U , typename V , typename W> inline basic_ostream<char,Traits>& operator<<( basic_ostream<char,Traits>& os , const tuple<T,U,V,W>& arg );
 
-DECLARATION_OF_OPERATOR_FOR_TUPLE( + );
-DECLARATION_OF_OPERATOR_FOR_TUPLE( - );
-DECLARATION_OF_OPERATOR_FOR_TUPLE( * );
-DECLARATION_OF_OPERATOR_FOR_TUPLE( / );
-DECLARATION_OF_OPERATOR_FOR_TUPLE( % );
+DECLARATION_OF_ARITHMETIC_FOR_TUPLE( + );
+DECLARATION_OF_ARITHMETIC_FOR_TUPLE( - );
+DECLARATION_OF_ARITHMETIC_FOR_TUPLE( * );
+DECLARATION_OF_ARITHMETIC_FOR_TUPLE( / );
+DECLARATION_OF_ARITHMETIC_FOR_TUPLE( % );
 
 DECLARATION_OF_INCREMENT_FOR_TUPLE( ++ );
 DECLARATION_OF_INCREMENT_FOR_TUPLE( -- );
