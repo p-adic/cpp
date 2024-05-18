@@ -1,5 +1,5 @@
 #ifdef DEBUG
-  #include "c:/Users/user/Documents/Programming/Mathematics/Algebra/Monoid/Group/Module/a_Body.hpp"
+  #include "c:/Users/user/Documents/Programming/Mathematics/Algebra/Monoid/Group/a_Body.hpp"
 #else
 #define DC_OF_CPOINT(POINT)IN CO U& POINT()CO NE
 #define DC_OF_POINT(POINT)IN U& POINT()NE
@@ -13,8 +13,4 @@ TE <TY U> IN MultiplicativeMonoid<U>::MultiplicativeMonoid(U e_U):PointedSet<U>(
 
 TE <TY U>CL VirtualGroup:VI PU VirtualMonoid<U>,VI PU VirtualPointedSet<U>,VI PU VirtualNSet<U>{};TE <TY U = ll>CL AdditiveGroup:VI PU VirtualGroup<U>,PU AdditiveMonoid<U>{PU:IN U Transfer(CO U& u);};TE <TY U,TY M_U,TY I_U>CL AbstractGroup:VI PU VirtualGroup<U>,PU AbstractMonoid<U,M_U>,PU AbstractNSet<U,I_U>{PU:IN AbstractGroup(M_U m_U,U e_U,I_U i_U);};
 TE <TY U,TY M_U,TY I_U> IN AbstractGroup<U,M_U,I_U>::AbstractGroup(M_U m_U,U e_U,I_U i_U):AbstractMonoid<U,M_U>(MO(m_U),MO(e_U)),AbstractNSet<U,I_U>(MO(i_U)){}TE <TY U> IN U AdditiveGroup<U>::Transfer(CO U& u){RE -u;}
-
-TE <TY R,TY U>CL VirtualRSet:VI PU UnderlyingSet<U>{PU:VI U Action(CO R& r,U u)= 0;IN U PW(U u,CO R& r);IN U ScalarProduct(CO R& r,U u);};TE <TY U,TY MAGMA>CL RegularRSet:VI PU VirtualRSet<U,U>,PU MAGMA{PU:IN RegularRSet(MAGMA magma);IN U Action(CO U& r,U u);};TE <TY MAGMA> RegularRSet(MAGMA magma)-> RegularRSet<inner_t<MAGMA>,MAGMA>;TE <TY R,TY U,TY O_U>CL AbstractRSet:VI PU VirtualRSet<R,U>{PU:O_U m_o_U;IN AbstractRSet(CO R& dummy0,CO U& dummy1,O_U o_U);IN AbstractRSet<R,U,O_U>& OP=(CO AbstractRSet<R,U,O_U>&)NE;IN U Action(CO R& r,U u);};TE <TY R,TY U,TY O_U,TY GROUP>CL AbstractModule:PU AbstractRSet<R,U,O_U>,PU GROUP{PU:IN AbstractModule(CO R& dummy,O_U o_U,GROUP M);};TE <TY R,TY O_U,TY GROUP> AbstractModule(CO R& dummy,O_U o_U,GROUP M)-> AbstractModule<R,inner_t<GROUP>,O_U,GROUP>;TE <TY R,TY U>CL Module:VI PU VirtualRSet<R,U>,PU AdditiveGroup<U>{PU:IN U Action(CO R& r,U u);};
-TE <TY R,TY MAGMA> IN RegularRSet<R,MAGMA>::RegularRSet(MAGMA magma):MAGMA(MO(magma)){}TE <TY R,TY U,TY O_U> IN AbstractRSet<R,U,O_U>::AbstractRSet(CO R& dummy0,CO U& dummy1,O_U o_U):m_o_U(MO(o_U)){ST_AS(is_invocable_r_v<U,O_U,R,U>);}TE <TY R,TY U,TY O_U,TY GROUP> IN AbstractModule<R,U,O_U,GROUP>::AbstractModule(CO R& dummy,O_U o_U,GROUP M):AbstractRSet<R,U,O_U>(dummy,M.One(),MO(o_U)),GROUP(MO(M)){ST_AS(is_same_v<U,inner_t<GROUP>>);}TE <TY R,TY U,TY O_U> IN AbstractRSet<R,U,O_U>& AbstractRSet<R,U,O_U>::OP=(CO AbstractRSet<R,U,O_U>&)NE{RE *TH;}TE <TY U,TY MAGMA> IN U RegularRSet<U,MAGMA>::Action(CO U& r,U u){RE TH->Product(r,MO(u));}TE <TY R,TY U,TY O_U> IN U AbstractRSet<R,U,O_U>::Action(CO R& r,U u){RE m_o_U(r,MO(u));}TE <TY R,TY U> IN U Module<R,U>::Action(CO R& r,U u){RE MO(u *= r);}TE <TY R,TY U> IN U VirtualRSet<R,U>::PW(U u,CO R& r){RE Action(r,MO(u));}TE <TY R,TY U> IN U VirtualRSet<R,U>::ScalarProduct(CO R& r,U u){RE Action(r,MO(u));}
 #endif
-

@@ -45,6 +45,7 @@ private:
 public:
   // 型推論のために余計な引数dummy0,dummy1が必要
   inline AbstractRSet( const R& dummy0 , const U& dummy1 , O_U o_U );
+  inline AbstractRSet<R,U,O_U>& operator=( const AbstractRSet<R,U,O_U>& ) noexcept;
   inline U Action( const R& r , U u );
 
 };
@@ -68,7 +69,7 @@ class Module :
   public AdditiveGroup<U>
 {
 
-private:
+public:
   inline U Action( const R& r , U u );
   
 };
