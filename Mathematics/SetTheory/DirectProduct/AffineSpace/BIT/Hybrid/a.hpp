@@ -25,7 +25,6 @@
 
 // 一点代入O(log_2 size)（通常のBITより定数倍速い）
 // U.Sum()による一点加算O(log_2 size)
-// U.Sum()による加法O(size)
 
 // 以下は入力の範囲内で要件
 // (2) operator<(const U&,const U&)に関してMがUの全順序可換群構造である。
@@ -43,11 +42,9 @@ private:
 public:
   inline AbstractHybridBIT( ABELIAN_GROUP M , const int& size = 0 );
   inline AbstractHybridBIT( ABELIAN_GROUP M , vector<U> a );
-  inline AbstractHybridBIT( const AbstractHybridBIT<U,ABELIAN_GROUP>& bit );
 
   template <typename...Args> inline void Initialise( Args&&... args );
   inline void Set( const int& i , const U& u );
-  inline AbstractHybridBIT<U,ABELIAN_GROUP>& operator+=( const vector<U>& a );
   inline void Add( const int& i , const U& u );
 
   inline const U& operator[]( const int& i ) const;

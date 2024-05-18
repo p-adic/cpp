@@ -64,8 +64,6 @@ template <typename U , typename COMM_IDEM_MONOID> inline void IdempotentMonoidBI
 
 }
 
-template <typename U , typename COMM_IDEM_MONOID> inline IdempotentMonoidBIT<U,COMM_IDEM_MONOID>::IdempotentMonoidBIT( const IdempotentMonoidBIT<U,COMM_IDEM_MONOID>& bit ) : m_size( bit.m_size ) , m_a( bit.m_a ) , m_fenwick_0( bit.m_fenwick_0 ) , m_fenwick_1( bit.m_fenwick_1 ) , m_power( bit.m_power ) {}
-
 template <typename U , typename COMM_IDEM_MONOID> template <typename...Args> inline void IdempotentMonoidBIT<U,COMM_IDEM_MONOID>::Initialise( Args&&... args ) { IdempotentMonoidBIT<U,COMM_IDEM_MONOID> temp{ m_M , forward<Args>( args )... };  m_size = temp.m_size; m_a = move( temp.m_a ); m_fenwick_0 = move( temp.m_fenwick_0 ); m_fenwick_1 = move( temp.m_fenwick_1 ); m_power = temp.m_power; }
 
 template <typename U , typename COMM_IDEM_MONOID>
@@ -133,8 +131,6 @@ void IdempotentMonoidBIT<U,COMM_IDEM_MONOID>::Set( const int& i , const U& u )
   return;
 
 }
-
-template <typename U , typename COMM_IDEM_MONOID> inline IdempotentMonoidBIT<U,COMM_IDEM_MONOID>& IdempotentMonoidBIT<U,COMM_IDEM_MONOID>::operator+=( vector<U>&& a ) { IdempotentMonoidBIT<U,COMM_IDEM_MONOID> a_copy{ m_M , move( a ) }; assert( m_size == a_copy.m_size ); for( int j = 1 ; j <= m_size ; j++ ){ U& t0j = m_fenwick_0[j]; t0j = m_M.Product( move( t0j ) , a_copy.m_fenwick_0[j] ); U& t1j = m_fenwick_1[j]; t1j = m_M.Product( move( t1j ) , a_copy.m_fenwick_1[j] ); } }
 
 template <typename U , typename COMM_IDEM_MONOID>
 void IdempotentMonoidBIT<U,COMM_IDEM_MONOID>::Multiply( const int& i , const U& u ) 

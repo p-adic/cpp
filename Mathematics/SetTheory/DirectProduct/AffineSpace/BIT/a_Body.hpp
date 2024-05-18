@@ -29,8 +29,6 @@ template <typename U , typename ABELIAN_GROUP> inline AbstractBIT<U,ABELIAN_GROU
 
 }
 
-template <typename U , typename ABELIAN_GROUP> inline AbstractBIT<U,ABELIAN_GROUP>::AbstractBIT( const AbstractBIT<U,ABELIAN_GROUP>& bit ) : m_M( bit.m_M ) , m_size( bit.m_size ) , m_fenwick( bit.m_fenwick ) , m_power( bit.m_power ) {}
-
 template <typename U , typename ABELIAN_GROUP> inline void AbstractBIT<U,ABELIAN_GROUP>::Construct()
 {
 
@@ -46,10 +44,8 @@ template <typename U , typename ABELIAN_GROUP> inline void AbstractBIT<U,ABELIAN
   
 template <typename U> template <typename...Args> inline BIT<U>::BIT( const Args&... args ) : AbstractBIT<U,AdditiveGroup<U>>( AdditiveGroup<U>() , args... ) {}
 
-template <typename U , typename ABELIAN_GROUP> inline AbstractBIT<U,ABELIAN_GROUP>& AbstractBIT<U,ABELIAN_GROUP>::operator=( AbstractBIT<U,ABELIAN_GROUP>&& bit ) { m_size = bit.m_size; m_fenwick = move( bit.m_fenwick ); m_power = bit.m_power; return *this; }
 template <typename U , typename ABELIAN_GROUP> template <typename...Args> inline void AbstractBIT<U,ABELIAN_GROUP>::Initialise( const Args&... args ) { *this = AbstractBIT<U,ABELIAN_GROUP>{ m_M , args... }; }
 template <typename U , typename ABELIAN_GROUP> inline void AbstractBIT<U,ABELIAN_GROUP>::Set( const int& i , const U& u ) { Add( i , m_M.Sum( m_M.Inverse( IntervalSum( i , i ) ) , u ) ); }
-template <typename U , typename ABELIAN_GROUP> inline AbstractBIT<U,ABELIAN_GROUP>& AbstractBIT<U,ABELIAN_GROUP>::operator+=( const vector<U>& a ) { AbstractBIT<U,ABELIAN_GROUP> a_copy{ m_M , a }; assert( m_size == a_copy.m_size ); for( int j = 1 ; j <= m_size ; j++ ){ U& fenwick_j = m_fenwick[j]; fenwick_j = m_M.Sum( move( fenwick_j ) , a.m_fenwick[j] ); } return *this; }
 
 template <typename U , typename ABELIAN_GROUP>
 void AbstractBIT<U,ABELIAN_GROUP>::Add( const int& i , const U& u )

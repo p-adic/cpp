@@ -33,14 +33,11 @@ template <typename U , typename Z_MODULE> AbstractIntervalAddBIT<U,Z_MODULE>::Ab
 
 }
 
-template <typename U , typename Z_MODULE> inline AbstractIntervalAddBIT<U,Z_MODULE>::AbstractIntervalAddBIT( const AbstractIntervalAddBIT<U,Z_MODULE>& bit ) : m_M( bit.m_M ) , m_bit_0( bit.m_bit_0 ) , m_bit_1( bit.m_bit_1 ) {}
-
 template <typename U>  template <typename...Args> inline IntervalAddBIT<U>::IntervalAddBIT( const Args&... args ) : AbstractIntervalAddBIT<U,Module<int,U>>( Module<int,U>() , args... ) {}
 
 template <typename U , typename Z_MODULE> template <typename...Args> inline void AbstractIntervalAddBIT<U,Z_MODULE>::Initialise( const Args&... args ) { AbstractIntervalAddBIT<U,Z_MODULE> temp{ m_M , args... }; m_bit_0 = move( temp.m_bit_0 ); m_bit_1 = move( temp.m_bit_1 ); }
 template <typename U , typename Z_MODULE> inline void AbstractIntervalAddBIT<U,Z_MODULE>::Set( const int& i , const U& u ) { Add( i , m_M.Sum( m_M.Inverse( IntervalSum( i , i ) ) , u ) ); }
 
-template <typename U , typename Z_MODULE> inline AbstractIntervalAddBIT<U,Z_MODULE>& AbstractIntervalAddBIT<U,Z_MODULE>::operator+=( const vector<U>& a ) { AbstractIntervalAddBIT<U,Z_MODULE> a_copy{ m_M , a }; m_bit_0 += a_copy.m_bit_0; m_bit_1 += a_copy.m_bit_1; return *this; }
 template <typename U , typename Z_MODULE> inline void AbstractIntervalAddBIT<U,Z_MODULE>::Add( const int& i , const U& u ) { assert( 0 <= i && i < size() ); IntervalAdd( i , i , u ); }
 template <typename U , typename Z_MODULE> inline void AbstractIntervalAddBIT<U,Z_MODULE>::IntervalAdd( const int& i_start , const int& i_final , const U& u ) { const U u_inv = m_M.Inverse( u ); m_bit_0.Add( i_start , m_M.ScalarProduct( ( i_start - 1 ) , u_inv ) ); m_bit_0.Add( i_final + 1 , m_M.ScalarProduct( i_final , u ) ); m_bit_1.Add( i_start , u ); m_bit_1.Add( i_final + 1 , u_inv ); }
 

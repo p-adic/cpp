@@ -25,7 +25,6 @@
 
 // 一点代入O(log_2 size)
 // U.Sum()による一点加算O(log_2 size)
-// U.Sum()による加法O(size)
 
 // 以下は入力の範囲内で要件
 // (2) operator<(const U&,const U&)に関してMがUの全順序可換群構造である。
@@ -45,12 +44,9 @@ protected:
 public:
   inline AbstractBIT( ABELIAN_GROUP M , const int& size = 0 );
   inline AbstractBIT( ABELIAN_GROUP M , const vector<U>& a );
-  inline AbstractBIT( const AbstractBIT<U,ABELIAN_GROUP>& bit );
 
-  inline AbstractBIT<U,ABELIAN_GROUP>& operator=( AbstractBIT<U,ABELIAN_GROUP>&& bit );
   template <typename...Args> inline void Initialise( const Args&... args );
   inline void Set( const int& i , const U& u );
-  inline AbstractBIT<U,ABELIAN_GROUP>& operator+=( const vector<U>& a );
   void Add( const int& i , const U& u );
 
   inline const int& size() const noexcept;

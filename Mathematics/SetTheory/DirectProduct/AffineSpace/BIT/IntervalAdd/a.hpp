@@ -5,7 +5,7 @@
 #include "../../../../../Algebra/Monoid/Group/Module/a.hpp"
 
 // verify:
-// https://yukicoder.me/submissions/961776（一点加算、区間加算、一点取得）
+// https://yukicoder.me/submissions/982716（一点加算、区間加算、一点取得）
 
 // 入力の範囲内で要件
 // (1) MがUのZ加群構造である。
@@ -20,7 +20,6 @@
 // 一点代入O(log_2 size)
 // m_M.Sum()による一点加算O(log_2 size)
 // m_M.Sum()による区間加算O(log_2 size)
-// 加法O(size)
 template <typename U , typename Z_MODULE>
 class AbstractIntervalAddBIT
 {
@@ -35,11 +34,9 @@ protected:
 public:
   AbstractIntervalAddBIT( Z_MODULE M , const int& size = 0 );
   AbstractIntervalAddBIT( Z_MODULE M , const vector<U>& a );
-  inline AbstractIntervalAddBIT( const AbstractIntervalAddBIT<U,Z_MODULE>& bit );
 
   template <typename...Args> inline void Initialise( const Args&... args );
   inline void Set( const int& i , const U& u );
-  inline AbstractIntervalAddBIT<U,Z_MODULE>& operator+=( const vector<U>& a );
   inline void Add( const int& i , const U& u );
   inline void IntervalAdd( const int& i_start , const int& i_final , const U& u );
 

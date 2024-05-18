@@ -21,7 +21,6 @@
 // 一点代入O((log_2 size)^2)
 // M.Product()に関する一点乗算O(log_2 size)（可換性と羃等性を用いる）
 // M.Product()に関する区間乗算O(i_final-i_start+log_2 size)（可換性と羃等性を用いる）
-// M.Product()に関する乗法O(size)（可換性と羃等性を用いる）
 
 // uを吸収する（uに吸収される）要素の添字の最小値の二分探索O(log_2 size)
 // （存在しない場合はsize以上の最小の2羃×2-1を返すので、size以上であることで判定可能）
@@ -43,12 +42,10 @@ private:
 public:
   inline IdempotentMonoidBIT( COMM_IDEM_MONOID M , const int& size = 0 );
   inline IdempotentMonoidBIT( COMM_IDEM_MONOID M , vector<U> a );
-  inline IdempotentMonoidBIT( const IdempotentMonoidBIT<U,COMM_IDEM_MONOID>& bit );
 
   template <typename...Args> inline void Initialise( Args&&... args );
   void Set( const int& i , const U& u );
 
-  inline IdempotentMonoidBIT<U,COMM_IDEM_MONOID>& operator+=( vector<U>&& a );
   void Multiply( const int& i , const U& u );
   void IntervalMultiply( const int& i_start , const int& i_final , const U& u );
 
