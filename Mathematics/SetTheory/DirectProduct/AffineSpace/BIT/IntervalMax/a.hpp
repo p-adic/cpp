@@ -5,7 +5,8 @@
 #include "../../../../../Algebra/Monoid/Semilattice/a.hpp"
 
 // verify:
-// https://yukicoder.me/submissions/961780（一点乗算、区間積取得）
+// https://yukicoder.me/submissions/982703（IntervalMaxBIT、SetMax, IntervalMax）
+// https://yukicoder.me/submissions/979134（IntervalMinBIT、SetMin, IntervalMin）
 
 // 入力の範囲内で要件
 // (1) MがUの可換羃等モノイド構造である。
@@ -42,6 +43,7 @@ private:
 public:
   inline IdempotentMonoidBIT( COMM_IDEM_MONOID M , const int& size = 0 );
   inline IdempotentMonoidBIT( COMM_IDEM_MONOID M , vector<U> a );
+  inline IdempotentMonoidBIT( const IdempotentMonoidBIT<U,COMM_IDEM_MONOID>& bit );
 
   template <typename...Args> inline void Initialise( Args&&... args );
   void Set( const int& i , const U& u );

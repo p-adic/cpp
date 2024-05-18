@@ -43,6 +43,7 @@ private:
 public:
   inline AbstractHybridBIT( ABELIAN_GROUP M , const int& size = 0 );
   inline AbstractHybridBIT( ABELIAN_GROUP M , vector<U> a );
+  inline AbstractHybridBIT( const AbstractHybridBIT<U,ABELIAN_GROUP>& bit );
 
   template <typename...Args> inline void Initialise( Args&&... args );
   inline void Set( const int& i , const U& u );

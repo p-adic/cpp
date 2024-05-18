@@ -35,6 +35,7 @@ protected:
 public:
   AbstractIntervalAddBIT( Z_MODULE M , const int& size = 0 );
   AbstractIntervalAddBIT( Z_MODULE M , const vector<U>& a );
+  inline AbstractIntervalAddBIT( const AbstractIntervalAddBIT<U,Z_MODULE>& bit );
 
   template <typename...Args> inline void Initialise( const Args&... args );
   inline void Set( const int& i , const U& u );

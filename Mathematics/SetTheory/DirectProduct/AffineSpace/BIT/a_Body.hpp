@@ -29,6 +29,8 @@ template <typename U , typename ABELIAN_GROUP> inline AbstractBIT<U,ABELIAN_GROU
 
 }
 
+template <typename U , typename ABELIAN_GROUP> inline AbstractBIT<U,ABELIAN_GROUP>::AbstractBIT( const AbstractBIT<U,ABELIAN_GROUP>& bit ) : m_M( bit.m_M ) , m_size( bit.m_size ) , m_fenwick( bit.m_fenwick ) , m_power( bit.m_power ) {}
+
 template <typename U , typename ABELIAN_GROUP> inline void AbstractBIT<U,ABELIAN_GROUP>::Construct()
 {
 

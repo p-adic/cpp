@@ -64,6 +64,8 @@ template <typename U , typename COMM_IDEM_MONOID> inline void IdempotentMonoidBI
 
 }
 
+template <typename U , typename COMM_IDEM_MONOID> inline IdempotentMonoidBIT<U,COMM_IDEM_MONOID>::IdempotentMonoidBIT( const IdempotentMonoidBIT<U,COMM_IDEM_MONOID>& bit ) : m_size( bit.m_size ) , m_a( bit.m_a ) , m_fenwick_0( bit.m_fenwick_0 ) , m_fenwick_1( bit.m_fenwick_1 ) , m_power( bit.m_power ) {}
+
 template <typename U , typename COMM_IDEM_MONOID> template <typename...Args> inline void IdempotentMonoidBIT<U,COMM_IDEM_MONOID>::Initialise( Args&&... args ) { IdempotentMonoidBIT<U,COMM_IDEM_MONOID> temp{ m_M , forward<Args>( args )... };  m_size = temp.m_size; m_a = move( temp.m_a ); m_fenwick_0 = move( temp.m_fenwick_0 ); m_fenwick_1 = move( temp.m_fenwick_1 ); m_power = temp.m_power; }
 
 template <typename U , typename COMM_IDEM_MONOID>

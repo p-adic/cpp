@@ -45,6 +45,7 @@ protected:
 public:
   inline AbstractBIT( ABELIAN_GROUP M , const int& size = 0 );
   inline AbstractBIT( ABELIAN_GROUP M , const vector<U>& a );
+  inline AbstractBIT( const AbstractBIT<U,ABELIAN_GROUP>& bit );
 
   inline AbstractBIT<U,ABELIAN_GROUP>& operator=( AbstractBIT<U,ABELIAN_GROUP>&& bit );
   template <typename...Args> inline void Initialise( const Args&... args );
