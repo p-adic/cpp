@@ -2102,11 +2102,14 @@ AC( QueryGraph )
 
 AC( QueryString )
 {
-  CERR( "文字列の一点更新（一文字更新／結合）／比較はローリングハッシュ" );
+  CERR( "文字列の一点更新（一文字更新）／結合／比較はローリングハッシュ" );
   CERR( "\\Utility\\String\\RollingHash" );
   CERR( "を検討しましょう。さらに文字列の範囲更新が必要な場合は" );
-  CERR( "- 固定位置の文字のシフトによる一文字更新ならば加算更新" );
-  CERR( "- 結合ならば加算更新と乗算による作用更新" );
+  CERR( "- 文字列の累積コードを区間加算BITに乗せて終切片加算" );
+  CERR( "  \\Mathematics\\SetTheory\\DirectProduct\\AfineSpace\\BIT\\IntervalAdd" );
+  CERR( "- 文字列の各文字のコードをセグメント木や平方分割に乗せて一点更新" );
+  CERR( "  \\Mathematics\\SetTheory\\DirectProduct\\AfineSpace\\SegmentTree" );
+  CERR( "  \\Mathematics\\SetTheory\\DirectProduct\\AfineSpace\\SqrtDecomposition" );
   CERR( "に対応するデータ構造との併用を検討しましょう。" );
 }
 
