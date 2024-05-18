@@ -98,6 +98,7 @@ AC( QueryArrayCommutativeMagmaSet );
 AC( QueryArrayMagmaMonoid );
 AC( QueryArrayOrder );
 AC( QueryArrayImageSize );
+AC( QueryArrayInverseImageSize );
 AC( QueryArrayMaxLinearFunction );
 AC( QueryArrayMinDistance );
 AC( QueryArrayMaxConstant );

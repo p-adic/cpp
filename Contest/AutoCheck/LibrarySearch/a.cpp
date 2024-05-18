@@ -783,6 +783,7 @@ AC( MaximisationFunctionOnArray )
 	     "条件を満たす任意の配列に関する問題"
 	     );
   if( num == num_temp++ ){
+    CERR( "ソートしても答えが変わらないならば適宜ソートしましょう。" );
     ASK_NUMBER(
 	       "成分を受け取る関数の部分和の最大化問題" ,
 	       "成分を受け取る関数の部分和と補部分和の差の最小化問題" ,
@@ -1855,7 +1856,8 @@ AC( QueryArray )
 	     "集合への可換マグマ作用(*,\\cdot)を使う問題" ,
 	     "モノイドへのマグマ作用(+,\\cdot)を使う問題" ,
 	     "序数を扱う問題" ,
-	     "像の要素数を扱う問題" ,
+	     "区間の像の要素数を扱う問題" ,
+	     "区間と逆像の共通部分の要素数を扱う問題" ,
 	     "2引数関数による区間max／min更新を使う問題" ,
 	     "距離関数と定数の和による区間min更新を使う問題" ,
 	     "定数とのmaxを取った値の区間演算取得を使う問題" ,
@@ -1878,6 +1880,8 @@ AC( QueryArray )
     CALL_AC( QueryArrayOrder );
   } else if( num == num_temp++ ){
     CALL_AC( QueryArrayImageSize );
+  } else if( num == num_temp++ ){
+    CALL_AC( QueryArrayInverseImageSize );
   } else if( num == num_temp++ ){
     CALL_AC( QueryArrayMaxLinearFunction );
   } else if( num == num_temp++ ){
@@ -2003,8 +2007,20 @@ AC( QueryArrayOrder )
 
 AC( QueryArrayImageSize )
 {
-  CERR( "区間での像の要素数取得が必要ならば莫のアルゴリズム" );
+  CERR( "区間の像の要素数取得が必要ならば莫のアルゴリズム" );
   CERR( "\\Mathematics\\SetTheory\\DirectProduct\\AfineSpace\\SqrtDecomposition\\Mo" );
+  CERR( "を検討しましょう。" );
+}
+
+AC( QueryArrayInverseImageSize )
+{
+  CERR( "q番目のクエリで共通部分を取る集合をS_qと置きます。" );
+  CERR( "- 各iに対するA_iを各qに対するS_qの特性関数たちの値の連想配列で管理し直して、" );
+  CERR( "  オフライン累積積で個数取得または莫のアルゴリズムで連想配列の累積和計算" );
+  CERR( "  \\Mathematics\\SetTheory\\DirectProduct\\AfineSpace\\CumulativePrpdict\\Offline" );
+  CERR( "  \\Mathematics\\SetTheory\\DirectProduct\\AfineSpace\\SqrtDecomposition\\Mo" );
+  CERR( "- 各qごとにvector I_qを用意して、各iに対しA_iがS_qに属すなら" );
+  CERR( "  I_qにiをpush_backし、I_qと区間の共通部分を二分探索で計算");
   CERR( "を検討しましょう。" );
 }
 
