@@ -82,6 +82,7 @@ private:
 
 public:
   inline AbstractNSet( F_U f_U );
+  inline AbstractNSet<U,F_U>& operator=( const AbstractNSet& ) noexcept;
   inline U Transfer( const U& u );
 
 };
@@ -127,6 +128,7 @@ private:
 
 public:
   inline AbstractMagma( M_U m_U );
+  inline AbstractMagma<U,M_U>& operator=( const AbstractMagma<U,M_U>& ) noexcept;
   inline U Product( U u0 , const U& u1 );
 
 };
