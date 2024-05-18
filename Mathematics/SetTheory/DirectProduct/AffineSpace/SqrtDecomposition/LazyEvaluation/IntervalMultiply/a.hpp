@@ -4,7 +4,7 @@
 #include "../../Sqrt/a.hpp"
 
 // verify:
-// https://judge.yosupo.jp/submission/209174（配列初期化、区間作用、区間乗算、区間積取得）
+// https://judge.yosupo.jp/submission/209796（配列初期化、区間作用、区間乗算、区間積取得）
 // https://yukicoder.me/submissions/959027（配列初期化、区間代入、区間乗算、区間積取得）
 
 // 入力の範囲内で要件
@@ -51,6 +51,7 @@ public:
   // としてInitialiseすればよい。
   template <typename...Args> inline IntervalMultiplyLazySqrtDecomposition( PT_MAGMA L , R_MODULE M , const int& N = 0 , const Args&... args );
   template <typename...Args> inline IntervalMultiplyLazySqrtDecomposition( PT_MAGMA L , R_MODULE M , vector<U> a , const Args&... args );
+  inline IntervalMultiplyLazySqrtDecomposition( const IntervalMultiplyLazySqrtDecomposition<R,PT_MAGMA,U,R_MODULE>& bit );
   
   template <typename...Args> inline void Initialise( Args&&... args );
   inline void Set( const int& i , const U& u );

@@ -4,7 +4,7 @@
 #include "../Sqrt/a.hpp"
 
 //verify:
-// https://onlinejudge.u-aizu.ac.jp/status/users/padic/submissions/1/DSL_2_I/judge/9207257/C++17（零初期化、区間代入、区間積取得）
+// https://onlinejudge.u-aizu.ac.jp/status/users/padic/submissions/1/DSL_2_I/judge/9222725/C++17（零初期化、区間代入、区間積取得）
 
 // 入力の範囲内で要件
 // (1) LがRの基点付き左作用構造（例えば基点付きマグマの正則左加群構造）である。
@@ -49,6 +49,7 @@ public:
   // としてInitialiseすればよい。
   template <typename...Args> inline LazySqrtDecomposition( PT_MAGMA L , R_MODULE M , const int& N = 0 , const Args&... args );
   template <typename...Args> inline LazySqrtDecomposition( PT_MAGMA L , R_MODULE M , vector<U> a , const Args&... args );
+  inline LazySqrtDecomposition( const LazySqrtDecomposition<R,PT_MAGMA,U,R_MODULE>& bit );
   
   template <typename...Args> inline void Initialise( Args&&... args );
   inline void Set( const int& i , const U& u );
