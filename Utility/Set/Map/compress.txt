@@ -1,0 +1,12 @@
+#ifdef DEBUG
+  #include "c:/Users/user/Documents/Programming/Utility/Set/Map/a_Body.hpp"
+#else
+#define DC_OF_HASH(...)struct hash<__VA_ARGS__>{IN size_t OP()(CO __VA_ARGS__& n)CO;};
+CL is_ordered{PU:is_ordered()= delete;TE <TY T> ST CE auto Check(CO T& t)-> decltype(t < t,true_type());ST CE false_type Check(...);TE <TY T> ST CE CO bool value = is_same_v< decltype(Check(declval<T>())),true_type >;};
+TE <TY T>US Set = conditional_t<is_COructible_v<unordered_set<T>>,unordered_set<T>,conditional_t<is_ordered::value<T>,set<T>,VO>>;
+
+#define DF_OF_AR_FOR_MAP(MAP,OPR)TE <TY T,TY U> IN MAP<T,U>& OP OPR ## =(MAP<T,U>& a,CO pair<T,U>& v){a[v.first]OPR ## = v.second;RE a;}TE <TY T,TY U> IN MAP<T,U>& OP OPR ## =(MAP<T,U>& a0,CO MAP<T,U>& a1){for(auto&[t,u]:a1){a0[t]OPR ## = u;}RE a0;}TE <TY T,TY U,TY ARG> IN MAP<T,U> OP OPR(MAP<T,U> a,CO ARG& arg){RE MO(a OPR ## = arg);}
+#define DF_OF_ARS_FOR_MAP(MAP)DF_OF_AR_FOR_MAP(MAP,+);DF_OF_AR_FOR_MAP(MAP,-);DF_OF_AR_FOR_MAP(MAP,*);DF_OF_AR_FOR_MAP(MAP,/);DF_OF_AR_FOR_MAP(MAP,%);
+TE <TY T,TY U>US Map = conditional_t<is_COructible_v<unordered_map<T,int>>,unordered_map<T,U>,conditional_t<is_ordered::value<T>,map<T,U>,VO>>;
+DF_OF_ARS_FOR_MAP(map);DF_OF_ARS_FOR_MAP(unordered_map);
+#endif

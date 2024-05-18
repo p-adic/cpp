@@ -21,8 +21,3 @@ public:
 // - unordered_set<T>()‚ªwell-formed‚È‚ç‚Îunordered_set<T>
 // - ‚»‚¤‚Å‚È‚­operator<(declval<T>(),declval<T>())‚ªwell-formed‚È‚ç‚Îset<T>
 // - ‚»‚¤‚Å‚È‚¢‚È‚ç‚Îvoid
-
-// Map<T,U>‚Í
-// - unordered_map<T,U>()‚ªwell-formed‚È‚ç‚Îunordered_map<T,U>
-// - ‚»‚¤‚Å‚È‚­operator<(declval<T>(),declval<T>())‚ªwell-formed‚È‚ç‚Îmap<T,U>
-// - ‚»‚¤‚Å‚È‚¢‚È‚ç‚Îvoid
