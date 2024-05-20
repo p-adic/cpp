@@ -1,8 +1,8 @@
 #ifdef DEBUG
   #include "c:/Users/user/Documents/Programming/Mathematics/SetTheory/DirectProduct/AffineSpace/DifferenceSequence/Reversed/a_Body.hpp"
 #else
-CL LinearEdge{PU:int m_SZ;bool m_directed;IN LinearEdge(CRI SZ,CO bool& directed = true);IN VE<int> OP()(CRI t);};CL LinearGraph:PU Graph<LinearEdge>{PU:IN LinearGraph(CRI SZ,CO bool& directed = true);};
-IN LinearEdge::LinearEdge(CRI SZ,CO bool& directed):m_SZ(SZ),m_directed(directed){}IN VE<int> LinearEdge::OP()(CRI t){VE<int> AN{};if(!m_directed && t > 0){AN.push_back(t - 1);}if(t + 1 < m_SZ){AN.push_back(t + 1);}RE AN;}IN LinearGraph::LinearGraph(CRI SZ,CO bool& directed):Graph<LinearEdge>(SZ,LinearEdge(SZ,directed)){}
+CL LinearEdge{PU:int m_SZ;int m_direction;IN LinearEdge(CRI SZ,CRI direction);IN VE<int> OP()(CRI t);};CL LinearGraph:PU Graph<LinearEdge>{PU:IN LinearGraph(CRI SZ,CRI direction = 1);};
+IN LinearEdge::LinearEdge(CRI SZ,CRI direction):m_SZ(SZ),m_direction(direction){}IN VE<int> LinearEdge::OP()(CRI t){VE<int> AN{};if((m_direction >> 1)== 1 && t > 0){AN.push_back(t - 1);}if((m_direction & 1)== 1 && t + 1 < m_SZ){AN.push_back(t + 1);}RE AN;}IN LinearGraph::LinearGraph(CRI SZ,CRI direction):Graph<LinearEdge>(SZ,LinearEdge(SZ,direction)){}
 
 CL LinearPrev{PU:IN int OP()(CRI i);};IN int LinearPrev::OP()(CRI i){RE i - 1;}
 
