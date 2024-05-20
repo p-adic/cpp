@@ -1,6 +1,0 @@
-#ifdef DEBUG
-  #include "c:/Users/user/Documents/Programming/Mathematics/Geometry/Graph/Discrete/a_Body.hpp"
-#else
-CL DiscreteEdge{PU:IN VE<int> OP()(CRI);};CL DiscreteGraph:PU Graph<DiscreteEdge>{PU:IN DiscreteGraph(CRI SZ);};
-IN VE<int> DiscreteEdge::OP()(CRI){RE{};}IN DiscreteGraph::DiscreteGraph(CRI SZ):Graph<DiscreteEdge>(SZ,DiscreteEdge()){}
-#endif

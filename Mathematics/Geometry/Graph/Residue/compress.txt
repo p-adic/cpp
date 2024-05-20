@@ -1,8 +1,0 @@
-#ifdef DEBUG
-  #include "c:/Users/user/Documents/Programming/Mathematics/Geometry/Graph/Residue/a_Body.hpp"
-#else
-#define RSGraph ResidueGraph
-TE <TY T,TY E>CL RSGraph:PU EdgeImplimentation<T,T,int,E>{PU:IN RSGraph(CRI SZ,CO T& dummy,E edge);IN T Enumeration(CRI i);TE <TY F> IN RSGraph<T,F> GetGraph(F edge)CO;IN int Enumeration_inv_Body(CO T& t);};
-TE <TY T,TY E> IN RSGraph<T,E>::RSGraph(CRI SZ,CO T& dummy,E edge):EdgeImplimentation<T,T,int,E>(SZ,MO(edge)){ST_AS(is_invocable_v<E,T>);}TE <TY T,TY E> IN T RSGraph<T,E>::Enumeration(CRI i){RE T::DeRP(i);}TE <TY T,TY E> IN int RSGraph<T,E>::Enumeration_inv_Body(CO T& t){RE t.RP();}TE <TY T,TY E> TE <TY F> IN RSGraph<T,F> RSGraph<T,E>::GetGraph(F edge)CO{RE RSGraph<T,F>(TH->SZ(),T::zero(),MO(edge));}
-#endif
-
