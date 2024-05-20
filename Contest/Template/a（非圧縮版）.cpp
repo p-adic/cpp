@@ -11,9 +11,23 @@ inline void Solve()
 {
   // // 数・配列・文字列
   // CIN( ll , N );
-  // CIN_A( ll , N , A );
+  // CIN_A( ll , 0 , N , A );
   // // CIN( string , S );
-
+  
+  // // グリッド
+  // CIN_HW;
+  // // SET_HW( N , M );
+  // FOR( i , 0 , H ){
+  //   SetWallStringOnGrid( i , grid ); // grid[i][j]に'.'や'#'を格納
+  // }
+  // // GridGraph graph{ WEdgeOnGrid };
+  // // AcyclicGridGraph graph{ WEdgeOnGrid };
+  // // {i,j}へデコード: EnumHW( v )
+  // // {i,j}をコード: EnumHW_inv( { i , j } );
+  // // (i,j)->(k,h)の方向番号を取得: DirectionNumberOnGrid( i , j , k , h );
+  // // v->wの方向番号を取得: DirectionNumberOnGrid( v , w );
+  // // 方向番号の反転U<->D、R<->L: ReverseDirectionNumberOnGrid( n );
+  
   // // グラフ
   // CIN( int , N , M );
   // // CIN( int , N ); int M = N - 1;
@@ -61,21 +75,9 @@ inline void Solve()
   //     COUT( t.IntervalSum( l , r ) );
   //   }
   // }
-  // // CIN_A( T3<int> , Q , query );
+  // // CIN_A( T3<int> , 0 , Q , query );
   // // sort( query );
   // // Mo mo{ query };
-  
-  // // グリッド
-  // cin >> H >> W; H_minus = H - 1; W_minus = W - 1; HW = H * W;
-  // FOR( i , 0 , H ){
-  //   SetWallStringOnGrid( i , grid ); // grid[i][j]に'.'や'#'を格納
-  // }
-  // // EnumerationGraph graph{ HW , EnumHW , EnumHW_inv , WEdgeOnGrid };
-  // // {i,j}へデコード: EnumHW( v )
-  // // {i,j}をコード: EnumHW_inv( { i , j } );
-  // // (i,j)->(k,h)の方向番号を取得: DirectionNumberOnGrid( i , j , k , h );
-  // // v->wの方向番号を取得: DirectionNumberOnGrid( v , w );
-  // // 方向番号の反転U<->D、R<->L: ReverseDirectionNumberOnGrid( n );
 }
 REPEAT_MAIN(1);
 
@@ -239,8 +241,8 @@ c:/Users/user/Documents/Programming/Mathematics/Geometry/Graph/UnionFindForest/c
 #else
   #define SET_LL( A ) cin >> A
   #define CIN( LL , ... ) SOLVE_ONLY; LL __VA_ARGS__; VariadicCin( cin , __VA_ARGS__ )
-  #define SET_A( N , ... ) SOLVE_ONLY; VariadicResize( N , __VA_ARGS__ ); FOR( VARIABLE_FOR_SET_A , 0 , N ){ VariadicSet( cin , VARIABLE_FOR_SET_A , __VA_ARGS__ ); }
-  #define CIN_A( LL , N , ... ) VE<LL> __VA_ARGS__; SET_A( N , __VA_ARGS__ );
+  #define SET_A( I , N , ... ) SOLVE_ONLY; VariadicResize( N + I , __VA_ARGS__ ); FOR( VARIABLE_FOR_SET_A , 0 , N ){ VariadicSet( cin , VARIABLE_FOR_SET_A + I , __VA_ARGS__ ); }
+  #define CIN_A( LL , I , N , ... ) VE<LL> __VA_ARGS__; SET_A( I , N , __VA_ARGS__ )
 #endif
 #include <bits/stdc++.h>
 using namespace std;
@@ -378,24 +380,6 @@ template <typename T> inline T Id( const T& v ) { return v; }
 template <typename T> inline T Min( const T& a , const T& b ){ return a < b ? a : b; }
 template <typename T> inline T Max( const T& a , const T& b ){ return a < b ? b : a; }
 
-// グラフ用
-template <typename V> inline auto Get( V& a ) { return [&]( const int& i = 0 ) -> const decldecay_t( a[0] )& { return a[i]; }; }
-template <typename T = int> inline vector<T> id( const int& size ) { vector<T> answer( size ); FOR( i , 0 , size ){ answer[i] = i; } return answer; }
-
-// グリッド問題用
-int H , W , H_minus , W_minus , HW;
-vector<string> grid;
-char walkable = '.' , unwalkable = '#';
-inline T2<int> EnumHW( const int& v ) { return { v / W , v % W }; }
-inline int EnumHW_inv( const T2<int>& ij ) { auto& [i,j] = ij; return i * W + j; }
-const string direction[4] = {"U","R","D","L"};
-inline int DirectionNumberOnGrid( const int& i , const int& j , const int& k , const int& h ){return i<k?2:i>k?0:j<h?1:j>h?3:(assert(false),-1);}
-inline int DirectionNumberOnGrid( const int& v , const int& w ){auto [i,j]=EnumHW(v);auto [k,h]=EnumHW(w);return DirectionNumberOnGrid(i,j,k,h);}
-inline int ReverseDirectionNumberOnGrid( const int& n ){assert(0<=n&&n<4);return(n+2)%4;}
-inline vector<T2<int>> EdgeOnGrid( const T2<int>& v ){vector<T2<int>>answer{};auto[i,j]=v;if(i>0&&grid[i-1][j]==walkable){answer.push_back({i-1,j});}if(i+1<H&&grid[i+1][j]==walkable){answer.push_back({i+1,j});}if(j>0&&grid[i][j-1]==walkable){answer.push_back({i,j-1});}if(j+1<W&&grid[i][j+1]==walkable){answer.push_back({i,j+1});}return answer;}
-inline vector<pair<T2<int>,ll>> WEdgeOnGrid( const T2<int>& v ){vector<pair<T2<int>,ll>>answer{};auto[i,j]=v;if(i>0&&grid[i-1][j]==walkable){answer.push_back({{i-1,j},1});}if(i+1<H&&grid[i+1][j]==walkable){answer.push_back({{i+1,j},1});}if(j>0&&grid[i][j-1]==walkable){answer.push_back({{i,j-1},1});}if(j+1<W&&grid[i][j+1]==walkable){answer.push_back({{i,j+1},1});}return answer;}
-inline void SetWallStringOnGrid( const int& i , vector<string>& S ){if(S.empty()){S.resize(H);}cin>>S[i];assert(int(S[i].size())==W):}
-
 // 圧縮用
 #define TE template
 #define TY typename
@@ -463,7 +447,7 @@ DF_OF_HASH_FOR_TUPLE(pair);DF_OF_HASH_FOR_TUPLE(tuple);TE <TY T,TY U,TY V> IN si
 #define DF_OF_AR_FOR_VE(V,OPR)TE <TY T> IN V<T>& OP OPR ## =(V<T>& a,CO T& t){for(auto& s:a){s OPR ## = t;}RE a;}TE <TY T> IN V<T>& OP OPR ## =(V<T>& a0,CO V<T>& a1){AS(a0.SZ()<= a1.SZ());auto IT0 = a0.BE(),EN0 = a0.EN();auto IT1 = a1.BE();WH(IT0 != EN0){*(IT0++)OPR ## = *(IT1++);}RE a0;}TE <TY T,TY U> IN V<T> OP OPR(V<T> a,CO U& u){RE MO(a OPR ## = u);}
 #define DF_OF_INCREMENT_FOR_VE(V,INCR)TE <TY T> IN V<T>& OP INCR(V<T>& a){for(auto& i:a){INCR i;}RE a;}
 #define DF_OF_ARS_FOR_VE(V)DF_OF_AR_FOR_VE(V,+);DF_OF_AR_FOR_VE(V,-);DF_OF_AR_FOR_VE(V,*);DF_OF_AR_FOR_VE(V,/);DF_OF_AR_FOR_VE(V,%);DF_OF_INCREMENT_FOR_VE(V,++);DF_OF_INCREMENT_FOR_VE(V,--)
-DF_OF_COUT_FOR_VE(VE);DF_OF_COUT_FOR_VE(LI);DF_OF_COUT_FOR_VE(set);DF_OF_COUT_FOR_VE(unordered_set);DF_OF_ARS_FOR_VE(VE);DF_OF_ARS_FOR_VE(LI);IN VO VariadicResize(CRI SZ){}TE <TY Arg,TY... ARGS> IN VO VariadicResize(CRI SZ,Arg& arg,ARGS&... args){arg.resize(SZ);VariadicResize(SZ,args...);}TE <TY T> VO sort(VE<T>& a,CO bool& reversed = false){if(reversed){ST auto comp =[](CO T& t0,CO T& t1){RE t1 < t0;};sort(a.BE(),a.EN(),comp);}else{sort(a.BE(),a.EN());}}
+DF_OF_COUT_FOR_VE(VE);DF_OF_COUT_FOR_VE(LI);DF_OF_COUT_FOR_VE(set);DF_OF_COUT_FOR_VE(unordered_set);DF_OF_ARS_FOR_VE(VE);DF_OF_ARS_FOR_VE(LI);IN VO VariadicResize(CRI SZ){}TE <TY Arg,TY... ARGS> IN VO VariadicResize(CRI SZ,Arg& arg,ARGS&... args){arg.resize(SZ);VariadicResize(SZ,args...);}TE <TY T> VO sort(VE<T>& a,CO bool& reversed = false){if(reversed){ST auto comp =[](CO T& t0,CO T& t1){RE t1 < t0;};sort(a.BE(),a.EN(),comp);}else{sort(a.BE(),a.EN());}}TE <TY V> IN auto Get(V& a){RE[&](CRI i = 0)-> CO decldecay_t(a[0])&{RE a[i];};}TE <TY T = int> IN VE<T> id(CRI SZ){VE<T> AN(SZ);FOR(i,0,SZ){AN[i]= i;}RE AN;}
 
 // StdStream（1KB）
 TE <CL Traits> IN IS& VariadicCin(IS& is){RE is;}TE <CL Traits,TY Arg,TY... ARGS> IN IS& VariadicCin(IS& is,Arg& arg,ARGS&... args){RE VariadicCin(is >> arg,args...);}TE <CL Traits> IN IS& VariadicSet(IS& is,CRI i){RE is;}TE <CL Traits,TY Arg,TY... ARGS> IN IS& VariadicSet(IS& is,CRI i,Arg& arg,ARGS&... args){RE VariadicSet(is >> arg[i],i,args...);}TE <CL Traits> IN IS& VariadicGetline(IS& is,CO char& separator){RE is;}TE <CL Traits,TY Arg,TY... ARGS> IN IS& VariadicGetline(IS& is,CO char& separator,Arg& arg,ARGS&... args){RE VariadicGetline(getline(is,arg,separator),separator,args...);}TE <CL Traits,TY Arg> IN OS& VariadicCout(OS& os,CO Arg& arg){RE os << arg;}TE <CL Traits,TY Arg1,TY Arg2,TY... ARGS> IN OS& VariadicCout(OS& os,CO Arg1& arg1,CO Arg2& arg2,CO ARGS&... args){RE VariadicCout(os << arg1 << " ",arg2,args...);}
@@ -488,6 +472,13 @@ TE <TY R,TY MAGMA> IN RegularRSet<R,MAGMA>::RegularRSet(MAGMA magma):MAGMA(MO(ma
 // Graph (5KB)
 TE <TY T,TY R1,TY R2,TY E>CL VirtualGraph:VI PU UnderlyingSet<T>{PU:VI R1 Enumeration(CRI i)= 0;IN R2 Enumeration_inv(CO T& t);TE <TY PATH> IN R2 Enumeration_inv(CO PATH& p);IN VO Reset();VI CRI SZ()CO NE = 0;VI E& edge()NE = 0;VI ret_t<E,T> Edge(CO T& t)= 0;TE <TY PATH> IN ret_t<E,T> Edge(CO PATH& p);ST IN CO T& Vertex(CO T& t)NE;TE <TY PATH> ST IN CO T& Vertex(CO PATH& e)NE;VI R2 Enumeration_inv_Body(CO T& t)= 0;};TE <TY T,TY R1,TY R2,TY E>CL EdgeImplimentation:VI PU VirtualGraph<T,R1,R2,E>{PU:int m_SZ;E m_edge;IN EdgeImplimentation(CRI SZ,E edge);IN CRI SZ()CO NE;IN E& edge()NE;IN ret_t<E,T> Edge(CO T& t);};TE <TY E>CL Graph:PU EdgeImplimentation<int,CRI,CRI,E>{PU:IN Graph(CRI SZ,E edge);IN CRI Enumeration(CRI i);TE <TY F> IN Graph<F> GetGraph(F edge)CO;IN CRI Enumeration_inv_Body(CRI t);};TE <TY T,TY Enum_T,TY Enum_T_inv,TY E>CL EnumerationGraph:PU EdgeImplimentation<T,ret_t<Enum_T,int>,ret_t<Enum_T_inv,T>,E>{PU:Enum_T m_enum_T;Enum_T_inv m_enum_T_inv;IN EnumerationGraph(CRI SZ,Enum_T enum_T,Enum_T_inv enum_T_inv,E edge);IN ret_t<Enum_T,int> Enumeration(CRI i);TE <TY F> IN EnumerationGraph<T,Enum_T,Enum_T_inv,F> GetGraph(F edge)CO;IN ret_t<Enum_T_inv,T> Enumeration_inv_Body(CO T& t);};TE <TY Enum_T,TY Enum_T_inv,TY E> EnumerationGraph(CRI SZ,Enum_T enum_T,Enum_T_inv enum_T_inv,E edge)-> EnumerationGraph<decldecay_t(declval<Enum_T>()(0)),Enum_T,Enum_T_inv,E>;TE <TY T,TY E>CL MemorisationGraph:PU EdgeImplimentation<T,T,CRI,E>{PU:int m_LE;VE<T> m_memory;Map<T,int> m_memory_inv;IN MemorisationGraph(CRI SZ,CO T& dummy,E edge);IN T Enumeration(CRI i);IN VO Reset();TE <TY F> IN MemorisationGraph<T,F> GetGraph(F edge)CO;IN CRI Enumeration_inv_Body(CO T& t);};
 TE <TY T,TY R1,TY R2,TY E> IN EdgeImplimentation<T,R1,R2,E>::EdgeImplimentation(CRI SZ,E edge):m_SZ(SZ),m_edge(MO(edge)){ST_AS(is_COructible_v<T,R1> && is_COructible_v<int,R2> && is_invocable_v<E,T>);}TE <TY E> IN Graph<E>::Graph(CRI SZ,E edge):EdgeImplimentation<int,CRI,CRI,E>(SZ,MO(edge)){}TE <TY T,TY Enum_T,TY Enum_T_inv,TY E> IN EnumerationGraph<T,Enum_T,Enum_T_inv,E>::EnumerationGraph(CRI SZ,Enum_T enum_T,Enum_T_inv enum_T_inv,E edge):EdgeImplimentation<T,ret_t<Enum_T,int>,ret_t<Enum_T_inv,T>,E>(SZ,MO(edge)),m_enum_T(MO(enum_T)),m_enum_T_inv(MO(enum_T_inv)){}TE <TY T,TY E> IN MemorisationGraph<T,E>::MemorisationGraph(CRI SZ,CO T& dummy,E edge):EdgeImplimentation<T,T,CRI,E>(SZ,MO(edge)),m_LE(),m_memory(),m_memory_inv(){ST_AS(is_invocable_v<E,T>);}TE <TY E> IN CRI Graph<E>::Enumeration(CRI i){RE i;}TE <TY T,TY Enum_T,TY Enum_T_inv,TY E> IN ret_t<Enum_T,int> EnumerationGraph<T,Enum_T,Enum_T_inv,E>::Enumeration(CRI i){RE m_enum_T(i);}TE <TY T,TY E> IN T MemorisationGraph<T,E>::Enumeration(CRI i){AS(0 <= i && i < m_LE);RE m_memory[i];}TE <TY T,TY R1,TY R2,TY E> IN R2 VirtualGraph<T,R1,R2,E>::Enumeration_inv(CO T& t){RE Enumeration_inv_Body(t);}TE <TY T,TY R1,TY R2,TY E> TE <TY PATH> IN R2 VirtualGraph<T,R1,R2,E>::Enumeration_inv(CO PATH& p){RE Enumeration_inv_Body(get<0>(p));}TE <TY E> IN CRI Graph<E>::Enumeration_inv_Body(CRI i){RE i;}TE <TY T,TY Enum_T,TY Enum_T_inv,TY E> IN ret_t<Enum_T_inv,T> EnumerationGraph<T,Enum_T,Enum_T_inv,E>::Enumeration_inv_Body(CO T& t){RE m_enum_T_inv(t);}TE <TY T,TY E> IN CRI MemorisationGraph<T,E>::Enumeration_inv_Body(CO T& t){if(m_memory_inv.count(t)== 0){AS(m_LE < TH->SZ());m_memory.push_back(t);RE m_memory_inv[t]= m_LE++;}RE m_memory_inv[t];}TE <TY T,TY R1,TY R2,TY E> VO VirtualGraph<T,R1,R2,E>::Reset(){}TE <TY T,TY E> IN VO MemorisationGraph<T,E>::Reset(){m_LE = 0;m_memory.clear();m_memory_inv.clear();}TE <TY T,TY R1,TY R2,TY E> IN CRI EdgeImplimentation<T,R1,R2,E>::SZ()CO NE{RE m_SZ;}TE <TY T,TY R1,TY R2,TY E> IN E& EdgeImplimentation<T,R1,R2,E>::edge()NE{RE m_edge;}TE <TY T,TY R1,TY R2,TY E> IN ret_t<E,T> EdgeImplimentation<T,R1,R2,E>::Edge(CO T& t){RE m_edge(t);}TE <TY T,TY R1,TY R2,TY E> TE <TY PATH> IN ret_t<E,T> VirtualGraph<T,R1,R2,E>::Edge(CO PATH& p){RE Edge(get<0>(p));}TE <TY E> TE <TY F> IN Graph<F> Graph<E>::GetGraph(F edge)CO{RE Graph<F>(TH->SZ(),MO(edge));}TE <TY T,TY Enum_T,TY Enum_T_inv,TY E> TE <TY F> IN EnumerationGraph<T,Enum_T,Enum_T_inv,F> EnumerationGraph<T,Enum_T,Enum_T_inv,E>::GetGraph(F edge)CO{RE EnumerationGraph<T,Enum_T,Enum_T_inv,F>(TH->SZ(),m_enum_T,m_enum_T_inv,MO(edge));}TE <TY T,TY E> TE <TY F> IN MemorisationGraph<T,F> MemorisationGraph<T,E>::GetGraph(F edge)CO{RE MemorisationGraph<T,F>(TH->SZ(),MO(edge));}TE <TY T,TY R1,TY R2,TY E> IN CO T& VirtualGraph<T,R1,R2,E>::Vertex(CO T& t)NE{RE t;}TE <TY T,TY R1,TY R2,TY E> TE <TY PATH> IN CO T& VirtualGraph<T,R1,R2,E>::Vertex(CO PATH& e)NE{RE Vertex(get<0>(e));}
+
+// Grid (2KB)
+#define SET_GRID H_minus = H - 1;W_minus = W - 1;HW = H * W
+#define SET_HW(h,w)H = h;W = w;SET_GRID
+#define CIN_HW cin >> H >> W;SET_GRID
+TE <TY E>CL GridGraph:PU EnumerationGraph<T2<int>,T2<int>(&)(CRI),int(&)(CO T2<int>&),E>{PU:IN GridGraph(E e);};int H,W,H_minus,W_minus,HW;VE<string> grid;char walkable = '.',unwalkable = '#';
+IN T2<int> EnumHW(CRI v){RE{v / W,v % W};}IN int EnumHW_inv(CO T2<int>& ij){auto&[i,j]= ij;RE i * W + j;}TE <TY E> IN GridGraph<E>::GridGraph(E e):EnumerationGraph<T2<int>,T2<int>(&)(CRI),int(&)(CO T2<int>&),E>(HW,EnumHW,EnumHW_inv,MO(e)){AS(H * W == HW);}VE<T2<int>> EdgeOnGrid(CO T2<int>& v){VE<T2<int>> AN{};auto&[i,j]= v;if(i > 0 && grid[i-1][j]== walkable){AN.push_back({i-1,j});}if(i+1 < H && grid[i+1][j]== walkable){AN.push_back({i+1,j});}if(j > 0 && grid[i][j-1]== walkable){AN.push_back({i,j-1});}if(j+1 < W && grid[i][j+1]== walkable){AN.push_back({i,j+1});}RE AN;}VE<pair<T2<int>,ll>> WEdgeOnGrid(CO T2<int>& v){VE<pair<T2<int>,ll>> AN{};auto&[i,j]= v;if(i>0 && grid[i-1][j]== walkable){AN.push_back({{i-1,j},1});}if(i+1 < H && grid[i+1][j]== walkable){AN.push_back({{i+1,j},1});}if(j>0 && grid[i][j-1]== walkable){AN.push_back({{i,j-1},1});}if(j+1 < W && grid[i][j+1]== walkable){AN.push_back({{i,j+1},1});}RE AN;}IN VO SetWallStringOnGrid(CRI i,VE<string>& S){if(S.empty()){S.resize(H);}cin >> S[i];AS(int(S[i].SZ())== W);}CO string direction[4]={"U","R","D","L"};IN int DirectionNumberOnGrid(CRI i,CRI j,CRI k,CRI h){RE i < k?2:i > k?0:j < h?1:(AS(j > h),3);}IN int DirectionNumberOnGrid(CRI v,CRI w){auto[i,j]= EnumHW(v);auto[k,h]= EnumHW(w);RE DirectionNumberOnGrid(i,j,k,h);}IN int ReverseDirectionNumberOnGrid(CRI n){AS(0 <= n && n<4);RE n ^ 2;}
 
 // ConstexprModulo (7KB)
 CEXPR(uint,P,998244353);
