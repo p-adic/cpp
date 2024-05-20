@@ -151,7 +151,7 @@ inline void RandomTest()
 
 /*
 AdicExhausiveSearch/BFS (11KB)
-c:/Users/user/Documents/Programming/Mathematics/Geometry/Graph/BreadthFirstSearch/AdicExhausiveSearch/compress.txt
+c:/Users/user/Documents/Programming/Mathematics/Geometry/Graph/Algorithm/BreadthFirstSearch/AdicExhausiveSearch/compress.txt
 
 CommutativeDualSqrtDecomposition (6KB)
 c:/Users/user/Documents/Programming/Mathematics/SetTheory/DirectProduct/AffineSpace/SqrtDecomposition/Dual/Commutative/compress.txt
@@ -160,7 +160,7 @@ CoordinateCompress (3KB)
 c:/Users/user/Documents/Programming/Mathematics/SetTheory/DirectProduct/CoordinateCompress/compress.txt
 
 DFSOnTree (11KB)
-c:/Users/user/Documents/Programming/Mathematics/Geometry/Graph/DepthFirstSearch/Tree/compress.txt
+c:/Users/user/Documents/Programming/Mathematics/Geometry/Graph/Algorithm/DepthFirstSearch/Tree/compress.txt
 
 DifferenceSequence (9KB)
 c:/Users/user/Documents/Programming/Mathematics/SetTheory/DirectProduct/AffineSpace/DifferenceSequence/compress.txt
@@ -181,7 +181,7 @@ Knapsack (8KB)
 c:/Users/user/Documents/Programming/Mathematics/Combinatorial/KnapsackProblem/compress.txt
 
 MinimumCostFlow/PotentialisedDijkstra/Dijkstra (16KB)
-c:/Users/user/Documents/Programming/Mathematics/Geometry/Graph/Dijkstra/Potentialised/MinimumCostFlow/compress.txt
+c:/Users/user/Documents/Programming/Mathematics/Geometry/Graph/Algorithm/Dijkstra/Potentialised/MinimumCostFlow/compress.txt
 
 Polynomial (21KB)
 c:/Users/user/Documents/Programming/Mathematics/Polynomial/compress.txt
@@ -190,7 +190,7 @@ TwoByOneMatrix/TwoByTwoMatrix (9KB)
 C:/Users/user/Documents/Programming/Mathematics/LinearAlgebra/TwoByOne/compress.txt
 
 UnionFind (3KB)
-c:/Users/user/Documents/Programming/Mathematics/Geometry/Graph/UnionFindForest/compress.txt
+c:/Users/user/Documents/Programming/Mathematics/Geometry/Graph/Algorithm/UnionFindForest/compress.txt
 */
 
 // VVV èÌê›Ç≈Ç»Ç¢ÉâÉCÉuÉâÉäÇÕà»â∫Ç…ë}ì¸Ç∑ÇÈÅB
