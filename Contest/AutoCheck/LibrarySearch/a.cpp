@@ -313,7 +313,7 @@ AC( ExplicitExpressionFunctionOnTree )
     CALL_AC( FunctionOnTree );
     CERR( "- 各ノード（またはその近傍）の寄与に分解できる時はノードごとの計算" );
     CERR( "- 部分木に関する良い遷移関係があれば（全方位）木DP" );
-    CERR( "  \\Mathematics\\Geometry\\Graph\\DepthFirstSearch\\Tree" );
+    CERR( "  \\Mathematics\\Geometry\\Graph\\Algorithm\\DepthFirstSearch\\Tree" );
     CERR( "を検討しましょう。" );
     ASK_YES_NO( "fがbit演算の多引数化である問題ですか？" );
     if( reply == "y" ){
@@ -374,10 +374,10 @@ AC( ExplicitExpressionFunctionOnNonTreeGraph )
   CERR( "  全体をわたってPに沿った辺の重みの総乗f(P)を考えf(P)の下限を計算する問題は" );
   CERR( "  - 重みが「単位元が最小元である等号つき全順序モノイドM個の直積」に値を持ち" );
   CERR( "    O(M(V+E)log V)が間に合いそうならば各直積成分に対するダイクストラ法" );
-  CERR( "    \\Mathematics\\Geometry\\Graph\\Dijkstra" );
+  CERR( "    \\Mathematics\\Geometry\\Graph\\Algorithm\\Dijkstra" );
   CERR( "  - 重みが「単位元が最小元であるmeet半束モノイド」に値を持ち" );
   CERR( "    O(V^3)が間に合いそうならばワーシャルフロイド法" );
-  CERR( "    \\Mathematics\\Geometry\\Graph\\FloydWarshall" );
+  CERR( "    \\Mathematics\\Geometry\\Graph\\Algorithm\\FloydWarshall" );
   CERR( "を検討しましょう。" );
 }
 
@@ -627,10 +627,12 @@ AC( MinimisationMovingCost )
     CERR( "- 各始点siへ容量1コスト0の辺を持つ頂点Sを追加" );
     CERR( "- 各終点tjから容量Njコスト0の辺を持つ頂点Tを追加" );
     CERR( "とすることで得られる有無向グラフに対しPrimal-Dual法を適用しましょう。" );
-    CERR( "\\Mathematics\\Geometry\\Graph\\Dijkstra\\Potentialised\\MinimumCostFlow" );
+    CERR( "\\Mathematics\\Geometry\\Graph\\Algorithm\\Dijkstra\\Potentialised\\MinimumCostFlow" );
   } else if( num == num_temp++ ){
-    CERR( "- HeldKarp法" );
-    CERR( "- 移動方法を分類するパラメータの全探策" );
+    CERR( "- 経由点の経由順序が指定されているならば、グラフの線形グラフに対する" );
+    CERR( "  分割統治ダイクストラ法" );
+    CERR( "  \\Mathematics\\Geometry\\Graph\\Algorithm\\Dijkstra\\Double\\Errand" );
+    CERR( "- 経由点の経由順序が指定されていないならば、HeldKarp法" );
     CERR( "を検討しましょう。" );
   } else if( num == num_temp++ ){
     CERR( "D次元ユークリッド空間内のN点を考えます。" );
@@ -671,27 +673,27 @@ AC( MinimisationSolvingMaze )
   ASK_YES_NO( "Eが10^8オーダーで抑えられますか？" );
   if( reply == "y" ){
     CERR( "- コストが1のみでO(V+E)が通りそうならば幅優先探索" );
-    CERR( "  \\Mathematics\\Geometry\\Graph\\BreadthFirst" );
+    CERR( "  \\Mathematics\\Geometry\\Graph\\Algorithm\\BreadthFirst" );
     CERR( "- コストが1のみでなく{0,1}値でO(V+E)が通りそうならば01幅優先探索" );
-    CERR( "  \\Mathematics\\Geometry\\Graph\\BreadthFirst\\ZeroOne" );
-    CERR( "  \\Mathematics\\Geometry\\Graph\\BreadthFirst" );
+    CERR( "  \\Mathematics\\Geometry\\Graph\\Algorithm\\BreadthFirst\\ZeroOne" );
+    CERR( "  \\Mathematics\\Geometry\\Graph\\Algorithm\\BreadthFirst" );
     CERR( "- コストが{0,1}値でなくかつ非負ならば" );
     CERR( "  - O(min(V^2,(V+E)log_2 E))が間に合いそうならばダイクストラ法" );
-    CERR( "    \\Mathematics\\Geometry\\Graph\\Dijkstra" );
+    CERR( "    \\Mathematics\\Geometry\\Graph\\Algorithm\\Dijkstra" );
     CERR( "  - Gがグラフの非輪状グラフならば" );
     CERR( "    - O(min(sum_i V_i^2,sum_i((V_i+E_i)log_2 E?i))が間に合いそうならば" );
     CERR( "      分割統治ダイクストラ法" );
-    CERR( "      \\Mathematics\\Geometry\\Graph\\Acyclic\\Double" );
+    CERR( "      \\Mathematics\\Geometry\\Graph\\Algorithm\\Dijkstra\\Double" );
     CERR( "    - 間に合わなさそうならば分割統治を動的計画法で書き直しデータ構造高速化" );
     CERR( "  - コスト総和上限をCとしO((V+E)C)が間に合いそうならば" );
     CERR( "    コスト総和も状態に含めたグラフ上での幅優先探索" );
-    CERR( "    \\Mathematics\\Geometry\\Graph\\BreadthFirst" );
+    CERR( "    \\Mathematics\\Geometry\\Graph\\Algorithm\\BreadthFirst" );
     CERR( "- コストが非負でないならば" );
     CERR( "  - O(VE)が間に合いそうならばベルマンフォード法" );
-    CERR( "    \\Mathematics\\Geometry\\Graph\\BellmanFord" );
+    CERR( "    \\Mathematics\\Geometry\\Graph\\Algorithm\\BellmanFord" );
     CERR( "  - 辺の削除を行い繰り返し解く場合O(VE+Q(V+E)log_2 E)が間に合いそうならば" );
     CERR( "    ポテンシャル付きダイクストラ法" );
-    CERR( "    \\Mathematics\\Geometry\\Graph\\Dijkstra\\Potentialised" );
+    CERR( "    \\Mathematics\\Geometry\\Graph\\Algorithm\\Dijkstra\\Potentialised" );
     CERR( "を検討しましょう。" );
   } else {
     CERR( "配列の書き換え問題やLightsOut問題のようにEが非常に大きいならば、" );
@@ -721,19 +723,19 @@ AC( MinimisationSolvingOpenCovering )
   if( reply == "y" ){
     CERR( "- コストがなくO(V+E)が通りそうならば、多点幅優先探索か" );
     CERR( "  頂点を１つ追加し各始点に辺を張ったグラフ上での幅優先探索" );
-    CERR( "  \\Mathematics\\Geometry\\Graph\\BreadthFirst" );
+    CERR( "  \\Mathematics\\Geometry\\Graph\\Algorithm\\BreadthFirst" );
     CERR( "- コストが0か1でO(V+E)が通りそうならば、多点01幅優先探索" );
     CERR( "  頂点を１つ追加し各始点に辺を張ったグラフ上での01幅優先探索" );
-    CERR( "  \\Mathematics\\Geometry\\Graph\\BreadthFirst\\ZeroOne" );
+    CERR( "  \\Mathematics\\Geometry\\Graph\\Algorithm\\BreadthFirst\\ZeroOne" );
     CERR( "- max演算を考えておりO(E(log_2 E + α(V)))が通りそうならば、" );
     CERR( "  重みで辺をソートして素集合データ構造" );
-    CERR( "  \\Mathematics\\Geometry\\Graph\\UnionFindForest" );
+    CERR( "  \\Mathematics\\Geometry\\Graph\\Algorithm\\UnionFindForest" );
     CERR( "- O((V+E)log_2 E)が通りそうならば、" );
     CERR( "  頂点を１つ追加し各始点に辺を張ったグラフ上でのダイクストラ法" );
-    CERR( "  \\Mathematics\\Geometry\\Graph\\Dijkstra" );
+    CERR( "  \\Mathematics\\Geometry\\Graph\\Algorithm\\Dijkstra" );
     CERR( "- O(V^3)が通りそうならば、" );
     CERR( "  ワーシャルフロイド法" );
-    CERR( "  \\Mathematics\\Geometry\\Graph\\FloydWarshall" );
+    CERR( "  \\Mathematics\\Geometry\\Graph\\Algorithm\\FloydWarshall" );
     CERR( "を検討しましょう。" );
   } else {
     CALL_AC( MinimisationSolvingOpenCoveringUnknownCentres );
@@ -771,9 +773,9 @@ AC( MaximisationMovingDistance )
 AC( MaximisationMovingDistanceSingleStart )
 {
   CERR( "- コストが非正でO((V+E)log_2 E)が間に合いそうならば-1倍してダイクストラ法" );
-  CERR( "  \\Mathematics\\Geometry\\Graph\\Dijkstra" );
+  CERR( "  \\Mathematics\\Geometry\\Graph\\Algorithm\\Dijkstra" );
   CERR( "- コストが正になりえてO(VE)が間に合いそうならば1倍してベルマンフォード法" );
-  CERR( "  \\Mathematics\\Geometry\\Graph\\BellmanFord" );
+  CERR( "  \\Mathematics\\Geometry\\Graph\\Algorithm\\BellmanFord" );
 }
 
 AC( MaximisationFunctionOnArray )
@@ -1075,7 +1077,7 @@ AC( SingleKnapsackCostfree )
   CERR( "- O(N^4)が間に合いそうかつ選択に負価値の要素と非負価値の要素間で一方向の" );
   CERR( "  制約があるならば、制約を容量∞の有向辺に対応させ選択するか否かを" );
   CERR( "  二部マッチングに翻訳し最小カット（最大流）計算" );
-  CERR( "  \\Mathematics\\Geometry\\Graph\\MaximumFlow" );
+  CERR( "  \\Mathematics\\Geometry\\Graph\\Algorithm\\MaximumFlow" );
   CERR( "- O((N+V)log_2 V)が通りそうかつ非負かつVが10^5オーダーでプロス素数Pを" );
   CERR( "  法とするならば法Pでの高速フーリエ変換によるexp(logの総和)計算" );
   CERR( "  \\Mathematics\\Polynomial\\Truncate" );
@@ -1158,17 +1160,17 @@ AC( MaximisationSubsetSize )
   if( reply == "y" ){
     CERR( "与えられた集合のサイズをNと置きます。" );
     CERR( "- O(2^N)が間に合いそうならば、bit全探策" );
-    CERR( "  \\Mathematics\\Geometry\\Graph\\BreadthFirstSearch\\BitExhausiveSearch" );
+    CERR( "  \\Mathematics\\Geometry\\Graph\\Algorithm\\BreadthFirstSearch\\BitExhausiveSearch" );
     CERR( "- O(N2^N)が間に合いそうならば、部分集合の包含対のbit全探策" );
-    CERR( "  \\Mathematics\\Geometry\\Graph\\BreadthFirstSearch\\BitExhausiveSearch" );
+    CERR( "  \\Mathematics\\Geometry\\Graph\\Algorithm\\BreadthFirstSearch\\BitExhausiveSearch" );
     CERR( "- 極大鎖の計算ならば、後続関数を定義し、極大元から後続関数の逆像のグラフの深さ計算" );
     CERR( "- 極大反鎖の計算ならば、" );
     CERR( "  - Dilworthの定理の証明に基く構築" );
     CERR( "    https://en.wikipedia.org/wiki/Dilworth%27s_theorem#Inductive_proof" );
     CERR( "  - 後続関数を定義し、後続に関する二分探索" );
     CERR( "- 完全代表系の計算ならば、幅優先探索やUnionFindによる連結成分計算" );
-    CERR( "  \\Mathematics\\Geometry\\Graph\\BreadthFirst" );
-    CERR( "  \\Mathematics\\Geometry\\Graph\\UnionFindForest" );
+    CERR( "  \\Mathematics\\Geometry\\Graph\\Algorithm\\BreadthFirst" );
+    CERR( "  \\Mathematics\\Geometry\\Graph\\Algorithm\\UnionFindForest" );
     CERR( "- 半開区間の極大排他的集合ならば、区間スケジューリング" );
     CERR( "を検討しましょう。" );
   } else {
@@ -1188,7 +1190,7 @@ AC( MinimisationGraphCost )
 	     );
   if( num == num_temp++ ){
     CERR( "クラスカル法" );
-    CERR( "\\Mathematics\\Geometry\\Graph\\UnionFindForest\\Kruscal" );
+    CERR( "\\Mathematics\\Geometry\\Graph\\Algorithm\\UnionFindForest\\Kruscal" );
     CERR( "を検討しましょう。" );
   } else if( num == num_temp++ ){
     CERR( "これは最短経路問題そのものです。" );
@@ -1664,9 +1666,9 @@ AC( CountingSubset )
   } else {
     CERR( "与えられた集合のサイズをNと置きます。" );
     CERR( "- O(2^N)が間に合いそうならば、bit全探策" );
-    CERR( "  \\Mathematics\\Geometry\\Graph\\BreadthFirstSearch\\BitExhausiveSearch" );
+    CERR( "  \\Mathematics\\Geometry\\Graph\\Algorithm\\BreadthFirstSearch\\BitExhausiveSearch" );
     CERR( "- O(N2^N)が間に合いそうならば、部分集合の包含対のbit全探策" );
-    CERR( "  \\Mathematics\\Geometry\\Graph\\BreadthFirstSearch\\BitExhausiveSearch" );
+    CERR( "  \\Mathematics\\Geometry\\Graph\\Algorithm\\BreadthFirstSearch\\BitExhausiveSearch" );
     CERR( "を検討しましょう。" );
   };
 }
@@ -1801,13 +1803,13 @@ AC( SolvingBinaryEquations )
 {
   CERR( "f(x,C^j -)かf(-,C^j y)が単射であるとします。" );
   CERR( "- O(BMf(BN) + BN log B)が間に合いそうならば素集合データ構造" );
-  CERR( "  \\Mathematics\\Geometry\\Graph\\UnionFindForest" );
+  CERR( "  \\Mathematics\\Geometry\\Graph\\Algorithm\\UnionFindForest" );
   CERR( "- O(BM + BN log B)が間に合いそうならば幅／深さ優先探索" );
-  CERR( "  \\Mathematics\\Geometry\\Graph\\BreadthFirst" );
-  CERR( "  \\Mathematics\\Geometry\\Graph\\DepthFirst" );
+  CERR( "  \\Mathematics\\Geometry\\Graph\\Algorithm\\BreadthFirst" );
+  CERR( "  \\Mathematics\\Geometry\\Graph\\Algorithm\\DepthFirst" );
   CERR( "- O(Mf(N) + N)が間に合いそうでf(x,y)=x-yかつC=1ならば" );
   CERR( "  ポテンシャル付き素集合データ構造" );
-  CERR( "  \\Mathematics\\Geometry\\Graph\\UnionFindForest" );
+  CERR( "  \\Mathematics\\Geometry\\Graph\\Algorithm\\UnionFindForest" );
   CERR( "を検討しましょう。" );
 }
 
@@ -2061,9 +2063,9 @@ AC( QueryTree )
   CERR( "- 可換群構造に関する範囲取得O(1)のみが必要ならば累積和" );
   CERR( "  \\Mathematics\\SetTheory\\DirectProduct\\AfineSpace\\CumulativeProduct\\Tree" );
   CERR( "- 可換モノイド構造に関する部分木での総乗O(N)が必要ならば全域木DP" );
-  CERR( "  \\Mathematics\\Geometry\\Graph\\DepthFirst\\Tree" );
+  CERR( "  \\Mathematics\\Geometry\\Graph\\Algorithm\\DepthFirst\\Tree" );
   CERR( "- モノイド構造に関するパスでの総乗O(log N)が必要ならば重み付きLCA" );
-  CERR( "  \\Mathematics\\Geometry\\Graph\\DepthFirst\\Tree\\Weighted" );
+  CERR( "  \\Mathematics\\Geometry\\Graph\\Algorithm\\DepthFirst\\Tree\\Weighted" );
   CERR( "を検討しましょう。" );  
 }
 
@@ -2086,17 +2088,17 @@ AC( QueryGraph )
 {
   CERR( "グラフの頂点数をV、辺の本数をE、クエリ数をQと置きます。" );
   CERR( "- 辺の追加でO(V+(E+Q)α(V))が間に合いそうならばUnionFind" );
-  CERR( "  \\Mathematics\\Geometry\\Graph\\UnionFindForest" );
+  CERR( "  \\Mathematics\\Geometry\\Graph\\Algorithm\\UnionFindForest" );
   CERR( "- 辺の削除でO(V+Eα(V))が間に合いそうならばクエリ逆読みのUnionFind" );
-  CERR( "  \\Mathematics\\Geometry\\Graph\\UnionFindForest" );
+  CERR( "  \\Mathematics\\Geometry\\Graph\\Algorithm\\UnionFindForest" );
   CERR( "- 特定の辺を含む最小全域森取得でO((V+Q)log V + E log E)が間に合いそうならば" );
   CERR( "  全体に対する最小全域森をクラスカル法で前計算し重み付きLCAによる" );
   CERR( "  最大コスト辺計算" );
-  CERR( "  \\Mathematics\\Geometry\\Graph\\UnionFindForest\\Kruscal" );
-  CERR( "  \\Mathematics\\Geometry\\Graph\\DepthFirst\\Tree\\Weighted" );
+  CERR( "  \\Mathematics\\Geometry\\Graph\\Algorithm\\UnionFindForest\\Kruscal" );
+  CERR( "  \\Mathematics\\Geometry\\Graph\\Algorithm\\DepthFirst\\Tree\\Weighted" );
   CERR( "- 辺集合の彩色を変えた最小全域森取得でO(V + E log E + Qα(V))が間に合いそう" );
   CERR( "  ならば全体に対する辺のソートを前計算しクラスカル法の反復" );
-  CERR( "  \\Mathematics\\Geometry\\Graph\\UnionFindForest\\Kruscal" );
+  CERR( "  \\Mathematics\\Geometry\\Graph\\Algorithm\\UnionFindForest\\Kruscal" );
   CERR( "を検討しましょう。" );  
 }
 
@@ -2218,8 +2220,8 @@ AC( Decision )
 AC( DecisionConnectedness )
 {
   CERR( "幅優先探索やUnionFind" );
-  CERR( "\\Mathematics\\Geometry\\Graph\\BreadthFirst" );
-  CERR( "\\Mathematics\\Geometry\\Graph\\UnionFindForest" );
+  CERR( "\\Mathematics\\Geometry\\Graph\\Algorithm\\BreadthFirst" );
+  CERR( "\\Mathematics\\Geometry\\Graph\\Algorithm\\UnionFindForest" );
   CERR( "を検討しましょう。" );
   CERR( "" );
 }
@@ -2227,7 +2229,7 @@ AC( DecisionConnectedness )
 AC( DecisionHigherConnectedness )
 {
   CERR( "- 強連結性判定は深さ優先探索" );
-  CERR( "  \\Mathematics\\Geometry\\Graph\\DepthFirst" );
+  CERR( "  \\Mathematics\\Geometry\\Graph\\Algorithm\\DepthFirst" );
   CERR( "- 高次ホモロジー計算は適当な法での掃き出し法" );
   CERR( "を検討しましょう。" );
 }
@@ -2303,9 +2305,9 @@ AC( DecisionAccessibility )
   } else if( num == num_temp++ ){
     CERR( "移動の前後で変化しない値がある場合、その値が等しい点に絞って考えましょう。" );
     CERR( "- 領域と移動に対称性があるならば、タイリングとマッチング" );
-    CERR( "  \\Mathematics\\Geometry\\Graph\\HopcroftKarp" );
+    CERR( "  \\Mathematics\\Geometry\\Graph\\Algorithm\\HopcroftKarp" );
     CERR( "- O(N^3)が通りそうで再来訪を許容するならば、ワーシャルフロイド法" );
-    CERR( "  \\Mathematics\\Geometry\\Graph\\FloydWarshall" );
+    CERR( "  \\Mathematics\\Geometry\\Graph\\Algorithm\\FloydWarshall" );
     CERR( "を検討しましょう。" );
   }
   CERR( "" );
@@ -2385,8 +2387,8 @@ AC( DecisionSatisfiability )
   } else if( num == num_temp++ ){
     CERR( "完全二部マッチング判定は最大二部マッチングに帰着させて" );
     CERR( "ホップクロフトカープ法や最大流" );
-    CERR( "\\Mathematics\\Geometry\\Graph\\HopcroftKarp" );
-    CERR( "\\Mathematics\\Geometry\\Graph\\MaximumFlow" );
+    CERR( "\\Mathematics\\Geometry\\Graph\\Algorithm\\HopcroftKarp" );
+    CERR( "\\Mathematics\\Geometry\\Graph\\Algorithm\\MaximumFlow" );
     CERR( "を検討しましょう。" );
   }
 }
@@ -2493,7 +2495,7 @@ AC( ConstructionMap )
   CERR( "- 単射の構築にはHallの結婚定理" );
   CERR( "  https://ja.wikipedia.org/wiki/ホールの定理" );
   CERR( "- 全単射の構築にはホップクロフトカープ法やカントールベルンシュタインの定理" );
-  CERR( "  \\Mathematics\\Geometry\\Graph\\HopcroftKarp" );
+  CERR( "  \\Mathematics\\Geometry\\Graph\\Algorithm\\HopcroftKarp" );
   CERR( "  https://ja.wikipedia.org/wiki/ベルンシュタインの定理#証明" );
   CERR( "- 全射の構築には部分集合を制限して全単射の構築の反復" );
   CERR( "を検討しましょう。" );
