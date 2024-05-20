@@ -8,8 +8,8 @@
 #include "c:/Users/user/Documents/Programming/Utility/Vector/a.hpp"
 #include "c:/Users/user/Documents/Programming/Utility/StdStream/a.hpp"
 
-#include "c:/Users/user/Documents/Programming/Mathematics/Algebra/Monoid/Group/a.hpp"
-#include "c:/Users/user/Documents/Programming/Mathematics/Geometry/Graph/a.hpp"
+#include "c:/Users/user/Documents/Programming/Mathematics/Algebra/Monoid/Group/Module/a.hpp"
+#include "c:/Users/user/Documents/Programming/Mathematics/Geometry/Graph/Grid/a.hpp"
 #include "c:/Users/user/Documents/Programming/Mathematics/Arithmetic/Mod/ConstexprModulo/Debug/a.hpp"
 
 CEXPR( uint , P , 998244353 );
