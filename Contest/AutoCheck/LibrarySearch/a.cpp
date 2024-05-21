@@ -2106,13 +2106,35 @@ AC( QueryString )
 {
   CERR( "文字列の一点更新（一文字更新）／結合／比較はローリングハッシュ" );
   CERR( "\\Utility\\String\\RollingHash" );
-  CERR( "を検討しましょう。さらに文字列の範囲更新が必要な場合は" );
-  CERR( "- 文字列の累積コードを区間加算BITに乗せて終切片加算" );
+  CERR( "でコード化し、追加で更新クエリ／取得クエリを" );
+  CERR( "- 左端からの連続部分文字列も管理する場合の一点更新は文字列の累積コードを" );
+  CERR( "  区間加算BITに乗せて終切片加算と始切片和取得（O(log N)/O(log N)）で処理" );
   CERR( "  \\Mathematics\\SetTheory\\DirectProduct\\AfineSpace\\BIT\\IntervalAdd" );
-  CERR( "- 文字列の各文字のコードをセグメント木や平方分割に乗せて一点更新" );
-  CERR( "  \\Mathematics\\SetTheory\\DirectProduct\\AfineSpace\\SegmentTree" );
-  CERR( "  \\Mathematics\\SetTheory\\DirectProduct\\AfineSpace\\SqrtDecomposition" );
-  CERR( "に対応するデータ構造との併用を検討しましょう。" );
+  CERR( "- 連続部分文字列も管理する場合、" );
+  CERR( "  - ハッシュと公比の冪乗は可換群" );
+  CERR( "  - コードは非可換群" );
+  CERR( "  を用いることに注意して" );
+  CERR( "  - 一点更新のみが必要ならば" );
+  CERR( "    - 文字列の各文字のハッシュと公比の冪乗の積を" );
+  CERR( "      - BITに乗せて一点更新と区間和取得（O(log N)/O(log N)）" );
+  CERR( "        \\Mathematics\\SetTheory\\DirectProduct\\AfineSpace\\BIT" );
+  CERR( "      - セグメント木に乗せて一点更新と区間和取得（O(log N)/O(log N)）" );
+  CERR( "        \\Mathematics\\SetTheory\\DirectProduct\\AfineSpace\\SegmentTree" );
+  CERR( "      - 平方分割に乗せて一点更新と区間和取得（O(1)/O(N^{1/2})）" );
+  CERR( "        \\Mathematics\\SetTheory\\DirectProduct\\AfineSpace\\SqrtDecomposition" );
+  CERR( "      で処理" );
+  CERR( "    - 文字列の各文字のコードを" );
+  CERR( "      - セグメント木に乗せて一点更新と区間積取得（O(log N)/O(log N)）" );
+  CERR( "        \\Mathematics\\SetTheory\\DirectProduct\\AfineSpace\\SegmentTree" );
+  CERR( "      - モノイド平方分割に乗せて一点更新と区間積取得（O(1)/O(N^{1/2})）" );
+  CERR( "        \\Mathematics\\SetTheory\\DirectProduct\\AfineSpace\\SqrtDecomposition\\Monoid" );
+  CERR( "      で処理" );
+  CERR( "  - 区間代入更新も必要ならば文字列の各文字のコードを" );
+  CERR( "    - 遅延セグメント木に乗せて区間代入更新と区間積取得（O(log N)/O(log N)）" );
+  CERR( "    - 区間代入モノイド平方分割に乗せて区間代入更新と区間積取得（O(N^{1/2})/O(N^{1/2})）" );
+  CERR( "      \\Mathematics\\SetTheory\\DirectProduct\\AfineSpace\\SqrtDecomposition\\Monoid\\IntervalSet" );
+  CERR( "    で処理" );
+  CERR( "を検討しましょう。" );
 }
 
 AC( QuerySet )
