@@ -1,56 +1,76 @@
-// c:/Users/user/Documents/Programming/Error/a_Body.hpp
+// c:/Users/user/Documents/Programming/Error/BreakPoint/a_Body.hpp
 
 #pragma once
 #include "a.hpp"
+#include "../../Utility/StdStream/a_Body.hpp"
+#include "../../Utility/String/a_Body.hpp"
 
-#include "FaultInCoding/a.hpp"
+inline FlagCounter::FlagCounter( const uint& i0 , const uint& i1 ) noexcept :
+  m_i0( i0 ) ,
+  m_i1( i1 ) ,
+  m_count( 0 ) ,
+  m_b( false )
+{}
 
-#include "BreakPoint/a_Body.hpp"
-#include "Position/a_Body.hpp"
-#include "../Utility/GlobalVariable/a_Body.hpp"
+inline void FlagCounter::operator++( int ) noexcept { m_count++; }
 
-inline ErrorType::ErrorType( const ErrorType& e ) noexcept :  m_count( e.m_count ) , m_number( e.m_number ) { *m_number += 1u; }
+inline const uint& FlagCounter::i0() const noexcept { return m_i0; }
+inline const uint& FlagCounter::i1() const noexcept { return m_i1; }
 
-// a.cppで定義されている。
-void IndicateError_Body( const char* const FILE , const int& LINE , const char* const FUNC );
+inline const bool& FlagCounter::IsActive() const noexcept { return m_b; }
 
-template <typename Arg1 , typename... Arg2>
-void IndicateParameters( const string& VARIABLE_NAMES , const Arg1& ARG1 , const Arg2&... ARG2 ) noexcept
+inline void B( const char* const FILE , const int& LINE , const char* const FUNC ) noexcept {}
+template <typename... ARGS> inline void BreakPoint( const char* const FILE , const int& LINE , const char* const FUNC , const ARGS&... args ) noexcept { VariadicCout( cerr , "BreakPoint:" , to_string( args )... ) << endl; B( FILE , LINE , FUNC ); }
+
+template <typename... ARGS>
+void CountCall( const char* const FILE , const int& LINE , const char* const FUNC , const uint& i0 , const uint& i1 , const ARGS&... i2 ) noexcept
 {
-  
-  if( sizeof...( ARG2 ) == 0 && ! CheckContain( VARIABLE_NAMES , "," ) ){
-    
-    cout << "      with a parameter `";
-    
-  } else {
 
-    cout << "      with parameters `";
+  if( CallFlagContainer( true , i2... ) ){
+    
+    CallFlagContainer( false , i0 , i1 , i2... );
 
   }
 
-  string s;
-  IndicateArguments_Body( VARIABLE_NAMES , s , ARG1 , ARG2... );
-  cout << s << "'" << endl;
+  if( CallFlagContainer( true , i0 , i1 , i2... ) ){
+    
+    BreakPoint( FILE , LINE , FUNC );
+
+  }
+  
   return;
 
 }
 
-template <typename Variable_Names , typename... Args>
-void IndicateError( const char* const FILE , const int& LINE , const char* const FUNC , const Variable_Names& VARIABLE_NAMES , const Args&... ARGS )
+inline bool CallFlagContainer( const bool& CalledForCheck ) noexcept { return true; }
+
+template <typename... ARGS>
+bool CallFlagContainer( const bool& CalledForCheck , const uint& i0 , const uint& i1 , const ARGS&... i2 ) noexcept
 {
 
-  if( sizeof...( Args ) >= 1 ){
+  static auto flag = FlagCounter( i0 , i1 );
 
-    IndicateError_Body( FILE , LINE , FUNC );
-    IndicateParameters( to_string( VARIABLE_NAMES ) , ARGS... );
-    cout << endl;
+  // FLAG以外での呼び出し（カウンターを増やさない）
+  if( CalledForCheck ){
 
-  } else {
+    flag.CheckActive();
+    return flag.IsActive();
 
-    ThrowFaultInCoding( FILE , LINE , FUNC );
+  }
+
+  // FLAGでの呼び出し（カウンターを増やす）
+  if( CallFlagContainer( true , i2... ) ){
+    
+    flag++;
+
+  }
+
+  if( flag.i1() == 0 ){
+
+    flag.Set( i0 , i1 );
 
   }
   
-  return;
+  return false;
 
 }
