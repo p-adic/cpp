@@ -81,4 +81,4 @@ template <INT_TYPE_FOR_MONTGOMERY M , class Traits> inline basic_istream<char,Tr
 template<INT_TYPE_FOR_MONTGOMERY M , class Traits> inline basic_ostream<char,Traits>& operator<<( basic_ostream<char,Traits>& os , const Montgomery<M>& n ) { return os << n.Represent(); }
 
 #include "../../Hash/a_Body.hpp"
-template <INT_TYPE_FOR_MOD M> DEFINITION_OF_HASH_FOR_MOD( Mod<M> );
+template <INT_TYPE_FOR_MOD M> DEFINITION_OF_HASH_FOR_MOD( Montgomery<M> );

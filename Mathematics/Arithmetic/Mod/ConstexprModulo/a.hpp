@@ -5,7 +5,7 @@
 
 #include "a_Alias.hpp"
 
-#include "Constants/a.hpp"
+#include "Constant/a.hpp"
 
 // 非常によくバグるので、更新したら必ずverifyすること！
 // verify:

@@ -58,7 +58,7 @@ template <INT_TYPE_FOR_MOD M> inline Mod<M> Mod<M>::Combination( const uint& n ,
 template <INT_TYPE_FOR_MOD M> inline constexpr const bool& Mod<M>::GetSign() const noexcept { return m_non_negative; }
 template <INT_TYPE_FOR_MOD M> inline constexpr const uint& Mod<M>::GetNumerator() const noexcept { return m_n; }
 template <INT_TYPE_FOR_MOD M> inline constexpr const uint& Mod<M>::GetDenominator() const noexcept { return m_d; }
-template <INT_TYPE_FOR_MOD M> inline constexpr uint Mod<M>::Represent() const noexcept { Mod<M> d_inv = Mod<M>::Derepresent( m_d ).NonNegativePower( Constants::g_order_minus_1 ); return ull( m_n ) * d_inv.m_n % M; }
+template <INT_TYPE_FOR_MOD M> inline constexpr uint Mod<M>::Represent() const noexcept { Mod<M> d_inv = Mod<M>::Derepresent( m_d ).NonNegativePower( Constants::g_order_minus_1 ); return  ull( m_non_negative ? m_n : M - m_n ) * d_inv.m_n % M; }
 template <INT_TYPE_FOR_MOD M> inline constexpr Mod<M> Mod<M>::Derepresent( uint n ) noexcept { Mod<M> n_copy{}; n_copy.m_n = move( n ); return n_copy; }
 
 template <INT_TYPE_FOR_MOD M> inline const Mod<M>& Mod<M>::zero() noexcept { static const Mod<M> z{}; return z; }
