@@ -395,36 +395,50 @@ AC( ExplicitExpressionOrder )
 	       "与えられたiに対するa[0],...,a[i]を全て求める問題"
 	       );
     if( num == num_temp++ ){
-      ASK_YES_NO( "各iごとにa[i]が高速に求められる問題ですか？" );
-      if( reply == "y" ){
-	CERR( "iに関する二分探索を検討しましょう。" );
-      } else {
-	CERR( "s未満のSの項の数え上げを検討しましょう。" );
-	ASK_YES_NO( "Sが固定長変数関数の像で与えられますか？" );
-	if( reply == "y" ){
-	  CERR( "固定長変数関数の逆像の数え上げ問題は、" );
-	  CALL_AC( CountingExplicitExpression );
-	}
-      }
+      CALL_AC( ExplicitExpressionOrderOfElement );
     } else if( num == num_temp++ ){
-      CERR( "Sの各要素sごとにs未満のSの項を数え上げてsに関する二分探索を検討しましょう。" );
-      ASK_YES_NO( "Sが固定長変数関数の像で与えられますか？" );
-      if( reply == "y" ){
-	CERR( "固定長変数関数の逆像の数え上げ問題は、" );
-	CALL_AC( CountingExplicitExpression );
-      }
+      CALL_AC( ExplicitExpressionRandomAccess );
     } else if( num == num_temp++ ){
-      CERR( "- 各iごとにa[i]が高速に求められるならば、a[i]以下のSの要素の全列挙を検討しましょう。" );
-      CERR( "- Sが多重集合M個の和集合であるならば、各多重集合をソートしてM個のpriority_queueでイベントソート" );
-      CERR( "を検討しましょう。" );
+      CALL_AC( ExplicitExpressionTotalAccess );
     }
-    CERR( "" );
-    CERR( "特に辞書式順序でs未満の項の数え上げをする際は、" );
-    CERR( "「sとd文字目で初めてズレるl文字の項の総数count[d][l]」" );
-    CERR( "のdとlをわたる総和を求めましょう。" );
+    CERR( "を検討しましょう。" );
   } else if( num == num_temp++ ){
     CALL_AC( QueryArrayOrder );
   }
+}
+
+AC( ExplicitExpressionOrderOfElement )
+{
+  ASK_YES_NO( "各iごとにa[i]が高速に求められる問題ですか？" );
+  if( reply == "y" ){
+    CERR( "iに関する二分探索を検討しましょう。" );
+  } else {
+    CERR( "s未満のSの項の数え上げを検討しましょう。" );
+    CALL_AC( CountingArrayBounded );
+    ASK_YES_NO( "Sが固定長変数関数の像で与えられますか？" );
+    if( reply == "y" ){
+      CERR( "固定長変数関数の逆像の数え上げ問題は、" );
+      CALL_AC( CountingExplicitExpression );
+    }
+  }
+}
+
+AC( ExplicitExpressionRandomAccess )
+{
+  CERR( "Sの各要素sごとにs未満のSの項を数え上げ問題を考えて、" );
+  CERR( "sに関する二分探索を検討しましょう。" );
+  CALL_AC( CountingArrayBounded );
+  ASK_YES_NO( "Sが固定長変数関数の像で与えられますか？" );
+  if( reply == "y" ){
+    CERR( "固定長変数関数の逆像の数え上げ問題は、" );
+    CALL_AC( CountingExplicitExpression );
+  }
+}
+
+AC( ExplicitExpressionTotalAccess )
+{
+  CERR( "- 各iごとにa[i]が高速に求められるならば、a[i]以下のSの要素の全列挙" );
+  CERR( "- Sが多重集合M個の和集合であるならば、各多重集合をソートしてM個のpriority_queueでイベントソート" );
 }
 
 AC( ExplicitExpressionProbability )
@@ -607,7 +621,7 @@ AC( MinimisationMovingCost )
 	     "１始点多終点コスト最小化（迷路）問題" ,
 	     "多始点１終点コスト最小化（競争）問題" ,
 	     "多始点多終点コスト最大値最小化（開被覆）問題" ,
-	     "多始点多終点コスト総和最小化（最小費用流）問題" ,
+	     "多プレイヤーコスト総和最小化（最小費用流）問題" ,
 	     "１始点多経由点コスト最小化（スタンプラリー）問題" ,
 	     "最近接点問題"
 	     );
@@ -670,51 +684,93 @@ AC( MinimisationMovingCost )
 
 AC( MinimisationSolvingMaze )
 {
-  ASK_YES_NO( "Eが10^8オーダーで抑えられますか？" );
+  ASK_YES_NO( "特定の辺群の合計使用回数に制限がありますか？" );
   if( reply == "y" ){
-    CERR( "- コストが1のみでO(V+E)が通りそうならば幅優先探索" );
-    CERR( "  \\Mathematics\\Geometry\\Graph\\Algorithm\\BreadthFirst" );
-    CERR( "- コストが1のみでなく{0,1}値でO(V+E)が通りそうならば01幅優先探索" );
-    CERR( "  \\Mathematics\\Geometry\\Graph\\Algorithm\\BreadthFirst\\ZeroOne" );
-    CERR( "  \\Mathematics\\Geometry\\Graph\\Algorithm\\BreadthFirst" );
-    CERR( "- コストが{0,1}値でなくかつ非負ならば" );
-    CERR( "  - O(min(V^2,(V+E)log_2 E))が間に合いそうならばダイクストラ法" );
-    CERR( "    \\Mathematics\\Geometry\\Graph\\Algorithm\\Dijkstra" );
-    CERR( "  - Gがグラフの非輪状グラフならば" );
-    CERR( "    - O(min(sum_i V_i^2,sum_i((V_i+E_i)log_2 E?i))が間に合いそうならば" );
-    CERR( "      分割統治ダイクストラ法" );
-    CERR( "      \\Mathematics\\Geometry\\Graph\\Algorithm\\Dijkstra\\Double" );
-    CERR( "    - 間に合わなさそうならば分割統治を動的計画法で書き直しデータ構造高速化" );
-    CERR( "  - コスト総和上限をCとしO((V+E)C)が間に合いそうならば" );
-    CERR( "    コスト総和も状態に含めたグラフ上での幅優先探索" );
-    CERR( "    \\Mathematics\\Geometry\\Graph\\Algorithm\\BreadthFirst" );
-    CERR( "- コストが非負でないならば" );
-    CERR( "  - O(VE)が間に合いそうならばベルマンフォード法" );
-    CERR( "    \\Mathematics\\Geometry\\Graph\\Algorithm\\BellmanFord" );
-    CERR( "  - 辺の削除を行い繰り返し解く場合O(VE+Q(V+E)log_2 E)が間に合いそうならば" );
-    CERR( "    ポテンシャル付きダイクストラ法" );
-    CERR( "    \\Mathematics\\Geometry\\Graph\\Algorithm\\Dijkstra\\Potentialised" );
-    CERR( "を検討しましょう。" );
+    CALL_AC( MinimisationSolvingMazeBoundedChoice );
   } else {
-    CERR( "配列の書き換え問題やLightsOut問題のようにEが非常に大きいならば、" );
-    CERR( "各操作をデータ構造に翻訳することでシンプルな最小化問題に帰着させましょう。" );
-    CERR( "- 区間加算ならば、階差数列の２点加算に翻訳" );
-    CERR( "- 部分木の白黒反転ならば、木上の階差数列の１点更新に翻訳" );
-    CERR( "- 無向グラフと非輪状有向グラフの合成ならば、有向グラフの有向辺に沿った" );
-    CERR( "  動的計画法のデータ構造高速化" );
-    CERR( "その上で、操作を" );
-    CERR( "- 選択部分（どこを操作するか、など）" );
-    CERR( "- 決定的遷移（選択部分を決めたら最小コストを実現するために" );
-    CERR( "  自動的に決まる部分）" );
-    CERR( "に分けて考えられないか検討し、選択部分の全探索や半分全列挙などを" );
-    CERR( "検討しましょう。例えば各成分高々１回しか操作しないのが最適であれば、" );
-    CERR( "どの成分を操作するかに対応する部分集合の探索問題となります。" );
-    CERR( "" );
-    CERR( "操作前後で不変な値（総和や白黒の個数差mod2など）があれば、" );
-    CERR( "操作を何らかの零化問題に翻訳できるかもしれません。" );
-    CERR( "なるべくコストを簡単で等価な値に翻訳し、その翻訳に則って操作も更に翻訳し、" );
-    CERR( "よりシンプルな（例えば貪欲法が適用可能な）零化問題への帰着を試みましょう。" );
+    ASK_YES_NO( "|E|が10^8オーダーで抑えられますか？" );
+    if( reply == "y" ){
+      CALL_AC( MinimisationSolvingMazeUnboundedChoiceFewEdges );
+    } else {
+      CALL_AC( MinimisationSolvingMazeUnboundedChoiceManyEdges );
+    }
   }
+}
+
+AC( MinimisationSolvingMazeBoundedChoice )
+{
+  CERR( "合計使用回数に制限のない辺たちE_0を、制限のある辺たちをE_1、" );
+  CERR( "使用回数の上限をCと置きます。" );
+  ASK_YES_NO( "|E_0|*(C+1)+|E_1|*Cが10^8オーダーで抑えられますか？" );
+  if( reply == "y" ){
+    CERR( "使用回数ごとに頂点を複製して、|V|頂点|E_0|辺の無向グラフ|C+1|個の" );
+    CERR( "非輪状グラフを構成することで、合計使用回数制限のない問題に帰着できます。" );
+    CALL_AC( MinimisationSolvingMazeUnboundedChoiceFewEdges );
+  } else {
+    ASK_YES_NO( "C=1かつ一終点ですか？" );
+    if( reply == "y" ){
+      CERR( "(V,E_0)に対し始点と終点からの一始点多終点最短経路問題を解き、" );
+      CERR( "各2点間をE_1で結んだ時の最短経路を2重ループやそのデータ構造高速化で" );
+      CERR( "計算することで合計使用回数制限のない問題に帰着できます。" );
+      CALL_AC( MinimisationSolvingMazeUnboundedChoiceFewEdges );
+    } else {
+      CERR( "(V,E_0)に対し多始点多終点最短経路問題を解き、各2点間を１回だけE_1で" );
+      CERR( "結んだ時の最短経路を2重ループやそのデータ構造高速化で計算します。" );
+      CERR( "その後、その結果をMinTropicalSemirng上の|V|次正方行列に格納し、" );
+      CERR( "0乗からC乗までの総minをO(V^3 C)で計算することで" );
+      CERR( "合計使用回数制限のない問題に帰着できます。" );
+      CALL_AC( MinimisationSolvingOpenCovering );
+    }
+  }
+}
+
+AC( MinimisationSolvingMazeUnboundedChoiceFewEdges )
+{
+  CERR( "- コストが1のみでO(V+E)が通りそうならば幅優先探索" );
+  CERR( "  \\Mathematics\\Geometry\\Graph\\Algorithm\\BreadthFirst" );
+  CERR( "- コストが1のみでなく{0,1}値でO(V+E)が通りそうならば01幅優先探索" );
+  CERR( "  \\Mathematics\\Geometry\\Graph\\Algorithm\\BreadthFirst\\ZeroOne" );
+  CERR( "  \\Mathematics\\Geometry\\Graph\\Algorithm\\BreadthFirst" );
+  CERR( "- コストが{0,1}値でなくかつ非負ならば" );
+  CERR( "  - O(min(V^2,(V+E)log_2 E))が間に合いそうならばダイクストラ法" );
+  CERR( "    \\Mathematics\\Geometry\\Graph\\Algorithm\\Dijkstra" );
+  CERR( "  - Gがグラフの非輪状グラフならば" );
+  CERR( "    - O(min(sum_i V_i^2,sum_i((V_i+E_i)log_2 E_i))が間に合いそうならば" );
+  CERR( "      分割統治ダイクストラ法" );
+  CERR( "      \\Mathematics\\Geometry\\Graph\\Algorithm\\Dijkstra\\Double" );
+  CERR( "    - 間に合わなさそうならば分割統治を動的計画法で書き直しデータ構造高速化" );
+  CERR( "  - コスト総和上限をCとしO((V+E)C)が間に合いそうならば" );
+  CERR( "    コスト総和も状態に含めたグラフ上での幅優先探索" );
+  CERR( "    \\Mathematics\\Geometry\\Graph\\Algorithm\\BreadthFirst" );
+  CERR( "- コストが非負でないならば" );
+  CERR( "  - O(VE)が間に合いそうならばベルマンフォード法" );
+  CERR( "    \\Mathematics\\Geometry\\Graph\\Algorithm\\BellmanFord" );
+  CERR( "  - 辺の削除を行い繰り返し解く場合O(VE+Q(V+E)log_2 E)が間に合いそうならば" );
+  CERR( "    ポテンシャル付きダイクストラ法" );
+  CERR( "    \\Mathematics\\Geometry\\Graph\\Algorithm\\Dijkstra\\Potentialised" );
+  CERR( "を検討しましょう。" );
+}
+
+AC( MinimisationSolvingMazeUnboundedChoiceManyEdges )
+{
+  CERR( "配列の書き換え問題やLightsOut問題のようにEが非常に大きいならば、" );
+  CERR( "各操作をデータ構造に翻訳することでシンプルな最小化問題に帰着させましょう。" );
+  CERR( "- 区間加算ならば、階差数列の２点加算に翻訳" );
+  CERR( "- 部分木の白黒反転ならば、木上の階差数列の１点更新に翻訳" );
+  CERR( "- 無向グラフと非輪状有向グラフの合成ならば、有向グラフの有向辺に沿った" );
+  CERR( "  動的計画法のデータ構造高速化" );
+  CERR( "その上で、操作を" );
+  CERR( "- 選択部分（どこを操作するか、など）" );
+  CERR( "- 決定的遷移（選択部分を決めたら最小コストを実現するために" );
+  CERR( "  自動的に決まる部分）" );
+  CERR( "に分けて考えられないか検討し、選択部分の全探索や半分全列挙などを" );
+  CERR( "検討しましょう。例えば各成分高々１回しか操作しないのが最適であれば、" );
+  CERR( "どの成分を操作するかに対応する部分集合の探索問題となります。" );
+  CERR( "" );
+  CERR( "操作前後で不変な値（総和や白黒の個数差mod2など）があれば、" );
+  CERR( "操作を何らかの零化問題に翻訳できるかもしれません。" );
+  CERR( "なるべくコストを簡単で等価な値に翻訳し、その翻訳に則って操作も更に翻訳し、" );
+  CERR( "よりシンプルな（例えば貪欲法が適用可能な）零化問題への帰着を試みましょう。" );
 }
 
 AC( MinimisationSolvingOpenCovering )
@@ -1308,7 +1364,7 @@ AC( Counting )
 {
   ASK_NUMBER(
 	     "固定長変数関数の逆像の数え上げ問題" ,
-	     "条件を満たす配列／文字列の数え上げ問題" ,
+	     "条件を満たす配列／文字列／数の数え上げ問題" ,
 	     "条件を満たすグラフの数え上げ問題" ,
 	     "与えられた配列の部分列の数え上げ問題" ,
 	     "与えられた文字列の部分文字列の数え上げ問題" ,
@@ -1380,43 +1436,70 @@ AC( CountingExplicitExpression )
 
 AC( CountingArray )
 {
+  CERR( "数は十進法などで文字列とみなし、また文字列も配列とみなします。" );
   ASK_NUMBER(
 	     "配列を受け取る関数の値が固定された配列の数え上げ問題" ,
 	     "隣接成分間関係式を満たす配列の数え上げ問題" ,
+	     "辞書式順序などで上限が与えられた配列の数え上げ問題" ,
 	     "その他の関係式を満たす配列の数え上げ問題"
 	     );
   if( num == num_temp++ ){
-    CERR( "- 配列の種類が少ない場合は、全ての配列に対する関数の値の前計算" );
-    CERR( "- 取り得る値が少なく関数が長さに関して再帰的構造を持つ場合は、" );
-    CERR( "  「長さiの時に値vである配列の総数dp[i][v]」" );
-    CERR( "  を管理するi,vに関する動的計画法" );
-    CERR( "- 配列が有界で関数が非零係数ベクトルBを持つ場合は、" );
-    CERR( "  「長さiの時に値vである配列の総数dp[i][v]」" );
-    CERR( "  が漸化式dp[i+1][v] = sum_j dp[i][v-j*B_{i+1}]を" );
-    CERR( "  満たすことからdp[i][p+xv]がxに関する多項式関数となるので" );
-    CERR( "  平行移動と累積和による計算" );
-    CERR( "  \\Mathematics\\Polynomial\\ParallelTranslation" );
-    CERR( "  \\Mathematics\\Polynomial\\CumulativeSum" );
-    CERR( "- 関数が区間和などデータ構造で計算できる場合は、" );
-    CERR( "  データ構造に翻訳した上での数え上げ" );
-    CERR( "を検討しましょう。" );
+    CALL_AC( CountingArrayInverseImage );
   } else if( num == num_temp++ ){
-    CERR( "- 半順序での単調性の場合、" );
-    CERR( "  - 全順序ならば、数の分割方法などへの翻訳" );
-    CERR( "  - 疎な半順序ならば、グラフの前計算" );
-    CERR( "- その他の条件の場合は動的計画法で、" );
-    CERR( "  - 禁止条件の時は余事象を引く更新" );
-    CERR( "  - 複数条件の時は包除原理による更新" );
-    CERR( "を検討しましょう。" );
+    CALL_AC( CountingArrayAdjacentRelation );
   } else if( num == num_temp++ ){
-    ASK_YES_NO( "配列への格納順が関係ありますか？" );
-    if( reply == "y" ){
-      CERR( "半順序を構成しグラフの数え上げに帰着することを検討しましょう。" );
-      CALL_AC( CountingGraph );
-    } else {
-      CERR( "（多重）集合やソートされた配列の数え上げに帰着することを検討しましょう。" );
-      CALL_AC( CountingSubset );
-    }
+    CALL_AC( CountingArrayBounded );
+  } else if( num == num_temp++ ){
+    CALL_AC( CountingArrayOtherRelation );
+  }
+}
+
+AC( CountingArrayInverseImage )
+{
+  CERR( "- 配列の種類が少ない場合は、全ての配列に対する関数の値の前計算" );
+  CERR( "- 取り得る値が少なく関数が長さに関して再帰的構造を持つ場合は、" );
+  CERR( "  「長さiの時に値vである配列の総数dp[i][v]」" );
+  CERR( "  を管理するi,vに関する動的計画法" );
+  CERR( "- 配列が有界で関数が非零係数ベクトルBを持つ場合は、" );
+  CERR( "  「長さiの時に値vである配列の総数dp[i][v]」" );
+  CERR( "  が漸化式dp[i+1][v] = sum_j dp[i][v-j*B_{i+1}]を" );
+  CERR( "  満たすことからdp[i][p+xv]がxに関する多項式関数となるので" );
+  CERR( "  平行移動と累積和による計算" );
+  CERR( "  \\Mathematics\\Polynomial\\ParallelTranslation" );
+  CERR( "  \\Mathematics\\Polynomial\\CumulativeSum" );
+  CERR( "- 関数が区間和などデータ構造で計算できる場合は、" );
+  CERR( "  データ構造に翻訳した上での数え上げ" );
+  CERR( "を検討しましょう。" );
+}
+
+AC( CountingArrayAdjacentRelation )
+{
+  CERR( "- 半順序での単調性の場合、" );
+  CERR( "  - 全順序ならば、数の分割方法などへの翻訳" );
+  CERR( "  - 疎な半順序ならば、グラフの前計算" );
+  CERR( "- その他の条件の場合は動的計画法で、" );
+  CERR( "  - 禁止条件の時は余事象を引く更新" );
+  CERR( "  - 複数条件の時は包除原理による更新" );
+  CERR( "を検討しましょう。" );
+}
+
+AC( CountingArrayBounded )
+{
+  CERR( "文字列集合や正整数集合で項s未満の項の数え上げをする際は、" );
+  CERR( "長さや文字種類数などの状態を考えて" );
+  CERR( "dp[d][n] = 「Sと先頭d文字目で初めてズレる状態nの項の総数」" );
+  CERR( "をdとnに関する動的計画法で求めましょう。" );
+}
+
+AC( CountingArrayOtherRelation )
+{
+  ASK_YES_NO( "配列への格納順が関係ありますか？" );
+  if( reply == "y" ){
+    CERR( "半順序を構成しグラフの数え上げに帰着することを検討しましょう。" );
+    CALL_AC( CountingGraph );
+  } else {
+    CERR( "（多重）集合やソートされた配列の数え上げに帰着することを検討しましょう。" );
+    CALL_AC( CountingSubset );
   }
 }
 
