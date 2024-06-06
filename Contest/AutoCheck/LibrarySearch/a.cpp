@@ -699,7 +699,7 @@ AC( MinimisationSolvingMaze )
 
 AC( MinimisationSolvingMazeBoundedChoice )
 {
-  CERR( "合計使用回数に制限のない辺たちE_0を、制限のある辺たちをE_1、" );
+  CERR( "合計使用回数に制限のない辺たちをE_0、制限のある辺たちをE_1、" );
   CERR( "使用回数の上限をCと置きます。" );
   ASK_YES_NO( "|E_0|*(C+1)+|E_1|*Cが10^8オーダーで抑えられますか？" );
   if( reply == "y" ){
