@@ -5,6 +5,7 @@
 
 #include "../a_Body.hpp"
 
+// 再帰版（非再帰版の方がgdbデバッグしやすいのでコメントアウト）
 // template <typename T , typename PATH , typename ACYCLIC_GRAPH>
 // void TopologicalSort_Body( ACYCLIC_GRAPH& G , vector<T>& answer , const PATH& t , const int& i , vector<bool>& found , int& num )
 // {
@@ -47,6 +48,7 @@
 
 // }
 
+// 非再帰版
 template <typename ACYCLIC_GRAPH>
 vector<inner_t<ACYCLIC_GRAPH>> TopologicalSort( ACYCLIC_GRAPH& G )
 {
