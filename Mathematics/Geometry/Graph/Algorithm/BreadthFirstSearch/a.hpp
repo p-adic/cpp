@@ -66,6 +66,13 @@ public:
   // 未到達点の全体のなす部分グラフにおける連結成分の色分けと連結成分数を格納。
   pair<vector<int>,int> GetConnectedComponent();
 
+  // m_nextに格納されている未到達点から到達できる未到達点を探索順に格納する。
+  vector<T> GetNodeEnumeration();
+  
+  // m_nextに格納されている未到達点から到達できる未到達点を帰りがけ順に格納する。
+  // 行きがけ順の逆順ではないことに注意。
+  vector<T> GetReversedNodeEnumeration();
+
 private:
   virtual void Push( list<T>& next , const T& t ) = 0;
   template <typename PATH> inline void Push( list<T>& next , const PATH& p );

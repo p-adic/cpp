@@ -39,7 +39,7 @@ class DepthFirstSearchOnTree :
 {
 
 protected:
-  // DFS順にノード番号を格納。
+  // 根からのDFS順にノード番号を格納。
   vector<int> m_node_num;
 
   // 子ノードのノード番号を格納。
@@ -68,7 +68,7 @@ protected:
 
 public:
   inline DepthFirstSearchOnTree( TREE& T , const int& root = 0 , const int& digit = 0 );
-  inline void Initialise( ) = delete;
+  inline void Initialise() = delete;
   inline void Initialise( const int& init ) = delete;
   inline void Shift( const int& init ) = delete;
 
@@ -79,7 +79,8 @@ public:
   inline const int& Height( const int& i , const bool& maximum = true );
   inline const int& Heaviness( const int& i );
 
-  // 探索順にノードを番号づける。
+  // 根からのDFS順にノードを番号づける。
+  // reversed = trueの場合は帰りがけ順ではなく行きがけ順の逆順であることに注意。
   inline const int& NodeNumber( const int& i , const bool& reversed = false ) const;
   // 共通の親を持つノード間で昇順に番号づける。
   inline const int& ChildrenNumber( const int& i );  

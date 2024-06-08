@@ -12,8 +12,9 @@ template <typename T , typename GRAPH>
 class DepthFirstSearch :
   public VirtualBreadthFirstSearch<T,GRAPH>
 {
-
+  
 public:
+  // Args‚ÍT‚©list<T>
   template <typename...Args> inline DepthFirstSearch( GRAPH& G , const T& not_found , Args&&... args );
 
 private:

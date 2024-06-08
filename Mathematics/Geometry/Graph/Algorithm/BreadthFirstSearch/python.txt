@@ -1,10 +1,7 @@
 import queue
 N,M=J()
 E=[[]for i in R(N)]
-for j in R(M):
-	u,v=J()
-	E[u]+=[v]
-	E[v]+=[u]
+for j in R(M):u,v=J();E[u]+=[v];E[v]+=[u]
 V=queue.Queue()
 s,t=J()
 D=[-1]*N
@@ -13,7 +10,5 @@ V.put(s)
 while V.qsize():
 	u=V.get()
 	for v in E[u]:
-		if D[v]<0:
-			D[v]=D[u]+1
-			V.put(v)
+		if D[v]<0:D[v]=D[u]+1;V.put(v)
 print(D[t])

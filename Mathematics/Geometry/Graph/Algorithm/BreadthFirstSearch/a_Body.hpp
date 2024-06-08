@@ -30,9 +30,8 @@ template <typename T , typename GRAPH> inline T VirtualBreadthFirstSearch<T,GRAP
 
   const T t_curr = m_next.front();
   m_next.pop_front();
-  auto&& edge = m_G.Edge( t_curr );
 
-  for( auto& t : edge ){
+  for( auto& t : m_G.Edge( t_curr ) ){
 
     auto&& i = m_G.Enumeration_inv( t );
     auto&& found_i = m_found[i];
@@ -139,6 +138,55 @@ pair<vector<int>,int> VirtualBreadthFirstSearch<T,GRAPH>::GetConnectedComponent(
   }
 
   return { move( cc_num ) , move( count ) };
+
+}
+
+
+template <typename T , typename GRAPH>
+vector<T> VirtualBreadthFirstSearch<T,GRAPH>::GetNodeEnumeration()
+{
+
+  vector<T> answer{};
+  T t = Next();
+
+  while( t != m_not_found ){
+
+    answer.push_back( t );
+    t = Next();
+    
+  }
+
+  return answer;
+
+}
+
+template <typename T , typename GRAPH>
+vector<T> VirtualBreadthFirstSearch<T,GRAPH>::GetReversedNodeEnumeration()
+{
+
+  vector<T> answer{};
+  vector<T> next{};
+  T t;
+  bool searched;
+
+  while( !( searched = ( t = Next() ) == m_not_found ) || !next.empty() ){
+
+    while( !next.empty() && ( searched || next.back() != m_prev[m_G.Enumeration_inv( t )] ) ){
+
+      answer.push_back( next.back() );
+      next.pop_back();
+
+    }
+
+    if( !searched ){
+      
+      next.push_back( t );
+
+    }
+    
+  }
+
+  return answer;
 
 }
 
