@@ -98,7 +98,7 @@ TruncatedPolynomial<T> Power( const TruncatedPolynomial<T>& f , const uint& e )
 
   if( v == size || ve >= N ){
 
-    return TruncatedPolynomial( N );
+    return TruncatedPolynomial<T>( N );
 
   }
 

@@ -21,9 +21,9 @@ template <typename T , template <typename...> typename V>TruncatedPolynomial<T>&
 
 // 多項式のe乗（O(De(log De)^2)）
 template <typename T> inline Polynomial<T> Power( const Polynomial<T>& f , const uint& e );
-// Tが標数0またはN以上の体でかつf[0] == 1の場合に多項式のt乗のN次打ち切り。
+// Tが標数0またはN以上の体でかつf[0] == 1の場合に多項式のt乗のN次打ち切り。（O(N log N)）
 template <typename T> inline TruncatedPolynomial<T> Power( const TruncatedPolynomial<T>& f , const T& t );
-// Tが標数0またはf.m_N以上の体の場合に多項式のe乗のN次打ち切り。
+// Tが標数0またはf.m_N以上の体の場合に多項式のe乗のN次打ち切り。（O(N log N)）
 template <typename T> TruncatedPolynomial<T> Power( const TruncatedPolynomial<T>& f , const uint& e );
 
 
