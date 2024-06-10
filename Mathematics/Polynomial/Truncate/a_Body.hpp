@@ -178,7 +178,7 @@ TruncatedPolynomial<T> TruncatedPolynomial<T>::FFT_TruncatedMultiplication_const
 
 template <typename T> inline TruncatedPolynomial<T>& TruncatedPolynomial<T>::operator/=( const T& t ) { Polynomial<T>::operator/=( t ); return *this; }
 
-template <typename T> inline TruncatedPolynomial<T>& TruncatedPolynomial<T>::operator/=( const TruncatedPolynomial<T>& f ) { return operator*=( Inverse( m_N > f.m_N ? f : TruncatedPolynomial<T>( m_N , f ) ) ); }
+template <typename T> inline TruncatedPolynomial<T>& TruncatedPolynomial<T>::operator/=( const TruncatedPolynomial<T>& f ) { assert( m_N <= f.m_N ); return operator*=( m_N == f.m_N ? Inverse( f ) : Inverse( TruncatedPolynomial<T>( m_N , f ) ) ); }
 
 template <typename T> inline TruncatedPolynomial<T>& TruncatedPolynomial<T>::operator%=( const T& t ) { Polynomial<T>::operator%=( t ); return *this; }
 
