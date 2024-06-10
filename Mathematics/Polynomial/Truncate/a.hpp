@@ -112,8 +112,13 @@ public:
   inline TruncatedPolynomial<T>& operator/=( const TruncatedPolynomial<T>& t );
   inline TruncatedPolynomial<T>& operator%=( const T& t );
 
+  template <typename P> inline TruncatedPolynomial<T> operator+( const P& f ) const;
   inline TruncatedPolynomial<T> operator-() const;
-
+  template <typename P> inline TruncatedPolynomial<T> operator-( const P& f ) const;
+  template <typename P> inline TruncatedPolynomial<T> operator*( const P& f ) const;
+  template <typename P> inline TruncatedPolynomial<T> operator/( const P& f ) const;
+  inline TruncatedPolynomial<T> operator%( const T& t ) const;
+  
   inline void SetTruncation( const uint& N ) noexcept;
   inline const uint& GetTruncation() const noexcept;
 
@@ -129,13 +134,6 @@ template <typename T> inline constexpr const uint FFT_Multiplication_border_1;
 template <typename T> inline constexpr const uint FFT_Multiplication_border_1_2;
 template <typename T> inline constexpr const uint FFT_Multiplication_border_1_2_exponent;
 template <typename T> inline constexpr const uint FFT_Multiplication_border_1_2_inv;
-
-template <typename T , typename P> inline TruncatedPolynomial<T> operator+( const TruncatedPolynomial<T>& f0 , const P& f1 );
-template <typename T , typename P> inline TruncatedPolynomial<T> operator-( const TruncatedPolynomial<T>& f );
-template <typename T , typename P> inline TruncatedPolynomial<T> operator-( const TruncatedPolynomial<T>& f0 , const P& f1 );
-template <typename T , typename P> inline TruncatedPolynomial<T> operator*( const TruncatedPolynomial<T>& f0 , const P& f1 );
-template <typename T , typename P> inline TruncatedPolynomial<T> operator/( const TruncatedPolynomial<T>& f0 , const P& f1 );
-template <typename T> inline TruncatedPolynomial<T> operator%( const TruncatedPolynomial<T>& f0 , const T& t1 );
 
 // m_NÇ™1â∫Ç™ÇÈÇ±Ç∆Ç…íçà”ÅB
 template <typename T> inline TruncatedPolynomial<T> Differential( const TruncatedPolynomial<T>& f );
