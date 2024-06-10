@@ -24,7 +24,7 @@ public:
   inline constexpr Mod() noexcept;
   inline constexpr Mod( const Mod<M>& n ) noexcept;
   inline constexpr Mod( Mod<M>&& n ) noexcept;
-  template <typename T> inline constexpr Mod( T n ) noexcept;
+  template <typename T , SFINAE_FOR_MOD = nullptr> inline constexpr Mod( T n ) noexcept;
 
   inline constexpr Mod<M>& operator=( Mod<M> n ) noexcept;
   inline constexpr Mod<M>& operator+=( const Mod<M>& n ) noexcept;

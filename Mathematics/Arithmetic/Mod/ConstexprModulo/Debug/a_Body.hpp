@@ -8,7 +8,7 @@
 template <INT_TYPE_FOR_MOD M> inline constexpr Mod<M>::Mod() noexcept : m_non_negative( true ) , m_n() , m_d( 1 ) {}
 template <INT_TYPE_FOR_MOD M> inline constexpr Mod<M>::Mod( const Mod<M>& n ) noexcept : m_non_negative( n.m_non_negative ) , m_n( n.m_n ) , m_d( n.m_d ) {}
 template <INT_TYPE_FOR_MOD M> inline constexpr Mod<M>::Mod( Mod<M>&& n ) noexcept : m_non_negative( n.m_non_negative ) , m_n( move( n.m_n ) ) , m_d( move( n.m_d ) ) {}
-template <INT_TYPE_FOR_MOD M> template <typename T> inline constexpr Mod<M>::Mod( T n ) noexcept : m_non_negative( n >= 0 ) , m_n( uint( move( ( m_non_negative ? n : n *= -1 ) %= M ) ) ) , m_d( 1 ) { static_assert( is_constructible_v<uint,decay_t<T> > ); }
+template <INT_TYPE_FOR_MOD M> template <typename T , SFINAE_FOR_MOD> inline constexpr Mod<M>::Mod( T n ) noexcept : m_non_negative( n >= 0 ) , m_n( uint( move( ( m_non_negative ? n : n *= -1 ) %= M ) ) ) , m_d( 1 ) {}
 
 template <INT_TYPE_FOR_MOD M> inline constexpr Mod<M>& Mod<M>::operator=( Mod<M> n ) noexcept { m_non_negative = n.m_non_negative; m_n = move( n.m_n ); m_d = move( n.m_d ); return *this; }
 

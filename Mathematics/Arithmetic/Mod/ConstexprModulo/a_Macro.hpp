@@ -2,6 +2,10 @@
 
 #pragma once
 
+// static_assertだとTruncatedPolynomial<Mod<M>>へのスカラー倍などで
+// 余計なオーバーロード候補が生じてしまい不適。
+#define SFINAE_FOR_MOD enable_if_t<is_constructible_v<INT_TYPE_FOR_MOD,decay_t<T>>>*
+
 #define DECLARATION_OF_COMPARISON_FOR_MOD( OPR )			\
   inline constexpr bool operator OPR( const Mod<M>& n ) const noexcept	\
 
@@ -13,6 +17,6 @@
 
 #define DEFINITION_OF_ARITHMETIC_FOR_MOD( OPR , EX , LEFT , OPR2 )	\
   template <INT_TYPE_FOR_MOD M> inline constexpr Mod<M> Mod<M>::operator OPR( Mod<M> n ) const EX { return move( LEFT OPR2 ## = *this ); } \
-  template <INT_TYPE_FOR_MOD M , typename T> inline constexpr Mod<M> operator OPR( T n0 , const Mod<M>& n1 ) EX { return move( Mod<M>( move( n0 ) ) OPR ## = n1 ); } \
+  template <INT_TYPE_FOR_MOD M , typename T , SFINAE_FOR_MOD = nullptr> inline constexpr Mod<M> operator OPR( T n0 , const Mod<M>& n1 ) EX { return move( Mod<M>( move( n0 ) ) OPR ## = n1 ); } \
 
 

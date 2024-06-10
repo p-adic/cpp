@@ -9,7 +9,7 @@
 template <INT_TYPE_FOR_MOD M> inline constexpr Mod<M>::Mod() noexcept : m_n() {}
 template <INT_TYPE_FOR_MOD M> inline constexpr Mod<M>::Mod( const Mod<M>& n ) noexcept : m_n( n.m_n ) {}
 template <INT_TYPE_FOR_MOD M> inline constexpr Mod<M>::Mod( Mod<M>&& n ) noexcept : m_n( move( n.m_n ) ) {}
-template <INT_TYPE_FOR_MOD M> template <typename T> inline constexpr Mod<M>::Mod( T n ) noexcept : m_n( Residue<M>( move( n ) ) ) { static_assert( is_constructible_v<INT_TYPE_FOR_MOD,decay_t<T> > ); }
+template <INT_TYPE_FOR_MOD M> template <typename T , SFINAE_FOR_MOD> inline constexpr Mod<M>::Mod( T n ) noexcept : m_n( Residue<M>( move( n ) ) ) {}
 
 template <INT_TYPE_FOR_MOD M> inline constexpr Mod<M>& Mod<M>::operator=( Mod<M> n ) noexcept { m_n = move( n.m_n ); return *this; }
 
