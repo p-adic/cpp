@@ -48,7 +48,7 @@ template <INT_TYPE_FOR_MOD M> template <typename INT> inline constexpr Mod<M>& M
 template <INT_TYPE_FOR_MOD M> template <typename INT> inline constexpr Mod<M>& Mod<M>::NonNegativePower( INT exponent ) noexcept { return exponent == 0 ? ( m_n = m_d = 1 , *this ) : PositivePower( move( exponent ) ); }
 template <INT_TYPE_FOR_MOD M> template <typename INT> inline constexpr Mod<M>& Mod<M>::Power( INT exponent ) { bool neg = exponent < 0; assert( !( neg && m_n == 0 ) ); return neg ? PositivePower( move( exponent *= Constants::g_order_minus_1_neg ) ) : NonNegativePower( move( exponent ) ); }
 
-template <INT_TYPE_FOR_MOD M> inline constexpr void Mod<M>::swap( Mod<M>& n ) noexcept { std::swap( m_n , n.m_n ); }
+template <INT_TYPE_FOR_MOD M> inline constexpr void Mod<M>::swap( Mod<M>& n ) noexcept { std::swap( m_non_negative , n.m_non_negative ); std::swap( m_n , n.m_n ); std::swap( m_d , n.m_d ); }
 
 template <INT_TYPE_FOR_MOD M> inline const Mod<M>& Mod<M>::Inverse( const uint& n ) { static vector<Mod<M>> memory = { zero() , one() }; static uint length_curr = 2; memory.reserve( n + 1 ); while( length_curr <= n ){ memory.push_back( 1 ); memory.back().m_d = length_curr++; } return memory[n]; }
 template <INT_TYPE_FOR_MOD M> inline const Mod<M>& Mod<M>::Factorial( const uint& n ) { static vector<Mod<M>> memory = { one() , one() }; static uint length_curr = 2; if( M <= n ){ return zero(); } memory.reserve( n + 1 ); while( length_curr <= n ){ memory.push_back( memory[length_curr - 1] ); auto& temp = memory.back().m_n; temp = ull( temp ) * length_curr++ % M; } return memory[n]; }
@@ -69,8 +69,9 @@ template <INT_TYPE_FOR_MOD M> constexpr ull Mod<M>::GCD( ull n0 , ull n1 ) noexc
 
   while( n1 != 0 ){
 
-    ull n2 = n0 %= n1;
-    n0 = n1;
+    // swapだとC++17ではコンパイル時計算できないのでstatic_assertなどでエラーが生じる。
+    ull n2 = move( n0 %= n1 );
+    n0 = move( n1 );
     n1 = move( n2 );
 
   }
