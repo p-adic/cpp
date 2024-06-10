@@ -29,7 +29,6 @@ public:
   inline Polynomial();
   inline Polynomial( const Polynomial<T>& f );
   inline Polynomial( Polynomial<T>&& f );
-  inline Polynomial( TruncatedPolynomial<T> f );
   inline Polynomial( vector<T> f );
   inline Polynomial( T t );
   template <SFINAE_FOR_POLYNOMIAL( = nullptr )> inline Polynomial( Arg n );

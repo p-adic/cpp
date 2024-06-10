@@ -8,7 +8,6 @@
 template <typename T> inline Polynomial<T>::Polynomial() : m_f() , m_size( 0 ) {}
 template <typename T> inline Polynomial<T>::Polynomial( const Polynomial<T>& f ) : m_f( f.m_f ) , m_size( f.m_size ) {}
 template <typename T> inline Polynomial<T>::Polynomial( Polynomial<T>&& f ) : m_f( move( f.m_f ) ) , m_size( f.m_size ) {}
-template <typename T> inline Polynomial<T>::Polynomial( TruncatedPolynomial<T> f ) : m_f( move( f.m_f ) ) , m_size( f.m_size ) {}
 template <typename T> inline Polynomial<T>::Polynomial( vector<T> f ) : m_f( move( f ) ) , m_size( m_f.size() ) {}
 template <typename T> inline Polynomial<T>::Polynomial( T t ) : Polynomial() { if( t != c_zero() ){ operator[]( 0 ) = move( t ); } }
 template <typename T> template <SFINAE_FOR_POLYNOMIAL()> inline Polynomial<T>::Polynomial( Arg n ) : Polynomial( T( move( n ) ) ) {}
