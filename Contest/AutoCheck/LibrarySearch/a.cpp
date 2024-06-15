@@ -604,7 +604,7 @@ AC( Maximisation )
 
 AC( MinimisationMovingCost )
 {
-  CERR( "マルチテストケースの場合は、個々のテストケース単位で次に答えてください。")
+  CERR( "マルチテストケースの場合は、個々のテストケース単位で次に答えてください。" );
   ASK_NUMBER(
 	     "１始点多終点コスト最小化（迷路）問題" ,
 	     "多始点１終点コスト最小化（競争）問題" ,
@@ -746,34 +746,6 @@ AC( MinimisationSolvingMazeUnboundedChoiceFewEdges )
   CERR( "    \\Mathematics\\Geometry\\Graph\\Algorithm\\Dijkstra\\Potentialised" );
   CERR( "を検討しましょう。" );
 }
-
-AC( MinimisationSolvingMazeUnboundedChoiceFewEdges )
-{
-  CERR( "- コストが1のみでO(V+E)が通りそうならば幅優先探索" );
-  CERR( "  \\Mathematics\\Geometry\\Graph\\Algorithm\\BreadthFirstSearch" );
-  CERR( "- コストが1のみでなく{0,1}値でO(V+E)が通りそうならば01幅優先探索" );
-  CERR( "  \\Mathematics\\Geometry\\Graph\\Algorithm\\BreadthFirstSearch\\ZeroOne" );
-  CERR( "  \\Mathematics\\Geometry\\Graph\\Algorithm\\BreadthFirstSearch" );
-  CERR( "- コストが{0,1}値でなくかつ非負ならば" );
-  CERR( "  - O(min(V^2,(V+E)log_2 E))が間に合いそうならばダイクストラ法" );
-  CERR( "    \\Mathematics\\Geometry\\Graph\\Algorithm\\Dijkstra" );
-  CERR( "  - Gがグラフの非輪状グラフならば" );
-  CERR( "    - O(min(sum_i V_i^2,sum_i((V_i+E_i)log_2 E_i))が間に合いそうならば" );
-  CERR( "      分割統治ダイクストラ法" );
-  CERR( "      \\Mathematics\\Geometry\\Graph\\Algorithm\\Dijkstra\\Double" );
-  CERR( "    - 間に合わなさそうならば分割統治を動的計画法で書き直しデータ構造高速化" );
-  CERR( "  - コスト総和上限をCとしO((V+E)C)が間に合いそうならば" );
-  CERR( "    コスト総和も状態に含めたグラフ上での幅優先探索" );
-  CERR( "    \\Mathematics\\Geometry\\Graph\\Algorithm\\BreadthFirstSearch" );
-  CERR( "- コストが非負でないならば" );
-  CERR( "  - O(VE)が間に合いそうならばベルマンフォード法" );
-  CERR( "    \\Mathematics\\Geometry\\Graph\\Algorithm\\BellmanFord" );
-  CERR( "  - 辺の削除を行い繰り返し解く場合O(VE+Q(V+E)log_2 E)が間に合いそうならば" );
-  CERR( "    ポテンシャル付きダイクストラ法" );
-  CERR( "    \\Mathematics\\Geometry\\Graph\\Algorithm\\Dijkstra\\Potentialised" );
-  CERR( "を検討しましょう。" );
-}
-
 
 AC( MinimisationSolvingMazeUnboundedChoiceManyEdges )
 {
