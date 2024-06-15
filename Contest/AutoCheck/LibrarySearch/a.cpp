@@ -32,6 +32,7 @@ AC( LibrarySearch )
   } else if( num == num_temp++ ){
     CALL_AC( Deduction );
   }
+  CERR( "" );
   CERR( "ライブラリー探索は以上です。終了します。" );
 }
 
@@ -604,7 +605,7 @@ AC( Maximisation )
 
 AC( MinimisationMovingCost )
 {
-  CERR( "マルチテストケースの場合は、個々のテストケース単位で次に答えてください。" );
+  CERR( "マルチクエリの場合は、個々のクエリ単位で次の質問に答えてください。" );
   ASK_NUMBER(
 	     "１始点多終点コスト最小化（迷路）問題" ,
 	     "多始点１終点コスト最小化（競争）問題" ,
@@ -664,10 +665,6 @@ AC( MinimisationMovingCost )
   CERR( "- 羃等モノイドならば特に頂点は追加せず" );
   CERR( "- 羃等でない可換モノイドならば重みが単位元である始点と終点を追加して" );
   CERR( "各辺の重みを両端の重みに演算を適用したもので定義しましょう。" );
-  CERR( "" );
-  CERR( "辺集合Eが大き過ぎる場合、経路を摂動する方法であってコストが大きくならない" );
-  CERR( "ものを特定し、摂動可能でない経路のみに絞ることでEを減らしましょう。" );
-  CERR( "" );
 }
 
 AC( MinimisationSolvingMaze )
@@ -714,37 +711,95 @@ AC( MinimisationSolvingMazeBoundedChoice )
 
 AC( MinimisationSolvingMazeUnboundedChoiceFewEdges )
 {
-  CERR( "- 演算が加法でコストが1のみでO(V+E)が通りそうならば幅優先探索" );
+  ASK_YES_NO( "演算は羃等的ですか？" );
+  if( reply == "y" ){
+    CALL_AC( MinimisationSolvingMazeUnboundedChoiceFewEdgesIdempotent );
+  } else {
+    CALL_AC( MinimisationSolvingMazeUnboundedChoiceFewEdgesNonIdempotent );
+  }
+}
+
+AC( MinimisationSolvingMazeUnboundedChoiceFewEdgesIdempotent )
+{
+  CERR( "コスト上限をCと置きます。" );
+  ASK_YES_NO( "マルチクエリですか？" );
+  if( reply == "y" ){
+    CERR( "クエリ回数をQと置きます。" );
+    CERR( "- O(E log_2 E + (V + (E + Q)α(V) + min(C,Q log_2 Q))log_2 E)" );
+    CERR( "  が間に合いそうならばコストで辺をソートしてUnionFind並列二分探索" );
+    CERR( "  \\Mathematics\\Geometry\\Graph\\Algorithm\\UnionFind\\ParallelBinarySearch" );
+    CERR( "- そうでなく始点が共通ならば、シングルクエリの解法で多終点並列計算" );
+    CERR( "- そうでないならば、シングルクエリの解法をQ回反復" );
+    CERR( "を検討しましょう。" );
+    CERR( "" );
+    CERR( "以下、シングルクエリの解法を説明します。" );
+  }
+  CERR( "- O(min(V^2,(V+E)log_2 E))が間に合いそうならばダイクストラ法" );
+  CERR( "  \\Mathematics\\Geometry\\Graph\\Algorithm\\Dijkstra" );
+  CERR( "- O((V+E)C)が間に合いそうならばコスト最大値も状態に含めたグラフ上での" );
+  CERR( "  幅優先探索" );
+  CERR( "  \\Mathematics\\Geometry\\Graph\\Algorithm\\BreadthFirstSearchSearch" );
+  CERR( "- O(V + E(log E + α(V)))が間に合いそうならば" );
+  CERR( "  コストで辺をソートしてUnionFind" );
+  CERR( "  \\Mathematics\\Geometry\\Graph\\Algorithm\\UnionFind" );
+  CERR( "- O(V + Eα(V + log_2 E)))が間に合いそうならば" );
+  CERR( "  クラスカル法で最小全域木まで辺を削減してBFS/DFS＋経路復元" );
+  CERR( "  \\Mathematics\\Geometry\\Graph\\Algorithm\\UnionFind\\Kruscal" );
+  CERR( "- Gがグラフの非輪状グラフならば" );
+  CERR( "  - O(min(sum_i V_i^2,sum_i((V_i+E_i)log_2 E_i))が間に合いそうならば" );
+  CERR( "    分割統治ダイクストラ法" );
+  CERR( "    \\Mathematics\\Geometry\\Graph\\Algorithm\\Dijkstra\\Double" );
+  CERR( "  - 間に合わなさそうならば分割統治を動的計画法で書き直しデータ構造高速化" );
+}
+
+AC( MinimisationSolvingMazeUnboundedChoiceFewEdgesNonIdempotent )
+{
+  ASK_YES_NO( "コストは負になりえますか？" );
+  if( reply == "y" ){
+    CALL_AC( MinimisationSolvingMazeUnboundedChoiceFewEdgesNonIdempotentNegative );
+  } else {
+    CALL_AC( MinimisationSolvingMazeUnboundedChoiceFewEdgesNonIdempotentNonNegative );
+  }
+}
+
+AC( MinimisationSolvingMazeUnboundedChoiceFewEdgesNonIdempotentNegative )
+{
+  CERR( "- O(VE)が間に合いそうならば、ベルマンフォード法" );
+  CERR( "  \\Mathematics\\Geometry\\Graph\\Algorithm\\BellmanFord" );
+  CERR( "- マルチクエリで辺の削除を行いO(VE+Q(V+E)log_2 E)が間に合いそうならば" );
+  CERR( "  ベルマンフォード法によるポテンシャル前計算＋ポテンシャル付きダイクストラ法" );
+  CERR( "  \\Mathematics\\Geometry\\Graph\\Algorithm\\Dijkstra\\Potentialised\\BellmanFord" );
+}
+
+AC( MinimisationSolvingMazeUnboundedChoiceFewEdgesNonIdempotentNonNegative )
+{
+  ASK_YES_NO( "マルチクエリですか？" );
+  if( reply == "y" ){
+    CERR( "クエリ回数をQと置きます。" );
+    CERR( "- O(V^3 + Q)が間に合いそうならばワーシャルフロイド法" );
+    CERR( "  \\Mathematics\\Geometry\\Graph\\Algorithm\\FloydWarshall" );
+    CERR( "- そうでなく始点が共通ならば、シングルクエリの解法で多終点並列計算" );
+    CERR( "- そうでないならば、シングルクエリの解法をQ回反復" );
+    CERR( "を検討しましょう。" );
+    CERR( "" );
+    CERR( "以下、シングルクエリの解法を説明します。" );
+  }
+  CERR( "- コストが1のみかつO(V+E)が通りそうならば、幅優先探索" );
   CERR( "  \\Mathematics\\Geometry\\Graph\\Algorithm\\BreadthFirstSearch" );
-  CERR( "- そうでなく演算が加法で{0,1}値でO(V+E)が通りそうならば01幅優先探索" );
+  CERR( "- そうでなくコストが{0,1}値かつO(V+E)が通りそうならば、01幅優先探索" );
   CERR( "  \\Mathematics\\Geometry\\Graph\\Algorithm\\BreadthFirstSearch\\ZeroOne" );
   CERR( "  \\Mathematics\\Geometry\\Graph\\Algorithm\\BreadthFirstSearch" );
-  CERR( "- そうでなく非負ならば" );
+  CERR( "- そうでないならばコスト総和上限をCとし、" );
   CERR( "  - O(min(V^2,(V+E)log_2 E))が間に合いそうならばダイクストラ法" );
   CERR( "    \\Mathematics\\Geometry\\Graph\\Algorithm\\Dijkstra" );
-  CERR( "  - Gがグラフの非輪状グラフならば" );
-  CERR( "    - O(min(sum_i V_i^2,sum_i((V_i+E_i)log_2 E_i))が間に合いそうならば" );
-  CERR( "      分割統治ダイクストラ法" );
-  CERR( "      \\Mathematics\\Geometry\\Graph\\Algorithm\\Dijkstra\\Double" );
-  CERR( "    - 間に合わなさそうならば分割統治を動的計画法で書き直しデータ構造高速化" );
-  CERR( "  - コスト総和上限をCとしO((V+E)C)が間に合いそうならば" );
-  CERR( "    コスト総和も状態に含めたグラフ上での幅優先探索" );
+  CERR( "  - O((V+E)C)が間に合いそうならば、コスト総和も状態に含めたグラフ上" );
+  CERR( "    での幅優先探索" );
   CERR( "    \\Mathematics\\Geometry\\Graph\\Algorithm\\BreadthFirstSearchSearch" );
-  CERR( "  - 演算がmaxでO(V + E(log E + α(V)))が間に合いそうならば" );
-  CERR( "    コストで辺をソートしてUnionFind" );
-  CERR( "    \\Mathematics\\Geometry\\Graph\\Algorithm\\UnionFind" );
-  CERR( "  - マルチテストケースでO(V^3 + Q)が間に合いそうならばワーシャルフロイド" );
-  CERR( "    \\Mathematics\\Geometry\\Graph\\Algorithm\\FloydWarshall" );
-  CERR( "  - マルチテストケースで演算がmaxでO(E log E + (V + Eα(V)) log E)が" );
-  CERR( "    間に合いそうならばコストで辺をソートしてUnionFind＋並列二分探索" );
-  CERR( "    \\Mathematics\\Geometry\\Graph\\Algorithm\\UnionFind\\ParallelBinarySearch" );
-  CERR( "- コストが非負でないならば" );
-  CERR( "  - O(VE)が間に合いそうならばベルマンフォード法" );
-  CERR( "    \\Mathematics\\Geometry\\Graph\\Algorithm\\BellmanFord" );
-  CERR( "  - マルチテストケースで辺の削除を行いO(VE+Q(V+E)log_2 E)が間に合いそうならば" );
-  CERR( "    ポテンシャル付きダイクストラ法" );
-  CERR( "    \\Mathematics\\Geometry\\Graph\\Algorithm\\Dijkstra\\Potentialised" );
-  CERR( "を検討しましょう。" );
+  CERR( "  - Gがグラフの非輪状グラフならば" );
+  CERR( "    - O(min(sum_i V_i^2,sum_i((V_i+E_i)log_2 E_i))が間に合いそう" );
+  CERR( "      ならば分割統治ダイクストラ法" );
+  CERR( "      \\Mathematics\\Geometry\\Graph\\Algorithm\\Dijkstra\\Double" );
+  CERR( "    - 間に合わなさそうならば、分割統治を動的計画法で書き直しデータ構造高速化" );
 }
 
 AC( MinimisationSolvingMazeUnboundedChoiceManyEdges )
@@ -767,6 +822,8 @@ AC( MinimisationSolvingMazeUnboundedChoiceManyEdges )
   CERR( "操作を何らかの零化問題に翻訳できるかもしれません。" );
   CERR( "なるべくコストを簡単で等価な値に翻訳し、その翻訳に則って操作も更に翻訳し、" );
   CERR( "よりシンプルな（例えば貪欲法が適用可能な）零化問題への帰着を試みましょう。" );
+  CERR( "例えば経路を摂動する方法であってコストが大きくならないものを特定し、" );
+  CERR( "摂動可能でない経路のみに絞ることでEを減らしましょう。" );
 }
 
 AC( MinimisationSolvingOpenCovering )
