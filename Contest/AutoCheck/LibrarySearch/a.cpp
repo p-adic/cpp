@@ -737,7 +737,7 @@ AC( MinimisationSolvingMazeUnboundedChoiceFewEdges )
   CERR( "    \\Mathematics\\Geometry\\Graph\\Algorithm\\FloydWarshall" );
   CERR( "  - マルチテストケースで演算がmaxでO(E log E + (V + Eα(V)) log E)が" );
   CERR( "    間に合いそうならばコストで辺をソートしてUnionFind＋並列二分探索" );
-  CERR( "    \\Mathematics\\Geometry\\Graph\\Algorithm\\UnionFind" );
+  CERR( "    \\Mathematics\\Geometry\\Graph\\Algorithm\\UnionFind\\ParallelBinarySearch" );
   CERR( "- コストが非負でないならば" );
   CERR( "  - O(VE)が間に合いそうならばベルマンフォード法" );
   CERR( "    \\Mathematics\\Geometry\\Graph\\Algorithm\\BellmanFord" );
