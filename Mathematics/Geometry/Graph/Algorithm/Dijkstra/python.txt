@@ -1,0 +1,15 @@
+# verify:
+# https://yukicoder.me/submissions/989059
+
+# E[始点番号]は[終点番号,重み]の配列。
+# O((N+M)log N)でWにsからの最短経路長を格納する。
+import heapq
+W=[9**20]*N
+W[s]=0
+S=[[0,s]]
+while S:
+	w,i=heapq.heappop(S)
+	if w>W[i]:continue
+	for j,v in E[i]:
+		if w+v<W[j]:W[j]=w+v;heapq.heappush(S,[w+v,j])
+
