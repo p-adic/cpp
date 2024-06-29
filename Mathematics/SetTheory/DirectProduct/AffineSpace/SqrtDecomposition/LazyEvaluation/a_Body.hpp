@@ -5,13 +5,13 @@
 
 #include "../Sqrt/a_Body.hpp"
 
-template <typename R , typename PT_MAGMA , typename U , typename R_MODULE> template <typename...Args> inline LazySqrtDecomposition<R,PT_MAGMA,U,R_MODULE>::LazySqrtDecomposition( PT_MAGMA L , R_MODULE M , const int& N , const Args&... args ) : SqrtDecompositionCoordinate( N , args... ) , m_L( move( L ) ) , m_M( move( M ) ) , m_a( N , m_M.One() ) , m_b( m_N_d , m_M.One() ) , m_lazy_substitution( m_b ) , m_suspended( m_N_d ) , m_lazy_action( m_N_d , m_L.Point() ) { Construct(); }
-template <typename R , typename PT_MAGMA , typename U , typename R_MODULE> template <typename...Args> inline LazySqrtDecomposition<R,PT_MAGMA,U,R_MODULE>::LazySqrtDecomposition( PT_MAGMA L , R_MODULE M , vector<U> a , const Args&... args ) : SqrtDecompositionCoordinate( a.size() , args... ) , m_L( move( L ) ) , m_M( move( M ) ) , m_a( move( a ) ) , m_b( m_N_d , m_M.One() ) , m_lazy_substitution( m_b ) , m_suspended( m_N_d ) , m_lazy_action( m_N_d , m_L.Point() ) { Construct(); }
+template <typename R , typename PT_MAGMA , typename U , typename RN_BIMODULE> template <typename...Args> inline LazySqrtDecomposition<R,PT_MAGMA,U,RN_BIMODULE>::LazySqrtDecomposition( PT_MAGMA L , RN_BIMODULE M , const int& N , const Args&... args ) : SqrtDecompositionCoordinate( N , args... ) , m_L( move( L ) ) , m_M( move( M ) ) , m_a( N , m_M.One() ) , m_b( m_N_d , m_M.One() ) , m_lazy_substitution( m_b ) , m_suspended( m_N_d ) , m_lazy_action( m_N_d , m_L.Point() ) { Construct(); }
+template <typename R , typename PT_MAGMA , typename U , typename RN_BIMODULE> template <typename...Args> inline LazySqrtDecomposition<R,PT_MAGMA,U,RN_BIMODULE>::LazySqrtDecomposition( PT_MAGMA L , RN_BIMODULE M , vector<U> a , const Args&... args ) : SqrtDecompositionCoordinate( a.size() , args... ) , m_L( move( L ) ) , m_M( move( M ) ) , m_a( move( a ) ) , m_b( m_N_d , m_M.One() ) , m_lazy_substitution( m_b ) , m_suspended( m_N_d ) , m_lazy_action( m_N_d , m_L.Point() ) { Construct(); }
 
-template <typename R , typename PT_MAGMA , typename U , typename R_MODULE> inline void LazySqrtDecomposition<R,PT_MAGMA,U,R_MODULE>::Construct()
+template <typename R , typename PT_MAGMA , typename U , typename RN_BIMODULE> inline void LazySqrtDecomposition<R,PT_MAGMA,U,RN_BIMODULE>::Construct()
 {
 
-  static_assert( is_same_v<R,inner_t<PT_MAGMA>> && is_same_v<U,inner_t<R_MODULE>> );
+  static_assert( is_same_v<R,inner_t<PT_MAGMA>> && is_same_v<U,inner_t<RN_BIMODULE>> );
   m_a.resize( m_N_m , m_M.One() );
   int i_min = 0;
   int i_ulim = m_N_sqrt;
@@ -33,9 +33,9 @@ template <typename R , typename PT_MAGMA , typename U , typename R_MODULE> inlin
 
 }
 
-template <typename R , typename PT_MAGMA , typename U , typename R_MODULE> template <typename...Args> inline void LazySqrtDecomposition<R,PT_MAGMA,U,R_MODULE>::Initialise( Args&&...args ) { LazySqrtDecomposition<R,PT_MAGMA,U,R_MODULE> temp{ m_L , m_M , forward<Args>( args )... }; SqrtDecompositionCoordinate::operator=( temp ); m_a = move( temp.m_a ); m_b = move( temp.m_b ); m_lazy_substitution = move( temp.m_lazy_substitution ); m_suspended = move( temp.m_suspended ); m_lazy_action = move( temp.m_lazy_action ); }
+template <typename R , typename PT_MAGMA , typename U , typename RN_BIMODULE> template <typename...Args> inline void LazySqrtDecomposition<R,PT_MAGMA,U,RN_BIMODULE>::Initialise( Args&&...args ) { LazySqrtDecomposition<R,PT_MAGMA,U,RN_BIMODULE> temp{ m_L , m_M , forward<Args>( args )... }; SqrtDecompositionCoordinate::operator=( temp ); m_a = move( temp.m_a ); m_b = move( temp.m_b ); m_lazy_substitution = move( temp.m_lazy_substitution ); m_suspended = move( temp.m_suspended ); m_lazy_action = move( temp.m_lazy_action ); }
 
-template <typename R , typename PT_MAGMA , typename U , typename R_MODULE> inline void LazySqrtDecomposition<R,PT_MAGMA,U,R_MODULE>::Set( const int& i , const U& u )
+template <typename R , typename PT_MAGMA , typename U , typename RN_BIMODULE> inline void LazySqrtDecomposition<R,PT_MAGMA,U,RN_BIMODULE>::Set( const int& i , const U& u )
 {
 
   const int d = i / m_N_sqrt;
@@ -72,7 +72,7 @@ template <typename R , typename PT_MAGMA , typename U , typename R_MODULE> inlin
 
 }
 
-template <typename R , typename PT_MAGMA , typename U , typename R_MODULE> inline void LazySqrtDecomposition<R,PT_MAGMA,U,R_MODULE>::IntervalSet( const int& i_start , const int& i_final , const U& u )
+template <typename R , typename PT_MAGMA , typename U , typename RN_BIMODULE> inline void LazySqrtDecomposition<R,PT_MAGMA,U,RN_BIMODULE>::IntervalSet( const int& i_start , const int& i_final , const U& u )
 {
 
   const int i_min = max( i_start , 0 );
@@ -152,7 +152,7 @@ template <typename R , typename PT_MAGMA , typename U , typename R_MODULE> inlin
 
 }
 
-template <typename R , typename PT_MAGMA , typename U , typename R_MODULE> inline void LazySqrtDecomposition<R,PT_MAGMA,U,R_MODULE>::IntervalAct( const int& i_start , const int& i_final , const R& r )
+template <typename R , typename PT_MAGMA , typename U , typename RN_BIMODULE> inline void LazySqrtDecomposition<R,PT_MAGMA,U,RN_BIMODULE>::IntervalAct( const int& i_start , const int& i_final , const R& r )
 {
 
   if( r != m_L.Point() ){
@@ -177,12 +177,12 @@ template <typename R , typename PT_MAGMA , typename U , typename R_MODULE> inlin
 
 	U& m_lazy_substitution_d = m_lazy_substitution[d_0_minus];
 	U& m_bd = m_b[d_0_minus];
-	const U u = m_M.Action( r , m_lazy_substitution_d );
+	const U u = m_M.ScalarProduct( r , m_lazy_substitution_d );
 	IntervalSet_Body( d_0_N_sqrt_minus , i_min , m_lazy_substitution_d );
 	IntervalSet_Body( i_min , i_0 , u );
 	IntervalSet_Body( i_0 , d_0_N_sqrt , m_lazy_substitution_d );
 	m_suspended_d = false;
-	m_bd = m_M.Product( m_M.Product( m_M.Power( m_lazy_substitution_d , i_min - d_0_N_sqrt_minus ) , m_M.Power( u , i_0 - i_min ) ) , m_M.Power( m_lazy_substitution , d_0_N_sqrt - i_0 ) );
+	m_bd = m_M.Product( m_M.Product( m_M.Power( m_lazy_substitution_d , i_min - d_0_N_sqrt_minus ) , m_M.Power( u , i_0 - i_min ) ) , m_M.Power( m_lazy_substitution_d , d_0_N_sqrt - i_0 ) );
 
       } else {
 
@@ -195,7 +195,7 @@ template <typename R , typename PT_MAGMA , typename U , typename R_MODULE> inlin
 	} else {
 	  
 	  IntervalAct_Body( d_0_N_sqrt_minus , i_min , m_lazy_action_d );
-	  IntervalAct_Body( i_min , i_0 , m_L.Action( r , m_lazy_action_d ) );
+	  IntervalAct_Body( i_min , i_0 , m_L.Product( r , m_lazy_action_d ) );
 	  IntervalAct_Body( i_0 , d_0_N_sqrt , m_lazy_action_d );
 	  m_lazy_action_d = m_L.Point();
 
@@ -210,17 +210,17 @@ template <typename R , typename PT_MAGMA , typename U , typename R_MODULE> inlin
     for( int d = d_0 ; d < d_1 ; d++ ){
 
       U& m_bd = m_b[d];
-      m_bd = m_M.Action( r , m_bd );
+      m_bd = m_M.ScalarProduct( r , m_bd );
 
       if( m_suspended[d] ){
 
 	U& m_lazy_substitution_d = m_lazy_substitution[d];
-	m_lazy_substitution_d = m_M.Action( r , m_lazy_substitution_d );
+	m_lazy_substitution_d = m_M.ScalarProduct( r , m_lazy_substitution_d );
 
       } else {
       
 	R& m_lazy_action_d = m_lazy_action[d];
-	m_lazy_action_d = m_L.Action( r , m_lazy_action_d );
+	m_lazy_action_d = m_L.Product( r , m_lazy_action_d );
 
       }
 
@@ -236,12 +236,12 @@ template <typename R , typename PT_MAGMA , typename U , typename R_MODULE> inlin
 
 	U& m_lazy_substitution_d = m_lazy_substitution[d_1];
 	U& m_bd = m_b[d_1];
-	const U u = m_M.Action( r , m_lazy_substitution_d );
+	const U u = m_M.ScalarProduct( r , m_lazy_substitution_d );
 	IntervalSet_Body( d_1_N_sqrt , i_1 , m_lazy_substitution_d );
 	IntervalSet_Body( i_1 , i_ulim , u );
 	IntervalSet_Body( i_ulim , d_1_N_sqrt_plus , m_lazy_substitution_d );
 	m_suspended_d = false;
-	m_bd = m_M.Product( m_M.Product( m_M.Power( m_lazy_substitution_d , i_1 - d_1_N_sqrt ) , m_M.Power( u , i_ulim - i_1 ) ) , m_M.Power( m_lazy_substitution , d_1_N_sqrt_plus - i_ulim ) );
+	m_bd = m_M.Product( m_M.Product( m_M.Power( m_lazy_substitution_d , i_1 - d_1_N_sqrt ) , m_M.Power( u , i_ulim - i_1 ) ) , m_M.Power( m_lazy_substitution_d , d_1_N_sqrt_plus - i_ulim ) );
 
       } else {
 
@@ -255,7 +255,7 @@ template <typename R , typename PT_MAGMA , typename U , typename R_MODULE> inlin
 	} else {
 	  
 	  IntervalAct_Body( d_1_N_sqrt , i_1 , m_lazy_action_d );
-	  IntervalAct_Body( i_1 , i_ulim , m_L.Action( r , m_lazy_action_d ) );
+	  IntervalAct_Body( i_1 , i_ulim , m_L.Product( r , m_lazy_action_d ) );
 	  IntervalAct_Body( i_ulim , d_1_N_sqrt_plus , m_lazy_action_d );
 	  m_lazy_action_d = m_L.Point();
 	  SetProduct( d_1 );
@@ -272,7 +272,7 @@ template <typename R , typename PT_MAGMA , typename U , typename R_MODULE> inlin
   
 }
 
-template <typename R , typename PT_MAGMA , typename U , typename R_MODULE> inline U LazySqrtDecomposition<R,PT_MAGMA,U,R_MODULE>::IntervalProduct_Body( const int& i_min , const int& i_ulim )
+template <typename R , typename PT_MAGMA , typename U , typename RN_BIMODULE> inline U LazySqrtDecomposition<R,PT_MAGMA,U,RN_BIMODULE>::IntervalProduct_Body( const int& i_min , const int& i_ulim )
 {
 
   U answer = m_M.One();
@@ -287,7 +287,7 @@ template <typename R , typename PT_MAGMA , typename U , typename R_MODULE> inlin
   
 }
 
-template <typename R , typename PT_MAGMA , typename U , typename R_MODULE> inline void LazySqrtDecomposition<R,PT_MAGMA,U,R_MODULE>::SetProduct( const int& d )
+template <typename R , typename PT_MAGMA , typename U , typename RN_BIMODULE> inline void LazySqrtDecomposition<R,PT_MAGMA,U,RN_BIMODULE>::SetProduct( const int& d )
 {
 
   U& m_bd = m_b[d] = m_M.One();
@@ -304,7 +304,7 @@ template <typename R , typename PT_MAGMA , typename U , typename R_MODULE> inlin
 
 }
 
-template <typename R , typename PT_MAGMA , typename U , typename R_MODULE> inline void LazySqrtDecomposition<R,PT_MAGMA,U,R_MODULE>::SolveSuspendedSubstitution( const int& d , const U& u )
+template <typename R , typename PT_MAGMA , typename U , typename RN_BIMODULE> inline void LazySqrtDecomposition<R,PT_MAGMA,U,RN_BIMODULE>::SolveSuspendedSubstitution( const int& d , const U& u )
 {
 
   const int i_min = d * m_N_sqrt;
@@ -314,7 +314,7 @@ template <typename R , typename PT_MAGMA , typename U , typename R_MODULE> inlin
 
 }
 
-template <typename R , typename PT_MAGMA , typename U , typename R_MODULE> inline void LazySqrtDecomposition<R,PT_MAGMA,U,R_MODULE>::IntervalSet_Body( const int& i_min , const int& i_ulim , const U& u )
+template <typename R , typename PT_MAGMA , typename U , typename RN_BIMODULE> inline void LazySqrtDecomposition<R,PT_MAGMA,U,RN_BIMODULE>::IntervalSet_Body( const int& i_min , const int& i_ulim , const U& u )
 {
 
   for( int i = i_min ; i < i_ulim ; i++ ){
@@ -327,7 +327,7 @@ template <typename R , typename PT_MAGMA , typename U , typename R_MODULE> inlin
   
 }
 
-template <typename R , typename PT_MAGMA , typename U , typename R_MODULE> inline void LazySqrtDecomposition<R,PT_MAGMA,U,R_MODULE>::SolveSuspendedAction( const int& d )
+template <typename R , typename PT_MAGMA , typename U , typename RN_BIMODULE> inline void LazySqrtDecomposition<R,PT_MAGMA,U,RN_BIMODULE>::SolveSuspendedAction( const int& d )
 {
 
   R& m_lazy_action_d = m_lazy_action[d];
@@ -338,7 +338,7 @@ template <typename R , typename PT_MAGMA , typename U , typename R_MODULE> inlin
     const int i_ulim = i_min + m_N_sqrt;
     IntervalAct_Body( i_min , i_ulim , m_lazy_action_d );
     U& m_bd = m_b[d];
-    m_bd = m_M.Action( m_lazy_action_d , m_bd );
+    m_bd = m_M.ScalarProduct( m_lazy_action_d , m_bd );
     m_lazy_action_d = m_L.Point();
  
   }
@@ -347,10 +347,10 @@ template <typename R , typename PT_MAGMA , typename U , typename R_MODULE> inlin
   
 }
 
-template <typename R , typename PT_MAGMA , typename U , typename R_MODULE> inline U LazySqrtDecomposition<R,PT_MAGMA,U,R_MODULE>::operator[]( const int& i ) { assert( 0 <= i && i < m_N ); const int d = i / m_N_sqrt; return m_suspended[d] ? m_lazy_substitution[d] : m_M.Action( m_lazy_action[d] , m_a[i] ); }
-template <typename R , typename PT_MAGMA , typename U , typename R_MODULE> inline U LazySqrtDecomposition<R,PT_MAGMA,U,R_MODULE>::Get( const int& i ) { return operator[]( i ); }
+template <typename R , typename PT_MAGMA , typename U , typename RN_BIMODULE> inline U LazySqrtDecomposition<R,PT_MAGMA,U,RN_BIMODULE>::operator[]( const int& i ) { assert( 0 <= i && i < m_N ); const int d = i / m_N_sqrt; return m_suspended[d] ? m_lazy_substitution[d] : m_M.ScalarProduct( m_lazy_action[d] , m_a[i] ); }
+template <typename R , typename PT_MAGMA , typename U , typename RN_BIMODULE> inline U LazySqrtDecomposition<R,PT_MAGMA,U,RN_BIMODULE>::Get( const int& i ) { return operator[]( i ); }
 
-template <typename R , typename PT_MAGMA , typename U , typename R_MODULE> inline U LazySqrtDecomposition<R,PT_MAGMA,U,R_MODULE>::IntervalProduct( const int& i_start , const int& i_final )
+template <typename R , typename PT_MAGMA , typename U , typename RN_BIMODULE> inline U LazySqrtDecomposition<R,PT_MAGMA,U,RN_BIMODULE>::IntervalProduct( const int& i_start , const int& i_final )
 {
 
   const int i_min = max( i_start , 0 );
@@ -366,7 +366,7 @@ template <typename R , typename PT_MAGMA , typename U , typename R_MODULE> inlin
 
     // Ç±ÇÃéûd_0 > 0Ç…Ç»ÇÈÅB
     const int d_0_minus = d_0 - 1;
-    answer = m_suspended[d_0_minus] ? m_M.Power( m_lazy_substitution[d_0_minus] , i_0 - i_min ) : m_M.Action( m_lazy_action[d_0_minus] , IntervalProduct_Body( i_min , i_0 ) );
+    answer = m_suspended[d_0_minus] ? m_M.Power( m_lazy_substitution[d_0_minus] , i_0 - i_min ) : m_M.ScalarProduct( m_lazy_action[d_0_minus] , IntervalProduct_Body( i_min , i_0 ) );
     
   }
   
@@ -379,7 +379,7 @@ template <typename R , typename PT_MAGMA , typename U , typename R_MODULE> inlin
   if( i_1 < i_ulim ){
 
     // Ç±ÇÃéûd_1 < m_N_dÇ…Ç»ÇÈÅB
-    answer = m_M.Product( move( answer ), m_suspended[d_1] ? m_M.Power( m_lazy_substitution[d_1] , i_ulim - i_1 ) : m_M.Action( m_lazy_action[d_1] , IntervalProduct_Body( i_1 , i_ulim ) ) );
+    answer = m_M.Product( move( answer ), m_suspended[d_1] ? m_M.Power( m_lazy_substitution[d_1] , i_ulim - i_1 ) : m_M.ScalarProduct( m_lazy_action[d_1] , IntervalProduct_Body( i_1 , i_ulim ) ) );
 
   }
 
@@ -387,13 +387,13 @@ template <typename R , typename PT_MAGMA , typename U , typename R_MODULE> inlin
 
 }
 
-template <typename R , typename PT_MAGMA , typename U , typename R_MODULE> inline void LazySqrtDecomposition<R,PT_MAGMA,U,R_MODULE>::IntervalAct_Body( const int& i_min , const int& i_ulim , const R& r )
+template <typename R , typename PT_MAGMA , typename U , typename RN_BIMODULE> inline void LazySqrtDecomposition<R,PT_MAGMA,U,RN_BIMODULE>::IntervalAct_Body( const int& i_min , const int& i_ulim , const R& r )
 {
 
   for( int i = i_min ; i < i_ulim ; i++ ){
 
     U& m_ai = m_a[i];
-    m_ai = m_M.Action( r , m_ai );
+    m_ai = m_M.ScalarProduct( r , m_ai );
 
   }
 
@@ -401,4 +401,4 @@ template <typename R , typename PT_MAGMA , typename U , typename R_MODULE> inlin
   
 }
 
-#include "../../../../../Algebra/Monoid/Group/Module/a_Body.hpp"
+#include "../../../../../Algebra/Monoid/Group/Module/BiModule/a_Body.hpp"
