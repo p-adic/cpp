@@ -1,7 +1,7 @@
 #verify:
 #https://yukicoder.me/submissions/959055（IntervalSet,IntervalMultiply,IntervalProuct）
 
-#基点付きマグマ
+#Based magma
 class L:
 	point=None
 	def __init__(self,val):
@@ -9,17 +9,17 @@ class L:
 	def __eq__(self,other):
 		return self.val==other.val
 	def __imul__(self,other):
-		self.val *= other.val #ユーザー定義
+		self.val *= other.val #User definition
 		return self
 	def __mul__(self,other):
-		return self.__class__(self.val*other.val) #ユーザー定義
+		return self.__class__(self.val*other.val) #User definition
 	def copy(self):
 		return self.__class__(self.val)
-L.point=L(1) #ユーザー定義
-# 区間作用を行わない場合もL.pointの作用を区間積に用いるため、
-# Lをdummyにせず自明群{1}などを用いる必要があることに注意。
+L.point=L(1) #User definition
+#Note that L should be a non-dummy one like the trivial group {1},
+#even when IntervalAct will not be called.
 
-# Lの基点が恒等変換に対応する左L作用つきN加群
+#A set on which L acts from left so that the base point of L coresponds to the identity
 class M:
 	one=None
 	def __init__(self,val):
@@ -27,42 +27,40 @@ class M:
 	def __eq__(self,other):
 		return self.val==other.val
 	def __mul__(self,other):
-		return self.__class__(self.val+other.val) #ユーザー定義
-	def __pow__(self,n):
-		return self.__class__(self.val*n) #ユーザー定義
-	def __ixor__(self,x):
-		self.val*=x.val #ユーザー定義
+		return self.__class__(self.val+other.val) #User definition
+	def __pow__(self,n): #N-module structure
+		return self.__class__(self.val*n) #User definition
+	def __ixor__(self,x): #Left L-action
+		self.val*=x.val #User definition
 		return self
-	def __xor__(self,x):
-		return self.__class__(self.val*x.val) #ユーザー定義
+	def __xor__(self,x): #Left L-action
+		return self.__class__(self.val*x.val) #User definition
 	def copy(self):
 		return self.__class__(self.val)
-M.one=M(0) #ユーザー定義
+M.one=M(0) #User definition
 
-# 配列による初期化O(N)
+#Initialisation by an array O(N)
 
-# 一点取得O(1)
-# 区間積取得O(N^{1/2})（Mのモノイド性を使う）
+#Get O(1)
+#IntervalProduct O(N^{1/2}) using the monoidness of M
 
-# 一点代入O(N^{1/2})（MのN加群性を使う）
-# 区間代入O(N^{1/2})（MのN加群性を使う）
-# 一点乗算はなし。
-# 区間乗算O(N^{1/2})（Mの可換性を使う）
-# 一点作用はなし。
-# 区間作用O(N^{1/2})
+#Set O(N^{1/2}) using the N-module structure of M
+#IntervalSet O(N^{1/2}) using the N-module structure of M
+#IntervalMultiply O(N^{1/2}) using the commutativity of M
+#IntervalAct O(N^{1/2})
 class IntervalMultiplyLazySqrtDecomposition:
-	def __init__(self,a):
+	def __init__(self,a,N_sqrt=None):
 		self.N = len(a)
-		self.N_sqrt = int( self.N**0.5 ) + 1
+		self.N_sqrt = int( self.N**0.5 ) + 1 if N_sqrt is None else N_sqrt
 		self.N_d = ( self.N + self.N_sqrt - 1 ) // self.N_sqrt
 		self.N_m = self.N_d * self.N_sqrt
-		self.a = a[:]
+		self.a = a[:] #Remove [:] if unnecessary
 		self.b = [M.one.copy()for d in R(self.N_d)]
 		self.lazy_substitution = self.b[:]
 		self.suspended = [False] * self.N_d
 		self.lazy_action = [L.point.copy()for d in R(self.N_d)]
 		self.lazy_multiplication = self.b[:]
-		self.a += [M.one.copy()for d in R(self.N_m)]
+		self.a += [M.one.copy()for d in R(self.N_m - self.N)]
 		i_min = 0
 		i_ulim = self.N_sqrt
 		for d in R(self.N_d):
@@ -78,7 +76,7 @@ class IntervalMultiplyLazySqrtDecomposition:
 			if self.lazy_substitution[d] != u:
 				SolveSuspendedSubstitution( d , self.lazy_substitution[d] )
 				self.a[i] = u
-				# N加群性を使った
+				#Used the N-module structure of M
 				self.b[d] = ( self.lazy_substitution[d] ** self.N_sqrt - 1 ) * u
 		else:
 			self.SolveSuspendedAction( d )
@@ -96,7 +94,7 @@ class IntervalMultiplyLazySqrtDecomposition:
 		i_0 = min( d_0_N_sqrt , i_ulim )
 		i_1 = max( i_0 , d_1_N_sqrt )
 		if i_min < i_0:
-			# この時d_0 > 0になる。
+			#Then d_0 > 0
 			d_0_minus = d_0 - 1
 			d_0_N_sqrt_minus = d_0_N_sqrt - self.N_sqrt
 			if self.suspended[d_0_minus]:
@@ -104,7 +102,7 @@ class IntervalMultiplyLazySqrtDecomposition:
 				self.IntervalSet_Body( i_min , i_0 , u )
 				self.IntervalSet_Body( i_0 , d_0_N_sqrt , self.lazy_substitution[d_0_minus] )
 				self.suspended[d_0_minus] = False
-				# N加群性を使った。
+				#Used the N-module structure of M
 				self.b[d_0_minus] = self.lazy_substitution[d_0_minus] ** ( self.N_sqrt - ( i_0 - i_min ) ) * ( u ** ( i_0 - i_min ) )
 			else:
 				self.SolveSuspendedAction( d_0_minus )
@@ -118,7 +116,7 @@ class IntervalMultiplyLazySqrtDecomposition:
 			self.lazy_multiplication[d] = M.one.copy()
 			self.lazy_action[d] = L.point.copy()
 		if i_1 < i_ulim:
-			# この時d_1 < self.N_dになる。
+			#Then d_1 < self.N_d
 			d_1_N_sqrt_plus = d_1_N_sqrt + self.N_sqrt
 			self.b[d_1] = self.b[d_1]
 			if self.suspended[d_1]:
@@ -143,7 +141,7 @@ class IntervalMultiplyLazySqrtDecomposition:
 			i_0 = min( d_0_N_sqrt , i_ulim )
 			i_1 = max( i_0 , d_1_N_sqrt )
 			if i_min < i_0:
-				# この時d_0 > 0になる。
+				#Then d_0 > 0
 				d_0_minus = d_0 - 1
 				d_0_N_sqrt_minus = d_0_N_sqrt - self.N_sqrt;
 				if self.suspended[d_0_minus]:
@@ -152,7 +150,7 @@ class IntervalMultiplyLazySqrtDecomposition:
 					self.IntervalSet_Body( i_min , i_0 , u )
 					self.IntervalSet_Body( i_0 , d_0_N_sqrt , self.lazy_substitution[d_0_minus] )
 					self.suspended[d_0_minus] = False
-					# N加群性を使った。
+					#Used the N-module structure of M
 					self.b[d_0_minus] = ( self.lazy_substitution[d_0_minus] ** ( self.N_sqrt - ( i_0 - i_min ) ) ) * ( u ** ( i_0 - i_min ) )
 				else:
 					if self.lazy_action[d_0_minus] == L.point:self.IntervalAct_Body( i_min , i_0 , r )
@@ -174,7 +172,7 @@ class IntervalMultiplyLazySqrtDecomposition:
 					self.lazy_action[d] ^= r
 					self.lazy_multiplication[d] ^= r
 			if i_1 < i_ulim:
-				# この時d_1 < self.N_dになる。
+				#Then d_1 < self.N_d
 				d_1_N_sqrt_plus = d_1_N_sqrt + self.N_sqrt
 				if self.suspended[d_1]:
 					u = self.lazy_substitution[d_1] ^ r
@@ -182,7 +180,7 @@ class IntervalMultiplyLazySqrtDecomposition:
 					self.IntervalSet_Body( i_1 , i_ulim , u )
 					self.IntervalSet_Body( i_ulim , d_1_N_sqrt_plus , self.lazy_substitution[d_1] )
 					self.suspended[d_1] = False
-					# N加群性を使った。
+					#Used the N-module structure of M
 					self.b[d_1] = ( self.lazy_substitution[d_1] ** ( self.N_sqrt - ( i_ulim - i_1 ) ) ) * ( u ** ( i_ulim - i_1 ) )
 				else:
 					if self.lazy_action[d_1] == L.point:self.IntervalAct_Body( i_1 , i_ulim , r )
@@ -209,10 +207,10 @@ class IntervalMultiplyLazySqrtDecomposition:
 			i_0 = min( d_0_N_sqrt , i_ulim )
 			i_1 = max( i_0 , d_1_N_sqrt )
 			if i_min < i_0:
-				# この時d_0 > 0になる。
+				#Then d_0 > 0
 				d_0_minus = d_0 - 1
 				d_0_N_sqrt_minus = d_0_N_sqrt - self.N_sqrt
-				# N加群性を使った。
+				#Used the N-module structure of M
 				self.b[d_0_minus] *= u ** ( i_0 - i_min )
 				if self.suspended[d_0_minus]:
 					self.IntervalSet_Body( d_0_N_sqrt_minus , i_min , self.lazy_substitution[d_0_minus] )
@@ -231,14 +229,14 @@ class IntervalMultiplyLazySqrtDecomposition:
 						self.lazy_multiplication[d_0_minus] = M.one.copy()
 			power = u ** self.N_sqrt
 			for d in R(d_0,d_1):
-				# N加群性を使った。
+				#Used the N-module structure of M
 				self.b[d] *= power
 				if self.suspended[d]:self.lazy_substitution[d] *= u
 				else:self.lazy_multiplication[d] *= u
 			if i_1 < i_ulim:
-				# この時d_1 < self.N_dになる。
+				#Then d_1 < self.N_d
 				d_1_N_sqrt_plus = d_1_N_sqrt + self.N_sqrt
-				# N加群性を使った。
+				#Used the N-module structure of M
 				self.b[d_1] *= u ** ( i_ulim - i_1 )
 				if self.suspended[d_1]:
 					self.IntervalSet_Body( d_1_N_sqrt , i_1 , self.lazy_substitution[d_1] )
@@ -269,19 +267,19 @@ class IntervalMultiplyLazySqrtDecomposition:
 		i_1 = max( i_0 , d_1 * self.N_sqrt )
 		answer = M.one.copy()
 		if i_min < i_0:
-			# この時d_0 > 0になる。
-			# N加群性を使った。
+			#Then d_0 > 0
+			#Used the N-module structure of M
 			d_0_minus = d_0 - 1
 			answer = ( self.lazy_substitution[d_0_minus] ** ( i_0 - i_min ) )if self.suspended[d_0_minus]else( ( self.IntervalProduct_Body( i_min , i_0 ) ^ self.lazy_action[d_0_minus] ) * ( self.lazy_multiplication[d_0_minus] ** ( i_0 - i_min ) ) )
 		for d in R(d_0,d_1):answer *= self.b[d]
 		if i_1 < i_ulim:
-			# この時d_1 < self.N_dになる。
-			# N加群性を使った。
+			#Then d_1 < self.N_d
+			#Used the N-module structure of M
 			answer *= ( self.lazy_substitution[d_1] ** ( i_ulim - i_1 ) )if self.suspended[d_1]else( ( self.IntervalProduct_Body( i_1 , i_ulim ) ^ self.lazy_action[d_1] ) * ( self.lazy_multiplication[d_1] ** ( i_ulim - i_1 ) ) )
 		return answer
 
 	#private:
-	def SetProduct(self,i):
+	def SetProduct(self,d):
 		self.b[d] = M.one.copy()
 		i_min = d * self.N_sqrt
 		i_ulim = i_min + self.N_sqrt
@@ -304,7 +302,7 @@ class IntervalMultiplyLazySqrtDecomposition:
 			self.lazy_action[d] = L.point.copy()
 		if self.lazy_multiplication[d] != M.one:
 			self.IntervalMultiply_Body( i_min , i_ulim , self.lazy_multiplication[d] )
-			# N加群性を使った。
+			#Used the N-module structure of M
 			self.b[d] = self.b[d] * ( self.lazy_multiplication[d] ** self.N_sqrt )
 			self.lazy_multiplication[d] = M.one.copy()
 

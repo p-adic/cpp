@@ -5,10 +5,10 @@
 
 #include "../../Sqrt/a_Body.hpp"
 
-template <typename R , typename PT_MAGMA , typename S , typename R_SET , typename U , typename RN_BIMODULE , typename UNIV> template <typename...Args> inline EquivariantLazySqrtDecomposition<R,PT_MAGMA,S,R_SET,U,RN_BIMODULE,UNIV>::EquivariantLazySqrtDecomposition( PT_MAGMA L , R_SET M0 , RN_BIMODULE M1 , UNIV univ , vector<S> a , const Args&... args ) : SqrtDecompositionCoordinate( a.size() , args... ) , m_L( move( L ) ) , m_M0( move( M0 ) ) , m_M1( move( M1 ) ) , m_univ( move( univ ) ) , m_a( move( a ) ) , m_b( m_N_d , m_M1.One() ) , m_lazy_substitution( m_N_d ) , m_suspended( m_N_d ) , m_lazy_action( m_N_d , m_L.Point() )
+template <typename R , typename PT_MAGMA , typename S , typename R_SET , typename U , typename RN_BIMODULE , typename TRANS> template <typename...Args> inline EquivariantLazySqrtDecomposition<R,PT_MAGMA,S,R_SET,U,RN_BIMODULE,TRANS>::EquivariantLazySqrtDecomposition( PT_MAGMA L , R_SET M0 , RN_BIMODULE M1 , TRANS trans , vector<S> a , const Args&... args ) : SqrtDecompositionCoordinate( a.size() , args... ) , m_L( move( L ) ) , m_M0( move( M0 ) ) , m_M1( move( M1 ) ) , m_trans( move( trans ) ) , m_a( move( a ) ) , m_b( m_N_d , m_M1.One() ) , m_lazy_substitution( m_N_d ) , m_suspended( m_N_d ) , m_lazy_action( m_N_d , m_L.Point() )
 {
   
-  static_assert( is_same_v<R,inner_t<PT_MAGMA>> && is_same_v<S,inner_t<R_SET>> && is_same_v<U,inner_t<RN_BIMODULE>> && is_invocable_r_v<U,UNIV,const S&> );
+  static_assert( is_same_v<R,inner_t<PT_MAGMA>> && is_same_v<S,inner_t<R_SET>> && is_same_v<U,inner_t<RN_BIMODULE>> && is_invocable_r_v<U,TRANS,U,const S&,const int&> );
 
   if( m_N_m > 0 ){
 
@@ -25,7 +25,7 @@ template <typename R , typename PT_MAGMA , typename S , typename R_SET , typenam
 
     for( int i = i_min ; i < i_ulim ; i++ ){
 
-      m_bd = m_M1.Product( move( m_bd ) , m_univ( m_a[i] ) );
+      m_bd = m_trans( move( m_bd ) , m_a[i] , 1 );
 
     }
 
@@ -36,9 +36,9 @@ template <typename R , typename PT_MAGMA , typename S , typename R_SET , typenam
 
 }
 
-template <typename R , typename PT_MAGMA , typename S , typename R_SET , typename U , typename RN_BIMODULE , typename UNIV> template <typename...Args> inline void EquivariantLazySqrtDecomposition<R,PT_MAGMA,S,R_SET,U,RN_BIMODULE,UNIV>::Initialise( Args&&...args ) { EquivariantLazySqrtDecomposition<R,PT_MAGMA,S,R_SET,U,RN_BIMODULE,UNIV> temp{ m_L , m_M0 , m_M1 , forward<Args>( args )... }; SqrtDecompositionCoordinate::operator=( temp ); m_a = move( temp.m_a ); m_b = move( temp.m_b ); m_lazy_substitution = move( temp.m_lazy_substitution ); m_suspended = move( temp.m_suspended ); m_lazy_action = move( temp.m_lazy_action ); }
+template <typename R , typename PT_MAGMA , typename S , typename R_SET , typename U , typename RN_BIMODULE , typename TRANS> template <typename...Args> inline void EquivariantLazySqrtDecomposition<R,PT_MAGMA,S,R_SET,U,RN_BIMODULE,TRANS>::Initialise( Args&&...args ) { EquivariantLazySqrtDecomposition<R,PT_MAGMA,S,R_SET,U,RN_BIMODULE,TRANS> temp{ m_L , m_M0 , m_M1 , forward<Args>( args )... }; SqrtDecompositionCoordinate::operator=( temp ); m_a = move( temp.m_a ); m_b = move( temp.m_b ); m_lazy_substitution = move( temp.m_lazy_substitution ); m_suspended = move( temp.m_suspended ); m_lazy_action = move( temp.m_lazy_action ); }
 
-template <typename R , typename PT_MAGMA , typename S , typename R_SET , typename U , typename RN_BIMODULE , typename UNIV> inline void EquivariantLazySqrtDecomposition<R,PT_MAGMA,S,R_SET,U,RN_BIMODULE,UNIV>::IntervalSet( const int& i_start , const int& i_final , const S& s )
+template <typename R , typename PT_MAGMA , typename S , typename R_SET , typename U , typename RN_BIMODULE , typename TRANS> inline void EquivariantLazySqrtDecomposition<R,PT_MAGMA,S,R_SET,U,RN_BIMODULE,TRANS>::IntervalSet( const int& i_start , const int& i_final , const S& s )
 {
 
   const int i_min = max( i_start , 0 );
@@ -49,7 +49,6 @@ template <typename R , typename PT_MAGMA , typename S , typename R_SET , typenam
   const int d_1_N_sqrt = d_1 * m_N_sqrt;
   const int i_0 = min( d_0_N_sqrt , i_ulim );
   const int i_1 = max( i_0 , d_1_N_sqrt );
-  const U u = m_univ( s );
 
   if( i_min < i_0 ){
 
@@ -61,24 +60,25 @@ template <typename R , typename PT_MAGMA , typename S , typename R_SET , typenam
 
     if( m_suspended_d ){
 
-      S& m_lazy_substitution_d = m_lazy_substitution[d_0_minus];
+      const S& m_lazy_substitution_d = m_lazy_substitution[d_0_minus];
       IntervalSet_Body( d_0_N_sqrt_minus , i_min , m_lazy_substitution_d );
       IntervalSet_Body( i_min , i_0 , s );
       IntervalSet_Body( i_0 , d_0_N_sqrt , m_lazy_substitution_d );
       m_suspended_d = false;
-      m_bd = m_M1.Product( m_M1.Product( m_M1.Power( m_univ( m_lazy_substitution_d ) , i_min - d_0_N_sqrt_minus ) , m_M1.Power( u , i_0 - i_min ) ) , m_M1.Power( m_lazy_substitution_d , d_0_N_sqrt - i_0 ) );
+      // 非可換N加群性を使った。
+      m_bd = m_trans( m_trans( Univ( m_lazy_substitution_d , i_min - d_0_N_sqrt_minus ) , s , i_0 - i_min ) , m_lazy_substitution_d , d_0_N_sqrt - i_0 );
 
     } else {
 
       SolveSuspendedAction( d_0_minus );
       IntervalSet_Body( i_min , i_0 , s );
-      m_bd = m_M1.Product( m_M1.Product( IntervalProduct_Body( d_0_N_sqrt_minus , i_min ) , m_M1.Power( u , i_0 - i_min ) ) , IntervalProduct_Body( i_0 , d_0_N_sqrt ) );
+      m_bd = m_M1.Product( m_trans( IntervalProduct_Body( d_0_N_sqrt_minus , i_min ) , s , i_0 - i_min ) , IntervalProduct_Body( i_0 , d_0_N_sqrt ) );
       
     }
     
   }
 
-  const U power = m_M1.Power( u , m_N_sqrt );
+  const U power = Univ( s , m_N_sqrt );
   
   for( int d = d_0 ; d < d_1 ; d++ ){
 
@@ -98,18 +98,18 @@ template <typename R , typename PT_MAGMA , typename S , typename R_SET , typenam
 
     if( m_suspended_d ){
 
-      S& m_lazy_substitution_d = m_lazy_substitution[d_1];
+      const S& m_lazy_substitution_d = m_lazy_substitution[d_1];
       IntervalSet_Body( d_1_N_sqrt , i_1 , m_lazy_substitution_d );
       IntervalSet_Body( i_1 , i_ulim , s );
       IntervalSet_Body( i_ulim , d_1_N_sqrt_plus , m_lazy_substitution_d );
       m_suspended_d = false;
-      m_bd = m_M1.Product( m_M1.Product( m_M1.Power( m_lazy_substitution_d , i_1 - d_1_N_sqrt ) , m_M1.Power( u , i_ulim - i_1 ) ) , m_M1.Power( m_lazy_substitution_d , d_1_N_sqrt_plus - i_ulim ) );
+      m_bd = m_trans( m_trans( Univ( m_lazy_substitution_d , i_1 - d_1_N_sqrt ) , s , i_ulim - i_1 ) , m_lazy_substitution_d , d_1_N_sqrt_plus - i_ulim );
 
     } else {
 
       SolveSuspendedAction( d_1 );
       IntervalSet_Body( i_1 , i_ulim , s );
-      m_bd = m_M1.Product( m_M1.Product( IntervalProduct_Body( d_1_N_sqrt , i_1 ) , m_M1.Power( u , i_ulim - i_1 ) ) , IntervalProduct_Body( i_ulim , d_1_N_sqrt_plus ) );
+      m_bd = m_M1.Product( m_trans( IntervalProduct_Body( d_1_N_sqrt , i_1 ) , s , i_ulim - i_1 ) , IntervalProduct_Body( i_ulim , d_1_N_sqrt_plus ) );
       
     }
     
@@ -119,7 +119,7 @@ template <typename R , typename PT_MAGMA , typename S , typename R_SET , typenam
 
 }
 
-template <typename R , typename PT_MAGMA , typename S , typename R_SET , typename U , typename RN_BIMODULE , typename UNIV> inline void EquivariantLazySqrtDecomposition<R,PT_MAGMA,S,R_SET,U,RN_BIMODULE,UNIV>::IntervalAct( const int& i_start , const int& i_final , const R& r )
+template <typename R , typename PT_MAGMA , typename S , typename R_SET , typename U , typename RN_BIMODULE , typename TRANS> inline void EquivariantLazySqrtDecomposition<R,PT_MAGMA,S,R_SET,U,RN_BIMODULE,TRANS>::IntervalAct( const int& i_start , const int& i_final , const R& r )
 {
 
   if( r != m_L.Point() ){
@@ -149,8 +149,8 @@ template <typename R , typename PT_MAGMA , typename S , typename R_SET , typenam
 	IntervalSet_Body( i_min , i_0 , s );
 	IntervalSet_Body( i_0 , d_0_N_sqrt , m_lazy_substitution_d );
 	m_suspended_d = false;
-	const U u = m_univ( m_lazy_substitution_d );
-	m_bd = m_M1.Product( m_M1.Product( m_M1.Power( u , i_min - d_0_N_sqrt_minus ) , m_M1.Power( m_univ( s ) , i_0 - i_min ) ) , m_M1.Power( u , d_0_N_sqrt - i_0 ) );
+	// 非可換N加群性を使った。
+	m_bd = m_trans( m_trans( Univ( m_lazy_substitution_d , i_min - d_0_N_sqrt_minus ) , s , i_0 - i_min ) , m_lazy_substitution_d , d_0_N_sqrt - i_0 );
 
       } else {
 
@@ -209,8 +209,8 @@ template <typename R , typename PT_MAGMA , typename S , typename R_SET , typenam
 	IntervalSet_Body( i_1 , i_ulim , s );
 	IntervalSet_Body( i_ulim , d_1_N_sqrt_plus , m_lazy_substitution_d );
 	m_suspended_d = false;
-	const U u = m_univ( m_lazy_substitution_d );
-	m_bd = m_M1.Product( m_M1.Product( m_M1.Power( u , i_1 - d_1_N_sqrt ) , m_M1.Power( m_univ( s ) , i_ulim - i_1 ) ) , m_M1.Power( u , d_1_N_sqrt_plus - i_ulim ) );
+	// 非可換N加群性を使った。
+	m_bd = m_trans( m_trans( Univ( m_lazy_substitution_d , i_1 - d_1_N_sqrt ) , s , i_ulim - i_1 ) , m_lazy_substitution_d , d_1_N_sqrt_plus - i_ulim );
 
       } else {
 
@@ -219,7 +219,6 @@ template <typename R , typename PT_MAGMA , typename S , typename R_SET , typenam
 	if( m_lazy_action_d == m_L.Point() ){
 
 	  IntervalAct_Body( i_1 , i_ulim , r );
-	  SetProduct( d_1 );
 
 	} else {
 	  
@@ -227,10 +226,11 @@ template <typename R , typename PT_MAGMA , typename S , typename R_SET , typenam
 	  IntervalAct_Body( i_1 , i_ulim , m_L.Product( r , m_lazy_action_d ) );
 	  IntervalAct_Body( i_ulim , d_1_N_sqrt_plus , m_lazy_action_d );
 	  m_lazy_action_d = m_L.Point();
-	  SetProduct( d_1 );
 
 	}
       
+	SetProduct( d_1 );
+
       }
 
     }
@@ -241,14 +241,14 @@ template <typename R , typename PT_MAGMA , typename S , typename R_SET , typenam
   
 }
 
-template <typename R , typename PT_MAGMA , typename S , typename R_SET , typename U , typename RN_BIMODULE , typename UNIV> inline U EquivariantLazySqrtDecomposition<R,PT_MAGMA,S,R_SET,U,RN_BIMODULE,UNIV>::IntervalProduct_Body( const int& i_min , const int& i_ulim )
+template <typename R , typename PT_MAGMA , typename S , typename R_SET , typename U , typename RN_BIMODULE , typename TRANS> inline U EquivariantLazySqrtDecomposition<R,PT_MAGMA,S,R_SET,U,RN_BIMODULE,TRANS>::IntervalProduct_Body( const int& i_min , const int& i_ulim )
 {
 
   U answer = m_M1.One();
   
   for( int i = i_min ; i < i_ulim ; i++ ){
 
-    answer = m_M1.Product( move( answer ) , m_univ( m_a[i] ) );
+    answer = m_trans( move( answer ) , m_a[i] , 1 );
 
   }
 
@@ -256,7 +256,9 @@ template <typename R , typename PT_MAGMA , typename S , typename R_SET , typenam
   
 }
 
-template <typename R , typename PT_MAGMA , typename S , typename R_SET , typename U , typename RN_BIMODULE , typename UNIV> inline void EquivariantLazySqrtDecomposition<R,PT_MAGMA,S,R_SET,U,RN_BIMODULE,UNIV>::SetProduct( const int& d )
+template <typename R , typename PT_MAGMA , typename S , typename R_SET , typename U , typename RN_BIMODULE , typename TRANS> inline U EquivariantLazySqrtDecomposition<R,PT_MAGMA,S,R_SET,U,RN_BIMODULE,TRANS>::Univ( const S& s , const int& n ) { return m_trans( m_M1.One() , s , n ); }
+
+template <typename R , typename PT_MAGMA , typename S , typename R_SET , typename U , typename RN_BIMODULE , typename TRANS> inline void EquivariantLazySqrtDecomposition<R,PT_MAGMA,S,R_SET,U,RN_BIMODULE,TRANS>::SetProduct( const int& d )
 {
 
   U& m_bd = m_b[d] = m_M1.One();
@@ -265,7 +267,7 @@ template <typename R , typename PT_MAGMA , typename S , typename R_SET , typenam
 
   for( int i = i_min ; i < i_ulim ; i++ ){
 
-    m_bd = m_M1.Product( move( m_bd ) , m_univ( m_a[i] ) );
+    m_bd = m_trans( move( m_bd ) , m_a[i] , 1 );
 
   }
 
@@ -273,7 +275,7 @@ template <typename R , typename PT_MAGMA , typename S , typename R_SET , typenam
 
 }
 
-template <typename R , typename PT_MAGMA , typename S , typename R_SET , typename U , typename RN_BIMODULE , typename UNIV> inline void EquivariantLazySqrtDecomposition<R,PT_MAGMA,S,R_SET,U,RN_BIMODULE,UNIV>::SolveSuspendedSubstitution( const int& d , const S& s )
+template <typename R , typename PT_MAGMA , typename S , typename R_SET , typename U , typename RN_BIMODULE , typename TRANS> inline void EquivariantLazySqrtDecomposition<R,PT_MAGMA,S,R_SET,U,RN_BIMODULE,TRANS>::SolveSuspendedSubstitution( const int& d , const S& s )
 {
 
   const int i_min = d * m_N_sqrt;
@@ -283,7 +285,7 @@ template <typename R , typename PT_MAGMA , typename S , typename R_SET , typenam
 
 }
 
-template <typename R , typename PT_MAGMA , typename S , typename R_SET , typename U , typename RN_BIMODULE , typename UNIV> inline void EquivariantLazySqrtDecomposition<R,PT_MAGMA,S,R_SET,U,RN_BIMODULE,UNIV>::IntervalSet_Body( const int& i_min , const int& i_ulim , const S& s )
+template <typename R , typename PT_MAGMA , typename S , typename R_SET , typename U , typename RN_BIMODULE , typename TRANS> inline void EquivariantLazySqrtDecomposition<R,PT_MAGMA,S,R_SET,U,RN_BIMODULE,TRANS>::IntervalSet_Body( const int& i_min , const int& i_ulim , const S& s )
 {
 
   for( int i = i_min ; i < i_ulim ; i++ ){
@@ -296,7 +298,7 @@ template <typename R , typename PT_MAGMA , typename S , typename R_SET , typenam
   
 }
 
-template <typename R , typename PT_MAGMA , typename S , typename R_SET , typename U , typename RN_BIMODULE , typename UNIV> inline void EquivariantLazySqrtDecomposition<R,PT_MAGMA,S,R_SET,U,RN_BIMODULE,UNIV>::SolveSuspendedAction( const int& d )
+template <typename R , typename PT_MAGMA , typename S , typename R_SET , typename U , typename RN_BIMODULE , typename TRANS> inline void EquivariantLazySqrtDecomposition<R,PT_MAGMA,S,R_SET,U,RN_BIMODULE,TRANS>::SolveSuspendedAction( const int& d )
 {
 
   R& m_lazy_action_d = m_lazy_action[d];
@@ -316,10 +318,10 @@ template <typename R , typename PT_MAGMA , typename S , typename R_SET , typenam
   
 }
 
-template <typename R , typename PT_MAGMA , typename S , typename R_SET , typename U , typename RN_BIMODULE , typename UNIV> inline S EquivariantLazySqrtDecomposition<R,PT_MAGMA,S,R_SET,U,RN_BIMODULE,UNIV>::operator[]( const int& i ) { assert( 0 <= i && i < m_N ); const int d = i / m_N_sqrt; return m_suspended[d] ? m_lazy_substitution[d] : m_M0.Action( m_lazy_action[d] , m_a[i] ); }
-template <typename R , typename PT_MAGMA , typename S , typename R_SET , typename U , typename RN_BIMODULE , typename UNIV> inline S EquivariantLazySqrtDecomposition<R,PT_MAGMA,S,R_SET,U,RN_BIMODULE,UNIV>::Get( const int& i ) { return operator[]( i ); }
+template <typename R , typename PT_MAGMA , typename S , typename R_SET , typename U , typename RN_BIMODULE , typename TRANS> inline S EquivariantLazySqrtDecomposition<R,PT_MAGMA,S,R_SET,U,RN_BIMODULE,TRANS>::operator[]( const int& i ) { assert( 0 <= i && i < m_N ); const int d = i / m_N_sqrt; return m_suspended[d] ? m_lazy_substitution[d] : m_M0.Action( m_lazy_action[d] , m_a[i] ); }
+template <typename R , typename PT_MAGMA , typename S , typename R_SET , typename U , typename RN_BIMODULE , typename TRANS> inline S EquivariantLazySqrtDecomposition<R,PT_MAGMA,S,R_SET,U,RN_BIMODULE,TRANS>::Get( const int& i ) { return operator[]( i ); }
 
-template <typename R , typename PT_MAGMA , typename S , typename R_SET , typename U , typename RN_BIMODULE , typename UNIV> inline U EquivariantLazySqrtDecomposition<R,PT_MAGMA,S,R_SET,U,RN_BIMODULE,UNIV>::IntervalProduct( const int& i_start , const int& i_final )
+template <typename R , typename PT_MAGMA , typename S , typename R_SET , typename U , typename RN_BIMODULE , typename TRANS> inline U EquivariantLazySqrtDecomposition<R,PT_MAGMA,S,R_SET,U,RN_BIMODULE,TRANS>::IntervalProduct( const int& i_start , const int& i_final )
 {
 
   const int i_min = max( i_start , 0 );
@@ -335,7 +337,8 @@ template <typename R , typename PT_MAGMA , typename S , typename R_SET , typenam
 
     // この時d_0 > 0になる。
     const int d_0_minus = d_0 - 1;
-    answer = m_suspended[d_0_minus] ? m_M1.Power( m_univ( m_lazy_substitution[d_0_minus] ) , i_0 - i_min ) : m_M1.ScalarProduct( m_lazy_action[d_0_minus] , IntervalProduct_Body( i_min , i_0 ) );
+    // 非可換N加群性を使った。
+    answer = m_suspended[d_0_minus] ? m_trans( move( answer ) , m_lazy_substitution[d_0_minus] , i_0 - i_min ) : m_M1.ScalarProduct( m_lazy_action[d_0_minus] , IntervalProduct_Body( i_min , i_0 ) );
     
   }
   
@@ -348,7 +351,8 @@ template <typename R , typename PT_MAGMA , typename S , typename R_SET , typenam
   if( i_1 < i_ulim ){
 
     // この時d_1 < m_N_dになる。
-    answer = m_M1.Product( move( answer ), m_suspended[d_1] ? m_M1.Power( m_univ( m_lazy_substitution[d_1] ) , i_ulim - i_1 ) : m_M1.ScalarProduct( m_lazy_action[d_1] , IntervalProduct_Body( i_1 , i_ulim ) ) );
+    // 非可換N加群性を使った。
+    answer = m_suspended[d_1] ? m_trans( move( answer ), m_lazy_substitution[d_1] , i_ulim - i_1 ) : m_M1.Product( move( answer ), m_M1.ScalarProduct( m_lazy_action[d_1] , IntervalProduct_Body( i_1 , i_ulim ) ) );
 
   }
 
@@ -356,7 +360,7 @@ template <typename R , typename PT_MAGMA , typename S , typename R_SET , typenam
 
 }
 
-template <typename R , typename PT_MAGMA , typename S , typename R_SET , typename U , typename RN_BIMODULE , typename UNIV> inline void EquivariantLazySqrtDecomposition<R,PT_MAGMA,S,R_SET,U,RN_BIMODULE,UNIV>::IntervalAct_Body( const int& i_min , const int& i_ulim , const R& r )
+template <typename R , typename PT_MAGMA , typename S , typename R_SET , typename U , typename RN_BIMODULE , typename TRANS> inline void EquivariantLazySqrtDecomposition<R,PT_MAGMA,S,R_SET,U,RN_BIMODULE,TRANS>::IntervalAct_Body( const int& i_min , const int& i_ulim , const R& r )
 {
 
   for( int i = i_min ; i < i_ulim ; i++ ){

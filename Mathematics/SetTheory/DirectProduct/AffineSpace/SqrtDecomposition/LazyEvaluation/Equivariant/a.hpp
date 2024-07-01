@@ -6,14 +6,15 @@
 //verify:
 // https://onlinejudge.u-aizu.ac.jp/status/users/padic/submissions/1/DSL_2_I/judge/9389155/C++17（零初期化、区間代入、区間積取得）
 
-// UNIVは写像univ:S->Uに相当する型である。
+// TRANSは写像trans:U \times S \times N ->Uに相当する型である。
 
 // 入力の範囲内で要件
 // (1) LはRの基点付きマグマ構造である。
 // (2) M0はSの左L集合構造であって、Lの基点がSの恒等変換に対応する。
 // (3) M1はUの左L作用付き非可換N加群構造であって、Lの基点がMの恒等変換に対応する。
 // (4) R=intならばUのL作用と非可換N加群構造が整合的である。
-// (5) univはL同変である。
+// (5) あるL同変写像univ:S->Uが存在して、任意の(u,s,n) in U \times S \times N
+//     に対してtrans(u,s,n) = u*univ(s)*nである。
 // を満たす場合にのみサポート。
 
 // 区間作用を行わない場合もm_L.Point()の作用を区間積に用いるため、
@@ -27,8 +28,8 @@
 // M0.Act()による区間作用O(N^{1/2})（univのL同変性を使う）
 
 // 一点取得O(1)
-// M1.Product(-,univ())に関する区間積取得O(N^{1/2})（M1のモノイド性を使う）
-template <typename R , typename PT_MAGMA , typename S , typename R_SET , typename U , typename RN_BIMODULE , typename UNIV>
+// transに関する区間積取得O(N^{1/2})（M1のモノイド性を使う）
+template <typename R , typename PT_MAGMA , typename S , typename R_SET , typename U , typename RN_BIMODULE , typename TRANS>
 class EquivariantLazySqrtDecomposition :
   public SqrtDecompositionCoordinate
 {
@@ -37,7 +38,7 @@ protected:
   PT_MAGMA m_L;
   R_SET m_M0;
   RN_BIMODULE m_M1;
-  UNIV m_univ;
+  TRANS m_trans;
   vector<S> m_a;
   vector<U> m_b;
   // 代入の遅延評価。過去の作用の遅延評価を棄却する。
@@ -51,7 +52,7 @@ public:
   // vectorを構築する時は
   // vector t( N , EquivariantLazySqrtDecomposition{L,M0,M1,vector<S>()} );
   // としてInitialiseすればよい。
-  template <typename...Args> inline EquivariantLazySqrtDecomposition( PT_MAGMA L , R_SET M0 , RN_BIMODULE M1 , UNIV univ , vector<S> a , const Args&... args );
+  template <typename...Args> inline EquivariantLazySqrtDecomposition( PT_MAGMA L , R_SET M0 , RN_BIMODULE M1 , TRANS trans , vector<S> a , const Args&... args );
   
   template <typename...Args> inline void Initialise( Args&&... args );
   inline void Set( const int& i , const S& s );
@@ -63,6 +64,7 @@ public:
   inline U IntervalProduct( const int& i_start , const int& i_final );
 
 private:
+  inline U Univ( const S& s , const int& n );
   inline void SetProduct( const int& i );
   inline void SolveSuspendedSubstitution( const int& d , const S& s );
   inline void IntervalSet_Body( const int& i_min , const int& i_ulim , const S& s );
@@ -72,4 +74,4 @@ private:
   inline U IntervalProduct_Body( const int& i_min , const int& i_ulim );
   
 };
-template <typename PT_MAGMA , typename S , typename R_SET , typename RN_BIMODULE , typename UNIV , typename...Args> EquivariantLazySqrtDecomposition( PT_MAGMA L , R_SET M0 , RN_BIMODULE M1 , UNIV univ , vector<S> a , const Args&... args ) -> EquivariantLazySqrtDecomposition<inner_t<PT_MAGMA>,PT_MAGMA,S,R_SET,inner_t<RN_BIMODULE>,RN_BIMODULE,UNIV>;
+template <typename PT_MAGMA , typename S , typename R_SET , typename RN_BIMODULE , typename TRANS , typename...Args> EquivariantLazySqrtDecomposition( PT_MAGMA L , R_SET M0 , RN_BIMODULE M1 , TRANS trans , vector<S> a , const Args&... args ) -> EquivariantLazySqrtDecomposition<inner_t<PT_MAGMA>,PT_MAGMA,S,R_SET,inner_t<RN_BIMODULE>,RN_BIMODULE,TRANS>;

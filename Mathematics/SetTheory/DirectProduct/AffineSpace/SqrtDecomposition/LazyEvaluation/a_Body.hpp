@@ -131,7 +131,7 @@ template <typename R , typename PT_MAGMA , typename U , typename RN_BIMODULE> in
 
     if( m_suspended_d ){
 
-      U& m_lazy_substitution_d = m_lazy_substitution[d_1];
+      const U& m_lazy_substitution_d = m_lazy_substitution[d_1];
       IntervalSet_Body( d_1_N_sqrt , i_1 , m_lazy_substitution_d );
       IntervalSet_Body( i_1 , i_ulim , u );
       IntervalSet_Body( i_ulim , d_1_N_sqrt_plus , m_lazy_substitution_d );
@@ -175,7 +175,7 @@ template <typename R , typename PT_MAGMA , typename U , typename RN_BIMODULE> in
 
       if( m_suspended_d ){
 
-	U& m_lazy_substitution_d = m_lazy_substitution[d_0_minus];
+	const U& m_lazy_substitution_d = m_lazy_substitution[d_0_minus];
 	U& m_bd = m_b[d_0_minus];
 	const U u = m_M.ScalarProduct( r , m_lazy_substitution_d );
 	IntervalSet_Body( d_0_N_sqrt_minus , i_min , m_lazy_substitution_d );
@@ -234,7 +234,7 @@ template <typename R , typename PT_MAGMA , typename U , typename RN_BIMODULE> in
 
       if( m_suspended_d ){
 
-	U& m_lazy_substitution_d = m_lazy_substitution[d_1];
+	const U& m_lazy_substitution_d = m_lazy_substitution[d_1];
 	U& m_bd = m_b[d_1];
 	const U u = m_M.ScalarProduct( r , m_lazy_substitution_d );
 	IntervalSet_Body( d_1_N_sqrt , i_1 , m_lazy_substitution_d );
