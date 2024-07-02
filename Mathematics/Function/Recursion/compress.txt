@@ -1,0 +1,8 @@
+#ifdef DEBUG
+  #include "c:/Users/user/Documents/Programming/Mathematics/Function/Recursion/a_Body.hpp"
+#else
+#define Recursion(RET,FUNC,...)MemorisationRecursion FUNC =[&](auto& FUNC,__VA_ARGS__)-> RET
+TE <TY REC>CL MemorisationRecursion:REC{PU:IN MemorisationRecursion(REC rec);TE <TY...Args> IN CO ret_t<REC,MemorisationRecursion<REC>&,Args&&...>& OP()(Args&&... args);};
+TE <TY REC> IN MemorisationRecursion<REC>::MemorisationRecursion(REC rec):REC(MO(rec)){}TE <TY REC> TE <TY...Args> IN CO ret_t<REC,MemorisationRecursion<REC>&,Args&&...>& MemorisationRecursion<REC>::OP()(Args&&... args){ST unordered_map<tuple<decay_t<Args>...>,ret_t<REC,MemorisationRecursion<REC>&,Args&&...>> memory{};CO tuple<decay_t<Args>...> v{args...};RE memory.count(v)== 0?memory[v]= REC::OP()(*TH,forward<decay_t<Args>>(args)...):memory[v];}
+#endif
+
