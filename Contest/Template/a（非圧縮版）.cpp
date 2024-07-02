@@ -135,12 +135,14 @@ inline void SmallTest()
 }
 
 // 圧縮時は中身だけ削除する。
-inline void RandomTest()
+inline void RandomTest( const int& test_case_num )
 {
-  // CEXPR( int , bound_N , 1e5 ); CIN_ASSERT( N , 1 , bound_N );
-  // CEXPR( ll , bound_M , 1e18 ); CIN_ASSERT( M , 1 , bound_M );
-  // CEXPR( ll , bound_K , 1e9 ); CIN_ASSERT( K , 1 , bound_K );
-  // COMPARE( N , M , N );
+  // REPEAT( test_case_num ){
+  //   CEXPR( int , bound_N , 1e5 ); CIN_ASSERT( N , 1 , bound_N );
+  //   CEXPR( ll , bound_M , 1e18 ); CIN_ASSERT( M , 1 , bound_M );
+  //   CEXPR( ll , bound_K , 1e9 ); CIN_ASSERT( K , 1 , bound_K );
+  //   COMPARE( N , M , K );
+  // }
 }
 
 #define INCLUDE_MAIN
@@ -378,7 +380,7 @@ template <typename T> inline T Addition( const T& t0 , const T& t1 ) { return t0
 template <typename T> inline T Xor( const T& t0 , const T& t1 ){ return t0 ^ t1; }
 template <typename T> inline T Multiplication( const T& t0 , const T& t1 ) { return t0 * t1; }
 template <typename T> inline const T& Zero() { static const T z{}; return z; }
-template <typename T> inline const T& One() { static const T o = 1; return o; }\
+template <typename T> inline const T& One() { static const T o = 1; return o; }
 template <typename T> inline T AdditionInv( const T& t ) { return -t; }
 template <typename T> inline T Id( const T& v ) { return v; }
 template <typename T> inline T Min( const T& a , const T& b ){ return a < b ? a : b; }
@@ -443,14 +445,14 @@ DF_OF_ARS_FOR_MAP(map);DF_OF_ARS_FOR_MAP(unordered_map);
 #define DF_OF_HASH_FOR_TUPLE(PAIR)TE <TY T,TY U> IN size_t hash<PAIR<T,U>>::OP()(CO PAIR<T,U>& n)CO{ST CO size_t seed =(GetRand(1e3,1e8)<< 1)| 1;ST CO hash<T> h0;ST CO hash<U> h1;RE(h0(get<0>(n))* seed)^ h1(get<1>(n));}
 #define DF_OF_INCREMENT_FOR_TUPLE(INCR)TE <TY T,TY U,TE <TY...> TY V> IN auto OP INCR(V<T,U>& t)-> decldecay_t((get<0>(t),t))&{INCR get<0>(t);INCR get<1>(t);RE t;}TE <TY T,TY U,TY V> IN tuple<T,U,V>& OP INCR(tuple<T,U,V>& t){INCR get<0>(t);INCR get<1>(t);INCR get<2>(t);RE t;}TE <TY T,TY U,TY V,TY W> IN tuple<T,U,V,W>& OP INCR(tuple<T,U,V,W>& t){INCR get<0>(t);INCR get<1>(t);INCR get<2>(t);INCR get<3>(t);RE t;}
 TE <CL Traits,TY T,TY U,TE <TY...> TY V> IN auto OP>>(IS& is,V<T,U>& arg)-> decltype((get<0>(arg),is))&{RE is >> get<0>(arg)>> get<1>(arg);}TE <CL Traits,TY T,TY U,TY V> IN IS& OP>>(IS& is,tuple<T,U,V>& arg){RE is >> get<0>(arg)>> get<1>(arg)>> get<2>(arg);}TE <CL Traits,TY T,TY U,TY V,TY W> IN IS& OP>>(IS& is,tuple<T,U,V,W>& arg){RE is >> get<0>(arg)>> get<1>(arg)>> get<2>(arg)>> get<3>(arg);}TE <CL Traits,TY T,TY U,TE <TY...> TY V> IN auto OP<<(OS& os,CO V<T,U>& arg)-> decltype((get<0>(arg),os))&{RE os << get<0>(arg)<< " " << get<1>(arg);}TE <CL Traits,TY T,TY U,TY V> IN OS& OP<<(OS& os,CO tuple<T,U,V>& arg){RE os << get<0>(arg)<< " " << get<1>(arg)<< " " << get<2>(arg);}TE <CL Traits,TY T,TY U,TY V,TY W> IN OS& OP<<(OS& os,CO tuple<T,U,V,W>& arg){RE os << get<0>(arg)<< " " << get<1>(arg)<< " " << get<2>(arg)<< " " << get<3>(arg);}DF_OF_AR_FOR_TUPLE(+);DF_OF_AR_FOR_TUPLE(-);DF_OF_AR_FOR_TUPLE(*);DF_OF_AR_FOR_TUPLE(/);DF_OF_AR_FOR_TUPLE(%);DF_OF_INCREMENT_FOR_TUPLE(++);DF_OF_INCREMENT_FOR_TUPLE(--);
-TE <TY T,TY U> DC_OF_HASH(pair<T,U>);TE <TY T,TY U> DC_OF_HASH(tuple<T,U>);TE <TY T,TY U,TY V> DC_OF_HASH(tuple<T,U,V>);TE <TY T,TY U,TY V,TY W> DC_OF_HASH(tuple<T,U,V,W>);
-DF_OF_HASH_FOR_TUPLE(pair);DF_OF_HASH_FOR_TUPLE(tuple);TE <TY T,TY U,TY V> IN size_t hash<tuple<T,U,V>>::OP()(CO tuple<T,U,V>& n)CO{ST CO size_t seed =(GetRand(1e3,1e8)<< 1)| 1;ST CO hash<pair<T,U>> h01;ST CO hash<V> h2;RE(h01({get<0>(n),get<1>(n)})* seed)^ h2(get<2>(n));}TE <TY T,TY U,TY V,TY W> IN size_t hash<tuple<T,U,V,W>>::OP()(CO tuple<T,U,V,W>& n)CO{ST CO size_t seed =(GetRand(1e3,1e8)<< 1)| 1;ST CO hash<pair<T,U>> h01;ST CO hash<pair<V,W>> h23;RE(h01({get<0>(n),get<1>(n)})* seed)^ h23({get<2>(n),get<3>(n)});}
+TE <TY T> DC_OF_HASH(tuple<T>);TE <TY T,TY U> DC_OF_HASH(pair<T,U>);TE <TY T,TY U> DC_OF_HASH(tuple<T,U>);TE <TY T,TY U,TY V> DC_OF_HASH(tuple<T,U,V>);TE <TY T,TY U,TY V,TY W> DC_OF_HASH(tuple<T,U,V,W>);
+TE <TY T> IN size_t hash<tuple<T>>::OP()(CO tuple<T>& n)CO{ST CO hash<T> h;RE h(get<0>(n));}DF_OF_HASH_FOR_TUPLE(pair);DF_OF_HASH_FOR_TUPLE(tuple);TE <TY T,TY U,TY V> IN size_t hash<tuple<T,U,V>>::OP()(CO tuple<T,U,V>& n)CO{ST CO size_t seed =(GetRand(1e3,1e8)<< 1)| 1;ST CO hash<pair<T,U>> h01;ST CO hash<V> h2;RE(h01({get<0>(n),get<1>(n)})* seed)^ h2(get<2>(n));}TE <TY T,TY U,TY V,TY W> IN size_t hash<tuple<T,U,V,W>>::OP()(CO tuple<T,U,V,W>& n)CO{ST CO size_t seed =(GetRand(1e3,1e8)<< 1)| 1;ST CO hash<pair<T,U>> h01;ST CO hash<pair<V,W>> h23;RE(h01({get<0>(n),get<1>(n)})* seed)^ h23({get<2>(n),get<3>(n)});}
 
 // Vector（2KB）
 #define DF_OF_COUT_FOR_VE(V)TE <CL Traits,TY Arg> IN OS& OP<<(OS& os,CO V<Arg>& arg){auto BE = arg.BE(),EN = arg.EN();auto IT = BE;WH(IT != EN){(IT == BE?os:os << " ")<< *IT;IT++;}RE os;}
 #define DF_OF_AR_FOR_VE(V,OPR)TE <TY T> IN V<T>& OP OPR ## =(V<T>& a,CO T& t){for(auto& s:a){s OPR ## = t;}RE a;}TE <TY T> IN V<T>& OP OPR ## =(V<T>& a0,CO V<T>& a1){AS(a0.SZ()<= a1.SZ());auto IT0 = a0.BE(),EN0 = a0.EN();auto IT1 = a1.BE();WH(IT0 != EN0){*(IT0++)OPR ## = *(IT1++);}RE a0;}TE <TY T,TY U> IN V<T> OP OPR(V<T> a,CO U& u){RE MO(a OPR ## = u);}
 #define DF_OF_INCREMENT_FOR_VE(V,INCR)TE <TY T> IN V<T>& OP INCR(V<T>& a){for(auto& i:a){INCR i;}RE a;}
-#define DF_OF_ARS_FOR_VE(V)DF_OF_AR_FOR_VE(V,+);DF_OF_AR_FOR_VE(V,-);DF_OF_AR_FOR_VE(V,*);DF_OF_AR_FOR_VE(V,/);DF_OF_AR_FOR_VE(V,%);DF_OF_INCREMENT_FOR_VE(V,++);DF_OF_INCREMENT_FOR_VE(V,--)
+#define DF_OF_ARS_FOR_VE(V)DF_OF_AR_FOR_VE(V,+);DF_OF_AR_FOR_VE(V,-);DF_OF_AR_FOR_VE(V,*);DF_OF_AR_FOR_VE(V,/);DF_OF_AR_FOR_VE(V,%);DF_OF_INCREMENT_FOR_VE(V,++);DF_OF_INCREMENT_FOR_VE(V,--);TE <TY T> IN V<T> OP*(CO T& scalar,V<T> v){for(auto& t:v){v *= t;}RE MO(v);}
 DF_OF_COUT_FOR_VE(VE);DF_OF_COUT_FOR_VE(LI);DF_OF_COUT_FOR_VE(set);DF_OF_COUT_FOR_VE(unordered_set);DF_OF_ARS_FOR_VE(VE);DF_OF_ARS_FOR_VE(LI);IN VO VariadicResize(CRI SZ){}TE <TY Arg,TY... ARGS> IN VO VariadicResize(CRI SZ,Arg& arg,ARGS&... args){arg.resize(SZ);VariadicResize(SZ,args...);}TE <TY T> VO sort(VE<T>& a,CO bool& reversed = false){if(reversed){ST auto comp =[](CO T& t0,CO T& t1){RE t1 < t0;};sort(a.BE(),a.EN(),comp);}else{sort(a.BE(),a.EN());}}TE <TY V> IN auto Get(V& a){RE[&](CRI i = 0)-> CO decldecay_t(a[0])&{RE a[i];};}TE <TY T = int> IN VE<T> id(CRI SZ){VE<T> AN(SZ);FOR(i,0,SZ){AN[i]= i;}RE AN;}
 
 // StdStream（1KB）
