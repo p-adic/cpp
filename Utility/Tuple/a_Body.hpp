@@ -23,6 +23,7 @@ DEFINITION_OF_INCREMENT_FOR_TUPLE( ++ );
 DEFINITION_OF_INCREMENT_FOR_TUPLE( -- );
 
 #include "../Set/a_Body.hpp"
+template <typename T> inline size_t hash<tuple<T>>::operator()( const tuple<T>& n ) const { static const hash<T> h; return h(get<0>( n ) ); }
 DEFINITION_OF_HASH_FOR_TUPLE( pair );
 DEFINITION_OF_HASH_FOR_TUPLE( tuple );
 template <typename T , typename U , typename V> inline size_t hash<tuple<T,U,V>>::operator()( const tuple<T,U,V>& n ) const { static const size_t seed = ( GetRand( 1e3 , 1e8 ) << 1 ) | 1; static const hash<pair<T,U>> h01; static const hash<V> h2; return ( h01( { get<0>( n ) , get<1>( n ) } ) * seed ) ^ h2( get<2>( n ) ); }
