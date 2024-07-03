@@ -9,10 +9,10 @@
 #include "../WrappedType/a_Body.hpp"
 #include "../../Error/IllegalInput/a_Body.hpp"
 
-template <typename T> inline VLArray<T>::VLArray() : m_e() , m_p_e( &m_e ) , m_size( 0 ) {}
+template <typename T> inline VLArray<T>::VLArray() : m_e() , m_p_e( &m_e ) , m_size( 0 ) , m_p_last( nullptr ) , m_p_p_last( &m_p_last ) , m_i_last( 0 ) , m_p_i_last( &m_i_last ) {}
 template <typename T> template <typename Arg1 , typename... Arg2> inline VLArray<T>::VLArray( const Arg1& t0 , const Arg2&... t1 ) : VLArray() { push_back( t0 , t1... ); }
-template <typename T> inline VLArray<T>::VLArray( const VLArray<T>& a ) : m_e( a.m_e.m_t ) , m_p_e( &m_e ) , m_size( 0 ) { Concatenate( a ); }
-template <typename T> template <typename Arg> inline VLArray<T>::VLArray( const WrappedType<Arg>& t ) : m_e( t.Get() ) , m_p_e( &m_e ) , m_size( 0 ) {}
+template <typename T> inline VLArray<T>::VLArray( const VLArray<T>& a ) : m_e( a.m_e.m_t ) , m_p_e( &m_e ) , m_size( 0 ) , m_p_last( nullptr ) , m_p_p_last( &m_p_last ) , m_i_last( 0 ) , m_p_i_last( &m_i_last ) { Concatenate( a ); }
+template <typename T> template <typename Arg> inline VLArray<T>::VLArray( const WrappedType<Arg>& t ) : m_e( t.Get() ) , m_p_e( &m_e ) , m_size( 0 ) , m_p_last( nullptr ) , m_p_p_last( &m_p_last ) , m_i_last( 0 ) , m_p_i_last( &m_i_last ) {}
 
 template <typename T> VLArray<T>::~VLArray() { clear(); }
 
@@ -167,6 +167,12 @@ void VLArray<T>::pop_back()
 
   m_e.m_prev = p_e_prev_prev;
   p_e_prev_prev->m_next = m_p_e;
+
+  if( m_p_last == p_e_prev ){
+
+    m_p_last = nullptr;
+
+  }
   
   delete p_e_prev;
   m_size--;
@@ -189,6 +195,12 @@ void VLArray<T>::pop_front()
 
   p_b_next->m_prev = m_p_e;
   m_e.m_next = p_b_next;
+  
+  if( m_p_last == p_b ){
+
+    m_p_last = nullptr;
+
+  }
   
   delete p_b;  
   m_size--;
@@ -346,6 +358,12 @@ typename VLArray<T>::iterator VLArray<T>::erase_back( typename VLArray<T>::itera
   p1->m_prev = p0;
   itr++;
   
+  if( m_p_last == p ){
+
+    m_p_last = nullptr;
+
+  }
+  
   delete p;
   m_size--;
   return itr;
@@ -371,6 +389,12 @@ typename VLArray<T>::iterator VLArray<T>::erase_front( typename VLArray<T>::iter
   p1->m_prev = p0;
   itr--;
   
+  if( m_p_last == p ){
+
+    m_p_last = nullptr;
+
+  }
+  
   delete p;
   m_size--;
   return itr;
@@ -387,28 +411,47 @@ T& VLArray<T>::operator[]( const uint& i )
 
   }
 
-  if( i < m_size / 2 ){
+  EntryOfVLArray<T>*& p = *m_p_p_last;
+  uint& i_last = *m_p_i_last;
 
-    EntryOfVLArray<T>* p = m_e.m_next;
+  if( p == nullptr ){
 
-    for( uint n = 0 ; n < i ; n++ ){
+    p = m_e.m_next;
+    i_last = 0;
+
+  }
+
+  if( i < ( i_last >> 1 ) ){
+
+    p = m_e.m_next;
+    i_last = 0;
+
+  } else if( ( ( m_size + i_last ) >> 1 ) < i ){
+
+    p = m_e.m_prev;
+    i_last = m_size - 1;
+
+  }
+
+  if( i < i_last ){
+
+    for( uint n = i_last ; n > i ; n-- ){
+
+      p = p->m_prev;
+
+    }
+
+  } else {
+
+    for( uint n = i_last ; n < i ; n++ ){
 
       p = p->m_next;
 
     }
 
-    return p->m_t;
-
   }
 
-  EntryOfVLArray<T>* p = m_e.m_prev;
-
-  for( uint n = m_size - 1 ; n > i ; n-- ){
-
-    p = p->m_prev;
-
-  }
-
+  i_last = i;
   return p->m_t;
 
 }
@@ -423,28 +466,47 @@ const T& VLArray<T>::operator[]( const uint& i ) const
 
   }
 
-  if( i < m_size / 2 ){
+  EntryOfVLArray<T>*& p = *m_p_p_last;
+  uint& i_last = *m_p_i_last;
 
-    EntryOfVLArray<T>* p = m_e.m_next;
+  if( p == nullptr ){
 
-    for( uint n = 0 ; n < i ; n++ ){
+    p = m_e.m_next;
+    i_last = 0;
+
+  }
+
+  if( i < ( i_last >> 1 ) ){
+
+    p = m_e.m_next;
+    i_last = 0;
+
+  } else if( ( ( m_size + i_last ) >> 1 ) < i ){
+
+    p = m_e.m_prev;
+    i_last = m_size - 1;
+
+  }
+
+  if( i < i_last ){
+
+    for( uint n = i_last ; n > i ; n-- ){
+
+      p = p->m_prev;
+
+    }
+
+  } else {
+
+    for( uint n = i_last ; n < i ; n++ ){
 
       p = p->m_next;
 
     }
 
-    return p->m_t;
-
   }
 
-  EntryOfVLArray<T>* p = m_e.m_prev;
-
-  for( uint n = m_size - 1 ; n > i ; n-- ){
-
-    p = p->m_prev;
-
-  }
-
+  i_last = i;
   return p->m_t;
 
 }
@@ -564,7 +626,7 @@ bool VLArray<T>::CheckContain( const const_iterator& itr ) const noexcept
 }
 
 template <typename T>
-string VLArray<T>::Display() const
+string VLArray<T>::Display() const noexcept
 {
 
   string s = "(";
@@ -572,14 +634,30 @@ string VLArray<T>::Display() const
   
   for( uint n = 0 ; n < m_size ; n++ ){
 
-    p = p->m_next;
-    
     if( n > 0 ){
 
       s += ",";
 
+    } else {
+
+      if( p == nullptr ){
+
+	s += "error: nullptr for m_p_e for non-empty VLArray";
+	break;
+
+      }
+
     }
     
+    p = p->m_next;
+    
+    if( p == nullptr ){
+
+      s += "error: nullptr for node";
+      break;
+
+    }
+
     s += to_string( p->m_t );
 
   }

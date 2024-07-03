@@ -19,7 +19,12 @@ private:
   EntryOfVLArray<T> m_e;
   EntryOfVLArray<T>* const m_p_e;
   uint m_size;
-  
+
+  EntryOfVLArray<T>* m_p_last;
+  EntryOfVLArray<T>** m_p_p_last;
+  uint m_i_last;
+  uint* m_p_i_last;
+
 public:
   // Tは引数0のコンストラクタを持つクラスのみ許容。
   inline VLArray();
@@ -81,7 +86,7 @@ public:
   bool CheckContain( const iterator& ) const noexcept;
   bool CheckContain( const const_iterator& ) const noexcept;
 
-  string Display() const;
+  string Display() const noexcept;
 
 private:
   template <typename Arg> inline int push_back_int( const Arg& );
