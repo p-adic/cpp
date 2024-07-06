@@ -131,7 +131,8 @@ void VLArray<T>::push_front( const Arg& t )
     
   p_b->m_prev = p;
   m_e.m_next = p;
-  
+
+  m_i_last++;
   m_size++;
   return;
 
@@ -200,9 +201,13 @@ void VLArray<T>::pop_front()
 
     m_p_last = nullptr;
 
+  } else {
+
+    m_i_last--;
+  
   }
   
-  delete p_b;  
+  delete p_b;
   m_size--;
   return;
   
@@ -308,7 +313,9 @@ typename VLArray<T>::iterator VLArray<T>::insert_front( const typename VLArray<T
   
   p0->m_next = p;
   p1->m_prev = p;
-  
+
+  // m_i_lastが不明になるためm_p_lastをリセットする。
+  m_p_last = nullptr;
   m_size++;
   return typename VLArray<T>::iterator( p );
 
@@ -393,6 +400,10 @@ typename VLArray<T>::iterator VLArray<T>::erase_front( typename VLArray<T>::iter
 
     m_p_last = nullptr;
 
+  } else {
+
+    m_i_last--;
+    
   }
   
   delete p;
@@ -503,6 +514,12 @@ const T& VLArray<T>::operator[]( const uint& i ) const
       p = p->m_next;
 
     }
+
+  }
+
+  if( p == nullptr || p == m_p_e ){
+
+    ERR_CODE;
 
   }
 
