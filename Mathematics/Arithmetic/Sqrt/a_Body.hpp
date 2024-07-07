@@ -20,7 +20,7 @@ INT RoundDownSqrt( const INT& n )
 
   while( l < r - 1 ){
 
-    INT m = ( l + r ) >> 1;
+    const INT m = ( l + r ) >> 1;
     // m * m <= n‚©”Û‚©‚ð”»’èB
     ( m <= n / m ? l : r ) = m;
 
@@ -41,14 +41,15 @@ INT RoundUpSqrt( const INT& n )
     return n;
     
   }
-  
+
+  const INT n_minus = n - 1;
   INT l = 1 , r = n;
 
   while( l + 1 < r ){
 
-    INT m = ( l + r ) >> 1;
+    const INT m = ( l + r ) >> 1;
     // m * m < n‚©”Û‚©‚ð”»’èB
-    ( m <= ( n - 1 ) / m ? l : r ) = m;
+    ( m <= n_minus / m ? l : r ) = m;
 
   }
 
