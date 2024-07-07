@@ -26,7 +26,7 @@ INT RoundDownSqrt( const INT& n )
 
   }
 
-  return l:
+  return l;
 
 }
 
