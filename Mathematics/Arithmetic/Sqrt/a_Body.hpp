@@ -10,9 +10,9 @@ INT RoundDownSqrt( const INT& n )
 
   assert( n >= 0 );
   
-  if( n == 0 ){
+  if( n <= 1 ){
 
-    return 0;
+    return n;
     
   }
   
@@ -36,13 +36,13 @@ INT RoundUpSqrt( const INT& n )
   
   assert( n >= 0 );
 
-  if( n == 0 ){
+  if( n <= 2 ){
 
-    return 0;
+    return n;
     
   }
   
-  INT l = 0 , r = n;
+  INT l = 1 , r = n;
 
   while( l + 1 < r ){
 

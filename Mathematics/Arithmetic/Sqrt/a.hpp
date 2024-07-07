@@ -3,8 +3,8 @@
 #pragma once
 #include "a.hpp"
 
-// √nを超えない最大の整数をO(n)で計算する。
+// √nを超えない最大の整数をO(log n)で計算する。
 template <typename INT> INT RoundDownSqrt( const INT& n );
 
-// √nを以上の最小の整数をO(n)で計算する。
+// √nを以上の最小の整数をO(log n)で計算する。
 template <typename INT> INT RoundUpSqrt( const INT& n );
