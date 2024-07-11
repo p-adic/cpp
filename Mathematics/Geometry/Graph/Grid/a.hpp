@@ -17,7 +17,8 @@ public:
 
 };
 
-int H , W , H_minus , W_minus , HW;
+int H , W , H_minus , W_minus;
+ll HW;
 vector<string> grid;
 char walkable = '.' , unwalkable = '#';
 
@@ -29,7 +30,10 @@ vector<pair<T2<int>,ll>> WEdgeOnGrid( const T2<int>& v );
 
 inline void SetWallStringOnGrid( const int& i , vector<string>& S );
 
+const string direction = "URDL";
+
 inline int DirectionNumberOnGrid( const int& i , const int& j , const int& k , const int& h );
+inline int DirectionNumberOnGrid( const T2<int>& v , const T2<int>& w );
 inline int DirectionNumberOnGrid( const int& v , const int& w );
 inline int ReverseDirectionNumberOnGrid( const int& n );
 

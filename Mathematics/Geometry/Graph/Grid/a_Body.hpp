@@ -8,7 +8,7 @@
 inline T2<int> EnumHW( const int& v ) { return { v / W , v % W }; }
 inline int EnumHW_inv( const T2<int>& ij ) { auto& [i,j] = ij; return i * W + j; }
 
-template <typename E> inline GridGraph<E>::GridGraph( E e ) : EnumerationGraph<T2<int>,T2<int>(&)(const int&),int(&)(const T2<int>&),E>( HW , EnumHW , EnumHW_inv , move( e ) ) { assert( H * W == HW ); }
+template <typename E> inline GridGraph<E>::GridGraph( E e ) : EnumerationGraph<T2<int>,T2<int>(&)(const int&),int(&)(const T2<int>&),E>( HW , EnumHW , EnumHW_inv , move( e ) ) { assert( HW >> 31 == 0 && H * W == HW ); }
 
 vector<T2<int>> EdgeOnGrid( const T2<int>& v )
 {
@@ -79,9 +79,8 @@ vector<pair<T2<int>,ll>> WEdgeOnGrid( const T2<int>& v ){
 
 inline void SetWallStringOnGrid( const int& i , vector<string>& S ){ if( S.empty() ){ S.resize( H ); } cin >> S[i]; assert( int( S[i].size() ) == W ); }
 
-const string direction[4] = {"U","R","D","L"};
-
 inline int DirectionNumberOnGrid( const int& i , const int& j , const int& k , const int& h ) { return i < k ? 2 : i > k ? 0 : j < h ? 1 : ( assert( j > h ) , 3 ); }
-inline int DirectionNumberOnGrid( const int& v , const int& w ) { auto [i,j] = EnumHW( v ); auto [k,h] = EnumHW( w ); return DirectionNumberOnGrid( i , j , k , h ); }
+inline int DirectionNumberOnGrid( const T2<int>& v , const T2<int>& w ) { auto& [i,j] = v; auto& [k,h] = w; return DirectionNumberOnGrid( i , j , k , h ); }
+inline int DirectionNumberOnGrid( const int& v , const int& w ) { return DirectionNumberOnGrid( EnumHW( v ) , EnumHW( w ) ); }
 inline int ReverseDirectionNumberOnGrid( const int& n ) { assert( 0 <= n && n<4 ); return n ^ 2; }
 
