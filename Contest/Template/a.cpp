@@ -32,10 +32,10 @@ IN VO Solve()
   // CIN( int , N , M );
   // // CIN( int , N ); int M = N - 1;
   // vector<vector<int>> e( N );
-  // FOR( j , 0 , M ){
-  //   CIN( int , uj , vj ); --uj; --vj;
-  //   e[uj].push_back( vj );
-  //   e[vj].push_back( uj );
+  // REPEAT( M ){
+  //   CIN( int , u , v ); --u; --v;
+  //   e[u].push_back( v );
+  //   e[v].push_back( u );
   // }
   // Graph graph{ N , Get( e ) };
   // BreadthFirstSearch bfs{ graph , -1 , 0 }; vector<int> d = bfs.GetDistance();
@@ -51,11 +51,11 @@ IN VO Solve()
   // CEXPR( ll , infty , 1e18 );
   // vector<vector<path>> e( N );
   // // vector w( N , vector( N , infty ) ); FOR( i , 0 , N ){ w[i][i] = 0; }
-  // FOR( j , 0 , M ){
-  //   CIN( ll , uj , vj , wj ); --uj; --vj;
-  //   e[uj].push_back( { vj , wj } );
-  //   e[vj].push_back( { uj , wj } );
-  //   // w[uj][vj] = w[vj][uj] = wj;
+  // REPEAT( M ){
+  //   CIN( ll , u , v , w ); --u; --v;
+  //   e[u].push_back( { v , w } );
+  //   e[v].push_back( { u , w } );
+  //   // w[u][v] = w[v][u] = w;
   // }
   // Graph graph{ N , Get( e ) };
   // Dijkstra dijk{ graph }; vector<ll> d = dijk.GetDistance( 0 );
@@ -478,11 +478,11 @@ TE <TY T,TY R1,TY R2,TY E>CL VirtualGraph:VI PU UnderlyingSet<T>{PU:VI R1 Enumer
 TE <TY T,TY R1,TY R2,TY E> IN EdgeImplimentation<T,R1,R2,E>::EdgeImplimentation(CRI SZ,E edge):m_SZ(SZ),m_edge(MO(edge)){ST_AS(is_COructible_v<T,R1> && is_COructible_v<int,R2> && is_invocable_v<E,T>);}TE <TY E> IN Graph<E>::Graph(CRI SZ,E edge):EdgeImplimentation<int,CRI,CRI,E>(SZ,MO(edge)){}TE <TY T,TY Enum_T,TY Enum_T_inv,TY E> IN EnumerationGraph<T,Enum_T,Enum_T_inv,E>::EnumerationGraph(CRI SZ,Enum_T enum_T,Enum_T_inv enum_T_inv,E edge):EdgeImplimentation<T,ret_t<Enum_T,int>,ret_t<Enum_T_inv,T>,E>(SZ,MO(edge)),m_enum_T(MO(enum_T)),m_enum_T_inv(MO(enum_T_inv)){}TE <TY T,TY E> IN MemorisationGraph<T,E>::MemorisationGraph(CRI SZ,CO T& dummy,E edge):EdgeImplimentation<T,T,CRI,E>(SZ,MO(edge)),m_LE(),m_memory(),m_memory_inv(){ST_AS(is_invocable_v<E,T>);}TE <TY E> IN CRI Graph<E>::Enumeration(CRI i){RE i;}TE <TY T,TY Enum_T,TY Enum_T_inv,TY E> IN ret_t<Enum_T,int> EnumerationGraph<T,Enum_T,Enum_T_inv,E>::Enumeration(CRI i){RE m_enum_T(i);}TE <TY T,TY E> IN T MemorisationGraph<T,E>::Enumeration(CRI i){AS(0 <= i && i < m_LE);RE m_memory[i];}TE <TY T,TY R1,TY R2,TY E> IN R2 VirtualGraph<T,R1,R2,E>::Enumeration_inv(CO T& t){RE Enumeration_inv_Body(t);}TE <TY T,TY R1,TY R2,TY E> TE <TY PATH> IN R2 VirtualGraph<T,R1,R2,E>::Enumeration_inv(CO PATH& p){RE Enumeration_inv_Body(get<0>(p));}TE <TY E> IN CRI Graph<E>::Enumeration_inv_Body(CRI i){RE i;}TE <TY T,TY Enum_T,TY Enum_T_inv,TY E> IN ret_t<Enum_T_inv,T> EnumerationGraph<T,Enum_T,Enum_T_inv,E>::Enumeration_inv_Body(CO T& t){RE m_enum_T_inv(t);}TE <TY T,TY E> IN CRI MemorisationGraph<T,E>::Enumeration_inv_Body(CO T& t){if(m_memory_inv.count(t)== 0){AS(m_LE < TH->SZ());m_memory.push_back(t);RE m_memory_inv[t]= m_LE++;}RE m_memory_inv[t];}TE <TY T,TY R1,TY R2,TY E> VO VirtualGraph<T,R1,R2,E>::Reset(){}TE <TY T,TY E> IN VO MemorisationGraph<T,E>::Reset(){m_LE = 0;m_memory.clear();m_memory_inv.clear();}TE <TY T,TY R1,TY R2,TY E> IN CRI EdgeImplimentation<T,R1,R2,E>::SZ()CO NE{RE m_SZ;}TE <TY T,TY R1,TY R2,TY E> IN E& EdgeImplimentation<T,R1,R2,E>::edge()NE{RE m_edge;}TE <TY T,TY R1,TY R2,TY E> IN ret_t<E,T> EdgeImplimentation<T,R1,R2,E>::Edge(CO T& t){RE m_edge(t);}TE <TY T,TY R1,TY R2,TY E> TE <TY PATH> IN ret_t<E,T> VirtualGraph<T,R1,R2,E>::Edge(CO PATH& p){RE Edge(get<0>(p));}TE <TY E> TE <TY F> IN Graph<F> Graph<E>::GetGraph(F edge)CO{RE Graph<F>(TH->SZ(),MO(edge));}TE <TY T,TY Enum_T,TY Enum_T_inv,TY E> TE <TY F> IN EnumerationGraph<T,Enum_T,Enum_T_inv,F> EnumerationGraph<T,Enum_T,Enum_T_inv,E>::GetGraph(F edge)CO{RE EnumerationGraph<T,Enum_T,Enum_T_inv,F>(TH->SZ(),m_enum_T,m_enum_T_inv,MO(edge));}TE <TY T,TY E> TE <TY F> IN MemorisationGraph<T,F> MemorisationGraph<T,E>::GetGraph(F edge)CO{RE MemorisationGraph<T,F>(TH->SZ(),MO(edge));}TE <TY T,TY R1,TY R2,TY E> IN CO T& VirtualGraph<T,R1,R2,E>::Vertex(CO T& t)NE{RE t;}TE <TY T,TY R1,TY R2,TY E> TE <TY PATH> IN CO T& VirtualGraph<T,R1,R2,E>::Vertex(CO PATH& e)NE{RE Vertex(get<0>(e));}
 
 // Grid (2KB)
-#define SET_GRID H_minus = H - 1;W_minus = W - 1;HW = H * W
+#define SET_GRID H_minus = H - 1;W_minus = W - 1;HW = ll(H)* W
 #define SET_HW(h,w)H = h;W = w;SET_GRID
 #define CIN_HW cin >> H >> W;SET_GRID
-TE <TY E>CL GridGraph:PU EnumerationGraph<T2<int>,T2<int>(&)(CRI),int(&)(CO T2<int>&),E>{PU:IN GridGraph(E e);};int H,W,H_minus,W_minus,HW;VE<string> grid;char walkable = '.',unwalkable = '#';
-IN T2<int> EnumHW(CRI v){RE{v / W,v % W};}IN int EnumHW_inv(CO T2<int>& ij){auto&[i,j]= ij;RE i * W + j;}TE <TY E> IN GridGraph<E>::GridGraph(E e):EnumerationGraph<T2<int>,T2<int>(&)(CRI),int(&)(CO T2<int>&),E>(HW,EnumHW,EnumHW_inv,MO(e)){AS(H * W == HW);}VE<T2<int>> EdgeOnGrid(CO T2<int>& v){VE<T2<int>> AN{};auto&[i,j]= v;if(i > 0 && grid[i-1][j]== walkable){AN.push_back({i-1,j});}if(i+1 < H && grid[i+1][j]== walkable){AN.push_back({i+1,j});}if(j > 0 && grid[i][j-1]== walkable){AN.push_back({i,j-1});}if(j+1 < W && grid[i][j+1]== walkable){AN.push_back({i,j+1});}RE AN;}VE<pair<T2<int>,ll>> WEdgeOnGrid(CO T2<int>& v){VE<pair<T2<int>,ll>> AN{};auto&[i,j]= v;if(i>0 && grid[i-1][j]== walkable){AN.push_back({{i-1,j},1});}if(i+1 < H && grid[i+1][j]== walkable){AN.push_back({{i+1,j},1});}if(j>0 && grid[i][j-1]== walkable){AN.push_back({{i,j-1},1});}if(j+1 < W && grid[i][j+1]== walkable){AN.push_back({{i,j+1},1});}RE AN;}IN VO SetWallStringOnGrid(CRI i,VE<string>& S){if(S.empty()){S.resize(H);}cin >> S[i];AS(int(S[i].SZ())== W);}CO string direction="URDL";IN int DirectionNumberOnGrid(CRI i,CRI j,CRI k,CRI h){RE i < k?2:i > k?0:j < h?1:(AS(j > h),3);}IN int DirectionNumberOnGrid(CO T2<int>& v,CO T2<int>& w){auto&[i,j]= v;auto&[k,h]= w;RE DirectionNumberOnGrid(i,j,k,h);}IN int DirectionNumberOnGrid(CRI v,CRI w){RE DirectionNumberOnGrid(EnumHW(v),EnumHW(w));}IN int ReverseDirectionNumberOnGrid(CRI n){AS(0 <= n && n<4);RE n ^ 2;}
+TE <TY E>CL GridGraph:PU EnumerationGraph<T2<int>,T2<int>(&)(CRI),int(&)(CO T2<int>&),E>{PU:IN GridGraph(E e);};int H,W,H_minus,W_minus;ll HW;VE<string> grid;char walkable = '.',unwalkable = '#';
+IN T2<int> EnumHW(CRI v){RE{v / W,v % W};}IN int EnumHW_inv(CO T2<int>& ij){auto&[i,j]= ij;RE i * W + j;}TE <TY E> IN GridGraph<E>::GridGraph(E e):EnumerationGraph<T2<int>,T2<int>(&)(CRI),int(&)(CO T2<int>&),E>(HW,EnumHW,EnumHW_inv,MO(e)){AS(HW >> 31 == 0 && H * W == HW);}VE<T2<int>> EdgeOnGrid(CO T2<int>& v){VE<T2<int>> AN{};auto&[i,j]= v;if(i > 0 && grid[i-1][j]== walkable){AN.push_back({i-1,j});}if(i+1 < H && grid[i+1][j]== walkable){AN.push_back({i+1,j});}if(j > 0 && grid[i][j-1]== walkable){AN.push_back({i,j-1});}if(j+1 < W && grid[i][j+1]== walkable){AN.push_back({i,j+1});}RE AN;}VE<pair<T2<int>,ll>> WEdgeOnGrid(CO T2<int>& v){VE<pair<T2<int>,ll>> AN{};auto&[i,j]= v;if(i>0 && grid[i-1][j]== walkable){AN.push_back({{i-1,j},1});}if(i+1 < H && grid[i+1][j]== walkable){AN.push_back({{i+1,j},1});}if(j>0 && grid[i][j-1]== walkable){AN.push_back({{i,j-1},1});}if(j+1 < W && grid[i][j+1]== walkable){AN.push_back({{i,j+1},1});}RE AN;}IN VO SetWallStringOnGrid(CRI i,VE<string>& S){if(S.empty()){S.resize(H);}cin >> S[i];AS(int(S[i].SZ())== W);}CO string direction="URDL";IN int DirectionNumberOnGrid(CRI i,CRI j,CRI k,CRI h){RE i < k?2:i > k?0:j < h?1:(AS(j > h),3);}IN int DirectionNumberOnGrid(CO T2<int>& v,CO T2<int>& w){auto&[i,j]= v;auto&[k,h]= w;RE DirectionNumberOnGrid(i,j,k,h);}IN int DirectionNumberOnGrid(CRI v,CRI w){RE DirectionNumberOnGrid(EnumHW(v),EnumHW(w));}IN int ReverseDirectionNumberOnGrid(CRI n){AS(0 <= n && n<4);RE n ^ 2;}
 
 // ConstexprModulo (7KB)
 CEXPR(uint,P,998244353);
