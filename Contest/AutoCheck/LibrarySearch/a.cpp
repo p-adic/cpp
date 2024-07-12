@@ -554,7 +554,7 @@ AC( Maximisation )
 	     "配列上の関数に関する最大／最小化問題" ,
 	     "配列の隣接成分間関係式を満たす部分列の最長化問題" ,
 	     "低次元アフィン空間上の関数の最大／最小化問題" ,
-	     "集合の部分集合の価値（要素数など）の最大化問題" ,
+	     "集合の部分集合に関するの最大／最小化問題" ,
 	     "グラフの辺集合に関する最大／最小化問題" ,
 	     "木上の関数に関する最大／最小化問題" ,
 	     "文字列のマッチングに関する最大／最長化問題" ,
@@ -608,19 +608,30 @@ AC( MinimisationMovingCost )
   CERR( "マルチクエリの場合は、個々のクエリ単位で次の質問に答えてください。" );
   ASK_NUMBER(
 	     "１始点多終点コスト最小化（迷路）問題" ,
+	     "１始点多中間点１終点コスト最小化（二段階迷路）問題" ,
+	     "１始点多経由点多終点コスト最小化（スタンプラリー）問題" ,
 	     "多始点１終点コスト最小化（競争）問題" ,
 	     "多始点多終点コスト最大値最小化（開被覆）問題" ,
 	     "多プレイヤーコスト総和最小化（最小費用流）問題" ,
-	     "１始点多経由点コスト最小化（スタンプラリー）問題" ,
 	     "最近接点問題"
 	     );
   if( num == num_temp++ ){
     CALL_AC( MinimisationSolvingMaze );
   } else if( num == num_temp++ ){
+    CERR( "始点から各中間点への最短経路問題と、終点から各中間点への最短径路問題" );
+    CERR( "を解くことで１始点多終点コスト最小化（迷路）問題に帰着されます。" );
+    CALL_AC( MinimisationSolvingMaze );
+  } else if( num == num_temp++ ){
+    CERR( "- 経由点の経由順序が指定されているならば、グラフの線形グラフに対する" );
+    CERR( "  分割統治ダイクストラ法" );
+    CERR( "  \\Mathematics\\Geometry\\Graph\\Algorithm\\Dijkstra\\Double\\Errand" );
+    CERR( "- 経由点の経由順序が指定されておらずかつ経由点が頂点全体ならば、HeldKarp法" );
+    CERR( "を検討しましょう。" );
+  } else if( num == num_temp++ ){
     CERR( "- 最短経路の始点の特定が不要ならば、始点を１つ追加して元の始点へコスト0の" );
     CERR( "  有向辺を追加" );
     CERR( "- 最短経路の始点の特定が必要ならば、辺を反転" );
-    CERR( "により１始点多終点最小コスト移動（迷路）問題に帰着されます。" );
+    CERR( "により１始点多終点コスト最小コスト化（迷路）問題に帰着されます。" );
     CALL_AC( MinimisationSolvingMaze );
   } else if( num == num_temp++ ){
     CALL_AC( MinimisationSolvingOpenCovering );
@@ -631,12 +642,6 @@ AC( MinimisationMovingCost )
     CERR( "- 各終点tjから容量Njコスト0の辺を持つ頂点Tを追加" );
     CERR( "とすることで得られる有無向グラフに対しPrimal-Dual法を適用しましょう。" );
     CERR( "\\Mathematics\\Geometry\\Graph\\Algorithm\\Dijkstra\\Potentialised\\MinimumCostFlow" );
-  } else if( num == num_temp++ ){
-    CERR( "- 経由点の経由順序が指定されているならば、グラフの線形グラフに対する" );
-    CERR( "  分割統治ダイクストラ法" );
-    CERR( "  \\Mathematics\\Geometry\\Graph\\Algorithm\\Dijkstra\\Double\\Errand" );
-    CERR( "- 経由点の経由順序が指定されていないならば、HeldKarp法" );
-    CERR( "を検討しましょう。" );
   } else if( num == num_temp++ ){
     CERR( "D次元ユークリッド空間内のN点を考えます。" );
     CERR( "- L^p距離に関する最近点対問題でかつO(N log N)が間に合いそうならば" );
@@ -1265,26 +1270,38 @@ AC( MaximisationFunctionOnAffineSpace )
 
 AC( MaximisationSubsetSize )
 {
-  ASK_YES_NO( "価値は要素数ですか？" );
-  if( reply == "y" ){
+  ASK_NUMBER(
+	     "部分集合の要素数の最大化問題" ,
+	     "その他の部分集合の価値最大化問題" ,
+	     "部分集合への分割の最小化問題"
+	     );
+  if( num == num_temp++ ){
     CERR( "与えられた集合のサイズをNと置きます。" );
     CERR( "- O(2^N)が間に合いそうならば、bit全探策" );
     CERR( "  \\Mathematics\\Geometry\\Graph\\Algorithm\\BreadthFirstSearch\\BitExhausiveSearch" );
     CERR( "- O(N2^N)が間に合いそうならば、部分集合の包含対のbit全探策" );
     CERR( "  \\Mathematics\\Geometry\\Graph\\Algorithm\\BreadthFirstSearch\\BitExhausiveSearch" );
-    CERR( "- 極大鎖の計算ならば、後続関数を定義し、極大元から後続関数の逆像のグラフの深さ計算" );
-    CERR( "- 極大反鎖の計算ならば、" );
-    CERR( "  - Dilworthの定理の証明に基く構築" );
+    CERR( "- 半順序の極大鎖ならば、後続関数を定義してその逆像を辺とする非輪状有向グラフ" );
+    CERR( "  を構築し、極大元からの最長歩道計算" );
+    CERR( "  \\Mathematics\\Geometry\\Graph\\Acyclic\\LongestWalk\\a.hpp" );
+    CERR( "- 半順序の極大反鎖ならば、" );
+    CERR( "  - 鎖への極小な分割が求まるならば、Dilworthの定理の証明に基く構築" );
     CERR( "    https://en.wikipedia.org/wiki/Dilworth%27s_theorem#Inductive_proof" );
-    CERR( "  - 後続関数を定義し、後続に関する二分探索" );
+    CERR( "  - トポロジカルソートされているならば、始切片としてNに埋め込み、" );
+    CERR( "    半順序と整合的な後続関数S:N->Nを定義して、Sの値が元の集合に入らない" );
+    CERR( "    要素全体の集合をSの単調性を用いて二分探索で計算" );
+    CERR( "- 半開区間の極大排他的集合ならば、区間スケジューリング" );
+    CERR( "  \\Mathematics\\Combinatorial\\IntervalScheduling\\a.hpp" );
+    CERR( "を検討しましょう。" );
+  } else if( num == num_temp++ ){
+    CERR( "コストなしのナップサック問題に他なりません。" );
+    CALL_AC( SingleKnapsackCostfree );
+  } else {
+    CERR( "- 鎖への分割の最小化ならば、極大反鎖からDilworthの定理の証明に基く構築" );
+    CERR( "  https://en.wikipedia.org/wiki/Dilworth%27s_theorem#Inductive_proof" );
     CERR( "- 完全代表系の計算ならば、幅優先探索やUnionFindによる連結成分計算" );
     CERR( "  \\Mathematics\\Geometry\\Graph\\Algorithm\\BreadthFirstSearch" );
     CERR( "  \\Mathematics\\Geometry\\Graph\\Algorithm\\UnionFindForest" );
-    CERR( "- 半開区間の極大排他的集合ならば、区間スケジューリング" );
-    CERR( "を検討しましょう。" );
-  } else {
-    CERR( "コストなしのナップサック問題に他なりません。" );
-    CALL_AC( SingleKnapsackCostfree );
   }
 }
 
@@ -1415,6 +1432,10 @@ AC( MinimisationSubsetSum )
 
 AC( Counting )
 {
+  CERR( "動的計画法で計算量が大きい場合、" );
+  CERR( "- dp[i]の代わりにsum_{j<=i}dp[j]を考える。" );
+  CERR( "- dp[i][k]の代わりにdp[i][0]のみに注目してBITなどによる高速化。" );
+  CERR( "を検討しましょう。" );
   ASK_NUMBER(
 	     "固定長変数関数の逆像の数え上げ問題" ,
 	     "条件を満たす配列／文字列／数の数え上げ問題" ,
@@ -1849,6 +1870,7 @@ AC( CountingPath )
     CERR( "  の間の関係式を立式" );
     CERR( "を検討しましょう。" );
     CERR( "" );
+    CERR( "領域から外に出る経路の数え上げは、出る直前の経路に帰着させましょう。" );
     CERR( "適宜カタラン数やヤング図形との関係も検討しましょう。" );
     CALL_AC( CountingYoundDiagram );
     CALL_AC( CountingParenthesisSequence );
@@ -2629,8 +2651,11 @@ AC( Construction )
   } else if( num == num_temp++ ){
     CALL_AC( ConstructionMaximisation );
   } else if( num == num_temp++ ){
-    CERR( "HWが小さいケースを手作業または全探策で求め、" );
-    CERR( "それらの反復を検討しましょう。" );
+    CERR( "- HWが小さいケースを手作業または全探策で求めて、" );
+    CERR( "  一般のHWは小さいケースの反復" );
+    CERR( "- 規則的な操作を(mod H,mod W)し、適宜unordered_set<T2<int>>で" );
+    CERR( "  重複管理し重複時にはずらす" );
+    CERR( "検討しましょう。" );
   } else if( num == num_temp++ ){
     CALL_AC( DecisionPresentability );
   } else if( num == num_temp++ ){
