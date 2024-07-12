@@ -3,8 +3,9 @@
 #pragma once
 
 // verify:
-// https://yukicoder.me/submissions/971107（R）
-// https://yukicoder.me/submissions/971181（L）
+// https://yukicoder.me/submissions/971107（ll、R）
+// https://yukicoder.me/submissions/994770（ll、L）
+// https://yukicoder.me/submissions/972421（tuple<int,int,int>、R）
 
 // Set回数をQ、Setされた項の種類数をNと置く。
 
@@ -37,8 +38,8 @@ public:
 
   inline void SetL( INT& t );
   template <typename U , template <typename...> typename V > inline void SetL( V<U>& a );
-  // 左辺値を圧縮して種類数を返す。
-  int GetL();
+  // 左辺値を圧縮してソート済みの配列を返す。
+  vector<INT> GetL();
   inline void clearL();
 
 };

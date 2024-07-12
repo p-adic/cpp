@@ -33,10 +33,11 @@ template <typename INT> inline void CoordinateCompress<INT>::SetL( INT& t ) { m_
 template <typename INT> template <typename U , template <typename...> typename V > inline void CoordinateCompress<INT>::SetL( V<U>& a ) { for( auto& t : a ){ SetL( t ); } }
 
 template <typename INT>
-int CoordinateCompress<INT>::GetL()
+vector<INT> CoordinateCompress<INT>::GetL()
 {
 
   int i = -1;
+  vector<INT> answer{};
 
   if( !m_l.empty() ){
 
@@ -46,13 +47,13 @@ int CoordinateCompress<INT>::GetL()
 
     for( auto p : m_l ){
 
-      *p = temp == *p ? i : ( temp = *p , ++i );
+      *p = temp == *p ? i : ( answer.push_back( temp = *p ) , ++i );
 
     }
 
   }
 
-  return ++i;
+  return answer;
 
 }
 
