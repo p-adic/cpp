@@ -9,10 +9,10 @@ template <typename INT> inline INT L1( const pair<INT,INT>& v ) { return L1( v.f
 template <typename INT> inline INT L1_Distance( const INT& x0 , const INT& y0 , const INT& x1 , const INT& y1 ) { return L1( x0 - x1 , y0 - y1 ); }
 template <typename INT> inline INT L1_Distance( const pair<INT,INT>& v0 , const pair<INT,INT>& v1 ) { return L1( v0.first - v1.first , v0.second - v1.second ); }
 
-template <typename INT> inline pair<INT,INT> L1_to_Linf( const INT& x , const INT& y ) { return { x + y , x - y }; }
-template <typename INT> inline pair<INT,INT> L1_to_Linf( const pair<INT,INT>& v ) { return L1_to_Linf( v.first , v.second ); }
-template <typename INT> inline pair<INT,INT> Linf_to_L1( const INT& x , const INT& y ) { assert( ( x & 1 ) == ( y & 1 ) ); return { ( x + y ) >> 1 , ( x - y ) >> 1 }; }
-template <typename INT> inline pair<INT,INT> Linf_to_L1( const pair<INT,INT>& v ) { return Linf_to_L1( v.first , v.second ); }
+template <typename INT> inline pair<INT,INT> L1_to_Linfty( const INT& x , const INT& y ) { return { x + y , x - y }; }
+template <typename INT> inline pair<INT,INT> L1_to_Linfty( const pair<INT,INT>& v ) { return L1_to_Linfty( v.first , v.second ); }
+template <typename INT> inline pair<INT,INT> Linfty_to_L1( const INT& x , const INT& y ) { assert( ( x & 1 ) == ( y & 1 ) ); return { ( x + y ) >> 1 , ( x - y ) >> 1 }; }
+template <typename INT> inline pair<INT,INT> Linfty_to_L1( const pair<INT,INT>& v ) { return Linfty_to_L1( v.first , v.second ); }
 
 // x軸と平行な直線上の点との距離の最小値の多点評価（O(#x0 log #x0 + #v1 log #v1)）
 template <typename INT>
