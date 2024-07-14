@@ -3,6 +3,10 @@
 #pragma once
 #include "a.hpp"
 
+// operator<<のオーバーロードを行うため、先にincludeする。
+#include "../Tuple/a_Body.hpp"
+#include "../Vector/a_Body.hpp"
+
 template <class Traits> inline basic_istream<char,Traits>& VariadicCin( basic_istream<char,Traits>& is ) { return is; }
 template <class Traits , typename Arg , typename... ARGS> inline basic_istream<char,Traits>& VariadicCin( basic_istream<char,Traits>& is , Arg& arg , ARGS&... args ) { return VariadicCin( is >> arg , args... ); }
 template <class Traits> inline basic_istream<char,Traits>& VariadicSet( basic_istream<char,Traits>& is , const int& i ) { return is; }
