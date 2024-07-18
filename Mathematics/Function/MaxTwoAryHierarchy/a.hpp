@@ -6,7 +6,7 @@
 #include "../../../Utility/Reverse/a.hpp"
 
 // verify:
-// https://yukicoder.me/submissions/981636
+// https://yukicoder.me/submissions/995706（一次関数）
 
 // 基本的に下記URLのConvex Hull Trickに準じる。
 // https://rsk0315.hatenablog.com/entry/2022/04/29/141726
@@ -58,7 +58,7 @@ protected:
 
 public:
   // vector<U>,vector<V>で初期化を行うと仮想継承されたIntersectionを呼び出すのでREとなる。
-  inline VirtualMaxTwoAryHierarchy( FUNC func , const X& x_min , const X& x_max , const U& u , const V& v );
+  inline VirtualMaxTwoAryHierarchy( FUNC func , const X& x_min , const X& x_max , const U& dummy1 , const V& dummy2 );
 
   void SetMax( const U& u , const V& v );
   // {最大値,傾きu（2個ある場合は大きい方）,y切片v}を返す。
@@ -85,7 +85,7 @@ class VirtualMinTwoAryHierarchy :
 {
 
 public:
-  inline VirtualMinTwoAryHierarchy( FUNC func , const X& x_min , const X& x_max , const U& u , const V& v );
+  inline VirtualMinTwoAryHierarchy( FUNC func , const X& x_min , const X& x_max , const U& dummy1 , const V& dummy2 );
 
   inline void SetMin( const U& u , const V& v );
   // {最小値,傾きu（2個ある場合は小さい方）,y切片v}を返す。
@@ -117,7 +117,7 @@ class AbstractMaxTwoAryHierarchy :
 {
 
 public:
-  inline AbstractMaxTwoAryHierarchy( FUNC func , const X& x_min , const X& x_max , const U& u , const V& v , INTERSECTION intersection );
+  inline AbstractMaxTwoAryHierarchy( FUNC func , const X& x_min , const X& x_max , const U& dummy1 , const V& dummy2 , INTERSECTION intersection );
 
 };
 
@@ -128,7 +128,7 @@ class AbstractMinTwoAryHierarchy :
 {
 
 public:
-  inline AbstractMinTwoAryHierarchy( FUNC func , const X& x_min , const X& x_max , const U& u , const V& v , INTERSECTION intersection );
+  inline AbstractMinTwoAryHierarchy( FUNC func , const X& x_min , const X& x_max , const U& dummy1 , const V& dummy2 , INTERSECTION intersection );
   
 };
 

@@ -4,7 +4,8 @@
 #include "../a.hpp"
 
 // verify:
-// https://yukicoder.me/submissions/981613
+// https://yukicoder.me/submissions/995708（MaxLinearFunction）
+// https://yukicoder.me/submissions/995710（MinLinearFunction）
 
 template <typename INT>
 class LinearFunction
@@ -37,7 +38,7 @@ class MaxLinearFunction :
 {
 
 public:
-  inline MaxLinearFunction( const INT& x_min , const INT& x_max , const INT& u = 0 , const INT& v = 0 );
+  inline MaxLinearFunction( const INT& x_min , const INT& x_max );
 
 };
 
@@ -48,7 +49,7 @@ class MinLinearFunction :
 {
 
 public:
-  inline MinLinearFunction( const INT& x_min , const INT& x_max , const INT& u = 0 , const INT& v = 0 );
+  inline MinLinearFunction( const INT& x_min , const INT& x_max );
 
 };
 

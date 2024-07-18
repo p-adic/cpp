@@ -4,8 +4,8 @@
 #include "../a.hpp"
 
 // verify:
-// https://yukicoder.me/submissions/981623（一次関数）
-// https://yukicoder.me/submissions/981690（等差数列との差の絶対値）
+// https://yukicoder.me/submissions/995705（一次関数）
+// https://yukicoder.me/submissions/995704（等差数列との差の絶対値）
 
 // X=INTにおいて二分探索を行うため、Xを反転させる時はReversed<X>でなくoperator-()を使うこと。
 
@@ -37,7 +37,7 @@ class MaxTwoAryHierarchyBinarySearch :
 {
 
 public:
-  inline MaxTwoAryHierarchyBinarySearch( FUNC func , const INT& x_min , const INT& x_max , const U& u , const V& v );
+  inline MaxTwoAryHierarchyBinarySearch( FUNC func , const INT& x_min , const INT& x_max , const U& dummy1 , const V& dummy2 );
 
 };
 
@@ -48,7 +48,7 @@ class MinTwoAryHierarchyBinarySearch :
 {
 
 public:
-  inline MinTwoAryHierarchyBinarySearch( FUNC func , const INT& x_min , const INT& x_max , const U& u , const V& v );
+  inline MinTwoAryHierarchyBinarySearch( FUNC func , const INT& x_min , const INT& x_max , const U& dummy1 , const V& dummy2 );
   
 };
 

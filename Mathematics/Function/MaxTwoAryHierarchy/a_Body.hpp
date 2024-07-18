@@ -5,8 +5,8 @@
 
 #include "../../../Utility/Reverse/a_Body.hpp"
 
-template <typename U , typename V , typename X , typename FUNC> inline VirtualMaxTwoAryHierarchy<U,V,X,FUNC>::VirtualMaxTwoAryHierarchy( FUNC func , const X& x_min , const X& x_max , const U& u , const V& v ) : m_func( move( func ) ) , m_x_min( x_min ) , m_x_max( x_max ) , m_uvx() , m_xu() { assert( m_x_min <= m_x_max ); m_uvx[u] = { v , m_x_min }; m_xu[m_x_min] = u; }
-template <typename U , typename V , typename X , typename FUNC> inline VirtualMinTwoAryHierarchy<U,V,X,FUNC>::VirtualMinTwoAryHierarchy( FUNC func , const X& x_min , const X& x_max , const U& u , const V& v ) : VirtualMaxTwoAryHierarchy<Reversed<U>,Reversed<V>,X,ReversedTwoAryHierarchy<U,V,X,FUNC>>( move( func ) , x_min , x_max , u , v ) {}
+template <typename U , typename V , typename X , typename FUNC> inline VirtualMaxTwoAryHierarchy<U,V,X,FUNC>::VirtualMaxTwoAryHierarchy( FUNC func , const X& x_min , const X& x_max , const U& dummy1 , const V& dummy2 ) : m_func( move( func ) ) , m_x_min( x_min ) , m_x_max( x_max ) , m_uvx() , m_xu() { assert( m_x_min <= m_x_max ); }
+template <typename U , typename V , typename X , typename FUNC> inline VirtualMinTwoAryHierarchy<U,V,X,FUNC>::VirtualMinTwoAryHierarchy( FUNC func , const X& x_min , const X& x_max , const U& dummy1 , const V& dummy2 ) : VirtualMaxTwoAryHierarchy<Reversed<U>,Reversed<V>,X,ReversedTwoAryHierarchy<U,V,X,FUNC>>( move( func ) , x_min , x_max , dummy1 , dummy2 ) {}
 template <typename U , typename V , typename X , typename FUNC> inline ReversedTwoAryHierarchy<U,V,X,FUNC>::ReversedTwoAryHierarchy( FUNC&& func ) : FUNC( move( func ) ) {}
   
 template <typename U , typename V , typename X , typename FUNC> inline Reversed<ret_t<FUNC,const U&,const V&,const X&>> ReversedTwoAryHierarchy<U,V,X,FUNC>::operator()( const Reversed<U>& u , const Reversed<V>& v , const X& x ) { return Reversed<ret_t<FUNC,const U&,const V&,const X&>>( FUNC::operator()( u.Get() , v.Get() , x ) ); }
@@ -15,6 +15,14 @@ template <typename U , typename V , typename X , typename FUNC>
 void VirtualMaxTwoAryHierarchy<U,V,X,FUNC>::SetMax( const U& u , const V& v )
 {
 
+  if( m_uvx.empty() ){
+
+    assert( m_xu.empty() );
+    m_uvx[u] = { v , m_x_min };
+    m_xu[m_x_min] = u;
+
+  }
+  
   auto itr_right = m_uvx.lower_bound( u ) , begin = m_uvx.begin();
   auto end = m_uvx.end();
 
@@ -30,12 +38,18 @@ void VirtualMaxTwoAryHierarchy<U,V,X,FUNC>::SetMax( const U& u , const V& v )
 	return;
 	
       }
-      
+
       m_xu.erase( x0 );
 
       if( itr_right == begin ){
 
-	begin++;
+	if( ++begin == end ){
+
+	  m_uvx[u] = { v , m_x_min };
+	  m_xu[m_x_min] = u;
+	  return;
+
+	}
 
       }
 	
@@ -170,7 +184,7 @@ template <typename U , typename V , typename X , typename FUNC>
 tuple<ret_t<FUNC,const U&,const V&,const X&>,U,V> VirtualMaxTwoAryHierarchy<U,V,X,FUNC>::Get( const X& x )
 {
 
-  assert( m_x_min <= x && x <= m_x_max );
+  assert( !m_uvx.empty() && !m_xu.empty() && m_x_min <= x && x <= m_x_max );
   auto itr_next = m_xu.upper_bound( x );
   auto& [x0,u0] = *( --itr_next );
   auto itr = m_uvx.lower_bound( u0 );
@@ -188,6 +202,6 @@ inline AbstractTwoAryHierarchyIntersection<U,V,X,INTERSECTION>::AbstractTwoAryHi
 template <typename U , typename V , typename X , typename INTERSECTION>
 inline X AbstractTwoAryHierarchyIntersection<U,V,X,INTERSECTION>::Intersection( const U& u0 , const V& v0 , const U& u1 , const V& v1 ) { assert( u0 < u1 ); return m_intersection( u0 , v0 , u1 , v1 ); }
 
-template <typename U , typename V , typename X , typename FUNC , typename INTERSECTION> inline AbstractMaxTwoAryHierarchy<U,V,X,FUNC,INTERSECTION>::AbstractMaxTwoAryHierarchy( FUNC func , const X& x_min , const X& x_max , const U& u , const V& v , INTERSECTION intersection ) : VirtualMaxTwoAryHierarchy<U,V,X,FUNC>( move( func ) , x_min , x_max , u , v ) , AbstractTwoAryHierarchyIntersection<U,V,X,INTERSECTION>( move( intersection ) ) {}
-template <typename U , typename V , typename X , typename FUNC , typename INTERSECTION> inline AbstractMinTwoAryHierarchy<U,V,X,FUNC,INTERSECTION>::AbstractMinTwoAryHierarchy( FUNC func , const X& x_min , const X& x_max , const U& u , const V& v , INTERSECTION intersection ) : VirtualMinTwoAryHierarchy<U,V,X,FUNC>( move( func ) , x_min , x_max , u , v ) , AbstractTwoAryHierarchyIntersection<U,V,X,INTERSECTION>( move( intersection ) ) {}
+template <typename U , typename V , typename X , typename FUNC , typename INTERSECTION> inline AbstractMaxTwoAryHierarchy<U,V,X,FUNC,INTERSECTION>::AbstractMaxTwoAryHierarchy( FUNC func , const X& x_min , const X& x_max , const U& dummy1 , const V& dummy2 , INTERSECTION intersection ) : VirtualMaxTwoAryHierarchy<U,V,X,FUNC>( move( func ) , x_min , x_max , dummy1 , dummy2 ) , AbstractTwoAryHierarchyIntersection<U,V,X,INTERSECTION>( move( intersection ) ) {}
+template <typename U , typename V , typename X , typename FUNC , typename INTERSECTION> inline AbstractMinTwoAryHierarchy<U,V,X,FUNC,INTERSECTION>::AbstractMinTwoAryHierarchy( FUNC func , const X& x_min , const X& x_max , const U& dummy1 , const V& dummy2 , INTERSECTION intersection ) : VirtualMinTwoAryHierarchy<U,V,X,FUNC>( move( func ) , x_min , x_max , dummy1 , dummy2 ) , AbstractTwoAryHierarchyIntersection<U,V,X,INTERSECTION>( move( intersection ) ) {}
 
