@@ -1,7 +1,0 @@
-def GCD(a,b):
-	c,d=abs(a),abs(b)
-	while d:c,d=d,c%d
-	return c
-
-def LCM(a,b):
-	return a//GCD(a,b)*b if a|b else 0
