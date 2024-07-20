@@ -5,10 +5,10 @@
 
 #include "../a_Body.hpp"
 #include "../../../Algebra/Monoid/Semirng/Ring/Algebra/a_Body.hpp"
-#include "../../../Arithmetic/Prime/Divisor/Constexpr/a_Body.hpp"
-#include "../../../Arithmetic/Prime/Divisor/Moevius/Constexpr/a_Body.hpp"
+#include "../../../Arithmetic/Divisor/Constexpr/a_Body.hpp"
+#include "../../../Arithmetic/Divisor/Moevius/Constexpr/a_Body.hpp"
 
-#include "../../../Arithmetic/Prime/Divisor/a_Body.hpp"
+#include "../../../Arithmetic/Divisor/a_Body.hpp"
 
 template <typename MU> inline constexpr DivisorMoeviusFunction<MU>::DivisorMoeviusFunction( const MU& mu ) : m_p_mu( &mu ) {}
 template <typename MU> inline constexpr MultipleMoeviusFunction<MU>::MultipleMoeviusFunction( const MU& mu ) : m_p_mu( &mu ) {}

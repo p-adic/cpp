@@ -3,8 +3,8 @@
 #pragma once
 #include "../a.hpp"
 #include "../../../Algebra/Monoid/Semirng/Ring/Algebra/a.hpp"
-#include "../../../Arithmetic/Prime/Divisor/Constexpr/a.hpp"
-#include "../../../Arithmetic/Prime/Divisor/Moevius/Constexpr/a.hpp"
+#include "../../../Arithmetic/Divisor/Constexpr/a.hpp"
+#include "../../../Arithmetic/Divisor/Moevius/Constexpr/a.hpp"
 
 // verify:
 // https://yukicoder.me/submissions/970736ÅiMultipleZetaTransform, Add, InitialSegmentSum, InverseImageSumÅj
