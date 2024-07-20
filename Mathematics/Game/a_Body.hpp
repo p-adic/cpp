@@ -4,39 +4,75 @@
 #include "a.hpp"
 
 #include "../SetTheory/Mex/a_Body.hpp"
+#include "../../Utility/Set/Map/a_Body.hpp"
 
-template <typename T , template <typename...> typename V , V<T> E(const T&)>
-const bool& HasNonZeroGrundyNumber( const T& t , const bool& reset )
+template <typename Edge , typename T>
+const bool& HasNonZeroGrundyNumber( Edge& edge , const T& t , const bool& reset )
 {
 
-  if constexpr( is_constructible_v<unordered_map<T,bool>> ){
+  static_assert( is_invocable_v<Edge,const T&> );
+  static Map<T,bool> g{};
 
-      static unordered_map<T,bool> g{};
-      CHECK_HAS_NON_ZERO_GRUNDY_NUMBER;
+  if( reset ){
 
-    } else {
-
-    static map<T,bool> g{};
-    CHECK_HAS_NON_ZERO_GRUNDY_NUMBER;
+    g.clear();
 
   }
+
+  if( g.count( t ) == 1 ){
+
+    return g[t];
+
+  }
+
+  bool b = false;
+
+  for( auto&& u : edge( t ) ){
+
+    b |= !HasNonZeroGrundyNumber( edge , u );
+
+  }
+
+  return ( g[t] = b );
 
 }
 
-template <typename T , template <typename...> typename V , V<T> E(const T&)>
-const int& GrundyNumber( const T& t , const bool& reset )
+template <typename AEdge , typename T>
+const int& GrundyNumber( AEdge& aedge , const T& t , const bool& reset )
 {
 
-  if constexpr( is_constructible_v<unordered_map<T,int>> ){
+  static_assert( is_invocable_v<AEdge,const T&> );
+  static Map<T,int> g{};
 
-      static unordered_map<T,bool> g{};
-      COMPUTE_GRUNDY_NUMBER;
+  if( reset ){
 
-    } else {
-
-    static map<T,int> g{};
-    COMPUTE_GRUNDY_NUMBER;
+    g.clear();
 
   }
-  
+
+  if( g.count( t ) == 1 ){
+
+    return g[t];
+
+  }
+
+  auto&& next = aedge( t );
+  MexSet mex{ int( next.size() ) };
+
+  for( auto&& a : next ){
+
+    int temp = 0;
+
+    for( auto&& u : a ){
+
+      temp ^= GrundyNumber( aedge , u );
+
+    }
+
+    mex.insert( temp );
+    
+  }
+
+  return g[t] = mex.Get();
+
 }

@@ -1,10 +1,10 @@
 // c:/Users/user/Documents/Programming/Mathematics/Game/a.hpp
 
 #pragma once
-#include "a_Macro.hpp"
 
-template <typename T , template <typename...> typename V , V<T> E(const T&)>
-const bool& HasNonZeroGrundyNumber( const T& t , const bool& reset = false );
+// Edge‚ÍƒQ[ƒ€‚Ìó‘Ô‘JˆÚ‚ð•\‚·ŽÊ‘œedge:T->T^{<\infty}‚É‘Š“–‚·‚éŒ^B
+template <typename Edge , typename T> const bool& HasNonZeroGrundyNumber( Edge& edge , const T& t , const bool& reset = false );
 
-template <typename T , template <typename...> typename V , V<T> E(const T&)>
-const int& GrundyNumber( const T& t , const bool& reset = false );
+// AEdge‚ÍƒQ[ƒ€‚Ìó‘Ô‘JˆÚ‚Ì˜a‚Ö‚Ì•ª‰ð‚ð•\‚·ŽÊ‘œaedge:T->(T^{<\infty})^{<\infty}‚É‘Š“–‚·‚éŒ^B
+// Šea in aedge(t)‚Í‚»‚ÌƒQ[ƒ€˜a‚ªt‚Ì‘JˆÚæ‚É‘Î‰ž‚·‚é”z—ñB
+template <typename AEdge , typename T> const int& GrundyNumber( AEdge& aedge , const T& t , const bool& reset = false );
