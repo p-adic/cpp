@@ -1,0 +1,40 @@
+#Å¬‚Ì‘fˆö”‚ðŠi”[
+L=9**5 #59049
+D=[0]*L
+for d in R(2,L):
+	if D[d]<1:
+		for n in R(d,L,d):
+			if D[n]<1:D[n]=d:
+
+#ãnˆÈ‰º‚Ì‘f”‚ðŠi”[‚µ‚½P‚ð—p‚¢‚Än‚Ì–ñ”‚ð—ñ‹“‚Æ“¯Žž‚É‘fˆö”•ª‰ð‚ÆƒIƒCƒ‰[ŠÖ”‚ðŒvŽZ
+D=[1];E=[];e=n
+for p in P:
+	c=0
+	while n%p<1:n//=p;c+=1
+	r=len(D)
+	for i in R(c):D+=[d*p for d in D[-r:]]
+	if c:E+=[[p,c]];e=e//p*(p-1)
+r=len(D)
+if n>1:D+=[d*n for d in D[-r:]];r*=2;E+=[[n,1]];e=e//n*(n-1)
+D.sort()
+
+#ãnˆÈ‰º‚Ì‘f”‚ðŠi”[‚µ‚½P‚ð—p‚¢‚Än‚Ì–ñ”‚ð”‚¦ã‚°
+a=1
+for p in P:
+	c=1
+	while n%p<1:n//=p;c+=1
+	a*=c
+a*=1+(n>1)
+
+#ãnˆÈ‰º‚Ì‘f”‚ðŠi”[‚µ‚½P‚ð—p‚¢‚Än‚Ì‘fˆö”‚ðd•¡‚È‚µ‚Å”‚¦ã‚°
+a=0
+for p in P:
+	a+=n%p<1
+	while n%p<1:n//=p
+a+=n>1
+
+#ãnˆÈ‰º‚Ì‘f”‚ðŠi”[‚µ‚½P‚ð—p‚¢‚Än‚Ì‘fˆö”‚ðd•¡ž‚Ý‚Å”‚¦ã‚°
+a=0
+for p in P:
+	while n%p<1:n//=p;a+=1
+a+=n>1
