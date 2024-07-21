@@ -40,8 +40,15 @@ template <typename U , typename ABELIAN_GROUP> inline void AbstractBIT<U,ABELIAN
 
   }
 
-  cerr << "BITをデバッグモードで実行します。" << endl;
-  cerr << "メンバ関数の戻り値以外HybridBITとほとんど等価です。" << endl;
+  static bool init = true;
+
+  if( init ){
+
+    cerr << "BITをデバッグモードで実行します。" << endl;
+    cerr << "メンバ関数の戻り値以外HybridBITとほとんど等価です。" << endl;
+    init = false;
+
+  }
   
 }
   

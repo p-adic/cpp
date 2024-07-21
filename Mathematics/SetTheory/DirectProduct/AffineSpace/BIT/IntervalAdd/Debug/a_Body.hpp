@@ -9,9 +9,16 @@ template <typename U , typename Z_MODULE> AbstractIntervalAddBIT<U,Z_MODULE>::Ab
 template <typename U , typename Z_MODULE> AbstractIntervalAddBIT<U,Z_MODULE>::AbstractIntervalAddBIT( Z_MODULE M , const vector<U>& a ) : m_M( move( M ) ) , m_size( a.size() ) , m_a( a )
 {
 
-  cerr << "IntervalAddBITをデバッグモードで実行します。" << endl;
-  cerr << "各区間処理の計算量がO(N)になることに注意してください。" << endl;
+  static bool init = true;
 
+  if( init ){
+
+    cerr << "IntervalAddBITをデバッグモードで実行します。" << endl;
+    cerr << "各区間処理の計算量がO(N)になることに注意してください。" << endl;
+    init = false;
+
+  }
+  
 }
 
 template <typename U>  template <typename...Args> inline IntervalAddBIT<U>::IntervalAddBIT( const Args&... args ) : AbstractIntervalAddBIT<U,Module<int,U>>( Module<int,U>() , args... ) {}
