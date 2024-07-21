@@ -148,7 +148,7 @@ U AbstractDijkstra<T,GRAPH,U,COMM_MONOID>::GetDistance( const inner_t<GRAPH>& t_
   }
   // AAA DIJKSTRA_BODY( , if( i == i_final ){ break; } , );
   U answer{ move( weight[i_final] ) };
-  cerr << "Dijkstra.GetDistance( t_start = " << t_start << " , t_final = " << t_final << " , many_edges = " << many_edges << " , path_length = " << path_length << " )の実行結果：" << endl;
+  cerr << "Dijkstra::GetDistance( t_start = " << t_start << " , t_final = " << t_final << " , many_edges = " << many_edges << " , path_length = " << path_length << " )の実行結果：" << endl;
   cerr << "answer = " << answer << endl;
   return answer;
 
@@ -283,7 +283,7 @@ vector<U> AbstractDijkstra<T,GRAPH,U,COMM_MONOID>::GetDistance( const inner_t<GR
 
   }
   // AAA DIJKSTRA_BODY( , , );
-  cerr << "Dijkstra.GetDistance( t_start = " << t_start << " , many_edges = " << many_edges << " , path_length = " << path_length << " )の実行結果：" << endl;
+  cerr << "Dijkstra::GetDistance( t_start = " << t_start << " , many_edges = " << many_edges << " , path_length = " << path_length << " )の実行結果：" << endl;
   cerr << "weight = ( " << weight << " )" << endl;
   return weight;
 
@@ -568,7 +568,7 @@ pair<U,list<inner_t<GRAPH>>> AbstractDijkstra<T,GRAPH,U,COMM_MONOID>::GetPath( c
   }
 
   U answer{ move( weight[i_final] ) };
-  cerr << "Dijkstra.GetPath( t_start = " << t_start << " , t_final = " << t_final << " , many_edges = " << many_edges << " , path_length = " << path_length << " )の実行結果：" << endl;
+  cerr << "Dijkstra::GetPath( t_start = " << t_start << " , t_final = " << t_final << " , many_edges = " << many_edges << " , path_length = " << path_length << " )の実行結果：" << endl;
   cerr << "answer = " << answer << endl;
   cerr << "path = ( " << path << " )" << endl;
   return { move( answer ) , move( path ) };
@@ -730,7 +730,7 @@ pair<vector<U>,vector<list<inner_t<GRAPH>>>> AbstractDijkstra<T,GRAPH,U,COMM_MON
 
   }
 
-  cerr << "Dijkstra.GetPath( t_start = " << t_start << " , t_finals = ( " << t_finals << " ) , many_edges = " << many_edges << " , path_length = " << path_length << " )の実行結果：" << endl;
+  cerr << "Dijkstra::GetPath( t_start = " << t_start << " , t_finals = ( " << t_finals << " ) , many_edges = " << many_edges << " , path_length = " << path_length << " )の実行結果：" << endl;
   cerr << "weight = ( " << weight << " )" << endl;
   cerr << "path = ( " << path << " )" << endl;
   return { move( weight ) , move( path ) };
