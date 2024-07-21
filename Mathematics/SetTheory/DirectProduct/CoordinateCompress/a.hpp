@@ -3,7 +3,7 @@
 #pragma once
 
 // verify:
-// https://yukicoder.me/submissions/971107（ll、R）
+// https://yukicoder.me/submissions/996898（ll、R）
 // https://yukicoder.me/submissions/994770（ll、L）
 // https://yukicoder.me/submissions/972421（tuple<int,int,int>、R）
 
