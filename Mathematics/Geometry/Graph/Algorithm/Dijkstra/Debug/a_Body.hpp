@@ -9,9 +9,24 @@
 template <typename T , typename GRAPH , typename U , typename COMM_MONOID> inline AbstractDijkstra<T,GRAPH,U,COMM_MONOID>::AbstractDijkstra( GRAPH& G , COMM_MONOID M , const U& infty ) : PointedSet<U>( infty ) , m_G( G ) , m_M( move( M ) )
 {
 
-  cerr << "Dijkstraをデバッグモードで実行します。" << endl;
-  cerr << "マクロが展開されるだけなのでファイルサイズとエラー出力以外は変わりません。" << endl;
-  cerr << "infty = " << infty << "と定義されています。" << endl;
+  static bool init = true;
+  static U infty_prev{};
+
+  if( init ){
+
+    cerr << "Dijkstraをデバッグモードで実行します。" << endl;
+    cerr << "マクロが展開されるだけなのでファイルサイズとエラー出力以外は変わりません。" << endl;
+    cerr << "infty = " << infty << "と定義されています。" << endl;
+    infty_prev = infty;
+    init = false;
+
+  } else if( infty_prev != infty ){
+    
+    cerr << "Dijkstraをデバッグモードで再実行しますが、" << endl;
+    cerr << "infty = " << infty << "に定義が変更されました。" << endl;
+    infty_prev = infty;
+
+  }
 
 }
 
