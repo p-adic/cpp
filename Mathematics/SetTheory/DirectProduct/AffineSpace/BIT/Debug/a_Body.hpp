@@ -1,12 +1,12 @@
-// c:/Users/user/Documents/Programming/Mathematics/SetTheory/DirectProduct/AffineSpace/BIT/a_Body.hpp
+// c:/Users/user/Documents/Programming/Mathematics/SetTheory/DirectProduct/AffineSpace/BIT/Debug/a_Body.hpp
 
 #pragma once
 #include "a.hpp"
 
-#include "../../../../Algebra/Monoid/Group/a_Body.hpp"
+#include "../../../../../Algebra/Monoid/Group/a_Body.hpp"
 
-template <typename U , typename ABELIAN_GROUP> inline AbstractBIT<U,ABELIAN_GROUP>::AbstractBIT( ABELIAN_GROUP M , const int& size ) : m_M( move( M ) ) , m_size( size ) , m_fenwick( m_size + 1 , m_M.Zero() ) , m_power( 1 ) { Construct(); }
-template <typename U , typename ABELIAN_GROUP> inline AbstractBIT<U,ABELIAN_GROUP>::AbstractBIT( ABELIAN_GROUP M , const vector<U>& a ) : m_M( move( M ) ) , m_size( a.size() ) , m_fenwick( m_size + 1 , m_M.Zero() ) , m_power( 1 )
+template <typename U , typename ABELIAN_GROUP> inline AbstractBIT<U,ABELIAN_GROUP>::AbstractBIT( ABELIAN_GROUP M , const int& size ) : m_M( move( M ) ) , m_size( size ) , m_fenwick( m_size + 1 , m_M.Zero() ) , m_power( 1 ) , m_a( m_size , m_M.Zero() ) { Construct(); }
+template <typename U , typename ABELIAN_GROUP> inline AbstractBIT<U,ABELIAN_GROUP>::AbstractBIT( ABELIAN_GROUP M , const vector<U>& a ) : m_M( move( M ) ) , m_size( a.size() ) , m_fenwick( m_size + 1 , m_M.Zero() ) , m_power( 1 ) , m_a( a )
 {
 
   Construct();
@@ -39,12 +39,15 @@ template <typename U , typename ABELIAN_GROUP> inline void AbstractBIT<U,ABELIAN
     m_power <<= 1;
 
   }
+
+  cerr << "BITをデバッグモードで実行します。" << endl;
+  cerr << "メンバ関数の戻り値以外HybridBITとほとんど等価です。" << endl;
   
 }
   
 template <typename U> template <typename...Args> inline BIT<U>::BIT( const Args&... args ) : AbstractBIT<U,AdditiveGroup<U>>( AdditiveGroup<U>() , args... ) {}
 
-template <typename U , typename ABELIAN_GROUP> template <typename...Args> inline void AbstractBIT<U,ABELIAN_GROUP>::Initialise( const Args&... args ) { AbstractBIT<U,ABELIAN_GROUP> temp{ m_M , args... }; m_size = temp.m_size; m_fenwick = move( temp.m_fenwick ); m_power = temp.m_power; }
+template <typename U , typename ABELIAN_GROUP> template <typename...Args> inline void AbstractBIT<U,ABELIAN_GROUP>::Initialise( const Args&... args ) { AbstractBIT<U,ABELIAN_GROUP> temp{ m_M , args... }; m_size = temp.m_size; m_fenwick = move( temp.m_fenwick ); m_power = temp.m_power; m_a = move( temp.m_a ); }
 template <typename U , typename ABELIAN_GROUP> inline void AbstractBIT<U,ABELIAN_GROUP>::Set( const int& i , const U& u ) { Add( i , m_M.Sum( m_M.Inverse( IntervalSum( i , i ) ) , u ) ); }
 
 template <typename U , typename ABELIAN_GROUP>
@@ -61,12 +64,18 @@ void AbstractBIT<U,ABELIAN_GROUP>::Add( const int& i , const U& u )
 
   }
 
+  if( 0 <= i && i < m_size ){
+
+    m_a[i] = m_M.Sum( move( m_a[i] ) , u );
+
+  }
+  
   return;
   
 }
 
 template <typename U , typename ABELIAN_GROUP> inline const int& AbstractBIT<U,ABELIAN_GROUP>::size() const noexcept { return m_size; }
-template <typename U , typename ABELIAN_GROUP> inline U AbstractBIT<U,ABELIAN_GROUP>::operator[]( const int& i ) { assert( 0 <= i && i < m_size ); return IntervalSum( i , i ); }
+template <typename U , typename ABELIAN_GROUP> inline U AbstractBIT<U,ABELIAN_GROUP>::operator[]( const int& i ) { assert( 0 <= i && i < m_size ); return m_a[i]; }
 template <typename U , typename ABELIAN_GROUP> inline U AbstractBIT<U,ABELIAN_GROUP>::Get( const int& i ) { return operator[]( i ); }
 
 template <typename U , typename ABELIAN_GROUP> inline const U& AbstractBIT<U,ABELIAN_GROUP>::LSBSegmentSum( const int& j ) const { assert( 0 < j && j <= m_size ); return m_fenwick[j]; }
