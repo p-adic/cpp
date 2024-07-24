@@ -1,0 +1,10 @@
+#長さNの非負整数値配列Aの極大な正値部分列とそれにおける総和を列挙する。
+N,*_=J()
+A=list(J())
+S=[]
+i=j=s=0
+while i<N:
+	if A[i]:
+		while j<N and A[j]:s+=A[j];j+=1
+		S+=[[i,j,s]];i=j
+	else:i=j=i+1;s=0
