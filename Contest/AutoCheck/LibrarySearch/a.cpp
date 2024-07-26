@@ -903,7 +903,7 @@ AC( MaximisationFunctionOnArray )
     ASK_NUMBER(
 	       "成分を受け取る関数の部分和の最大化問題" ,
 	       "成分を受け取る関数の部分和と補部分和の差の最小化問題" ,
-	       "0/1倍以外の配列の変更と配列を受け取る関数の合成の最大化問題"
+	       "0/1倍以外の配列の変更と配列を受け取る関数の合成の最大／最小化問題"
 	       );
     if( num == num_temp++ ){
       CALL_AC( Knapsack );
@@ -1003,9 +1003,12 @@ AC( KnapsackInterval )
   if( reply == "y" ){
     CERR( "区間をスライドしていき、両端の更新値を用いて最大値を管理しましょう。" );
   } else {
-    CERR( "尺取り法で区間を伸ばしていき、両端の更新値を用いて最大値を管理しましょう。" );
+    CERR( "- 区間に属すべき点が与えられているならば、その点の両側で始切片和と終切片和の" );
+    CERR( "  最小値の総和を求め全体の総和から引けばよいので、始切片和の始切片最大値と" );
+    CERR( "  終切片和の終切片最大値を前計算しましょう。" );
+    CERR( "- そうでないならば、尺取り法で区間を伸ばし両端の更新値を用いて最大値を管理しましょう。" );
+    CERR( "  \\Mathematics\\Combinatorial\\KnapsackProblem\\Interval" );
   }
-  CERR( "\\Mathematics\\Combinatorial\\KnapsackProblem\\Interval" );
 }
 
 AC( KnapsackBoundedIntervalLength )
@@ -1212,10 +1215,27 @@ AC( MultipleKnapsack )
 AC( MaximisationArrayFunction )
 {
   CERR( "配列を受け取る関数Fが与えられているとします。与えられた配列Aに" );
-  CERR( "何らかの処理をして得られる配列Bに対するF(B)の最大化問題は、" );
+  CERR( "何らかの処理をして得られる配列Bに対するF(B)の最大化問題を考えます。" );
+  CERR( "最小化問題は-1倍すれば良いです。" );
+  ASK_YES_NO( "操作は成分を成分の一次結合で置き換えるものですか？" );
+  if( reply == "y" ){
+    CALL_AC( MaximisationArrayFunctionLinearCombination );
+  } else {
+    CALL_AC( MaximisationArrayFunctionGeneralOperation );
+  }
+}
+
+AC( MaximisationArrayFunctionLinearCombination )
+{
+  CERR( "成分の生成するイデアルや成分の差が生成するイデアルに注目して" );
+  CERR( "gcdを計算しましょう。" );
+}
+
+AC( MaximisationArrayFunctionGeneralOperation )
+{
   CERR( "最大化すべき式のサブゴールfに表れる項xのうち決め打ちやすいものを探しましょう。" );
-  CERR( "- 配列の長さをiで打ち切った時のxの候補数をX(i)" );
-  CERR( "- 配列の長さをiで打ち切ってxを決め打った時の配列の長さi+1でのxの候補数をdX(i)" );
+  CERR( "配列の長さをiで打ち切った時のxの候補数をX(i)、" );
+  CERR( "配列の長さをiで打ち切ってxを決め打った時の配列の長さi+1でのxの候補数をdX(i)" );
   CERR( "と置きます。" );
   CERR( "- O(sum_i X(i) dX(i))が通りそうでfがxからO(1)で計算できるならば、" );
   CERR( "  iとxに関する動的計画法" );

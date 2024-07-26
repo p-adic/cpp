@@ -60,6 +60,8 @@ AC( SingleKnapsackWithMultiCost );
 AC( SingleKnapsackCostfree );
 AC( MultipleKnapsack );
 AC( MaximisationArrayFunction );
+AC( MaximisationArrayFunctionLinearCombination );
+AC( MaximisationArrayFunctionGeneralOperation );
 AC( MaximisationArrayLength );
 AC( MaximisationFunctionOnAffineSpace );
 AC( MaximisationSubsetSize );
