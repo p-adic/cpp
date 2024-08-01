@@ -3,7 +3,7 @@
 #pragma once
 
 // Edge‚ÍƒQ[ƒ€‚Ìó‘Ô‘JˆÚ‚ð•\‚·ŽÊ‘œedge:T->T^{<\infty}‚É‘Š“–‚·‚éŒ^B
-template <typename Edge , typename T> const bool& HasNonZeroGrundyNumber( Edge& edge , const T& t , const bool& reset = false );
+template <typename Edge , typename T> const bool& IsWinningState( Edge& edge , const T& t , const bool& reset = false );
 
 // AEdge‚ÍƒQ[ƒ€‚Ìó‘Ô‘JˆÚ‚Ì˜a‚Ö‚Ì•ª‰ð‚ð•\‚·ŽÊ‘œaedge:T->(T^{<\infty})^{<\infty}‚É‘Š“–‚·‚éŒ^B
 // Šea in aedge(t)‚Í‚»‚ÌƒQ[ƒ€˜a‚ªt‚Ì‘JˆÚæ‚É‘Î‰ž‚·‚é”z—ñB

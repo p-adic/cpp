@@ -1,10 +1,10 @@
-// c:/Users/user/Documents/Programming/Mathematics/Game/a_Body.hpp
+// c:/Users/user/Documents/Programming/Mathematics/Game/Debug/a_Body.hpp
 
 #pragma once
 #include "a.hpp"
 
-#include "../SetTheory/Mex/Debug/a_Body.hpp"
-#include "../../Utility/Set/Map/a_Body.hpp"
+#include "../../SetTheory/Mex/a_Body.hpp"
+#include "../../../Utility/Set/Map/a_Body.hpp"
 
 template <typename Edge , typename T>
 const bool& IsWinningState( Edge& edge , const T& t , const bool& reset )
@@ -15,7 +15,15 @@ const bool& IsWinningState( Edge& edge , const T& t , const bool& reset )
 
   if( reset ){
 
+    cerr << "IsWinningStateを初期化しました。" << endl;
     g.clear();
+
+  }
+
+  if( g.empty() ){
+
+    cerr << "IsWinningStateをデバッグモードで実行します。" << endl;
+    cerr << "デバッグ出力以外に変更点はありません。" << endl;
 
   }
 
@@ -33,7 +41,8 @@ const bool& IsWinningState( Edge& edge , const T& t , const bool& reset )
 
   }
 
-  return ( g[t] = b );
+  cerr << "IsWinningState: " << t << " -> " << b << endl;
+  return g[t];
 
 }
 
@@ -46,7 +55,15 @@ const int& GrundyNumber( AEdge& aedge , const T& t , const bool& reset )
 
   if( reset ){
 
+    cerr << "IsWinningStateを初期化しました。" << endl;
     g.clear();
+
+  }
+
+  if( g.empty() ){
+
+    cerr << "GrundyNumberをデバッグモードで実行します。" << endl;
+    cerr << "デバッグ出力以外に変更点はありません。" << endl;
 
   }
 
@@ -73,6 +90,7 @@ const int& GrundyNumber( AEdge& aedge , const T& t , const bool& reset )
     
   }
 
+  cerr << "GrundyNumber: " << t << " -> " << mex.Get() << endl;
   return g[t] = mex.Get();
 
 }
