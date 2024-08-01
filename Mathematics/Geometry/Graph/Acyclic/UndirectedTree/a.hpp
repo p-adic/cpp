@@ -2,6 +2,8 @@
 
 #pragma once
 
+// verify: https://yukicoder.me/submissions/998766
+
 // 入力の範囲内で要件
 // (1) Gが辺Edge:T->(T \times ...)^{< \omega}を持つ無向木である。
 // を満たす場合にのみサポート。
