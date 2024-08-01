@@ -4,8 +4,8 @@
 #include "../../../../../../Algebra/Monoid/Group/Module/a.hpp"
 
 
-// デバッグ用にIntervalAddBITを愚直な配列に変更したもの。
-// 各区間処理の計算量がO(N)になることに注意。
+// デバッグ用にIntervalAddBITを愚直な配列に変更しと出力機能を追加したもの。
+// 通常のIntervalAddBITと比べるとと一点取得にconst修飾がつき各種操作にO(N)かかることに注意。
 
 template <typename U , typename Z_MODULE>
 class AbstractIntervalAddBIT
@@ -27,8 +27,8 @@ public:
 
   inline const int& size() const noexcept;
   // const参照でないことに注意。
-  inline U operator[]( const int& i );
-  inline U Get( const int& i );
+  inline U operator[]( const int& i ) const;
+  inline U Get( const int& i ) const;
   inline U InitialSegmentSum( const int& i_final );
   inline U IntervalSum( const int& i_start , const int& i_final );
   
@@ -45,3 +45,7 @@ public:
   
 };
 template <typename U> IntervalAddBIT( const vector<U>& a ) -> IntervalAddBIT<U>;
+
+
+// デバッグ出力用
+template <class Traits , typename U , typename Z_MODULE> inline basic_ostream<char,Traits>& operator<<( basic_ostream<char,Traits>& os , const AbstractIntervalAddBIT<U,Z_MODULE>& bit );
