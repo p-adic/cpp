@@ -45,10 +45,17 @@ template <typename U , typename ABELIAN_GROUP> inline void AbstractBIT<U,ABELIAN
   if( init ){
 
     cerr << "BITをデバッグモードで実行します。" << endl;
-    cerr << "メンバ関数の戻り値以外HybridBITとほとんど等価です。" << endl;
+    cerr << "HybridBITと比べると一点取得の戻り値の型が異なり、" << endl;
+    cerr << "通常のBITと比べると一点取得にconst修飾がつき各種操作にO(N)かかる" << endl;
+    cerr << "ことにご注意ください。" << endl;
+    cerr << endl;
     init = false;
 
   }
+
+  cerr << "BITの初期値：" << endl;
+  cerr << *this << endl;
+  cerr << endl;
   
 }
   
@@ -61,6 +68,7 @@ template <typename U , typename ABELIAN_GROUP>
 void AbstractBIT<U,ABELIAN_GROUP>::Add( const int& i , const U& u )
 {
   
+  cerr << "BITの第" << i << "成分に" << u << "を加算します。" << endl;
   int j = i + 1;
 
   while( j <= m_size ){
@@ -77,13 +85,16 @@ void AbstractBIT<U,ABELIAN_GROUP>::Add( const int& i , const U& u )
 
   }
   
+  cerr << "BITの更新後の成分：" << endl;
+  cerr << *this << endl;
+  cerr << endl;
   return;
   
 }
 
 template <typename U , typename ABELIAN_GROUP> inline const int& AbstractBIT<U,ABELIAN_GROUP>::size() const noexcept { return m_size; }
-template <typename U , typename ABELIAN_GROUP> inline U AbstractBIT<U,ABELIAN_GROUP>::operator[]( const int& i ) { assert( 0 <= i && i < m_size ); return m_a[i]; }
-template <typename U , typename ABELIAN_GROUP> inline U AbstractBIT<U,ABELIAN_GROUP>::Get( const int& i ) { return operator[]( i ); }
+template <typename U , typename ABELIAN_GROUP> inline U AbstractBIT<U,ABELIAN_GROUP>::operator[]( const int& i ) const { assert( 0 <= i && i < m_size ); return m_a[i]; }
+template <typename U , typename ABELIAN_GROUP> inline U AbstractBIT<U,ABELIAN_GROUP>::Get( const int& i ) const { return operator[]( i ); }
 
 template <typename U , typename ABELIAN_GROUP> inline const U& AbstractBIT<U,ABELIAN_GROUP>::LSBSegmentSum( const int& j ) const { assert( 0 < j && j <= m_size ); return m_fenwick[j]; }
 
@@ -105,7 +116,15 @@ U AbstractBIT<U,ABELIAN_GROUP>::InitialSegmentSum( const int& i_final )
   
 }
 
-template <typename U , typename ABELIAN_GROUP> inline U AbstractBIT<U,ABELIAN_GROUP>::IntervalSum( const int& i_start , const int& i_final ) { return m_M.Sum( m_M.Inverse( InitialSegmentSum( i_start - 1 ) ) , InitialSegmentSum( i_final ) ); }
+template <typename U , typename ABELIAN_GROUP> inline U AbstractBIT<U,ABELIAN_GROUP>::IntervalSum( const int& i_start , const int& i_final )
+{
+
+  auto answer = m_M.Sum( m_M.Inverse( InitialSegmentSum( i_start - 1 ) ) , InitialSegmentSum( i_final ) );
+  cerr << "BITの区間[" << i_start << "," << i_final << "] における総和： " << answer << endl;
+  cerr << endl;
+  return answer;
+
+}
 
 
 template <typename U , typename ABELIAN_GROUP> template <typename F , SFINAE_FOR_BIT_BS>
@@ -155,3 +174,20 @@ template <typename U , typename ABELIAN_GROUP> template <typename F , SFINAE_FOR
 template <typename U , typename ABELIAN_GROUP> inline int AbstractBIT<U,ABELIAN_GROUP>::BinarySearch( const U& u ) { return BinarySearch( [&]( const U& sum , const int& ){ return !( sum < u ); } ); }
 
 template <typename U , typename ABELIAN_GROUP> inline int AbstractBIT<U,ABELIAN_GROUP>::BinarySearch( const int& i_start , const U& u ) { return max( i_start , BinarySearch( m_M.Sum( InitialSegmentSum( i_start - 1 ) , u ) ) ); }
+
+
+template <class Traits , typename U , typename ABELIAN_GROUP> inline basic_ostream<char,Traits>& operator<<( basic_ostream<char,Traits>& os , const AbstractBIT<U,ABELIAN_GROUP>& bit )
+{
+
+  auto&& size = bit.size();
+  os << "{ ";
+
+  for( int i = 0 ; i < size ; i++ ){
+
+    os << bit[i] << " ";
+
+  }
+
+  return os << "}";
+
+}

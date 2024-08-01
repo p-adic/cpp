@@ -5,8 +5,9 @@
 #include "../a_Macro.hpp"
 #include "../../../../../Algebra/Monoid/Group/a.hpp"
 
-// デバッグ用にBITに通常の配列を追加したもの。
-// メンバ関数の戻り値以外HybridBITとほとんど等価。
+// デバッグ用にBITに通常の配列を折衷し出力機能を追加したもの。
+// HybridBITと比べると一点取得の戻り値の型が異なり、
+// 通常のBITと比べるとと一点取得にconst修飾がつき各種操作にO(N)かかることに注意。
 
 template <typename U , typename ABELIAN_GROUP>
 class AbstractBIT
@@ -29,8 +30,8 @@ public:
 
   inline const int& size() const noexcept;
   // const参照でないことに注意。
-  inline U operator[]( const int& i );
-  inline U Get( const int& i );
+  inline U operator[]( const int& i ) const;
+  inline U Get( const int& i ) const;
   inline const U& LSBSegmentSum( const int& j ) const;
   U InitialSegmentSum( const int& i_final );
   inline U IntervalSum( const int& i_start , const int& i_final );
@@ -66,3 +67,6 @@ public:
 
 };
 template <typename U> BIT( const vector<U>& a ) -> BIT<U>;
+
+// デバッグ出力用
+template <class Traits , typename U , typename ABELIAN_GROUP> inline basic_ostream<char,Traits>& operator<<( basic_ostream<char,Traits>& os , const AbstractBIT<U,ABELIAN_GROUP>& bit );
