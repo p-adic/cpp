@@ -48,8 +48,8 @@ IN VO Solve()
   // // 重み付きグラフ
   // CIN( int , N , M );
   // // CIN( int , N ); int M = N - 1;
-  // CEXPR( ll , infty , 1e18 );
   // vector<vector<path>> e( N );
+  // // CEXPR( ll , infty , 1e18 );
   // // vector w( N , vector( N , infty ) ); FOR( i , 0 , N ){ w[i][i] = 0; }
   // REPEAT( M ){
   //   CIN( ll , u , v , w ); --u; --v;
@@ -226,10 +226,8 @@ c:/Users/user/Documents/Programming/Mathematics/Geometry/Graph/Algorithm/UnionFi
   #define SOLVE_ONLY 
   #define CERR( ... ) 
   #define COUT( ... ) VariadicCout( cout , __VA_ARGS__ ) << ENDL
-  #define CERR_A( A , N ) 
-  #define COUT_A( A , N ) OUTPUT_ARRAY( cout , A , N ) << ENDL
-  #define CERR_ITR( A ) 
-  #define COUT_ITR( A ) OUTPUT_ITR( cout , A ) << ENDL
+  #define CERR_A( I , N , A ) 
+  #define COUT_A( I , N , A ) CoutArray( cout , I , N , A ) << ENDL
 #endif
 #ifdef REACTIVE
   #ifdef DEBUG
@@ -267,6 +265,7 @@ using namespace std;
 #define CIN_ASSERT( A , MIN , MAX ) decldecay_t( MAX ) A; SET_ASSERT( A , MIN , MAX )
 #define CIN_A_ASSERT( I , N , A , MIN , MAX ) vector<decldecay_t( MAX )> A( N + I ); SET_A_ASSERT( I , N , A , MIN , MAX )
 #define CIN_AA_ASSERT( I0 , N0 , I1 , N1 , A , MIN , MAX ) vector A( N0 + I0 , vector<decldecay_t( MAX )>( N1 + I1 ) ); SET_AA_ASSERT( I0 , N0 , I1 , N1 , A , MIN , MAX )
+#define OUTPUT_ARRAY( C , I , N , A ) FOR( VARIABLE_FOR_OUTPUT_ARRAY , I , N ){ C << A[VARIABLE_FOR_OUTPUT_ARRAY] << " \n"[VARIABLE_FOR_OUTPUT_ARRAY==(N)-1]; }
 #define FOR( VAR , INITIAL , FINAL_PLUS_ONE ) for( decldecay_t( FINAL_PLUS_ONE ) VAR = INITIAL ; VAR < FINAL_PLUS_ONE ; VAR ++ )
 #define FOREQ( VAR , INITIAL , FINAL ) for( decldecay_t( FINAL ) VAR = INITIAL ; VAR <= FINAL ; VAR ++ )
 #define FOREQINV( VAR , INITIAL , FINAL ) for( decldecay_t( INITIAL ) VAR = INITIAL ; VAR + 1 > FINAL ; VAR -- )
@@ -381,16 +380,17 @@ US path = pair<int,ll>;
 #define BS4( ANSWER , MINIMUM , MAXIMUM , EXPRESSION , CO_TARGET ) BS( ANSWER , MINIMUM , MAXIMUM , EXPRESSION , <= , CO_TARGET , <= , ANSWER , ANSWER + 1 , ( L_BS + U_BS ) / 2 )
 
 // 尺取り法用
-// VAR_TPA_LとVAR_TPA_RをINITで初期化し、VAR_TPA_RがCONTINUE_CONDITIONを満たす限り、
-// 閉区間[VAR_TPA_L,VAR_TPA_R]が条件ON_CONDITIONを満たすか否かを判定し、
-// trueになるかVAR_TAR_LがVAR_TAR_Rに追い付くまでVAR_TPA_Lの更新操作UPDATE_Lを繰り返し、
-// その後VAR_TPA_Rの更新操作UPDATE_Rを行う。
-// ON_CONDITIONがtrueとなる極大閉区間とその時点でのINFOをANSWERに格納する。
-#define TPA( ANSWER , VAR_TPA , INIT , CONTINUE_CONDITION , UPDATE_L , UPDATE_R , ON_CONDITION , INFO ) \
-  VE<tuple<decldecay_t( INIT ),decldecay_t( INIT ),decldecay_t( INFO )>> ANSWER{}; \
+// VAR_TPAは尺取り法用の変数名の接頭辞で、実際の変数名ではなく、_Lと_Rと_infoがつく。
+// ANSWER ## _temp = {VAR_TPA ## _L,VAR_TPA ## _R,,VPA_TPA ## _info}を{INIT,INIT,INFO_init}で初期化する。VPA_TPA ## _infoは区間和など。
+// ANSWER ## _tempがCONTINUE_CONDITIONを満たす限り、ANSWER ## _tempが条件ON_CONDITIONを満たすか否かを判定し、
+// それがtrueになるかVAR_TAR ## _LがVAR_TAR ## _Rに追い付くまでVAR_TPA ## _LとVPA_TPA ## _infoの更新操作UPDATE_Lを繰り返し、
+// その後VAR_TPA ## _RとVPA_TPA ## _infoの更新操作UPDATE_Rを行う。（マクロとコンマの制約上、関数オブジェクトを用いる）
+// ON_CONDITIONがtrueとなる極大閉区間とその時点でのinfoをANSWERに格納する。
+#define TPA( ANSWER , VAR_TPA , INIT , CONTINUE_CONDITION , UPDATE_L , UPDATE_R , ON_CONDITION , INFO_init ) \
+  VE<tuple<decldecay_t( INIT ),decldecay_t( INIT ),decldecay_t( INFO_init )>> ANSWER{}; \
   {									\
     auto init_TPA = INIT;						\
-    decldecay_t( ANSWER.front() ) ANSWER ## _temp = { init_TPA , init_TPA , INFO }; \
+    decldecay_t( ANSWER.front() ) ANSWER ## _temp = { init_TPA , init_TPA , INFO_init }; \
     auto ANSWER ## _prev = ANSWER ## _temp;				\
     auto& VAR_TPA ## _L = get<0>( ANSWER ## _temp );			\
     auto& VAR_TPA ## _R = get<1>( ANSWER ## _temp );			\
@@ -402,6 +402,7 @@ US path = pair<int,ll>;
       CERR( continuing ? "尺取り中" : "尺取り終了" , "： [L,R] = [" , VAR_TPA ## _L , "," , VAR_TPA ## _R , "] ," , on_TPA_prev ? "on" : "off" , "->" , on_TPA ? "on" : "off" , ", info =" , VAR_TPA ## _info );	\
       if( on_TPA_prev && ! on_TPA ){					\
 	ANSWER.push_back( ANSWER ## _prev );				\
+	CERR( #ANSWER , "に" , ANSWER ## _prev , "を格納します。" );	\
       }									\
       if( continuing ){							\
 	if( on_TPA || VAR_TPA ## _L == VAR_TPA ## _R ){			\
@@ -447,7 +448,7 @@ DF_OF_ARS_FOR_MAP(map);DF_OF_ARS_FOR_MAP(unordered_map);
 // Tuple（4KB）
 #define DF_OF_AR_FOR_TUPLE(OPR)TE <TY T,TY U,TE <TY...> TY V> IN auto OP OPR ## =(V<T,U>& t0,CO V<T,U>& t1)-> decltype((get<0>(t0),t0))&{get<0>(t0)OPR ## = get<0>(t1);get<1>(t0)OPR ## = get<1>(t1);RE t0;}TE <TY T,TY U,TY V> IN tuple<T,U,V>& OP OPR ## =(tuple<T,U,V>& t0,CO tuple<T,U,V>& t1){get<0>(t0)OPR ## = get<0>(t1);get<1>(t0)OPR ## = get<1>(t1);get<2>(t0)OPR ## = get<2>(t1);RE t0;}TE <TY T,TY U,TY V,TY W> IN tuple<T,U,V,W>& OP OPR ## =(tuple<T,U,V,W>& t0,CO tuple<T,U,V,W>& t1){get<0>(t0)OPR ## = get<0>(t1);get<1>(t0)OPR ## = get<1>(t1);get<2>(t0)OPR ## = get<2>(t1);get<3>(t0)OPR ## = get<3>(t1);RE t0;}TE <TY ARG,TY T,TY U,TE <TY...> TY V> IN auto OP OPR ## =(V<T,U>& t0,CO ARG& t1)-> decltype((get<0>(t0),t0))&{get<0>(t0)OPR ## = t1;get<1>(t0)OPR ## = t1;RE t0;}TE <TY ARG,TY T,TY U,TY V> IN tuple<T,U,V>& OP OPR ## =(tuple<T,U,V>& t0,CO ARG& t1){get<0>(t0)OPR ## = t1;get<1>(t0)OPR ## = t1;get<2>(t0)OPR ## = t1;RE t0;}TE <TY ARG,TY T,TY U,TY V,TY W> IN tuple<T,U,V,W>& OP OPR ## =(tuple<T,U,V,W>& t0,CO ARG& t1){get<0>(t0)OPR ## = t1;get<1>(t0)OPR ## = t1;get<2>(t0)OPR ## = t1;get<3>(t0)OPR ## = t1;RE t0;}TE <TE <TY...> TY V,TY...ARGS,TY ARG> IN auto OP OPR(CO V<ARGS...>& t0,CO ARG& t1)-> decldecay_t((get<0>(t0),t0)){auto t = t0;RE MO(t OPR ## = t1);}
 #define DF_OF_INCREMENT_FOR_TUPLE(INCR)TE <TY T,TY U,TE <TY...> TY V> IN auto OP INCR(V<T,U>& t)-> decltype((get<0>(t),t))&{INCR get<0>(t);INCR get<1>(t);RE t;}TE <TY T,TY U,TY V> IN tuple<T,U,V>& OP INCR(tuple<T,U,V>& t){INCR get<0>(t);INCR get<1>(t);INCR get<2>(t);RE t;}TE <TY T,TY U,TY V,TY W> IN tuple<T,U,V,W>& OP INCR(tuple<T,U,V,W>& t){INCR get<0>(t);INCR get<1>(t);INCR get<2>(t);INCR get<3>(t);RE t;}
-TE <CL Traits,TY T,TY U,TE <TY...> TY V> IN auto OP>>(IS& is,V<T,U>& arg)-> decltype((get<0>(arg),is))&{RE is >> get<0>(arg)>> get<1>(arg);}TE <CL Traits,TY T,TY U,TY V> IN IS& OP>>(IS& is,tuple<T,U,V>& arg){RE is >> get<0>(arg)>> get<1>(arg)>> get<2>(arg);}TE <CL Traits,TY T,TY U,TY V,TY W> IN IS& OP>>(IS& is,tuple<T,U,V,W>& arg){RE is >> get<0>(arg)>> get<1>(arg)>> get<2>(arg)>> get<3>(arg);}TE <CL Traits,TY T,TY U,TE <TY...> TY V> IN auto OP<<(OS& os,CO V<T,U>& arg)-> decltype((get<0>(arg),os))&{RE os << get<0>(arg)<< " " << get<1>(arg);}TE <CL Traits,TY T,TY U,TY V> IN OS& OP<<(OS& os,CO tuple<T,U,V>& arg){RE os << get<0>(arg)<< " " << get<1>(arg)<< " " << get<2>(arg);}TE <CL Traits,TY T,TY U,TY V,TY W> IN OS& OP<<(OS& os,CO tuple<T,U,V,W>& arg){RE os << get<0>(arg)<< " " << get<1>(arg)<< " " << get<2>(arg)<< " " << get<3>(arg);}DF_OF_AR_FOR_TUPLE(+);DF_OF_AR_FOR_TUPLE(-);DF_OF_AR_FOR_TUPLE(*);DF_OF_AR_FOR_TUPLE(/);DF_OF_AR_FOR_TUPLE(%);DF_OF_INCREMENT_FOR_TUPLE(++);DF_OF_INCREMENT_FOR_TUPLE(--);
+TE <CL Traits,TY T> IN IS& OP>>(IS& is,tuple<T>& arg){RE is >> get<0>(arg);}TE <CL Traits,TY T,TY U,TE <TY...> TY V> IN auto OP>>(IS& is,V<T,U>& arg)-> decltype((get<0>(arg),is))&{RE is >> get<0>(arg)>> get<1>(arg);}TE <CL Traits,TY T,TY U,TY V> IN IS& OP>>(IS& is,tuple<T,U,V>& arg){RE is >> get<0>(arg)>> get<1>(arg)>> get<2>(arg);}TE <CL Traits,TY T,TY U,TY V,TY W> IN IS& OP>>(IS& is,tuple<T,U,V,W>& arg){RE is >> get<0>(arg)>> get<1>(arg)>> get<2>(arg)>> get<3>(arg);}TE <CL Traits,TY T> IN OS& OP<<(OS& os,CO tuple<T>& arg){RE os << get<0>(arg);}TE <CL Traits,TY T,TY U,TE <TY...> TY V> IN auto OP<<(OS& os,CO V<T,U>& arg)-> decltype((get<0>(arg),os))&{RE os << get<0>(arg)<< " " << get<1>(arg);}TE <CL Traits,TY T,TY U,TY V> IN OS& OP<<(OS& os,CO tuple<T,U,V>& arg){RE os << get<0>(arg)<< " " << get<1>(arg)<< " " << get<2>(arg);}TE <CL Traits,TY T,TY U,TY V,TY W> IN OS& OP<<(OS& os,CO tuple<T,U,V,W>& arg){RE os << get<0>(arg)<< " " << get<1>(arg)<< " " << get<2>(arg)<< " " << get<3>(arg);}DF_OF_AR_FOR_TUPLE(+);DF_OF_AR_FOR_TUPLE(-);DF_OF_AR_FOR_TUPLE(*);DF_OF_AR_FOR_TUPLE(/);DF_OF_AR_FOR_TUPLE(%);DF_OF_INCREMENT_FOR_TUPLE(++);DF_OF_INCREMENT_FOR_TUPLE(--);
 
 #define DF_OF_HASH_FOR_TUPLE(PAIR)TE <TY T,TY U> IN size_t hash<PAIR<T,U>>::OP()(CO PAIR<T,U>& n)CO{ST CO size_t seed =(GetRand(1e3,1e8)<< 1)| 1;ST CO hash<T> h0;ST CO hash<U> h1;RE(h0(get<0>(n))* seed)^ h1(get<1>(n));}
 TE <TY T> DC_OF_HASH(tuple<T>);TE <TY T,TY U> DC_OF_HASH(pair<T,U>);TE <TY T,TY U> DC_OF_HASH(tuple<T,U>);TE <TY T,TY U,TY V> DC_OF_HASH(tuple<T,U,V>);TE <TY T,TY U,TY V,TY W> DC_OF_HASH(tuple<T,U,V,W>);
@@ -461,7 +462,7 @@ TE <TY T> IN size_t hash<tuple<T>>::OP()(CO tuple<T>& n)CO{ST CO hash<T> h;RE h(
 DF_OF_COUT_FOR_VE(VE);DF_OF_COUT_FOR_VE(LI);DF_OF_COUT_FOR_VE(set);DF_OF_COUT_FOR_VE(unordered_set);DF_OF_ARS_FOR_VE(VE);DF_OF_ARS_FOR_VE(LI);IN VO VariadicResize(CRI SZ){}TE <TY Arg,TY... ARGS> IN VO VariadicResize(CRI SZ,Arg& arg,ARGS&... args){arg.resize(SZ);VariadicResize(SZ,args...);}TE <TY V> IN auto Get(V& a){RE[&](CRI i = 0)-> CO decldecay_t(a[0])&{RE a[i];};}TE <TY T = int> IN VE<T> id(CRI SZ){VE<T> AN(SZ);FOR(i,0,SZ){AN[i]= i;}RE AN;}TE <TY T> VO Sort(VE<T>& a,CO bool& reversed = false){if(reversed){ST auto comp =[](CO T& t0,CO T& t1){RE t1 < t0;};sort(a.BE(),a.EN(),comp);}else{sort(a.BE(),a.EN());}}TE <TY T> IN VE<int> IndexSort(CO VE<T>& a,CO bool& reversed = false){auto index = id<int>(a.SZ());if(reversed){sort(index.BE(),index.EN(),[&](CRI i,CRI j){RE a[j]< a[i];});}else{sort(index.BE(),index.EN(),[&](CRI i,CRI j){RE a[i]< a[j];});}RE index;}
 
 // StdStream（1KB）
-TE <CL Traits> IN IS& VariadicCin(IS& is){RE is;}TE <CL Traits,TY Arg,TY... ARGS> IN IS& VariadicCin(IS& is,Arg& arg,ARGS&... args){RE VariadicCin(is >> arg,args...);}TE <CL Traits> IN IS& VariadicSet(IS& is,CRI i){RE is;}TE <CL Traits,TY Arg,TY... ARGS> IN IS& VariadicSet(IS& is,CRI i,Arg& arg,ARGS&... args){RE VariadicSet(is >> arg[i],i,args...);}TE <CL Traits> IN IS& VariadicGetline(IS& is,CO char& separator){RE is;}TE <CL Traits,TY Arg,TY... ARGS> IN IS& VariadicGetline(IS& is,CO char& separator,Arg& arg,ARGS&... args){RE VariadicGetline(getline(is,arg,separator),separator,args...);}TE <CL Traits,TY Arg> IN OS& VariadicCout(OS& os,CO Arg& arg){RE os << arg;}TE <CL Traits,TY Arg1,TY Arg2,TY... ARGS> IN OS& VariadicCout(OS& os,CO Arg1& arg1,CO Arg2& arg2,CO ARGS&... args){RE VariadicCout(os << arg1 << " ",arg2,args...);}
+TE <CL Traits> IN IS& VariadicCin(IS& is){RE is;}TE <CL Traits,TY Arg,TY... ARGS> IN IS& VariadicCin(IS& is,Arg& arg,ARGS&... args){RE VariadicCin(is >> arg,args...);}TE <CL Traits> IN IS& VariadicSet(IS& is,CRI i){RE is;}TE <CL Traits,TY Arg,TY... ARGS> IN IS& VariadicSet(IS& is,CRI i,Arg& arg,ARGS&... args){RE VariadicSet(is >> arg[i],i,args...);}TE <CL Traits> IN IS& VariadicGetline(IS& is,CO char& separator){RE is;}TE <CL Traits,TY Arg,TY... ARGS> IN IS& VariadicGetline(IS& is,CO char& separator,Arg& arg,ARGS&... args){RE VariadicGetline(getline(is,arg,separator),separator,args...);}TE <CL Traits,TY Arg> IN OS& VariadicCout(OS& os,CO Arg& arg){RE os << arg;}TE <CL Traits,TY Arg1,TY Arg2,TY... ARGS> IN OS& VariadicCout(OS& os,CO Arg1& arg1,CO Arg2& arg2,CO ARGS&... args){RE VariadicCout(os << arg1 << " ",arg2,args...);}TE <CL Traits,TY ARRAY> IN OS& CoutArray(OS& os,CRI i_start,CRI i_ulim,CO ARRAY& a){for(int i = i_start;i < i_ulim;i++){(i == i_start?os:(os << " "))<< a[i];}RE os;}
 
 // Module (6KB)
 #define DC_OF_CPOINT(POINT)IN CO U& POINT()CO NE
