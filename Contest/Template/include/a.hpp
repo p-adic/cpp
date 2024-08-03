@@ -4,8 +4,6 @@
 #include "a_Macro.hpp"
 
 #include "c:/Users/user/Documents/Programming/Utility/Set/a.hpp"
-#include "c:/Users/user/Documents/Programming/Utility/Tuple/a.hpp"
-#include "c:/Users/user/Documents/Programming/Utility/Vector/a.hpp"
 #include "c:/Users/user/Documents/Programming/Utility/StdStream/a.hpp"
 
 #include "c:/Users/user/Documents/Programming/Mathematics/Algebra/Monoid/Group/Module/a.hpp"
@@ -15,12 +13,12 @@
 CEXPR( uint , P , 998244353 );
 using MP = Mod<P>;
 
-inline void AlertAbort( int n ) { CERR( "abort関数が呼ばれました。assertマクロのメッセージが出力されていない場合はオーバーフローの有無を確認をしてください。" ); }
+inline void AlertAbort( int n );
 void AutoCheck( int& exec_mode , const bool& use_getline );
 inline void Solve();
 inline void Experiment();
 inline void SmallTest();
-inline void RandomTest();
+inline void RandomTest( const int& test_case_num );
 inline void BreakPoint( const int& LINE ) {}
 int exec_mode;
 CEXPR( int , solve_mode , 0 );

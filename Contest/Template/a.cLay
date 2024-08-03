@@ -1,1 +1,1 @@
-ll@N,@M,@A[N],x=0;wt(x);
+ll@N,@M,@A[N],x=0;wt(x+max(A(N)));
