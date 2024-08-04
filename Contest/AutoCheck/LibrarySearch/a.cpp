@@ -402,7 +402,7 @@ AC( ExplicitExpressionOrderOfElement )
     CERR( "iに関する二分探索を検討しましょう。" );
   } else {
     CERR( "s未満のSの項の数え上げを検討しましょう。" );
-    CALL_AC( CountingArrayBounded );
+    CALL_AC( CountingArrayBoundedTotal );
     ASK_YES_NO( "Sが固定長変数関数の像で与えられますか？" );
     if( reply == "y" ){
       CERR( "固定長変数関数の逆像の数え上げ問題は、" );
@@ -415,7 +415,7 @@ AC( ExplicitExpressionRandomAccess )
 {
   CERR( "Sの各要素sごとにs未満のSの項を数え上げ問題を考えて、" );
   CERR( "sに関する二分探索を検討しましょう。" );
-  CALL_AC( CountingArrayBounded );
+  CALL_AC( CountingArrayBoundedTotal );
   ASK_YES_NO( "Sが固定長変数関数の像で与えられますか？" );
   if( reply == "y" ){
     CERR( "固定長変数関数の逆像の数え上げ問題は、" );
@@ -1534,7 +1534,7 @@ AC( CountingArray )
   ASK_NUMBER(
 	     "配列を受け取る関数の値が固定された配列の数え上げ問題" ,
 	     "隣接成分間関係式を満たす配列の数え上げ問題" ,
-	     "辞書式順序などで上限が与えられた配列の数え上げ問題" ,
+	     "辞書式順序などで固定長の部分文字列に上限が与えられた配列の数え上げ問題" ,
 	     "その他の関係式を満たす配列の数え上げ問題"
 	     );
   if( num == num_temp++ ){
@@ -1579,10 +1579,30 @@ AC( CountingArrayAdjacentRelation )
 
 AC( CountingArrayBounded )
 {
-  CERR( "文字列集合や正整数集合で項s未満の項の数え上げをする際は、" );
+  CERR( "上限をsと置き、sの長さをL、数え上げる文字列の長さをNと置き、" );
+  CERR( "数え上げる文字列の属す集合をSと置きます。" );
+  ASK_YES_NO( "L == Nですか？" );
+  if( reply == "y" ){
+    CALL_AC( CountingArrayBoundedTotal );
+  } else {
+    CALL_AC( CountingArrayBoundedSub );
+  }
+}
+
+AC( CountingArrayBoundedTotal )
+{
+  CERR( "文字列集合S内でs未満の項の数え上げをする際は、" );
   CERR( "長さや文字種類数などの状態を考えて" );
   CERR( "dp[d][n] = 「Sと先頭d文字目で初めてズレる状態nの項の総数」" );
   CERR( "をdとnに関する動的計画法で求めましょう。" );
+}
+
+AC( CountingArrayBoundedSub )
+{
+  CERR( "長さLの全ての部分文字列がs未満であるという条件を、Sの定義を用いて" );
+  CERR( "簡単な条件に翻訳しましょう。" );
+  CERR( "そのためにはLが小さい具体的なsに対して実験し、法則や上限を見付けましょう。" );
+  CERR( "この際に辞書式順序と積順序を混同しないように注意しましょう。" );
 }
 
 AC( CountingArrayOtherRelation )

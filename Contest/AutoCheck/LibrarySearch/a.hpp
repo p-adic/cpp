@@ -81,6 +81,8 @@ AC( CountingArray );
 AC( CountingArrayInverseImage );
 AC( CountingArrayAdjacentRelation );
 AC( CountingArrayBounded );
+AC( CountingArrayBoundedTotal );
+AC( CountingArrayBoundedSub );
 AC( CountingArrayOtherRelation );
 AC( CountingGraph );
 AC( CountingSubArray );
