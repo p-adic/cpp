@@ -56,7 +56,11 @@ public:
   inline int Search( const int& i_start , const U& u );
   
 private:
-  template <typename F> int Search_Body( const int& i_start , const F& f , U sum_temp );
+  template <typename F> int Search_Body( const int& i_start , const F& f , U product_temp );
   
 };
 template <typename MONOID , typename...Args> MonoidSqrtDecomposition( MONOID M , Args&&...args ) -> MonoidSqrtDecomposition<inner_t<MONOID>,MONOID>;
+
+// —á‚¦‚Îmax‚ğ‰‰Z‚É‚·‚é‚ÍMaxSemilattice{ 0LL }‚È‚Ç‚ğ“n‚·B
+// Search‚Ì‘å¬”»’è‚ğ‹t‚É‚µ‚½‚¢‚Í”z—ñ‚ğ-1”{‚·‚éB
+

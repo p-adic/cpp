@@ -184,13 +184,13 @@ template <typename U , typename NON_COMM_N_MODULE> inline U IntervalSetSqrtDecom
 }
 
 template <typename U , typename NON_COMM_N_MODULE> template <typename F , SFINAE_FOR_SD_S> inline int IntervalSetSqrtDecomposition<U,NON_COMM_N_MODULE>::Search( const int& i_start , const F& f ) { return Search_Body( i_start , f , m_M.One() ); }
-template <typename U , typename NON_COMM_N_MODULE> inline int IntervalSetSqrtDecomposition<U,NON_COMM_N_MODULE>::Search( const int& i_start , const U& u ) { return Search( i_start , [&]( const U& product , const int& ){ return !( u < product ); } ); }
+template <typename U , typename NON_COMM_N_MODULE> inline int IntervalSetSqrtDecomposition<U,NON_COMM_N_MODULE>::Search( const int& i_start , const U& u ) { return Search( i_start , [&]( const U& product , const int& ){ return !( product < u ); } ); }
 
 template <typename U , typename NON_COMM_N_MODULE> template <typename F> int IntervalSetSqrtDecomposition<U,NON_COMM_N_MODULE>::Search_Body( const int& i_start , const F& f , U product_temp )
 {
 
   const int i_min = max( i_start , 0 );
-  const int d_0 = ( i_min + m_N_sqrt - 1 ) / m_N_sqrt;
+  const int d_0 = i_min / m_N_sqrt + 1;
   const int i_0 = min( d_0 * m_N_sqrt , m_N );
 
   if( i_min < i_0 ){
@@ -213,7 +213,7 @@ template <typename U , typename NON_COMM_N_MODULE> template <typename F> int Int
 
       while( l + 1 < r ){
 
-	int m = ( l + r ) / 2;
+	int m = ( l + r ) >> 1;
 	// ”ñ‰ÂŠ·N‰ÁŒQ«‚ğg‚Á‚½B
 	product_next = m_M.Product( product_temp , m_M.Power( m_lazy_substitution_d , m - i_min + 1 ) );
 
