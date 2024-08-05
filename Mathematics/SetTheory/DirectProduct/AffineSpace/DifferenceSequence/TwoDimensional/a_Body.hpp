@@ -3,8 +3,8 @@
 #pragma once
 #include "a.hpp"
 
-template <typename U , typename GROUP> inline AbstractTwoDimensionalDifferenceSequence<U,GROUP>::AbstractTwoDimensionalDifferenceSequence( GROUP M , const int& size_X , const int& size_Y , int degree ) : m_M( move( M ) ) , m_size_X( size_X ) , m_size_Y( size_Y ) , m_a( m_size_X + 1 , vector<U>( m_size_Y + 1 , m_M.Zero() ) ) , m_degree( move( degree ) ) {}
-template <typename U , typename GROUP> inline AbstractTwoDimensionalDifferenceSequence<U,GROUP>::AbstractTwoDimensionalDifferenceSequence( GROUP M , const vector<vector<U>>& a , int degree ) : m_M( move( M ) ) , m_size_X( a.size() ) , m_size_Y( m_size_X > 0 ? a.front().size() : 0 ) , m_a( m_size_X + 1 , vector<U>( m_size_Y + 1 , m_M.Zero() ) ) , m_degree( move( degree ) )
+template <typename U , typename ABELIAN_GROUP> inline AbstractTwoDimensionalDifferenceSequence<U,ABELIAN_GROUP>::AbstractTwoDimensionalDifferenceSequence( ABELIAN_GROUP M , const int& size_X , const int& size_Y , int degree ) : m_M( move( M ) ) , m_size_X( size_X ) , m_size_Y( size_Y ) , m_a( m_size_X + 1 , vector<U>( m_size_Y + 1 , m_M.Zero() ) ) , m_degree( move( degree ) ) {}
+template <typename U , typename ABELIAN_GROUP> inline AbstractTwoDimensionalDifferenceSequence<U,ABELIAN_GROUP>::AbstractTwoDimensionalDifferenceSequence( ABELIAN_GROUP M , const vector<vector<U>>& a , int degree ) : m_M( move( M ) ) , m_size_X( a.size() ) , m_size_Y( m_size_X > 0 ? a[0].size() : 0 ) , m_a( m_size_X + 1 , vector<U>( m_size_Y + 1 , m_M.Zero() ) ) , m_degree( move( degree ) )
 {
 
   for( int x = 0 ; x < m_size_X ; x++ ){
@@ -21,13 +21,16 @@ template <typename U , typename GROUP> inline AbstractTwoDimensionalDifferenceSe
 
 template <typename U> template <typename...Args> inline TwoDimensionalDifferenceSequence<U>::TwoDimensionalDifferenceSequence( Args&&... args ) : AbstractTwoDimensionalDifferenceSequence<U,AdditiveGroup<U>>( AdditiveGroup<U>() , forward<decay_t<Args>>( args )... ) {}
 
-template <typename U , typename GROUP> template <typename...Args> inline void AbstractTwoDimensionalDifferenceSequence<U,GROUP>::Initialise( Args&&... args ) { AbstractTwoDimensionalDifferenceSequence temp{ m_M , forward<decay_t<Args>>( args )... }; m_size_X = temp.m_size_X; m_size_Y = temp.m_size_Y; m_a = move( temp.m_a ); m_degree = temp.m_degree; }
+template <typename U , typename ABELIAN_GROUP> template <typename...Args> inline void AbstractTwoDimensionalDifferenceSequence<U,ABELIAN_GROUP>::Initialise( Args&&... args ) { AbstractTwoDimensionalDifferenceSequence temp{ m_M , forward<decay_t<Args>>( args )... }; m_size_X = temp.m_size_X; m_size_Y = temp.m_size_Y; m_a = move( temp.m_a ); m_degree = temp.m_degree; }
 
-template <typename U , typename GROUP> inline void AbstractTwoDimensionalDifferenceSequence<U,GROUP>::Set( const int& i_x , const int& i_y , const U& u , const int& degree ) { Add( i_x , i_y , m_M.Sum( m_M.Inverse( Get( i_x , i_y , degree ) ) , u ) , degree ); }
+template <typename U , typename ABELIAN_GROUP> inline const int& AbstractTwoDimensionalDifferenceSequence<U,ABELIAN_GROUP>::size_X() const noexcept { return m_size_X; }
+template <typename U , typename ABELIAN_GROUP> inline const int& AbstractTwoDimensionalDifferenceSequence<U,ABELIAN_GROUP>::size_Y() const noexcept { return m_size_Y; }
 
-template <typename U , typename GROUP> inline void AbstractTwoDimensionalDifferenceSequence<U,GROUP>::Add( const int& i_x , const int& i_y , const U& u , const int& degree ) { if( u == m_M.Zero() ){ return; } Shift( degree ); auto& m_a_i_x_i_y = m_a[i_x+1][i_y+1]; m_a_i_x_i_y = m_M.Sum( move( m_a_i_x_i_y ) , u ); }
+template <typename U , typename ABELIAN_GROUP> inline void AbstractTwoDimensionalDifferenceSequence<U,ABELIAN_GROUP>::Set( const int& i_x , const int& i_y , const U& u , const int& degree ) { Add( i_x , i_y , m_M.Sum( m_M.Inverse( Get( i_x , i_y , degree ) ) , u ) , degree ); }
+
+template <typename U , typename ABELIAN_GROUP> inline void AbstractTwoDimensionalDifferenceSequence<U,ABELIAN_GROUP>::Add( const int& i_x , const int& i_y , const U& u , const int& degree ) { if( u == m_M.Zero() ){ return; } Shift( degree ); auto& m_a_i_x_i_y = m_a[i_x+1][i_y+1]; m_a_i_x_i_y = m_M.Sum( move( m_a_i_x_i_y ) , u ); }
   
-template <typename U , typename GROUP> inline void AbstractTwoDimensionalDifferenceSequence<U,GROUP>::RectangleAdd( const int& i_start_x , const int& i_start_y , const int& i_final_x , const int& i_final_y , const U& u , const int& degree )
+template <typename U , typename ABELIAN_GROUP> inline void AbstractTwoDimensionalDifferenceSequence<U,ABELIAN_GROUP>::RectangleAdd( const int& i_start_x , const int& i_start_y , const int& i_final_x , const int& i_final_y , const U& u , const int& degree )
 {
 
   if( u == m_M.Zero() ){
@@ -71,15 +74,15 @@ template <typename U , typename GROUP> inline void AbstractTwoDimensionalDiffere
   
 }
 
-template <typename U , typename GROUP> inline const U& AbstractTwoDimensionalDifferenceSequence<U,GROUP>::Get( const int& i_x , const int& i_y , const int& degree ) { assert( 0 <= i_x && i_x < m_size_X && 0 <= i_y && i_y < m_size_Y ); Shift( degree ); return m_a[i_x+1][i_y+1]; }
+template <typename U , typename ABELIAN_GROUP> inline const U& AbstractTwoDimensionalDifferenceSequence<U,ABELIAN_GROUP>::Get( const int& i_x , const int& i_y , const int& degree ) { assert( 0 <= i_x && i_x < m_size_X && 0 <= i_y && i_y < m_size_Y ); Shift( degree ); return m_a[i_x+1][i_y+1]; }
 
-template <typename U , typename GROUP> inline const U& AbstractTwoDimensionalDifferenceSequence<U,GROUP>::InitialRectangleSum( const int& i_x , const int& i_y , const int& degree ) { assert( -1 <= i_x && i_x < m_size_X && -1 <= i_y && i_y < m_size_Y ); Shift( degree - 1 ); return m_a[i_x+1][i_y+1]; }
+template <typename U , typename ABELIAN_GROUP> inline const U& AbstractTwoDimensionalDifferenceSequence<U,ABELIAN_GROUP>::InitialRectangleSum( const int& i_x , const int& i_y , const int& degree ) { assert( -1 <= i_x && i_x < m_size_X && -1 <= i_y && i_y < m_size_Y ); Shift( degree - 1 ); return m_a[i_x+1][i_y+1]; }
 
-template <typename U , typename GROUP> inline U AbstractTwoDimensionalDifferenceSequence<U,GROUP>::RectangleSum( const int& i_start_x , const int& i_start_y , const int& i_final_x , const int& i_final_y , const int& degree ) { assert( 0 <= i_start_x && i_start_x - 1 <= i_final_x && i_final_x < m_size_X && 0 <= i_start_y && i_start_y - 1 <= i_final_y && i_final_y < m_size_Y ); Shift( degree - 1 ); return m_M.Sum( m_M.Sum( m_a[i_start_x][i_start_y] , m_M.Inverse( m_M.Sum( m_a[i_final_x+1][i_start_y] , m_a[i_start_x][i_final_y+1] ) ) ) , m_a[i_final_x+1][i_final_y+1] ); }
+template <typename U , typename ABELIAN_GROUP> inline U AbstractTwoDimensionalDifferenceSequence<U,ABELIAN_GROUP>::RectangleSum( const int& i_start_x , const int& i_start_y , const int& i_final_x , const int& i_final_y , const int& degree ) { assert( 0 <= i_start_x && i_start_x - 1 <= i_final_x && i_final_x < m_size_X && 0 <= i_start_y && i_start_y - 1 <= i_final_y && i_final_y < m_size_Y ); Shift( degree - 1 ); return m_M.Sum( m_M.Sum( m_a[i_start_x][i_start_y] , m_M.Inverse( m_M.Sum( m_a[i_final_x+1][i_start_y] , m_a[i_start_x][i_final_y+1] ) ) ) , m_a[i_final_x+1][i_final_y+1] ); }
 
-template <typename U , typename GROUP> void AbstractTwoDimensionalDifferenceSequence<U,GROUP>::Shift( const int& degree ) { while( m_degree < degree ){ Differentiate(); } while( m_degree > degree ){ Integrate(); } }
+template <typename U , typename ABELIAN_GROUP> void AbstractTwoDimensionalDifferenceSequence<U,ABELIAN_GROUP>::Shift( const int& degree ) { while( m_degree < degree ){ Differentiate(); } while( m_degree > degree ){ Integrate(); } }
 
-template <typename U , typename GROUP> void AbstractTwoDimensionalDifferenceSequence<U,GROUP>::Integrate()
+template <typename U , typename ABELIAN_GROUP> void AbstractTwoDimensionalDifferenceSequence<U,ABELIAN_GROUP>::Integrate()
 {
 
   m_degree--;
@@ -102,7 +105,7 @@ template <typename U , typename GROUP> void AbstractTwoDimensionalDifferenceSequ
 
 }
 
-template <typename U , typename GROUP> void AbstractTwoDimensionalDifferenceSequence<U,GROUP>::Differentiate()
+template <typename U , typename ABELIAN_GROUP> void AbstractTwoDimensionalDifferenceSequence<U,ABELIAN_GROUP>::Differentiate()
 {
 
   m_degree++;

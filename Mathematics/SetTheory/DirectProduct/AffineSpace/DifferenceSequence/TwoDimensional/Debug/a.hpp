@@ -1,30 +1,14 @@
-// c:/Users/user/Documents/Programming/Mathematics/SetTheory/DirectProduct/Tree/DifferenceSequence/TwoDimensional/a.hpp
+// c:/Users/user/Documents/Programming/Mathematics/SetTheory/DirectProduct/AffineSpace/DifferenceSequence/TwoDimensional/Debug/a.hpp
 
 #pragma once
 
-// verify:
-// https://yukicoder.me/submissions/999929（零初期化、一点取得、矩形加算、矩形取得）
-// https://yukicoder.me/submissions/961857（零初期化、一点取得、矩形加算）
+// デバッグ用にエラー出力を追加したもの。
+// 各範囲更新にO(size_X*size_Y)追加されることに注意。
 
-// ２次元配列上の階差数列の高階化。基本的に２次元imos法
-// https://imoz.jp/algorithms/imos_method.html
-// に準拠。範囲更新が不要な場合は代わりにファイル容量の小さい２次元累積和を使用。
 
-// 入力の範囲内で要件
-// (1) MはUの可換群構造である。
-// が成り立つ場合にのみサポート。
+// c:/Users/user/Documents/Programming/Mathematics/SetTheory/DirectProduct/Tree/DifferenceSequence/TwoDimensional/a.hpp
 
-// M.Zero()による初期化O(size_X*size_Y)
-// 配列による初期化O(size_X*size_Y)
-
-// 一点代入O(|m_degree|*size_X*size_Y)
-// 一点加算O(|m_degree|*size_X*size_Y)
-// 始矩形加算O(|m_degree-1|*size_X*size_Y)
-// 矩形加算O(|m_degree-1|*size_X*size_Y)
-
-// 一点取得O(|m_degree|*size_X*size_Y)
-// 始矩形取得O(|m_degree+1|*size_X*size_Y)
-// 矩形取得O(|m_degree+1|*size_X*size_Y)
+#pragma once
 
 template <typename U , typename ABELIAN_GROUP>
 class AbstractTwoDimensionalDifferenceSequence
@@ -47,6 +31,9 @@ public:
   template <typename...Args> inline void Initialise( Args&&... args );
   const int& size_X() const noexcept;
   const int& size_Y() const noexcept;
+
+  // デバッグ出力用
+  const vector<vector<U>>& Get() const noexcept;
 
   // degree階の階差数列の(i_x,i_y)での値にuを代入する。
   inline void Set( const int& i_x , const int& i_y , const U& u , const int& degree = 0 );
@@ -94,3 +81,7 @@ public:
   template <typename...Args> inline TwoDimensionalDifferenceSequence( Args&&... args );
 
 };
+
+
+// デバッグ出力用
+template <class Traits , typename U , typename ABELIAN_GROUP> inline basic_ostream<char,Traits>& operator<<( basic_ostream<char,Traits>& os , const AbstractTwoDimensionalDifferenceSequence<U,ABELIAN_GROUP>& tdds );
