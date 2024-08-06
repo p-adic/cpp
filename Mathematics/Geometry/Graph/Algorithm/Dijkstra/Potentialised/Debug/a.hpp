@@ -2,3 +2,5 @@
 
 #pragma once
 #include "../a.hpp"
+
+// デバッグ用にマクロを展開したもの。
