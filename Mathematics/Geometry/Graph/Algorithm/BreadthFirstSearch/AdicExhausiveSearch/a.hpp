@@ -6,7 +6,7 @@
 // https://yukicoder.me/submissions/976469（NextPermutation）
 // https://yukicoder.me/submissions/976492（Power, to_vec）
 
-#include "../../a.hpp"
+#include "../a.hpp"
 
 class AdicExhausiveSearch;
 

@@ -3,7 +3,11 @@
 #pragma once
 #include "a.hpp"
 
-#include "../../a_Body.hpp"
+#ifdef DEBUG
+  #include "../Debug/a_Body.hpp"
+#else
+  #include "../a_Body.hpp"
+#endif
 
 #include "../../../../../Combinatorial/Loop/a_Body.hpp"
 
