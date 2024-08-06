@@ -3,7 +3,11 @@
 #pragma once
 #include "a.hpp"
 
-#include "../BreadthFirstSearch/a_Body.hpp"
+#ifdef DEBUG
+  #include "../BreadthFirstSearch/Debug/a_Body.hpp"
+#else
+  #include "../BreadthFirstSearch/a_Body.hpp"
+#endif
 
 template <typename T , typename GRAPH> template <typename...Args> inline DepthFirstSearch<T,GRAPH>::DepthFirstSearch( GRAPH& G , const T& not_found , Args&&... args ) : VirtualBreadthFirstSearch<T,GRAPH>( G , not_found , forward<Args>( args )... ) {}
 
