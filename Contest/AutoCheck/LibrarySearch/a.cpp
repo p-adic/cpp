@@ -454,14 +454,21 @@ AC( ExplicitExpressionProbability )
 
 AC( ExplicitExpressionCountingOperation )
 {
-  CERR( "選択の余地のない操作回数を求める際は、" );
+  CALL_AC( ReducingOperation );
+  CERR( "その上で選択の余地のない操作回数を求める際は、" );
   CERR( "- 操作列をイベントとみなし時系列に並べ、「一斉に処理できる区間」いくつかに分割し、" );
   CERR( "  それぞれの区間での処理をまとめて計算" );
-  CERR( "- 操作後の状態を何らかの不変量で分類し、操作を不変量間の遷移とみなすことで" );
-  CERR( "  動的計画法や移動コスト最小化問題に帰着" );
-  CERR( "- 操作が何らかの集合の要素に高々１回しか適用しないならば、適用する要素全体のなす" );
-  CERR( "  部分集合の全探策や半分全列挙" );
+  CERR( "- 操作対象が操作優先度つきで複数ある場合は、各操作対象の操作回数に関する動的計画法" );
   CERR( "を検討しましょう。" );
+}
+
+AC( ReducingOperation )
+{
+  CERR( "操作対象を何らかの不変量で分類し、操作を不変量間の遷移とみなすことで" );
+  CERR( "簡単な問題に帰着させましょう。" );
+  CERR( "- 操作で階差数列の奇数成分が減るならば、その総和" );
+  CERR( "- 操作で累積和の最大値と最小値の差が減るならば、その差" );
+  CERR( "- 操作で隣接成分との大小が変わるならば、その大小関係を管理する01列" );
 }
 
 AC( ExplicitExpressionConvolution )
@@ -890,6 +897,9 @@ AC( MaximisationMovingDistanceSingleStart )
   CERR( "  \\Mathematics\\Geometry\\Graph\\Algorithm\\Dijkstra" );
   CERR( "- コストが正になりえてO(VE)が間に合いそうならば1倍してベルマンフォード法" );
   CERR( "  \\Mathematics\\Geometry\\Graph\\Algorithm\\BellmanFord" );
+  CERR( "- コストが1で無向グラフとして完全な有向グラフでO(V log V)が間に合いそうならば" );
+  CERR( "  Vに関する再帰的構成" );
+  CERR( "  https://yukicoder.me/submissions/916203" );
 }
 
 AC( MaximisationFunctionOnArray )
@@ -1399,13 +1409,22 @@ AC( MinimisationOperationCost )
 
 AC( MaximisationCountingOperation )
 {
-  CERR( "操作によって減る数値xを見付けることで操作回数の上界を求めましょう。" );
-  CERR( "上界を達成する方法の探索には" );
-  CERR( "- 操作によってxが減る値が最小になるような操作の反復" );
-  CERR( "- ほとんど同じ操作の反復" );
-  CERR( "- 操作が何らかの集合の要素に高々１回しか適用しないならば、適用する要素全体のなす" );
-  CERR( "  部分集合の全探策や半分全列挙" );
-  CERR( "を検討しましょう。" );
+  CALL_AC( ReducingOperation );
+  ASK_YES_NO( "その上で状態が10^6オーダーですか？" );
+  if( reply == "y" ){
+    CERR( "状態の遷移をグラフ上の移動とみなし、最長経路問題に帰着させましょう。" );
+    CALL_AC( MaximisationMovingDistance );
+  } else {
+    CERR( "操作方法の探索には" );
+    CERR( "- 操作によって不変量が減る量が最小になるような操作の反復" );
+    CERR( "- ほとんど同じ操作の反復" );
+    CERR( "- 操作対象が複数あるならば" );
+    CERR( "  - 対象に操作優先度があるならば、各対象の操作回数最大値に関する" );
+    CERR( "    動的計画法" );
+    CERR( "  - 操作順に意味がなく各対象に高々１回しか操作しないならば、" );
+    CERR( "    操作する対象全体のなす部分集合の全探策や半分全列挙" );
+    CERR( "を検討しましょう。" );
+  }
 }
 
 AC( MinimisationCoveringSize )
@@ -1924,12 +1943,38 @@ AC( CountingPath )
 
 AC( CountingTiling )
 {
-  CERR( "- 端点や外周のサイズが小さいかタイル／色の種類数が少ないならば、" );
-  CERR( "  端点や外周のタイリング／塗り分けを固定することで小さいサイズに対する" );
+  CERR( "タイルの各種類を色に対応させることで、タイリングは塗り分けに翻訳します。" );
+  ASK_NUMBER(
+	     "隣接成分と異なる色で塗り分ける問題" ,
+	     "与えられた図形で描画可能になるよう塗り分ける問題"
+	     );
+  if( num == num_temp++ ){
+    CALL_AC( CountingTilingDistinct );
+  } else if( num == num_temp++ ){
+    CALL_AC( CountingTilingDrawable );
+  }
+}
+
+AC( CountingTilingDistinct )
+{
+  CERR( "- 端点や外周のサイズが小さいか色の種類数が少ないならば、" );
+  CERR( "  端点や外周の塗り分けを固定することで小さいサイズに対する" );
   CERR( "  数え上げとの関係式を導出し、サイズに関する動的計画法" );
   CERR( "- 群の作用による同一視があるならば、コーシー・フロベニウスの補題" );
   CERR( "  https://ja.wikipedia.org/wiki/コーシー・フロベニウスの補題" );
   CERR( "を検討しましょう。" );
+}
+
+AC( CountingTilingDrawable )
+{
+  CERR( "描画可能性を簡単な条件に翻訳し、その条件を満たす塗り分けを" );
+  CERR( "数え上げましょう。" );
+  ASK_YES_NO( "重なりを許して図形を置く描画方法ですか？" );
+  if( reply == "y" ){
+    CALL_AC( DecisionDrawabilitySameSizeOverdrawn );
+  } else {
+    CALL_AC( DecisionDrawabilitySameSizeUnoverdrawn );
+  }
 }
 
 AC( CountingYoundDiagram )
@@ -2541,25 +2586,69 @@ AC( DecisionAccessibility )
 AC( DecisionDrawability )
 {
   CERR( "まずは描画領域内にどのように図形を置くかを決定しましょう。" );
-  CERR( "- サイズ固定の図形による描画可能性を考える場合は、" );
-  CERR( "  図形を必要ならば回転させた上で、図形をいくつかの矩形領域の和集合に分解し" );
-  CERR( "  描画領域内に図形を置けるか否かを図形の位置ごとに２次元累積和や" );
-  CERR( "  木上の累積和などで判定" );
-  CERR( "  \\Mathematics\\SetTheory\\DirectProduct\\AffineSpace\\CumulativeProduct\\Tree" );
-  CERR( "  \\Mathematics\\SetTheory\\DirectProduct\\AffineSpace\\CumulativeProduct\\TwoDimensional" );
-  CERR( "- サイズ可変の図形による描画可能性を考える場合は、" );
-  CERR( "  描画領域内に図形を置けるサイズの最大値を図形の位置ごとに尺取り法などで" );
-  CERR( "  前計算" );
-  CERR( "を検討しましょう。" );
+  ASK_YES_NO( "図形を置く際に重なりを許しますか？" );
+  if( reply == "y" ){
+    ASK_NUMBER(
+	       "平行移動のみを除いて単一の図形を置く問題" ,
+	       "平行移動とサイズ変更のみを除いて単一の図形を置く問題" ,
+	       "複数種類の同一サイズの図形を許して置く問題"
+	       );
+    if( num == num_temp++ ){
+      CALL_AC( DecisionDrawabilityUnique );
+    } else if( num == num_temp++ ){
+      CALL_AC( DecisionDrawabilityExtension );
+    } else if( num == num_temp++ ){
+      CALL_AC( DecisionDrawabilitySameSizeOverdrawn );
+    }
+  } else {
+    CALL_AC( DecisionDrawabilitySameSizeUnoverdrawn );
+  }
+}
+
+AC( DecisionDrawabilityUnique )
+{
+  CERR( "図形を必要ならば回転させた上で、図形をいくつかの矩形領域の和集合に分解し" );
+  CERR( "描画領域内に図形を置けるか否かを図形の位置ごとに２次元累積和や" );
+  CERR( "２次元高階階差数列などで判定しましょう。" );
+  CERR( "\\Mathematics\\SetTheory\\DirectProduct\\AffineSpace\\CumulativeProduct\\TwoDimensional" );
+  CERR( "\\Mathematics\\SetTheory\\DirectProduct\\AffineSpace\\DifferenceSequence\\TwoDimensional" );
   CERR( "" );
-  CERR( "描画領域内にどのように図形を置くかを決めた後は、" );
   CALL_AC( DecisionImageCoincidence );
+}
+
+AC( DecisionDrawabilityExtension )
+{
+  CERR( "描画領域内に図形を置けるサイズの最大値を図形の位置ごとに尺取り法などで" );
+  CERR( "前計算し、最大サイズで置くことを考えましょう。" );
+  CERR( "" );
+  CALL_AC( DecisionImageCoincidence );
+}
+
+AC( DecisionDrawabilitySameSizeOverdrawn )
+{
+  CERR( "正整数Bと描画領域の同値関係であって、どのように図形を置いてもその図形が" );
+  CERR( "mod Bで等サイズの図形に分割されるものを探し、各商集合の配色をmod Bで" );
+  CERR( "管理することで得られる必要条件判定が十分かを判定しましょう。" );
+}
+
+AC( DecisionDrawabilitySameSizeUnoverdrawn )
+{
+  CERR( "可換モノイドGと描画領域の商集合Xとモノイド準同型f:N^X->Gであって" );
+  CERR( "どのように図形を置いてもその図形の商の濃度ベクトルのfでの値が" );
+  CERR( "一定値cであるものを探しましょう。" );
+  CERR( "するとXの濃度ベクトルのfでの値Cが(図形を置く個数)cで表せることが" );
+  CERR( "必要条件となります。例えば" );
+  CERR( "- Gが群かつC=0かつ(図形を置ける個数)がcの位数の倍数になりえない。" );
+  CERR( "- GがNかつ(図形を置ける個数の最大値)cがC未満である。" );
+  CERR( "- GがNかつ(図形を置ける個数の最小値)cがCより大きい。" );
+  CERR( "などの場合はこの必要条件が成り立たないので塗り分け不可能です。" );
 }
 
 AC( DecisionImageCoincidence )
 {
-  CERR( "階差数列などで実際に描画をし、描画したい図形と一致するかを判定しましょう。" );
-  CERR( "\\Mathematics\\SetTheory\\DirectProduct\\AffineSpace\\DifferenceSequence" );
+  CERR( "描画領域内にどのように図形を置くかを決めた後は２次元階差数列などで" );
+  CERR( "実際に描画をし、描画したい図形と一致するかを判定しましょう。" );
+  CERR( "\\Mathematics\\SetTheory\\DirectProduct\\AffineSpace\\DifferenceSequence\\TwoDimensional" );
 }
 
 AC( DecisionExistence )
@@ -2733,11 +2822,15 @@ AC( ConstructionPath )
 {
   ASK_NUMBER(
 	     "最短経路の構築" ,
+	     "最長経路の構築" ,
 	     "グリッド上の巡回セールスマン問題に対する良い解の構築"
 	     );
   if( num == num_temp++ ){
-    CERR( "可能な経路の定めるグラフの問題に帰着させましょう。" );
-    CALL_AC( DecisionAccessibility );
+    CERR( "最短経路探索アルゴリズムで経路復元をしましょう。" );
+    CALL_AC( MinimisationMovingCost );
+  } else if( num == num_temp++ ){
+    CERR( "最長経路探索アルゴリズムで経路復元をしましょう。" );
+    CALL_AC( MaximisationMovingDistanceSingleStart );
   } else {
     CERR( "莫のアルゴリズムによるソート" );
     CERR( "\\Mathematics\\SetTheory\\DirectProduct\\AfineSpace\\SqrtDecomposition\\Mo" );
