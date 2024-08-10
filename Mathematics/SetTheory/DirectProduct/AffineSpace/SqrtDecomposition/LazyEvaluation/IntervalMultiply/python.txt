@@ -19,7 +19,7 @@ L.point=L(1) #User definition
 #Note that L should be a non-dummy one like the trivial group {1},
 #even when IntervalAct will not be called.
 
-#A set on which L acts from left so that the base point of L coresponds to the identity
+#A set on which L acts from left so that the base point of L corresponds to the identity
 class M:
 	one=None
 	def __init__(self,val):
@@ -70,8 +70,6 @@ class IntervalMultiplyLazySqrtDecomposition:
 
 	def Set(self,i,u):
 		d = i // self.N_sqrt
-		i_min = d * self.N_sqrt
-		i_ulim = i_min + self.N_sqrt
 		if self.suspended[d]:
 			if self.lazy_substitution[d] != u:
 				SolveSuspendedSubstitution( d , self.lazy_substitution[d] )
