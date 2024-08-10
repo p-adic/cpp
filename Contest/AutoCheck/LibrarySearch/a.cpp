@@ -1943,7 +1943,6 @@ AC( CountingPath )
 
 AC( CountingTiling )
 {
-  CERR( "タイルの各種類を色に対応させることで、タイリングは塗り分けに翻訳します。" );
   ASK_NUMBER(
 	     "隣接成分と異なる色で塗り分ける問題" ,
 	     "与えられた図形で描画可能になるよう塗り分ける問題"
@@ -2626,9 +2625,9 @@ AC( DecisionDrawabilityExtension )
 
 AC( DecisionDrawabilitySameSizeOverdrawn )
 {
-  CERR( "正整数Bと描画領域の同値関係であって、どのように図形を置いてもその図形が" );
-  CERR( "mod Bで等サイズの図形に分割されるものを探し、各商集合の配色をmod Bで" );
-  CERR( "管理することで得られる必要条件判定が十分かを判定しましょう。" );
+  CERR( "正整数Bと描画領域の同値関係であって以下の2条件を満たすものを探しましょう。" );
+  CERR( "- どのように図形を置いてもその図形がmod Bで等サイズの図形に分割される。" );
+  CERR( "- 商の配色ベクトルmod Bを管理することで得られる必要条件が十分条件でもある。" );
 }
 
 AC( DecisionDrawabilitySameSizeUnoverdrawn )
