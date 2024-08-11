@@ -1,7 +1,10 @@
 #双方向リストを基点ノードとコンテナノードを円環状に繋いで実装。
 #基点ノードは[コンテナの長さ,末尾コンテナノード,先頭コンテナノード]を格納。
 #コンテナノードは[値,前のノード,後ろのノード]を格納。
-#dllistのlist()とcopy()はmutableな成分のコピーを複製しないことに注意
+#dllistのlist()とcopy()は、要素自体がmutableな場合にコピーせず参照することに注意
+def rec_str(a):
+	if not isinstance(a,list):return str(a)
+	return "".join(["[",", ".join(rec_str(x)for x in a),"]"])
 class dliterator:
 	def __init__(self,a,i):
 		self.a,self.i=a,i
@@ -10,6 +13,8 @@ class dliterator:
 	def get(self):
 		assert(self.i)
 		return self.a.a[self.i][0]
+	def __str__(self):
+		return rec_str(self.get())
 	def set(self,x):
 		assert(self.i)
 		self.a.a[self.i][0]=x
@@ -36,6 +41,18 @@ class dllist:
 		self.a=[[n,n,0]]+[[x,i,i+2]for x,i in zip(init,R(n))]
 		if n:self.a[0][2],self.a[-1][2]=1,0
 		self.i=self.end()
+	def list(self):
+		a=[]
+		i=self.begin()
+		e=self.end()
+		while i!=e:
+			a+=[i.get()]
+			i.next()
+		return a
+	def __str__(self):
+		return rec_str(self.list())
+	def copy(self):
+		return dllist(self.list())
 	def size(self):
 		return self.a[0][0]
 	def end(self):
@@ -94,19 +111,23 @@ class dllist:
 		self.a[m.i][2],self.a[l.i][1]=l.i,m.i
 		self.i,self.a[i.i][1]=i,self.i.i
 		self.a[i.i][2]=-1
+		return l
 	def pop_front(self):
 		self.erase(self.begin())
 	def pop_back(self):
 		self.erase(self.rbegin())
 	def clear(self):
 		self.a,self.i=[[0,0,0]],self.end()
-	def list(self):
-		a=[]
+	def merge(self,other):
 		i=self.begin()
 		e=self.end()
-		while i!=e:
-			a+=[i.get()]
-			i.next()
-		return a
-	def copy(self):
-		return dllist(self.list())
+		while other.size():
+			t=other.front()
+			while i!=e:
+				if t < i.get():
+					self.insert_front(i,t)
+					break
+				else:i.next()
+			else:self.push_back(t)
+			other.pop_front()
+
