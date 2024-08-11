@@ -1,12 +1,15 @@
+#verify:
+#https://yukicoder.me/submissions/1001580（一点加算、区間加算、一点取得）
+
 #区間加算P
 #区間和S
 def B(i,u,F):
 	i+=1
-	while i<=N:F[i],i=F[i]+u,i+(i&-i)
+	while i<=N:F[i]+=u;i+=i&-i
 def M(r,F):
 	a=0
 	i=min(r+1,N)
-	while i:a,i=a+F[i],i-(i&-i)
+	while i:a+=F[i];i-=i&-i
 	return a
 F=[[0]*(N+1)for i in R(2)]
 def P(l,r,u):
@@ -15,3 +18,60 @@ def L(r):
 	return M(r,F[0])+r*M(r,F[1])
 def S(l,r): #l,rは始端,終端
 	return L(r)-L(l-1)
+
+def rec_str(a):
+	if not isinstance(a,list):return str(a)
+	return "".join(["[",", ".join(rec_str(x)for x in a),"]"])
+class BIT:
+	def __init__(self,x):
+		if isinstance(x,int):
+			self.N=x
+			self.F=[0]*(x+1)
+		else:
+			self.N=len(x)
+			self.F=[0]*(self.N+1)
+			for j in R(1,self.N+1):
+				i=j-1
+				self.F[j]=x[i]
+				k=j-(j&-j)
+				while i>k:
+					self.F[j]+=self.F[i]
+					i-=i&-i
+	def Add(self,i,u):
+		i+=1
+		while i<=self.N:
+			self.F[i]+=u
+			i+=i&-i
+	def InitialSegmentSum(self,r):
+		assert(r>-2)
+		a=0
+		i=min(r+1,self.N)
+		while i:
+			a+=self.F[i]
+			i-=i&-i
+		return a
+class IntervalAddBIT:
+	def __init__(self,N):
+		self.N=N
+		self.F=BIT(N+1)
+		self.G=BIT(N+1)
+	def IntervalAdd(self,l,r,u):
+		self.F.Add(l,-(l-1)*u)
+		self.F.Add(r+1,r*u)
+		self.G.Add(l,u)
+		self.G.Add(r+1,-u)
+	def Add(self,i,u):
+		self.IntervalAdd(i,i,u)
+	def Set(self,i,u):
+		self.Add(i,u-self.Get(i))
+	def InitialSegmentSum(self,r):
+		return self.F.InitialSegmentSum(r)+r*self.G.InitialSegmentSum(r)
+	def IntervalSum(self,l,r):
+		return self.InitialSegmentSum(r)-self.InitialSegmentSum(l-1)
+	def Get(self,i):
+		return self.IntervalSum(i,i)
+	def list(self):
+		return[self.Get(i)for i in R(self.N)]
+	def __str__(self):
+		return rec_str(self.list())
+
