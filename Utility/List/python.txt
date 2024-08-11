@@ -71,22 +71,6 @@ class dllist:
 		return self.begin().get()
 	def back(self):
 		return self.rbegin().get()
-	def insert_between(self,i,j,x,c):
-		assert(id(i.a)==id(self)==id(j.a)and self.a[i.i][2]>=0 and self.a[j.i][2]>=0)
-		k=j.copy()
-		for _ in R(c):
-			self.a[0][0]+=1
-			n=self.i.i
-			v=[x,i.i,k.i]
-			if n:
-				assert(self.a[n][2]==-1)
-				self.i.prev()
-				self.a[n]=v
-			else:
-				n=len(self.a)
-				self.a+=[v]
-			self.a[i.i][2]=self.a[k.i][1]=n
-			k=dliterator(self,n)
 	def insert_front(self,i,x,c=1):
 		j=i.copy()
 		j.prev()
@@ -130,4 +114,21 @@ class dllist:
 				else:i.next()
 			else:self.push_back(t)
 			other.pop_front()
+	#private:
+	def insert_between(self,i,j,x,c):
+		assert(id(i.a)==id(self)==id(j.a)and self.a[i.i][2]>=0 and self.a[j.i][2]>=0)
+		k=j.copy()
+		for _ in R(c):
+			self.a[0][0]+=1
+			n=self.i.i
+			v=[x,i.i,k.i]
+			if n:
+				assert(self.a[n][2]==-1)
+				self.i.prev()
+				self.a[n]=v
+			else:
+				n=len(self.a)
+				self.a+=[v]
+			self.a[i.i][2]=self.a[k.i][1]=n
+			k=dliterator(self,n)
 
