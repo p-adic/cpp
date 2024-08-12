@@ -4,12 +4,12 @@
 #include "a.hpp"
 
 // operator<<のオーバーロードを行うため、先にincludeする。
-#include "../Tuple/a_Body.hpp"
-
 #ifdef DEBUG
-  #include "../Vector/Debug/a_Body.hpp"
+  #include "../Tuple/StdStream/Debug/a_Body.hpp"
+  #include "../Vector/StdStream/Debug/a_Body.hpp"
 #else
-  #include "../Vector/a_Body.hpp"
+  #include "../Tuple/StdStream/a_Body.hpp"
+  #include "../Vector/StdStream/a_Body.hpp"
 #endif
 
 template <class Traits> inline basic_istream<char,Traits>& VariadicCin( basic_istream<char,Traits>& is ) { return is; }
