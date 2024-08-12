@@ -5,7 +5,12 @@
 
 // operator<<のオーバーロードを行うため、先にincludeする。
 #include "../Tuple/a_Body.hpp"
-#include "../Vector/a_Body.hpp"
+
+#ifdef DEBUG
+  #include "../Vector/Debug/a_Body.hpp"
+#else
+  #include "../Vector/a_Body.hpp"
+#endif
 
 template <class Traits> inline basic_istream<char,Traits>& VariadicCin( basic_istream<char,Traits>& is ) { return is; }
 template <class Traits , typename Arg , typename... ARGS> inline basic_istream<char,Traits>& VariadicCin( basic_istream<char,Traits>& is , Arg& arg , ARGS&... args ) { return VariadicCin( is >> arg , args... ); }
@@ -17,3 +22,5 @@ template <class Traits , typename Arg , typename... ARGS> inline basic_istream<c
 
 template <class Traits , typename Arg> inline basic_ostream<char,Traits>& VariadicCout( basic_ostream<char,Traits>& os , const Arg& arg ) { return os << arg; }
 template <class Traits , typename Arg1 , typename Arg2 , typename... ARGS> inline basic_ostream<char,Traits>& VariadicCout( basic_ostream<char,Traits>& os , const Arg1& arg1 , const Arg2& arg2 , const ARGS&... args ) { return VariadicCout( os << arg1 << " " , arg2 , args... ); }
+
+template <class Traits , typename ARRAY> inline basic_ostream<char,Traits>& CoutArray( basic_ostream<char,Traits>& os , const int& i_start , const int& i_ulim , const ARRAY& a ) { for( int i = i_start ; i < i_ulim ; i++ ){ ( i == i_start ? os : ( os << " " ) ) << a[i]; } return os; }
