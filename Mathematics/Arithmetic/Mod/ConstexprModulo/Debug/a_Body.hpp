@@ -86,10 +86,10 @@ template <INT_TYPE_FOR_MOD M , typename INT> inline constexpr Mod<M> Power( Mod<
 
 template <INT_TYPE_FOR_MOD M> inline constexpr void swap( Mod<M>& n0 , Mod<M>& n1 ) noexcept { n0.swap( n1 ); }
 
-template <INT_TYPE_FOR_MOD M> inline string to_string( const Mod<M>& n ) noexcept { return ( n.GetSign() ? "" : "-" ) + to_string( n.GetNumerator() ) + "/" + to_string( n.GetDenominator() ) + " + " + to_string( M ) + "Z = " + to_string( n.Represent() ) + " + " + to_string( M ) + "Z"; }
+template <INT_TYPE_FOR_MOD M> inline string to_string( const Mod<M>& n ) noexcept { return ( n.GetSign() ? "" : "-" ) + to_string( n.GetNumerator() ) + ( n.GetDenominator() == 1 ? " + " + to_string( M ) + "Z" : "/" + to_string( n.GetDenominator() ) + " + " + to_string( M ) + "Z = " + to_string( n.Represent() ) + " + " + to_string( M ) + "Z" ); }
 
 template <INT_TYPE_FOR_MOD M , class Traits> inline basic_istream<char,Traits>& operator>>( basic_istream<char,Traits>& is , Mod<M>& n ) { ll m; is >> m; n = m; return is; }
-template <INT_TYPE_FOR_MOD M , class Traits> inline basic_ostream<char,Traits>& operator<<( basic_ostream<char,Traits>& os , const Mod<M>& n ) { return os << ( n.GetSign() ? "" : "-" ) << n.GetNumerator() << "/" << n.GetDenominator() << " ß " << n.Represent(); }
+template <INT_TYPE_FOR_MOD M , class Traits> inline basic_ostream<char,Traits>& operator<<( basic_ostream<char,Traits>& os , const Mod<M>& n ) { os << ( n.GetSign() ? "" : "-" ) << n.GetNumerator(); return n.GetDenominator() == 1 ? os : os << "/" << n.GetDenominator() << " ß " << n.Represent(); }
 
 #include "../../Hash/a_Body.hpp"
 template <INT_TYPE_FOR_MOD M> DEFINITION_OF_HASH_FOR_MOD( Mod<M> );
