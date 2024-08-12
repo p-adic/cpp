@@ -33,6 +33,3 @@
   template <typename T , typename U , typename V> inline tuple<T,U,V>& operator INCR ( tuple<T,U,V>& t ) { INCR get<0>( t ); INCR get<1>( t ); INCR get<2>( t ); return t; } \
   template <typename T , typename U , typename V , typename W> inline tuple<T,U,V,W>& operator INCR ( tuple<T,U,V,W>& t ) { INCR get<0>( t ); INCR get<1>( t ); INCR get<2>( t ); INCR get<3>( t ); return t; }	\
 
-#define DEFINITION_OF_HASH_FOR_TUPLE( PAIR )				\
-  template <typename T , typename U> inline size_t hash<PAIR<T,U>>::operator()( const PAIR<T,U>& n ) const { static const size_t seed = ( GetRand( 1e3 , 1e8 ) << 1 ) | 1; static const hash<T> h0; static const hash<U> h1; return ( h0( get<0>( n ) ) * seed ) ^ h1( get<1>( n ) ); } \
-
