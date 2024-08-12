@@ -3,18 +3,13 @@
 #pragma once
 #include "a.hpp"
 
-DEFINITION_OF_COUT_FOR_VECTOR( vector );
-DEFINITION_OF_COUT_FOR_VECTOR( list );
-DEFINITION_OF_COUT_FOR_VECTOR( set );
-DEFINITION_OF_COUT_FOR_VECTOR( unordered_set );
-
-DEFINITION_OF_ARITHMETICS_FOR_VECTOR( vector );
-DEFINITION_OF_ARITHMETICS_FOR_VECTOR( list );
+#ifdef DEBUG
+  #include "StdStream/Debug/a_Body.hpp"
+#else
+  #include "StdStream/a_Body.hpp"
+#endif
 
 template <typename T> inline operator*( const T& scalar , vector<T> v ) { for( auto& t : v ){ v *= t; } return move( v ); }
-
-inline void VariadicResize( const int& size ) {}
-template <typename Arg , typename... ARGS> inline void VariadicResize( const int& size , Arg& arg , ARGS&... args ) { arg.resize( size ); VariadicResize( size , args... ); }
 
 template <typename V> inline auto Get( V& a ) { return [&]( const int& i = 0 ) -> const decldecay_t( a[0] )& { return a[i]; }; }
 template <typename T> inline vector<T> id( const int& size ) { vector<T> answer( size ); for( int i = 0 ; i < size ; i++ ){ answer[i] = i; } return answer; }

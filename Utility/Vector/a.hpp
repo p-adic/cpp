@@ -5,18 +5,16 @@
 
 #include <vector>
 
-// SFINAEだとstringと競合する。
-DECLARATION_OF_COUT_FOR_VECTOR( vector );
-DECLARATION_OF_COUT_FOR_VECTOR( list );
-DECLARATION_OF_COUT_FOR_VECTOR( set );
-DECLARATION_OF_COUT_FOR_VECTOR( unordered_set );
+#ifdef DEBUG
+  #include "StdStream/Debug/a.hpp"
+#else
+  #include "StdStream/a.hpp"
+#endif
 
 DECLARATION_OF_ARITHMETICS_FOR_VECTOR( vector );
 template <typename T> inline operator*( const T& scalar , vector<T> v );
 
-inline void VariadicResize( const int& size );
-template <typename Arg , typename... ARGS> inline void VariadicResize( const int& size , Arg& arg , ARGS&... args );
-
+// 宣言だけでは型推論できないので宣言はコメントアウトする。
 // template <typename V> inline auto Get( V& a );
 
 template <typename T = int> inline vector<T> id( const int& size );
