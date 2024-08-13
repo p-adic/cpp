@@ -12,16 +12,11 @@ def M(r,F):
 	while i:a+=F[i];i-=i&-i
 	return a
 F=[[0]*(N+1)for i in R(2)]
-def P(l,r,u):
-	B(l,-(l-1)*u,F[0]),B(r+1,r*u,F[0]),B(l,u,F[1]),B(r+1,-u,F[1])
-def L(r):
-	return M(r,F[0])+r*M(r,F[1])
-def S(l,r): #l,rは始端,終端
-	return L(r)-L(l-1)
+def P(l,r,u):B(l,-(l-1)*u,F[0]),B(r+1,r*u,F[0]),B(l,u,F[1]),B(r+1,-u,F[1])
+def L(r):return M(r,F[0])+r*M(r,F[1])
+def S(l,r):return L(r)-L(l-1) #l,rは始端,終端
 
-def rec_str(a):
-	if not isinstance(a,list):return str(a)
-	return "".join(["[",", ".join(rec_str(x)for x in a),"]"])
+def rec_str(a):return"".join(["[",", ".join(rec_str(x)for x in a),"]"])if isinstance(a,list)else str(a)
 class BIT:
 	def __init__(self,x):
 		if isinstance(x,int):
@@ -60,18 +55,11 @@ class IntervalAddBIT:
 		self.F.Add(r+1,r*u)
 		self.G.Add(l,u)
 		self.G.Add(r+1,-u)
-	def Add(self,i,u):
-		self.IntervalAdd(i,i,u)
-	def Set(self,i,u):
-		self.Add(i,u-self.Get(i))
-	def InitialSegmentSum(self,r):
-		return self.F.InitialSegmentSum(r)+r*self.G.InitialSegmentSum(r)
-	def IntervalSum(self,l,r):
-		return self.InitialSegmentSum(r)-self.InitialSegmentSum(l-1)
-	def Get(self,i):
-		return self.IntervalSum(i,i)
-	def list(self):
-		return[self.Get(i)for i in R(self.N)]
-	def __str__(self):
-		return rec_str(self.list())
+	def Add(self,i,u):self.IntervalAdd(i,i,u)
+	def Set(self,i,u):self.Add(i,u-self.Get(i))
+	def InitialSegmentSum(self,r):return self.F.InitialSegmentSum(r)+r*self.G.InitialSegmentSum(r)
+	def IntervalSum(self,l,r):return self.InitialSegmentSum(r)-self.InitialSegmentSum(l-1)
+	def Get(self,i):return self.IntervalSum(i,i)
+	def list(self):return[self.Get(i)for i in R(self.N)]
+	def __str__(self):return rec_str(self.list())
 
