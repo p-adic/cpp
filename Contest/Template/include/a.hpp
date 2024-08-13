@@ -4,6 +4,9 @@
 #include "a_Macro.hpp"
 
 #include "c:/Users/user/Documents/Programming/Utility/Set/a.hpp"
+#include "c:/Users/user/Documents/Programming/Utility/Tuple/a.hpp"
+#include "c:/Users/user/Documents/Programming/Utility/Vector/a.hpp"
+#include "c:/Users/user/Documents/Programming/Utility/Set/Map/a.hpp"
 #include "c:/Users/user/Documents/Programming/Utility/StdStream/a.hpp"
 
 #include "c:/Users/user/Documents/Programming/Mathematics/Algebra/Monoid/Group/Module/a.hpp"

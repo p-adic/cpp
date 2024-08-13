@@ -4,6 +4,9 @@
 #include "a.hpp"
 
 #include "c:/Users/user/Documents/Programming/Utility/Set/a_Body.hpp"
+#include "c:/Users/user/Documents/Programming/Utility/Tuple/a_Body.hpp"
+#include "c:/Users/user/Documents/Programming/Utility/Vector/a_Body.hpp"
+#include "c:/Users/user/Documents/Programming/Utility/Set/Map/a_Body.hpp"
 #include "c:/Users/user/Documents/Programming/Utility/StdStream/a_Body.hpp"
 
 #include "c:/Users/user/Documents/Programming/Mathematics/Algebra/Monoid/Group/Module/a_Body.hpp"
