@@ -1945,28 +1945,35 @@ AC( CountingTiling )
 {
   ASK_NUMBER(
 	     "隣接成分と異なる色で塗り分ける問題" ,
-	     "与えられた図形で描画可能になるよう塗り分ける問題"
+	     "与えられた図形で描画可能になるように塗り分ける問題" ,
+	     "与えられた条件に従って塗り分け可能になるように図形で描画する問題"
 	     );
   if( num == num_temp++ ){
-    CALL_AC( CountingTilingDistinct );
+    CALL_AC( CountingColouringDistinct );
   } else if( num == num_temp++ ){
-    CALL_AC( CountingTilingDrawable );
+    CALL_AC( CountingColouringDrawable );
+  } else if( num == num_temp++ ){
+    CALL_AC( CountingTilingPaintable );
   }
 }
 
-AC( CountingTilingDistinct )
+AC( CountingColouringDistinct )
 {
-  CERR( "- 塗り分ける図形群の外周や頂点に位置する図形やの個数が少ないか" );
-  CERR( "  色の種類数が少ないならば、外周や頂点の図形群の塗り分けを固定することで" );
-  CERR( "  一廻り小さい図形群に対する数え上げとの関係式を導出し、" );
-  CERR( "  サイズに関する動的計画法" );
-  CERR( "- グリッドの部分集合の辺の塗り分けは、左下から単純な2重ループ" );
+  CALL_AC( CountingColouring );
   CERR( "- 群の作用による同一視があるならば、コーシー・フロベニウスの補題" );
   CERR( "  https://ja.wikipedia.org/wiki/コーシー・フロベニウスの補題" );
   CERR( "を検討しましょう。" );
 }
 
-AC( CountingTilingDrawable )
+AC( CountingColouring )
+{
+  CERR( "- 塗り分ける図形群の外周や頂点に位置する図形やの個数が少ないか" );
+  CERR( "  色の種類数が少ないならば、外周や頂点の図形群の塗り分けを固定することで" );
+  CERR( "  一廻り小さい図形群に対する数え上げとの関係式を導出し、" );
+  CERR( "  サイズに関する動的計画法" );
+}
+
+AC( CountingColouringDrawable )
 {
   CERR( "描画可能性を簡単な条件に翻訳し、その条件を満たす塗り分けを" );
   CERR( "数え上げましょう。" );
@@ -1976,6 +1983,19 @@ AC( CountingTilingDrawable )
   } else {
     CALL_AC( DecisionDrawabilitySameSizeUnoverdrawn );
   }
+}
+
+AC( CountingTilingPaintable )
+{
+  CERR( "塗り分けごとに図形の描画方法が一意に定まるならば、" );
+  CERR( "塗り分け方法の同値類として描画方法を数え上げをましょう。" );
+  CERR( "- 同値類の要素数が一定ならば単純な商" );
+  CERR( "- 群の作用による同一視があるならば、コーシー・フロベニウスの補題" );
+  CERR( "  https://ja.wikipedia.org/wiki/コーシー・フロベニウスの補題" );
+  CERR( "で商集合を計算しましょう。条件つきの塗り分けは" );
+  CERR( "- グリッドの部分集合のマスや辺の塗り分けは、左下から単純な2重ループ" );
+  CALL_AC( CountingColouring );
+  CERR( "を検討しましょう。" );
 }
 
 AC( CountingYoundDiagram )
