@@ -4,7 +4,7 @@
 #include "a.hpp"
 
 // operator<<のオーバーロードを行うため、先にincludeする。
-#include "../Tuple/StdStream/Debug/a_Body.hpp"
+#include "../../Tuple/StdStream/Debug/a_Body.hpp"
 
 template <class Traits , typename T , typename U> inline basic_ostream<char,Traits>& operator<<( basic_ostream<char,Traits>& os , const map<T,U>& f )
 {
