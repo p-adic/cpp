@@ -6,6 +6,7 @@
 #Get O(1)
 #IntervalSum O(N^{1/2})
 
+def rec_str(a):return"".join(["[",", ".join(rec_str(x)for x in a),"]"])if isinstance(a,list)else str(a)
 class SqrtDecomposition:
 	def __init__(self,a,N_sqrt=None):
 		self.N = len(a)
@@ -21,17 +22,15 @@ class SqrtDecomposition:
 			for i in R(i_min,i_ulim):self.b[d] *= self.a[i]
 			i_min = i_ulim
 			i_ulim += self.N_sqrt
-
+	def __str__(self):return("\n".join([rec_str(self.a),rec_str(self.b)]))
 	def Set(self,i,u):
 		d = i // self.N_sqrt
 		self.b[d] += u - self.a[i]
 		self.a[i] = u
-
 	def Add(self,i,u):
 		d = i // self.N_sqrt
 		self.b[d] += u
 		self.a[i] += u
-
 	def IntervalSum(self,i_start,i_final):
 		i_min = max( i_start , 0 )
 		i_ulim = min( i_final + 1 , self.N )
