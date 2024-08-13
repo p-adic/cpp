@@ -18,8 +18,7 @@ def L(r):
 	a=0;i=min(r+1,N)
 	while i:a+=F[i];i-=i&-i
 	return a
-def S(l,r): #l,rは始端,終端
-	return L(r)-L(l-1)
+def S(l,r):return L(r)-L(l-1) #l,rは始端,終端
 def B(u):
 	j=s=n=0;p=8**6 #262144
 	while p:
@@ -30,9 +29,8 @@ def B(u):
 			else:n=s
 	return j
 
-def rec_str(a):
-	if not isinstance(a,list):return str(a)
-	return "".join(["[",", ".join(rec_str(x)for x in a),"]"])
+
+def rec_str(a):return"".join(["[",", ".join(rec_str(x)for x in a),"]"])if isinstance(a,list)else str(a)
 class BIT:
 	def __init__(self,x):
 		if isinstance(x,int):
@@ -53,10 +51,8 @@ class BIT:
 		while i<=self.N:
 			self.F[i]+=u
 			i+=i&-i
-	def Set(self,i,u):
-		self.Add(i,u-self.Get(i))
-	def Get(self,i):
-		return self.IntervalSum(i,i)
+	def Set(self,i,u):self.Add(i,u-self.Get(i))
+	def Get(self,i):return self.IntervalSum(i,i)
 	def InitialSegmentSum(self,r):
 		assert(r>-2)
 		a=0
@@ -65,12 +61,9 @@ class BIT:
 			a+=self.F[i]
 			i-=i&-i
 		return a
-	def IntervalSum(self,l,r):
-		return self.InitialSegmentSum(r)-self.InitialSegmentSum(l-1)
-	def list(self):
-		return[self.Get(i)for i in R(self.N)]
-	def __str__(self):
-		return rec_str(self.list())
+	def IntervalSum(self,l,r):return self.InitialSegmentSum(r)-self.InitialSegmentSum(l-1)
+	def list(self):return[self.Get(i)for i in R(self.N)]
+	def __str__(self):return rec_str(self.list())
 	def BinarySearch(self,u):
 		j=s=n=0
 		p=1<<17 #131072
