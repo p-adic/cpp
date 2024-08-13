@@ -16,27 +16,31 @@ vector<T2<int>> EdgeOnGrid( const T2<int>& v )
   vector<T2<int>> answer{};
   auto& [i,j] = v;
 
-  if( i > 0 && grid[i-1][j] == walkable ){
+  if( grid[i][j] == walkable ){
 
-    answer.push_back( {i-1,j} );
+    if( i > 0 && grid[i-1][j] == walkable ){
 
-  }
+      answer.push_back( {i-1,j} );
 
-  if( i+1 < H && grid[i+1][j] == walkable ){
+    }
 
-    answer.push_back( {i+1,j} );
+    if( i+1 < H && grid[i+1][j] == walkable ){
 
-  }
+      answer.push_back( {i+1,j} );
 
-  if( j > 0 && grid[i][j-1] == walkable ){
+    }
 
-    answer.push_back( {i,j-1} );
+    if( j > 0 && grid[i][j-1] == walkable ){
 
-  }
+      answer.push_back( {i,j-1} );
 
-  if( j+1 < W && grid[i][j+1] == walkable ){
+    }
 
-    answer.push_back( {i,j+1} );
+    if( j+1 < W && grid[i][j+1] == walkable ){
+
+      answer.push_back( {i,j+1} );
+
+    }
 
   }
 
@@ -49,30 +53,34 @@ vector<pair<T2<int>,ll>> WEdgeOnGrid( const T2<int>& v ){
   vector<pair<T2<int>,ll>> answer{};
   auto& [i,j] = v;
 
-  if( i>0 && grid[i-1][j] == walkable ){
+  if( grid[i][j] == walkable ){
+  
+    if( i>0 && grid[i-1][j] == walkable ){
 
-    answer.push_back( {{i-1,j},1} );
+      answer.push_back( {{i-1,j},1} );
+
+    }
+
+    if( i+1 < H && grid[i+1][j] == walkable ){
+
+      answer.push_back( {{i+1,j},1} );
+
+    }
+
+    if( j>0 && grid[i][j-1] == walkable ){
+
+      answer.push_back( {{i,j-1},1} );
+
+    }
+
+    if( j+1 < W && grid[i][j+1] == walkable ){
+
+      answer.push_back( {{i,j+1},1} );
+
+    }
 
   }
-
-  if( i+1 < H && grid[i+1][j] == walkable ){
-
-    answer.push_back( {{i+1,j},1} );
-
-  }
-
-  if( j>0 && grid[i][j-1] == walkable ){
-
-    answer.push_back( {{i,j-1},1} );
-
-  }
-
-  if( j+1 < W && grid[i][j+1] == walkable ){
-
-    answer.push_back( {{i,j+1},1} );
-
-  }
-
+  
   return answer;
 
 }
