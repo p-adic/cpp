@@ -152,60 +152,65 @@ IN VO RandomTest( CRI test_case_num )
 #ifdef INCLUDE_LIBRARY
 
 /*
-AdicExhausiveSearch/BFS (11KB)
-c:/Users/user/Documents/Programming/Mathematics/Geometry/Graph/Algorithm/BreadthFirstSearch/AdicExhausiveSearch/compress.txt
+- BFS (6KB)
+  Geometry/Graph/Algorithm/BreadthFirstSearch/
+  - AdicExhausiveSearch (11KB)
+    Geometry/Graph/Algorithm/BreadthFirstSearch/AdicExhausiveSearch/
 
-CommutativeDualSqrtDecomposition (6KB)
-c:/Users/user/Documents/Programming/Mathematics/SetTheory/DirectProduct/AffineSpace/SqrtDecomposition/Dual/Commutative/compress.txt
+- BIT (5KB)
+  SetTheory/DirectProduct/AffineSpace/BIT/
+  - IntervalAdd (9KB)
+    SetTheory/DirectProduct/AffineSpace/BIT/IntervalAdd/
+  - IntervalMax (9KB)
+    SetTheory/DirectProduct/AffineSpace/BIT/IntervalMax/
 
-CoordinateCompress (3KB)
-c:/Users/user/Documents/Programming/Mathematics/SetTheory/DirectProduct/CoordinateCompress/compress.txt
+- CoordinateCompress (3KB)
+  SetTheory/DirectProduct/CoordinateCompress/
 
-DFSOnTree (11KB)
-c:/Users/user/Documents/Programming/Mathematics/Geometry/Graph/Algorithm/DepthFirstSearch/Tree/compress.txt
+- DFS (6KB)
+  Geometry/Graph/Algorithm/DepthFirstSearch/
+  - Tree (11KB)
+    Geometry/Graph/Algorithm/DepthFirstSearch/Tree/
 
-DifferenceSequence (9KB)
-c:/Users/user/Documents/Programming/Mathematics/SetTheory/DirectProduct/AffineSpace/DifferenceSequence/compress.txt
+- DifferenceSequence (9KB)
+  SetTheory/DirectProduct/AffineSpace/DifferenceSequence/
+  - TwoDimensional (5KB)
+    SetTheory/DirectProduct/AffineSpace/DifferenceSequence/TwoDimensional/
 
-Divisor/Prime (4KB)
-c:/Users/user/Documents/Programming/Mathematics/Arithmetic/Prime/Divisor/compress.txt
+- Dijkstra (6KB)
+  Geometry/Graph/Algorithm/Dijkstra/
+  - MinimumCostFlow (16KB)
+    Geometry/Graph/Algorithm/Dijkstra/Potentialised/MinimumCostFlow/
 
-IntervalAddBIT (9KB)
-c:/Users/user/Documents/Programming/Mathematics/SetTheory/DirectProduct/AffineSpace/BIT/IntervalAdd/compress.txt
+- Divisor/Prime/Factorisation (4KB)
+  Arithmetic/Divisor/
 
-IntervalMaxBIT (9KB)
-c:/Users/user/Documents/Programming/Mathematics/SetTheory/DirectProduct/AffineSpace/BIT/IntervalMax/compress.txt
+- Knapsack (8KB)
+  Combinatorial/KnapsackProblem/
 
-IntervalMultiplyLazySqrtDecomposition (18KB)
-c:/Users/user/Documents/Programming/Mathematics/SetTheory/DirectProduct/AffineSpace/SqrtDecomposition/LazyEvaluation/IntervalMultiply/compress.txt
+- SqrtDecomposition
+  - Monoid (5KB)
+    SetTheory/DirectProduct/AffineSpace/SqrtDecomposition/Monoid/
+  - CommutativeDual (6KB)
+    SetTheory/DirectProduct/AffineSpace/SqrtDecomposition/Dual/Commutative/
+  - IntervalMultiplyLazy (18KB)
+    SetTheory/DirectProduct/AffineSpace/SqrtDecomposition/LazyEvaluation/IntervalMultiply/
 
-Knapsack (8KB)
-c:/Users/user/Documents/Programming/Mathematics/Combinatorial/KnapsackProblem/compress.txt
+- TruncatedPolynomial (31KB)
+  Polynomial/Truncate/
+  - NonProth (34KB)
+    Polynomial/Truncate/NonProth/
 
-MinimumCostFlow/PotentialisedDijkstra/Dijkstra (16KB)
-c:/Users/user/Documents/Programming/Mathematics/Geometry/Graph/Algorithm/Dijkstra/Potentialised/MinimumCostFlow/compress.txt
+- TwoByTwoMatrix (6KB)
+  LinearAlgebra/
+  - TwoByOneMatrix (9KB)
+    LinearAlgebra/TwoByOne/
 
-TruncatedPolynomial (34KB)
-c:/Users/user/Documents/Programming/Mathematics/Polynomial/Truncate/NonProth/compress.txt
-
-TwoByOneMatrix/TwoByTwoMatrix (9KB)
-C:/Users/user/Documents/Programming/Mathematics/LinearAlgebra/TwoByOne/compress.txt
-
-UnionFind (3KB)
-c:/Users/user/Documents/Programming/Mathematics/Geometry/Graph/Algorithm/UnionFindForest/compress.txt
+- UnionFind (3KB)
+  Geometry/Graph/Algorithm/UnionFindForest/
 */
 
 // VVV 常設でないライブラリは以下に挿入する。
-
-
-
-
-
-
-
-
-
-
 
 
 // AAA 常設でないライブラリは以上に挿入する。
@@ -436,15 +441,10 @@ TE <TY T> IN T Max(CO T& a,CO T& b){RE a < b?b:a;}
 // Random（1KB）
 ll GetRand(CRI Rand_min,CRI Rand_max){AS(Rand_min <= Rand_max);ll AN = time(NULL);RE AN * rand()%(Rand_max + 1 - Rand_min)+ Rand_min;}
 
-// Map (2KB)
+// Set (1KB)
 #define DC_OF_HASH(...)struct hash<__VA_ARGS__>{IN size_t OP()(CO __VA_ARGS__& n)CO;};
 CL is_ordered{PU:is_ordered()= delete;TE <TY T> ST CE auto Check(CO T& t)-> decltype(t < t,true_type());ST CE false_type Check(...);TE <TY T> ST CE CO bool value = is_same_v< decltype(Check(declval<T>())),true_type >;};
 TE <TY T>US Set = conditional_t<is_COructible_v<unordered_set<T>>,unordered_set<T>,conditional_t<is_ordered::value<T>,set<T>,VO>>;
-
-#define DF_OF_AR_FOR_MAP(MAP,OPR)TE <TY T,TY U> IN MAP<T,U>& OP OPR ## =(MAP<T,U>& a,CO pair<T,U>& v){a[v.first]OPR ## = v.second;RE a;}TE <TY T,TY U> IN MAP<T,U>& OP OPR ## =(MAP<T,U>& a0,CO MAP<T,U>& a1){for(auto&[t,u]:a1){a0[t]OPR ## = u;}RE a0;}TE <TY T,TY U,TY ARG> IN MAP<T,U> OP OPR(MAP<T,U> a,CO ARG& arg){RE MO(a OPR ## = arg);}
-#define DF_OF_ARS_FOR_MAP(MAP)DF_OF_AR_FOR_MAP(MAP,+);DF_OF_AR_FOR_MAP(MAP,-);DF_OF_AR_FOR_MAP(MAP,*);DF_OF_AR_FOR_MAP(MAP,/);DF_OF_AR_FOR_MAP(MAP,%);
-TE <TY T,TY U>US Map = conditional_t<is_COructible_v<unordered_map<T,int>>,unordered_map<T,U>,conditional_t<is_ordered::value<T>,map<T,U>,VO>>;
-DF_OF_ARS_FOR_MAP(map);DF_OF_ARS_FOR_MAP(unordered_map);
 
 // Tuple（4KB）
 #define DF_OF_AR_FOR_TUPLE(OPR)TE <TY T,TY U,TE <TY...> TY V> IN auto OP OPR ## =(V<T,U>& t0,CO V<T,U>& t1)-> decltype((get<0>(t0),t0))&{get<0>(t0)OPR ## = get<0>(t1);get<1>(t0)OPR ## = get<1>(t1);RE t0;}TE <TY T,TY U,TY V> IN tuple<T,U,V>& OP OPR ## =(tuple<T,U,V>& t0,CO tuple<T,U,V>& t1){get<0>(t0)OPR ## = get<0>(t1);get<1>(t0)OPR ## = get<1>(t1);get<2>(t0)OPR ## = get<2>(t1);RE t0;}TE <TY T,TY U,TY V,TY W> IN tuple<T,U,V,W>& OP OPR ## =(tuple<T,U,V,W>& t0,CO tuple<T,U,V,W>& t1){get<0>(t0)OPR ## = get<0>(t1);get<1>(t0)OPR ## = get<1>(t1);get<2>(t0)OPR ## = get<2>(t1);get<3>(t0)OPR ## = get<3>(t1);RE t0;}TE <TY ARG,TY T,TY U,TE <TY...> TY V> IN auto OP OPR ## =(V<T,U>& t0,CO ARG& t1)-> decltype((get<0>(t0),t0))&{get<0>(t0)OPR ## = t1;get<1>(t0)OPR ## = t1;RE t0;}TE <TY ARG,TY T,TY U,TY V> IN tuple<T,U,V>& OP OPR ## =(tuple<T,U,V>& t0,CO ARG& t1){get<0>(t0)OPR ## = t1;get<1>(t0)OPR ## = t1;get<2>(t0)OPR ## = t1;RE t0;}TE <TY ARG,TY T,TY U,TY V,TY W> IN tuple<T,U,V,W>& OP OPR ## =(tuple<T,U,V,W>& t0,CO ARG& t1){get<0>(t0)OPR ## = t1;get<1>(t0)OPR ## = t1;get<2>(t0)OPR ## = t1;get<3>(t0)OPR ## = t1;RE t0;}TE <TE <TY...> TY V,TY...ARGS,TY ARG> IN auto OP OPR(CO V<ARGS...>& t0,CO ARG& t1)-> decldecay_t((get<0>(t0),t0)){auto t = t0;RE MO(t OPR ## = t1);}
@@ -461,6 +461,12 @@ TE <TY T> IN size_t hash<tuple<T>>::OP()(CO tuple<T>& n)CO{ST CO hash<T> h;RE h(
 #define DF_OF_INCREMENT_FOR_VE(V,INCR)TE <TY T> IN V<T>& OP INCR(V<T>& a){for(auto& i:a){INCR i;}RE a;}
 #define DF_OF_ARS_FOR_VE(V)DF_OF_AR_FOR_VE(V,+);DF_OF_AR_FOR_VE(V,-);DF_OF_AR_FOR_VE(V,*);DF_OF_AR_FOR_VE(V,/);DF_OF_AR_FOR_VE(V,%);DF_OF_INCREMENT_FOR_VE(V,++);DF_OF_INCREMENT_FOR_VE(V,--);TE <TY T> IN V<T> OP*(CO T& scalar,V<T> v){for(auto& t:v){v *= t;}RE MO(v);}
 DF_OF_COUT_FOR_VE(VE);DF_OF_COUT_FOR_VE(LI);DF_OF_COUT_FOR_VE(set);DF_OF_COUT_FOR_VE(unordered_set);DF_OF_ARS_FOR_VE(VE);DF_OF_ARS_FOR_VE(LI);IN VO VariadicResize(CRI SZ){}TE <TY Arg,TY... ARGS> IN VO VariadicResize(CRI SZ,Arg& arg,ARGS&... args){arg.resize(SZ);VariadicResize(SZ,args...);}TE <TY V> IN auto Get(V& a){RE[&](CRI i = 0)-> CO decldecay_t(a[0])&{RE a[i];};}TE <TY T = int> IN VE<T> id(CRI SZ){VE<T> AN(SZ);FOR(i,0,SZ){AN[i]= i;}RE AN;}TE <TY T> VO Sort(VE<T>& a,CO bool& reversed = false){if(reversed){ST auto comp =[](CO T& t0,CO T& t1){RE t1 < t0;};sort(a.BE(),a.EN(),comp);}else{sort(a.BE(),a.EN());}}TE <TY T> IN VE<int> IndexSort(CO VE<T>& a,CO bool& reversed = false){auto index = id<int>(a.SZ());if(reversed){sort(index.BE(),index.EN(),[&](CRI i,CRI j){RE a[j]< a[i];});}else{sort(index.BE(),index.EN(),[&](CRI i,CRI j){RE a[i]< a[j];});}RE index;}
+
+// Map (1KB)
+#define DF_OF_AR_FOR_MAP(MAP,OPR)TE <TY T,TY U> IN MAP<T,U>& OP OPR ## =(MAP<T,U>& a,CO pair<T,U>& v){a[v.first]OPR ## = v.second;RE a;}TE <TY T,TY U> IN MAP<T,U>& OP OPR ## =(MAP<T,U>& a0,CO MAP<T,U>& a1){for(auto&[t,u]:a1){a0[t]OPR ## = u;}RE a0;}TE <TY T,TY U,TY ARG> IN MAP<T,U> OP OPR(MAP<T,U> a,CO ARG& arg){RE MO(a OPR ## = arg);}
+#define DF_OF_ARS_FOR_MAP(MAP)DF_OF_AR_FOR_MAP(MAP,+);DF_OF_AR_FOR_MAP(MAP,-);DF_OF_AR_FOR_MAP(MAP,*);DF_OF_AR_FOR_MAP(MAP,/);DF_OF_AR_FOR_MAP(MAP,%);
+TE <TY T,TY U>US Map = conditional_t<is_COructible_v<unordered_map<T,int>>,unordered_map<T,U>,conditional_t<is_ordered::value<T>,map<T,U>,VO>>;
+DF_OF_ARS_FOR_MAP(map);DF_OF_ARS_FOR_MAP(unordered_map);
 
 // StdStream（1KB）
 TE <CL Traits> IN IS& VariadicCin(IS& is){RE is;}TE <CL Traits,TY Arg,TY... ARGS> IN IS& VariadicCin(IS& is,Arg& arg,ARGS&... args){RE VariadicCin(is >> arg,args...);}TE <CL Traits> IN IS& VariadicSet(IS& is,CRI i){RE is;}TE <CL Traits,TY Arg,TY... ARGS> IN IS& VariadicSet(IS& is,CRI i,Arg& arg,ARGS&... args){RE VariadicSet(is >> arg[i],i,args...);}TE <CL Traits> IN IS& VariadicGetline(IS& is,CO char& separator){RE is;}TE <CL Traits,TY Arg,TY... ARGS> IN IS& VariadicGetline(IS& is,CO char& separator,Arg& arg,ARGS&... args){RE VariadicGetline(getline(is,arg,separator),separator,args...);}TE <CL Traits,TY Arg> IN OS& VariadicCout(OS& os,CO Arg& arg){RE os << arg;}TE <CL Traits,TY Arg1,TY Arg2,TY... ARGS> IN OS& VariadicCout(OS& os,CO Arg1& arg1,CO Arg2& arg2,CO ARGS&... args){RE VariadicCout(os << arg1 << " ",arg2,args...);}TE <CL Traits,TY ARRAY> IN OS& CoutArray(OS& os,CRI i_start,CRI i_ulim,CO ARRAY& a){for(int i = i_start;i < i_ulim;i++){(i == i_start?os:(os << " "))<< a[i];}RE os;}
