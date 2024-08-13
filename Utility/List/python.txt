@@ -2,39 +2,23 @@
 #基点ノードは[コンテナの長さ,末尾コンテナノード,先頭コンテナノード]を格納。
 #コンテナノードは[値,前のノード,後ろのノード]を格納。
 #dllistのlist()とcopy()は、要素自体がmutableな場合にコピーせず参照することに注意
-def rec_str(a):
-	if not isinstance(a,list):return str(a)
-	return "".join(["[",", ".join(rec_str(x)for x in a),"]"])
+def rec_str(a):return"".join(["[",", ".join(rec_str(x)for x in a),"]"])if isinstance(a,list)else str(a)
 class dliterator:
-	def __init__(self,a,i):
-		self.a,self.i=a,i
-	def __eq__(self,i):
-		return id(self.a)==id(i.a)and self.i==i.i
-	def get(self):
-		assert(self.i)
-		return self.a.a[self.i][0]
-	def __str__(self):
-		return rec_str(self.get())
-	def set(self,x):
-		assert(self.i)
-		self.a.a[self.i][0]=x
-	def copy(self):
-		return dliterator(self.a,self.i)
+	def __init__(self,a,i):self.a,self.i=a,i
+	def __eq__(self,i):return id(self.a)==id(i.a)and self.i==i.i
+	def get(self):assert(self.i);return self.a.a[self.i][0]
+	def __str__(self):return rec_str(self.get())
+	def set(self,x):assert(self.i);self.a.a[self.i][0]=x
+	def copy(self):return dliterator(self.a,self.i)
 	def next(self,c=1):
-		for _ in R(c):
-			self.i=self.a.a[self.i][2]
-			assert(self.i>=0)
+		for _ in R(c):self.i=self.a.a[self.i][2];assert(self.i>=0)
 	def prev(self,c=1):
-		for _ in R(c):
-			self.i=self.a.a[self.i][1]
-			assert(self.i>=0)
+		for _ in R(c):self.i=self.a.a[self.i][1];assert(self.i>=0)
 	def shift(c):
 		if c<0:self.prev(-c)
 		else:self.next(c)
-	def __ladd__(self,c):
-		self.shift(c)
-	def __lsub__(self,c):
-		self.shift(-c)
+	def __ladd__(self,c):self.shift(c)
+	def __lsub__(self,c):self.shift(-c)
 class dllist:
 	def __init__(self,init=[]):
 		n=len(init)
@@ -49,16 +33,11 @@ class dllist:
 			a+=[i.get()]
 			i.next()
 		return a
-	def __str__(self):
-		return rec_str(self.list())
-	def copy(self):
-		return dllist(self.list())
-	def size(self):
-		return self.a[0][0]
-	def end(self):
-		return dliterator(self,0)
-	def rend(self):
-		return self.end()
+	def __str__(self):return rec_str(self.list())
+	def copy(self):return dllist(self.list())
+	def size(self):return self.a[0][0]
+	def end(self):return dliterator(self,0)
+	def rend(self):return self.end()
 	def begin(self):
 		n=self.end()
 		n.next()
@@ -67,10 +46,8 @@ class dllist:
 		n=self.rend()
 		n.prev()
 		return n
-	def front(self):
-		return self.begin().get()
-	def back(self):
-		return self.rbegin().get()
+	def front(self):return self.begin().get()
+	def back(self):return self.rbegin().get()
 	def insert_front(self,i,x,c=1):
 		j=i.copy()
 		j.prev()
@@ -79,10 +56,8 @@ class dllist:
 		j=i.copy()
 		j.next()
 		self.insert_between(i,j,x,c)
-	def push_front(self,x,c=1):
-		self.insert_front(self.begin(),x,c)
-	def push_back(self,x,c=1):
-		self.insert_back(self.rbegin(),x,c)
+	def push_front(self,x,c=1):self.insert_front(self.begin(),x,c)
+	def push_back(self,x,c=1):self.insert_back(self.rbegin(),x,c)
 	def __ladd__(self,a):
 		for x in a:self.push_back(x)
 	def erase(self,i):
@@ -96,12 +71,9 @@ class dllist:
 		self.i,self.a[i.i][1]=i,self.i.i
 		self.a[i.i][2]=-1
 		return l
-	def pop_front(self):
-		self.erase(self.begin())
-	def pop_back(self):
-		self.erase(self.rbegin())
-	def clear(self):
-		self.a,self.i=[[0,0,0]],self.end()
+	def pop_front(self):self.erase(self.begin())
+	def pop_back(self):self.erase(self.rbegin())
+	def clear(self):self.a,self.i=[[0,0,0]],self.end()
 	def merge(self,other):
 		i=self.begin()
 		e=self.end()
@@ -114,6 +86,7 @@ class dllist:
 				else:i.next()
 			else:self.push_back(t)
 			other.pop_front()
+
 	#private:
 	def insert_between(self,i,j,x,c):
 		assert(id(i.a)==id(self)==id(j.a)and self.a[i.i][2]>=0 and self.a[j.i][2]>=0)
