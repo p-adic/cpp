@@ -14,7 +14,8 @@ template <typename T , typename GRAPH> inline VirtualBreadthFirstSearch<T,GRAPH>
   cerr << "•^[‚³’Tõ—Dæ’Tõ‚ðƒfƒoƒbƒOƒ‚[ƒh‚ÅŽÀs‚µ‚Ü‚·B" << endl;
   cerr << "Še’TõƒXƒeƒbƒv‚ÌŒvŽZ—Ê‚ªO(V)’Ç‰Á‚³‚ê‚é‚±‚Æ‚É’ˆÓ‚µ‚Ä‚­‚¾‚³‚¢B" << endl;
   cerr << "ƒOƒ‰ƒt‚Ì’¸“_”V‚Í" << V << "‚Å‚·B" << endl;
-  cerr << "—LŒü•Ó‚ª" << endl;
+
+  bool empty = true;
 
   for( int i = 0 ; i < V ; i++ ){
 
@@ -22,16 +23,33 @@ template <typename T , typename GRAPH> inline VirtualBreadthFirstSearch<T,GRAPH>
 
     for( auto&& u : m_G.Edge( t ) ){
 
+      if( empty ){
+
+	empty = false;
+	cerr << "—LŒü•Ó‚ª" << endl;
+
+      }
+
       cerr << t << " -> " << m_G.Vertex( u ) << endl;
 
     }
 
   }
 
-  cerr << "‚Æ“\‚ç‚ê‚Ä‚¢‚Ü‚·B" << endl;
+  if( empty ){
+
+    cerr << "—LŒü•Ó‚ª1–{‚à‚ ‚è‚Ü‚¹‚ñB" << endl;
+
+  } else {
+
+    cerr << "‚Æ“\‚ç‚ê‚Ä‚¢‚Ü‚·B" << endl;
+
+  }
+  
   cerr << endl;
 
 }
+
 template <typename T , typename GRAPH> template <typename Arg> inline VirtualBreadthFirstSearch<T,GRAPH>::VirtualBreadthFirstSearch( GRAPH& G , const T& not_found , Arg&& init ) : VirtualBreadthFirstSearch<T,GRAPH>( G , not_found ) { Initialise( forward<Arg>( init ) ); }
 
 template <typename T , typename GRAPH> inline void VirtualBreadthFirstSearch<T,GRAPH>::Initialise()
@@ -39,13 +57,19 @@ template <typename T , typename GRAPH> inline void VirtualBreadthFirstSearch<T,G
 
   m_initialised = true;
   const int& V = size();
-  m_next.clear();
-  m_found = vector<bool>( V );
-  m_prev = vector<T>( V , m_not_found );
   cerr << "s”Ô†: " << __LINE__ << endl;
   cerr << "•^[‚³’Tõ—Dæ’Tõ‚ð‰Šú‰»‚µ‚Ü‚·B" << endl;
-  cerr << "–K–â—\’è‚Ì’¸“_ƒŠƒXƒg‚ðíœ‚µ‚Ü‚µ‚½B" << endl;
-  cerr << endl;
+
+  if( ! m_next.empty() ){
+
+    cerr << "–K–â—\’è‚Ì’¸“_ƒŠƒXƒg‚ðíœ‚µ‚Ü‚µ‚½B" << endl;
+    cerr << endl;
+    m_next.clear();
+
+  }
+  
+  m_found = vector<bool>( V );
+  m_prev = vector<T>( V , m_not_found );
 
 }
 
@@ -55,10 +79,11 @@ template <typename T , typename GRAPH> inline void VirtualBreadthFirstSearch<T,G
   auto&& i = m_G.Enumeration_inv( init );
   const int& V = size();
   assert( 0 <= i && i < V );
+  cerr << "s”Ô†: " << __LINE__ << endl;
+  cerr << "-> ";
   Initialise();
   m_next.push_back( init );
   m_found[i] = true;
-  cerr << "s”Ô†: " << __LINE__ << endl;
   cerr << "–K–â—\’è‚Ì’¸“_ƒŠƒXƒg‚É" << init << "‚ð’Ç‰Á‚µ‚Ü‚µ‚½B" << endl;
   cerr << "–K–â—\’è‚Ì’¸“_ƒŠƒXƒg: " << m_next << endl;
   cerr << "–K–â—\’è‚É’Ç‰ÁÏ‚Ý‚Ì’¸“_ƒŠƒXƒg:";
@@ -77,6 +102,8 @@ template <typename T , typename GRAPH> inline void VirtualBreadthFirstSearch<T,G
 template <typename T , typename GRAPH> inline void VirtualBreadthFirstSearch<T,GRAPH>::Initialise( list<T> inits )
 {
 
+  cerr << "s”Ô†: " << __LINE__ << endl;
+  cerr << "-> ";
   Initialise();
   m_next = move( inits );
   const int& V = size();
@@ -89,7 +116,6 @@ template <typename T , typename GRAPH> inline void VirtualBreadthFirstSearch<T,G
 
   }
 
-  cerr << "s”Ô†: " << __LINE__ << endl;
   cerr << "–K–â—\’è‚Ì’¸“_ƒŠƒXƒg‚É" << inits << "‚ð’Ç‰Á‚µ‚Ü‚µ‚½B" << endl;
   cerr << "–K–â—\’è‚Ì’¸“_ƒŠƒXƒg: " << m_next << endl;
   cerr << "–K–â—\’è‚É’Ç‰ÁÏ‚Ý‚Ì’¸“_ƒŠƒXƒg:";
@@ -115,31 +141,36 @@ template <typename T , typename GRAPH> inline void VirtualBreadthFirstSearch<T,G
     assert( 0 <= i && i < V );
     m_next.clear();
     cerr << "s”Ô†: " << __LINE__ << endl;
-    cerr << "–K–â—\’è‚Ì’¸“_ƒŠƒXƒg‚ðíœ‚µ‚Ü‚µ‚½B" << endl;
 
-    if( ! m_found[i] ){
+    if( m_found[i] ){
+
+      cerr << "–K–â—\’è‚Ì’¸“_ƒŠƒXƒg‚ðíœ‚µ‚Ü‚µ‚½B" << endl;
+      cerr << "–K–â—\’è‚Ì’¸“_ƒŠƒXƒg: " << m_next << endl;
+
+    } else {
       
       m_next.push_back( init );
       m_found[i] = true;
-      cerr << "–K–â—\’è‚Ì’¸“_ƒŠƒXƒg‚É" << init << "‚ð’Ç‰Á‚µ‚Ü‚µ‚½B" << endl;
+      cerr << "–K–â—\’è‚Ì’¸“_ƒŠƒXƒg‚ðíœ‚µ" << init << "‚ð’Ç‰Á‚µ‚Ü‚µ‚½B" << endl;
+      cerr << "–K–â—\’è‚Ì’¸“_ƒŠƒXƒg: " << m_next << endl;
+      cerr << "–K–â—\’è‚É’Ç‰ÁÏ‚Ý‚Ì’¸“_ƒŠƒXƒg:";
 
-    }
+      for( int j = 0 ; j < V ; j++ ){
 
-    cerr << "–K–â—\’è‚Ì’¸“_ƒŠƒXƒg: " << m_next << endl;
-    cerr << "–K–â—\’è‚É’Ç‰ÁÏ‚Ý‚Ì’¸“_ƒŠƒXƒg:";
+	m_found[j] ? ( cerr << " " << m_G.Enumeration( j ) ) : cerr;
 
-    for( int j = 0 ; j < V ; j++ ){
-
-      m_found[j] ? ( cerr << " " << m_G.Enumeration( j ) ) : cerr;
-
-    }
+      }
   
-    cerr << endl;
+      cerr << endl;
+
+    }
+
     cerr << endl;
 
   } else {
 
     cerr << "s”Ô†: " << __LINE__ << endl;
+    cerr << "-> ";
     Initialise( init );
 
   }
@@ -154,7 +185,6 @@ template <typename T , typename GRAPH> inline void VirtualBreadthFirstSearch<T,G
     m_next.clear();
     const int& V = size();
     cerr << "s”Ô†: " << __LINE__ << endl;
-    cerr << "–K–â—\’è‚Ì’¸“_ƒŠƒXƒg‚ðíœ‚µ‚Ü‚µ‚½B" << endl;
 
     for( auto& u : m_next ){
 
@@ -165,11 +195,29 @@ template <typename T , typename GRAPH> inline void VirtualBreadthFirstSearch<T,G
 
 	m_next.push_back( u );
 	m_found[i] = true;
-	cerr << "–K–â—\’è‚Ì’¸“_ƒŠƒXƒg‚É" << u << "‚ð’Ç‰Á‚µ‚Ü‚µ‚½B" << endl;
 
       }
 
-      cerr << "–K–â—\’è‚Ì’¸“_ƒŠƒXƒg: " << m_next << endl;
+    }
+
+    if( m_next.empty() ){
+
+      cerr << "s”Ô†: " << __LINE__ << endl;
+      cerr << "–K–â—\’è‚Ì’¸“_ƒŠƒXƒg‚ðíœ‚µ‚Ü‚µ‚½B" << endl;
+      cerr << "–K–â—\’è‚Ì’¸“_ƒŠƒXƒg:" << m_next << endl;
+
+    } else {
+      
+      cerr << "s”Ô†: " << __LINE__ << endl;
+      cerr << "–K–â—\’è‚Ì’¸“_ƒŠƒXƒg‚ðíœ‚µ";
+
+      for( auto begin = m_next.begin() , itr = begin , end = m_next.end() ; itr != end ; itr++ ){
+
+	( itr == begin ? cerr : cerr << ", " ) << *itr;
+
+      }
+
+      cerr << "‚ð’Ç‰Á‚µ‚Ü‚µ‚½B" << endl;
       cerr << "–K–â—\’è‚É’Ç‰ÁÏ‚Ý‚Ì’¸“_ƒŠƒXƒg:";
 
       for( int j = 0 ; j < V ; j++ ){
@@ -179,9 +227,10 @@ template <typename T , typename GRAPH> inline void VirtualBreadthFirstSearch<T,G
       }
   
       cerr << endl;
-      cerr << endl;
 
     }
+
+    cerr << endl;
 
   } else {
 
@@ -207,8 +256,7 @@ template <typename T , typename GRAPH> inline T VirtualBreadthFirstSearch<T,GRAP
 
   const T t_curr = m_next.front();
   m_next.pop_front();
-  cerr << "s”Ô†: " << __LINE__ << endl;
-  cerr << "–K–â—\’è‚Ì’¸“_ƒŠƒXƒg‚©‚ç" << t_curr << "‚ðŽæ‚èo‚µ‚Ü‚µ‚½B" << endl;
+  vector<T> new_next{};
 
   for( auto& t : m_G.Edge( t_curr ) ){
 
@@ -220,23 +268,44 @@ template <typename T , typename GRAPH> inline T VirtualBreadthFirstSearch<T,GRAP
       Push( m_next , t );
       m_prev[i] = t_curr;
       found_i = true;
-      cerr << "–K–â—\’è‚Ì’¸“_ƒŠƒXƒg‚É" << t << "‚ð’Ç‰Á‚µ‚Ü‚µ‚½B" << endl;
+      new_next.push_back( t );
 
     }
 
   }
 
-  cerr << "–K–â—\’è‚Ì’¸“_ƒŠƒXƒg: " << m_next << endl;
-  cerr << "–K–â—\’è‚É’Ç‰ÁÏ‚Ý‚Ì’¸“_ƒŠƒXƒg:";
-  const int& V = size();
-  
-  for( int j = 0 ; j < V ; j++ ){
+  if( new_next.empty() ){
 
-    m_found[j] ? ( cerr << " " << m_G.Enumeration( j ) ) : cerr;
+    cerr << "s”Ô†: " << __LINE__ << endl;
+    cerr << "–K–â—\’è‚Ì’¸“_ƒŠƒXƒg‚©‚ç" << t_curr << "‚ðŽæ‚èo‚µ‚Ü‚µ‚½B" << endl;
+    cerr << "–K–â—\’è‚Ì’¸“_ƒŠƒXƒg: " << m_next << endl;
+
+  } else {
+    
+    cerr << "s”Ô†: " << __LINE__ << endl;
+    cerr << "–K–â—\’è‚Ì’¸“_ƒŠƒXƒg‚©‚ç" << t_curr << "‚ðŽæ‚èo‚µ";
+
+    for( auto begin = new_next.begin() , itr = begin , end = new_next.end() ; itr != end ; itr++ ){
+
+      ( itr == begin ? cerr : cerr << ", " ) << *itr;
+
+    }
+
+    cerr << "‚ð’Ç‰Á‚µ‚Ü‚µ‚½B" << endl;
+    cerr << "–K–â—\’è‚Ì’¸“_ƒŠƒXƒg: " << m_next << endl;
+    cerr << "–K–â—\’è‚É’Ç‰ÁÏ‚Ý‚Ì’¸“_ƒŠƒXƒg:";
+    const int& V = size();
+  
+    for( int j = 0 ; j < V ; j++ ){
+
+      m_found[j] ? ( cerr << " " << m_G.Enumeration( j ) ) : cerr;
+
+    }
+  
+    cerr << endl;
 
   }
   
-  cerr << endl;
   cerr << endl;
   return t_curr;
 
