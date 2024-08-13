@@ -5,6 +5,11 @@
 
 #include "../a.hpp"
 
+// デバッグ用（CERRマクロ内でのみ使用）
+#ifdef DEBUG
+  #include "StdStream/a.hpp"
+#endif
+
 #include "a_Alias.hpp"
 
 // Map<T,U>は
