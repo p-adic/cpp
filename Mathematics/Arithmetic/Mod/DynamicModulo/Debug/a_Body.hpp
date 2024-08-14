@@ -4,7 +4,7 @@
 #include "a.hpp"
 
 #include "../Constant/a_Body.hpp"
-#include "../../../Prime/Divisor/GCD/a_Body.hpp"
+#include "../../../Divisor/GCD/a_Body.hpp"
 
 template <int NUM> inline DynamicMods<NUM>::DynamicMods() noexcept : m_non_negative( true ) , m_n() , m_d( 1 ) {}
 template <int NUM> inline DynamicMods<NUM>::DynamicMods( const DynamicMods<NUM>& n ) noexcept : m_non_negative( n.m_non_negative ) , m_n( n.m_n ) , m_d( n.m_d ) {}
