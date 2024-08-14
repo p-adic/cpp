@@ -89,7 +89,7 @@ void PowerAnalysis( const int& sample_count , const vector<DynamicMod>& output ,
     FOR( sample_num , 0 , sample_count ){
       ( sample_num == 0 ? cerr : cerr << ", " ) << sample_num + 1;
     }
-    cerr << "の出力の法" + P_str + "における" + to_string( base ) + "羃指数の解析結果:\n";
+    cerr << "の出力の法" + P_str + "における底" + to_string( base ) + "の離散対数を求めます。\n";
     FOREQ( diff , - diff_max , diff_max ){
       cerr << "出力" << ( diff > 0 ? "+" : "" ) << ( diff == 0 ? "" : to_string( diff ) ) << ": ";
       bool small = true;
