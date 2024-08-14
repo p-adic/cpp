@@ -21,7 +21,8 @@ void AutoCheck( int& exec_mode , const bool& use_getline )
 	     "ライブラリーを探索する。" ,
 	     "愚直解で実験する。" ,
 	     "愚直解と提出用ファイルを入力の小さいテストケースで比較する。" ,
-	     "愚直解と提出用ファイルをランダムテストで比較する。"
+	     "愚直解と提出用ファイルをランダムテストで比較する。" ,
+	     "終了する。"
 	     );
   exec_mode = num;
   if( num == num_temp++ ){
@@ -38,6 +39,8 @@ void AutoCheck( int& exec_mode , const bool& use_getline )
     CERR( "愚直解と提出用ファイルを入力の小さいテストケースで比較します。" );
   } else if( num == num_temp++ ){
     CERR( "愚直解と提出用ファイルをランダムテストで比較します。" );
+  } else if( num == num_temp++ ){
+    CERR( "終了します。" );
   }
   CERR( "" );
 }
@@ -63,6 +66,7 @@ AC( DebugHint )
     CERR( "- イテレータを範囲外まで--/++していませんか？" );
     CERR( "- multisetのcountを使っていませんか？" );
     CERR( "- 0で割っていませんか？" );
+    CERR( "- 仮想継承した関数をコンストラクタ内で呼び出していませんか？" );
   } else if( num == num_temp++ ){
     CERR( "- マルチテストケースでデータ構造の初期化が反復されていませんか？" );
     CERR( "  - 動的配列への置き換え" );

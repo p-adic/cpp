@@ -3,6 +3,8 @@
 #include "../../Header.hpp"
 #include "a_Body.hpp"
 
+#include "../SampleAnalyser/a_Body.hpp"
+
 AC( LibrarySearch )
 {
   ASK_NUMBER(
@@ -1516,6 +1518,10 @@ AC( Counting )
     CALL_AC( CountingParenthesisSequence );
   } else if( num == num_temp++ ){
     CALL_AC( ExplicitExpressionCountingOperation );
+  }
+  ASK_YES_NO( "ƒTƒ“ƒvƒ‹‚ğ‰ğÍ‚µ‚Ü‚·‚©H" );
+  if( reply == "y" ){
+    CALL_AC( SampleAnalyser );
   }
 }
 
