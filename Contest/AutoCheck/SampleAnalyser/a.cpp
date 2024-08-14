@@ -106,7 +106,7 @@ void PowerAnalysis( const int& sample_count , const vector<DynamicMod>& output ,
 
 void InputPolynomialAnalysis1( const int& sample_count , const vector<vector<ll>>& input , const vector<DynamicMod>& output , const int& scale , const int& P , const string& P_str )
 {
-  CERR( "サンプル出力の法" + P_str + "における1変数多項式補間の解析結果:" );
+  CERR( "サンプル出力の法" + P_str + "における1変数多項式補間を試みます。" );
   CEXPR( int , size , 4 );
   CEXPR( int , length , size );
   CEXPR( int , denom , 12 );
@@ -155,7 +155,7 @@ void InputPolynomialAnalysis1( const int& sample_count , const vector<vector<ll>
 
 void InputPolynomialAnalysis2( const int& sample_count , const vector<vector<ll>>& input , const vector<DynamicMod>& output , const int& scale , const int& P , const string& P_str )
 {
-  CERR( "サンプル出力の法" + P_str + "における2変数多項式補間の解析結果:" );
+  CERR( "サンプル出力の法" + P_str + "における2変数多項式補間を試みます。" );
   CEXPR( int , size , 3 );
   CEXPR( int , length , size * size );
   CEXPR( int , denom , 2 );
@@ -212,7 +212,7 @@ void InputPolynomialAnalysis2( const int& sample_count , const vector<vector<ll>
 
 void InputPolynomialAnalysis3( const int& sample_count , const vector<vector<ll>>& input , const vector<DynamicMod>& output , const int& scale , const int& P , const string& P_str )
 {
-  CERR( "サンプル出力の法" + P_str + "における3変数多項式補間の解析結果:" );
+  CERR( "サンプル出力の法" + P_str + "における3変数多項式補間を試みます。" );
   CEXPR( int , size , 2 );
   CEXPR( int , length , size * size * size );
   CEXPR( int , denom , 2 );
@@ -275,7 +275,7 @@ void InputPolynomialAnalysis3( const int& sample_count , const vector<vector<ll>
 
 void InputLinearAnalysis4( const int& sample_count , const vector<vector<ll>>& input , const vector<DynamicMod>& output , const int& scale , const int& P , const string& P_str )
 {
-  CERR( "サンプル出力の法" + P_str + "における4変数線形補間の解析結果:" );
+  CERR( "サンプル出力の法" + P_str + "における4変数線形補間を試みます。" );
   CEXPR( int , var , 4 );
   CEXPR( int , length , var + 1 );
   CEXPR( int , denom , 12 );
@@ -323,7 +323,7 @@ void InputLinearAnalysis4( const int& sample_count , const vector<vector<ll>>& i
 
 void InputExponentialAnalysis2( const int& sample_count , const vector<vector<ll>>& input , const vector<DynamicMod>& output , const int& scale , const int& P , const string& P_str )
 {
-  CERR( "サンプル出力の法" + P_str + "における指数関数の一次結合による補間の解析結果:" );
+  CERR( "サンプル出力の法" + P_str + "における指数関数の一次結合による補間を試みます。" );
   CEXPR( int , size , 3 );
   CEXPR( int , var , 2 );
   CEXPR( int , length , var * ( var - 1 ) * size + 1 );
