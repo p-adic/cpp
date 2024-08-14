@@ -149,7 +149,7 @@ void InputPolynomialAnalysis1( const int& sample_count , const vector<vector<ll>
   } else {
     CERR( "ï‚ä‘é∏îsÅB" );
   }
-  cerr << "âêÕéûä‘: " << int( CURRENT_TIME * 1000 ) << "ïb\n";
+  cerr << "âêÕéûä‘: " << int( CURRENT_TIME / 1000 ) << "ïb\n";
   CERR( "" );
 }
 
@@ -206,7 +206,7 @@ void InputPolynomialAnalysis2( const int& sample_count , const vector<vector<ll>
   } else {
     CERR( "ï‚ä‘é∏îsÅB" );
   }
-  cerr << "âêÕéûä‘: " << int( CURRENT_TIME * 1000 ) << "ïb\n";
+  cerr << "âêÕéûä‘: " << int( CURRENT_TIME / 1000 ) << "ïb\n";
   CERR( "" );
 }
 
@@ -269,7 +269,7 @@ void InputPolynomialAnalysis3( const int& sample_count , const vector<vector<ll>
   } else {
     CERR( "ï‚ä‘é∏îsÅB" );
   }
-  cerr << "âêÕéûä‘: " << int( CURRENT_TIME * 1000 ) << "ïb\n";
+  cerr << "âêÕéûä‘: " << int( CURRENT_TIME / 1000 ) << "ïb\n";
   CERR( "" );
 }
 
@@ -317,7 +317,7 @@ void InputLinearAnalysis4( const int& sample_count , const vector<vector<ll>>& i
   } else {
     CERR( "ï‚ä‘é∏îsÅB" );
   }
-  cerr << "âêÕéûä‘: " << int( CURRENT_TIME * 1000 ) << "ïb\n";
+  cerr << "âêÕéûä‘: " << int( CURRENT_TIME / 1000 ) << "ïb\n";
   CERR( "" );
 }
 
@@ -328,7 +328,7 @@ void InputExponentialAnalysis2( const int& sample_count , const vector<vector<ll
   CEXPR( int , var , 2 );
   CEXPR( int , length , var * ( var - 1 ) * size + 1 );
   CEXPR( int , denom , 2 );
-  CEXPR( int , numer_bound , 3 );
+  CEXPR( int , numer_bound , 5 );
   const int numer_max = numer_bound * scale;
   vector<int> lower_bound( length , - numer_max );
   vector<int> upper_bound( length , numer_max );
@@ -379,6 +379,6 @@ void InputExponentialAnalysis2( const int& sample_count , const vector<vector<ll
   } else {
     CERR( "ï‚ä‘é∏îsÅB" );
   }
-  cerr << "âêÕéûä‘: " << int( CURRENT_TIME * 1000 ) << "ïb\n";
+  cerr << "âêÕéûä‘: " << int( CURRENT_TIME / 1000 ) << "ïb\n";
   CERR( "" );
 }
