@@ -77,7 +77,7 @@ template <int NUM> inline void swap( DynamicMods<NUM>& n0 , DynamicMods<NUM>& n1
 template <int NUM> inline string to_string( const DynamicMods<NUM>& n ) noexcept { const uint& M = DynamicMods<NUM>::GetModulo(); return ( n.GetSign() ? "" : "-" ) + to_string( n.GetNumerator() ) + ( n.GetNumerator() == 1 ? " + " + to_string( M ) + "Z" : "/" + to_string( n.GetDenominator() ) + " + " + to_string( M ) + "Z = " + to_string( n.Represent() ) + " + " + to_string( M ) + "Z" ); }
 
 template <int NUM , class Traits> inline basic_istream<char,Traits>& operator>>( basic_istream<char,Traits>& is , DynamicMods<NUM>& n ) { ll m; is >> m; n = m; return is; }
-template <int NUM , class Traits> inline basic_ostream<char,Traits>& operator<<( basic_ostream<char,Traits>& os , const DynamicMods<NUM>& n ) { os << ( n.GetSign() ? "" : "-" ) << n.GetNumerator(); return n.GetDenominator() == 1 ? os : os << "/" << n.GetDenominator() << " ß " << n.Represent(); }
+template <int NUM , class Traits> inline basic_ostream<char,Traits>& operator<<( basic_ostream<char,Traits>& os , const DynamicMods<NUM>& n ) { os << ( n.GetSign() ? "" : "-" ) << n.GetNumerator(); return n.GetDenominator() == 1 ? n.GetSign() ? os : os << " ß " << n.Represent() : os << "/" << n.GetDenominator() << " ß " << n.Represent(); }
 
 #include "../../Hash/a_Body.hpp"
 template <int NUM> DEFINITION_OF_HASH_FOR_MOD( DynamicMods<NUM> );
