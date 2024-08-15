@@ -4,6 +4,7 @@
 #include "a_Body.hpp"
 
 #include "LibrarySearch/a_Body.hpp"
+#include "SampleAnalyser/a_Body.hpp"
 
 #include "../../Utility/StdStream/a_Body.hpp"
 
@@ -19,6 +20,7 @@ void AutoCheck( int& exec_mode , const bool& use_getline )
 	     "サンプルの合わないファイルをデバッグする。" ,
 	     "提出済みファイルをデバッグする。" ,
 	     "ライブラリーを探索する。" ,
+	     "サンプルを解析する。" ,
 	     "愚直解で実験する。" ,
 	     "愚直解と提出用ファイルを入力の小さいテストケースで比較する。" ,
 	     "愚直解と提出用ファイルをランダムテストで比較する。" ,
@@ -33,6 +35,8 @@ void AutoCheck( int& exec_mode , const bool& use_getline )
     CALL_AC( DebugHint );
   } else if( num == num_temp++ ){
     CALL_AC( LibrarySearch );
+  } else if( num == num_temp++ ){
+    CALL_AC( SampleAnalyser );
   } else if( num == num_temp++ ){
     CERR( "愚直解で実験します。" );
   } else if( num == num_temp++ ){
