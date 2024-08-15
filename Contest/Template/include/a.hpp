@@ -28,9 +28,9 @@ CEXPR( int , solve_mode , 0 );
 CEXPR( int , sample_debug_mode , 1 );
 CEXPR( int , submission_debug_mode , 2 );
 CEXPR( int , library_search_mode , 3 );
-CEXPR( int , experiment_mode , 4 );
-CEXPR( int , small_test_mode , 5 );
-CEXPR( int , random_test_mode , 6 );
+CEXPR( int , experiment_mode , 5 );
+CEXPR( int , small_test_mode , 6 );
+CEXPR( int , random_test_mode , 7 );
 #ifdef USE_GETLINE
   CEXPR( bool , use_getline , true );
 #else
