@@ -11,10 +11,10 @@
 
 AC( SampleAnalyser )
 {
-  ASK_YES_NO( "数え上げの法は998244353ですか？" );
+  ASK_YES_NO( "出力の法は998244353または0ですか？" );
   int P = 998244353;
   if( reply != "y" ){
-    cerr << "数え上げの法: "; cin >> P;
+    cerr << "出力の法: "; cin >> P;
   }
   DynamicMod::SetModulo( P );
   int sample_count = 3;
@@ -24,20 +24,11 @@ AC( SampleAnalyser )
   }
   vector<vector<ll>> input( sample_count );
   vector<DynamicMod> output( sample_count );
-  int var = 0;
-  bool const_var = false;
-  ASK_YES_NO( "サンプル入力中の数値の個数は一定ですか？" );
-  if( reply == "y" ){
-    cerr << "サンプル入力中の数値の個数: "; cin >> var;
-    CERR( "" );
-    const_var = true;
-  }
+  cerr << "サンプル入力中の固定長な数値の個数: "; CIN( int , var );
+  CERR( "" );
   FOR( sample_num , 0 , sample_count ){
     const string sample_num_str = to_string( sample_num + 1 );
-    if( !const_var ){
-      cerr << "サンプル" << sample_num_str << "の入力中の数値の個数: "; cin >> var;
-    }
-    cerr << "サンプル" << sample_num_str << "の入力中の数値: ";
+    cerr << "サンプル" << sample_num_str << "の入力中の固定長な数値: ";
     CIN_A( ll , 0 , var , A );
     input[sample_num] = move( A );
     cerr << "サンプル" + sample_num_str + "出力: "; cin >> output[sample_num];
@@ -47,9 +38,10 @@ AC( SampleAnalyser )
   int scale = 1;
   while( true ){
     PowerAnalysis( sample_count , output , scale , P , P_str );
-    if( const_var && 0 < var && var <= 4 ){
+    if( 0 < var && var <= 4 ){
       if( var == 1 ){
 	InputPolynomialAnalysis1( sample_count , input , output , scale , P , P_str );
+	InputExponentialAnalysis1( sample_count , input , output , scale , P , P_str );
       } else if( var == 2 ){
 	InputPolynomialAnalysis2( sample_count , input , output , scale , P , P_str );
 	InputExponentialAnalysis2( sample_count , input , output , scale , P , P_str );
@@ -95,10 +87,10 @@ void PowerAnalysis( const int& sample_count , const vector<DynamicMod>& output ,
       bool small = true;
       FOR( sample_num , 0 , sample_count ){
 	int dl = DiscreteLog( int( output[sample_num].Represent() ) + diff , base , P );
-	small &= 0 <= dl && ll( dl ) * dl < P;  
+	small &= ( int( output[sample_num].Represent() ) + diff ) % P == 0 || ( 0 <= dl && ll( dl ) * dl < P );
 	cerr << ( dl < 0 ? "NaN" : to_string( dl ) ) << ( sample_num == sample_count - 1 ? "" : ", " );
       }
-      ( small ? cerr << " <- 有意に小さい値です。" : cerr ) << "\n";
+      ( small ? cerr << " <- 0または離散対数が有意に小さい値です。" : cerr ) << "\n";
     }
     CERR( "" );
   }
@@ -321,6 +313,59 @@ void InputLinearAnalysis4( const int& sample_count , const vector<vector<ll>>& i
   CERR( "" );
 }
 
+void InputExponentialAnalysis1( const int& sample_count , const vector<vector<ll>>& input , const vector<DynamicMod>& output , const int& scale , const int& P , const string& P_str )
+{
+  CERR( "サンプル出力の法" + P_str + "における指数関数の一次結合による補間を試みます。" );
+  CEXPR( int , size , 3 );
+  CEXPR( int , length , size + 2 );
+  CEXPR( int , denom , 6 );
+  CEXPR( int , numer_bound , 18 );
+  const int numer_max = numer_bound * scale;
+  vector<int> lower_bound( length , - numer_max );
+  vector<int> upper_bound( length , numer_max );
+  vector<int> index = lower_bound;
+  ll time = sample_count * ( size + 2 );
+  REPEAT( length ){
+    time *= 2 * numer_max + 1;
+  }
+  cerr << "（予想解析時間: " << time / 16000000 << "秒）\n";
+  START_WATCH;
+  bool valid = true;
+  bool match = false;
+  while( valid && !match ){
+    match = true;
+    FOR( sample_num , 0 , sample_count ){
+      DynamicMod x{ input[sample_num][0] } , x_power = Power( x , input[sample_num][0] - 1 );
+      DynamicMod temp = DynamicMod( index[length-1] ) + DynamicMod( index[length-2] ) * x;
+      FOR( d , 0 , size ){
+	int i = d;
+	temp += DynamicMod( index[i] ) * x_power;
+	x_power *= x;
+      }
+      if( output[sample_num] * denom != temp ){
+	match = false;
+	break;
+      }
+    }
+    if( !match ){
+      valid = NextLoopEq( length , lower_bound , upper_bound , index );
+    }
+  }
+  if( match ){
+    CERR( "補間成功:" );
+    cerr << "(" << index[length-1] << "/" << denom << ") + " << "(" << index[length-2] << "/" << denom << ") (引数1) + ";
+    FOR( d , 0 , size ){
+      int i = d , dx = d - 1;
+      cerr << "(" << index[i] << "/" << denom << ") (引数1)^{(引数1)" << ( dx > 0 ? "+" : "" ) << ( dx == 0 ? "" : to_string( dx ) ) << ( d == size - 1 ? "}\n" : "} + " );
+    }
+  } else {
+    CERR( "補間失敗。" );
+  }
+  cerr << "解析時間: " << int( CURRENT_TIME / 1000 ) << "秒\n";
+  CERR( "" );
+}
+
+
 void InputExponentialAnalysis2( const int& sample_count , const vector<vector<ll>>& input , const vector<DynamicMod>& output , const int& scale , const int& P , const string& P_str )
 {
   CERR( "サンプル出力の法" + P_str + "における指数関数の一次結合による補間を試みます。" );
@@ -346,13 +391,13 @@ void InputExponentialAnalysis2( const int& sample_count , const vector<vector<ll
     FOR( sample_num , 0 , sample_count ){
       DynamicMod x{ input[sample_num][0] } , y{ input[sample_num][1] } , x_power = Power( x , input[sample_num][1] - 1 ) , y_power = Power( y , input[sample_num][0] - 1 );
       DynamicMod temp = DynamicMod( index[length-1] );
-      FOR( dy , 0 , size ){
-	int i = dy;
+      FOR( d , 0 , size ){
+	int i = d;
 	temp += DynamicMod( index[i] ) * x_power;
 	x_power *= x;
       }
-      FOR( dx , 0 , size ){
-	int i = size + dx;
+      FOR( d , 0 , size ){
+	int i = size + d;
 	temp += DynamicMod( index[i] ) * y_power;
 	y_power *= y;
       }
@@ -367,14 +412,14 @@ void InputExponentialAnalysis2( const int& sample_count , const vector<vector<ll
   }
   if( match ){
     CERR( "補間成功:" );
-      cerr << "(" << index[length-1] << "/" << denom << ") + ";
-    FOR( dy , 0 , size ){
-      int i = dy;
+    cerr << "(" << index[length-1] << "/" << denom << ") + ";
+    FOR( d , 0 , size ){
+      int i = d , dy = d - 1;
       cerr << "(" << index[i] << "/" << denom << ") (引数1)^{(引数2)" << ( dy > 0 ? "+" : "" ) << ( dy == 0 ? "" : to_string( dy ) ) << "} + ";
     }
-    FOR( dx , 0 , size ){
-      int i = size + dx;
-      cerr << "(" << index[i] << "/" << denom << ") (引数2)^{(引数1)" << ( dx > 0 ? "+" : "" ) << ( dx == 0 ? "" : to_string( dx ) ) << ( dx == size - 1 ? "}" : "} + " );
+    FOR( d , 0 , size ){
+      int i = size + d , dx = d - 1;
+      cerr << "(" << index[i] << "/" << denom << ") (引数2)^{(引数1)" << ( dx > 0 ? "+" : "" ) << ( dx == 0 ? "" : to_string( dx ) ) << ( d == size - 1 ? "}\n" : "} + " );
     }
   } else {
     CERR( "補間失敗。" );
