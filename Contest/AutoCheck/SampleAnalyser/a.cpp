@@ -55,7 +55,7 @@ AC( SampleAnalyser )
   const string P_str = to_string( P );
   int scale = 1;
   while( true ){
-    // PowerAnalysis( sample_count , output , scale , P );
+    PowerAnalysis( sample_count , output , scale , P );
     if( 0 < var && var <= 4 ){
       bool prime = P == 998244353 || P == 1000000007;
       if( !prime && (
