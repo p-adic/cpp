@@ -31,11 +31,9 @@ public:
   inline Polynomial( Polynomial<T>&& f );
   inline Polynomial( vector<T> f );
   inline Polynomial( T t );
-  template <SFINAE_FOR_POLYNOMIAL( = nullptr )> inline Polynomial( Arg n );
   inline Polynomial( const uint& i , T t );
-  template <SFINAE_FOR_POLYNOMIAL( = nullptr )> inline Polynomial( const uint& i , Arg n );
 
-  template <SFINAE_FOR_POLYNOMIAL( = nullptr )> inline Polynomial<T>& operator=( Arg n );
+  inline Polynomial<T>& operator=( T n );
   inline Polynomial<T>& operator=( Polynomial<T> f );
   inline Polynomial<T>& operator=( vector<T> f );
 
@@ -85,6 +83,7 @@ public:
 
   static inline const Polynomial<T>& zero();
   static inline const Polynomial<T>& one();
+  static inline const Polynomial<T>& x();
   static inline const T& c_zero();
   static inline const T& c_one();
   static inline const T& c_minus_one();

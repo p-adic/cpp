@@ -1,3 +1,6 @@
+#ifdef DEBUG
+  #include "c:/Users/user/Documents/Programming/Mathematics/Polynomial/Composition/a_Body.hpp"
+#else
 // ../Truncate/compress.txtを先に貼る。
 
 // 一般の合成
@@ -26,3 +29,4 @@ TE <TY T>TRPO<T> MoeviusEXialComposition(CRUI N,CO PO<T>& f,T a,T b,T c,T d,CO T
 TE <TY T>TRPO<T> LogarithmComposition(CRUI N,PO<T> f,CO T& t){CRUI f_SZ = f.SZ();if(f_SZ == 0){RE TRPO<T>(N);}CO T& zero = PO<T>::c_zero();if(t == zero){RE TRPO<T>(N,f(t));}CO uint SZ = max(f_SZ,N);LI<T> point{};VE<T> coef{};for(uint d = 0;d < f_SZ;d++){f[d]*= T::Factorial(d);}for(uint d = 1;d < SZ;d++){point.push_back(t * T::Inverse(d));}SetPartialFractionDecomposition(SZ,f,point,coef);point.clear();f = MO(coef);CO T& one = PO<T>::c_one();CO T t_inv_minus = -one / t;T temp = t_inv_minus;for(uint d = 1;d < SZ;d++){f[d] *= temp;temp += t_inv_minus;}Shift(f,one);RE TRPO<T>(N,MO(f));}
 // t log(x)の合成後に0を1に移すメビウス変換のN次打ち切り
 TE <TY T>TRPO<T> MoeviusLogarithmComposition(CRUI N,PO<T> f,T a,T b,T c,CO T& t){CO T& zero = PO<T>::c_zero();assert(b != zero);f = LogarithmComposition(N,MO(f),t);a -= c;RE MoeviusComposition(N,f,a,zero,c,b);}
+#endif

@@ -44,11 +44,10 @@ public:
   inline TruncatedPolynomial( const uint& N , Polynomial<T>&& f );
   inline TruncatedPolynomial( const uint& N , vector<T>&& f );
   inline TruncatedPolynomial( const uint& N , const uint& i , T t );
-  template <SFINAE_FOR_POLYNOMIAL( = nullptr )> inline TruncatedPolynomial( const uint& N , const uint& i , const Arg& t );
 
   // m_N‚à‘ã“ü‚³‚ê‚é‚±‚Æ‚É’ˆÓ
   inline TruncatedPolynomial<T>& operator=( TruncatedPolynomial<T> f );
-  template <SFINAE_FOR_POLYNOMIAL( = nullptr )> inline TruncatedPolynomial<T>& operator=( Arg n );
+  inline TruncatedPolynomial<T>& operator=( T n );
   inline TruncatedPolynomial<T>& operator=( Polynomial<T> f );
 
   // m_N‚Í•Ï‰»‚µ‚È‚¢‚±‚Æ‚É’ˆÓ

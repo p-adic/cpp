@@ -3,18 +3,16 @@
 #pragma once
 #include "a.hpp"
 
-#include "Mod/a_Body.hpp"
+#include "Truncate/a_Body.hpp"
 
 template <typename T> inline Polynomial<T>::Polynomial() : m_f() , m_size( 0 ) {}
 template <typename T> inline Polynomial<T>::Polynomial( const Polynomial<T>& f ) : m_f( f.m_f ) , m_size( f.m_size ) {}
 template <typename T> inline Polynomial<T>::Polynomial( Polynomial<T>&& f ) : m_f( move( f.m_f ) ) , m_size( f.m_size ) {}
 template <typename T> inline Polynomial<T>::Polynomial( vector<T> f ) : m_f( move( f ) ) , m_size( m_f.size() ) {}
 template <typename T> inline Polynomial<T>::Polynomial( T t ) : Polynomial() { if( t != c_zero() ){ operator[]( 0 ) = move( t ); } }
-template <typename T> template <SFINAE_FOR_POLYNOMIAL()> inline Polynomial<T>::Polynomial( Arg n ) : Polynomial( T( move( n ) ) ) {}
 template <typename T> inline Polynomial<T>::Polynomial( const uint& i , T t ) : Polynomial() { if( t != c_zero() ){ operator[]( i ) = move( t ); } }
-template <typename T> template <SFINAE_FOR_POLYNOMIAL()> inline Polynomial<T>::Polynomial( const uint& i , Arg n ) : Polynomial( i , T( move( n ) ) ) {}
 
-template <typename T> template <SFINAE_FOR_POLYNOMIAL()> inline Polynomial<T>& Polynomial<T>::operator=( Arg n ) { m_f.clear(); m_size = 0; operator[]( 0 ) = move( n ); return *this; }
+template <typename T> inline Polynomial<T>& Polynomial<T>::operator=( T n ) { m_f.clear(); m_size = 0; operator[]( 0 ) = move( n ); return *this; }
 template <typename T> inline Polynomial<T>& Polynomial<T>::operator=( Polynomial<T> f ) { m_f = move( f.m_f ); m_size = f.m_size; return *this; }
 template <typename T> inline Polynomial<T>& Polynomial<T>::operator=( vector<T> f ) { m_f = move( f ); m_size = m_f.size(); return *this; }
 
@@ -317,6 +315,7 @@ string Polynomial<T>::Display() const noexcept
 
 template <typename T> inline const Polynomial<T>& Polynomial<T>::zero() { static const Polynomial<T> z{}; return z; }
 template <typename T> inline const Polynomial<T>& Polynomial<T>::one() { static const Polynomial<T> o{ c_one() }; return o; }
+template <typename T> inline const Polynomial<T>& Polynomial<T>::x() { static const Polynomial<T> f{ 1 , c_one() }; return f; }
 template <typename T> inline const T& Polynomial<T>::c_zero() { static const T z{ 0 }; return z; }
 template <typename T> inline const T& Polynomial<T>::c_one() { static const T o{ 1 }; return o; }
 template <typename T> inline const T& Polynomial<T>::c_minus_one() { static const T m{ -1 }; return m; }

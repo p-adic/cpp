@@ -18,10 +18,9 @@ template <typename T> inline TruncatedPolynomial<T>::TruncatedPolynomial( const 
 template <typename T> inline TruncatedPolynomial<T>::TruncatedPolynomial( const uint& N , Polynomial<T>&& f ) : Polynomial<T>() , m_N( N ) { if( f.Polynomial<T>::m_size < m_N * 2 ){ Polynomial<T>::operator=( move( f ) ); if( f.Polynomial<T>::m_size > m_N ){ TruncateFinal( m_N ); } } else { Polynomial<T>::m_f = vector<T>( m_N ); for( uint i = 0 ; i < m_N ; i++ ){ Polynomial<T>::m_f[i] = move( f.Polynomial<T>::m_f[i] ); } Polynomial<T>::m_size = m_N; } }
 template <typename T> inline TruncatedPolynomial<T>::TruncatedPolynomial( const uint& N , vector<T>&& f ) : Polynomial<T>() , m_N( N ) { const uint f_size = f.size(); if( f_size < m_N * 2 ){ Polynomial<T>::operator=( move( f ) ); if( f_size > m_N ){ TruncateFinal( m_N ); } } else { Polynomial<T>::m_f = vector<T>( m_N ); for( uint i = 0 ; i < m_N ; i++ ){ Polynomial<T>::m_f[i] = move( f[i] ); }} }
 template <typename T> inline TruncatedPolynomial<T>::TruncatedPolynomial( const uint& N , const uint& i , T t ) : Polynomial<T>() , m_N( N ) { if( i < m_N ? t != Polynomial<T>::c_zero() : false ){ Polynomial<T>::operator[]( i ) = move( t ); }}
-template <typename T> template <SFINAE_FOR_POLYNOMIAL()> inline TruncatedPolynomial<T>::TruncatedPolynomial( const uint& N , const uint& i , const Arg& n ) : TruncatedPolynomial( N , i , T( n ) ) {}
 
 template <typename T> inline TruncatedPolynomial<T>& TruncatedPolynomial<T>::operator=( TruncatedPolynomial<T> f ) { Polynomial<T>::operator=( move( f.m_f ) ); m_N = f.m_N; return *this; }
-template <typename T> template <SFINAE_FOR_POLYNOMIAL()> inline TruncatedPolynomial<T>& TruncatedPolynomial<T>::operator=( Arg n ) { Polynomial<T>::operator=( move( n ) ); return *this; }
+template <typename T> inline TruncatedPolynomial<T>& TruncatedPolynomial<T>::operator=( T n ) { Polynomial<T>::operator=( move( n ) ); return *this; }
 template <typename T> inline TruncatedPolynomial<T>& TruncatedPolynomial<T>::operator=( Polynomial<T> f ) { return operator=( TruncatedPolynomial<T>( m_N , move( f ) ) ); }
 
 template <typename T> inline TruncatedPolynomial<T>& TruncatedPolynomial<T>::operator+=( const T& t ) { Polynomial<T>::operator+=( t ); return *this; }

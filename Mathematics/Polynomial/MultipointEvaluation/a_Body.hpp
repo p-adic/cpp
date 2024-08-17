@@ -12,35 +12,33 @@ template <typename T , template <typename...> typename V1 , template <typename..
 void SetProductTree( V1<V2<T> >& product_tree )
 {
 
-  V2<T> empty{};
   V2<T> *p_node = &( product_tree.back() );
   
   while( p_node->size() > 1 ){
 
-    product_tree.push_front( empty );
-    V2<T>& node_curr = product_tree.front();
+    V2<T> node{};
 
     for( auto itr = p_node->begin() , end = p_node->end() ; itr != end ; itr++ ){
 
-      static const T null{};
-      node_curr.push_back( null );
+      node.push_back( T{} );
       T& f = *itr;
       itr++;
 
       if( itr == end ){
 
-	node_curr.back() = f;
+	node.back() = f;
 	break;
 	
       } else {
 	
-	node_curr.back() = f * *itr;
+	node.back() = f * *itr;
 
       }
 
     }
 
-    p_node = &node_curr;
+    product_tree.push_front( move( node ) );
+    p_node = &( product_tree.front() );
 
   }
 
@@ -55,18 +53,16 @@ template <typename T , template <typename...> typename V1 , template <typename..
 void SetPointTree( const V1<T>& point , V2<V3<Polynomial<T> > >& point_tree )
 {
 
-  static const V3<Polynomial<T> > empty{};
-  point_tree.push_front( empty );
-  V3<Polynomial<T> >& linear = point_tree.front();
+  const Polynomial<T>& x = Polynomial<T>::x();
+  V3<Polynomial<T> > linear{};
 
-  for( auto itr = point.begin() , end = point.end() ; itr != end ; itr++ ){
+  for( auto& p : point ){
 
-    static const Polynomial<T> x{ 1 , Polynomial<T>::c_one() };
-    linear.push_back( x );
-    linear.back()[0] -= *itr;
+    linear.push_back( x - Polynomial<T>( p ) );
 
   }
 
+  point_tree.push_front( move( linear ) );
   SetProductTree( point_tree );
   return;
   
@@ -88,12 +84,9 @@ void SetPointTreeEvaluation( const Polynomial<T>& f , const V1<V2<Polynomial<T> 
 
   }
 
-  list<Polynomial<T> > residue = {};
   const Polynomial<T>& zero = Polynomial<T>::zero();
-  residue.push_back( zero );
-  residue.back() = f % top.front();
-
   auto itr_tree = point_tree.begin() , end_tree = point_tree.end();
+  list<Polynomial<T> > residue = { f % itr_tree->front() };
   itr_tree++;
 
   while( itr_tree != end_tree ){
@@ -122,9 +115,9 @@ void SetPointTreeEvaluation( const Polynomial<T>& f , const V1<V2<Polynomial<T> 
 
   }
   
-  for( auto itr_residue = residue.begin() , end_residue = residue.end() ; itr_residue != end_residue ; itr_residue++ ){
+  for( auto& f : residue ){
 
-    answer.push_back( ( *itr_residue )[0] );
+    answer.push_back( f[0] );
 
   }
 
@@ -135,11 +128,12 @@ void SetPointTreeEvaluation( const Polynomial<T>& f , const V1<V2<Polynomial<T> 
 template <typename T , template <typename...> typename V1 , template <typename...> typename V2> inline void SetMultipointEvaluation( const Polynomial<T>& f , const V1<T>& point , V2<T>& answer ) { list<list<Polynomial<T> > > pt{}; SetPointTree( point , pt ); SetPointTreeEvaluation( f , pt , answer ); }
 
 template <typename T , template <typename...> typename V1 , template <typename...> typename V2>
-void SetDifferenceProduct( const Polynomial<T>& f , const V1<T>& point , V2<T>& answer ){
+void SetDifferenceProduct( const V1<T>& point , V2<T>& answer )
+{
 
-  list<list<Polynomial<T> > > pt{};
+  list<vector<Polynomial<T> > > pt{};
   SetPointTree( point , pt );
-  const list<Polynomial<T> >& top = pt.front();
+  const vector<Polynomial<T> >& top = pt.front();
 
   if( top.empty() ){
 
@@ -223,4 +217,3 @@ void SetPartialFractionDecomposition( const uint& N , Polynomial<T> f , const V1
   return;
 
 }
-

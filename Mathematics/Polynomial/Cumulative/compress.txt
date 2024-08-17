@@ -1,6 +1,8 @@
 #ifdef DEBUG
   #include "c:/Users/user/Documents/Programming/Mathematics/Polynomial/Cumulative/a_Body.hpp"
 #else
+// ../Truncate/compress.txtÇêÊÇ…ì\ÇÈÅB
+
 #define EXPRESSION1_FOR_RATIONAL_SUM {PO<T>::zero(),PO<T>::one()}
 #define EXPRESSION2_FOR_RATIONAL_SUM {t.first * IT->second + t.second * IT->first,t.second * IT->second}
 #define EXPRESSION3_FOR_RATIONAL_SUM {TRPO<T>(),TRPO<T>(1,PO<T>::one())}
