@@ -149,15 +149,15 @@ void PowerAnalysis( const int& sample_count , const vector<DynamicMod>& output ,
       }
       ( small ? cerr << " <- 0または離散対数が有意に小さい値です。" : cerr ) << "\n";
     }
-    vector<int> exponent( sqrtP * 2 + 1 , sqrtP );
+    vector exponent( sample_count , vector( sqrtP * 2 + 1 , sqrtP ) );
     DynamicMod base_mod{ base } , power = Power( base_mod , -sqrtP );
     FOREQ( d , -sqrtP , sqrtP ){
       FOR( sample_num , 0 , sample_count ){
 	int temp = ( power - output[sample_num] ).Represent();
-	if( temp < sqrtP ){
-	  exponent[temp + sqrtP] = d;
-	} else if( -sqrtP < ( temp -= P ) ){
-	  exponent[temp + sqrtP] = d;
+	if( temp <= sqrtP ){
+	  exponent[sample_num][temp + sqrtP] = d;
+	} else if( -sqrtP <= ( temp -= P ) ){
+	  exponent[sample_num][temp + sqrtP] = d;
 	}
       }
     }
@@ -165,13 +165,13 @@ void PowerAnalysis( const int& sample_count , const vector<DynamicMod>& output ,
       if( abs( diff ) > diff_max ){
 	bool small = true;
 	FOR( sample_num , 0 , sample_count ){
-	  small &= exponent[diff + sqrtP] < sqrtP;
+	  small &= exponent[sample_num][diff + sqrtP] < sqrtP;
 	}
 	if( small ){
 	  cerr << "出力" << ( diff > 0 ? "+" : "" ) << ( diff == 0 ? "" : to_string( diff ) ) << ": ";
-	}
-	FOR( sample_num , 0 , sample_count ){
-	  cerr << exponent[diff + sqrtP] << ( sample_num == sample_count - 1 ? " <- 離散対数が有意に小さい値です。" : ", " );;
+	  FOR( sample_num , 0 , sample_count ){
+	    cerr << exponent[sample_num][diff + sqrtP] << ( sample_num == sample_count - 1 ? " <- 離散対数が有意に小さい値です。" : ", " );;
+	  }
 	}
       }
     }
