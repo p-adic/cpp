@@ -3,21 +3,18 @@
 #pragma once
 #include "a.hpp"
 
-template <typename INT1 , typename INT2 , int bound_L , int bound_M>
-int RowEchelonForm( INT1 ( &A )[bound_L][bound_M] , const int& L , const int& M , const INT2& P )
+template <typename MODINT>
+int RowEchelonForm( vector<vector<MODINT>>& A )
 {
 
-  assert( L <= bound_L );
-  assert( M <= bound_M );
-  int i_min = 0;
-  int i_curr;
-  int j_curr = 0;
+  const int L = A.size() , M = L == 0 ? 0 : A[0].size();
+  int i_min = 0 , i_curr , j_curr = 0;
 
   while( i_min < L && j_curr < M ){
 
     i_curr = i_min;
 
-    while( i_curr < L ? A[i_curr][j_curr] % P == 0 : false ){
+    while( i_curr < L && A[i_curr][j_curr] == 0 ){
 
       i_curr++;
 
@@ -26,37 +23,23 @@ int RowEchelonForm( INT1 ( &A )[bound_L][bound_M] , const int& L , const int& M 
     if( i_curr < L ){
 
       swap( A[i_min] , A[i_curr] );
-      INT1 ( &A_i_min )[bound_M] = A[i_min];
-      INT1 inv = 1;
-      INT1 exponent = P - 2;
-      INT1 power = A_i_min[j_curr];
-
-      while( exponent > 0 ){
-
-	( exponent & 1 ) == 1 ? ( inv *= power ) %= P : inv;
-	( power *= power ) %= P;
-	exponent >>= 1;
-
-      }
+      auto& A_i_min = A[i_min];
+      MODINT inv = 1 / A_i_min[j_curr];
       
       for( int j = j_curr ; j < M ; j++ ){
 
-	INT1& A_i_min_j = A_i_min[j];
-	( A_i_min_j *= inv ) %= P;
-	A_i_min_j < 0 ? A_i_min_j += P : A_i_min_j;
+	A_i_min[j] *= inv;
 
       }
       
       for( int i = i_min + 1 ; i < L ; i++ ){
 
-	INT1 ( &A_i )[bound_M] = A[i];
-	const INT1 A_i_j_curr = A_i[j_curr];
+	auto& A_i = A[i];
+	const MODINT A_i_j_curr = A_i[j_curr];
 
 	for( int j = j_curr ; j < M ; j++ ){
 
-	  INT1& A_i_j = A_i[j];
-	  ( A_i_j -= A_i_j_curr * A_i_min[j] ) %= P;
-	  A_i_j < 0 ? A_i_j += P : A_i_j;
+	  A_i[j] -= A_i_j_curr * A_i_min[j];
 
 	}
 
@@ -74,49 +57,66 @@ int RowEchelonForm( INT1 ( &A )[bound_L][bound_M] , const int& L , const int& M 
 
 }
 
-template <typename INT1 , typename INT2 , int bound_L , int bound_M_N>
-pair<int,bool> ExtendedReducedRowEchelonForm( INT1 ( &A )[bound_L][bound_M_N] , const int& L , const int& M , const int& N , const INT2& P )
+template <typename MODINT>
+pair<int,bool> ExtendedReducedRowEchelonForm( vector<vector<MODINT>>& A , const int& N )
 {
 
-  DEFINITION_OF_EXTENDED_REDUCED_ROW_ECHELON_FORM_FOR_MOD(int j = -1 );
+  const int L = A.size();
+  DEFINITION_OF_EXTENDED_REDUCED_ROW_ECHELON_FORM_FOR_MOD( int j = -1 );
   return { rank , solvable };
 
 }
 
-template <typename INT1 , typename INT2 , int bound_L , int bound_M , int bound_N , int bound_M_N>
-pair<int,bool> ExtendedReducedRowEchelonForm( INT1 ( &A )[bound_L][bound_M_N] , INT1 ( &solution )[bound_M][bound_N] , const int& L , const int& M , const int& N , const INT2& P )
+template <typename MODINT>
+pair<int,bool> ExtendedReducedRowEchelonForm( vector<vector<MODINT>>& A , vector<MODINT>& solution )
 {
 
-  assert( M <= bound_M );
-  assert( N <= bound_N );
-  int left[bound_L];
-  DEFINITION_OF_EXTENDED_REDUCED_ROW_ECHELON_FORM_FOR_MOD( int& j = left[i] = -1 );
+  const int L = A.size();
+  constexpr int N = 1;
+  vector<int> left( L , -1 );
+  DEFINITION_OF_EXTENDED_REDUCED_ROW_ECHELON_FORM_FOR_MOD( int& j = left[i] );
 
   if( solvable ){
-    
-    for( int j = 0 ; j < M ; j++ ){
 
-      INT1 ( &solution_j )[bound_N] = solution[j];
-      
-      for( int k = 0 ; k < N ; k++ ){
-
-	solution_j[k] = 0;
-
-      }
-
-    }
-  
+    solution = vector<MODINT>( M );
     i = rank;
   
     while( --i >= 0 ){
 
-      const INT1 ( &A_i )[bound_M_N] = A[i];
+      auto& A_i = A[i];
       const int& j = left[i];
-      INT1 ( &solution_j )[bound_N] = solution[j];
+      solution[j] = A_i[M];
+
+    }
+
+  }
+
+  return { rank , solvable };
+
+}
+
+template <typename MODINT>
+pair<int,bool> ExtendedReducedRowEchelonForm( vector<vector<MODINT>>& A , vector<vector<MODINT>>& solutions , const int& N )
+{
+
+  const int L = A.size();
+  vector<int> left( L , -1 );
+  DEFINITION_OF_EXTENDED_REDUCED_ROW_ECHELON_FORM_FOR_MOD( int& j = left[i] );
+
+  if( solvable ){
+
+    solutions = vector( M , vector<MODINT>( N ) );
+    i = rank;
+  
+    while( --i >= 0 ){
+
+      auto& A_i = A[i];
+      const int& j = left[i];
+      auto& solutions_j = solutions[j];
       
       for( int k = 0 ; k < N ; k++ ){
 
-	solution_j[k] = A_i[M + k];
+	solutions_j[k] = A_i[M + k];
 
       }
 
@@ -128,18 +128,19 @@ pair<int,bool> ExtendedReducedRowEchelonForm( INT1 ( &A )[bound_L][bound_M_N] , 
 
 }
 
-template <typename INT1 , typename INT2 , int bound_L , int bound_M> inline int ReducedRowEchelonForm( INT1 ( &A )[bound_L][bound_M] , const int& L , const int& M , const INT2& P ) { INT1 dummy[bound_L][1] = {}; return ExtendedReducedRowEchelonForm( A , dummy , L , M , 0 , P ).first; }
+template <typename MODINT> inline int ReducedRowEchelonForm( vector<vector<MODINT>>& A ) { const int L = A.size() , M = L == 0 ? 0 : A[0].size(); vector dummy( L , vector<MODINT>( 1 ) ); return ExtendedReducedRowEchelonForm( A , dummy , 0 ).first; }
 
-template <typename INT1 , typename INT2 , int bound_L>
-bool Invertible( const INT1 ( &A )[bound_L][bound_L] , INT1 ( &A_inv )[bound_L][bound_L] , const int& L , const INT2& P )
+template <typename MODINT>
+vector<vector<MODINT>> Inverse( const vector<vector<MODINT>>& A )
 {
 
-  INT1 A_copy[bound_L][bound_L + bound_L];
+  const int L = A.size();
+  vector A_copy( L , vector<MODINT>( L + L ) );
 
   for( int i = 0 ; i < L ; i++ ){
 
-    const INT1 ( &A_i )[bound_L] = A[i];
-    INT1 ( &A_copy_i )[bound_L + bound_L] = A_copy[i];
+    auto& A_i = A[i];
+    auto& A_copy_i = A_copy[i];
 
     for( int j = 0 ; j < L ; j++ ){
 
@@ -155,6 +156,8 @@ bool Invertible( const INT1 ( &A )[bound_L][bound_L] , INT1 ( &A_inv )[bound_L][
     
   }
 
-  return ExtendedReducedRowEchelonForm( A_copy , A_inv , L , L , L , P ).second;
+  vector<vector<MODINT>> answer{};
+  ExtendedReducedRowEchelonForm( A_copy , answer , L );
+  return answer;
 
 }

@@ -3,35 +3,38 @@
 #pragma once
 #include "a_Macro.hpp"
 
-// 以下L <= bound_LかつM <= bound_MかつN <= bound_Nの場合のみサポート。
-// INTはintかllであり、Pは素数である。
+// 以下MODINTは素数を法とする整数型である場合のみサポート。
 
 
-// 左端非零成分が1である階段化（戻り値はrank）
+// 階段化
 
-// AはINT係数L×M行列である。
-template <typename INT1 , typename INT2 , int bound_L , int bound_M>
-int RowEchelonForm( INT1 ( &A )[bound_L][bound_M] , const int& L , const int& M , const INT2& P );
-
-
-// 係数行列の簡約化＋拡大係数行列の左端非零成分が1である階段化
-// { 係数行列の階数 , 「対応する連立一次方程式が全て解を持つ」の真偽 } を返す。
-
-// AはINT係数L×M行列とINT係数L次縦ベクトルN個を結合した拡大係数行列である。
-template <typename INT1 , typename INT2 , int bound_L , int bound_M_N>
-pair<int,bool> ExtendedReducedRowEchelonForm( INT1 ( &A )[bound_L][bound_M_N] , const int& L , const int& M , const int& N , const INT2& P );
-template <typename INT1 , typename INT2 , int bound_L , int bound_M , int bound_N, int bound_M_N = bound_M + bound_N>
-pair<int,bool> ExtendedReducedRowEchelonForm( INT1 ( &A )[bound_L][bound_M_N] , INT1 ( &solution )[bound_M][bound_N] , const int& L , const int& M , const int& N , const INT2& P );
+// AがL×M行列である場合に、
+// Aを左端非零成分が1である階段化しrankを返す（O(LM min{L,M})）。
+template <typename MODINT> int RowEchelonForm( vector<vector<MODINT>>& A );
 
 
-// 簡約化（戻り値はrank）
+// 拡大係数行列の簡約階段化
 
-// AはINT係数L×M行列である。
-template <typename INT1 , typename INT2 , int bound_L , int bound_M> inline int ReducedRowEchelonForm( INT1 ( &A )[bound_L][bound_M] , const int& L , const int& M , const INT2& P );
+// AがL×M行列とL次縦ベクトルN個を結合した拡大係数行列である場合に、
+// Aに対し係数行列の簡約化＋拡大係数行列の左端非零成分が1である階段化を施し、
+// {係数行列の階数,「対応する連立一次方程式が全て解を持つ」の真偽}を返す（O(L(M+N)min{L,M+N})）。
+// 解の一意存在性は係数行列の階数がMか否かで判定可能、その際の解は縱ベクトル部分。
+template <typename MODINT> pair<int,bool> ExtendedReducedRowEchelonForm( vector<vector<MODINT>>& A , const int& N = 1 );
+// 解が少なくとも１つ存在する場合はそれをsolution/solutionsに格納する。
+template <typename MODINT> pair<int,bool> ExtendedReducedRowEchelonForm( vector<vector<MODINT>>& A , vector<MODINT>& solution );
+template <typename MODINT> pair<int,bool> ExtendedReducedRowEchelonForm( vector<vector<MODINT>>& A , vector<vector<MODINT>>& solutions , const int& N );
 
-// 逆行列（戻り値は「L>0かつAが正則」の真偽）
 
-// AはINT係数L次正方行列である。
-template <typename INT1 , typename INT2 , int bound_L>
-bool Invertible( const INT1 ( &A )[bound_L][bound_L] , INT1 ( &A_inv )[bound_L][bound_L] , const int& L , const INT2& P );
+// 簡約化
+
+// AがL×M行列でありかつ簡約化である場合に、
+// Aを簡約化しrankを返す（O(LM min{L,M})）。
+template <typename MODINT> inline int ReducedRowEchelonForm( vector<vector<MODINT>>& A );
+
+
+// 正則性判定
+
+// AはL次正方行列である場合に、
+// Aが正則ならばAの逆行列を格納し、正則でないならば0次正方行列を返す（O(L^3)）。
+template <typename MODINT> vector<vector<MODINT>> Inverse( const vector<vector<MODINT>>& A );
 
