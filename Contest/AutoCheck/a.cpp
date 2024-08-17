@@ -61,16 +61,28 @@ AC( DebugHint )
   if( num == num_temp++ ){
     CALL_AC( DebugHintWA );
   } else if( num == num_temp++ ){
+    CERR( "abort系:" );
     CERR( "- 制約を間違えてassertしていませんか？" );
-    CERR( "- 手元の環境ではDEXPRで設定した値が小さくなることを忘れていませんか？" );
+    CERR( "" );
+    CERR( "ローカルでのabort系（提出時はWAなど）:" );
     CERR( "- 配列外参照していませんか？" );
     CERR( "  - 座標圧縮畤に圧縮前の添字操作と圧縮後の添字操作を混同していませんか？" );
     CERR( "  - グラフや座標圧縮の操作で存在しない座標-1の場合分けを忘れていませんか？" );
+    CERR( "- オーバーフローしていませんか？" );
+    CERR( "" );
+    CERR( "Segmentation Fault系:" );
+    CERR( "- 手元の環境ではDEXPRで設定した値が小さくなることを忘れていませんか？" );
     CERR( "- 二分探索マクロで探索値が存在しない場合にMAXIMUM+1が返ることを忘れていませんか？" );
     CERR( "- イテレータを範囲外まで--/++していませんか？" );
-    CERR( "- multisetのcountを使っていませんか？" );
-    CERR( "- 0で割っていませんか？" );
     CERR( "- 仮想継承した関数をコンストラクタ内で呼び出していませんか？" );
+    CERR( "- 複数翻訳単位でデバッグ用と提出用の2種類のクラス定義を行って" );
+    CERR( "  メモリサイズが変わりメモリが壊れていませんか？" );
+    CERR( "" );
+    CERR( "arithmetic exception系:" );
+    CERR( "- 0で割っていませんか？" );
+    CERR( "" );
+    CERR( "Heap block/signal SIGTRAP系:" );
+    CERR( "- 動的配列で配列外に代入していませんか？" );
   } else if( num == num_temp++ ){
     CERR( "- マルチテストケースでデータ構造の初期化が反復されていませんか？" );
     CERR( "  - 動的配列への置き換え" );
@@ -91,6 +103,7 @@ AC( DebugHint )
     CERR( "- 前計算できる処理を繰り返してませんか？" );
     CERR( "  - 各(i,j)ごとにS_ijを構築する代わりに各iごとにS_iを構築してS_iとS_jで" );
     CERR( "    S_ijをO(1)で構築することを検討しましょう。" );
+    CERR( "- multisetのcountを使っていませんか？" );
     CERR( "- リアクティブ問題でflushと改行をし忘れていませんか？" );
     CERR( "- gccのvariadic arrayのバグの可能性がありませんか？" );
     CERR( "- 畳み込みでgccを使っていませんか？" );
@@ -130,7 +143,10 @@ AC( DebugHint )
     CERR( "  - クラステンプレートのテンプレート引数を部分特殊化してメンバ関数を" );
     CERR( "    定義しようとしていませんか？" );
     CERR( "    - 部分特殊化に対しクラスを完全に宣言し直して他のメンバも定義するか" );
-    CERR( "      完全な特殊化をしましょう。" );
+    CERR( "      完全特殊化をinline付きで定義しましょう。" );
+    CERR( "- multiple definitionが出ている時は" );
+    CERR( "  - pragma onceの付け忘れをしていませんか？" );
+    CERR( "  - 関数templateの完全特殊化のinlineの付け忘れをしていませんか？" );
   }
   CERR( "" );
   CERR( "提出済みファイルのデバッグは以上です。終了します。" );
