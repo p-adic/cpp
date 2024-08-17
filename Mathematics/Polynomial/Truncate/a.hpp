@@ -1,4 +1,4 @@
-// c:/Users/user/Documents/Programming/Mathematics/Polynomial/Mod/a.hpp
+// c:/Users/user/Documents/Programming/Mathematics/Polynomial/Truncate/a.hpp
 
 #pragma once
 #include "a_Macro.hpp"

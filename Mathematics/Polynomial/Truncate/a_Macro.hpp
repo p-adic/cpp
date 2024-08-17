@@ -2,9 +2,10 @@
 
 #pragma once
 
+// 関数テンプレートの明示的特殊化にinlineをつけないと複数の翻訳単位でincludeできないことに注意。
 #define DEFINITION_BODY_OF_PARTIAL_SPECIALISATION_OF_MULTIPLICATION_OF_POLYNOMIAL_PROTH_MOD( TYPE , ARG , RHS ) \
   template <>								\
-  Polynomial<TYPE>& Polynomial<TYPE>::operator*=( ARG f )		\
+  inline Polynomial<TYPE>& Polynomial<TYPE>::operator*=( ARG f )		\
   {									\
 									\
     if( m_size != 0 ){							\
@@ -368,6 +369,7 @@
   return f_exp								\
 									\
 
+// 関数テンプレートの明示的特殊化にinlineをつけないと複数の翻訳単位でincludeできないことに注意。
 #define DEFINITION_OF_PARTIAL_SPECIALISATION_OF_MULTIPLICATION_OF_TRUNCATED_POLYNOMIAL( TYPE , BORDER_0 , BORDER_1 , BORDER_1_2 , BORDER_1_2_EXPONENT , BORDER_1_2_INV ) \
   template <> constexpr const uint FFT_Multiplication_border_0< TYPE > = BORDER_0; \
   template <> constexpr const uint FFT_Multiplication_border_1< TYPE > = BORDER_1; \
@@ -382,7 +384,7 @@
   template <> inline TruncatedPolynomial< TYPE >& TruncatedPolynomial< TYPE >::operator*=( Polynomial< TYPE >&& f ) { return TruncatedPolynomial< TYPE >::FFT_Multiplication( move( f ) ); } \
 									\
   template <>								\
-  TruncatedPolynomial< TYPE > Inverse( const TruncatedPolynomial< TYPE >& f ) \
+  inline TruncatedPolynomial< TYPE > Inverse( const TruncatedPolynomial< TYPE >& f ) \
   {									\
 									\
     DEFINITION_OF_INVERSE_FOR_TRUNCATED_POLYNOMIAL( TYPE , f_inv.TruncatedMinus( f_inv.FFT_TruncatedMultiplication_const( f , power , power_2 ).FFT_TruncatedMultiplication( f_inv , power , power_2 ) , power , power_2 ) ); \
@@ -390,7 +392,7 @@
   }									\
 									\
   template <>								\
-  TruncatedPolynomial< TYPE > Exp( const TruncatedPolynomial< TYPE >& f ) \
+  inline TruncatedPolynomial< TYPE > Exp( const TruncatedPolynomial< TYPE >& f ) \
   {									\
 									\
     DEFINITION_OF_EXP_FOR_TRUNCATED_POLYNOMIAL( TYPE , f_exp.TruncatedMinus( ( TruncatedIntegral( Differential( f_exp ).FFT_TruncatedMultiplication_const( Inverse( f_exp ) , power - 1 , power_2 ) , power ).TruncatedMinus( f , power , power_2 ) ).FFT_TruncatedMultiplication( f_exp , power , power_2 ) , power , power_2 ) ); \

@@ -3,9 +3,10 @@
 #pragma once
 #include "../a_Macro.hpp"
 
+// 関数テンプレートの明示的特殊化にinlineをつけないと複数の翻訳単位でincludeできないことに注意。
 #define DEFINITION_BODY_OF_PARTIAL_SPECIALISATION_OF_MULTIPLICATION_OF_POLYNOMIAL_ARBITRARY_MOD( TYPE , ARG , MINT , COEF ) \
   template <>								\
-  Polynomial<TYPE>& Polynomial<TYPE>::operator*=( ARG f )		\
+  inline Polynomial<TYPE>& Polynomial<TYPE>::operator*=( ARG f )		\
   {									\
 									\
     if( m_size != 0 ){							\
