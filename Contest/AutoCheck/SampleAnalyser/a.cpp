@@ -146,9 +146,12 @@ void PowerAnalysis( const int& sample_count , const vector<DynamicMod>& output ,
       FOR( sample_num , 0 , sample_count ){
 	int dl = DiscreteLog( int( output[sample_num].Represent() ) + diff , base , P );
 	small &= ( int( output[sample_num].Represent() ) + diff ) % P == 0 || ( 0 <= dl && dl < sqrtP );
-	cerr << ( dl < 0 ? "NaN" : to_string( dl ) ) << ( sample_num == sample_count - 1 ? "" : ", " );
+	cerr << ( dl < 0 ? "NaN" : to_string( dl ) ) << ( sample_num == sample_count - 1 ? "\n" : ", " );
       }
-      ( small ? cerr << " <- 0または離散対数が有意に小さい値です。" : cerr ) << "\n";
+      if( small ){
+	CERR( "(0または離散対数が有意に小さい値です。)" );
+	CERR( "" );
+      }
     }
     vector exponent( sample_count , vector( sqrtP * 2 + 1 , sqrtP ) );
     DynamicMod base_mod{ base } , power = Power( base_mod , -sqrtP );
@@ -178,7 +181,7 @@ void PowerAnalysis( const int& sample_count , const vector<DynamicMod>& output ,
 	  }
 	  cerr << "出力" << ( diff > 0 ? "+" : "" ) << ( diff == 0 ? "" : to_string( diff ) ) << ": ";
 	  FOR( sample_num , 0 , sample_count ){
-	    cerr << exponent[sample_num][diff + sqrtP] << ( sample_num == sample_count - 1 ? " <- 離散対数が有意に小さい値です。" : ", " );;
+	    cerr << exponent[sample_num][diff + sqrtP] << ( sample_num == sample_count - 1 ? "" : ", " );
 	  }
 	}
       }
