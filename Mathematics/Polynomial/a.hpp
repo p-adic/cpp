@@ -49,8 +49,10 @@ public:
   Polynomial<T>& operator*=( const Polynomial<T>& f );
   // 部分特殊化用
   Polynomial<T>& operator*=( Polynomial<T>&& f );
+  // fがRemoveRedundantZeroされている場合にのみサポート。
   inline Polynomial<T>& operator/=( const Polynomial<T>& f );
   Polynomial<T>& operator/=( const T& t );
+  // fがRemoveRedundantZeroされている場合にのみサポート。
   Polynomial<T>& operator%=( const Polynomial<T>& f );
   Polynomial<T>& operator%=( const T& t );
 
@@ -62,8 +64,10 @@ public:
   inline Polynomial<T> operator-() const;
   DECLARATION_OF_ARITHMETIC_FOR_POLYNOMIAL( - );
   DECLARATION_OF_ARITHMETIC_FOR_POLYNOMIAL( * );
+  // fがRemoveRedundantZeroされている場合にのみサポート。
   inline Polynomial<T> operator/( const Polynomial<T>& f ) const;
   inline Polynomial<T> operator/( const T& t ) const;
+  // fがRemoveRedundantZeroされている場合にのみサポート。
   inline Polynomial<T> operator%( const Polynomial<T>& f ) const;
   inline Polynomial<T> operator%( const T& t ) const;
 
@@ -78,6 +82,7 @@ public:
 
   inline string Display() const noexcept;
 
+  // f1がRemoveRedundantZeroされている場合にのみサポート。
   static Polynomial<T> Quotient( const Polynomial<T>& f0 , const Polynomial<T>& f1 );
   static Polynomial<T> Transpose( const Polynomial<T>& f , const uint& f_transpose_size );
 

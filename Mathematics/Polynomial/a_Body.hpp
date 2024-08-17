@@ -349,12 +349,14 @@ Polynomial<T> Differential( const uint& n , const Polynomial<T>& f )
 }
 
 // ˆÈ‰ºTruncatedPolynomial<T>‚ğg—pB
-template <typename T> inline Polynomial<T>& Polynomial<T>::operator/=( const Polynomial<T>& f ) { return m_size < f.m_size ? *this : *this = Quotient( *this , f ); }
+template <typename T> inline Polynomial<T>& Polynomial<T>::operator/=( const Polynomial<T>& f ) { return *this = Quotient( *this , f ); }
 
 template <typename T>
 Polynomial<T> Polynomial<T>::Quotient( const Polynomial<T>& f0 , const Polynomial<T>& f1 )
 {
 
+  assert( f1.m_size == 0 || f1[f1.m_size-1] != c_zero() );
+  
   if( f0.m_size < f1.m_size ){
 
     return Polynomial<T>::zero();
