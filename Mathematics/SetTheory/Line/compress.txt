@@ -1,0 +1,7 @@
+#ifdef DEBUG
+  #include "c:/Users/user/Documents/Programming/Mathematics/SetTheory/Line/a_Body.hpp"
+#else
+TE <TY INT>CL LineSubset{PU:map<INT,INT> m_l;VO insert(CO INT& i)NE;VO erase(CO INT& i)NE;IN int count(CO INT& i)CO NE;bool find(CO INT& i)CO NE;pair<INT,INT> ConnectedComponentOf(CO INT& i)CO NE;IN CO map<INT,INT>& GetConnectedComponent()CO NE;};
+TE <TY INT>VO LineSubset<INT>::insert(CO INT& i)NE{auto IT0 = m_l.lower_bound(i - 1),EN = m_l.EN();if(IT0 == EN){m_l[i]= i;RE;}auto&[r0,l0]= *IT0;if(l0 <= i && i <= r0){RE;}if(i + 1 == l0){l0--;RE;}if(i + 1 < l0){m_l[i]= i;RE;}auto IT1 = m_l.lower_bound(i + 1);if(IT1 == EN){m_l[i]= l0;}else{auto&[r1,l1]= *IT1;if(i + 1 < l1){m_l[i]= l0;}else{l1 = l0;}}m_l.erase(IT0);RE;}TE <TY INT>VO LineSubset<INT>::erase(CO INT& i)NE{auto IT = m_l.lower_bound(i);if(IT == m_l.EN()){RE;}auto&[r,l]= *IT;if(i < l){RE;}if(l < i){m_l[i-1]= l;}if(i == r){m_l.erase(IT);}else{l = i + 1;}RE;}TE <TY INT> IN int LineSubset<INT>::count(CO INT& i)CO NE{RE find(i)?1:0;}TE <TY INT>bool LineSubset<INT>::find(CO INT& i)CO NE{auto IT = m_l.lower_bound(i);if(IT == m_l.EN()){RE false;}RE IT->second <= i;}TE <TY INT>pair<INT,INT> LineSubset<INT>::ConnectedComponentOf(CO INT& i)CO NE{auto IT = m_l.lower_bound(i);if(IT == m_l.EN()){RE{i+1,i-1};}RE IT->second <= i?pair<INT,INT>{IT->second,IT->first}:pair<INT,INT>{i+1,i-1};}TE <TY INT> IN CO map<INT,INT>& LineSubset<INT>::GetConnectedComponent()CO NE{RE m_l;}
+#endif
+
