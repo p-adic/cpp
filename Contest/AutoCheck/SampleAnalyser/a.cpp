@@ -23,6 +23,7 @@ AC( SampleAnalyser )
   ASK_YES_NO( "サンプルの個数は3個ですか？" );
   if( reply != "y" ){
     cerr << "サンプルの個数: "; cin >> sample_count;
+    assert( sample_count > 0 );
   }
   vector<vector<ll>> input( sample_count );
   vector<DynamicMod> output( sample_count );
@@ -129,8 +130,8 @@ AC( SampleAnalyser )
 
 void PowerAnalysis( const int& sample_count , const vector<DynamicMod>& output , const int& scale , const int& P )
 {
-  CEXPR( int , diff_bound , 10 );
-  const int diff_max = diff_bound * scale;
+  CEXPR( int , diff_bound , 30 );
+  const int diff_max = diff_bound / sample_count * scale;
   const vector bases{2,3,5,6,7};
   int sqrtP = sqrt( P );
   RUN( bases , base ){
@@ -161,6 +162,8 @@ void PowerAnalysis( const int& sample_count , const vector<DynamicMod>& output ,
 	}
       }
     }
+    CERR( "" );
+    bool found = false;
     FOREQ( diff , -sqrtP , sqrtP ){
       if( abs( diff ) > diff_max ){
 	bool small = true;
@@ -168,12 +171,21 @@ void PowerAnalysis( const int& sample_count , const vector<DynamicMod>& output ,
 	  small &= exponent[sample_num][diff + sqrtP] < sqrtP;
 	}
 	if( small ){
+	  if( !found ){
+	    found = true;
+	    cerr << "出力からのズレ" << sqrtP << "以下の範囲で他に離散対数が有意に小さい\n";
+	    cerr << "値を列挙します。\n";
+	  }
 	  cerr << "出力" << ( diff > 0 ? "+" : "" ) << ( diff == 0 ? "" : to_string( diff ) ) << ": ";
 	  FOR( sample_num , 0 , sample_count ){
 	    cerr << exponent[sample_num][diff + sqrtP] << ( sample_num == sample_count - 1 ? " <- 離散対数が有意に小さい値です。" : ", " );;
 	  }
 	}
       }
+    }
+    if( !found ){
+      cerr << "出力からのズレ" << sqrtP << "以下の範囲で他に離散対数が有意に小さい値は\n";
+      cerr << "見付かりませんでした。\n";
     }
     CERR( "" );
   }
@@ -325,7 +337,7 @@ void InputPolynomialAnalysis2_enough( const int& sample_count , const vector<vec
   }
   vector<DynamicMod> index{};
   auto [rank,solvable] = ExtendedReducedRowEchelonForm( M , index );
-  if( rank == length ){
+  if( rank == length && solvable ){
     CERR( "補間成功:" );
     FOR( dx , 0 , size ){
       FOR( dy , 0 , size ){
@@ -425,7 +437,7 @@ void InputPolynomialAnalysis3_enough( const int& sample_count , const vector<vec
   }
   vector<DynamicMod> index{};
   auto [rank,solvable] = ExtendedReducedRowEchelonForm( M , index );
-  if( rank == length ){
+  if( rank == length && solvable ){
     CERR( "補間成功:" );
     FOR( dx , 0 , size ){
       FOR( dy , 0 , size ){
@@ -556,7 +568,7 @@ void InputExponentialAnalysis1_enough( const int& sample_count , const vector<ve
   }
   vector<DynamicMod> index{};
   auto [rank,solvable] = ExtendedReducedRowEchelonForm( M , index );
-  if( rank == length ){
+  if( rank == length && solvable ){
     CERR( "補間成功:" );
     cerr << "(" << index[length-1] << ") + " << "(" << index[length-2] << ") (引数1) + ";
     FOR( d , 0 , size ){
@@ -655,7 +667,7 @@ void InputExponentialAnalysis2_enough( const int& sample_count , const vector<ve
   }
   vector<DynamicMod> index{};
   auto [rank,solvable] = ExtendedReducedRowEchelonForm( M , index );
-  if( rank == length ){
+  if( rank == length && solvable ){
     CERR( "補間成功:" );
     cerr << "(" << index[length-1] << ") +\n";
     FOR( d , 0 , size ){
