@@ -18,7 +18,7 @@ template <typename INT , template <typename...> typename DATA_STR> inline int Ab
 
 template <typename INT , template <typename...> typename DATA_STR> inline bool AbstractBoundedLineSubset<INT,DATA_STR>::find( const INT& i ) noexcept { return count( i ) == 1; }
 
-template <typename INT , template <typename...> typename DATA_STR> inline int AbstractBoundedLineSubset<INT,DATA_STR>::InitialSegmentSize( const INT& i_final ) noexcept { return m_ds.IntervalSum( 0 , i_final - m_lbound ); }
+template <typename INT , template <typename...> typename DATA_STR> inline int AbstractBoundedLineSubset<INT,DATA_STR>::InitialSegmentSize( const INT& i_final ) noexcept { return m_ds.InitialSegmentSum( i_final - m_lbound ); }
 template <typename INT , template <typename...> typename DATA_STR> inline int AbstractBoundedLineSubset<INT,DATA_STR>::IntervalSize( const INT& i_start , const INT& i_final ) noexcept { return m_ds.IntervalSum( i_start - m_lbound , i_final - m_lbound ); }
 template <typename INT , template <typename...> typename DATA_STR> inline bool AbstractBoundedLineSubset<INT,DATA_STR>::empty() noexcept { return InitialSegmentSize( m_ubound ) == 0; }
 
