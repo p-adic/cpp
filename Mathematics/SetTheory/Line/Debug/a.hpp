@@ -1,24 +1,10 @@
-// c:/Users/user/Documents/Programming/Mathematics/SetTheory/Line/a.hpp
+// c:/Users/user/Documents/Programming/Mathematics/SetTheory/Line/Debug/a.hpp
 
 #pragma once
-#include "Iterator/a.hpp"
+#include "../Iterator/a.hpp"
 
-// verify:
-// https://yukicoder.me/submissions/1002400（insert, erase, ConnectedComponentOf）
-
-// 構築O(1)
-// 一点挿入O(log Q)
-// 一点削除O(log Q)
-// 一点帰属判定O(log Q)
-// サイズ取得O(1)
-
-// 先頭イテレータ取得O(1)
-// 末尾イテレータ取得O(1)
-// 上限/下限二分探索O(log Q)
-
-// 最大値/最小値取得O(1)
-
-// 一点連結成分取得O(log Q)
+// デバッグ用にデバッグ出力とsetそのものを追加したもの。
+// 各計算量にO(m_size)が加わることに注意。
 
 template <typename INT>
 class LineSubset
@@ -29,7 +15,11 @@ private:
   map<INT,INT> m_l;
   int m_size;
 
+  set<INT> m_set;
+
 public:
+  inline LineSubset();
+  
   using iterator = IteratorOfLineSubset<INT>;
   
   void insert( const INT& i ) noexcept;
@@ -58,5 +48,7 @@ public:
   pair<INT,INT> ConnectedComponentOf( const INT& i ) const noexcept;
 
   inline const map<INT,INT>& GetConnectedComponent() const noexcept;
+
+  inline void Display() const noexcept;
   
 };

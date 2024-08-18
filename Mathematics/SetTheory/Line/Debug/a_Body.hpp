@@ -1,9 +1,19 @@
-// c:/Users/user/Documents/Programming/Mathematics/SetTheory/Line/a_Body.hpp
+// c:/Users/user/Documents/Programming/Mathematics/SetTheory/Line/Debug/a_Body.hpp
 
 #pragma once
 #include "a.hpp"
 
-#include "Iterator/a_Body.hpp"
+#include "../Iterator/a_Body.hpp"
+
+template <typename INT> inline LineSubset<INT>::LineSubset() :
+  m_l() , m_size() , m_set()
+{
+
+  cerr << "LineSubsetをデバッグモードで実行します。" << endl;
+  cerr << "各計算量にO(m_size)が加わることに注意してください。" << endl;
+  Display();
+
+}
 
 template <typename INT>
 void LineSubset<INT>::insert( const INT& i ) noexcept
@@ -15,6 +25,10 @@ void LineSubset<INT>::insert( const INT& i ) noexcept
 
     m_l[i] = i;
     m_size++;
+    assert( m_set.count( i ) == 0 );
+    m_set.insert( i );
+    cerr << "LineSubsetに" << i << "が挿入されました。" << endl;
+    Display();
     return;
 
   }
@@ -23,6 +37,9 @@ void LineSubset<INT>::insert( const INT& i ) noexcept
 
   if( l0 <= i && i <= r0 ){
 
+    assert( m_set.count( i ) == 1 );
+    cerr << "LineSubsetに" << i << "の挿入を試みましたが元々属していました。" << endl;
+    cerr << endl;
     return;
 
   }
@@ -32,6 +49,10 @@ void LineSubset<INT>::insert( const INT& i ) noexcept
   if( i + 1 == l0 ){
 
     l0--;
+    assert( m_set.count( i ) == 0 );
+    m_set.insert( i );
+    cerr << "LineSubsetに" << i << "が挿入されました。" << endl;
+    Display();
     return;
 
   }
@@ -39,6 +60,10 @@ void LineSubset<INT>::insert( const INT& i ) noexcept
   if( i + 1 < l0 ){
 
     m_l[i] = i;
+    assert( m_set.count( i ) == 0 );
+    m_set.insert( i );
+    cerr << "LineSubsetに" << i << "が挿入されました。" << endl;
+    Display();
     return;
 
   }
@@ -66,6 +91,10 @@ void LineSubset<INT>::insert( const INT& i ) noexcept
   }
   
   m_l.erase( itr0 );
+  assert( m_set.count( i ) == 0 );
+  m_set.insert( i );
+  cerr << "LineSubsetに" << i << "が挿入されました。" << endl;
+  Display();
   return;
 
 }
@@ -78,6 +107,8 @@ void LineSubset<INT>::erase( const INT& i ) noexcept
 
   if( itr == m_l.end() ){
 
+    assert( m_set.count( i ) == 0 );
+    cerr << "LineSubsetから" << i << "の削除を試みましたが元々属していませんでした。" << endl;
     return;
 
   }
@@ -86,6 +117,8 @@ void LineSubset<INT>::erase( const INT& i ) noexcept
 
   if( i < l ){
 
+    assert( m_set.count( i ) == 0 );
+    cerr << "LineSubsetから" << i << "の削除を試みましたが元々属していませんでした。" << endl;
     return;
 
   }
@@ -108,11 +141,27 @@ void LineSubset<INT>::erase( const INT& i ) noexcept
 
   }
   
+  assert( m_set.count( i ) == 1 );
+  m_set.erase( i );
+  cerr << "LineSubsetから" << i << "が削除されました。" << endl;
+  Display();
   return;
 
 }
 
-template <typename INT> inline IteratorOfLineSubset<INT>& LineSubset<INT>::erase( IteratorOfLineSubset<INT>& itr ) { m_size--; return itr.erase_from( m_l ); }
+template <typename INT> inline IteratorOfLineSubset<INT>& LineSubset<INT>::erase( IteratorOfLineSubset<INT>& itr )
+{
+
+  m_size--;
+  INT i = *itr;
+  auto [l,r] = itr.ConnectedComponent();
+  auto& itr_ref = itr.erase_from( m_l );
+  assert( m_set.count( i ) == 1 );
+  m_set.erase( i );
+  cerr << "LineSubsetから" << i << "in [" << l << "," << r << "]が削除されました。" << endl;
+  Display();
+
+}
 
 template <typename INT> inline int LineSubset<INT>::count( const INT& i ) const noexcept { return find( i ) ? 1 : 0; }
 
@@ -163,3 +212,22 @@ pair<INT,INT> LineSubset<INT>::ConnectedComponentOf( const INT& i ) const noexce
 }
 
 template <typename INT> inline const map<INT,INT>& LineSubset<INT>::GetConnectedComponent() const noexcept { return m_l; }
+
+
+template <typename INT> inline void LineSubset<INT>::Display() const noexcept
+{
+
+  cerr << "要素数: " << m_size << endl;
+  cerr << "集合: " << m_set << endl;
+  cerr << "区間列:";
+
+  for( auto& [r,l] : m_l ){
+
+    cerr << " [" << l << "," << r << "]";
+
+  }
+  
+  cerr << endl;
+  cerr << endl;
+
+}
