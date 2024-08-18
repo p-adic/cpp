@@ -93,7 +93,7 @@ template <typename U , typename ABELIAN_GROUP> inline U AbstractBIT<U,ABELIAN_GR
 
 
 template <typename U , typename ABELIAN_GROUP> template <typename F , SFINAE_FOR_BIT_BS>
-int AbstractBIT<U,ABELIAN_GROUP>::BinarySearch( const F& f )
+int AbstractBIT<U,ABELIAN_GROUP>::Search( const F& f )
 {
 
   int j = 0;
@@ -134,8 +134,8 @@ int AbstractBIT<U,ABELIAN_GROUP>::BinarySearch( const F& f )
   
 }
 
-template <typename U , typename ABELIAN_GROUP> template <typename F , SFINAE_FOR_BIT_BS> inline int AbstractBIT<U,ABELIAN_GROUP>::BinarySearch( const int& i_start , const F& f ) { const U u_inv = m_M.Inverse( InitialSegmentSum( i_start - 1 ) ); return max( i_start , BinarySearch( [&]( const U& sum , const int& i ){ return i_start <= i && f( m_M.Sum( u_inv , sum ) , i ); } ) ); }
+template <typename U , typename ABELIAN_GROUP> template <typename F , SFINAE_FOR_BIT_BS> inline int AbstractBIT<U,ABELIAN_GROUP>::Search( const int& i_start , const F& f ) { const U u_inv = m_M.Inverse( InitialSegmentSum( i_start - 1 ) ); return max( i_start , Search( [&]( const U& sum , const int& i ){ return i_start <= i && f( m_M.Sum( u_inv , sum ) , i ); } ) ); }
 
-template <typename U , typename ABELIAN_GROUP> inline int AbstractBIT<U,ABELIAN_GROUP>::BinarySearch( const U& u ) { return BinarySearch( [&]( const U& sum , const int& ){ return !( sum < u ); } ); }
+template <typename U , typename ABELIAN_GROUP> inline int AbstractBIT<U,ABELIAN_GROUP>::Search( const U& u ) { return Search( [&]( const U& sum , const int& ){ return !( sum < u ); } ); }
 
-template <typename U , typename ABELIAN_GROUP> inline int AbstractBIT<U,ABELIAN_GROUP>::BinarySearch( const int& i_start , const U& u ) { return max( i_start , BinarySearch( m_M.Sum( InitialSegmentSum( i_start - 1 ) , u ) ) ); }
+template <typename U , typename ABELIAN_GROUP> inline int AbstractBIT<U,ABELIAN_GROUP>::Search( const int& i_start , const U& u ) { return max( i_start , Search( m_M.Sum( InitialSegmentSum( i_start - 1 ) , u ) ) ); }

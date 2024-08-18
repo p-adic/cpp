@@ -19,10 +19,12 @@ protected:
   int m_power;
 
   vector<U> m_a;
+
+  bool m_output_mode;
   
 public:
-  inline AbstractBIT( ABELIAN_GROUP M , const int& size = 0 );
-  inline AbstractBIT( ABELIAN_GROUP M , const vector<U>& a );
+  inline AbstractBIT( ABELIAN_GROUP M , const int& size = 0 , const bool& output_mode = true );
+  inline AbstractBIT( ABELIAN_GROUP M , const vector<U>& a , const bool& output_mode = true );
 
   template <typename...Args> inline void Initialise( const Args&... args );
   inline void Set( const int& i , const U& u );
@@ -39,17 +41,20 @@ public:
   // Fは積順序に関して単調な写像f:U \times int -> {0,1}に相当する型。
   // f( InitialSegmentSum( i ) , i )がtrueとなるiが存在する場合にその最小値を2進法で探索。
   // 存在しない場合はN以上の最小の2羃×2-1を返す（N以上であることで判別可能）。
-  template <typename F , SFINAE_FOR_BIT_BS = nullptr> int BinarySearch( const F& f );
+  template <typename F , SFINAE_FOR_BIT_BS = nullptr> int Search( const F& f );
   // f( IntervalSum( i_start , i ) , i )がtrueとなるi_start以上のiが存在する場合に
   // その最小値を2進法で探索。存在しない場合はNを返す。
-  template <typename F , SFINAE_FOR_BIT_BS = nullptr> inline int BinarySearch( const int& i_start , const F& f );
+  template <typename F , SFINAE_FOR_BIT_BS = nullptr> inline int Search( const int& i_start , const F& f );
 
   // InitialSegmentSum( i )がu以上となるiが存在する場合にその最小値を2進法で探索。
   // 存在しない場合はNを返す。
-  inline int BinarySearch( const U& u );
+  inline int Search( const U& u );
   // IntervalSum( i_start , i )がu以上となるi_start以上のiが存在する場合にその最小値を
   // 2進法で探索。存在しない場合はNを返す。
-  inline int BinarySearch( const int& i_start , const U& u );
+  inline int Search( const int& i_start , const U& u );
+
+  inline const bool& OutputMode() const noexcept;
+  inline void ChangeOutputMode( const bool& output_mode ) noexcept;
 
 private:
   inline void Construct();

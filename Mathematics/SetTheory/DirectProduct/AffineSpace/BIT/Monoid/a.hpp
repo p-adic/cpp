@@ -54,10 +54,10 @@ public:
   // Fは積順序に関して単調な写像f:U \times int -> {0,1}に相当する型。
   // f( IntervalProduct( 0 , i ) , i )がtrueとなるiが存在する場合にその最小値を
   // 2進法で探索。存在しない場合はNを返す。
-  template <typename F , SFINAE_FOR_BIT_BS = nullptr> int BinarySearch( const F& f );
+  template <typename F , SFINAE_FOR_BIT_BS = nullptr> int Search( const F& f );
   // IntervalProduct( 0 , i )がu以上となるiが存在する場合にその最小値を2進法で探索。
   // 存在しない場合はNを返す。
-  inline int BinarySearch( const U& u );
+  inline int Search( const U& u );
   
 };
 template <typename MONOID , typename...Args> MonoidBIT( MONOID M , Args&&... args ) -> MonoidBIT<inner_t<MONOID>,MONOID>;

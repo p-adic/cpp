@@ -275,7 +275,7 @@ U IdempotentMonoidBIT<U,COMM_IDEM_MONOID>::IntervalProduct( const int& i_start ,
 template <typename U> U IntervalMaxBIT<U>::IntervalMax( const int& i_start , const int& i_final ) { return this->IntervalProduct( i_start , i_final ); }
 template <typename U> U IntervalMinBIT<U>::IntervalMin( const int& i_start , const int& i_final ) { return this->IntervalProduct( i_start , i_final ); }
 
-template <typename U , typename COMM_IDEM_MONOID> template <typename F , SFINAE_FOR_BIT_BS> inline int IdempotentMonoidBIT<U,COMM_IDEM_MONOID>::BinarySearch( const F& f )
+template <typename U , typename COMM_IDEM_MONOID> template <typename F , SFINAE_FOR_BIT_BS> inline int IdempotentMonoidBIT<U,COMM_IDEM_MONOID>::Search( const F& f )
 {
 
   int j = 0;
@@ -315,4 +315,4 @@ template <typename U , typename COMM_IDEM_MONOID> template <typename F , SFINAE_
 
 }
 
-template <typename U , typename COMM_IDEM_MONOID> inline int IdempotentMonoidBIT<U,COMM_IDEM_MONOID>::BinarySearch( const U& u ) { return BinarySearch( [&]( const U& prod , const int& ){ return prod == m_M.Product( prod , u ); } ); }
+template <typename U , typename COMM_IDEM_MONOID> inline int IdempotentMonoidBIT<U,COMM_IDEM_MONOID>::Search( const U& u ) { return Search( [&]( const U& prod , const int& ){ return prod == m_M.Product( prod , u ); } ); }

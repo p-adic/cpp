@@ -6,7 +6,7 @@
 #include "../../../../../Algebra/Monoid/Group/Module/a_Body.hpp"
 
 #include "../a_Body.hpp"
-#include "../../../../../../Utility/Sort/Query/a_Body.hpp"
+#include "../../../../../../Utility/Vector/Query/a_Body.hpp"
 
 template <typename R , typename U , typename Z_MODULE> inline AbstractTimeSeriesSetMaxBIT<R,U,Z_MODULE>::AbstractTimeSeriesSetMaxBIT( Z_MODULE M , const R& dummy , const int& N ) : m_M( move( M ) ) , m_N( N ) , m_a( N , m_M.Zero() ) , m_event() {}
 template <typename R , typename U , typename Z_MODULE> inline AbstractTimeSeriesSetMaxBIT<R,U,Z_MODULE>::AbstractTimeSeriesSetMaxBIT( Z_MODULE M , const R& dummy , vector<U> a , const vector<pair<R,U>>& event ) : m_M( move( M ) ) , m_N( a.size() ) , m_a( move( a ) ) , m_event() { for( auto& [t,u] : event ){ Set( t , u ); } }

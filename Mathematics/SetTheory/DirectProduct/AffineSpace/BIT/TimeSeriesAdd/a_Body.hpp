@@ -6,7 +6,7 @@
 #include "../../../../../Algebra/Monoid/Group/Module/Interval/a_Body.hpp"
 
 #include "../a_Body.hpp"
-#include "../../../../../../Utility/Sort/Query/a_Body.hpp"
+#include "../../../../../../Utility/Vector/Query/a_Body.hpp"
 
 template <typename R , typename U , typename C_MODULE> inline AbstractTimeSeriesAddBIT<R,U,C_MODULE>::AbstractTimeSeriesAddBIT( C_MODULE M , R init , const int& N ) : m_M( move( M ) ) , m_init( move( init ) ) , m_N( N ) , m_a( N , m_M.Zero() ) , m_event() {}
 template <typename R , typename U , typename C_MODULE> inline AbstractTimeSeriesAddBIT<R,U,C_MODULE>::AbstractTimeSeriesAddBIT( C_MODULE M , R init , vector<U> a , const vector<tuple<R,int,U>>& event ) : m_M( move( M ) ) , m_init( move( init ) ) , m_N( a.size() ) , m_a( move( a ) ) , m_event() { for( auto& [t,i,du] : event ){ Set( t , i , du ); } }

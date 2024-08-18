@@ -64,7 +64,7 @@ class BIT:
 	def IntervalSum(self,l,r):return self.InitialSegmentSum(r)-self.InitialSegmentSum(l-1)
 	def list(self):return[self.Get(i)for i in R(self.N)]
 	def __str__(self):return rec_str(self.list())
-	def BinarySearch(self,u):
+	def Search(self,u):
 		j=s=n=0
 		p=1<<17 #131072
 		while p:

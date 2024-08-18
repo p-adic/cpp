@@ -156,7 +156,7 @@ U MonoidBIT<U,MONOID>::IntervalProduct( const int& i_start , const int& i_final 
 
 }
 
-template <typename U , typename MONOID> template <typename F , SFINAE_FOR_BIT_BS> inline int MonoidBIT<U,MONOID>::BinarySearch( const F& f )
+template <typename U , typename MONOID> template <typename F , SFINAE_FOR_BIT_BS> inline int MonoidBIT<U,MONOID>::Search( const F& f )
 {
 
   int j = 0;
@@ -196,4 +196,4 @@ template <typename U , typename MONOID> template <typename F , SFINAE_FOR_BIT_BS
 
 }
 
-template <typename U , typename MONOID> inline int MonoidBIT<U,MONOID>::BinarySearch( const U& u ) { return BinarySearch( [&]( const U& prod , const int& ){ return !( prod < u ); } ); }
+template <typename U , typename MONOID> inline int MonoidBIT<U,MONOID>::Search( const U& u ) { return Search( [&]( const U& prod , const int& ){ return !( prod < u ); } ); }

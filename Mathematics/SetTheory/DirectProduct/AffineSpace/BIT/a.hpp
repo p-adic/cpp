@@ -12,8 +12,8 @@
 // 入力の範囲内で要件
 // (1) MがUの可換群構造である。
 // を満たす場合にのみサポート。
-// ただしM.Inverse()を使うのはSetとIntervalSumと単調関係に関する区間でのBinarySearchのみなので、
-// AddとInitialSegmentSumとその他のBinarySearchしか使わない場合は
+// ただしM.Inverse()を使うのはSetとIntervalSumと単調関係に関する区間でのSearchのみなので、
+// AddとInitialSegmentSumとその他のSearchしか使わない場合は
 // M.Inverse()を好きに設定してMをUの可換モノイド構造として良い。
 
 // 配列による初期化O(size)
@@ -60,17 +60,17 @@ public:
   // Fは積順序に関して単調な写像f:U \times int -> {0,1}に相当する型。
   // f( InitialSegmentSum( i ) , i )がtrueとなるiが存在する場合にその最小値を2進法で探索。
   // 存在しない場合はN以上の最小の2羃×2-1を返す（N以上であることで判別可能）。
-  template <typename F , SFINAE_FOR_BIT_BS = nullptr> int BinarySearch( const F& f );
+  template <typename F , SFINAE_FOR_BIT_BS = nullptr> int Search( const F& f );
   // f( IntervalSum( i_start , i ) , i )がtrueとなるi_start以上のiが存在する場合に
   // その最小値を2進法で探索。存在しない場合はNを返す。
-  template <typename F , SFINAE_FOR_BIT_BS = nullptr> inline int BinarySearch( const int& i_start , const F& f );
+  template <typename F , SFINAE_FOR_BIT_BS = nullptr> inline int Search( const int& i_start , const F& f );
 
   // InitialSegmentSum( i )がu以上となるiが存在する場合にその最小値を2進法で探索。
   // 存在しない場合はNを返す。
-  inline int BinarySearch( const U& u );
+  inline int Search( const U& u );
   // IntervalSum( i_start , i )がu以上となるi_start以上のiが存在する場合にその最小値を
   // 2進法で探索。存在しない場合はNを返す。
-  inline int BinarySearch( const int& i_start , const U& u );
+  inline int Search( const int& i_start , const U& u );
 
 private:
   inline void Construct();
