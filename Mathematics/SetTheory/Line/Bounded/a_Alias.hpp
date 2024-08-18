@@ -3,4 +3,4 @@
 #pragma once
 
 template <typename INT>
-using BoundedLineSubsetBIT = AbstractBoundedLineSubset<INT,BIT>;
+using BoundedLineSubset = AbstractBoundedLineSubset<INT,BIT>;

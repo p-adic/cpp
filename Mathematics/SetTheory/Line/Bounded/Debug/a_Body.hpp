@@ -105,38 +105,38 @@ template <typename INT , template <typename...> typename DATA_STR> inline INT Ab
 template <typename INT , template <typename...> typename DATA_STR> inline INT AbstractBoundedLineSubset<INT,DATA_STR>::Minimum() { return *begin(); }
 
 template <typename INT , template <typename...> typename DATA_STR>
-INT AbstractBoundedLineSubset<INT,DATA_STR>::RightEndPointOf( const INT& i ) noexcept
+INT AbstractBoundedLineSubset<INT,DATA_STR>::RightEndPointOf( const INT& i , const bool& in ) noexcept
 {
 
-  if( !this->find( i ) ){
+  if( !in && !find( i ) ){
 
     return i - 1;
 
   }
 
   const int d = i - m_lbound;
-  const INT comp = d - InitialSegmentSize( i );
-  return m_lbound + m_ds.Search( [&]( const INT& sum , const int& j ){ return d <= j && sum + comp < j; } ) - 1;
+  const INT comp = d - InitialSegmentSize( i ) + 1;
+  return m_lbound + m_ds.Search( [&]( const INT& sum , const int& j ){ return d <= j && sum + comp <= j; } ) - 1;
 
 }
 
 template <typename INT , template <typename...> typename DATA_STR>
-INT AbstractBoundedLineSubset<INT,DATA_STR>::LeftEndPointOf( const INT& i ) noexcept
+INT AbstractBoundedLineSubset<INT,DATA_STR>::LeftEndPointOf( const INT& i , const bool& in ) noexcept
 {
 
-  if( !this->find( i ) ){
+  if( !in && !find( i ) ){
 
     return i + 1;
 
   }
 
   const int d = i - m_lbound;
-  const INT comp = d - InitialSegmentSize( i );
-  return m_lbound + m_ds.Search( [&]( const INT& sum , const int& j ){ return d <= j || ( find( j ) && sum + comp == j ); } );
+  const INT comp = d - InitialSegmentSize( i ) + 1;
+  return m_lbound + m_ds.Search( [&]( const INT& sum , const int& j ){ return d <= j || ( find( j ) && sum + comp > j ); } );
 
 }
 
-template <typename INT , template <typename...> typename DATA_STR> inline pair<INT,INT> AbstractBoundedLineSubset<INT,DATA_STR>::ConnectedComponentOf( const INT& i ) noexcept { return { LefttEndPointOf( i ) , RighttEndPointOf( i ) }; }
+template <typename INT , template <typename...> typename DATA_STR> inline pair<INT,INT> AbstractBoundedLineSubset<INT,DATA_STR>::ConnectedComponentOf( const INT& i , bool in ) noexcept { if( !in ){ in = find( i ); } return { LeftEndPointOf( i , in ) , RightEndPointOf( i , in ) }; }
 
 
 template <typename INT , template <typename...> typename DATA_STR>

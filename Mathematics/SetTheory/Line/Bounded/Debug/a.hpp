@@ -47,12 +47,12 @@ public:
   inline INT Minimum();
 
   // iを含む連結成分の右端を返す。存在しない場合はi-1を返す。
-  INT RightEndPointOf( const INT& i ) noexcept;
+  INT RightEndPointOf( const INT& i , const bool& in = false ) noexcept;
   // iを含む連結成分の左端を返す。存在しない場合はi+1を返す。
-  INT LeftEndPointOf( const INT& i ) noexcept;
+  INT LeftEndPointOf( const INT& i , const bool& in = false ) noexcept;
 
   // iを含む連結成分を返す。存在しない場合は[1+1,i-1]を返す。
-  inline pair<INT,INT> ConnectedComponentOf( const INT& i ) noexcept;
+  inline pair<INT,INT> ConnectedComponentOf( const INT& i , bool in = false ) noexcept;
 
   vector<pair<INT,INT>> GetConnectedComponent() noexcept;
 
