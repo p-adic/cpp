@@ -9,7 +9,7 @@
 template <typename INT , template <typename...> typename DATA_STR> inline AbstractBoundedLineSubset<INT,DATA_STR>::AbstractBoundedLineSubset( const INT& lbound , const INT& ubound ) : m_lbound( lbound ) , m_ubound( ubound ) , m_ds( m_ubound - m_lbound + 1 , false ) , m_S()
 {
 
-  assert( m_lbound <= m_ubound );
+  assert( m_lbound <= m_ubound + 1 );
   cerr << "BoundedLineSubsetをデバッグモードで実行します。" << endl;
   cerr << "各処理の計算量がO(size)増えることに注意してください。" << endl;
   Display();
@@ -116,7 +116,7 @@ INT AbstractBoundedLineSubset<INT,DATA_STR>::RightEndPointOf( const INT& i , con
 
   const int d = i - m_lbound;
   const INT comp = d - InitialSegmentSize( i ) + 1;
-  return m_lbound + m_ds.Search( [&]( const INT& sum , const int& j ){ return d <= j && sum + comp <= j; } ) - 1;
+  return m_ds.Search( [&]( const INT& sum , const int& j ){ return d <= j && sum + comp <= j; } ) + m_lbound - 1;
 
 }
 
@@ -132,7 +132,7 @@ INT AbstractBoundedLineSubset<INT,DATA_STR>::LeftEndPointOf( const INT& i , cons
 
   const int d = i - m_lbound;
   const INT comp = d - InitialSegmentSize( i ) + 1;
-  return m_lbound + m_ds.Search( [&]( const INT& sum , const int& j ){ return d <= j || ( find( j ) && sum + comp > j ); } );
+  return m_ds.Search( [&]( const INT& sum , const int& j ){ return d <= j || ( find( j ) && sum + comp > j ); } ) + m_lbound;
 
 }
 

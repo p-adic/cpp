@@ -6,7 +6,7 @@
 #include "Iterator/a_Body.hpp"
 #include "../../DirectProduct/AffineSpace/BIT/a_Body.hpp"
 
-template <typename INT , template <typename...> typename DATA_STR> inline AbstractBoundedLineSubset<INT,DATA_STR>::AbstractBoundedLineSubset( const INT& lbound , const INT& ubound ) : m_lbound( lbound ) , m_ubound( ubound ) , m_ds( m_ubound - m_lbound + 1 ) { assert( m_lbound <= m_ubound ); }
+template <typename INT , template <typename...> typename DATA_STR> inline AbstractBoundedLineSubset<INT,DATA_STR>::AbstractBoundedLineSubset( const INT& lbound , const INT& ubound ) : m_lbound( lbound ) , m_ubound( ubound ) , m_ds( m_ubound - m_lbound + 1 ) { assert( m_lbound <= m_ubound + 1 ); }
 
 template <typename INT , template <typename...> typename DATA_STR> inline void AbstractBoundedLineSubset<INT,DATA_STR>::insert( const INT& i ) { assert( m_lbound <= i && i <= m_ubound ); m_ds.Set( i - m_lbound , 1 ); }
 
@@ -45,7 +45,7 @@ INT AbstractBoundedLineSubset<INT,DATA_STR>::RightEndPointOf( const INT& i , con
 
   const int d = i - m_lbound;
   const INT comp = d - InitialSegmentSize( i ) + 1;
-  return m_lbound + m_ds.Search( [&]( const INT& sum , const int& j ){ return d <= j && sum + comp <= j; } ) - 1;
+  return m_ds.Search( [&]( const INT& sum , const int& j ){ return d <= j && sum + comp <= j; } ) + m_lbound - 1;
 
 }
 
@@ -61,7 +61,7 @@ INT AbstractBoundedLineSubset<INT,DATA_STR>::LeftEndPointOf( const INT& i , cons
 
   const int d = i - m_lbound;
   const INT comp = d - InitialSegmentSize( i ) + 1;
-  return m_lbound + m_ds.Search( [&]( const INT& sum , const int& j ){ return d <= j || ( find( j ) && sum + comp > j ); } );
+  return m_ds.Search( [&]( const INT& sum , const int& j ){ return d <= j || ( find( j ) && sum + comp > j ); } ) + m_lbound;
 
 }
 

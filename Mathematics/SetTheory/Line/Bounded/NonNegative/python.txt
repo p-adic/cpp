@@ -49,50 +49,46 @@ class BIT:
 				else:n=s
 		return j
 
-class BoundedLineSubset:
-	def __init__(self,lbound,ubound):
-		assert(lbound<=ubound+1)
-		self.lbound=lbound
+class NonNegativeLineSubset:
+	def __init__(self,ubound):
+		assert(-1<=ubound)
 		self.ubound=ubound
-		self.bit=BIT(ubound-lbound+1)
+		self.bit=BIT(ubound+1)
 	def copy(self):
 		a=__class__([])
-		a.lbound=self.lbound
 		a.ubound=self.ubound
 		a.bit=self.bit.copy()
 		return a
-	def insert(self,i):assert(self.lbound<=i<=self.ubound);self.bit.Set(i-self.lbound,1)
-	def erase(self,i):self.bit.Set(i-self.lbound,0)
-	def count(self,i):return self.bit[i-self.lbound]if self.lbound<=i<=self.ubound else 0
+	def insert(self,i):assert(0<=i<=self.ubound);self.bit.Set(i,1)
+	def erase(self,i):self.bit.Set(i,0)
+	def count(self,i):return self.bit[i]if 0<=i<=self.ubound else 0
 	def find(self,i):return self.count(i)>0
-	def InitialSegmentSize(self,i_final):return self.bit.InitialSegmentSum(i_final-self.lbound)
-	def IntervalSize(self,i_start,i_final):returnself.bit.IntervalSum(i_start-self.lbound,i_final-self.lbound)
+	def InitialSegmentSize(self,i_final):return self.bit.InitialSegmentSum(i_final)
+	def IntervalSize(self,i_start,i_final):returnself.bit.IntervalSum(i_start,i_final)
 	def empty(self):return self.InitialSegmentSize(self.ubound)<1
-	def MaximumLeq(self,i):#Returning lbound-1 if not exists
+	def MaximumLeq(self,i):#Returning -1 if not exists
 		num=self.InitialSegmentSize(i)
 		def f(sum,j):return i<=j or num<=sum
-		a=self.Search(f)+self.lbound
-		return a if self.find(a)else self.lbound-1
+		a=self.Search(f)
+		return a if self.find(a)else -1
 	def MaximumLt(self,i):return self.MaximumLeq(i-1)
 	def MinimumGeq(self,i):return self.MinimumGt(i-1)
 	def MinimumGt(self,i):#Returning ubound+1 if not exists
 		num=self.InitialSegmentSize(i)
 		def f(sum,j):return i<j and num<sum
-		return self.Search(f)+self.lbound
+		return self.Search(f)
 	def Maximum(self):return self.MaximumLeq(self.ubound)
-	def Minimum(self):return self.MinimumGeq(self.lbound)
+	def Minimum(self):return self.MinimumGeq(0)
 	def RightEndPointOf(self,i,b=False):
 		if not b and not self.find(i):return i-1
-		d=i-self.lbound
-		comp=d-self.InitialSegmentSize(i)
-		def f(sum,j):return d<=j and sum+comp<j
-		return self.Search(f)+self.lbound-1
+		comp=i-self.InitialSegmentSize(i)
+		def f(sum,j):return i<=j and sum+comp<j
+		return self.Search(f)-1
 	def LeftEndPointOf(self,i,b=False):
 		if not b and not sel.find(i):return i+1
-		d=i-self.lbound
-		comp=d-self.InitialSegmentSize(i)
-		def f(sum,j):return d<=j or (self.find(j)and sum+comp==j)
-		return self.Search(f)+self.lbound
+		comp=i-self.InitialSegmentSize(i)
+		def f(sum,j):return i<=j or (self.find(j)and sum+comp==j)
+		return self.Search(f)
 	def ConnectedComponentOf(self,i,b=False):
 		if not b:b=self.find(i)
 		return[self.LeftEndPointOf(i,b),self.RightEndPointOf(i,b)]
@@ -105,7 +101,6 @@ class BoundedLineSubset:
 			l=self.MinimumGt(r)
 		return a
 	def __str__(self):return rec_str(self.GetConnectedComponent())
-	def lbound(self):return self.lbound
 	def ubound(self):return self.ubound
 
 	#private:
