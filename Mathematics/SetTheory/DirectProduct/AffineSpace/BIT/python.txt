@@ -46,6 +46,11 @@ class BIT:
 				while i>k:
 					self.F[j]+=self.F[i]
 					i-=i&-i
+	def copy(self):
+		a=__class__([])
+		a.N=__self__.N
+		a.F=__self__.F[:]
+		return a
 	def Add(self,i,u):
 		i+=1
 		while i<=self.N:
@@ -64,14 +69,14 @@ class BIT:
 	def IntervalSum(self,l,r):return self.InitialSegmentSum(r)-self.InitialSegmentSum(l-1)
 	def list(self):return[self.Get(i)for i in R(self.N)]
 	def __str__(self):return rec_str(self.list())
-	def Search(self,u):
+	def Search(self,u):#Computing minimum of j such that InitialSegmentSum(j)>=u or j==N
 		j=s=n=0
 		p=1<<17 #131072
 		while p:
 			k=j|p
 			p>>=1
-			if k<=N:
-				n+=F[k]
+			if k<=self.N:
+				n+=self.F[k]
 				if n<u:s,j=n,k
 				else:n=s
 		return j
