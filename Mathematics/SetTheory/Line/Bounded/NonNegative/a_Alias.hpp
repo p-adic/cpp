@@ -1,4 +1,4 @@
-// c:/Users/user/Documents/Programming/Mathematics/SetTheory/Line/NonNegative/a_Alias.hpp
+// c:/Users/user/Documents/Programming/Mathematics/SetTheory/Line/Bounded/NonNegative/a_Alias.hpp
 
 #pragma once
 

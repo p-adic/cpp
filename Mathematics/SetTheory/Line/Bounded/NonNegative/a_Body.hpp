@@ -1,10 +1,10 @@
-// c:/Users/user/Documents/Programming/Mathematics/SetTheory/Line/NonNegative/a_Body.hpp
+// c:/Users/user/Documents/Programming/Mathematics/SetTheory/Line/Bounded/NonNegative/a_Body.hpp
 
 #pragma once
 #include "a.hpp"
 
 #include "Iterator/a_Body.hpp"
-#include "../../DirectProduct/AffineSpace/BIT/a_Body.hpp"
+#include "../../../DirectProduct/AffineSpace/BIT/a_Body.hpp"
 
 template <typename INT , template <typename...> typename DATA_STR> inline AbstractNonNegativeLineSubset<INT,DATA_STR>::AbstractNonNegativeLineSubset( const INT& ubound ) : m_ubound( ubound ) , m_ds( m_ubound + 1 ) { assert( -1 <= m_ubound ); }
 
@@ -44,8 +44,8 @@ INT AbstractNonNegativeLineSubset<INT,DATA_STR>::RightEndPointOf( const INT& i ,
   }
 
   const int d = i;
-  const INT comp = d - InitialSegmentSize( i ) + 1;
-  return m_ds.Search( [&]( const INT& sum , const int& j ){ return d <= j && sum + comp <= j; } ) - 1;
+  const INT comp_minus = d - InitialSegmentSize( i );
+  return m_ds.Search( [&]( const INT& sum , const int& j ){ return d <= j && sum + comp_minus < j; } ) - 1;
 
 }
 
@@ -60,8 +60,8 @@ INT AbstractNonNegativeLineSubset<INT,DATA_STR>::LeftEndPointOf( const INT& i , 
   }
 
   const int d = i;
-  const INT comp = d - InitialSegmentSize( i ) + 1;
-  return m_ds.Search( [&]( const INT& sum , const int& j ){ return d <= j || ( find( j ) && sum + comp > j ); } );
+  const INT comp_minus = d - InitialSegmentSize( i );
+  return m_ds.Search( [&]( const INT& sum , const int& j ){ return d <= j || ( find( j ) && sum + comp_minus == j ); } );
 
 }
 

@@ -1,3 +1,6 @@
+#verify:
+#https://yukicoder.me/submissions/1002450 (insert, erase, ConnectedComponentOf)
+
 def rec_str(a):return"".join(["[",", ".join(rec_str(x)for x in a),"]"])if isinstance(a,list)else str(a)
 class BIT:
 	def __init__(self,x):
@@ -61,7 +64,7 @@ class NonNegativeLineSubset:
 		return a
 	def insert(self,i):assert(0<=i<=self.ubound);self.bit.Set(i,1)
 	def erase(self,i):self.bit.Set(i,0)
-	def count(self,i):return self.bit[i]if 0<=i<=self.ubound else 0
+	def count(self,i):return self.bit.Get(i)if 0<=i<=self.ubound else 0
 	def find(self,i):return self.count(i)>0
 	def InitialSegmentSize(self,i_final):return self.bit.InitialSegmentSum(i_final)
 	def IntervalSize(self,i_start,i_final):returnself.bit.IntervalSum(i_start,i_final)
@@ -81,13 +84,13 @@ class NonNegativeLineSubset:
 	def Minimum(self):return self.MinimumGeq(0)
 	def RightEndPointOf(self,i,b=False):
 		if not b and not self.find(i):return i-1
-		comp=i-self.InitialSegmentSize(i)
-		def f(sum,j):return i<=j and sum+comp<j
+		c=i-self.InitialSegmentSize(i)
+		def f(sum,j):return i<=j and sum+c<j
 		return self.Search(f)-1
 	def LeftEndPointOf(self,i,b=False):
-		if not b and not sel.find(i):return i+1
-		comp=i-self.InitialSegmentSize(i)
-		def f(sum,j):return i<=j or (self.find(j)and sum+comp==j)
+		if not b and not self.find(i):return i+1
+		c=i-self.InitialSegmentSize(i)
+		def f(sum,j):return i<=j or (self.find(j)and sum+c==j)
 		return self.Search(f)
 	def ConnectedComponentOf(self,i,b=False):
 		if not b:b=self.find(i)
@@ -169,6 +172,3 @@ class CompressedLineSubset:
 			l=self.MinimumGt(r)
 		return a
 	def __str__(self):return rec_str(self.GetConnectedComponent())
-
-
-

@@ -9,10 +9,10 @@ class IteratorOfLineSubset
 private:
   const map<INT,INT>* m_p;
   typename map<INT,INT>::iterator m_itr;
-  INT m_n;
+  INT m_i;
 
 public:
-  inline IteratorOfLineSubset( const map<INT,INT>& l , typename map<INT,INT>::iterator itr , INT n );
+  inline IteratorOfLineSubset( const map<INT,INT>& l , typename map<INT,INT>::iterator itr , INT i );
 
   inline bool operator==( const IteratorOfLineSubset<INT>& itr ) const noexcept;
   inline bool operator!=( const IteratorOfLineSubset<INT>& itr ) const noexcept;

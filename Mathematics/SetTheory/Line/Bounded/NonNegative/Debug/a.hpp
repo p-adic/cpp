@@ -1,8 +1,8 @@
-// c:/Users/user/Documents/Programming/Mathematics/SetTheory/Line/NonNegative/Debug/a.hpp
+// c:/Users/user/Documents/Programming/Mathematics/SetTheory/Line/Bounded/NonNegative/Debug/a.hpp
 
 #pragma once
 #include "../Iterator/a.hpp"
-#include "../../../DirectProduct/AffineSpace/BIT/Debug/a.hpp"
+#include "../../../../DirectProduct/AffineSpace/BIT/Debug/a.hpp"
 
 // デバッグ用にデバッグ出力とsetを追加したもの。
 // 各処理の計算量がO(size)増えることに注意。

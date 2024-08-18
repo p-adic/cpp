@@ -1,8 +1,11 @@
-// c:/Users/user/Documents/Programming/Mathematics/SetTheory/Line/NonNegative/a.hpp
+// c:/Users/user/Documents/Programming/Mathematics/SetTheory/Line/Bounded/NonNegative/a.hpp
 
 #pragma once
 #include "Iterator/a.hpp"
-#include "../../DirectProduct/AffineSpace/BIT/a.hpp"
+#include "../../../DirectProduct/AffineSpace/BIT/a.hpp"
+
+// verify:
+// https://yukicoder.me/submissions/1002458 (insert,erase,ConnectedComponentOf)
 
 // 非負に制限したBoundedLineSubsetの定数倍高速化版。
 
@@ -68,10 +71,6 @@ public:
   vector<pair<INT,INT>> GetConnectedComponent() noexcept;
 
   inline const INT& ubound() const noexcept;
-
-  // Fは積順序に関して単調な写像f:U \times int -> {0,1}に相当する型。
-  // f( m_ds.InitialSegmentSum( i ) , i )がtrueとなるiが存在する場合にその最小値を返す。
-  template <typename F> virtual int Search( const F& f );
 
 };
 

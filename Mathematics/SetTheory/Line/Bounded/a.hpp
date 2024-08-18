@@ -4,6 +4,9 @@
 #include "Iterator/a.hpp"
 #include "../../DirectProduct/AffineSpace/BIT/a.hpp"
 
+// verify:
+// https://yukicoder.me/submissions/1002456 (insert, erase, ConnectedComponentOf)
+
 // 構築O(ubound - lbound)
 // 一点挿入O(log (ubound - lbound))
 // 一点削除O(log (ubound - lbound))
@@ -68,10 +71,6 @@ public:
 
   inline const INT& lbound() const noexcept;
   inline const INT& ubound() const noexcept;
-
-  // Fは積順序に関して単調な写像f:U \times int -> {0,1}に相当する型。
-  // f( m_ds.InitialSegmentSum( i ) , i )がtrueとなるiが存在する場合にその最小値を返す。
-  template <typename F> virtual int Search( const F& f );
 
 };
 

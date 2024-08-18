@@ -44,8 +44,8 @@ INT AbstractBoundedLineSubset<INT,DATA_STR>::RightEndPointOf( const INT& i , con
   }
 
   const int d = i - m_lbound;
-  const INT comp = d - InitialSegmentSize( i ) + 1;
-  return m_ds.Search( [&]( const INT& sum , const int& j ){ return d <= j && sum + comp <= j; } ) + m_lbound - 1;
+  const INT comp_minus = d - InitialSegmentSize( i );
+  return m_ds.Search( [&]( const INT& sum , const int& j ){ return d <= j && sum + comp < j; } ) + m_lbound - 1;
 
 }
 
@@ -60,8 +60,8 @@ INT AbstractBoundedLineSubset<INT,DATA_STR>::LeftEndPointOf( const INT& i , cons
   }
 
   const int d = i - m_lbound;
-  const INT comp = d - InitialSegmentSize( i ) + 1;
-  return m_ds.Search( [&]( const INT& sum , const int& j ){ return d <= j || ( find( j ) && sum + comp > j ); } ) + m_lbound;
+  const INT comp_minus = d - InitialSegmentSize( i );
+  return m_ds.Search( [&]( const INT& sum , const int& j ){ return d <= j || ( find( j ) && sum + comp == j ); } ) + m_lbound;
 
 }
 

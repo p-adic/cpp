@@ -1,3 +1,6 @@
+#verify:
+#https://yukicoder.me/submissions/1002448 (insert, erase, ConnectedComponentOf)
+
 def rec_str(a):return"".join(["[",", ".join(rec_str(x)for x in a),"]"])if isinstance(a,list)else str(a)
 class BIT:
 	def __init__(self,x):
@@ -63,7 +66,7 @@ class BoundedLineSubset:
 		return a
 	def insert(self,i):assert(self.lbound<=i<=self.ubound);self.bit.Set(i-self.lbound,1)
 	def erase(self,i):self.bit.Set(i-self.lbound,0)
-	def count(self,i):return self.bit[i-self.lbound]if self.lbound<=i<=self.ubound else 0
+	def count(self,i):return self.bit.Get(i-self.lbound)if self.lbound<=i<=self.ubound else 0
 	def find(self,i):return self.count(i)>0
 	def InitialSegmentSize(self,i_final):return self.bit.InitialSegmentSum(i_final-self.lbound)
 	def IntervalSize(self,i_start,i_final):returnself.bit.IntervalSum(i_start-self.lbound,i_final-self.lbound)
@@ -84,14 +87,14 @@ class BoundedLineSubset:
 	def RightEndPointOf(self,i,b=False):
 		if not b and not self.find(i):return i-1
 		d=i-self.lbound
-		comp=d-self.InitialSegmentSize(i)
-		def f(sum,j):return d<=j and sum+comp<j
+		c=d-self.InitialSegmentSize(i)
+		def f(sum,j):return d<=j and sum+c<j
 		return self.Search(f)+self.lbound-1
 	def LeftEndPointOf(self,i,b=False):
-		if not b and not sel.find(i):return i+1
+		if not b and not self.find(i):return i+1
 		d=i-self.lbound
-		comp=d-self.InitialSegmentSize(i)
-		def f(sum,j):return d<=j or (self.find(j)and sum+comp==j)
+		c=d-self.InitialSegmentSize(i)
+		def f(sum,j):return d<=j or (self.find(j)and sum+c==j)
 		return self.Search(f)+self.lbound
 	def ConnectedComponentOf(self,i,b=False):
 		if not b:b=self.find(i)
