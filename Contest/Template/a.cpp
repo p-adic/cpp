@@ -112,8 +112,9 @@ IN VO Experiment()
   // CEXPR( int , bound , 10 );
   // FOREQ( N , 0 , bound ){
   //   FOREQ( M , 0 , bound ){
+  //   	cout << N << "," << M << ",[" << 0 << "--" << bound << "]:";
   //     FOREQ( K , 0 , bound ){
-  //   	COUT( N , M , K , ":" , Naive( N , M , K , true ) );
+  //   	   cout << " " << Naive( N , M , K , true );
   //     }
   //   }
   //   // cout << Naive( N , true ) << " \n"[N==bound];
