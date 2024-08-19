@@ -458,19 +458,21 @@ AC( ExplicitExpressionCountingOperation )
 {
   CALL_AC( ReducingOperation );
   CERR( "その上で選択の余地のない操作回数を求める際は、" );
-  CERR( "- 操作列をイベントとみなし時系列に並べ、「一斉に処理できる区間」いくつかに分割し、" );
-  CERR( "  それぞれの区間での処理をまとめて計算" );
+  CERR( "- 操作列をイベントとみなし時系列に並べ、「一斉に処理できる区間」いくつか" );
+  CERR( "  に分割し、それぞれの区間での処理をまとめて計算" );
   CERR( "- 操作対象が操作優先度つきで複数ある場合は、各操作対象の操作回数に関する動的計画法" );
+  CERR( "- 操作がいくつかの対象群に同時に行われるならば、各対象群ごとに回数計算" );
+  CERR( "- 操作が辺の削除ならば、逆向きに処理して各連結成分ごとに操作回数を記録" );
   CERR( "を検討しましょう。" );
 }
 
 AC( ReducingOperation )
 {
   CERR( "操作対象を何らかの不変量で分類し、操作を不変量間の遷移とみなすことで" );
-  CERR( "簡単な問題に帰着させましょう。" );
-  CERR( "- 操作で階差数列の奇数成分が減るならば、その総和" );
-  CERR( "- 操作で累積和の最大値と最小値の差が減るならば、その差" );
-  CERR( "- 操作で隣接成分との大小が変わるならば、その大小関係を管理する01列" );
+  CERR( "なるべく簡単な問題に帰着させましょう。" );
+  CERR( "- 操作で階差数列の奇数成分が減るならば、その総和に注目" );
+  CERR( "- 操作で累積和の最大値と最小値の差が減るならば、その差に注目" );
+  CERR( "- 操作で隣接成分との大小が変わるならば、その大小関係を管理する01列に注目" );
 }
 
 AC( ExplicitExpressionConvolution )
@@ -1229,6 +1231,17 @@ AC( MaximisationArrayFunction )
   CERR( "配列を受け取る関数Fが与えられているとします。与えられた配列Aに" );
   CERR( "何らかの処理をして得られる配列Bに対するF(B)の最大化問題を考えます。" );
   CERR( "最小化問題は-1倍すれば良いです。" );
+  CERR( "" );
+  CERR( "AのサイズNが小さい場合、操作の全探策を検討しましょう。" );
+  CERR( "" );
+  CERR( "Fの終域Mの有限順序半群構造(|,R)が" );
+  CERR( "(1) Rは<を含意しかつ<に関する最大元がRに関する最大元でもある。" );
+  CERR( "(2) 任意のm,n in Mに対しm = m|nまたはm R m|nである。" );
+  CERR( "(3) Fが|に関する総和関数である。" );
+  CERR( "(4) 配列のサイズNがRの最長昇鎖列長L以下ならば、Bの|に関する累積和が" );
+  CERR( "    Rに関して狭義単調増加するようにBを構成できる" );
+  CERR( "を満たすならば、N>=Lの場合に求める<に関する最大値が<に関する最大元と" );
+  CERR( "一致するので、N<Lの場合に帰着されます。" );
   ASK_YES_NO( "操作は成分を成分の一次結合で置き換えるものですか？" );
   if( reply == "y" ){
     CALL_AC( MaximisationArrayFunctionLinearCombination );
@@ -2510,10 +2523,18 @@ AC( DecisionGame )
 {
   ASK_NUMBER(
 	     "操作の継続を目指すゲーム" ,
+	     "最終局面での不変量の偶奇を指定するゲーム" ,
 	     "得点の大小を競うゲーム"
 	     );
   if( num == num_temp++ ){
     CALL_AC( DecisionContinuingGame );
+    CALL_AC( DecisionContinuingGameCheck );
+  } else if( num == num_temp++ ){
+    CERR( "dp[t] = 初期状態tから確実に最終局面での不変量の値にできる数値の全体集合" );
+    CERR( "と定めてtに関する動的計画法を検討し、必要ならばその実験結果から" );
+    CERR( "規則を見付けたりデータ構造高速化を行いましょう。" );
+    CERR( "\\Mathematics\\Game" );
+    CALL_AC( DecisionContinuingGameCheck );
   } else if( num == num_temp++ ){
     ASK_YES_NO( "操作回数が少なく勝敗がつきそうですか？" );
     if( reply == "y" ){
@@ -2560,6 +2581,12 @@ AC( DecisionContinuingGame )
   CERR( "- ゲームの状態に全順序構造があり勝敗が十分長い区間で一定ならば、" );
   CERR( "  勝敗で区間を連結成分に分解" );
   CERR( "を検討しましょう。" );
+}
+
+AC( DecisionContinuingGameCheck )
+{
+  CERR( "実装ミスだけでなく考察ミスもしやすいので、サンプルが通ってもWAとなったら" );
+  CERR( "即座に愚直解との比較を試みましょう。" );
 }
 
 AC( DecisionConnectedness )

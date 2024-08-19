@@ -137,6 +137,7 @@ AC( QueryTimeAddition );
 AC( Decision );
 AC( DecisionGame );
 AC( DecisionContinuingGame );
+AC( DecisionContinuingGameCheck );
 AC( DecisionConnectedness );
 AC( DecisionAccessibility );
 AC( DecisionDrawability );
