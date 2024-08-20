@@ -110,15 +110,21 @@ ll Answer( ll N , ll M , ll K )
 IN VO Experiment()
 {
   // CEXPR( int , bound , 10 );
+  // // // vector<decldecay_t(Naive(0))> naive1( bound + 1 );
   // FOREQ( N , 0 , bound ){
+  //   // vector<decldecay_t(Naive(0,0))> naive2( bound + 1 );
   //   FOREQ( M , 0 , bound ){
-  //   	cout << N << "," << M << ",[" << 0 << "--" << bound << "]:";
+  //     vector<decldecay_t(Naive(0,0,0))> naive3( bound + 1 );
   //     FOREQ( K , 0 , bound ){
-  //   	   cout << " " << Naive( N , M , K , true );
+  // 	naive3[K] = Naive( N , M , K , true );
   //     }
+  //     cout << N << "," << M << ",[" << 0 << "--" << bound << "]: " << naive3 << endl;
+  //     // naive2[M] = Naive( N , M , true );
   //   }
-  //   // cout << Naive( N , true ) << " \n"[N==bound];
+  //   // cout << N << "," << ",[" << 0 << "--" << bound << "]: " << naive2 << endl;
+  //   // // naive1[N] = Naive( N , true );
   // }
+  // // // cout << "[" << 0 << "--" << bound << "]: " << naive1 << endl;
 }
 
 // ˆ³kŽž‚Í’†g‚¾‚¯íœ‚·‚éB

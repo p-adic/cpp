@@ -1,1 +1,8 @@
+//interactive
+rep(3){//サンプル確認用
+
+
 ll@N,@M,@A[N],x=0;wt(x+max(A(N)));
+
+
+}//サンプル確認用
