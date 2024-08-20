@@ -112,6 +112,6 @@ const int& WinningConstantsOf( Edge& edge , const T& t , const INVARIANT& invari
 
   }
 
-  return ( g[t] = c );
+  return g[t] = c;
 
 }
