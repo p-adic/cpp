@@ -13,6 +13,7 @@ AC( LibrarySearch )
 	     "数え上げ問題" ,
 	     "求解問題" ,
 	     "クエリ処理問題" ,
+	     "ゲーム問題" ,
 	     "真偽判定問題" ,
 	     "構築問題" ,
 	     "推定問題"
@@ -27,6 +28,8 @@ AC( LibrarySearch )
     CALL_AC( Solving );
   } else if( num == num_temp++ ){
     CALL_AC( Query );
+  } else if( num == num_temp++ ){
+    CALL_AC( Game );
   } else if( num == num_temp++ ){
     CALL_AC( Decision );
   } else if( num == num_temp++ ){
@@ -575,7 +578,8 @@ AC( Maximisation )
 	     "被覆半径の最小化問題" ,
 	     "描画サイズ／個数の最大／最小化問題" ,
 	     "最小値の最大化問題" ,
-	     "部分和の最小化問題"
+	     "部分和の最小化問題" ,
+	     "2人ゲームの最終的な不変量の最大化問題"
 	     );
   if( num == num_temp++ ){
     CALL_AC( MinimisationMovingCost );
@@ -611,6 +615,8 @@ AC( Maximisation )
     CALL_AC( MaximisationMinimum );
   } else if( num == num_temp++ ){
     CALL_AC( MinimisationSubsetSum );
+  } else if( num == num_temp++ ){
+    CALL_AC( MaximisationGame );
   }
 }
 
@@ -1267,8 +1273,8 @@ AC( MaximisationArrayFunctionGeneralOperation )
   CERR( "- O(N log_2 X(N))が通りそうで" );
   CERR( "  - fがxからO(N)で計算できxに関して単調ならば、xの二分探索" );
   CERR( "  - fがxからO(N/x)で計算できるならば、xの全探索" );
-  CERR( "- O(N log_2 N)が通りそうでxを並び替えるとfがxからO(log_2 N)で計算できるならば、" );
-  CERR( "  優先度つきキューなどでのxの管理" );
+  CERR( "- O(N log_2 N)が通りそうでxを並び替えるとfがxからO(log_2 N)で計算できる" );
+  CERR( "  ならば、優先度つきキューなどでのxの管理" );
   CERR( "を検討しましょう。" );
 }
 
@@ -1481,6 +1487,28 @@ AC( MinimisationSubsetSum )
   } else if( num == num_temp++ ){
     CERR( "部分和を固定して部分集合の存在を判定する" );
     CERR( "二分探索を検討しましょう。" );
+  }
+}
+
+AC( MaximisationGame )
+{
+  ASK_YES_NO( "整礎なゲームですか？" );
+  if( reply == "y" ){
+    CERR( "数列や多重集合から成分や要素を削除していき先行の総和と後行の総和の差を" );
+    CERR( "最大化する問題は、貪欲法を検討しましょう。" );
+  } else {
+    CERR( "局面を反復可能なゲームは反復戦略を取ることで初期局面に帰着されます。" );
+    CERR( "- 先行が最終着手を行う場合、初手での最大化問題に帰着し" );
+    CERR( "  初手のうち無駄がないものを全探策" );
+    CERR( "- 後行が最終着手を行う場合、２手目での最小値の最大化問題に帰着し" );
+    CERR( "  初手のうち無駄がないものを固定するごとに２手目の最小値を計算" );
+    CERR( "- 最終的な不変量の下界を決め打った時にそれ以上の不変量を得ることが" );
+    CERR( "  実現可能な必要十分条件が決定できる場合、それによる最大値の計算" );
+    CERR( "を検討しましょう。" );
+    CERR( "" );
+    CERR( "数値を置き換えるゲームは頻度表を用いて数値を移動するゲームに" );
+    CERR( "翻訳できることがありますが、その場合は数値の移動が結果的に" );
+    CERR( "起こらない操作も許されるか否かに注意しましょう。" );
   }
 }
 
@@ -2045,6 +2073,9 @@ AC( CountingParenthesisSequence )
 
 AC( Solving )
 {
+  CERR( "一般に不定方程式は分母を払い定数倍して移項し、変数を含む積=定数の形に" );
+  CERR( "翻訳することで定数の約数列挙により小さな方程式の組み合わせに帰着されます。" );
+  CERR( "例えばaxy+bx+cy+d=0は(ax+c)(ay+b)=-(ad-bc)と同値です。" );
   ASK_NUMBER(
 	     "１つの方程式f(g(x),g(y),...) = c" ,
 	     "M個の方程式f(x[a[i]],C^{d[i]}x[b[i]]) = c[i]" ,
@@ -2486,6 +2517,19 @@ AC( QueryTimeAddition )
   CERR( "で計算しましょう。" );
 }
 
+AC( Game )
+{
+  ASK_NUMBER(
+	     "勝敗を決める2人ゲーム" ,
+	     "最終的な不変量の最大化と最小化を先行と後行が目指す2人ゲーム"
+	     );
+  if( num == num_temp++ ){
+    CALL_AC( DecisionGame );
+  } else if( num == num_temp++ ){
+    CALL_AC( MaximisationGame );
+  }
+}
+
 AC( Decision )
 {
   CERR( "場合分けの複雑な問題は証明の概略をコメントしないとバグを倦めやすいです。" );
@@ -2541,8 +2585,9 @@ AC( DecisionGame )
       CERR( "局面の対称性などに注目して同値な局面を同一視し、" );
       CERR( "それぞれについてしらみ潰しに勝敗を考察してみましょう。" );
     } else {
-      CERR( "２プレイヤーの得点差を１つの点数とみなし、その最大化を行いましょう。" );
-      CALL_AC( ConstructionMaximisation );
+      CERR( "２プレイヤーの得点差を１つの不変量とみなし、その最大化を行って" );
+      CERR( "正負を判定しましょう。" );
+      CALL_AC( MaximisationGame );
     }
   }
 }
@@ -2835,7 +2880,6 @@ AC( Construction )
   } else if( num == num_temp++ ){
     CALL_AC( ConstructionPath );
   } else if( num == num_temp++ ){
-    CERR( "ゲームの問題に帰着させましょう。" );
     CALL_AC( DecisionGame );
   } else if( num == num_temp++ ){
     CALL_AC( ConstructionMaximisation );
@@ -2894,9 +2938,11 @@ AC( ConstructionPath )
 
 AC( ConstructionMaximisation )
 {
-  CERR( "操作ごとに決まる値を最大化するためには、操作の整礎な変形手順であって" );
+  CERR( "最終的な不変量を最大化するためには、操作の整礎な変形手順であって" );
   CERR( "値を減らさないものを探し、その変形を完全に行って得られる操作のみに" );
-  CERR( "絞って考えましょう。" );
+  CERR( "絞って考えましょう。その変形によって貪欲な操作が可能であれば" );
+  CERR( "貪欲法で解くことが可能です。" );
+  CERR( "" );
   CALL_AC( Maximisation );
 }
 
