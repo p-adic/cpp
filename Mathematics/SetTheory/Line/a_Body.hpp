@@ -70,6 +70,36 @@ void LineSubset<INT>::insert( const INT& i ) noexcept
 
 }
 
+template <typename INT> void LineSubset<INT>::IntervalInsert( const INT& i_start , const INT& i_final )
+{
+
+  if( i_start > i_final ){
+
+    return;
+
+  }
+
+  insert( i_final );
+  auto itr_i = m_l.lower_bound( i_final ) , end_i = m_l.end();
+  INT& l = ( itr_i-- )->second = i_start;
+
+  while( itr_i != end_i && i_start - 1 <= itr_i->first ){
+
+    if( itr_i->second < i_start ){
+
+      l = itr_i->second;
+
+    }
+
+    ( itr_i = m_l.erase( itr_i ) )--;
+    m_size--;
+
+  }
+
+  return;
+
+}
+
 template <typename INT>
 void LineSubset<INT>::erase( const INT& i ) noexcept
 {
@@ -108,6 +138,38 @@ void LineSubset<INT>::erase( const INT& i ) noexcept
 
   }
   
+  return;
+
+}
+
+template <typename INT> void LineSubset<INT>::IntervalErase( const INT& i_start , const INT& i_final )
+{
+
+  if( i_start > i_final ){
+
+    return;
+
+  }
+
+  erase( i_start );
+  auto itr_i = m_l.upper_bound( i_start ) , end_i = m_l.end();
+
+  while( itr_i != end_i && itr_i->second <= i_final ){
+
+    if( i_final < itr_i->first ){
+
+      itr_i->second = i_final + 1;
+      break;
+
+    } else {
+
+      itr_i = m_l.erase( itr_i );
+      m_size--;
+
+    }
+
+  }
+
   return;
 
 }
