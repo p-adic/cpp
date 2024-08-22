@@ -52,13 +52,13 @@ public:
   inline iterator begin() noexcept;
   inline iterator end() const noexcept;
 
-  inline iterator MaximumLeq( const INT& i ) noexcept;
-  inline iterator MaximumLt( const INT& i ) noexcept;
-  inline iterator MinimumGeq( const INT& i ) noexcept;
-  inline iterator MinimumGt( const INT& i ) noexcept;
+  inline iterator MaximumLeq( const INT& i , const int& k = 0 ) noexcept;
+  inline iterator MaximumLt( const INT& i , const int& k = 0 ) noexcept;
+  inline iterator MinimumGeq( const INT& i , const int& k = 0 ) noexcept;
+  inline iterator MinimumGt( const INT& i , const int& k = 0 ) noexcept;
 
-  inline INT Maximum();
-  inline INT Minimum();
+  inline INT Maximum( const int& k = 0 );
+  inline INT Minimum( const int& k = 0 );
 
   // iを含む連結成分の右端を返す。存在しない場合はi-1を返す。
   INT RightEndPointOf( const INT& i , const bool& in = false ) noexcept;
