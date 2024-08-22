@@ -4,28 +4,30 @@
 #include "Iterator/a.hpp"
 
 // verify:
-// https://yukicoder.me/submissions/1002400iinsert, erase, ConnectedComponentOfj
+// https://yukicoder.me/submissions/1002400ï¼ˆinsert, erase, ConnectedComponentOfï¼‰
 
-// \’zO(1)
-// ˆê“_‘}“üO(log Q)
-// ˆê“_íœO(log Q)
-// ˆê“_‹A‘®”»’èO(log Q)
-// ƒTƒCƒYæ“¾O(1)
+// æ§‹ç¯‰O(1)
+// ä¸€ç‚¹æŒ¿å…¥O(log Q)
+// åŒºé–“æŒ¿å…¥O(log Q)ï¼ˆå‡ã—ï¼‰
+// ä¸€ç‚¹å‰Šé™¤O(log Q)
+// åŒºé–“å‰Šé™¤O(log Q)ï¼ˆå‡ã—ï¼‰
+// ä¸€ç‚¹å¸°å±åˆ¤å®šO(log Q)
+// ã‚µã‚¤ã‚ºå–å¾—O(1)
 
-// æ“ªƒCƒeƒŒ[ƒ^æ“¾O(1)
-// ––”öƒCƒeƒŒ[ƒ^æ“¾O(1)
-// ãŒÀ/‰ºŒÀ“ñ•ª’TõO(log Q)
+// å…ˆé ­ã‚¤ãƒ†ãƒ¬ãƒ¼ã‚¿å–å¾—O(1)
+// æœ«å°¾ã‚¤ãƒ†ãƒ¬ãƒ¼ã‚¿å–å¾—O(1)
+// ä¸Šé™/ä¸‹é™äºŒåˆ†æ¢ç´¢O(log Q)
 
-// Å‘å’l/Å¬’læ“¾O(1)
+// æœ€å¤§å€¤/æœ€å°å€¤å–å¾—O(1)
 
-// ˆê“_˜AŒ‹¬•ªæ“¾O(log Q)
+// ä¸€ç‚¹é€£çµæˆåˆ†å–å¾—O(log Q)
 
 template <typename INT>
 class LineSubset
 {
 
 private:
-  // ‹æŠÔ[l,r]‚²‚Æ‚Ém_l[r] = l‚Æ‚µ‚Ä’¼ü‚Ì•”•ªW‡‚ğŠÇ—‚·‚éB
+  // åŒºé–“[l,r]ã”ã¨ã«m_l[r] = lã¨ã—ã¦ç›´ç·šã®éƒ¨åˆ†é›†åˆã‚’ç®¡ç†ã™ã‚‹ã€‚
   map<INT,INT> m_l;
   int m_size;
 
@@ -33,8 +35,10 @@ public:
   using iterator = IteratorOfLineSubset<INT>;
   
   void insert( const INT& i ) noexcept;
+  void IntervalInsert( const INT& i_start , const INT& i_final ) noexcept;
   void erase( const INT& i ) noexcept;
-  // itr‚ğƒCƒ“ƒNƒŠƒƒ“ƒg‚µ‚Ä‘‚«Š·‚¦A‚»‚ê‚Ö‚ÌQÆ‚ğ•Ô‚·B
+  void IntervalErase( const INT& i_start , const INT& i_final ) noexcept;
+  // itrã‚’ã‚¤ãƒ³ã‚¯ãƒªãƒ¡ãƒ³ãƒˆã—ã¦æ›¸ãæ›ãˆã€ãã‚Œã¸ã®å‚ç…§ã‚’è¿”ã™ã€‚
   inline iterator& erase( iterator& itr );
 
   inline int count( const INT& i ) const noexcept;
@@ -54,7 +58,7 @@ public:
   inline INT Maximum() const;
   inline INT Minimum() const;
 
-  // i‚ğŠÜ‚Ş˜AŒ‹¬•ª‚ğ•Ô‚·B‘¶İ‚µ‚È‚¢ê‡‚Í[1+1,i-1]‚ğ•Ô‚·B
+  // iã‚’å«ã‚€é€£çµæˆåˆ†ã‚’è¿”ã™ã€‚å­˜åœ¨ã—ãªã„å ´åˆã¯[1+1,i-1]ã‚’è¿”ã™ã€‚
   pair<INT,INT> ConnectedComponentOf( const INT& i ) const noexcept;
 
   inline const map<INT,INT>& GetConnectedComponent() const noexcept;
