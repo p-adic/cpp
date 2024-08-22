@@ -4,7 +4,7 @@
 #include "Iterator/a.hpp"
 
 // verify:
-// https://yukicoder.me/submissions/1002400（insert, erase, ConnectedComponentOf）
+// https://yukicoder.me/submissions/1002789（insert, erase, ConnectedComponentOf）
 
 // 構築O(1)
 // 一点挿入O(log Q)
