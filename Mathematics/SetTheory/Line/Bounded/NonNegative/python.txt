@@ -67,21 +67,21 @@ class NonNegativeLineSubset:
 	def count(self,i):return self.bit.Get(i)if 0<=i<=self.ubound else 0
 	def find(self,i):return self.count(i)>0
 	def InitialSegmentSize(self,i_final):return self.bit.InitialSegmentSum(i_final)
-	def IntervalSize(self,i_start,i_final):returnself.bit.IntervalSum(i_start,i_final)
+	def IntervalSize(self,i_start,i_final):return self.bit.IntervalSum(i_start,i_final)
 	def empty(self):return self.InitialSegmentSize(self.ubound)<1
-	def MaximumLeq(self,i):#Returning -1 if not exists
-		num=self.InitialSegmentSize(i)
+	def MaximumLeq(self,i,k=0):#Returning -1 if not exists
+		num=self.InitialSegmentSize(i)-k
 		def f(sum,j):return i<=j or num<=sum
 		a=self.Search(f)
-		return a if self.find(a)else -1
-	def MaximumLt(self,i):return self.MaximumLeq(i-1)
-	def MinimumGeq(self,i):return self.MinimumGt(i-1)
-	def MinimumGt(self,i):#Returning ubound+1 if not exists
-		num=self.InitialSegmentSize(i)
+		return a if num>=0 and self.find(a)else -1
+	def MaximumLt(self,i,k=0):return self.MaximumLeq(i-1,k)
+	def MinimumGeq(self,i,k=0):return self.MinimumGt(i-1,k)
+	def MinimumGt(self,i,k=0):#Returning ubound+1 if not exists
+		num=self.InitialSegmentSize(i)+k
 		def f(sum,j):return i<j and num<sum
 		return self.Search(f)
-	def Maximum(self):return self.MaximumLeq(self.ubound)
-	def Minimum(self):return self.MinimumGeq(0)
+	def Maximum(self,k=0):return self.MaximumLeq(self.ubound,k)
+	def Minimum(self,k=0):return self.MinimumGeq(0,k)
 	def RightEndPointOf(self,i,b=False):
 		if not b and not self.find(i):return i-1
 		c=i-self.InitialSegmentSize(i)
