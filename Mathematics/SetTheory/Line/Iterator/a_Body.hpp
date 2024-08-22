@@ -3,7 +3,7 @@
 #pragma once
 #include "a.hpp"
 
-template <typename INT> inline IteratorOfLineSubset<INT>::IteratorOfLineSubset( const map<INT,INT>& l , typename map<INT,INT>::iterator itr , INT n ) : m_p( &l ) , m_itr( move( itr ) ) , m_i( move( i ) ) {}
+template <typename INT> inline IteratorOfLineSubset<INT>::IteratorOfLineSubset( const map<INT,INT>& l , typename map<INT,INT>::iterator itr , INT i ) : m_p( &l ) , m_itr( move( itr ) ) , m_i( move( i ) ) {}
 
 template <typename INT> inline bool IteratorOfLineSubset<INT>::operator==( const IteratorOfLineSubset<INT>& itr ) const noexcept { return m_p == itr.m_p && m_itr == itr.m_itr && m_i == itr.m_i; }
 template <typename INT> inline bool IteratorOfLineSubset<INT>::operator!=( const IteratorOfLineSubset<INT>& itr ) const noexcept { return !( *this == itr ); }
