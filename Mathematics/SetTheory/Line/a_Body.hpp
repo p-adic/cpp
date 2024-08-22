@@ -70,7 +70,7 @@ void LineSubset<INT>::insert( const INT& i ) noexcept
 
 }
 
-template <typename INT> void LineSubset<INT>::IntervalInsert( const INT& i_start , const INT& i_final )
+template <typename INT> void LineSubset<INT>::IntervalInsert( const INT& i_start , const INT& i_final ) noexcept
 {
 
   if( i_start > i_final ){
@@ -142,7 +142,7 @@ void LineSubset<INT>::erase( const INT& i ) noexcept
 
 }
 
-template <typename INT> void LineSubset<INT>::IntervalErase( const INT& i_start , const INT& i_final )
+template <typename INT> void LineSubset<INT>::IntervalErase( const INT& i_start , const INT& i_final ) noexcept
 {
 
   if( i_start > i_final ){
