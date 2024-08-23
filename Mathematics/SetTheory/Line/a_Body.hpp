@@ -142,6 +142,9 @@ void LineSubset<INT>::erase( const INT& i ) noexcept
 
 }
 
+template <typename INT> inline IteratorOfLineSubset<INT>& LineSubset<INT>::erase( IteratorOfLineSubset<INT>& itr ) { m_size--; return itr.erase_from( m_l ); }
+
+
 template <typename INT> void LineSubset<INT>::IntervalErase( const INT& i_start , const INT& i_final ) noexcept
 {
 
@@ -173,8 +176,6 @@ template <typename INT> void LineSubset<INT>::IntervalErase( const INT& i_start 
   return;
 
 }
-
-template <typename INT> inline IteratorOfLineSubset<INT>& LineSubset<INT>::erase( IteratorOfLineSubset<INT>& itr ) { m_size--; return itr.erase_from( m_l ); }
 
 template <typename INT> inline int LineSubset<INT>::count( const INT& i ) const noexcept { return find( i ) ? 1 : 0; }
 
