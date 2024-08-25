@@ -119,13 +119,13 @@ inline void Experiment()
   //     FOREQ( K , 0 , bound ){
   // 	naive3[K] = Naive( N , M , K , true );
   //     }
-  //     cout << N << "," << M << ",[" << 0 << "--" << bound << "]: " << naive3 << endl;
+  //     cout << "(N,M)=("N << "," << M << "),K¸[" << 0 << "--" << bound << "]: " << naive3 << endl;
   //     // naive2[M] = Naive( N , M , true );
   //   }
-  //   // cout << N << "," << ",[" << 0 << "--" << bound << "]: " << naive2 << endl;
+  //   // cout << "N=" << N << ",M¸[" << 0 << "--" << bound << "]: " << naive2 << endl;
   //   // // naive1[N] = Naive( N , true );
   // }
-  // // // cout << "[" << 0 << "--" << bound << "]: " << naive1 << endl;
+  // // // cout << "N¸[" << 0 << "--" << bound << "]: " << naive1 << endl;
 }
 
 // ˆ³kŽž‚Í’†g‚¾‚¯íœ‚·‚éB

@@ -23,7 +23,6 @@ inline void Experiment();
 inline void SmallTest();
 inline void RandomTest( const int& test_case_num );
 inline void BreakPoint( const int& LINE ) {}
-int exec_mode;
 CEXPR( int , solve_mode , 0 );
 CEXPR( int , sample_debug_mode , 1 );
 CEXPR( int , submission_debug_mode , 2 );
@@ -35,4 +34,10 @@ CEXPR( int , random_test_mode , 7 );
   CEXPR( bool , use_getline , true );
 #else
   CEXPR( bool , use_getline , false );
+#endif
+int exec_mode = solve_mode;
+#ifdef SUBMIT_ONLY
+  CEXPR( bool , submit_only , true );
+#else
+  CEXPR( bool , submit_only , false );
 #endif
