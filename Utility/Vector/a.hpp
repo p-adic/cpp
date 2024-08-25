@@ -12,6 +12,7 @@
 #endif
 
 DECLARATION_OF_ARITHMETICS_FOR_VECTOR( vector );
+DECLARATION_OF_ARITHMETICS_FOR_VECTOR( list );
 template <typename T> inline operator*( const T& scalar , vector<T> v );
 
 // 宣言だけでは型推論できないので宣言はコメントアウトする。
