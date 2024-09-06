@@ -1,5 +1,6 @@
 #verify:
 #https://yukicoder.me/submissions/1002450 (insert, erase, ConnectedComponentOf)
+#https://yukicoder.me/submissions/1007707iinsert,InitialSegmentSize,IntervalSizej
 
 def rec_str(a):return"".join(["[",", ".join(rec_str(x)for x in a),"]"])if isinstance(a,list)else str(a)
 class BIT:
@@ -136,7 +137,7 @@ class CompressedLineSubset:
 	def count(self,i):return self.nnls.count(self.compressed_coordinate[i])if i in self.compressed_coordinate else 0
 	def find(self,i):return self.count(i)>0
 	def InitialSegmentSize(self,i_final):return self.nnls.InitialSegmentSize(self.compressed_coordinate[i_final])
-	def IntervalSize(self,i_start,i_final):return self.nnls.IntervalSum(self.compressed_coordinate[i_start],self.compressed_coordinate[i_final])
+	def IntervalSize(self,i_start,i_final):return self.nnls.IntervalSize(self.compressed_coordinate[i_start],self.compressed_coordinate[i_final])
 	def empty(self):return self.InitialSegmentSize(self.nnls.bit.N-1)<1
 	def MaximumLeq(self,i,k=0):
 		t=self.nnls.MaximumLeq(self.compressed_coordinate[i],k)
