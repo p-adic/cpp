@@ -6,14 +6,19 @@
 #include "../Iterator/a_Body.hpp"
 #include "../../../DirectProduct/AffineSpace/BIT/Debug/a_Body.hpp"
 
-template <typename INT , template <typename...> typename DATA_STR> inline AbstractBoundedLineSubset<INT,DATA_STR>::AbstractBoundedLineSubset( const INT& lbound , const INT& ubound ) : m_lbound( lbound ) , m_ubound( ubound ) , m_ds( m_ubound - m_lbound + 1 , false ) , m_S()
+template <typename INT , template <typename...> typename DATA_STR> inline AbstractBoundedLineSubset<INT,DATA_STR>::AbstractBoundedLineSubset( const INT& lbound , const INT& ubound , const bool& output_mode ) : Debug( output_mode ) , m_lbound( lbound ) , m_ubound( ubound ) , m_ds( m_ubound - m_lbound + 1 , false ) , m_S()
 {
 
   assert( m_lbound <= m_ubound + 1 );
-  cerr << "BoundedLineSubsetをデバッグモードで実行します。" << endl;
-  cerr << "各処理の計算量がO(size)増えることに注意してください。" << endl;
-  Display();
-  cerr << endl;
+
+  if( m_output_mode ){
+    
+    cerr << "BoundedLineSubsetをデバッグモードで実行します。" << endl;
+    cerr << "各処理の計算量がO(size)増えることに注意してください。" << endl;
+    Display();
+    cerr << endl;
+
+  }
 
 }
 
@@ -23,16 +28,25 @@ template <typename INT , template <typename...> typename DATA_STR> inline void A
   assert( m_lbound <= i && i <= m_ubound );
   m_ds.Set( i - m_lbound , 1 );
 
-  if( m_S.count( i ) == 1 ){
+  if( m_output_mode ){
 
-    cerr << "BoundedLineSubsetに" << i << "の挿入を試みましたが元々属していました。" << endl;
+    if( m_S.count( i ) == 1 ){
+  
+      cerr << "BoundedLineSubsetに" << i << "の挿入を試みましたが元々属していました。" << endl;
+
+    } else {
+
+      m_S.insert( i );
+
+      cerr << "BoundedLineSubsetに" << i << "を挿入しました。" << endl;
+      Display();
+      cerr << endl;
+
+    }
 
   } else {
 
     m_S.insert( i );
-    cerr << "BoundedLineSubsetに" << i << "を挿入しました。" << endl;
-    Display();
-    cerr << endl;
 
   }
 
@@ -45,16 +59,24 @@ template <typename INT , template <typename...> typename DATA_STR> inline void A
 
   m_ds.Set( i - m_lbound , 0 );
 
-  if( m_S.count( i ) == 1 ){
+  if( m_output_mode ){
 
-    cerr << "BoundedLineSubsetから" << i << "を削除しました。" << endl;
-    m_S.erase( i );
-    Display();
-    cerr << endl;
+    if( m_S.count( i ) == 1 ){
+
+      cerr << "BoundedLineSubsetから" << i << "を削除しました。" << endl;
+      m_S.erase( i );
+      Display();
+      cerr << endl;
+
+    } else {
+
+      cerr << "BoundedLineSubsetから" << i << "の削除を試みましたが元々属していませんでした。" << endl;
+
+    }
 
   } else {
 
-    cerr << "BoundedLineSubsetから" << i << "の削除を試みましたが元々属していませんでした。" << endl;
+    m_S.erase( i );
 
   }
 
@@ -68,38 +90,56 @@ template <typename INT , template <typename...> typename DATA_STR> inline Iterat
   const INT i = *itr;
   assert( m_S.count( i ) == 1 );
   auto& itr_ref = itr.erase_from( *this );
-  cerr << "BoundedLineSubsetから" << i << "を削除しました。" << endl;
+  
+  if( m_output_mode ){
+
+    cerr << "BoundedLineSubsetから" << i << "を削除しました。" << endl;
+
+  }
+  
   m_S.erase( i );
-  Display();
-  cerr << endl;
+
+  if( m_output_mode ){
+
+    Display();
+    cerr << endl;
+
+  }
+
   return itr_ref;
 
 }
 
 template <typename INT , template <typename...> typename DATA_STR> inline int AbstractBoundedLineSubset<INT,DATA_STR>::count( const INT& i ) noexcept { return m_lbound <= i && i <= m_ubound ? m_ds[i - m_lbound] : 0; }
 
-template <typename INT , template <typename...> typename DATA_STR> inline bool AbstractBoundedLineSubset<INT,DATA_STR>::find( const INT& i ) noexcept { return count( i ) == 1; }
+template <typename INT , template <typename...> typename DATA_STR> inline bool AbstractBoundedLineSubset<INT,DATA_STR>::find( const INT& i ) noexcept { return count( i ) > 0; }
 
-template <typename INT , template <typename...> typename DATA_STR> inline int AbstractBoundedLineSubset<INT,DATA_STR>::InitialSegmentSize( const INT& i_final ) noexcept { return m_ds.InitialSegmentSum( i_final - m_lbound ); }
+template <typename INT , template <typename...> typename DATA_STR> inline int AbstractBoundedLineSubset<INT,DATA_STR>::InitialSegmentCount( const INT& i_final ) noexcept { return m_ds.InitialSegmentSum( i_final - m_lbound ); }
 
-template <typename INT , template <typename...> typename DATA_STR> inline int AbstractBoundedLineSubset<INT,DATA_STR>::IntervalSize( const INT& i_start , const INT& i_final ) noexcept
+template <typename INT , template <typename...> typename DATA_STR> inline int AbstractBoundedLineSubset<INT,DATA_STR>::IntervalCount( const INT& i_start , const INT& i_final ) noexcept
 {
 
   const INT answer = m_ds.IntervalSum( i_start - m_lbound , i_final - m_lbound );
-  cerr << "BoundedLineSubsetの区間[" << i_start << "," << i_final << "]内の要素数は" << answer << "です。" << endl;
+
+  if( m_output_mode ){
+
+    cerr << "BoundedLineSubsetの区間[" << i_start << "," << i_final << "]内の要素数は" << answer << "です。" << endl;
+
+  }
+  
   return answer;
 
 }
 
-template <typename INT , template <typename...> typename DATA_STR> inline bool AbstractBoundedLineSubset<INT,DATA_STR>::empty() noexcept { return InitialSegmentSize( m_ubound ) == 0; }
+template <typename INT , template <typename...> typename DATA_STR> inline bool AbstractBoundedLineSubset<INT,DATA_STR>::empty() noexcept { return InitialSegmentCount( m_ubound ) == 0; }
 
 template <typename INT , template <typename...> typename DATA_STR> inline IteratorOfBoundedLineSubset<INT,DATA_STR> AbstractBoundedLineSubset<INT,DATA_STR>::begin() noexcept { return MinimumGeq( m_lbound ); }
-template <typename INT , template <typename...> typename DATA_STR> inline IteratorOfBoundedLineSubset<INT,DATA_STR> AbstractBoundedLineSubset<INT,DATA_STR>::end() const noexcept { return IteratorOfBoundedLineSubset<INT,DATA_STR>( *this , m_ubound + 1 ); }
+template <typename INT , template <typename...> typename DATA_STR> inline IteratorOfBoundedLineSubset<INT,DATA_STR> AbstractBoundedLineSubset<INT,DATA_STR>::end() noexcept { return IteratorOfBoundedLineSubset<INT,DATA_STR>( *this , m_ubound + 1 ); }
 
-template <typename INT , template <typename...> typename DATA_STR> inline IteratorOfBoundedLineSubset<INT,DATA_STR> AbstractBoundedLineSubset<INT,DATA_STR>::MaximumLeq( const INT& i , const int& k ) noexcept { const INT num = InitialSegmentSize( i ) - k; const INT l = m_ds.Search( [&]( const INT& sum , const int& j ){ return num <= sum; } ) + m_lbound; return num >= 0 && find( l ) ? IteratorOfBoundedLineSubset<INT,DATA_STR>{ *this , l } : end(); }
+template <typename INT , template <typename...> typename DATA_STR> inline IteratorOfBoundedLineSubset<INT,DATA_STR> AbstractBoundedLineSubset<INT,DATA_STR>::MaximumLeq( const INT& i , const int& k ) noexcept { const INT num = InitialSegmentCount( i ) - k; const INT l = m_ds.Search( [&]( const INT& sum , const int& j ){ return num <= sum; } ) + m_lbound; return num >= 0 && find( l ) ? IteratorOfBoundedLineSubset<INT,DATA_STR>{ *this , l } : end(); }
 template <typename INT , template <typename...> typename DATA_STR> inline IteratorOfBoundedLineSubset<INT,DATA_STR> AbstractBoundedLineSubset<INT,DATA_STR>::MaximumLt( const INT& i , const int& k ) noexcept { return MaximumLeq( i - 1 , k ); }
 template <typename INT , template <typename...> typename DATA_STR> inline IteratorOfBoundedLineSubset<INT,DATA_STR> AbstractBoundedLineSubset<INT,DATA_STR>::MinimumGeq( const INT& i , const int& k ) noexcept { return MinimumGt( i - 1 , k ); }
-template <typename INT , template <typename...> typename DATA_STR> inline IteratorOfBoundedLineSubset<INT,DATA_STR> AbstractBoundedLineSubset<INT,DATA_STR>::MinimumGt( const INT& i , const int& k ) noexcept { const INT num = InitialSegmentSize( i ) + k; const INT r = m_ds.Search( [&]( const INT& sum , const int& j ){ return num < sum; } ) + m_lbound; return find( r ) ? IteratorOfBoundedLineSubset<INT,DATA_STR>{ *this , r } : end(); }
+template <typename INT , template <typename...> typename DATA_STR> inline IteratorOfBoundedLineSubset<INT,DATA_STR> AbstractBoundedLineSubset<INT,DATA_STR>::MinimumGt( const INT& i , const int& k ) noexcept { const INT num = InitialSegmentCount( i ) + k; const INT r = m_ds.Search( [&]( const INT& sum , const int& j ){ return num < sum; } ) + m_lbound; return find( r ) ? IteratorOfBoundedLineSubset<INT,DATA_STR>{ *this , r } : end(); }
 
 template <typename INT , template <typename...> typename DATA_STR> inline INT AbstractBoundedLineSubset<INT,DATA_STR>::Maximum( const int& k ) { return MaximumLeq( m_ubound , k ); }
 template <typename INT , template <typename...> typename DATA_STR> inline INT AbstractBoundedLineSubset<INT,DATA_STR>::Minimum( const int& k ) { return MinimumGeq( m_lbound , k ); }
@@ -115,7 +155,7 @@ INT AbstractBoundedLineSubset<INT,DATA_STR>::RightEndPointOf( const INT& i , con
   }
 
   const int d = i - m_lbound;
-  const INT comp_minus = d - InitialSegmentSize( i );
+  const INT comp_minus = d - InitialSegmentCount( i );
   return m_ds.Search( [&]( const INT& sum , const int& j ){ return d <= j && sum + comp_minus < j; } ) + m_lbound - 1;
 
 }
@@ -131,7 +171,7 @@ INT AbstractBoundedLineSubset<INT,DATA_STR>::LeftEndPointOf( const INT& i , cons
   }
 
   const int d = i - m_lbound;
-  const INT comp_minus = d - InitialSegmentSize( i );
+  const INT comp_minus = d - InitialSegmentCount( i );
   return m_ds.Search( [&]( const INT& sum , const int& j ){ return d <= j || ( find( j ) && sum + comp_minus == j ); } ) + m_lbound;
 
 }
@@ -158,6 +198,7 @@ vector<pair<INT,INT>> AbstractBoundedLineSubset<INT,DATA_STR>::GetConnectedCompo
 
 template <typename INT , template <typename...> typename DATA_STR> inline const INT& AbstractBoundedLineSubset<INT,DATA_STR>::lbound() const noexcept { return m_lbound; }
 template <typename INT , template <typename...> typename DATA_STR> inline const INT& AbstractBoundedLineSubset<INT,DATA_STR>::ubound() const noexcept { return m_ubound; }
+
 
 template <typename INT , template <typename...> typename DATA_STR> void AbstractBoundedLineSubset<INT,DATA_STR>::Display() noexcept
 {

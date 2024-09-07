@@ -9,11 +9,11 @@ class IteratorOfBoundedLineSubset
 {
 
 private:
-  const AbstractBoundedLineSubset<INT,DATA_STR>* m_p;
+  AbstractBoundedLineSubset<INT,DATA_STR>* m_p;
   INT m_i;
 
 public:
-  inline IteratorOfBoundedLineSubset( const AbstractBoundedLineSubset<INT,DATA_STR>& S , INT i );
+  inline IteratorOfBoundedLineSubset( AbstractBoundedLineSubset<INT,DATA_STR>& S , INT i );
 
   inline bool operator==( const IteratorOfBoundedLineSubset<INT,DATA_STR>& itr ) const noexcept;
   inline bool operator!=( const IteratorOfBoundedLineSubset<INT,DATA_STR>& itr ) const noexcept;

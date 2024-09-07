@@ -1,6 +1,3 @@
-#verify:
-#https://yukicoder.me/submissions/1002448 (insert, erase, ConnectedComponentOf)
-
 def rec_str(a):return"".join(["[",", ".join(rec_str(x)for x in a),"]"])if isinstance(a,list)else str(a)
 class BIT:
 	def __init__(self,x):
@@ -17,18 +14,11 @@ class BIT:
 				while i>k:
 					self.F[j]+=self.F[i]
 					i-=i&-i
-	def copy(self):
-		a=__class__([])
-		a.N=self.N
-		a.F=self.F[:]
-		return a
 	def Add(self,i,u):
 		i+=1
 		while i<=self.N:
 			self.F[i]+=u
 			i+=i&-i
-	def Set(self,i,u):self.Add(i,u-self.Get(i))
-	def Get(self,i):return self.IntervalSum(i,i)
 	def InitialSegmentSum(self,r):
 		assert(r>-2)
 		a=0
@@ -37,39 +27,47 @@ class BIT:
 			a+=self.F[i]
 			i-=i&-i
 		return a
+class IntervalAddBIT:
+	def __init__(self,N):
+		self.N=N
+		self.F=BIT(N+1)
+		self.G=BIT(N+1)
+	def IntervalAdd(self,l,r,u):
+		self.F.Add(l,-(l-1)*u)
+		self.F.Add(r+1,r*u)
+		self.G.Add(l,u)
+		self.G.Add(r+1,-u)
+	def Add(self,i,u):self.IntervalAdd(i,i,u)
+	def Set(self,i,u):self.Add(i,u-self.Get(i))
+	def InitialSegmentSum(self,r):return self.F.InitialSegmentSum(r)+r*self.G.InitialSegmentSum(r)
 	def IntervalSum(self,l,r):return self.InitialSegmentSum(r)-self.InitialSegmentSum(l-1)
+	def Get(self,i):return self.IntervalSum(i,i)
 	def list(self):return[self.Get(i)for i in R(self.N)]
 	def __str__(self):return rec_str(self.list())
-	def Search(self,u):#Computing minimum of j such that InitialSegmentSum(j)>=u or j==N
-		j=s=n=0
-		p=1<<17 #131072
-		while p:
-			k=j|p
-			p>>=1
-			if k<=self.N:
-				n+=self.F[k]
-				if n<u:s,j=n,k
-				else:n=s
-		return j
 
-class BoundedLineSubset:
+class IntervalInsertBoundedLineMultiSubset:
 	def __init__(self,lbound,ubound):
 		assert(lbound<=ubound+1)
 		self.lbound=lbound
 		self.ubound=ubound
-		self.bit=BIT(ubound-lbound+1)
+		self.bit=IntervalAddBIT(ubound-lbound+1)
 	def copy(self):
 		a=__class__([])
 		a.lbound=self.lbound
 		a.ubound=self.ubound
 		a.bit=self.bit.copy()
 		return a
-	def insert(self,i):assert(self.lbound<=i<=self.ubound);self.bit.Set(i-self.lbound,1)
-	def erase(self,i):self.bit.Set(i-self.lbound,0)
+	def insert(self,i,c=1):assert(self.lbound<=i<=self.ubound);self.bit.Add(i-self.lbound,c)
+	def IntervalInsert(self,i_start,i_final,c=1):assert(self.lbound<=i_start and i_final<=self.ubound);self.bit.IntervalAdd(i_start-self.lbound,i_final-self.lbound,c)
+	def erase(self,i,c=1):self.bit.Add(i-self.lbound,-c)
+	def EraseAll(self,i):self.bit.Set(i-self.lbound,0)
+	def IntervalErase(self,i,c=1):self.bit.IntervalAdd(i_start-self.lbound,i_final-self.lbound,-c)
 	def count(self,i):return self.bit.Get(i-self.lbound)if self.lbound<=i<=self.ubound else 0
 	def find(self,i):return self.count(i)>0
 	def InitialSegmentCount(self,i_final):return self.bit.InitialSegmentSum(i_final-self.lbound)
 	def IntervalCount(self,i_start,i_final):return self.bit.IntervalSum(i_start-self.lbound,i_final-self.lbound)
+
+	#VVV Supported if multiplicities are non-negative
 	def empty(self):return self.InitialSegmentCount(self.ubound)<1
 	def MaximumLeq(self,i,k=0):#Returning lbound-1 if not exists
 		num=self.InitialSegmentCount(i)-k
@@ -96,7 +94,7 @@ class BoundedLineSubset:
 		if not b and not self.find(i):return i+1
 		d=i-self.lbound
 		c=d-self.InitialSegmentCount(i)
-		def f(sum,j):return d<=j or (self.find(j)and sum+c==j)
+		def f(sum,j):return d<=j or(self.find(j)and sum+c==j)
 		return self.Search(f)+self.lbound
 	def ConnectedComponentOf(self,i,b=False):
 		if not b:b=self.find(i)
@@ -109,19 +107,24 @@ class BoundedLineSubset:
 			a+=[[l,r]]
 			l=self.MinimumGt(r)
 		return a
-	def __str__(self):return rec_str(self.GetConnectedComponent())
+	#AAA Supported if multiplicities are non-negative
+
+	def __str__(self):
+		s=[]
+		for i in R(self.lbound,self.ubound+1):
+			c=self.count(i)
+			if c==1:s+=[str(i)]
+			elif c>0:s+=[str(i)+'x'+str(c)]
+			elif c<0:s+=[str(i)+"x("+str(c)+')']
+		return '{{'+", ".join(s)+'}}'
 	def lbound(self):return self.lbound
 	def ubound(self):return self.ubound
 
 	#private:
 	def Search(self,f):#Computing minimum of j satisfying f(bit.InitialSegmentSum(j),j) or j==bit.N
-		j=s=n=0
-		p=1<<17 #131072
-		while p:
-			k=j|p
-			p>>=1
-			if k<=self.bit.N:
-				n+=self.bit.F[k]
-				if f(n,k-1):n=s
-				else:s,j=n,k
-		return j
+		l,r=-1,self.bit.N
+		while l+1<r:
+			m=(l+r)>>1
+			if f(self.bit.InitialSegmentSum(m),m):r=m
+			else:l=m
+		return r

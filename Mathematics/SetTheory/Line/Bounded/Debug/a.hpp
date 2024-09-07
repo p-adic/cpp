@@ -8,7 +8,8 @@
 // äeèàóùÇÃåvéZó Ç™O(size)ëùÇ¶ÇÈÇ±Ç∆Ç…íçà”ÅB
 
 template <typename INT , template <typename...> typename DATA_STR>
-class AbstractBoundedLineSubset
+class AbstractBoundedLineSubset :
+  public Debug
 {
 
 protected:
@@ -19,7 +20,7 @@ protected:
   set<INT> m_S;
 
 public:
-  inline AbstractBoundedLineSubset( const INT& lbound , const INT& ubound );
+  inline AbstractBoundedLineSubset( const INT& lbound , const INT& ubound , const bool& output_mode = true );
   
   using iterator = IteratorOfBoundedLineSubset<INT,DATA_STR>;
   
@@ -31,12 +32,12 @@ public:
   inline int count( const INT& i ) noexcept;
   bool find( const INT& i ) noexcept;
 
-  inline int InitialSegmentSize( const INT& i_final ) noexcept;
-  inline int IntervalSize( const INT& i_start , const INT& i_final ) noexcept;
+  inline int InitialSegmentCount( const INT& i_final ) noexcept;
+  inline int IntervalCount( const INT& i_start , const INT& i_final ) noexcept;
   inline bool empty() noexcept;
 
   inline iterator begin() noexcept;
-  inline iterator end() const noexcept;
+  inline iterator end() noexcept;
 
   inline iterator MaximumLeq( const INT& i , const int& k = 0 ) noexcept;
   inline iterator MaximumLt( const INT& i , const int& k = 0 ) noexcept;

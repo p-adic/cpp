@@ -2,7 +2,12 @@
 
 #pragma once
 #include "Iterator/a.hpp"
-#include "../../DirectProduct/AffineSpace/BIT/a.hpp"
+
+#ifdef DEBUG
+  #include "../../DirectProduct/AffineSpace/BIT/Debug/a.hpp"
+#else
+  #include "../../DirectProduct/AffineSpace/BIT/a.hpp"
+#endif
 
 // verify:
 // https://yukicoder.me/submissions/1002456 (insert, erase, ConnectedComponentOf)
@@ -11,7 +16,7 @@
 // 一点挿入O(log (ubound - lbound))
 // 一点削除O(log (ubound - lbound))
 // 一点帰属判定O(log (ubound - lbound))
-// 区間サイズ取得O(log (ubound - lbound))
+// 区間要素数取得O(log (ubound - lbound))
 
 // 先頭イテレータ取得O(log (ubound - lbound))
 // 末尾イテレータ取得O(log (ubound - lbound))
@@ -44,12 +49,12 @@ public:
   inline int count( const INT& i ) noexcept;
   bool find( const INT& i ) noexcept;
 
-  inline int InitialSegmentSize( const INT& i_final ) noexcept;
-  inline int IntervalSize( const INT& i_start , const INT& i_final ) noexcept;
+  inline int InitialSegmentCount( const INT& i_final ) noexcept;
+  inline int IntervalCount( const INT& i_start , const INT& i_final ) noexcept;
   inline bool empty() noexcept;
 
   inline iterator begin() noexcept;
-  inline iterator end() const noexcept;
+  inline iterator end() noexcept;
 
   inline iterator MaximumLeq( const INT& i , const int& k = 0 ) noexcept;
   inline iterator MaximumLt( const INT& i , const int& k = 0 ) noexcept;
