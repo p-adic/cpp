@@ -4,39 +4,48 @@
 #include "a.hpp"
 
 #include "../../../../../../Algebra/Monoid/Group/Module/a_Body.hpp"
+#include "../../../../../../../Error/Debug/a_Body.hpp"
 
-template <typename U , typename Z_MODULE> AbstractIntervalAddBIT<U,Z_MODULE>::AbstractIntervalAddBIT( Z_MODULE M , const int& size ) : AbstractIntervalAddBIT( M , vector<U>( size , m_M.Zero() ) ) {}
-template <typename U , typename Z_MODULE> AbstractIntervalAddBIT<U,Z_MODULE>::AbstractIntervalAddBIT( Z_MODULE M , const vector<U>& a ) : m_M( move( M ) ) , m_size( a.size() ) , m_a( a )
+template <typename U , typename Z_MODULE> AbstractIntervalAddBIT<U,Z_MODULE>::AbstractIntervalAddBIT( Z_MODULE M , const int& size , const bool& output_mode ) : AbstractIntervalAddBIT( M , vector<U>( size , M.Zero() ) , output_mode ) {}
+template <typename U , typename Z_MODULE> AbstractIntervalAddBIT<U,Z_MODULE>::AbstractIntervalAddBIT( Z_MODULE M , const vector<U>& a , const bool& output_mode ) : Debug( output_mode ) , m_M( move( M ) ) , m_size( a.size() ) , m_a( a )
 {
 
-  static bool init = true;
+  if( m_output_mode ){
+    
+    static bool init = true;
 
-  if( init ){
+    if( init ){
 
-    cerr << "IntervalAddBITをデバッグモードで実行します。" << endl;
-    cerr << "通常のIntervalBITと比べると一点取得にconst修飾がつき各種操作にO(N)かかる" << endl;
-    cerr << "ことにご注意ください。" << endl;
+      cerr << "IntervalAddBITをデバッグモードで実行します。" << endl;
+      cerr << "通常のIntervalAddBITと比べると一点取得にconst修飾がつき各種操作にO(N)かかる" << endl;
+      cerr << "ことにご注意ください。" << endl;
+      cerr << endl;
+      init = false;
+
+    }
+
+    cerr << "IntervalAddBITの初期値：" << endl;
+    cerr << *this << endl;
     cerr << endl;
-    init = false;
 
   }
-
-  cerr << "IntervalAddBITの初期値：" << endl;
-  cerr << *this << endl;
-  cerr << endl;
   
 }
 
 template <typename U>  template <typename...Args> inline IntervalAddBIT<U>::IntervalAddBIT( const Args&... args ) : AbstractIntervalAddBIT<U,Module<int,U>>( Module<int,U>() , args... ) {}
 
-template <typename U , typename Z_MODULE> template <typename...Args> inline void AbstractIntervalAddBIT<U,Z_MODULE>::Initialise( const Args&... args ) { AbstractIntervalAddBIT<U,Z_MODULE> temp{ m_M , args... }; m_a = move( temp.m_a ); }
+template <typename U , typename Z_MODULE> template <typename...Args> inline void AbstractIntervalAddBIT<U,Z_MODULE>::Initialise( const Args&... args ) { AbstractIntervalAddBIT<U,Z_MODULE> temp{ m_M , args... }; m_size = temp.m_size; m_a = move( temp.m_a ); }
 template <typename U , typename Z_MODULE> inline void AbstractIntervalAddBIT<U,Z_MODULE>::Set( const int& i , const U& u ) { Add( i , m_M.Sum( m_M.Inverse( IntervalSum( i , i ) ) , u ) ); }
 
 template <typename U , typename Z_MODULE> inline void AbstractIntervalAddBIT<U,Z_MODULE>::Add( const int& i , const U& u ) { assert( 0 <= i && i < size() ); IntervalAdd( i , i , u ); }
 template <typename U , typename Z_MODULE> inline void AbstractIntervalAddBIT<U,Z_MODULE>::IntervalAdd( const int& i_start , const int& i_final , const U& u )
 {
 
-  cerr << "IntervalAddBITの区間[" << i_start << "," << i_final << "]に" << u << "を加算します。" << endl;
+  if( m_output_mode ){
+    
+    cerr << "IntervalAddBITの区間[" << i_start << "," << i_final << "]に" << u << "を加算します。" << endl;
+
+  }
 
   for( int i = max( 0 , i_start ) ; i <= min( i_final , m_size - 1 ) ; i++ ){
 
@@ -44,9 +53,14 @@ template <typename U , typename Z_MODULE> inline void AbstractIntervalAddBIT<U,Z
 
   }
 
-  cerr << "IntervalAddBITの更新後の成分：" << endl;
-  cerr << *this << endl;
-  cerr << endl;
+  if( m_output_mode ){
+    
+    cerr << "IntervalAddBITの更新後の成分：" << endl;
+    cerr << *this << endl;
+    cerr << endl;
+
+  }
+  
   return;
   
 }
@@ -68,11 +82,40 @@ template <typename U , typename Z_MODULE> inline U AbstractIntervalAddBIT<U,Z_MO
 
   }
 
-  cerr << "IntervalAddBITの区間[" << i_start << "," << i_final << "] における総和： " << answer << endl;
-  cerr << endl;
+  if( m_output_mode ){
+    
+    cerr << "IntervalAddBITの区間[" << i_start << "," << i_final << "] における総和： " << answer << endl;
+    cerr << endl;
+
+  }
+  
   return answer;
 
 }
+
+
+template <typename U , typename Z_MODULE> template <typename F , SFINAE_FOR_BIT_BS>
+int AbstractIntervalAddBIT<U,Z_MODULE>::Search( const F& f )
+{
+
+  int l = -1 , r = size();
+
+  while( l + 1 < r ){
+
+    const int m = ( l + r ) >> 1;
+    ( f( InitialSegmentSum( m ) , m ) ? r : l ) = m;
+
+  }
+
+  return r;
+  
+}
+
+template <typename U , typename Z_MODULE> template <typename F , SFINAE_FOR_BIT_BS> inline int AbstractIntervalAddBIT<U,Z_MODULE>::Search( const int& i_start , const F& f ) { const U u_inv = m_M.Inverse( InitialSegmentSum( i_start - 1 ) ); return max( i_start , Search( [&]( const U& sum , const int& i ){ return i_start <= i && f( m_M.Sum( u_inv , sum ) , i ); } ) ); }
+
+template <typename U , typename Z_MODULE> inline int AbstractIntervalAddBIT<U,Z_MODULE>::Search( const U& u ) { return Search( [&]( const U& sum , const int& ){ return !( sum < u ); } ); }
+
+template <typename U , typename Z_MODULE> inline int AbstractIntervalAddBIT<U,Z_MODULE>::Search( const int& i_start , const U& u ) { return max( i_start , Search( m_M.Sum( InitialSegmentSum( i_start - 1 ) , u ) ) ); }
 
 
 template <class Traits , typename U , typename Z_MODULE> inline basic_ostream<char,Traits>& operator<<( basic_ostream<char,Traits>& os , const AbstractIntervalAddBIT<U,Z_MODULE>& bit )

@@ -5,8 +5,10 @@
 
 #include "../../../../../Algebra/Monoid/Group/a_Body.hpp"
 
-template <typename U , typename ABELIAN_GROUP> inline AbstractBIT<U,ABELIAN_GROUP>::AbstractBIT( ABELIAN_GROUP M , const int& size , const bool& output_mode ) : m_M( move( M ) ) , m_size( size ) , m_fenwick( m_size + 1 , m_M.Zero() ) , m_power( 1 ) , m_a( m_size , m_M.Zero() ) , m_output_mode( output_mode ) { Construct(); }
-template <typename U , typename ABELIAN_GROUP> inline AbstractBIT<U,ABELIAN_GROUP>::AbstractBIT( ABELIAN_GROUP M , const vector<U>& a , const bool& output_mode ) : m_M( move( M ) ) , m_size( a.size() ) , m_fenwick( m_size + 1 , m_M.Zero() ) , m_power( 1 ) , m_a( a ) , m_output_mode( output_mode )
+#include "../../../../../../Error/Debug/a_Body.hpp"
+
+template <typename U , typename ABELIAN_GROUP> inline AbstractBIT<U,ABELIAN_GROUP>::AbstractBIT( ABELIAN_GROUP M , const int& size , const bool& output_mode ) : Debug( output_mode ) , m_M( move( M ) ) , m_size( size ) , m_fenwick( m_size + 1 , m_M.Zero() ) , m_power( 1 ) , m_a( m_size , m_M.Zero() ) { Construct(); }
+template <typename U , typename ABELIAN_GROUP> inline AbstractBIT<U,ABELIAN_GROUP>::AbstractBIT( ABELIAN_GROUP M , const vector<U>& a , const bool& output_mode ) : Debug( output_mode ) , m_M( move( M ) ) , m_size( a.size() ) , m_fenwick( m_size + 1 , m_M.Zero() ) , m_power( 1 ) , m_a( a )
 {
 
   Construct();
@@ -199,9 +201,6 @@ template <typename U , typename ABELIAN_GROUP> template <typename F , SFINAE_FOR
 template <typename U , typename ABELIAN_GROUP> inline int AbstractBIT<U,ABELIAN_GROUP>::Search( const U& u ) { return Search( [&]( const U& sum , const int& ){ return !( sum < u ); } ); }
 
 template <typename U , typename ABELIAN_GROUP> inline int AbstractBIT<U,ABELIAN_GROUP>::Search( const int& i_start , const U& u ) { return max( i_start , Search( m_M.Sum( InitialSegmentSum( i_start - 1 ) , u ) ) ); }
-
-template <typename U , typename ABELIAN_GROUP> inline const bool& AbstractBIT<U,ABELIAN_GROUP>::OutputMode() const noexcept { return m_output_mode; }
-template <typename U , typename ABELIAN_GROUP> inline void AbstractBIT<U,ABELIAN_GROUP>::ChangeOutputMode( const bool& output_mode ) noexcept { m_output_mode = output_mode; }
 
 
 template <class Traits , typename U , typename ABELIAN_GROUP> inline basic_ostream<char,Traits>& operator<<( basic_ostream<char,Traits>& os , const AbstractBIT<U,ABELIAN_GROUP>& bit )

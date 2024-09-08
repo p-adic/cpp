@@ -3,14 +3,18 @@
 #pragma once
 
 #include "../a_Macro.hpp"
+
 #include "../../../../../Algebra/Monoid/Group/a.hpp"
+
+#include "../../../../../../Error/Debug/a.hpp"
 
 // デバッグ用にBITに通常の配列を折衷し出力機能を追加したもの。
 // HybridBITと比べると一点取得の戻り値の型が異なり、
 // 通常のBITと比べるとと一点取得にconst修飾がつき各種操作にO(N)かかることに注意。
 
 template <typename U , typename ABELIAN_GROUP>
-class AbstractBIT
+class AbstractBIT :
+  public Debug
 {
 protected:
   ABELIAN_GROUP m_M;
@@ -19,8 +23,6 @@ protected:
   int m_power;
 
   vector<U> m_a;
-
-  bool m_output_mode;
   
 public:
   inline AbstractBIT( ABELIAN_GROUP M , const int& size = 0 , const bool& output_mode = true );
@@ -52,9 +54,6 @@ public:
   // IntervalSum( i_start , i )がu以上となるi_start以上のiが存在する場合にその最小値を
   // 2進法で探索。存在しない場合はNを返す。
   inline int Search( const int& i_start , const U& u );
-
-  inline const bool& OutputMode() const noexcept;
-  inline void ChangeOutputMode( const bool& output_mode ) noexcept;
 
 private:
   inline void Construct();
