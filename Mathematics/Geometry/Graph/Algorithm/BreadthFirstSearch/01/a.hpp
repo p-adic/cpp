@@ -1,10 +1,11 @@
 // c:/Users/user/Documents/Programming/Mathematics/Geometry/Graph/Algorithm/BreadthFirstSearch/01/a.hpp
 
 #pragma once
-#include "../../a.hpp"
+#include "../../../a.hpp"
 
 // verify:
-// https://yukicoder.me/submissions/953236（GetWeight）
+// https://yukicoder.me/submissions/953236 (GetWeight)
+// https://yukicoder.me/submissions/1009094 (GetWeight)
 
 // GRAPHは{0,1}彩色付き辺Edge:T->(T \times \{0,1\})^{< \omega}を持つグラフに相当する型。
 
@@ -48,15 +49,16 @@ public:
   inline const int& size() const;
   inline int& found( const T& t );
   inline const T& prev( const T& t );
+  // 現時点での重みを返す。
   inline const int& weight( const T& t );
 
   T Next();
 
-  // m_nextに格納されている未到達点（初期化時点ではinit/inits）から到達できる未到達点の重みを
-  // m_weightに格納し、到達できない未到達点や既到達点は重みの代わりに-1を格納。
+  // 始点から到達できる点の重みをm_weightに格納し、到達できない未到達点は重みの代わりに-1を格納する。
   inline void SetWeight();
-  // m_nextに格納されている未到達点（初期化時点ではinit/inits）からgoalの深さを計算し、
-  // m_weightに格納した上で参照で返す。
+  // t_goalが始点から到達できるならばその重みを、到達できないならば-1をm_weightに格納して
+  // そこへの参照を返す。
+  // Dijkstraと違って参照を行うため、返り値を配列にしない。
   inline const int& GetWeight( const T& t_goal );
 
 };

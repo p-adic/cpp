@@ -1,14 +1,14 @@
-// c:/Users/user/Documents/Programming/Mathematics/Geometry/Graph/Algorithm/xBreadthFirstSearch/01/a_Body.hpp
+// c:/Users/user/Documents/Programming/Mathematics/Geometry/Graph/Algorithm/BreadthFirstSearch/01/a_Body.hpp
 
 #pragma once
 #include "a.hpp"
 
-#include "../../a_Body.hpp"
+#include "../../../a_Body.hpp"
 
 template <typename T , typename GRAPH> inline ZeroOneBreadthFirstSearch<T,GRAPH>::ZeroOneBreadthFirstSearch( GRAPH& G , const T& not_found ) : m_G( G ) , m_not_found( not_found ) , m_initialised( false ) , m_next() , m_found() , m_prev() , m_weight() {}
 template <typename T , typename GRAPH> template <typename Arg> inline ZeroOneBreadthFirstSearch<T,GRAPH>::ZeroOneBreadthFirstSearch( GRAPH& G , const T& not_found , Arg&& init ) : ZeroOneBreadthFirstSearch( G , not_found ) { Initialise( forward<Arg>( init ) ); }
 
-template <typename T , typename GRAPH> inline void ZeroOneBreadthFirstSearch<T,GRAPH>::Initialise() { m_initialised = true; m_next.clear(); const int& V = size(); m_found = vector<int>( V ); m_prev = m_weight = vector<int>( V , -1 ); }
+template <typename T , typename GRAPH> inline void ZeroOneBreadthFirstSearch<T,GRAPH>::Initialise() { m_initialised = true; m_next.clear(); const int& V = size(); m_found = vector<int>( V ); m_prev = vector<T>( V , m_not_found ); m_weight = vector<int>( V , -1 ); }
 template <typename T , typename GRAPH> inline void ZeroOneBreadthFirstSearch<T,GRAPH>::Initialise( const T& init ) { auto&& i = m_G.Enumeration_inv( init ); assert( 0 <= i && i < size() ); Initialise(); m_next.push_back( init ); m_found[i] = 2; m_weight[i] = 0; }
 template <typename T , typename GRAPH> inline void ZeroOneBreadthFirstSearch<T,GRAPH>::Initialise( list<T> inits ) { Initialise(); m_next = move( inits ); const int& V = size(); for( auto u : m_next ){ auto&& i = m_G.Enumeration_inv( u ); assert( 0 <= i && i < V ); m_found[i] = 2; m_weight[i] = 0; } }
 template <typename T , typename GRAPH> inline void ZeroOneBreadthFirstSearch<T,GRAPH>::Shift( const T& init ) { if( m_initialised ){ const int& V = size(); auto&& i = m_G.Enumeration_inv( init ); assert( 0 <= i && i < size() ); m_next.clear(); if( ! m_found[i] ){ m_next.push_back( init ); m_found[i] = 2; m_weight[i] = 0; } } else { Initialise( init ); } }
@@ -28,7 +28,7 @@ template <typename T , typename GRAPH> T ZeroOneBreadthFirstSearch<T,GRAPH>::Nex
 
   }
 
-  const int t_curr = m_next.front();
+  const T t_curr = m_next.front();
   auto&& i_curr = m_G.Enumeration_inv( t_curr );
   m_next.pop_front();
 
