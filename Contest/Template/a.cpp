@@ -2,6 +2,7 @@
   #define INCLUDE_MODE
   // #define REACTIVE
   // #define USE_GETLINE
+  // #define SUBMIT_ONLY
 #endif
 
 #ifdef INCLUDE_MAIN
@@ -17,10 +18,11 @@ IN VO Solve()
   // CIN_HW;
   // // SET_HW( N , M );
   // FOR( i , 0 , H ){
-  //   SetWallStringOnGrid( i , grid ); // grid[i][j]に'.'や'#'を格納
+  //   SetWallStringOnGrid( i , grid ); // 入力からgrid[i][j]に'.'や'#'を格納
   // }
-  // // GridGraph graph{ WEdgeOnGrid };
-  // // AcyclicGridGraph graph{ WEdgeOnGrid };
+  // // grid.resize( H , string( W , '.' ) );
+  // // GridGraph graph{ WEdgeOnGrid }; // 上下左右の移動を許容
+  // // AcyclicGridGraph graph{ WEdgeOnGrid }; // 下左右の移動を許容
   // // {i,j}へデコード: EnumHW( v )
   // // {i,j}をコード: EnumHW_inv( { i , j } );
   // // 方向の文字列：direction="URDL";
@@ -58,9 +60,9 @@ IN VO Solve()
   //   // w[u][v] = w[v][u] = w;
   // }
   // Graph graph{ N , Get( e ) };
-  // Dijkstra dijk{ graph }; vector<ll> d = dijk.GetDistance( 0 );
+  // Dijkstra dijk{ graph }; vector<decldecay_t(dijk.Infy())> d = dijk.GetDistance( 0 );
   // // AbstractUnionFindForest uff{ graph , AdditiveGroup<ll>() };
-  // // FloydWarshall fw{ infty , w }; vector<vector<ll>> d = fw.GetDistance();
+  // // FloydWarshall fw{ infty , w }; vector<vector<decltype(infty)>> d = fw.GetDistance();
 
   // // 一般のクエリ
   // CIN( int , Q );
@@ -163,6 +165,10 @@ IN VO RandomTest( CRI test_case_num )
   Geometry/Graph/Algorithm/BreadthFirstSearch/
   - AdicExhausiveSearch (11KB)
     Geometry/Graph/Algorithm/BreadthFirstSearch/AdicExhausiveSearch/
+  - BitExhausiveSearch (10KB)
+    Geometry/Graph/Algorithm/BreadthFirstSearch/BitExhausiveSearch/
+  - ZeroOneBreadthFirstSearch (4KB)
+    Geometry/Graph/Algorithm/BreadthFirstSearch/01/
 
 - BIT (5KB)
   SetTheory/DirectProduct/AffineSpace/BIT/
@@ -227,7 +233,9 @@ IN VO RandomTest( CRI test_case_num )
 
 #else // INCLUDE_LIBRARY
 
-#ifndef DEBUG
+#ifdef DEBUG
+  #define _GLIBCXX_DEBUG
+#else
   #pragma GCC optimize ( "O3" )
   #pragma GCC optimize ( "unroll-loops" )
   #pragma GCC target ( "sse4.2,fma,avx2,popcnt,lzcnt,bmi2" )
@@ -269,8 +277,8 @@ using namespace std;
 #define START_MAIN int main(){ ios_base::sync_with_stdio( false ); cin.tie( nullptr )
 #define FINISH_MAIN REPEAT( test_case_num ){ if CE( bound_test_case_num > 1 ){ CERR( "testcase " , VARIABLE_FOR_REPEAT_test_case_num , ":" ); } Solve(); CERR( "" ); } }
 #define START_WATCH chrono::system_clock::time_point watch = chrono::system_clock::now(); double loop_average_time = 0.0 , loop_start_time = 0.0 , current_time = 0.0; int loop_count = 0
-#define CURRENT_TIME static_cast<double>( chrono::duration_cast<chrono::microseconds>( chrono::system_clock::now() - watch ).count() / 1000.0 )
-#define CHECK_WATCH( TL_MS ) ( current_time = CURRENT_TIME , loop_count == 0 ? loop_start_time = current_time : loop_average_time = ( current_time - loop_start_time ) / loop_count , ++loop_count , current_time < TL_MS - loop_average_time - 100.0 )
+#define CURRENT_TIME ( current_time = static_cast<double>( chrono::duration_cast<chrono::microseconds>( chrono::system_clock::now() - watch ).count() / 1000.0 ) )
+#define CHECK_WATCH( TL_MS ) ( CURRENT_TIME , loop_count == 0 ? loop_start_time = current_time : loop_average_time = ( current_time - loop_start_time ) / loop_count , ++loop_count , current_time < TL_MS - loop_average_time * 2 - 100.0 )
 #define CEXPR( LL , BOUND , VALUE ) CE LL BOUND = VALUE
 #define SET_A_ASSERT( I , N , A , MIN , MAX ) FOR( VARIABLE_FOR_SET_A , 0 , N ){ SET_ASSERT( A[VARIABLE_FOR_SET_A + I] , MIN , MAX ); }
 #define SET_AA_ASSERT( I0 , N0 , I1 , N1 , A , MIN , MAX ) FOR( VARIABLE_FOR_SET_AA0 , 0 , N0 ){ FOR( VARIABLE_FOR_SET_AA1 , 0 , N1 ){ SET_ASSERT( A[VARIABLE_FOR_SET_AA0 + I0][VARIABLE_FOR_SET_AA1 + I1] , MIN , MAX ); } }
