@@ -9,10 +9,11 @@
   assert( 0 <= i_start && i_start < size );		\
   INITIALISE_PREV;					\
 
+// mane_edge == true‚ÌŽž(O(V^2))
 #define DIJKSTRA_BODY_1( SET_PREV )					\
   if( path_length == -1 ){						\
 									\
-    path_length = size - 1;						\
+    path_length = size;                                                 \
 									\
   }									\
 									\
@@ -21,18 +22,24 @@
 									\
   for( int num = 0 ; num < path_length ; num++ ){			\
 									\
-    const U& weight_i = weight[i];					\
+    if( fixed[i] ){                                                     \
+                                                                        \
+      break;                                                            \
+                                                                        \
+    }                                                                   \
+                                                                        \
     fixed[i] = true;							\
+    const U& weight_i = weight[i];					\
     auto&& edge_i = m_G.Edge( m_G.Enumeration( i ) );			\
 									\
-    for( auto itr = edge_i.begin() , end = edge_i.end() ; itr != end ; itr++ ){ \
+    for( auto&& edge_ij : edge_i ){                                     \
 									\
-      auto&& j = m_G.Enumeration_inv( itr->first );			\
+      auto&& j = m_G.Enumeration_inv( get<0>( edge_ij ) );              \
       									\
       if( !fixed[j] ){							\
 									\
-	const U& edge_ij = get<1>( *itr );				\
-	U temp = m_M.Product( weight_i , edge_ij );			\
+	const U& w_ij = get<1>( edge_ij );				\
+	U temp = m_M.Product( weight_i , w_ij );			\
 	assert( temp < infty );						\
 	U& weight_j = weight[j];					\
 									\
@@ -68,6 +75,7 @@
 									\
   }									\
 
+// mane_edge == true‚ÌŽž(O((|V|+|E|)log |V|))
 #define DIJKSTRA_BODY_2( CHECK_FINAL , SET_PREV )			\
   assert( path_length == -1 );						\
   set<pair<U,int>> vertex{};						\
@@ -81,16 +89,16 @@
     fixed[i] = true;							\
     vertex.erase( begin );						\
     auto&& edge_i = m_G.Edge( m_G.Enumeration( i ) );			\
-    vector<pair<U,int>> changed_vertex{};					\
+    vector<pair<U,int>> changed_vertex{};                               \
 									\
-    for( auto itr = edge_i.begin() , end = edge_i.end() ; itr != end ; itr++ ){ \
+    for( auto&& edge_ij : edge_i ){                                     \
 									\
-      auto&& j = m_G.Enumeration_inv( itr->first );			\
+      auto&& j = m_G.Enumeration_inv( get<0>( edge_ij ) );              \
       									\
       if( !fixed[j] ){							\
 									\
-	const U& edge_ij = get<1>( *itr );				\
-	U temp = m_M.Product( weight_i , edge_ij );			\
+	const U& w_ij = get<1>( edge_ij );				\
+	U temp = m_M.Product( weight_i , w_ij );			\
 	assert( temp < infty );						\
 	U& weight_j = weight[j];					\
 									\

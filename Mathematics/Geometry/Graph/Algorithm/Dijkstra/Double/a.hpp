@@ -1,4 +1,4 @@
-// c:/Users/user/Documents/Programming/Mathematics/Geometry/Algorithm/Dijkstra/Double/a.hpp
+// c:/Users/user/Documents/Programming/Mathematics/Geometry/Graph/Algorithm/Dijkstra/Double/a.hpp
 
 #pragma once
 
@@ -20,9 +20,9 @@ class DoubleDijkstra
 {
 
 private:
-  ACYCLIC_GRAPH m_G1; // 主にLinearGraph( H )
-  GRAPH m_G2; // 主にGridGraph( edge )
-  VERTEX m_vertex; // 主に[&]( const int& i ){ return id<int>( W ); }
+  ACYCLIC_GRAPH m_G1; // 例えばLinearGraph( H )
+  GRAPH m_G2; // 例えばGridGraph( edge )
+  VERTEX m_vertex; // 例えば[&]( const int& i ){ return id<int>( W ); }
   vector<T1> m_top_sort;
 
 public:
@@ -35,9 +35,9 @@ public:
   // (2) Mがoperator<(const U&,const U&)に関してUの順序可換モノイド構造である。
   // を満たす場合にのみサポート。
   // t_startsの点を始点とする最短経路長を
-  // O(min(\sum_{t1} |V_{t1)|^2,\sum_{t1} (|V_{t1}|+|E_{t1}|)log_2|E_{t2}|))
+  // O(min(\sum_{t1} |V_{t1}|^2,\sum_{t1} (|V_{t1}|+|E_{t1}|)log_2|E_{t2}|))
   // で計算する。
-  template <typename COMM_MONOID> vector<U> GetDistance( const vector<pair<T1,T2>>& t_starts , COMM_MONOID M , const U& infty , const bool& many_edges = true );
+  template <typename COMM_MONOID> vector<U> GetDistance( const vector<pair<T1,T2>>& t_starts , COMM_MONOID M , const U& infty , const bool& many_edges = false );
 
 };
-template <typename ACYCLIC_GRAPH , typename GRAPH , typename VERTEX , typename...Args> DoubleDijkstra( ACYCLIC_GRAPH& G1 , GRAPH& G2 , VERTEX& vertex , Args&&... ) -> DoubleDijkstra<inner_t<ACYCLIC_GRAPH>,ACYCLIC_GRAPH,decldecay_t( declval<inner_t<GRAPH>>().second ),decldecay_t( declval<GRAPH>().Edge( declval<inner_t<GRAPH>>() ).front().second ),GRAPH,VERTEX>;
+template <typename ACYCLIC_GRAPH , typename GRAPH , typename VERTEX , typename...Args> DoubleDijkstra( ACYCLIC_GRAPH G1 , GRAPH G2 , VERTEX vertex , Args&&... ) -> DoubleDijkstra<inner_t<ACYCLIC_GRAPH>,ACYCLIC_GRAPH,decldecay_t( declval<inner_t<GRAPH>>().second ),decldecay_t( declval<GRAPH>().Edge( declval<inner_t<GRAPH>>() ).front().second ),GRAPH,VERTEX>;

@@ -17,6 +17,7 @@ template <typename T , typename GRAPH , typename U , typename COMM_MONOID> inlin
     cerr << "Dijkstraをデバッグモードで実行します。" << endl;
     cerr << "マクロが展開されるだけなのでファイルサイズとエラー出力以外は変わりません。" << endl;
     cerr << "infty = " << infty << "と定義されています。" << endl;
+    cerr << endl;
     infty_prev = infty;
     init = false;
 
@@ -24,6 +25,7 @@ template <typename T , typename GRAPH , typename U , typename COMM_MONOID> inlin
     
     cerr << "Dijkstraをデバッグモードで再実行しますが、" << endl;
     cerr << "infty = " << infty << "に定義が変更されました。" << endl;
+    cerr << endl;
     infty_prev = infty;
 
   }
@@ -65,14 +67,14 @@ U AbstractDijkstra<T,GRAPH,U,COMM_MONOID>::GetDistance( const inner_t<GRAPH>& t_
       fixed[i] = true;
       auto&& edge_i = m_G.Edge( m_G.Enumeration( i ) );
 
-      for( auto itr = edge_i.begin() , end = edge_i.end() ; itr != end ; itr++ ){
+      for( auto&& edge_ij : edge_i ){
 
-	auto&& j = m_G.Enumeration_inv( itr->first );
+        auto&& j = m_G.Enumeration_inv( get<0>( edge_ij ) );
 
-	if( !fixed[j] ){
+        if( !fixed[j] ){
 
-	  const U& edge_ij = get<1>( *itr );
-	  U temp = m_M.Product( weight_i , edge_ij );
+          const U& w_ij = get<1>( edge_ij );
+	  U temp = m_M.Product( weight_i , w_ij );
 	  assert( temp < infty );
 	  U& weight_j = weight[j];
 
@@ -126,12 +128,12 @@ U AbstractDijkstra<T,GRAPH,U,COMM_MONOID>::GetDistance( const inner_t<GRAPH>& t_
 
       for( auto itr = edge_i.begin() , end = edge_i.end() ; itr != end ; itr++ ){
 
-	auto&& j = m_G.Enumeration_inv( itr->first );
+	auto&& j = m_G.Enumeration_inv( get<0>( *itr ) );
 
 	if( !fixed[j] ){
 
-	  const U& edge_ij = get<1>( *itr );
-	  U temp = m_M.Product( weight_i , edge_ij );
+	  const U& w_ij = get<1>( *itr );
+	  U temp = m_M.Product( weight_i , w_ij );
 	  assert( temp < infty );
 	  U& weight_j = weight[j];
 
@@ -165,6 +167,7 @@ U AbstractDijkstra<T,GRAPH,U,COMM_MONOID>::GetDistance( const inner_t<GRAPH>& t_
   U answer{ move( weight[i_final] ) };
   cerr << "Dijkstra::GetDistance( t_start = " << t_start << " , t_final = " << t_final << " , many_edges = " << many_edges << " , path_length = " << path_length << " )の実行結果：" << endl;
   cerr << "answer = " << answer << endl;
+  cerr << endl;
   return answer;
 
 }
@@ -188,7 +191,7 @@ vector<U> AbstractDijkstra<T,GRAPH,U,COMM_MONOID>::GetDistance( const inner_t<GR
 
     if( path_length == -1 ){
 
-      path_length = size - 1;
+      path_length = size;
 
     }
 
@@ -197,18 +200,24 @@ vector<U> AbstractDijkstra<T,GRAPH,U,COMM_MONOID>::GetDistance( const inner_t<GR
 
     for( int num = 0 ; num < path_length ; num++ ){
 
-      const U& weight_i = weight[i];
+      if( fixed[i] ){
+
+        break;
+
+      }
+      
       fixed[i] = true;
+      const U& weight_i = weight[i];
       auto&& edge_i = m_G.Edge( m_G.Enumeration( i ) );
 
-      for( auto itr = edge_i.begin() , end = edge_i.end() ; itr != end ; itr++ ){
+      for( auto&& edge_ij : edge_i ){
 
-	auto&& j = m_G.Enumeration_inv( itr->first );
+        auto&& j = m_G.Enumeration_inv( get<0>( edge_ij ) );
 
-	if( !fixed[j] ){
+        if( !fixed[j] ){
 
-	  const U& edge_ij = get<1>( *itr );
-	  U temp = m_M.Product( weight_i , edge_ij );
+          const U& w_ij = get<1>( edge_ij );
+	  U temp = m_M.Product( weight_i , w_ij );
 	  assert( temp < infty );
 	  U& weight_j = weight[j];
 
@@ -260,14 +269,14 @@ vector<U> AbstractDijkstra<T,GRAPH,U,COMM_MONOID>::GetDistance( const inner_t<GR
       auto&& edge_i = m_G.Edge( m_G.Enumeration( i ) );
       vector<pair<U,int>> changed_vertex{};
 
-      for( auto itr = edge_i.begin() , end = edge_i.end() ; itr != end ; itr++ ){
+      for( auto&& edge_ij : edge_i ){
 
-	auto&& j = m_G.Enumeration_inv( itr->first );
+        auto&& j = m_G.Enumeration_inv( get<0>( edge_ij ) );
 
-	if( !fixed[j] ){
+        if( !fixed[j] ){
 
-	  const U& edge_ij = get<1>( *itr );
-	  U temp = m_M.Product( weight_i , edge_ij );
+          const U& w_ij = get<1>( edge_ij );
+	  U temp = m_M.Product( weight_i , w_ij );
 	  assert( temp < infty );
 	  U& weight_j = weight[j];
 
@@ -299,7 +308,8 @@ vector<U> AbstractDijkstra<T,GRAPH,U,COMM_MONOID>::GetDistance( const inner_t<GR
   }
   // AAA DIJKSTRA_BODY( , , );
   cerr << "Dijkstra::GetDistance( t_start = " << t_start << " , many_edges = " << many_edges << " , path_length = " << path_length << " )の実行結果：" << endl;
-  cerr << "weight = ( " << weight << " )" << endl;
+  cerr << "weight = " << weight << endl;
+  cerr << endl;
   return weight;
 
 }
@@ -336,14 +346,14 @@ void AbstractDijkstra<T,GRAPH,U,COMM_MONOID>::SetDistance( vector<U>& weight , v
       fixed[i] = true;
       auto&& edge_i = m_G.Edge( m_G.Enumeration( i ) );
 
-      for( auto itr = edge_i.begin() , end = edge_i.end() ; itr != end ; itr++ ){
+      for( auto&& edge_ij : edge_i ){
 
-	auto&& j = m_G.Enumeration_inv( itr->first );
+        auto&& j = m_G.Enumeration_inv( get<0>( edge_ij ) );
 
-	if( !fixed[j] ){
+        if( !fixed[j] ){
 
-	  const U& edge_ij = get<1>( *itr );
-	  U temp = m_M.Product( weight_i , edge_ij );
+          const U& w_ij = get<1>( edge_ij );
+	  U temp = m_M.Product( weight_i , w_ij );
 	  assert( temp < infty );
 	  U& weight_j = weight[j];
 
@@ -395,14 +405,14 @@ void AbstractDijkstra<T,GRAPH,U,COMM_MONOID>::SetDistance( vector<U>& weight , v
       auto&& edge_i = m_G.Edge( m_G.Enumeration( i ) );
       vector<pair<U,int>> changed_vertex{};
 
-      for( auto itr = edge_i.begin() , end = edge_i.end() ; itr != end ; itr++ ){
+      for( auto&& edge_ij : edge_i ){
 
-	auto&& j = m_G.Enumeration_inv( itr->first );
+        auto&& j = m_G.Enumeration_inv( get<0>( edge_ij ) );
 
-	if( !fixed[j] ){
+        if( !fixed[j] ){
 
-	  const U& edge_ij = get<1>( *itr );
-	  U temp = m_M.Product( weight_i , edge_ij );
+          const U& w_ij = get<1>( edge_ij );
+	  U temp = m_M.Product( weight_i , w_ij );
 	  assert( temp < infty );
 	  U& weight_j = weight[j];
 
@@ -433,6 +443,10 @@ void AbstractDijkstra<T,GRAPH,U,COMM_MONOID>::SetDistance( vector<U>& weight , v
 
   }
   // AAA DIJKSTRA_BODY( , , );
+  cerr << "Dijkstra::SetDistance( t_start = " << t_start << " , many_edges = " << many_edges << " , path_length = " << path_length << " )の実行結果：" << endl;
+  cerr << "weight = " << weight << endl;
+  cerr << "fixed = " << fixed << endl;
+  cerr << endl;
   return;
 
 }
@@ -470,14 +484,14 @@ pair<U,list<inner_t<GRAPH>>> AbstractDijkstra<T,GRAPH,U,COMM_MONOID>::GetPath( c
       fixed[i] = true;
       auto&& edge_i = m_G.Edge( m_G.Enumeration( i ) );
 
-      for( auto itr = edge_i.begin() , end = edge_i.end() ; itr != end ; itr++ ){
+      for( auto&& edge_ij : edge_i ){
 
-	auto&& j = m_G.Enumeration_inv( itr->first );
+        auto&& j = m_G.Enumeration_inv( get<0>( edge_ij ) );
 
-	if( !fixed[j] ){
+        if( !fixed[j] ){
 
-	  const U& edge_ij = get<1>( *itr );
-	  U temp = m_M.Product( weight_i , edge_ij );
+          const U& w_ij = get<1>( edge_ij );
+	  U temp = m_M.Product( weight_i , w_ij );
 	  assert( temp < infty );
 	  U& weight_j = weight[j];
 
@@ -529,14 +543,14 @@ pair<U,list<inner_t<GRAPH>>> AbstractDijkstra<T,GRAPH,U,COMM_MONOID>::GetPath( c
       auto&& edge_i = m_G.Edge( m_G.Enumeration( i ) );
       vector<pair<U,int>> changed_vertex{};
 
-      for( auto itr = edge_i.begin() , end = edge_i.end() ; itr != end ; itr++ ){
+      for( auto&& edge_ij : edge_i ){
 
-	auto&& j = m_G.Enumeration_inv( itr->first );
+        auto&& j = m_G.Enumeration_inv( get<0>( edge_ij ) );
 
-	if( !fixed[j] ){
+        if( !fixed[j] ){
 
-	  const U& edge_ij = get<1>( *itr );
-	  U temp = m_M.Product( weight_i , edge_ij );
+          const U& w_ij = get<1>( edge_ij );
+	  U temp = m_M.Product( weight_i , w_ij );
 	  assert( temp < infty );
 	  U& weight_j = weight[j];
 
@@ -585,7 +599,8 @@ pair<U,list<inner_t<GRAPH>>> AbstractDijkstra<T,GRAPH,U,COMM_MONOID>::GetPath( c
   U answer{ move( weight[i_final] ) };
   cerr << "Dijkstra::GetPath( t_start = " << t_start << " , t_final = " << t_final << " , many_edges = " << many_edges << " , path_length = " << path_length << " )の実行結果：" << endl;
   cerr << "answer = " << answer << endl;
-  cerr << "path = ( " << path << " )" << endl;
+  cerr << "path = " << path << endl;
+  cerr << endl;
   return { move( answer ) , move( path ) };
 
 }
@@ -622,14 +637,14 @@ pair<vector<U>,vector<list<inner_t<GRAPH>>>> AbstractDijkstra<T,GRAPH,U,COMM_MON
       fixed[i] = true;
       auto&& edge_i = m_G.Edge( m_G.Enumeration( i ) );
 
-      for( auto itr = edge_i.begin() , end = edge_i.end() ; itr != end ; itr++ ){
+      for( auto&& edge_ij : edge_i ){
 
-	auto&& j = m_G.Enumeration_inv( itr->first );
+        auto&& j = m_G.Enumeration_inv( get<0>( edge_ij ) );
 
-	if( !fixed[j] ){
+        if( !fixed[j] ){
 
-	  const U& edge_ij = get<1>( *itr );
-	  U temp = m_M.Product( weight_i , edge_ij );
+          const U& w_ij = get<1>( edge_ij );
+	  U temp = m_M.Product( weight_i , w_ij );
 	  assert( temp < infty );
 	  U& weight_j = weight[j];
 
@@ -683,12 +698,12 @@ pair<vector<U>,vector<list<inner_t<GRAPH>>>> AbstractDijkstra<T,GRAPH,U,COMM_MON
 
       for( auto itr = edge_i.begin() , end = edge_i.end() ; itr != end ; itr++ ){
 
-	auto&& j = m_G.Enumeration_inv( itr->first );
+	auto&& j = m_G.Enumeration_inv( get<0>( *itr ) );
 
 	if( !fixed[j] ){
 
-	  const U& edge_ij = get<1>( *itr );
-	  U temp = m_M.Product( weight_i , edge_ij );
+	  const U& w_ij = get<1>( *itr );
+	  U temp = m_M.Product( weight_i , w_ij );
 	  assert( temp < infty );
 	  U& weight_j = weight[j];
 
@@ -746,8 +761,9 @@ pair<vector<U>,vector<list<inner_t<GRAPH>>>> AbstractDijkstra<T,GRAPH,U,COMM_MON
   }
 
   cerr << "Dijkstra::GetPath( t_start = " << t_start << " , t_finals = ( " << t_finals << " ) , many_edges = " << many_edges << " , path_length = " << path_length << " )の実行結果：" << endl;
-  cerr << "weight = ( " << weight << " )" << endl;
-  cerr << "path = ( " << path << " )" << endl;
+  cerr << "weight = " << weight << endl;
+  cerr << "path = " << path << endl;
+  cerr << endl;
   return { move( weight ) , move( path ) };
 
 }

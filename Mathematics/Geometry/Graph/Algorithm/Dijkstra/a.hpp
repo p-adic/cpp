@@ -7,7 +7,7 @@
 #include "../../../../Algebra/Monoid/a.hpp"
 
 // verify:
-// https://yukicoder.me/submissions/969250（GetDistance、many_edges=false）
+// https://yukicoder.me/submissions/989021（GetDistance、many_edges=false）
 // https://yukicoder.me/submissions/961784（GetDistance、many_edges=true）
 // https://yukicoder.me/submissions/961385（SetDistance、many_edges=true）
 // https://yukicoder.me/submissions/961826（GetPath、many_edged=false）
@@ -72,7 +72,8 @@ class Dijkstra :
 {
 
 public:
-  inline Dijkstra( GRAPH& G );
+  // llをテンプレートにしてllにキャストするとデフォルト引数を取る時に型推論できないことに注意。
+  inline Dijkstra( GRAPH& G , const ll& infty = 1e18 );
 
 };
-template <typename GRAPH> Dijkstra( GRAPH& G ) -> Dijkstra<inner_t<GRAPH>,GRAPH>;
+template <typename GRAPH , typename...ARGS> Dijkstra( GRAPH& G , const ARGS&... args ) -> Dijkstra<inner_t<GRAPH>,GRAPH>;
