@@ -7,7 +7,7 @@
 
 #include "../../../../../Utility/Set/Map/a_Body.hpp"
 
-template <typename INT , template <typename...> typename DATA_STR> inline AbstractCompressedLineSubset<INT,DATA_STR>::AbstractCompressedLineSubset( const vector<INT>& query ) : m_sorted_coord() , m_sorted_coord_inv()
+template <typename INT , template <typename...> typename DATA_STR> inline AbstractCompressedSortedSet<INT,DATA_STR>::AbstractCompressedSortedSet( const vector<INT>& query ) : m_sorted_coord() , m_sorted_coord_inv()
 {
 
   set<INT> S{};
@@ -43,7 +43,7 @@ template <typename INT , template <typename...> typename DATA_STR> inline Abstra
 
 }
 
-template <typename INT , template <typename...> typename DATA_STR> inline bool AbstractCompressedLineSubset<INT,DATA_STR>::InRange( const INT& i ) { return m_sorted_coord_inv.count( i ) > 0; }
-template <typename INT , template <typename...> typename DATA_STR> inline const INT& AbstractCompressedLineSubset<INT,DATA_STR>::Normalise( const INT& i ) { return m_sorted_coord_inv[i]; }
-template <typename INT , template <typename...> typename DATA_STR> inline const INT& AbstractCompressedLineSubset<INT,DATA_STR>::Denormalise( const INT& d ) { return m_sorted_coord[d]; }
+template <typename INT , template <typename...> typename DATA_STR> inline bool AbstractCompressedSortedSet<INT,DATA_STR>::InRange( const INT& i ) { return m_sorted_coord_inv.count( i ) > 0; }
+template <typename INT , template <typename...> typename DATA_STR> inline const INT& AbstractCompressedSortedSet<INT,DATA_STR>::Normalise( const INT& i ) { return m_sorted_coord_inv[i]; }
+template <typename INT , template <typename...> typename DATA_STR> inline const INT& AbstractCompressedSortedSet<INT,DATA_STR>::Denormalise( const INT& d ) { return m_sorted_coord[d]; }
 

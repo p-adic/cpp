@@ -6,7 +6,7 @@
 #include "../../../../../../Utility/Set/Map/a.hpp"
 
 template <typename INT>
-class CompressedLineSubset :
+class CompressedSortedSet :
   public VirtualBoundedLineSubset<INT,const INT&,const INT&>
 {
 
@@ -15,7 +15,7 @@ protected:
   Map<INT,int> m_sorted_coord_inv;
 
 public:
-  inline CompressedLineSubset( const vector<INT>& query , const bool& output_mode = true );
+  inline CompressedSortedSet( const vector<INT>& query , const bool& output_mode = true );
 
 private:
   inline bool InRange( const INT& i );

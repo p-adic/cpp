@@ -7,7 +7,7 @@
 // Šeˆ—‚ÌŒvZ—Ê‚ªO(size)‘‚¦‚é‚±‚Æ‚É’ˆÓB
 
 template <typename INT>
-class CompressedLineMultiSubset :
+class CompressedSortedMultiSet :
   public VirtualBoundedLineMultiSubset<INT,const INT&,const INT&>
 {
 
@@ -16,7 +16,7 @@ protected:
   Map<INT,int> m_sorted_coord_inv;
 
 public:
-  inline CompressedLineMultiSubset( const vector<INT>& query );
+  inline CompressedSortedMultiSet( const vector<INT>& query );
 
 protected:
   inline bool InRange( const INT& i );

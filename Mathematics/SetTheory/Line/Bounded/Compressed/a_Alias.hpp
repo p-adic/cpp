@@ -3,4 +3,4 @@
 #pragma once
 
 template <typename INT>
-using CompressedLineSubset = AbstractCompressedLineSubset<INT,BIT>;
+using CompressedSortedSet = AbstractCompressedSortedSet<INT,BIT>;

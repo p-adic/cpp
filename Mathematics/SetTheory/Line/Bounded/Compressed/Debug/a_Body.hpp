@@ -6,7 +6,7 @@
 #include "../../Debug/a_Body.hpp"
 #include "../../../../../../Utility/Set/Map/a_Body.hpp"
 
-template <typename INT> inline CompressedLineSubset<INT>::CompressedLineSubset( const vector<INT>& query , const bool& output_mode ) : VirtualBoundedLineSubset<INT,const INT&,const INT&>()
+template <typename INT> inline CompressedSortedSet<INT>::CompressedSortedSet( const vector<INT>& query , const bool& output_mode ) : VirtualBoundedLineSubset<INT,const INT&,const INT&>()
 {
 
   set<INT> S{};
@@ -40,7 +40,7 @@ template <typename INT> inline CompressedLineSubset<INT>::CompressedLineSubset( 
 
   }
   
-  this->m_name = "CompressedLineSubset";
+  this->m_name = "CompressedSortedSet";
   this->m_ds.Initialise( int( S.size() ) , false );
   
   if( this->m_output_mode ){
@@ -54,6 +54,6 @@ template <typename INT> inline CompressedLineSubset<INT>::CompressedLineSubset( 
   
 }
 
-template <typename INT> inline bool CompressedLineSubset<INT>::InRange( const INT& i ) { return m_sorted_coord_inv.count( i ) > 0; }
-template <typename INT> inline constexpr const INT& CompressedLineSubset<INT>::Normalise( const INT& i ) { return m_sorted_coord_inv[i]; }
-template <typename INT> inline constexpr const INT& CompressedLineSubset<INT>::Denormalise( const INT& d ) { return m_sorted_coord[d]; }
+template <typename INT> inline bool CompressedSortedSet<INT>::InRange( const INT& i ) { return m_sorted_coord_inv.count( i ) > 0; }
+template <typename INT> inline constexpr const INT& CompressedSortedSet<INT>::Normalise( const INT& i ) { return m_sorted_coord_inv[i]; }
+template <typename INT> inline constexpr const INT& CompressedSortedSet<INT>::Denormalise( const INT& d ) { return m_sorted_coord[d]; }

@@ -6,5 +6,5 @@
 #include "../a_Body.hpp"
 #include "../../Multisubset/a_Body.hpp"
 
-template <typename INT> inline CompressedLineMultiSubset<INT>::CompressedLineMultiSubset( const vector<INT>& query ) : CompressedLineSubset<INT>( query ) {}
+template <typename INT> inline CompressedSortedMultiSet<INT>::CompressedSortedMultiSet( const vector<INT>& query ) : CompressedSortedSet<INT>( query ) {}
 

@@ -5,7 +5,7 @@
 
 #include "../../../../Multisubset/IntervalInsert/Debug/a_Body.hpp"
 
-template <typename INT> inline IntervalInsertCompressedLineMultiSubset<INT>::IntervalInsertCompressedLineMultiSubset( const vector<INT>& query ) : VirtualIntervalInsertBoundedLineMultiSubset<INT,const INT&,const INT&>()
+template <typename INT> inline IntervalInsertCompressedSortedMultiSet<INT>::IntervalInsertCompressedSortedMultiSet( const vector<INT>& query ) : VirtualIntervalInsertBoundedLineMultiSubset<INT,const INT&,const INT&>()
 {
 
   set<INT> S{};
@@ -37,7 +37,7 @@ template <typename INT> inline IntervalInsertCompressedLineMultiSubset<INT>::Int
 
   }
   
-  this->m_name = "IntervalInsertCompressedLineMultiSubset";
+  this->m_name = "IntervalInsertCompressedSortedMultiSet";
   this->m_ds.Initialise( this->m_ubound , false );
   cerr << this->m_name << "をデバッグモードで実行します。" << endl;
   cerr << "各処理の計算量がO(size)増えることに注意してください。" << endl;
@@ -46,6 +46,6 @@ template <typename INT> inline IntervalInsertCompressedLineMultiSubset<INT>::Int
   
 }
 
-template <typename INT> inline bool IntervalInsertCompressedLineMultiSubset<INT>::InRange( const INT& i ) { return m_sorted_coord_inv.count( i ) > 0; }
-template <typename INT> inline const INT& IntervalInsertCompressedLineMultiSubset<INT>::Normalise( const INT& i ) { return m_sorted_coord_inv[i]; }
-template <typename INT> inline const INT& IntervalInsertCompressedLineMultiSubset<INT>::Denormalise( const INT& d ) { return m_sorted_coord[d]; }
+template <typename INT> inline bool IntervalInsertCompressedSortedMultiSet<INT>::InRange( const INT& i ) { return m_sorted_coord_inv.count( i ) > 0; }
+template <typename INT> inline const INT& IntervalInsertCompressedSortedMultiSet<INT>::Normalise( const INT& i ) { return m_sorted_coord_inv[i]; }
+template <typename INT> inline const INT& IntervalInsertCompressedSortedMultiSet<INT>::Denormalise( const INT& d ) { return m_sorted_coord[d]; }

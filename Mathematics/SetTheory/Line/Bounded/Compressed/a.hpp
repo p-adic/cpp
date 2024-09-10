@@ -6,7 +6,7 @@
 #include "../../../../../Utility/Set/Map/a.hpp"
 
 template <typename INT , template <typename...> typename DATA_STR>
-class AbstractCompressedLineSubset :
+class AbstractCompressedSortedSet :
   virtual public VirtualBoundedLineSubset<INT,const INT&,const INT&,DATA_STR>
 {
 
@@ -15,7 +15,7 @@ protected:
   Map<INT,int> m_sorted_coord_inv;
 
 public:
-  inline AbstractCompressedLineSubset( const vector<INT>& query );
+  inline AbstractCompressedSortedSet( const vector<INT>& query );
 
 protected:
   inline bool InRange( const INT& i );

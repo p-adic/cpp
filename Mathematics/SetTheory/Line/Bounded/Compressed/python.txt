@@ -120,7 +120,7 @@ class NonNegativeLineSubset:
 				else:s,j=n,k
 		return j
 
-class CompressedLineSubset:
+class CompressedSortedSet:
 	def __init__(self,X):
 		self.sorted_list=sorted(set(X))
 		N=len(self.sorted_list)

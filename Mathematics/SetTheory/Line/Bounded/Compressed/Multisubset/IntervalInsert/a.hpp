@@ -18,13 +18,13 @@
 
 // イテレータは要素の重複を無視することに注意。
 template <typename INT>
-class IntervalInsertCompressedLineMultiSubset :
-  public AbstractCompressedLineSubset<INT,IntervalAddBIT> ,
+class IntervalInsertCompressedSortedMultiSet :
+  public AbstractCompressedSortedSet<INT,IntervalAddBIT> ,
   public AbstractIntervalInsertBoundedLineMultiSubset<INT,const INT&,const INT&>
 {
   
 public:
-  inline IntervalInsertCompressedLineMultiSubset( const vector<INT>& query );
+  inline IntervalInsertCompressedSortedMultiSet( const vector<INT>& query );
 
 };
 
