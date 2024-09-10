@@ -437,7 +437,8 @@ AC( ExplicitExpressionTotalAccess )
 AC( ExplicitExpressionProbability )
 {
   CERR( "- 確率計算は" );
-  CERR( "  - 余事象や包除原理（高速ゼータ変換／メビウス変換）" );;
+  CERR( "  - 事象を全探策してそれぞれの確率を計算" );;
+  CERR( "  - 余事象や包除原理（高速ゼータ変換／メビウス変換）" );
   CERR( "    \\Mathematics\\Combinatorial\\ZetaTransform" );
   CERR( "  - 対象を独立変数の積で表して乗法性" );
   CERR( "    - グリッドのマスなどの直積集合の要素が矩形領域に属すか否かの確率は" );
@@ -447,8 +448,11 @@ AC( ExplicitExpressionProbability )
   CERR( "- 期待値計算は" );
   CERR( "  - 確率を用いた愚直な計算" );
   CERR( "  - 対象を和で表して線形性" );
-  CERR( "    - 転倒数やグリッドの黒マスの個数など、部分集合の要素数の期待値は" );
+  CERR( "    - 転倒数やグリッドの黒マスの個数など部分集合の要素数の期待値は" );
   CERR( "      各要素が部分集合に属す確率の和に帰着" );
+  CERR( "    - 単位時間に高々1回起こる事象の起きた回数は、各時刻tごとに" );
+  CERR( "      +1の起こる確率p(t)の総和" );
+  CERR( "    - 裏が出るまでのコイン投げ回数ならn回以上表が出る確率p(n)の総和" );
   CERR( "  - 操作／遷移回数なら期待値間の関係式を求め行列累乗やボスタン森法" );
   CERR( "    \\Mathematics\\LinearAlgebra" );
   CERR( "    \\Mathematics\\Polynomial\\BostanMori" );
@@ -772,6 +776,11 @@ AC( MinimisationSolvingMazeUnboundedChoiceFewEdgesIdempotent )
   CERR( "    分割統治ダイクストラ法" );
   CERR( "    \\Mathematics\\Geometry\\Graph\\Algorithm\\Dijkstra\\Double" );
   CERR( "  - 間に合わなさそうならば分割統治を動的計画法で書き直しデータ構造高速化" );
+  CERR( "- 辺のコストのうちK番目に大きい値の最小化でO((V+E)log C)が間に合いそう" );
+  CERR( "  ならば、コストcを決め打って辺の新たな重みとして「コストがcより大きい」の" );
+  CERR( "  真偽を考えて01幅優先探索を行い、経路の重みの総和の最小値がK未満である" );
+  CERR( "  ようなcの最小値を二分探索" );
+  CERR( "  \\Mathematics\\Geometry\\Graph\\Algorithm\\BFS\\01" );
 }
 
 AC( MinimisationSolvingMazeUnboundedChoiceFewEdgesNonIdempotent )
@@ -1649,6 +1658,15 @@ AC( CountingArrayAdjacentRelation )
   CERR( "- その他の条件の場合は動的計画法で、" );
   CERR( "  - 禁止条件の時は余事象を引く更新" );
   CERR( "  - 複数条件の時は包除原理による更新" );
+  CERR( "  - 特定の部分列（例えばaba）を含むという条件の時は" );
+  CERR( "    (1) 長さiかつabaを含まないかつ末尾がaなものの個数dpa[i]" );
+  CERR( "    (2) 長さiかつabaを含まないかつ末尾がabなものの個数dpab[i]" );
+  CERR( "    (3) 長さiかつabaを含むものの個数dpaba[i]" );
+  CERR( "    を再帰式" );
+  CERR( "    (1) dpa[i] = (26^{i-1}-dpaba[i-1]-dpab[i-1])*1" );
+  CERR( "    (2) dpab[i] = (26^{i-2}-dpaba[i-2]*26 + dpab[i-2])*1" );
+  CERR( "    (3) dpaba[i] = dpaba[i-1]*26 + dpab[i-1]*1" );
+  CERR( "    を用いてiに関する動的計画法で計算" );
   CERR( "を検討しましょう。" );
 }
 
