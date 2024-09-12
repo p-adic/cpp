@@ -27,23 +27,23 @@ void AutoCheck( int& exec_mode , const bool& use_getline )
 	     "終了する。"
 	     );
   exec_mode = num;
-  if( num == num_temp++ ){
+  if( num == solve_mode ){
     CERR( "提出用ファイルを実行します。" );
-  } else if( num == num_temp++ ){
+  } else if( num == sample_debug_mode ){
     CALL_AC( DebugHintWA );
-  } else if( num == num_temp++ ){
+  } else if( num == submission_debug_mode ){
     CALL_AC( DebugHint );
-  } else if( num == num_temp++ ){
+  } else if( num == library_search_mode ){
     CALL_AC( LibrarySearch );
-  } else if( num == num_temp++ ){
+  } else if( num == sample_analysis_mode ){
     CALL_AC( SampleAnalyser );
-  } else if( num == num_temp++ ){
+  } else if( num == experiment_mode ){
     CERR( "愚直解で実験します。" );
-  } else if( num == num_temp++ ){
+  } else if( num == small_test_mode ){
     CERR( "愚直解と提出用ファイルを入力の小さいテストケースで比較します。" );
-  } else if( num == num_temp++ ){
+  } else if( num == random_test_mode ){
     CERR( "愚直解と提出用ファイルをランダムテストで比較します。" );
-  } else if( num == num_temp++ ){
+  } else if( num == quit_mode ){
     CERR( "終了します。" );
   }
   CERR( "" );
@@ -147,6 +147,14 @@ AC( DebugHint )
     CERR( "- multiple definitionが出ている時は" );
     CERR( "  - pragma onceの付け忘れをしていませんか？" );
     CERR( "  - 関数templateの完全特殊化のinlineの付け忘れをしていませんか？" );
+    CERR( "- expected primary expressionが出ている時は" );
+    CERR( "  - 直前の行でセミコロンを付け忘れていませんか？" );
+    CERR( "  - 変数名のメンバアクセスのつもりでクラス名に.を付けていませんか？" );
+    CERR( "  - 3項演算子の?:を::や:,に書き間違えていませんか？" );
+    CERR( "- オーバーロードされた関数にconst char*[]を引数に渡した時に" );
+    CERR( "  no matching functionが出ている時は、const char*[]への特殊化を" );
+    CERR( "  工夫しても解決できないのでstringへの特殊化を用意して関数テンプレートに" );
+    CERR( "  to_stringを噛ませましょう。" );
   }
   CERR( "" );
   CERR( "提出済みファイルのデバッグは以上です。終了します。" );
