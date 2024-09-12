@@ -278,7 +278,6 @@ inline void RandomTest( const int& test_case_num )
 using namespace std;
 #define ATT __attribute__( ( target( "sse4.2,fma,avx2,popcnt,lzcnt,bmi2" ) ) )
 #define START_MAIN int main(){ ios_base::sync_with_stdio( false ); cin.tie( nullptr )
-#define FINISH_MAIN REPEAT( test_case_num ){ if constexpr( bound_test_case_num > 1 ){ CERR( "testcase " , VARIABLE_FOR_REPEAT_test_case_num , ":" ); } Solve(); CERR( "" ); } }
 #define START_WATCH chrono::system_clock::time_point watch = chrono::system_clock::now(); double loop_average_time = 0.0 , loop_start_time = 0.0 , current_time = 0.0; int loop_count = 0
 #define CURRENT_TIME ( current_time = static_cast<double>( chrono::duration_cast<chrono::microseconds>( chrono::system_clock::now() - watch ).count() / 1000.0 ) )
 #define CHECK_WATCH( TL_MS ) ( CURRENT_TIME , loop_count == 0 ? loop_start_time = current_time : loop_average_time = ( current_time - loop_start_time ) / loop_count , ++loop_count , current_time < TL_MS - loop_average_time * 2 - 100.0 )
