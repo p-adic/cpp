@@ -57,6 +57,9 @@ public:
 
   template <typename...Args> inline void Initialise( Args&&... args );
 
+  const int& size() const noexcept;
+
+  // degreeŠK‚ÌŠK·”—ñ‚Ìt‚Å‚Ì’l‚Éu‚ğ‘ã“ü‚·‚éB
   inline void Set( const T& t , const U& u , const int& degree = 0 );
   // degreeŠK‚ÌŠK·”—ñ‚Ìt‚Å‚Ì’l‚Éu‚ğ‰ÁZ‚·‚éB
   inline void Add( const T& t , const U& u , const int& degree = 0 );
@@ -83,7 +86,6 @@ private:
   inline AbstractDifferenceSequence( FOREST& G , PREV& prev , GROUP& M , vector<U> a , int degree , int dummy );
 
   inline void Shift( const int& degree );
-  inline void Shift( const int& degree_min , const int& degree_max );
   void Integrate();
   void Differentiate();
 
@@ -122,3 +124,4 @@ private:
   
 };
 
+template <class Traits , typename T , typename FOREST , typename PREV , typename U , typename GROUP> inline basic_ostream<char,Traits>& operator<<( basic_ostream<char,Traits>& os , AbstractDifferenceSequence<T,FOREST,PREV,U,GROUP>& ds );
