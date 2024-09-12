@@ -46,6 +46,7 @@ AC( ExplicitExpression )
   ASK_NUMBER(
 	     "１変数関数／数列の計算問題" ,
 	     "配列を用いた関数の総和の計算問題" ,
+	     "二重和や二重積などの計算問題" ,
 	     "順列上の関数の計算問題" ,
 	     "木上の関数の総和の計算問題" ,
 	     "木以外のグラフ上の関数の計算問題" ,
@@ -60,6 +61,8 @@ AC( ExplicitExpression )
     CALL_AC( ExplicitExpressionUnary );
   } else if( num == num_temp++ ){
     CALL_AC( ExplicitExpressionArraySum );
+  } else if( num == num_temp++ ){
+    CALL_AC( ExplicitExpressionDoubleSum );
   } else if( num == num_temp++ ){
     CALL_AC( ExplicitExpressionFunctionOnPermutation );
   } else if( num == num_temp++ ){
@@ -199,44 +202,77 @@ AC( ExplicitExpressionUnaryOther )
 AC( ExplicitExpressionArraySum )
 {
   ASK_NUMBER(
-	     "１つの配列の成分と位置を受け取る関数の総和の計算問題" ,
+	     "１つの配列の成分を受け取る関数の総和の計算問題" ,
+	     "２つの配列の内積の計算問題" ,
 	     "１つの配列の部分列を受け取る関数の総和の計算問題" ,
 	     "配列を受け取る関数の配列をわたる総和の計算問題"
 	     );
   if( num == num_temp++ ){
-    CERR( "- 和の順序交換" );
-    CERR( "- 同じ値になる項の纏め上げ" );
-    CERR( "- 2変数関数fと数列(a_i)_iが与えられ、sum_i f(a_i,i)を求める場合、" );
-    CERR( "  f(x,i)=sum_k b_{i,k} g_k(x)と表示できれば" );
-    CERR( "  (b_{i,k})_iと(g_k(a_i))_iの内積の総和に帰着、" );
-    CERR( "  内積は片方の添え字を反転させることで畳み込みに帰着" );
-    CERR( "  - 配列への操作がシフトである場合は繰り返し内積を求めることになるので、" );
-    CERR( "    適当な法での高速フーリエ変換" );
-    CERR( "    \\Mathematics\\Polynoial\\Truncate" );
-    CERR( "- 2変数関数fと数列(a_i)_iが与えられ、sum_{i,j} f(a_i,a_j)を求める場合、" );
-    CERR( "  f(x,y)=sum_k g_k(x) h_k(y)と表示できれば" );
-    CERR( "  (g_k(a_i))_iの累積和と(h_k(a_j))_jの積の総和に帰着" );
-    CERR( "を検討しましょう。" );
+    CALL_AC( ExplicitExpressionOneArrayEntrySum );
   } else if( num == num_temp++ ){
-    ASK_NUMBER(
-	       "連続部分列への分割に関する関数の総和の計算問題" ,
-	       "連続とは限らない部分列への分割に関する関数の総和の計算問題"
-	       );
-    if( num == num_temp++ ){
-      CERR( "配列の添字集合は全順序集合なので、木の分割の問題に一般化されます。" );
-      CALL_AC( ExplicitExpressionFunctionOnTree );
-      CERR( "" );
-      CERR( "更にfが部分列の長さに関する再帰的な構造を持つ場合、全ての連続部分列に" );
-      CERR( "対しfの値を前計算することを検討しましょう。" );
-    } else if( num == num_temp++ ){
-      CERR( "配列の並び換えによって答えが変わらないので、適切にソートしてから" );
-      CERR( "計算することを検討しましょう。" );
-    }
+    CALL_AC( ExplicitExpressionInnerProduct );
+  } else if( num == num_temp++ ){
+    CALL_AC( ExplicitExpressionOneArraySubArraySum );
   } else if( num == num_temp++ ){
     CALL_AC( ExplicitExpressionArrayCombinatorial );
   }
+}
+
+AC( ExplicitExpressionOneArrayEntrySum )
+{
+  CERR( "1変数関数f(x)と配列(a_i)_{i=0}^{N-1}に対するsum_if(a_i)などを考えるとします。" );
+  CERR( "必要ならば(a_i)_iをソートして広義単調増大とします。" );
+  CERR( "- f(a_{i+1}) - f(a_i)がO(1)で計算できO(N)が間に合いそうならば、" );
+  CERR( "  f(a_i)の差分計算による高速化" );
+  CERR( "- #im(f)が小さくf(a_)の逆像が計算しやすいならば" );
+  CERR( "  同じ返り値の纏め上げsum_i f(a_i)=sum_y #f(a_)^{-1}(y) y" );
+  CERR( "- #dom(f)が小さく(a_)の逆像が計算しやすいならば" );
+  CERR( "  同じ代入値の纏め上げsum_i f(a_i)=sum_x #(a_)^{-1}(x) f(x)" );
+  CERR( "を検討しましょう。" );
   CERR( "" );
-  CERR( "Nが大きい場合と小さい場合で解法を変える考察を忘れないようにしましょう。" );
+  CERR( "Nが大きい場合と小さい場合で解法を変える考察も忘れないように気を付けましょう。" );
+}
+
+AC( ExplicitExpressionInnerProduct )
+{
+  CERR( "数列(a_i)_iと(b_i)_iが与えられるとします。" );
+  CERR( "f(X) = sum_{i=0}^{N-1} a_i X^i" );
+  CERR( "g(X) = sum_{i=0}^{N-1} b_{N-i-1} X^i" );
+  CERR( "と置きます。" );
+  ASK_NUMBER(
+             "(sum_{i=0}^{N-i-j} a_i b_{i+j})_{j=0}^{N-1}の計算"
+             "(sum_{i=0}^{N-1} a_i b_{i+j})_{j=0}^{N-1}の計算"
+             );
+  if( num == num_temp++ ){
+    CERR( "f(X)g(X)mod X^N = sum_{i=0}^{N-1} c_i X^i" );
+    CERR( "と置くと" );
+    CERR( "(c_{N-1-j})_{j=0}^{N-1}" );
+    CERR( "が答えです。" );
+  } else if( num == num_temp++ ){
+    CERR( "f(X)g(X) = sum_{i=0}^{2N-2} c_i X^i" );
+    CERR( "と置くと" );
+    CERR( "(sum_{k \equiv -1-j mod N}c_k)_{j=0}^{N-1}" );
+    CERR( "が答えです。" );
+  }
+  CERR( "\\Mathematics\\Polynoial\\Truncate" );
+}
+
+AC( ExplicitExpressionOneArraySubArraySum )
+{
+  ASK_NUMBER(
+             "連続部分列への分割に関する関数の総和の計算問題" ,
+             "連続とは限らない部分列への分割に関する関数の総和の計算問題"
+             );
+  if( num == num_temp++ ){
+    CERR( "配列の添字集合は全順序集合なので、木の分割の問題に一般化されます。" );
+    CALL_AC( ExplicitExpressionFunctionOnTree );
+    CERR( "" );
+    CERR( "更にfが部分列の長さに関する再帰的な構造を持つ場合、全ての連続部分列に" );
+    CERR( "対しfの値を前計算することを検討しましょう。" );
+  } else if( num == num_temp++ ){
+    CERR( "配列の並び換えによって答えが変わらないので、適切にソートしてから" );
+    CERR( "計算することを検討しましょう。" );
+  }
 }
 
 AC( ExplicitExpressionArrayCombinatorial )
@@ -259,6 +295,24 @@ AC( ExplicitExpressionArrayCombinatorial )
   CERR( "  を満たす関数gが存在するならば、積の和典型などの組み合わせ論的解釈" );
   CERR( "  https://ei1333.hateblo.jp/entry/2021/07/30/144201" );
   CERR( "  https://ladywingclover.hatenablog.com/entry/2022/11/24/084524" );
+  CERR( "を検討しましょう。" );
+}
+
+AC( ExplicitExpressionDoubleSum )
+{
+  CERR( "2変数関数f(x,y)と配列(a_i)_{i=0}^{N-1}, (b_j)_{j=0}^{M-1}に対する" );
+  CERR( "二重和sum_i sum_j f(a_i,b_j)などを考えるとします。" );
+  CERR( "必要ならば(a_i)_iと(b_j)をソートしてともに広義単調増大とします。" );
+  CERR( "- sum_i f(a_i,b_j)の計算量をO(g(N))としてO(g(N)M)が間に合いそうならば、" );
+  CERR( "  和の順序交換sum_i sum_j f(a_i,b_j) = sum_j sum_i f(a_i,b_j)" );
+  CERR( "- sum_j (f(a_i,b_{j+1}) - f(a_i,b_j))の計算量をO(g(N))としてO(g(N)M)が" );
+  CERR( "  間に合いそうならば、sum_j f(a_i,b_j)の差分計算による高速化" );
+  CERR( "- f(x,y)=sum_k g_k(x) h_k(y)と表示できO(K(N+M))が間に合いそうならば" );
+  CERR( "  変数分離sum_{i,j} f(a_i,b_j)=sum_k(sum_i g_k(a_i))(sum_j h_k(b_j))" );
+  CERR( "- #im(f)が小さくf(a_,b_)の逆像が計算しやすいならば" );
+  CERR( "  同じ返り値の纏め上げsum_{i,j} f(a_i,b_j)=sum_z #f(a_,b_)^{-1}(z) z" );
+  CERR( "- #dom(f)が小さく(a_,b_)の逆像が計算しやすいならば" );
+  CERR( "  同じ代入値の纏め上げsum_{i,j} f(a_i,b_j)=sum_v #(a_,b_)^{-1}(v) f(v)" );
   CERR( "を検討しましょう。" );
 }
 
@@ -583,7 +637,7 @@ AC( Maximisation )
 	     "描画サイズ／個数の最大／最小化問題" ,
 	     "最小値の最大化問題" ,
 	     "部分和の最小化問題" ,
-	     "2人ゲームの最終的な不変量の最大化問題"
+	     "2人ゲームの最終的な不変量の最大／最小化問題"
 	     );
   if( num == num_temp++ ){
     CALL_AC( MinimisationMovingCost );
@@ -931,11 +985,18 @@ AC( MaximisationFunctionOnArray )
     CERR( "ソートしても答えが変わらないならば適宜ソートしましょう。" );
     ASK_NUMBER(
 	       "成分を受け取る関数の部分和の最大化問題" ,
+	       "成分を受け取る関数の部分和と別の関数の補部分和の和の最大化問題" ,
 	       "成分を受け取る関数の部分和と補部分和の差の最小化問題" ,
 	       "0/1倍以外の配列の変更と配列を受け取る関数の合成の最大／最小化問題"
 	       );
     if( num == num_temp++ ){
       CALL_AC( Knapsack );
+    } else if( num == num_temp++ ){
+      CERR( "関数をfとgとした時、" );
+      CERR( "- fとgに代入する項数に制限がないならば、max(f(i),g(i))の総和" );
+      CERR( "- fに代入する項数がKで固定ならば、f(i)-g(i)を大きい順にK個" );
+      CERR( "  足したものとgの総和の和" );
+      CERR( "が求める最大値です" );
     } else if( num == num_temp++ ){
       CERR( "部分和と総和の半分の差の最小化を行いましょう。" );
       CERR( "これは小さい方を考えることで上限付き部分和の最大化問題となります。" );
@@ -1503,8 +1564,18 @@ AC( MaximisationGame )
 {
   ASK_YES_NO( "整礎なゲームですか？" );
   if( reply == "y" ){
-    CERR( "数列や多重集合から成分や要素を削除していき先行の総和と後行の総和の差を" );
-    CERR( "最大化する問題は、貪欲法を検討しましょう。" );
+    CERR( "数列や多重集合から成分や要素である項を交互に削除していき、項iを" );
+    CERR( "先行が削除した場合は先行にA[i]点、後行が削除した場合は後行にB[i]点" );
+    CERR( "が与えられるとし、先行の総得点をX、後行の総得点をYと置きます。" );
+    CERR( "- 先行がX-Yの最大化を、後行がX-Yの最小化を目指す問題ならば、" );
+    CERR( "  双方がA[i]+B[i]の大きい順に貪欲に選ぶ場合が双方の最善です。" );
+    CERR( "- 先行がX-Yの最小化を、後行がX-Yの最大化を目指す問題ならば、" );
+    CERR( "  双方がA[i]+B[i]の小さい順に貪欲に選ぶ場合が双方の最善です。" );
+    CERR( "- 先行がX+Yの最大化を、後行がX+Yの最小化を目指す問題ならば、" );
+    CERR( "  双方がA[i]-B[i]の大きい順に貪欲に選ぶ場合が双方の最善です。" );
+    CERR( "- 先行がX+Yの最小化を、後行がX+Yの最大化を目指す問題ならば、" );
+    CERR( "  双方がA[i]-B[i]の小さい順に貪欲に選ぶ場合が双方の最善です。" );
+    CERR( "これに従って配列の和／差をソートして実際に操作を実行しましょう。" );
   } else {
     CERR( "局面を反復可能なゲームは反復戦略を取ることで初期局面に帰着されます。" );
     CERR( "- 先行が最終着手を行う場合、初手での最大化問題に帰着し" );
