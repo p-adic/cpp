@@ -3,12 +3,14 @@
 #pragma once
 #include "a.hpp"
 
-#ifdef DEBUG
+#if !defined( SAMPLE_CHECK ) && defined( DEBUG )
   #include "StdStream/Debug/a_Body.hpp"
 #else
   #include "StdStream/a_Body.hpp"
 #endif
 
+DEFINITION_OF_ARITHMETICS_FOR_VECTOR( vector );
+DEFINITION_OF_ARITHMETICS_FOR_VECTOR( list );
 template <typename T> inline operator*( const T& scalar , vector<T> v ) { for( auto& t : v ){ v *= t; } return move( v ); }
 
 template <typename V> inline auto Get( V& a ) { return [&]( const int& i = 0 ) -> const decldecay_t( a[0] )& { return a[i]; }; }

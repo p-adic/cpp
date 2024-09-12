@@ -5,7 +5,7 @@
 
 #include <vector>
 
-#ifdef DEBUG
+#if !defined( SAMPLE_CHECK ) && defined( DEBUG )
   #include "StdStream/Debug/a.hpp"
 #else
   #include "StdStream/a.hpp"
