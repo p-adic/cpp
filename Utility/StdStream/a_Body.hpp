@@ -4,7 +4,7 @@
 #include "a.hpp"
 
 // operator<<のオーバーロードを行うため、先にincludeする。
-#ifdef DEBUG
+#if !defined( SAMPLE_CHECK ) && defined( DEBUG )
   #include "../Tuple/StdStream/Debug/a_Body.hpp"
   #include "../Vector/StdStream/Debug/a_Body.hpp"
 #else
