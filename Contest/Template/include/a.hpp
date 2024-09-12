@@ -50,10 +50,12 @@ string sample_num;
   const string problem_order = TO_STRING( SAMPLE_CHECK );
   const string input_path = sample_path + problem_order + "/input/sample";
   const string output_path = sample_path + problem_order + "/output/exec";
-  ifstream sample_count{ sample_path + problem_order + "/count.txt" };
 #else
   constexpr bool sample_check = false;
+  string problem_order = "dummy";
   string input_path = "dummy.txt";
   string output_path = "dummy.txt";
-  string problem_order = "dummy";
 #endif
+
+ifstream sample_count{ sample_path + problem_order + "/count.txt" };
+
