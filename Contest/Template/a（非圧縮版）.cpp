@@ -262,6 +262,8 @@ inline void RandomTest( const int& test_case_num )
   #define COUTNS( ... ) VariadicCoutNonSep( cout , __VA_ARGS__ )
   #define CERR( ... ) 
   #define CERRNS( ... ) 
+  #define COUT_A( I , N , A ) CoutArray( cout , I , N , A ) << ENDL
+  #define CERR_A( I , N , A ) 
 #endif
 #ifdef REACTIVE
   #ifdef DEBUG
