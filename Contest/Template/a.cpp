@@ -3,6 +3,7 @@
   // #define REACTIVE
   // #define USE_GETLINE
   // #define SUBMIT_ONLY
+  // #define SAMPLE_CHECK A
 #endif
 
 #ifdef INCLUDE_MAIN
@@ -120,7 +121,7 @@ IN VO Experiment()
   //     FOREQ( K , 0 , bound ){
   // 	naive3[K] = Naive( N , M , K , true );
   //     }
-  //     cout << "(N,M)=("N << "," << M << "),K¸[" << 0 << "--" << bound << "]: " << naive3 << endl;
+  //     cout << "(N,M)=(" << N << "," << M << "),K¸[" << 0 << "--" << bound << "]: " << naive3 << endl;
   //     // naive2[M] = Naive( N , M , true );
   //   }
   //   // cout << "N=" << N << ",M¸[" << 0 << "--" << bound << "]: " << naive2 << endl;
@@ -240,8 +241,20 @@ IN VO RandomTest( CRI test_case_num )
   #pragma GCC optimize ( "unroll-loops" )
   #pragma GCC target ( "sse4.2,fma,avx2,popcnt,lzcnt,bmi2" )
   #define REPEAT_MAIN( BOUND ) START_MAIN; CEXPR( int , bound_test_case_num , BOUND ); int test_case_num = 1; if CE( bound_test_case_num > 1 ){ SET_ASSERT( test_case_num , 1 , bound_test_case_num ); } FINISH_MAIN
+  #define FINISH_MAIN REPEAT( test_case_num ){ if CE( bound_test_case_num > 1 ){ CERR( "testcase " , VARIABLE_FOR_REPEAT_test_case_num , ":" ); } Solve(); CERR( "" ); } }
   #define DEXPR( LL , BOUND , VALUE1 , VALUE2 ) CEXPR( LL , BOUND , VALUE1 )
   #define ASSERT( A , MIN , MAX ) AS( ( MIN ) <= A && A <= ( MAX ) )
+  #ifdef USE_GETLINE
+    #define GETLINE_SEPARATE( SEPARATOR , ... ) string __VA_ARGS__; VariadicGetline( cin , SEPARATOR , __VA_ARGS__ )
+    #define GETLINE( ... ) GETLINE_SEPARATE( '\n' , __VA_ARGS__ )
+    #define SET_LL( A ) { GETLINE( A ## _str ); A = stoll( A ## _str ); }
+  #else
+    #define CIN( LL , ... ) LL __VA_ARGS__; VariadicCin( cin , __VA_ARGS__ )
+    #define SET_A( I , N , ... ) VariadicResize( N + I , __VA_ARGS__ ); FOR( VARIABLE_FOR_SET_A , 0 , N ){ VariadicSet( cin , VARIABLE_FOR_SET_A + I , __VA_ARGS__ ); }
+    #define CIN_A( LL , I , N , ... ) VE<LL> __VA_ARGS__; SET_A( I , N , __VA_ARGS__ )
+    #define CIN_AA( LL , I0 , N0 , I1 , N1 , VAR ) VE<VE<LL>> VAR( N0 + I0 ); FOR( VARIABLE_FOR_CIN_AA , 0 , N0 ){ SET_A( I1 , N1 , VAR[VARIABLE_FOR_CIN_AA + I0] ); }
+    #define SET_LL( A ) cin >> A
+  #endif
   #define SET_ASSERT( A , MIN , MAX ) SET_LL( A ); ASSERT( A , MIN , MAX )
   #define SOLVE_ONLY 
   #define CERR( ... ) 
@@ -259,17 +272,6 @@ IN VO RandomTest( CRI test_case_num )
   #define ENDL endl
 #else
   #define ENDL "\n"
-#endif
-#ifdef USE_GETLINE
-  #define SET_LL( A ) { GETLINE( A ## _str ); A = stoll( A ## _str ); }
-  #define GETLINE_SEPARATE( SEPARATOR , ... ) string __VA_ARGS__; VariadicGetline( cin , SEPARATOR , __VA_ARGS__ )
-  #define GETLINE( ... ) GETLINE_SEPARATE( '\n' , __VA_ARGS__ )
-#else
-  #define SET_LL( A ) cin >> A
-  #define CIN( LL , ... ) LL __VA_ARGS__; VariadicCin( cin , __VA_ARGS__ )
-  #define SET_A( I , N , ... ) VariadicResize( N + I , __VA_ARGS__ ); FOR( VARIABLE_FOR_SET_A , 0 , N ){ VariadicSet( cin , VARIABLE_FOR_SET_A + I , __VA_ARGS__ ); }
-  #define CIN_A( LL , I , N , ... ) VE<LL> __VA_ARGS__; SET_A( I , N , __VA_ARGS__ )
-  #define CIN_AA( LL , I0 , N0 , I1 , N1 , VAR ) VE<VE<LL>> VAR( N0 + I0 ); FOR( VARIABLE_FOR_CIN_AA , 0 , N0 ){ SET_A( I1 , N1 , VAR[VARIABLE_FOR_CIN_AA + I0] ); }
 #endif
 #include <bits/stdc++.h>
 using namespace std;
