@@ -6,18 +6,12 @@
   #define INPUT ifs
   #define COUT( ... ) VariadicCout( ofs , __VA_ARGS__ ) << endl
   #define COUTNS( ... ) VariadicCoutNonSep( ofs , __VA_ARGS__ ) << flush
-  #define CERR( ... ) 
-  #define CERRNS( ... ) 
   #define COUT_A( I , N , A ) CoutArray( ofs , I , N , A ) << endl
-  #define CERR_A( I , N , A ) 
 #else
   #define INPUT cin
   #define COUT( ... ) VariadicCout( cout << "出力" << __LINE__ << "：" , __VA_ARGS__ ) << endl
   #define COUTNS( ... ) VariadicCoutNonSep( cout << "出力" << __LINE__ << "： " , __VA_ARGS__ ) << flush
-  #define CERR( ... ) VariadicCout( cerr , __VA_ARGS__ ) << endl
-  #define CERRNS( ... ) VariadicCoutNonSep( cerr , __VA_ARGS__ ) << flush
   #define COUT_A( I , N , A ) CoutArray( cout << "出力： " , I , N , A ) << endl
-  #define CERR_A( I , N , A ) CoutArray( cerr , I , N , A ) << endl
 #endif
 
 #define REPEAT_MAIN( BOUND )                                    \
@@ -83,6 +77,10 @@
   #define CIN_AA( LL , I0 , N0 , I1 , N1 , VAR ) VE<VE<LL>> VAR( N0 + I0 ); FOR( VARIABLE_FOR_CIN_AA , 0 , N0 ){ SET_A( I1 , N1 , VAR[VARIABLE_FOR_CIN_AA + I0] ); }
   #define SET_LL( A ) INPUT >> A
 #endif
+
+#define CERR( ... ) VariadicCout( cerr , __VA_ARGS__ ) << endl
+#define CERRNS( ... ) VariadicCoutNonSep( cerr , __VA_ARGS__ ) << flush
+#define CERR_A( I , N , A ) CoutArray( cerr , I , N , A ) << endl
 
 #define SET_ASSERT( A , MIN , MAX )                     \
   if( exec_mode == solve_mode ){                        \
