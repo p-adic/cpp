@@ -5,9 +5,9 @@
 #ifndef CERR
   #ifdef DEBUG
     #define COUT( ... ) VariadicCout( cout << "出力：" , __VA_ARGS__ ) << endl
-    #define COUTNS( ... ) VariadicCoutNonSep( cout , __VA_ARGS__ )
+    #define COUTNS( ... ) VariadicCoutNonSep( cout , __VA_ARGS__ ) << flush
     #define CERR( ... ) VariadicCout( cerr , __VA_ARGS__ ) << endl
-    #define CERRNS( ... ) VariadicCout( cerr , __VA_ARGS__ )
+    #define CERRNS( ... ) VariadicCout( cerr , __VA_ARGS__ ) << flush
     #define COUT_A( A , N ) OUTPUT_ARRAY( cout << "出力："  , A , N ) << endl
     #define CERR_A( A , N ) OUTPUT_ARRAY( cerr , A , N ) << endl
   #else
