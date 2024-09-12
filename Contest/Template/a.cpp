@@ -257,10 +257,12 @@ IN VO RandomTest( CRI test_case_num )
   #endif
   #define SET_ASSERT( A , MIN , MAX ) SET_LL( A ); ASSERT( A , MIN , MAX )
   #define SOLVE_ONLY 
-  #define CERR( ... ) 
   #define COUT( ... ) VariadicCout( cout , __VA_ARGS__ ) << ENDL
-  #define CERR_A( I , N , A ) 
+  #define COUTNS( ... ) VariadicCoutNonSep( cout , __VA_ARGS__ )
+  #define CERR( ... ) 
+  #define CERRNS( ... ) 
   #define COUT_A( I , N , A ) CoutArray( cout , I , N , A ) << ENDL
+  #define CERR_A( I , N , A ) 
 #endif
 #ifdef REACTIVE
   #ifdef DEBUG
@@ -493,7 +495,7 @@ TE <TY T,TY U>US Map = conditional_t<is_COructible_v<unordered_map<T,int>>,unord
 DF_OF_ARS_FOR_MAP(map);DF_OF_ARS_FOR_MAP(unordered_map);
 
 // StdStreamÅi1KBÅj
-TE <CL Traits> IN IS& VariadicCin(IS& is){RE is;}TE <CL Traits,TY Arg,TY... ARGS> IN IS& VariadicCin(IS& is,Arg& arg,ARGS&... args){RE VariadicCin(is >> arg,args...);}TE <CL Traits> IN IS& VariadicSet(IS& is,CRI i){RE is;}TE <CL Traits,TY Arg,TY... ARGS> IN IS& VariadicSet(IS& is,CRI i,Arg& arg,ARGS&... args){RE VariadicSet(is >> arg[i],i,args...);}TE <CL Traits> IN IS& VariadicGetline(IS& is,CO char& separator){RE is;}TE <CL Traits,TY Arg,TY... ARGS> IN IS& VariadicGetline(IS& is,CO char& separator,Arg& arg,ARGS&... args){RE VariadicGetline(getline(is,arg,separator),separator,args...);}TE <CL Traits,TY Arg> IN OS& VariadicCout(OS& os,CO Arg& arg){RE os << arg;}TE <CL Traits,TY Arg1,TY Arg2,TY... ARGS> IN OS& VariadicCout(OS& os,CO Arg1& arg1,CO Arg2& arg2,CO ARGS&... args){RE VariadicCout(os << arg1 << " ",arg2,args...);}TE <CL Traits,TY ARRAY> IN OS& CoutArray(OS& os,CRI i_start,CRI i_ulim,CO ARRAY& a){for(int i = i_start;i < i_ulim;i++){(i == i_start?os:(os << " "))<< a[i];}RE os;}
+TE <CL Traits> IN IS& VariadicCin(IS& is){RE is;}TE <CL Traits,TY Arg,TY... ARGS> IN IS& VariadicCin(IS& is,Arg& arg,ARGS&... args){RE VariadicCin(is >> arg,args...);}TE <CL Traits> IN IS& VariadicSet(IS& is,CRI i){RE is;}TE <CL Traits,TY Arg,TY... ARGS> IN IS& VariadicSet(IS& is,CRI i,Arg& arg,ARGS&... args){RE VariadicSet(is >> arg[i],i,args...);}TE <CL Traits> IN IS& VariadicGetline(IS& is,CO char& separator){RE is;}TE <CL Traits,TY Arg,TY... ARGS> IN IS& VariadicGetline(IS& is,CO char& separator,Arg& arg,ARGS&... args){RE VariadicGetline(getline(is,arg,separator),separator,args...);}TE <CL Traits,TY Arg> IN OS& VariadicCout(OS& os,CO Arg& arg){RE os << arg;}TE <CL Traits,TY Arg1,TY Arg2,TY... ARGS> IN OS& VariadicCout(OS& os,CO Arg1& arg1,CO Arg2& arg2,CO ARGS&... args){RE VariadicCout(os << arg1 << " ",arg2,args...);}TE <CL Traits,TY Arg> IN OS& VariadicCoutNonSep(OS& os,CO Arg& arg){RE os << arg;}TE <CL Traits,TY Arg1,TY Arg2,TY... ARGS> IN OS& VariadicCoutNonSep(OS& os,CO Arg1& arg1,CO Arg2& arg2,CO ARGS&... args){RE VariadicCoutNonSep(os << arg1,arg2,args...);}TE <CL Traits,TY ARRAY> IN OS& CoutArray(OS& os,CRI i_start,CRI i_ulim,CO ARRAY& a){for(int i = i_start;i < i_ulim;i++){(i == i_start?os:(os << " "))<< a[i];}RE os;}
 
 // Module (6KB)
 #define DC_OF_CPOINT(POINT)IN CO U& POINT()CO NE
