@@ -33,7 +33,7 @@ template <typename T , typename FOREST , typename PREV , typename U , typename G
 template <typename T , typename FOREST , typename PREV , typename U , typename GROUP> inline void AbstractDifferenceSequence<T,FOREST,PREV,U,GROUP>::Shift( const int& degree ) { while( m_degree < degree ){ Differentiate(); } while( m_degree > degree ){ Integrate(); } }
 
 template <typename T , typename FOREST , typename PREV , typename U , typename GROUP> inline void AbstractDifferenceSequence<T,FOREST,PREV,U,GROUP>::Integrate() { m_degree--; const int& N = size(); for( int i = 1; i < N ; i++ ){ auto&& i_prev = this->m_prev( i ); if( i_prev != -1 ){ m_a[i] = m_M.Sum( move( m_a[i] ) , m_a[i_prev] ); } } }
-template <typename T , typename FOREST , typename PREV , typename U , typename GROUP> inline void AbstractDifferenceSequence<T,FOREST,PREV,U,GROUP>::Differentiate() { m_degree++; for( int i = size() - 1; i > 0 ; i-- ){ auto&& i_prev = this->m_prev( i ); if( i_prev != -1 ){ m_a[i_prev] = m_M.Sum( move( m_a[i_prev] ) , m_M.Inverse( m_a[i] ) ); } } }
+template <typename T , typename FOREST , typename PREV , typename U , typename GROUP> inline void AbstractDifferenceSequence<T,FOREST,PREV,U,GROUP>::Differentiate() { m_degree++; for( int i = size() - 1; i > 0 ; i-- ){ auto&& i_prev = this->m_prev( i ); if( i_prev != -1 ){ m_a[i] = m_M.Sum( move( m_a[i] ) , m_M.Inverse( m_a[i_prev] ) ); } } }
 
 template <class Traits , typename T , typename FOREST , typename PREV , typename U , typename GROUP> inline basic_ostream<char,Traits>& operator<<( basic_ostream<char,Traits>& os , AbstractDifferenceSequence<T,FOREST,PREV,U,GROUP>& ds ){ auto&& size = ds.size(); for( int i = 0 ; i < size ; i++ ){ ( i == 0 ? os : os << " " ) << ds[i]; } return os; }
 
