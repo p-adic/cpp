@@ -79,7 +79,7 @@ template <int NUM> inline string to_string( const DynamicMods<NUM>& n ) noexcept
 template <int NUM , class Traits> inline basic_istream<char,Traits>& operator>>( basic_istream<char,Traits>& is , DynamicMods<NUM>& n ) { ll m; is >> m; n = m; return is; }
 
 #ifdef SAMPLE_CHECK
-  template <int NUM , class Traits> inline basic_ostream<char,Traits>& operator<<( basic_ostream<char,Traits>& os , const DynamicMods<NUM>& n ) { os << n.Represent(); }
+  template <int NUM , class Traits> inline basic_ostream<char,Traits>& operator<<( basic_ostream<char,Traits>& os , const DynamicMods<NUM>& n ) { return os << n.Represent(); }
 #else
   template <int NUM , class Traits> inline basic_ostream<char,Traits>& operator<<( basic_ostream<char,Traits>& os , const DynamicMods<NUM>& n ) { os << ( n.GetSign() ? "" : "-" ) << n.GetNumerator(); return n.GetDenominator() == 1 ? n.GetSign() ? os : os << " ß " << n.Represent() : os << "/" << n.GetDenominator() << " ß " << n.Represent(); }
 #endif
