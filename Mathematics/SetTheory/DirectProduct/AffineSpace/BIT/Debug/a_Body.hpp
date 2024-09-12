@@ -207,14 +207,19 @@ template <class Traits , typename U , typename ABELIAN_GROUP> inline basic_ostre
 {
 
   auto&& size = bit.size();
-  os << "{ ";
+  #ifndef SAMPLE_CHECK
+    os << "[";
+  #endif
 
   for( int i = 0 ; i < size ; i++ ){
 
-    os << bit[i] << " ";
+    ( i == 0 ? os : os << " " ) << bit[i];
 
   }
 
-  return os << "}";
+  #ifndef SAMPLE_CHECK
+  os << "]";
+  #endif
+  return os;
 
 }

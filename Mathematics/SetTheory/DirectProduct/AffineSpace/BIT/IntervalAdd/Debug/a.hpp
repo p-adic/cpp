@@ -64,6 +64,4 @@ public:
 };
 template <typename U> IntervalAddBIT( const vector<U>& a ) -> IntervalAddBIT<U>;
 
-
-// デバッグ出力用
 template <class Traits , typename U , typename Z_MODULE> inline basic_ostream<char,Traits>& operator<<( basic_ostream<char,Traits>& os , const AbstractIntervalAddBIT<U,Z_MODULE>& bit );

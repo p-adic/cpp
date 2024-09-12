@@ -88,3 +88,5 @@ public:
 
 };
 template <typename U> BIT( const vector<U>& a ) -> BIT<U>;
+
+template <class Traits , typename U , typename ABELIAN_GROUP> inline basic_ostream<char,Traits>& operator<<( basic_ostream<char,Traits>& os , AbstractBIT<U,ABELIAN_GROUP>& bit );

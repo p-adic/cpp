@@ -117,19 +117,25 @@ template <typename U , typename Z_MODULE> inline int AbstractIntervalAddBIT<U,Z_
 
 template <typename U , typename Z_MODULE> inline int AbstractIntervalAddBIT<U,Z_MODULE>::Search( const int& i_start , const U& u ) { return max( i_start , Search( m_M.Sum( InitialSegmentSum( i_start - 1 ) , u ) ) ); }
 
-
 template <class Traits , typename U , typename Z_MODULE> inline basic_ostream<char,Traits>& operator<<( basic_ostream<char,Traits>& os , const AbstractIntervalAddBIT<U,Z_MODULE>& bit )
 {
 
   auto&& size = bit.size();
-  os << "{ ";
+
+  #ifndef SAMPLE_CHECK
+    os << "[";
+  #endif
 
   for( int i = 0 ; i < size ; i++ ){
 
-    os << bit[i] << " ";
+    ( i == 0 ? os : os << " " ) << bit[i];
 
   }
 
-  return os << "}";
+  #ifndef SAMPLE_CHECK
+    os << "]";
+  #endif
+
+  return os;
 
 }
