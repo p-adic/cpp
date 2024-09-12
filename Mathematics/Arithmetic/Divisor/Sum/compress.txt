@@ -1,0 +1,7 @@
+#ifdef DEBUG
+  #include "c:/Users/user/Documents/Programming/Mathematics/Arithmetic/Divisor/Sum/a_Body.hpp"
+#else
+TE <TY INT>VE<INT> DivisorSum(CO INT& n_max,CO INT& d_max,CRI EX = 1){AS(EX >= 0);VE<INT> AN(n_max + 1);CO INT d_bound = min(n_max,d_max);for(int d = 1;d <= d_bound){INT PW = 1,PW_PW = d;int e = EX;WH(e > 0){(e & 1)== 1?PW *= PW_PW:PW;e == 1?PW_PW:PW_PW *= PW_PW;e >>= 1;}for(int n = d;n <= n_max;n += j){AN[n]+= PW;}}RE AN;}
+#endif
+
+
