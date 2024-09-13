@@ -3,7 +3,7 @@
   // #define REACTIVE
   // #define USE_GETLINE
   // #define SUBMIT_ONLY
-  // #define SAMPLE_CHECK A
+  #define SAMPLE_CHECK dummy
 #endif
 
 #ifdef INCLUDE_MAIN
@@ -112,22 +112,43 @@ ll Answer( ll N , ll M , ll K )
 // 圧縮時は中身だけ削除する。
 IN VO Experiment()
 {
-  // CEXPR( int , bound , 10 );
-  // // // vector<decldecay_t(Naive(0))> naive1( bound + 1 );
-  // FOREQ( N , 0 , bound ){
-  //   // vector<decldecay_t(Naive(0,0))> naive2( bound + 1 );
-  //   FOREQ( M , 0 , bound ){
-  //     vector<decldecay_t(Naive(0,0,0))> naive3( bound + 1 );
-  //     FOREQ( K , 0 , bound ){
-  // 	naive3[K] = Naive( N , M , K , true );
-  //     }
-  //     cout << "(N,M)=(" << N << "," << M << "),K∈[" << 0 << "--" << bound << "]: " << naive3 << endl;
-  //     // naive2[M] = Naive( N , M , true );
-  //   }
-  //   // cout << "N=" << N << ",M∈[" << 0 << "--" << bound << "]: " << naive2 << endl;
-  //   // // naive1[N] = Naive( N , true );
+  // // 1変数
+  // int N_min = 1 , N_max = bound;
+  // vector<decldecay_t(Naive(0))> naive1( N_max - N_min + 1 );
+  // FOREQ( N , N_min , N_max ){
+  //   naive1[N-N_min] = Naive( N , true );
   // }
-  // // // cout << "N∈[" << 0 << "--" << bound << "]: " << naive1 << endl;
+  // CERRNS( "N∈[",N_min,"--",N_max,"]: " , naive3[N] , "\n" };
+
+  // // 2変数
+  // int N_min = 1 , N_max = bound;
+  // vector<vector<decldecay_t(Naive(0,0))>> naive2( N_max - N_min + 1 );
+  // FOREQ( N , N_min , N_max ){
+  //   int M_min = 1 , M_max = bound;
+  //   naive2[N-N_min].resize( M_max - M_min + 1 );
+  //   FOREQ( M , M_min , M_max ){
+  //     naive2[N-N_min][M-M_min] = Naive( N , M , true );
+  //   }
+  //   CERRNS( "N=",N,",M∈[",M_min,"--",M_max,"]: " , naive2[N-N_min] , "\n" );
+  // }
+  // CERRNS( "Inline: " , naive2 , "\n" );
+  
+  // // 3変数
+  // int N_min = 1 , N_max = bound;
+  // vector<vector<vector<decldecay_t(Naive(0,0,0))>>> naive3( N_max - N_min + 1 );
+  // FOREQ( N , N_min , N_max ){
+  //   int M_min = 1 , M_max = bound;
+  //   naive3[N-N_min].resize( M_max - M_min + 1 );
+  //   FOREQ( M , M_min , M_max ){
+  //     int K_min = 1 , K_max = bound;
+  //     naive3[N-N_min][M-M_min].resize( K_max - K_min + 1 );
+  //     FOREQ( K , K_min , K_max ){
+  // 	naive3[N-N_min][M-M_min][K-K_min] = Naive( N , M , K , true );
+  //     }
+  //     CERRNS( "(N,M)=(",N,",",M,"),K∈[",K_min,"--",K_max,"]: " , naive3[N-N_min][M-M_min] , "\n" );
+  //   }
+  // }
+  // CERRNS( "Inline: " ); FOREQ( N , N_min , N_max ){ CERRNS( naive3[N-N_min] , " \n"[N==N_max] ) };
 }
 
 // 圧縮時は中身だけ削除する。
