@@ -46,15 +46,16 @@ const string sample_path = "C:/Users/user/Documents/Programming/Contest/AutoChec
 string sample_num;
 
 #ifdef SAMPLE_CHECK
+  static_assert( TO_CHAR( SAMPLE_CHECK )[0] != 'd'  );
   constexpr bool sample_check = true;
   const string problem_order = TO_STRING( SAMPLE_CHECK );
   const string input_path = sample_path + problem_order + "/input/sample";
   const string output_path = sample_path + problem_order + "/output/exec";
 #else
   constexpr bool sample_check = false;
-  string problem_order = "dummy";
-  string input_path = "dummy.txt";
-  string output_path = "dummy.txt";
+  const string problem_order = "dummy";
+  const string input_path = "dummy.txt";
+  const string output_path = "dummy.txt";
 #endif
 
 ifstream sample_count{ sample_path + problem_order + "/count.txt" };

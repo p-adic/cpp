@@ -2,6 +2,7 @@
 
 #pragma once
 
+
 #ifdef SAMPLE_CHECK
   #define INPUT ifs
   #define COUT( ... ) VariadicCout( ofs , __VA_ARGS__ ) << endl
@@ -18,6 +19,10 @@
   START_MAIN;                                                   \
   signal( SIGABRT , &AlertAbort );                              \
   if constexpr( !submit_only ){                                 \
+    if( problem_order != "dummy " ){                            \
+      CERR( "" );                                               \
+      CERR( "提出用ファイル実行時は" + problem_order + "問題のサンプルを確認します。" ); \
+    }                                                           \
     AutoCheck( exec_mode , use_getline );                       \
   }                                                             \
   CEXPR( int , bound_test_case_num , BOUND );                   \

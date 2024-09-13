@@ -4,7 +4,7 @@
   // #define REACTIVE
   // #define USE_GETLINE
   // #define SUBMIT_ONLY
-  // #define SAMPLE_CHECK A
+  #define SAMPLE_CHECK dummy
 #endif
 
 #ifdef INCLUDE_MAIN
