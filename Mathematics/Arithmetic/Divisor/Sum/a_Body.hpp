@@ -3,30 +3,23 @@
 #pragma once
 #include "a.hpp"
 
-template <typename INT>
-vector<INT> DivisorSum( const INT& n_max , const INT& d_max , const int& exponent )
+#include "../../Power/a_Body.hpp"
+
+template <typename INT , typename RET>
+vector<RET> DivisorSum( const INT& n , const INT& m , const int& exponent )
 {
 
   assert( exponent >= 0 );
-  vector<INT> answer( n_max + 1 );
-  const INT d_bound = min( n_max , d_max );
+  vector<RET> answer( n + 1 );
+  const INT d_max = min( n , m );
 
-  for( int d = 1 ; d <= d_bound ){
+  for( INT d = 1 ; d <= d_max ; d++ ){
 
-    INT power = 1 , power_power = d;
-    int e = exponent;
-
-    while( e > 0 ){
-
-      ( e & 1 ) == 1 ? power *= power_power : power;
-      e == 1 ? power_power : power_power *= power_power;
-      e >>= 1;
-
-    }
+    const RET power = Power( d , exponent );
     
-    for( int n = d ; n <= n_max ; n += j ){
+    for( int i = d ; i <= n ; i += d ){
 
-      answer[n] += power;
+      answer[i] += power;
 
     }
 

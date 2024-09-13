@@ -1,7 +1,8 @@
 #ifdef DEBUG
   #include "c:/Users/user/Documents/Programming/Mathematics/Arithmetic/Divisor/Sum/a_Body.hpp"
 #else
-TE <TY INT>VE<INT> DivisorSum(CO INT& n_max,CO INT& d_max,CRI EX = 1){AS(EX >= 0);VE<INT> AN(n_max + 1);CO INT d_bound = min(n_max,d_max);for(int d = 1;d <= d_bound){INT PW = 1,PW_PW = d;int e = EX;WH(e > 0){(e & 1)== 1?PW *= PW_PW:PW;e == 1?PW_PW:PW_PW *= PW_PW;e >>= 1;}for(int n = d;n <= n_max;n += j){AN[n]+= PW;}}RE AN;}
-#endif
+TE <TY T> IN T Square(CO T& t){RE t * t;}TE <TY T,TY UINT>T PW(T t,UINT EX){T AN =(EX & 1)== 1?t:1;EX >>= 1;WH(EX > 0){t = Square(t);(EX & 1)== 1?AN *= t:AN;EX >>= 1;}RE AN;}TE <TY T,TY UINT>T PW(T t,UINT EX,T init){(EX & 1)== 1?init *= t:init;EX >>= 1;WH(EX > 0){t = Square(t);(EX & 1)== 1?init *= t:init;EX >>= 1;}RE MO(init);}
 
+TE <TY INT,TY RET>VE<RET> DivisorSum(CO INT& n,CO INT& m,CRI EX = 1){AS(EX >= 0);VE<RET> AN(n + 1);CO INT d_max = min(n,m);for(INT d = 1;d <= d_max;d++){CO RET PW = PW(d,EX);for(int i = d;i <= n;i += d){AN[i]+= PW;}}RE AN;}
+#endif
 
