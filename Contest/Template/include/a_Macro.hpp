@@ -5,11 +5,13 @@
 
 #ifdef SAMPLE_CHECK
   #define INPUT ifs
+  #define DEBUG_OUTPUT ofs_err
   #define COUT( ... ) VariadicCout( ofs , __VA_ARGS__ ) << endl
   #define COUTNS( ... ) VariadicCoutNonSep( ofs , __VA_ARGS__ ) << flush
   #define COUT_A( I , N , A ) CoutArray( ofs , I , N , A ) << endl
 #else
   #define INPUT cin
+  #define DEBUG_OUTPUT cerr
   #define COUT( ... ) VariadicCout( cout << "出力" << __LINE__ << "：" , __VA_ARGS__ ) << endl
   #define COUTNS( ... ) VariadicCoutNonSep( cout << "出力" << __LINE__ << "： " , __VA_ARGS__ ) << flush
   #define COUT_A( I , N , A ) CoutArray( cout << "出力： " , I , N , A ) << endl
@@ -19,7 +21,7 @@
   START_MAIN;                                                   \
     signal( SIGABRT , &AlertAbort );                              \
     if constexpr( !submit_only ){                                 \
-      if( problem_order != "dummy " ){                            \
+      if( problem_order != "dummy" ){                            \
         CERR( "" );                                               \
         CERR( "提出用ファイル実行時は" + problem_order + "問題のサンプルを確認します。" ); \
       }                                                           \
@@ -48,6 +50,8 @@
       int sample_repetition_num; sample_count >> sample_repetition_num;       \
       REPEAT( sample_repetition_num ){                                           \
         sample_count >> sample_num;                                    \
+        ofs_err << "サンプル" << sample_num << "を実行します。" << endl; \
+        ofs_err << endl;                                                \
         ifs = ifstream{ input_path + sample_num + ".txt" };            \
         ofs = ofstream{ output_path + sample_num + ".txt" , ios::trunc }; \
         if constexpr( bound_test_case_num > 1 ){             \
@@ -57,7 +61,8 @@
           Solve();                                                         \
         }                                                               \
         CompareAnswer( sample_path , problem_order , sample_num );    \
-        CERR( "" );                                                     \
+        ofs_err << "サンプル" << sample_num << "の実行を終了しました。" << endl; \
+        ofs_err << endl;                                                \
       }                                                                 \
     }                                                                 \
 

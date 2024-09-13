@@ -51,6 +51,7 @@ string sample_num;
   const string problem_order = TO_STRING( SAMPLE_CHECK );
   const string input_path = sample_path + problem_order + "/input/sample";
   const string output_path = sample_path + problem_order + "/output/exec";
+ofstream ofs_err{ "C:/Users/user/Documents/Programming/Contest/AutoCheck/SampleMemoriser/cerr.txt" , ios::trunc };
 #else
   constexpr bool sample_check = false;
   const string problem_order = "dummy";
