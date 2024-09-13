@@ -17,53 +17,68 @@
 
 #define REPEAT_MAIN( BOUND )                                    \
   START_MAIN;                                                   \
-  signal( SIGABRT , &AlertAbort );                              \
-  if constexpr( !submit_only ){                                 \
-    if( problem_order != "dummy " ){                            \
-      CERR( "" );                                               \
-      CERR( "提出用ファイル実行時は" + problem_order + "問題のサンプルを確認します。" ); \
-    }                                                           \
-    AutoCheck( exec_mode , use_getline );                       \
-  }                                                             \
-  CEXPR( int , bound_test_case_num , BOUND );                   \
-  int test_case_num = 1;                                        \
-  if( exec_mode == solve_mode ){                                \
-    if constexpr( sample_check ){                               \
-      sample_count >> test_case_num;                            \
-    } else if constexpr( bound_test_case_num > 1 ){             \
-      CERR( "テストケースの個数を入力してください。" );               \
-      SET_ASSERT( test_case_num , 1 , bound_test_case_num );    \
-    }                                                           \
-  } else {                                                      \
-    if( exec_mode == experiment_mode ){                         \
-      Experiment();                                             \
-    } else if( exec_mode == small_test_mode ){                  \
-      SmallTest();                                              \
-    } else if( exec_mode == random_test_mode ){                 \
-      CERR( "ランダムテストを行う回数を指定してください。" );          \
-      SET_LL( test_case_num );                                  \
-      RandomTest( test_case_num );                              \
-    }                                                           \
-    RE 0;                                                       \
-  }                                                             \
+    signal( SIGABRT , &AlertAbort );                              \
+    if constexpr( !submit_only ){                                 \
+      if( problem_order != "dummy " ){                            \
+        CERR( "" );                                               \
+        CERR( "提出用ファイル実行時は" + problem_order + "問題のサンプルを確認します。" ); \
+      }                                                           \
+      AutoCheck( exec_mode , use_getline );                       \
+    }                                                             \
+    int test_case_num = 1;                                        \
+    if( exec_mode != solve_mode ){                                \
+      if( exec_mode == experiment_mode ){                         \
+        Experiment();                                             \
+      } else if( exec_mode == small_test_mode ){                  \
+        SmallTest();                                              \
+      } else if( exec_mode == random_test_mode ){                 \
+        CERR( "ランダムテストを行う回数を指定してください。" );          \
+        SET_LL( test_case_num );                                  \
+        RandomTest( test_case_num );                              \
+      }                                                           \
+      RE 0;                                                       \
+    }                                                             \
+    CEXPR( int , bound_test_case_num , BOUND );                   \
   FINISH_MAIN                                                   \
 
-#define FINISH_MAIN                                                    \
-    REPEAT( test_case_num ){                                           \
-      if constexpr( sample_check ){                                    \
+
+#ifdef SAMPLE_CHECK
+
+  #define FINISH_MAIN                                                     \
+      int sample_repetition_num; sample_count >> sample_repetition_num;       \
+      REPEAT( sample_repetition_num ){                                           \
         sample_count >> sample_num;                                    \
         ifs = ifstream{ input_path + sample_num + ".txt" };            \
         ofs = ofstream{ output_path + sample_num + ".txt" , ios::trunc }; \
-      } else if constexpr( bound_test_case_num > 1 ){                  \
-        CERR( "testcase " , VARIABLE_FOR_REPEAT_test_case_num , ":" ); \
-      }                                                                \
-      Solve();                                                         \
-      if constexpr( sample_check ){                                    \
-        CompareAnswer( sample_path , problem_order , sample_num );     \
-      }                                                                \
-      CERR( "" );                                                      \
-    }                                                                  \
-  }                                                                    \
+        if constexpr( bound_test_case_num > 1 ){             \
+          SET_ASSERT( test_case_num , 1 , bound_test_case_num );          \
+        }                                                             \
+        REPEAT( test_case_num ){                                           \
+          Solve();                                                         \
+        }                                                               \
+        CompareAnswer( sample_path , problem_order , sample_num );    \
+        CERR( "" );                                                     \
+      }                                                                 \
+    }                                                                 \
+
+#else
+
+  #define FINISH_MAIN                                                    \
+      if constexpr( bound_test_case_num > 1 ){             \
+        CERR( "テストケースの個数を入力してください。" );               \
+        SET_ASSERT( test_case_num , 1 , bound_test_case_num );    \
+        REPEAT( test_case_num ){                                                \
+          CERR( "testcase " , VARIABLE_FOR_REPEAT_test_case_num , ":" ); \
+          Solve();                                                         \
+          CERR( "" );                                                      \
+        }                                                                  \
+      } else {                                              \
+        Solve();                                                         \
+        CERR( "" );                                                      \
+      }                                                                  \
+    }                                                                    \
+
+#endif
 
 #define DEXPR( LL , BOUND , VALUE1 , VALUE2 ) CEXPR( LL , BOUND , VALUE2 )
 
