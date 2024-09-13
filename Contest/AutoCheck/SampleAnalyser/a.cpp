@@ -38,12 +38,28 @@ AC( SampleAnalyser )
     hand = num == 1;
   }
   if( hand ){
-    FOR( sample_num , 0 , sample_count ){
-      cerr << "サンプル" << sample_num + 1 << "入力中の固定長な数値: ";
-      CIN_A( ll , 0 , var , A );
-      input[sample_num] = move( A );
-      cerr << "サンプル" << sample_num + 1 << "出力: "; cin >> output[sample_num];
-      CERR( "" );
+    ASK_NUMBER(
+	       "(入力-出力)群を入力する。" ,
+	       "(入力)群と(出力)群を入力する。"
+	       );
+    if( num == num_temp++ ){
+      FOR( sample_num , 0 , sample_count ){
+        cerr << "サンプル" << sample_num + 1 << "入力中の固定長な数値: ";
+        CIN_A( ll , 0 , var , A );
+        input[sample_num] = move( A );
+        cerr << "サンプル" << sample_num + 1 << "出力: "; cin >> output[sample_num];
+        CERR( "" );
+      }
+    } else {
+      FOR( sample_num , 0 , sample_count ){
+        cerr << "サンプル" << sample_num + 1 << "入力中の固定長な数値: ";
+        CIN_A( ll , 0 , var , A );
+        input[sample_num] = move( A );
+      }
+      FOR( sample_num , 0 , sample_count ){
+        cerr << "サンプル" << sample_num + 1 << "出力: "; cin >> output[sample_num];
+        CERR( "" );
+      }
     }
   } else {
     cerr << "初項aと公差d: "; CIN( int , a , d );
