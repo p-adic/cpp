@@ -372,42 +372,43 @@ TE <TY INT> US T3 = tuple<INT,INT,INT>;
 TE <TY INT> US T4 = tuple<INT,INT,INT,INT>;
 US path = pair<int,ll>;
 
+#ifndef DEBUG
 // 二分探索用
 // EXPRESSIONがANSWERの広義単調関数の時、EXPRESSION >= CONST_TARGETの整数解を格納。
 #define BS( ANSWER , MINIMUM , MAXIMUM , EXPRESSION , DESIRED_INEQUALITY , CONST_TARGET , INEQUALITY_FOR_CHECK , UPDATE_U , UPDATE_L , UPDATE_ANSWER ) \
   static_assert( ! is_same<decldecay_t( CONST_TARGET ),uint>::value && ! is_same<decldecay_t( CONST_TARGET ),ull>::value ); \
   ll ANSWER = MINIMUM;							\
   {									\
-    ll ANSWER ## _L = MINIMUM;							\
-    ll ANSWER ## _R = MAXIMUM;							\
+    ll ANSWER ## _L = MINIMUM;                                          \
+    ll ANSWER ## _R = MAXIMUM;                                          \
     ANSWER = UPDATE_ANSWER;						\
     ll EXPRESSION_BS;							\
     const ll CONST_TARGET_BS = ( CONST_TARGET );			\
     ll DIFFERENCE_BS;							\
-    while( ANSWER ## _L < ANSWER ## _R ){						\
+    while( ANSWER ## _L < ANSWER ## _R ){                               \
       DIFFERENCE_BS = ( EXPRESSION_BS = ( EXPRESSION ) ) - CONST_TARGET_BS; \
-      CERR( "二分探索中：" , string{ #ANSWER } + "_L" , "=" , ANSWER ## _L , "<=" , #ANSWER , "=" , ANSWER , "<=" , ANSWER ## _R , "=" , string{ #ANSWER } + "_R" , ":" , #EXPRESSION , "=" , EXPRESSION_BS , DIFFERENCE_BS > 0 ? ">" : DIFFERENCE_BS < 0 ? "<" : "=" , CONST_TARGET_BS , "=" , #CONST_TARGET ); \
+      CERR( "二分探索中:" , string{ #ANSWER } + "_L" , "=" , ANSWER ## _L , "<=" , #ANSWER , "=" , ANSWER , "<=" , ANSWER ## _R , "=" , string{ #ANSWER } + "_R" , ":" , #EXPRESSION , "=" , EXPRESSION_BS , DIFFERENCE_BS > 0 ? ">" : DIFFERENCE_BS < 0 ? "<" : "=" , CONST_TARGET_BS , "=" , #CONST_TARGET ); \
       if( DIFFERENCE_BS INEQUALITY_FOR_CHECK 0 ){			\
-	ANSWER ## _R = UPDATE_U;						\
+	ANSWER ## _R = UPDATE_U;                                        \
       } else {								\
-	ANSWER ## _L = UPDATE_L;						\
+	ANSWER ## _L = UPDATE_L;                                        \
       }									\
       ANSWER = UPDATE_ANSWER;						\
     }									\
-    if( ANSWER ## _L > ANSWER ## _R ){							\
-      CERR( "二分探索失敗：" , string{ #ANSWER } + "_L" , "=" , ANSWER ## _L , ">" , ANSWER ## _R , "=" , string{ #ANSWER } + "_R" , ":" , #ANSWER , ":=" , #MAXIMUM , "+ 1 =" , MAXIMUM + 1  ); \
+    if( ANSWER ## _L > ANSWER ## _R ){                                  \
+      CERR( "二分探索失敗:" , string{ #ANSWER } + "_L" , "=" , ANSWER ## _L , ">" , ANSWER ## _R , "=" , string{ #ANSWER } + "_R" , ":" , #ANSWER , ":=" , #MAXIMUM , "+ 1 =" , MAXIMUM + 1  ); \
       CERR( "二分探索マクロにミスがある可能性があります。変更前の版に戻してください。" ); \
       ANSWER = MAXIMUM + 1;						\
     } else {								\
-      CERR( "二分探索終了：" , string{ #ANSWER } + "_L" , "=" , ANSWER ## _L , "<=" , #ANSWER , "=" , ANSWER , "<=" , ANSWER ## _R , "=" , string{ #ANSWER } + "_R" ); \
+      CERR( "二分探索終了:" , string{ #ANSWER } + "_L" , "=" , ANSWER ## _L , "<=" , #ANSWER , "=" , ANSWER , "<=" , ANSWER ## _R , "=" , string{ #ANSWER } + "_R" ); \
       CERR( "二分探索が成功したかを確認するために" , #EXPRESSION , "を計算します。" ); \
       CERR( "成功判定が不要な場合はこの計算を削除しても構いません。" );	\
       EXPRESSION_BS = ( EXPRESSION );					\
-      CERR( "二分探索結果：" , #EXPRESSION , "=" , EXPRESSION_BS , ( EXPRESSION_BS > CONST_TARGET_BS ? ">" : EXPRESSION_BS < CONST_TARGET_BS ? "<" : "=" ) , CONST_TARGET_BS ); \
+      CERR( "二分探索結果:" , #EXPRESSION , "=" , EXPRESSION_BS , ( EXPRESSION_BS > CONST_TARGET_BS ? ">" : EXPRESSION_BS < CONST_TARGET_BS ? "<" : "=" ) , CONST_TARGET_BS ); \
       if( EXPRESSION_BS DESIRED_INEQUALITY CONST_TARGET_BS ){		\
-	CERR( "二分探索成功：" , #ANSWER , ":=" , ANSWER );		\
+	CERR( "二分探索成功:" , #ANSWER , ":=" , ANSWER );		\
       } else {								\
-	CERR( "二分探索失敗：" , #ANSWER , ":=" , #MAXIMUM , "+ 1 =" , MAXIMUM + 1 ); \
+	CERR( "二分探索失敗:" , #ANSWER , ":=" , #MAXIMUM , "+ 1 =" , MAXIMUM + 1 ); \
 	CERR( "単調でないか、単調増加性と単調減少性を逆にしてしまったか、探索範囲内に解が存在しません。" ); \
 	ANSWER = MAXIMUM + 1;						\
       }									\
@@ -449,10 +450,10 @@ US path = pair<int,ll>;
     auto& VAR_TPA ## _R = get<1>( ANSWER ## _temp );			\
     auto& VAR_TPA ## _info = get<2>( ANSWER ## _temp );			\
     bool on_TPA_prev = false;						\
-    while( true ){								\
+    while( true ){                                                      \
       bool continuing = CONTINUE_CONDITION;				\
       bool on_TPA = continuing && ( ON_CONDITION );			\
-      CERR( continuing ? "尺取り中" : "尺取り終了" , "： [L,R] = [" , VAR_TPA ## _L , "," , VAR_TPA ## _R , "] ," , on_TPA_prev ? "on" : "off" , "->" , on_TPA ? "on" : "off" , ", info =" , VAR_TPA ## _info );	\
+      CERR( continuing ? "尺取り中" : "尺取り終了" , ": [L,R] = [" , VAR_TPA ## _L , "," , VAR_TPA ## _R , "] ," , on_TPA_prev ? "on" : "off" , "->" , on_TPA ? "on" : "off" , ", info =" , VAR_TPA ## _info ); \
       if( on_TPA_prev && ! on_TPA ){					\
 	ANSWER.push_back( ANSWER ## _prev );				\
 	CERR( #ANSWER , "に" , ANSWER ## _prev , "を格納します。" );	\
@@ -470,6 +471,8 @@ US path = pair<int,ll>;
       on_TPA_prev = on_TPA;						\
     }									\
   }									\
+
+#endif
 
 // データ構造用
 TE <TY T> IN T Addition(CO T& t0,CO T& t1){RE t0 + t1;}
