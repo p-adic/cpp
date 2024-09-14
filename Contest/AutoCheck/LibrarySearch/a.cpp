@@ -220,17 +220,22 @@ AC( ExplicitExpressionArraySum )
 
 AC( ExplicitExpressionOneArrayEntrySum )
 {
-  CERR( "1変数関数f(x)と配列(a_i)_{i=0}^{N-1}に対するsum_if(a_i)などを考えるとします。" );
-  CERR( "必要ならば(a_i)_iをソートして広義単調増大とします。" );
+  CERR( "1変数関数f(x)と配列(a_i)_{i=0}^{N-1}に対するsum_i f(a_i)などを考える" );
+  CERR( "とします。必要ならば(a_i)_iをソートして広義単調増大とします。" );
   CERR( "- f(a_{i+1}) - f(a_i)がO(1)で計算できO(N)が間に合いそうならば、" );
   CERR( "  f(a_i)の差分計算による高速化" );
   CERR( "- #im(f)が小さくf(a_)の逆像が計算しやすいならば" );
   CERR( "  同じ返り値の纏め上げsum_i f(a_i)=sum_y #f(a_)^{-1}(y) y" );
   CERR( "- #dom(f)が小さく(a_)の逆像が計算しやすいならば" );
   CERR( "  同じ代入値の纏め上げsum_i f(a_i)=sum_x #(a_)^{-1}(x) f(x)" );
+  CERR( "- i%j = i - floor(i/j)jを用いて剰余を商に帰着" );
+  CERR( "  - iに関する和はfloor_sum" );
+  CERR( "    \\Mathematics\\Combinatorial\\FloorSum" );
+  CERR( "  - jに関する和は平方分割" );
+  CERR( "    \\Mathematics\\Combinatorial\\ResidueSum" );
+  CERR( "- Nが大きい場合と小さい場合で解法の折衷" );
   CERR( "を検討しましょう。" );
   CERR( "" );
-  CERR( "Nが大きい場合と小さい場合で解法を変える考察も忘れないように気を付けましょう。" );
 }
 
 AC( ExplicitExpressionInnerProduct )
@@ -1600,7 +1605,9 @@ AC( Counting )
   CERR( "を検討しましょう。" );
   ASK_NUMBER(
 	     "固定長変数関数の逆像の数え上げ問題" ,
-	     "条件を満たす配列／文字列／数の数え上げ問題" ,
+	     "条件を満たす配列の数え上げ問題" ,
+	     "条件を満たす文字列の数え上げ問題" ,
+	     "条件を満たす数の数え上げ問題" ,
 	     "条件を満たすグラフの数え上げ問題" ,
 	     "与えられた配列の部分列の数え上げ問題" ,
 	     "与えられた文字列の部分文字列の数え上げ問題" ,
@@ -1617,6 +1624,10 @@ AC( Counting )
     CALL_AC( CountingExplicitExpression );
   } else if( num == num_temp++ ){
     CALL_AC( CountingArray );
+  } else if( num == num_temp++ ){
+    CALL_AC( CountingString );
+  } else if( num == num_temp++ ){
+    CALL_AC( CountingNumber );
   } else if( num == num_temp++ ){
     CALL_AC( CountingGraph );
   } else if( num == num_temp++ ){
@@ -1676,7 +1687,6 @@ AC( CountingExplicitExpression )
 
 AC( CountingArray )
 {
-  CERR( "数は十進法などで文字列とみなし、また文字列も配列とみなします。" );
   ASK_NUMBER(
 	     "配列を受け取る関数の値が固定された配列の数え上げ問題" ,
 	     "隣接成分間関係式を満たす配列の数え上げ問題" ,
@@ -1778,6 +1788,25 @@ AC( CountingArrayOtherRelation )
   } else {
     CERR( "（多重）集合やソートされた配列の数え上げに帰着することを検討しましょう。" );
     CALL_AC( CountingSubset );
+  }
+}
+
+AC( CountingString )
+{
+  CERR( "文字列は文字の配列とみなします。" );
+  CALL_AC( CountingArray );      
+}
+
+AC( CountingNumber )
+{
+  ASK_YES_NO( "各桁の数字に関する条件ですか？" );
+  if( reply == "y" ){
+    CERR( "数を十進法などで文字列とみなします。" );
+    CALL_AC( CountingArray );    
+  } else {
+    CERR( "条件P(n)を満たすN以下の非負整数nの数え上げは、関数f(n) = P(n)?1:0などの" );
+    CERR( "総和の計算問題に帰着されます。" );
+    CALL_AC( ExplicitExpressionOneArrayEntrySum );
   }
 }
 

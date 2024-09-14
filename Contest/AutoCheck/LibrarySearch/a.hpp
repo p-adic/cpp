@@ -90,6 +90,8 @@ AC( CountingArrayBounded );
 AC( CountingArrayBoundedTotal );
 AC( CountingArrayBoundedSub );
 AC( CountingArrayOtherRelation );
+AC( CountingString );
+AC( CountingNumber );
 AC( CountingGraph );
 AC( CountingSubArray );
 AC( CountingSumFixedSubArray );
