@@ -1,4 +1,4 @@
-// c:/Users/user/Documents/Programming/Mathematics/LinearAlgebra/Rank/Mod/a_Body.hpp
+// c:/Users/user/Documents/Programming/Mathematics/LinearAlgebra/Rank/Mod/Debug/a_Body.hpp
 
 #pragma once
 #include "a.hpp"
@@ -69,7 +69,60 @@ pair<int,vector<MODINT>> ExtendedReducedRowEchelonForm( vector<vector<MODINT>>& 
   const int L = A.size();
   constexpr int N = 1;
   vector<int> left( L , -1 );
-  DEFINITION_OF_EXTENDED_REDUCED_ROW_ECHELON_FORM_FOR_MOD( int& j = left[i] );
+  const MODINT& zero = MODINT::zero();
+  const int M_N = L == 0 ? 0 : A[0].size() , M = M_N - N;
+  assert( M >= 0 );
+  int rank = RowEchelonForm( A );
+  vector<bool> solvable( N , true );
+  int i = rank;
+
+  while( --i >= 0 ){
+
+    auto& A_i = A[i];
+    int& j = left[i];
+
+    while( ++j < M ){
+
+      if( A_i[j] != zero ){
+
+	break;
+
+      }
+
+    }
+
+    if( j == M ){
+
+      while( j < M_N ){
+
+	solvable[j] = solvable[j] && A_i[j] == zero;
+        j++;
+
+      }
+
+      rank--;
+
+    } else {
+
+      int i_curr = i;
+
+      while( --i_curr >= 0 ){
+
+	auto& A_i_curr = A[i_curr];
+	const MODINT A_i_curr_j = A_i_curr[j];
+
+	for( int j_curr = j ; j_curr < M_N ; j_curr++ ){
+
+	  A_i_curr[j_curr] -= A_i_curr_j * A_i[j_curr];
+
+	}
+
+      }
+
+    }
+
+  }
+
   vector<MODINT> solution{};
 
   if( solvable[0] ){
@@ -97,7 +150,60 @@ tuple<int,vector<bool>,vector<vector<MODINT>>> MultiExtendedReducedRowEchelonFor
 
   const int L = A.size();
   vector<int> left( L , -1 );
-  DEFINITION_OF_EXTENDED_REDUCED_ROW_ECHELON_FORM_FOR_MOD( int& j = left[i] );
+  const MODINT& zero = MODINT::zero();
+  const int M_N = L == 0 ? 0 : A[0].size() , M = M_N - N;
+  assert( M >= 0 );
+  int rank = RowEchelonForm( A );
+  vector<bool> solvable( N , true );
+  int i = rank;
+
+  while( --i >= 0 ){
+
+    auto& A_i = A[i];
+    int& j = left[i];
+
+    while( ++j < M ){
+
+      if( A_i[j] != zero ){
+
+	break;
+
+      }
+
+    }
+
+    if( j == M ){
+
+      while( j < M_N ){
+
+	solvable[j] = solvable[j] && A_i[j] == zero;
+        j++;
+
+      }
+
+      rank--;
+
+    } else {
+
+      int i_curr = i;
+
+      while( --i_curr >= 0 ){
+
+	auto& A_i_curr = A[i_curr];
+	const MODINT A_i_curr_j = A_i_curr[j];
+
+	for( int j_curr = j ; j_curr < M_N ; j_curr++ ){
+
+	  A_i_curr[j_curr] -= A_i_curr_j * A_i[j_curr];
+
+	}
+
+      }
+
+    }
+
+  }
+
   vector<vector<MODINT>> solutions( M , vector<MODINT>( N ) );
   i = rank;
   

@@ -5,7 +5,7 @@
 #define DEFINITION_OF_EXTENDED_REDUCED_ROW_ECHELON_FORM_FOR_BITSET( DECL_J ) \
   const size_t M_N = M + N;						\
   assert( M_N <= bound_M_N );						\
-  size_t rank = RowEchelonForm( A ,  M_N );				\
+  size_t rank = RowEchelonForm( A , M_N );				\
   bool solvable = true;							\
   size_t i = rank;							\
 									\
