@@ -4,7 +4,6 @@
 
 #ifdef SAMPLE_CHECK
   #define INPUT ifs
-  #define DEBUG_OUTPUT ofs_err
   #define COUT( ... ) VariadicCout( ofs , __VA_ARGS__ ) << endl
   #define COUTNS( ... ) VariadicCoutNonSep( ofs , __VA_ARGS__ ) << flush
   #define COUT_A( I , N , A ) CoutArray( ofs , I , N , A ) << endl
@@ -12,7 +11,7 @@
   #define DERRNS( ... ) VariadicCoutNonSep( ofs_err , __VA_ARGS__ ) << flush
 #else
   #define INPUT cin
-  #define DEBUG_OUTPUT cerr
+  #define ofs_err cerr
   #define COUT( ... ) VariadicCout( cout << "出力" << __LINE__ << "：" , __VA_ARGS__ ) << endl
   #define COUTNS( ... ) VariadicCoutNonSep( cout << "出力" << __LINE__ << "： " , __VA_ARGS__ ) << flush
   #define COUT_A( I , N , A ) CoutArray( cout << "出力： " , I , N , A ) << endl
@@ -109,6 +108,7 @@
 #define CERR( ... ) VariadicCout( cerr , __VA_ARGS__ ) << endl
 #define CERRNS( ... ) VariadicCoutNonSep( cerr , __VA_ARGS__ ) << flush
 #define CERR_A( I , N , A ) CoutArray( cerr , I , N , A ) << endl
+#define DEBUG_OUTPUT ofs_err
 
 #define SET_ASSERT( A , MIN , MAX )                     \
   if( exec_mode == solve_mode ){                        \
