@@ -1,4 +1,4 @@
-contest_num = 512
+contest_num = 511
 start_hour = 21
 start_minute = 20
 wait = True
@@ -41,12 +41,12 @@ for a_tag in contest_table_page.find_all("a"):
 		if len(temp) < 3:
 			print(problem_order,message_list[6],str(count%100),message_list[7])
 		else:
-			if len(temp) != 3:
-				print(problem_order,message_list[6],str(count%100),message_list[8])
-			input_file.write(temp[1].split("</pre>")[0])
-			output_file.write(temp[2].split("</pre>")[0])
-		input_file.close()
-		output_file.close()
+			if len(temp) != 3:print(problem_order,message_list[6],str(count%100),message_list[8])
+			for i,file in zip([1,2],[input_file,output_file]):
+				temp[i] = temp[i].split("</pre>")[0]
+				if temp[i][-1] != '\n':temp[i] += '\n'
+				file.write(temp[i])
+				file.close()
 		count_list += [str(count)[1:]+'\n']
 	count_file = open("Sample/" + problem_order + "/count.txt",'w')
 	count_file.write(str(len(count_list))+'\n')
@@ -58,3 +58,7 @@ problem_order_file.write(str(len(problem_order_list))+'\n')
 for valid_problem_order in problem_order_list:problem_order_file.write(valid_problem_order)
 problem_order_file.close()
 print(message_list[11])
+while True:
+	print(message_list[12])
+	finish = input()
+	if finish == "y":break
