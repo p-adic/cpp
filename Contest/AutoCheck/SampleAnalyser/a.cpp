@@ -354,9 +354,8 @@ void InputPolynomialAnalysis2_enough( const int& sample_count , const vector<vec
     }
     M[sample_num][length-1] = output[sample_num];
   }
-  vector<DynamicMod> index{};
-  auto [rank,solvable] = ExtendedReducedRowEchelonForm( M , index );
-  if( rank == length && solvable ){
+  auto [rank,index] = ExtendedReducedRowEchelonForm( M );
+  if( rank == length ){
     CERR( "ï‚ä‘ê¨å˜:" );
     FOR( dx , 0 , size ){
       FOR( dy , 0 , size ){
@@ -454,9 +453,8 @@ void InputPolynomialAnalysis3_enough( const int& sample_count , const vector<vec
     }
     M[sample_num][length-1] = output[sample_num];
   }
-  vector<DynamicMod> index{};
-  auto [rank,solvable] = ExtendedReducedRowEchelonForm( M , index );
-  if( rank == length && solvable ){
+  auto [rank,index] = ExtendedReducedRowEchelonForm( M );
+  if( rank == length ){
     CERR( "ï‚ä‘ê¨å˜:" );
     FOR( dx , 0 , size ){
       FOR( dy , 0 , size ){
@@ -585,9 +583,8 @@ void InputExponentialAnalysis1_enough( const int& sample_count , const vector<ve
     M[sample_num][size+1] = 1;
     M[sample_num][length] = output[sample_num];
   }
-  vector<DynamicMod> index{};
-  auto [rank,solvable] = ExtendedReducedRowEchelonForm( M , index );
-  if( rank == length && solvable ){
+  auto [rank,index] = ExtendedReducedRowEchelonForm( M );
+  if( rank == length ){
     CERR( "ï‚ä‘ê¨å˜:" );
     cerr << "(" << index[length-1] << ") + " << "(" << index[length-2] << ") (à¯êî1) + ";
     FOR( d , 0 , size ){
@@ -684,9 +681,8 @@ void InputExponentialAnalysis2_enough( const int& sample_count , const vector<ve
     M[sample_num][var * ( var - 1 ) * size] = 1;
     M[sample_num][length] = output[sample_num];
   }
-  vector<DynamicMod> index{};
-  auto [rank,solvable] = ExtendedReducedRowEchelonForm( M , index );
-  if( rank == length && solvable ){
+  auto [rank,index] = ExtendedReducedRowEchelonForm( M );
+  if( rank == length ){
     CERR( "ï‚ä‘ê¨å˜:" );
     cerr << "(" << index[length-1] << ") +\n";
     FOR( d , 0 , size ){
