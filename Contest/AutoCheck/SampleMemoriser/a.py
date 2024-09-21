@@ -1,4 +1,4 @@
-contest_num = 511
+contest_num = 513
 start_hour = 21
 start_minute = 20
 wait = True
@@ -44,6 +44,7 @@ for a_tag in contest_table_page.find_all("a"):
 			if len(temp) != 3:print(problem_order,message_list[6],str(count%100),message_list[8])
 			for i,file in zip([1,2],[input_file,output_file]):
 				temp[i] = temp[i].split("</pre>")[0]
+				for br in ["<br>","</br>","<br/>"]:temp[i] = "\n".join(temp[i].split(br))
 				if temp[i][-1] != '\n':temp[i] += '\n'
 				file.write(temp[i])
 				file.close()
