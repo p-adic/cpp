@@ -12,7 +12,7 @@
   #define DERR_TARGET ofs_err
 #elif defined( DEBUG_OUTPUT )
   #define INPUT_SOURCE cin
-  #define COUT_TARGET cout
+  #define COUT_TARGET cout << "o—Í " << __LINE__ << ": "
   #define DERR_TARGET cerr
 #else
   #define INPUT_SOURCE cin
