@@ -44,8 +44,8 @@ int exec_mode;
 #endif
 
 void CompareAnswer( const string& sample_path , const string& problem_order , const string& sample_num );
-ifstream ifs{ "dummy.txt" };
-ofstream ofs{ "dummy.txt" };
+ifstream ifs{};
+ofstream ofs{};
 const string sample_path = "C:/Users/user/Documents/Programming/Contest/AutoCheck/SampleMemoriser/Sample/";
 string sample_num;
 
