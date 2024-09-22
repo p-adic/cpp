@@ -1600,19 +1600,18 @@ AC( MaximisationGame )
 AC( Counting )
 {
   CERR( "動的計画法で計算量が大きい場合、" );
-  CERR( "- dp[i]の代わりにsum_{j<=i}dp[j]を考える。" );
-  CERR( "- dp[i][k]の代わりにdp[i][0]のみに注目してBITなどによる高速化。" );
+  CERR( "- dp[i]の代わりに" );
+  CERR( "  - sum_{j<=i}dp[j]を考える。" );
+  CERR( "  - i番目の状態をdp[i+1]への寄与C(k)が等しい状態kへ細分してdp[i][k]を考える。" );
+  CERR( "  - i番目の状態をdp[i+1]への寄与がcである状態の和集合へ細分してdp[i][c]を考える。" );
+  CERR( "- dp[i][k]の代わりにdp[i][0]のみに注目してBITなどで高速化。" );
   CERR( "を検討しましょう。" );
   ASK_NUMBER(
-	     "固定長変数関数の逆像の数え上げ問題" ,
-	     "条件を満たす配列の数え上げ問題" ,
-	     "条件を満たす文字列の数え上げ問題" ,
-	     "条件を満たす数の数え上げ問題" ,
-	     "条件を満たすグラフの数え上げ問題" ,
-	     "与えられた配列の部分列の数え上げ問題" ,
-	     "与えられた文字列の部分文字列の数え上げ問題" ,
-	     "与えられた木の分割の数え上げ問題" ,
-	     "与えられた集合の部分集合の数え上げ問題" ,
+	     "数の数え上げ問題" ,
+	     "配列の数え上げ問題" ,
+	     "文字列の数え上げ問題" ,
+	     "グラフの数え上げ問題" ,
+	     "部分集合の数え上げ問題" ,
 	     "戦略／操作方法の数え上げ問題" ,
 	     "経路の数え上げ問題" ,
 	     "タイリング／塗り分けの数え上げ問題" ,
@@ -1621,21 +1620,13 @@ AC( Counting )
 	     "操作回数の計算問題"
 	     );
   if( num == num_temp++ ){
-    CALL_AC( CountingExplicitExpression );
+    CALL_AC( CountingNumber );
   } else if( num == num_temp++ ){
     CALL_AC( CountingArray );
   } else if( num == num_temp++ ){
     CALL_AC( CountingString );
   } else if( num == num_temp++ ){
-    CALL_AC( CountingNumber );
-  } else if( num == num_temp++ ){
     CALL_AC( CountingGraph );
-  } else if( num == num_temp++ ){
-    CALL_AC( CountingSubArray );
-  } else if( num == num_temp++ ){
-    CALL_AC( CountingSubString );
-  } else if( num == num_temp++ ){
-    CALL_AC( CountingPartitionOfTree );
   } else if( num == num_temp++ ){
     CALL_AC( CountingSubset );
   } else if( num == num_temp++ ){
@@ -1647,8 +1638,6 @@ AC( Counting )
   } else if( num == num_temp++ ){
     CALL_AC( CountingYoundDiagram );
   } else if( num == num_temp++ ){
-    CALL_AC( CountingParenthesisSequence );
-  } else if( num == num_temp++ ){
     CALL_AC( ExplicitExpressionCountingOperation );
   }
   ASK_YES_NO( "サンプルを解析しますか？" );
@@ -1657,15 +1646,35 @@ AC( Counting )
   }
 }
 
+AC( CountingNumber )
+{
+  CERR( "何らかの条件を満たす数の数え上げ問題を考えます。" );
+  ASK_NUMBER(
+	     "固定長変数関数の値に関する条件" ,
+	     "各桁の数字に関する条件" ,
+	     "その他の条件"
+             );
+  if( num == num_temp++ ){
+    CALL_AC( CountingExplicitExpression );
+  } else if( num == num_temp++ ){
+    CERR( "数を十進法などで文字列とみなします。" );
+    CALL_AC( CountingArray );    
+  } else {
+    CERR( "条件P(n)を満たすN以下の非負整数nの数え上げは、関数f(n) = P(n)?1:0などの" );
+    CERR( "総和の計算問題に帰着されます。" );
+    CALL_AC( ExplicitExpressionOneArrayEntrySum );
+  }
+}
+
 AC( CountingExplicitExpression )
 {
   CERR( "- 変数の対称性があれば大小関係を制限した全探策" );
   CERR( "- 何らかの約数となるなど動く範囲が狭い変数があればそれらを決め打った全探策" );
-  CERR( "- 半順序集合への写像の逆像ならばゼータ変換／メビウス変換" );
+  CERR( "- 半順序集合への特定の写像の逆像ならばゼータ変換／メビウス変換" );
   CERR( "  \\Mathematics\\Combinatorial\\ZetaTransform" );
   CERR( "- gcd(n,x)=1かつ1<=x<=nを満たすxの数え上げはオイラー関数" );
   CERR( "  \\Mathematics\\Arithmetic\\Mod\\Function\\Euler" );
-  CERR( "- f(g(x),g(y))=cの形は" );
+  CERR( "- f(g(x),g(y))=cの形ならば" );
   CERR( "  - まず各b in im(g)に対しf(a,b) = cを満たすa in im(g)全体を前計算する。" );
   CERR( "  - 次に|dom(g)| = N、max im(g) = Mとして、各y in im(g)に対する" );
   CERR( "    逆像の濃度|g^{-1}(y)|を管理するg_inv[y]を" );
@@ -1676,11 +1685,11 @@ AC( CountingExplicitExpression )
   CERR( "    により管理する。" );
   CERR( "  - 最後に各yごとにf(a,g(y)) = cを満たす各a in im(g)に対しa = g(x)を満たす" );
   CERR( "    xをg_inv[a]で数え上げる。" );
-  CERR( "- f(g(x),g(y))<=cの形でfとgが単調増加する時は" );
+  CERR( "- f(g(x),g(y))<=cの形かつfとgが単調増加するならば" );
   CERR( "  - まず各b in im(g)に対しf(a,b) <= cを満たすaの上限を二分探索で前計算する。" );
   CERR( "  - 次にそうして得られる各aに対しg(x)<=aを満たすxの上限を二分探索で前計算する。" );
   CERR( "  - 最後に各yごとにb = g(y)に対する前計算結果の総和を求める。" );
-  CERR( "- 平方数の和はヤコビの二平方定理" );
+  CERR( "- 平方数の和ならばヤコビの二平方定理" );
   CERR( "  https://ja.wikipedia.org/wiki/ヤコビの二平方定理" );
   CERR( "を検討しましょう。" );
 }
@@ -1688,9 +1697,23 @@ AC( CountingExplicitExpression )
 AC( CountingArray )
 {
   ASK_NUMBER(
+             "条件を満たす配列の数え上げ問題" ,
+             "与えられた配列の部分列の数え上げ問題"
+             );
+  if( num == num_temp++ ){
+    CALL_AC( CountingArrayConditional );
+  } else {
+    CALL_AC( CountingSubArray );
+  }
+}
+
+AC( CountingArrayConditional )
+{
+  ASK_NUMBER(
 	     "配列を受け取る関数の値が固定された配列の数え上げ問題" ,
 	     "隣接成分間関係式を満たす配列の数え上げ問題" ,
 	     "辞書式順序などで固定長の部分文字列に上限が与えられた配列の数え上げ問題" ,
+             "閉じたカッコ列の数え上げ問題" ,
 	     "その他の関係式を満たす配列の数え上げ問題"
 	     );
   if( num == num_temp++ ){
@@ -1699,6 +1722,8 @@ AC( CountingArray )
     CALL_AC( CountingArrayAdjacentRelation );
   } else if( num == num_temp++ ){
     CALL_AC( CountingArrayBounded );
+  } else if( num == num_temp++ ){
+    CALL_AC( CountingParenthesisSequence );
   } else if( num == num_temp++ ){
     CALL_AC( CountingArrayOtherRelation );
   }
@@ -1783,39 +1808,18 @@ AC( CountingArrayOtherRelation )
 {
   ASK_YES_NO( "配列への格納順が関係ありますか？" );
   if( reply == "y" ){
-    CERR( "半順序を構成しグラフの数え上げに帰着することを検討しましょう。" );
-    CALL_AC( CountingGraph );
+    ASK_YES_NO( "総和が0で左端からの始端和が非負な±1列ですか？" );
+    if( reply == "y" ){
+      CERR( "長さ2Nの閉じたカッコ列に対応します。" );
+      CALL_AC( CountingParenthesisSequence );
+    } else {
+      CERR( "添字に半順序を構成しグラフの数え上げに帰着することを検討しましょう。" );
+      CALL_AC( CountingGraph );
+    }
   } else {
     CERR( "（多重）集合やソートされた配列の数え上げに帰着することを検討しましょう。" );
     CALL_AC( CountingSubset );
   }
-}
-
-AC( CountingString )
-{
-  CERR( "文字列は文字の配列とみなします。" );
-  CALL_AC( CountingArray );      
-}
-
-AC( CountingNumber )
-{
-  ASK_YES_NO( "各桁の数字に関する条件ですか？" );
-  if( reply == "y" ){
-    CERR( "数を十進法などで文字列とみなします。" );
-    CALL_AC( CountingArray );    
-  } else {
-    CERR( "条件P(n)を満たすN以下の非負整数nの数え上げは、関数f(n) = P(n)?1:0などの" );
-    CERR( "総和の計算問題に帰着されます。" );
-    CALL_AC( ExplicitExpressionOneArrayEntrySum );
-  }
-}
-
-AC( CountingGraph )
-{
-  CERR( "- 木はケーリーの公式やその亜種" );
-  CERR( "  https://oeis.org/A000272" );
-  CERR( "- なもりグラフはサイクルとそれ以外への分割" );
-  CERR( "を検討しましょう。" );
 }
 
 AC( CountingSubArray )
@@ -1985,6 +1989,25 @@ AC( CountingSubArrayImageArray )
   CERR( "の２つを管理するiに関する動的計画法を検討しましょう。" );
 }
 
+AC( CountingString )
+{
+  ASK_NUMBER(
+	     "条件を満たす文字列の数え上げ問題" ,
+	     "与えられた文字列の部分文字列の数え上げ問題"
+             );
+  if( num == num_temp++ ){
+    CALL_AC( CountingStringConditional );
+  } else {
+    CALL_AC( CountingSubString );
+  }
+}
+
+AC( CountingStringConditional )
+{
+  CERR( "文字列は文字の配列とみなします。" );
+  CALL_AC( CountingArray );
+}
+
 AC( CountingSubString )
 {
   ASK_NUMBER(
@@ -2036,6 +2059,43 @@ AC( CountingShapedSubString )
   CERR( "\\Mathematics\\SetTheory\\DirectProduct\\AffineSpace\\SegmentTree" );
 }
 
+AC( CountingGraph )
+{
+  ASK_NUMBER(
+             "条件を満たす無向グラフの数え上げ問題" ,
+             "条件を満たす有向グラフの数え上げ問題" ,
+	     "与えられた木の分割の数え上げ問題"
+             );
+  if( num == num_temp++ ){
+    CALL_AC( CountingUndirectedGraph );
+  } else if( num == num_temp++ ){
+    CALL_AC( CountingDirectedGraph );
+  } else {
+    CALL_AC( CountingPartitionOfTree );
+  }
+}
+
+AC( CountingUndirectedGraph )
+{
+  CERR( "- ラベル付き無向木はケーリーの公式N^{N-2}" );
+  CERR( "  https://oeis.org/A000272" );
+  CERR( "- 各ノードの枝に左右の区別があるNノードN+1葉の二分木や" );
+  CERR( "  円上の2N頂点に非交差かつ次数2な無向辺を張って得られる無向グラフは" );
+  CERR( "  第Nカタラン数C(N)=(2N)!/((N+1)!N!)" );
+  CERR( "  https://ja.wikipedia.org/wiki/カタラン数#カタラン数の意味" );
+  CERR( "- なもりグラフはサイクル（N!/(N-C)!）とそれ以外への分割（C^{N-C}）" );
+  CERR( "を検討しましょう。" );
+}
+
+AC( CountingDirectedGraph )
+{
+  CERR( "- ラベル付き有向木（根付き木）はケーリーの公式の亜種N^{N-1}" );
+  CERR( "  https://oeis.org/A000169" );
+  CERR( "- K個のサイクルの和は第1種スターリング数s(N,K)" );
+  CERR( "  https://スターリング数#組み合わせ数学における意味" );
+  CERR( "を検討しましょう。" );
+}
+
 AC( CountingPartitionOfTree )
 {
   CERR( "木を受け取る関数fが与えられているとします。" );
@@ -2049,17 +2109,32 @@ AC( CountingPartitionOfTree )
 
 AC( CountingSubset )
 {
-  ASK_YES_NO( "要素を受け取る関数の部分和を固定した部分集合の数え上げ問題ですか？" );
-  if( reply == "y" ){
+  ASK_NUMBER(
+             "要素を受け取る関数の部分和を固定した部分集合の数え上げ問題" ,
+             "その他の部分集合の数え上げ問題" ,
+             "部分集合への分割の数え上げ問題"
+             );
+  if( num == num_temp++ ){
     CERR( "要素に番号を振り、集合を配列とみなして部分和問題に帰着させましょう。" );
     CALL_AC( CountingSumFixedSubArray );
-  } else {
+  } else if( num == num_temp++ ){
     CERR( "与えられた集合のサイズをNと置きます。" );
     CERR( "- O(2^N)が間に合いそうならば、bit全探策" );
     CERR( "  \\Mathematics\\Geometry\\Graph\\Algorithm\\BreadthFirstSearch\\BitExhausiveSearch" );
     CERR( "- O(N2^N)が間に合いそうならば、部分集合の包含対のbit全探策" );
     CERR( "  \\Mathematics\\Geometry\\Graph\\Algorithm\\BreadthFirstSearch\\BitExhausiveSearch" );
     CERR( "を検討しましょう。" );
+  } else {
+    CERR( "- 任意有限個の部分集合への排他的分割ならばベル数B(N)" );
+    CERR( "  https://ja.wikipedia.org/wiki/ベル数" );
+    CERR( "- 任意有限個の部分集合への非公差分割や、円上のN頂点の多角形分割や" );
+    CERR( "  円上のN+2角形の三角形分割ならば第Nカタラン数C(N)=(2N)!/((N+1)!N!)" );
+    CERR( "  https://ja.wikipedia.org/wiki/カタラン数" );
+    CERR( "  https://ja.wikipedia.org/wiki/非交差分割" );
+    CERR( "- K個の部分集合への排他的分割ならば第2種スターリング数s(N,K)" );
+    CERR( "  \\Mathematics\\Combinatorial\\StirlingNumber\\SecondKind" );
+    CERR( "  https://ja.wikipedia.org/wiki/スターリング数#組み合わせ数学における意味_2" );
+  CERR( "を検討しましょう。" );
   };
 }
 
@@ -2104,9 +2179,10 @@ AC( CountingPath )
     CERR( "を検討しましょう。" );
     CERR( "" );
     CERR( "領域から外に出る経路の数え上げは、出る直前の経路に帰着させましょう。" );
-    CERR( "適宜カタラン数やヤング図形との関係も検討しましょう。" );
+    CERR( "適宜カタラン数やヤング図形との関係も検討しましょう。例えば" );
+    CERR( "N×N格子で左下から右上まで対角線を跨がず最初に右へ行く最短経路の個数は" );
+    CERR( "第Nカタラン数C(N)=(2N)!/((N+1)!N!)です。" );
     CALL_AC( CountingYoundDiagram );
-    CALL_AC( CountingParenthesisSequence );
   } else if( num == num_temp++ ){
     CERR( "ループの不能な有向グラフは整礎なので、各点pごとに" );
     CERR( "-「pが探索されたか」を表すbool値配列" );
@@ -2176,7 +2252,8 @@ AC( CountingYoundDiagram )
 {
   CERR( "標準ヤングタブローの個数はフック長公式で計算できます。" );
   CERR( "\\Mathematics\\Combinatorial\\YoungDiagram\\a.hpp" );
-  CERR( "- 2×nの標準ヤングタブローと第nカタラン数の関係" );
+  CERR( "- 2×Nの標準ヤングタブロー（行／列ともに狭義単調増大になるような番号づけ）" );
+  CERR( "  の個数=第Nカタラン数C(N)=(2N)!/((N+1)!N!)" );
   CERR( "- RS対応（型の等しいヤングタブローと順列の対応）" );
   CERR( "  https://en.wikipedia.org/wiki/Robinson%E2%80%93Schensted_correspondence" );
   CERR( "- 半標準ヤングタブローと非交叉なパスの組との対応" );
@@ -2185,17 +2262,7 @@ AC( CountingYoundDiagram )
 
 AC( CountingParenthesisSequence )
 {
-  CERR( "第nカタラン数Cnは(2n)!/(n+1)!n!です。" );
-  CERR( "- n対のカッコ列であって全てのカッコが閉じたもの" );
-  CERR( "- 2n成分の総和が0で左端からの始端和が非負な±1列" );
-  CERR( "- nノードの二分木" );
-  CERR( "- n×n格子で左下から右上まで対角線を跨がず最初に右へ行く最短経路" );
-  CERR( "- 2×nの標準ヤングタブロー（行／列ともに狭義単調増大になるような番号づけ）" );
-  CERR( "- 円上のn頂点の多角形分割" );
-  CERR( "- 円上のn+2角形の三角形分割" );
-  CERR( "- 円上の2n頂点の非交差かつ次数2な無向辺の張り方" );
-  CERR( "の数え上げなどがCnと一致します。" );
-  CERR( "https://en.wikipedia.org/wiki/Catalan_number#Applications_in_combinatorics" );
+  CERR( "2N文字の閉じたカッコ列の個数は第Nカタラン数C(N)=(2N)!/((N+1)!N!)です。" );
 }
 
 AC( Solving )
