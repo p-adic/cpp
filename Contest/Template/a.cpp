@@ -89,23 +89,16 @@ REPEAT_MAIN(1);
 #ifdef INCLUDE_SUB
 
 /* COMPAREに使用。圧縮時は削除する。*/
-int Naive( int N , int M , int K , const bool& experiment = false )
+MP Naive( const int& N , const int& M , const int& K , const bool& experiment = false )
 {
-  int answer = N + M + K;
+  MP answer = 0;
   return answer;
 }
 
 /* COMPAREに使用。圧縮時は削除する。*/
-ll Answer( ll N , ll M , ll K )
+MP Answer( const ll& N , const ll& M , const ll& K )
 {
-  /* START_WATCH; */
-  ll answer = N + M + K;
-
-  /* // TLに準じる乱択や全探索。デフォルトの猶予は100.0[ms]。
-  CEXPR( double , TL , 2000.0 );
-  while( CHECK_WATCH( TL ) ){
-
-  } */
+  MP answer = 0;
   return answer;
 }
 
@@ -120,7 +113,6 @@ IN VO Experiment()
     naive1[N-N_min] = Naive( N , true );
   }
   CERRNS( "N∈[",N_min,"--",N_max,"]: " , naive3[N] , "\n" }; */
-
   /* // 2変数
   CEXPR( int , bound , 10 );
   int N_min = 1 , N_max = bound;
@@ -134,7 +126,6 @@ IN VO Experiment()
     CERRNS( "N=",N,",M∈[",M_min,"--",M_max,"]: " , naive2[N-N_min] , "\n" );
   }
   CERRNS( "Inline: " , naive2 , "\n" ); */
-  
   /* // 3変数
   CEXPR( int , bound , 10 );
   int N_min = 1 , N_max = bound;
@@ -155,27 +146,91 @@ IN VO Experiment()
 }
 
 /* 圧縮時は中身だけ削除する。*/
-IN VO SmallTest()
+inline void SmallTest()
 {
-  /* CEXPR( int , bound , 10 );
-  FOREQ( N , 0 , bound ){
-    FOREQ( M , 0 , bound ){
-      FOREQ( K , 0 , bound ){
-    	   COMPARE( N , M , K );
+  /* 数
+  CEXPR( int , bound , 10 );
+  int N_min = 1 , N_max = bound;
+  FOREQ( N , N_min , N_max ){
+    int M_min = 1 , M_max = bound;
+    FOREQ( M , M_min , M_max ){
+      int K_min = 1 , K_max = bound;
+      FOREQ( K , K_min , K_max ){
+        COMPARE( N , M , K );
       }
+    }
+  } */
+  /* 配列
+  CEXPR( int , bound , 10 );
+  int N_min = 1 , N_max = bound;
+  FOREQ( N , N_min , N_max ){
+    int Ai_min = 1 , Ai_max = bound;
+    vector<int> A_min( N , Ai_min ) , A_max( N , Ai_max ) , A = A_min;
+    bool b = Ai_min <= Ai_max;
+    while( b ){
+      COMPARE( N , A );
+      b = NextLoopEq( N , A_min , A_max , A );
+    }
+  } */
+  /* 順列
+  CEXPR( int , bound , 10 );
+  int N_min = 1 , N_max = bound;
+  FOREQ( N , N_min , N_max ){
+    vector<int> P = id<int>( N ); ++P;
+    bool b = true;
+    while( b ){
+      COMPARE( N , P );
+      b = next_permutation( P.begin() , P.end() );
+    }
+  } */
+  /* 文字列
+  CEXPR( int , bound , 5 );
+  CEXPR( int , letter_num , 26 );
+  int N_min = 1 , N_max = bound;
+  FOREQ( N , N_min , N_max ){
+    vector<int> A_min( N ) , A_ulim( N , letter_num ) , A = A_min;
+    bool b = true;
+    while( b ){
+      COMPARE( N , ArrayToString( A ) );
+      b = NextLoopEq( N , A_min , A_max , A );
     }
   } */
 }
 
 /* 圧縮時は中身だけ削除する。*/
-IN VO RandomTest( CRI test_case_num )
+inline void RandomTest( const int& test_case_num )
 {
-  /* REPEAT( test_case_num ){
+  /* 数
+  REPEAT( test_case_num ){
     CEXPR( int , bound_N , 1e5 ); CIN_ASSERT( N , 1 , bound_N );
     CEXPR( ll , bound_M , 1e18 ); CIN_ASSERT( M , 1 , bound_M );
     CEXPR( ll , bound_K , 1e9 ); CIN_ASSERT( K , 1 , bound_K );
     COMPARE( N , M , K );
   }*/
+  /* 配列
+  REPEAT( test_case_num ){
+    CEXPR( int , bound_N , 1e5 ); CIN_ASSERT( N , 1 , bound_N );
+    CEXPR( int , bound_A , 1e5 ); vector<int> A( N );
+    FOR( i , 0 , N ){ SET_ASSERT( A[i] , 1 , bound_A ); }
+    COMPARE( N , A );
+  } */
+  /* 順列
+  REPEAT( test_case_num ){
+    CEXPR( int , bound_N , 1e5 ); CIN_ASSERT( N , 1 , bound_N );
+    vector<int> P = id<int>( N ); ++P;
+    REPEAT( N ){
+      int i = GetRand( 0 , N - 1 ) , j = GetRand( 0 , N - 1 ); swap( P[i] , P[j] );
+    }
+    COMPARE( N , P );
+  } */
+  /* 文字列
+  CEXPR( int , letter_num , 26 );
+  REPEAT( test_case_num ){
+    CEXPR( int , bound_N , 1e5 ); CIN_ASSERT( N , 1 , bound_N );
+    CEXPR( int , bound_A , 1e5 ); vector<int> A( N );
+    FOR( i , 0 , N ){ SET_ASSERT( A[i] , 1 , bound_A ); }
+    COMPARE( N , ArrayToString( A ) );
+  } */
 }
 
 #define INCLUDE_MAIN
@@ -194,38 +249,38 @@ IN VO RandomTest( CRI test_case_num )
     Geometry/Graph/Algorithm/BreadthFirstSearch/BitExhausiveSearch/
   - ZeroOneBreadthFirstSearch (4KB)
     Geometry/Graph/Algorithm/BreadthFirstSearch/01/
-
 - BIT (5KB)
   SetTheory/DirectProduct/AffineSpace/BIT/
   - IntervalAdd (9KB)
     SetTheory/DirectProduct/AffineSpace/BIT/IntervalAdd/
   - IntervalMax (9KB)
     SetTheory/DirectProduct/AffineSpace/BIT/IntervalMax/
-
 - CoordinateCompress (3KB)
   SetTheory/DirectProduct/CoordinateCompress/
-
 - DFS (6KB)
   Geometry/Graph/Algorithm/DepthFirstSearch/
   - Tree (11KB)
     Geometry/Graph/Algorithm/DepthFirstSearch/Tree/
-
 - DifferenceSequence (9KB)
   SetTheory/DirectProduct/AffineSpace/DifferenceSequence/
   - TwoDimensional (5KB)
     SetTheory/DirectProduct/AffineSpace/DifferenceSequence/TwoDimensional/
-
 - Dijkstra (6KB)
   Geometry/Graph/Algorithm/Dijkstra/
   - MinimumCostFlow (16KB)
     Geometry/Graph/Algorithm/Dijkstra/Potentialised/MinimumCostFlow/
-
 - Divisor/Prime/Factorisation (4KB)
   Arithmetic/Divisor/
-
 - Knapsack (8KB)
   Combinatorial/KnapsackProblem/
-
+- LineSubset (7KB)
+  SetTheory/Line/
+  - NonNegative (15KB)
+    SetTheory/Line/NonNegative/
+  - Bounded (15KB)
+    SetTheory/Line/Bounded/
+  - Compressed (15KB)
+    SetTheory/Line/Compressed/
 - SqrtDecomposition
   - Monoid (5KB)
     SetTheory/DirectProduct/AffineSpace/SqrtDecomposition/Monoid/
@@ -233,17 +288,16 @@ IN VO RandomTest( CRI test_case_num )
     SetTheory/DirectProduct/AffineSpace/SqrtDecomposition/Dual/Commutative/
   - IntervalMultiplyLazy (18KB)
     SetTheory/DirectProduct/AffineSpace/SqrtDecomposition/LazyEvaluation/IntervalMultiply/
-
 - TruncatedPolynomial (31KB)
   Polynomial/Truncate/
   - NonProth (34KB)
     Polynomial/Truncate/NonProth/
-
-- TwoByTwoMatrix (6KB)
+- Matrix (6KB)
   LinearAlgebra/
-  - TwoByOneMatrix (9KB)
+  - TwoByTwo/TwoByOne (9KB)
     LinearAlgebra/TwoByOne/
-
+  - Rank (3KB)
+    LinearAlgebra/Rank/Mod/
 - UnionFind (3KB)
   Geometry/Graph/Algorithm/UnionFindForest/
 */
@@ -572,6 +626,12 @@ US MP = Mod<P>;
 TE <uint M> CE Mod<M>::Mod()NE:m_n(){}TE <uint M> CE Mod<M>::Mod(CO Mod<M>& n)NE:m_n(n.m_n){}TE <uint M> CE Mod<M>::Mod(Mod<M>&& n)NE:m_n(MO(n.m_n)){}TE <uint M> TE <TY T,SFINAE_FOR_MOD> CE Mod<M>::Mod(T n)NE:m_n(Residue<M>(MO(n))){}TE <uint M> CE Mod<M>& Mod<M>::OP=(Mod<M> n)NE{m_n = MO(n.m_n);RE *TH;}TE <uint M> CE Mod<M>& Mod<M>::OP+=(CO Mod<M>& n)NE{(m_n += n.m_n)< M?m_n:m_n -= M;RE *TH;}TE <uint M> CE Mod<M>& Mod<M>::OP-=(CO Mod<M>& n)NE{m_n < n.m_n?(m_n += M)-= n.m_n:m_n -= n.m_n;RE *TH;}TE <uint M> CE Mod<M>& Mod<M>::OP*=(CO Mod<M>& n)NE{m_n = MO(ull(m_n)* n.m_n)% M;RE *TH;}TE <> CE MP& MP::OP*=(CO MP& n)NE{ull m_n_copy = m_n;m_n = MO((m_n_copy *= n.m_n)< P?m_n_copy:ResidueP(m_n_copy));RE *TH;}TE <uint M> IN Mod<M>& Mod<M>::OP/=(Mod<M> n){RE OP*=(n.Invert());}TE <uint M> TE <TY INT> CE Mod<M>& Mod<M>::OP<<=(INT n){AS(n >= 0);RE *TH *= Mod<M>(2).NonNegativePW(MO(n));}TE <uint M> TE <TY INT> CE Mod<M>& Mod<M>::OP>>=(INT n){AS(n >=0);WH(n-- > 0){((m_n & 1)== 0?m_n:m_n += M)>>= 1;}RE *TH;}TE <uint M> CE Mod<M>& Mod<M>::OP++()NE{m_n < COants::g_M_minus?++m_n:m_n = 0;RE *TH;}TE <uint M> CE Mod<M> Mod<M>::OP++(int)NE{Mod<M> n{*TH};OP++();RE n;}TE <uint M> CE Mod<M>& Mod<M>::OP--()NE{m_n == 0?m_n = COants::g_M_minus:--m_n;RE *TH;}TE <uint M> CE Mod<M> Mod<M>::OP--(int)NE{Mod<M> n{*TH};OP--();RE n;}DF_OF_CM_FOR_MOD(==);DF_OF_CM_FOR_MOD(!=);DF_OF_CM_FOR_MOD(>);DF_OF_CM_FOR_MOD(>=);DF_OF_CM_FOR_MOD(<);DF_OF_CM_FOR_MOD(<=);DF_OF_AR_FOR_MOD(+,NE,n,+);DF_OF_AR_FOR_MOD(-,NE,n.SignInvert(),+);DF_OF_AR_FOR_MOD(*,NE,n,*);DF_OF_AR_FOR_MOD(/,,n.Invert(),*);TE <uint M> TE <TY INT> CE Mod<M> Mod<M>::OP^(INT EX)CO{RE MO(Mod<M>(*TH).PW(MO(EX)));}TE <uint M> TE <TY INT> CE Mod<M> Mod<M>::OP<<(INT n)CO{RE MO(Mod<M>(*TH)<<= MO(n));}TE <uint M> TE <TY INT> CE Mod<M> Mod<M>::OP>>(INT n)CO{RE MO(Mod<M>(*TH)>>= MO(n));}TE <uint M> CE Mod<M> Mod<M>::OP-()CO NE{RE MO(Mod<M>(*TH).SignInvert());}TE <uint M> CE Mod<M>& Mod<M>::SignInvert()NE{m_n > 0?m_n = M - m_n:m_n;RE *TH;}TE <uint M> IN Mod<M>& Mod<M>::Invert(){AS(m_n != 0);uint m_n_neg;RE m_n < COants::g_memory_LE?(m_n = Inverse(m_n).m_n,*TH):((m_n_neg = M - m_n)< COants::g_memory_LE)?(m_n = M - Inverse(m_n_neg).m_n,*TH):NonNegativePW(COants::g_order_minus_1);}TE <uint M> TE <TY INT> CE Mod<M>& Mod<M>::PositivePW(INT EX)NE{Mod<M> PW{*TH};EX--;WH(EX != 0){(EX & 1)== 1?*TH *= PW:*TH;EX >>= 1;PW *= PW;}RE *TH;}TE <uint M> TE <TY INT> CE Mod<M>& Mod<M>::NonNegativePW(INT EX)NE{RE EX == 0?(m_n = 1,*TH):PositivePW(MO(EX));}TE <uint M> TE <TY INT> CE Mod<M>& Mod<M>::PW(INT EX){bool neg = EX < 0;AS(!(neg && m_n == 0));RE neg?PositivePW(ll(MO(EX %= COants::g_M_minus))* COants::g_order_minus_1_neg %COants::g_M_minus):NonNegativePW(MO(EX));}TE <uint M> CE VO Mod<M>::swap(Mod<M>& n)NE{std::swap(m_n,n.m_n);}TE <uint M> IN CO Mod<M>& Mod<M>::Inverse(CRUI n){AS(n < M);ST VE<Mod<M>> memory ={zero(),one()};ST uint LE_curr = 2;WH(LE_curr <= n){memory.push_back(DeRP(M - memory[M % LE_curr].m_n * ull(M / LE_curr)% M));LE_curr++;}RE memory[n];}TE <uint M> IN CO Mod<M>& Mod<M>::Factorial(CRUI n){if(M <= n){RE zero();}ST VE<Mod<M>> memory ={one(),one()};ST uint LE_curr = 2;WH(LE_curr <= n){memory.push_back(memory[LE_curr - 1]* LE_curr);LE_curr++;}RE memory[n];}TE <uint M> IN CO Mod<M>& Mod<M>::FactorialInverse(CRUI n){ST VE<Mod<M>> memory ={one(),one()};ST uint LE_curr = 2;WH(LE_curr <= n){memory.push_back(memory[LE_curr - 1]* Inverse(LE_curr));LE_curr++;}RE memory[n];}TE <uint M> IN Mod<M> Mod<M>::Combination(CRUI n,CRUI i){RE i <= n?Factorial(n)* FactorialInverse(i)* FactorialInverse(n - i):zero();}TE <uint M> CE CRUI Mod<M>::RP()CO NE{RE m_n;}TE <uint M> CE Mod<M> Mod<M>::DeRP(uint n)NE{Mod<M> n_copy{};n_copy.m_n = MO(n);RE n_copy;}TE <uint M> IN CO Mod<M>& Mod<M>::zero()NE{ST CE CO Mod<M> z{};RE z;}TE <uint M> IN CO Mod<M>& Mod<M>::one()NE{ST CE CO Mod<M> o{1};RE o;}TE <uint M> IN Mod<M> Inverse(CO Mod<M>& n){RE MO(Mod<M>(n).Invert());}TE <uint M,TY INT> CE Mod<M> PW(Mod<M> n,INT EX){RE MO(n.PW(MO(EX)));}TE <uint M> CE VO swap(Mod<M>& n0,Mod<M>& n1)NE{n0.swap(n1);}TE <uint M> IN string to_string(CO Mod<M>& n)NE{RE to_string(n.RP())+ " + " + to_string(M)+ "Z";}TE <uint M,CL Traits> IN IS& OP>>(IS& is,Mod<M>& n){ll m;is >> m;n = m;RE is;}TE <uint M,CL Traits> IN OS& OP<<(OS& os,CO Mod<M>& n){RE os << n.RP();}
 #define DF_OF_HASH_FOR_MOD(MOD)IN size_t hash<MOD>::OP()(CO MOD& n)CO{ST CO hash<decldecay_t(n.RP())> h;RE h(n.RP());}
 TE <uint M> DC_OF_HASH(Mod<M>); TE <uint M> DF_OF_HASH_FOR_MOD(Mod<M>);
+
+/* Loop (1KB)*/
+TE <TY INT> bool NextLoop(CRI SZ,CO VE<INT>& lower_bound,CO VE<INT>& upper_limit,VE<INT>& index){int depth = 0;WH(depth < SZ){if(++index[depth]< upper_limit[depth]){break;}index[depth]= lower_bound[depth];depth++;}RE depth < SZ;}TE <TY INT> bool NextLoop(CO VE<INT>& lower_bound,CO VE<INT>& upper_limit,VE<INT>& index){RE NextLoop(index.SZ(),lower_bound,upper_limit,index);}TE <TY INT> bool NextLoopEq(CRI SZ,CO VE<INT>& lower_bound,CO VE<INT>& upper_bound,VE<INT>& index){int depth = 0;WH(depth < SZ){if(++index[depth]<= upper_bound[depth]){break;}index[depth]= lower_bound[depth];depth++;}RE depth < SZ;}TE <TY INT> bool NextLoopEq(CO VE<INT>& lower_bound,CO VE<INT>& upper_bound,VE<INT>& index){RE NextLoopEq(index.SZ(),lower_bound,upper_bound,index);}
+
+/* string (1KB)*/
+TE <TY INT = int> IN char IntToChar(CO INT& i,CO bool& capital = false){RE i +(capital?'A':'a');}TE <TY INT = int> IN INT CharToInt(CO char& i){RE i -(i < 'a'?'A':'a');}TE <TY INT = int>string ArrayToString(CO VE<INT>& A,CO bool& capital = false){CO int N = A.SZ();string S(N,'a');for(int i = 0;i < N;i++){S[i]= IntToChar<INT>(A[i],capital);}RE S;}TE <TY INT = int>VE<INT> StringToArray(CO string& S){CO int N = S.SZ();VE<int> A(N);for(int i = 0;i < N;i++){A[i]= CharToInt<INT>(S[i]);}RE A;}
 #endif
 /* AAA 常設ライブラリは以上に挿入する。*/
 

@@ -9,10 +9,14 @@
 #include "../../../Utility/Set/Map/a.hpp"
 #include "../../../Utility/StdStream/a.hpp"
 #include "../../../Utility/String/a.hpp"
+#include "../../../Utility/String/ToArray/a.hpp"
+#include "../../../Utility/BinarySearch/Debug/a.hpp"
+#include "../../../Utility/TwoPointerApproach/Debug/a.hpp"
 
 #include "../../../Mathematics/Algebra/Monoid/Group/Module/a.hpp"
 #include "../../../Mathematics/Geometry/Graph/Grid/a.hpp"
 #include "../../../Mathematics/Arithmetic/Mod/ConstexprModulo/Debug/a.hpp"
+#include "../../../Mathematics/Combinatorial/Loop/a.hpp"
 
 CEXPR( uint , P , 998244353 );
 using MP = Mod<P>;
@@ -51,7 +55,7 @@ string sample_num;
   const string problem_order = TO_STRING( SAMPLE_CHECK );
   const string input_path = sample_path + problem_order + "/input/sample";
   const string output_path = sample_path + problem_order + "/output/exec";
-ofstream ofs_err{ "C:/Users/user/Documents/Programming/Contest/AutoCheck/SampleMemoriser/cerr.txt" , ios::trunc };
+  ofstream ofs_err{ "C:/Users/user/Documents/Programming/Contest/AutoCheck/SampleMemoriser/cerr.txt" , ios::trunc };
 #else
   constexpr bool sample_check = false;
   const string problem_order = "dummy";
