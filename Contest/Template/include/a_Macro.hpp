@@ -11,7 +11,6 @@
   #define DERRNS( ... ) VariadicCoutNonSep( ofs_err , __VA_ARGS__ ) << flush
 #else
   #define INPUT cin
-  #define ofs_err cerr
   #define COUT( ... ) VariadicCout( cout << "出力" << __LINE__ << "：" , __VA_ARGS__ ) << endl
   #define COUTNS( ... ) VariadicCoutNonSep( cout << "出力" << __LINE__ << "： " , __VA_ARGS__ ) << flush
   #define COUT_A( I , N , A ) CoutArray( cout << "出力： " , I , N , A ) << endl
@@ -105,10 +104,15 @@
   #define SET_LL( A ) INPUT >> A
 #endif
 
-#define CERR( ... ) VariadicCout( cerr , __VA_ARGS__ ) << endl
-#define CERRNS( ... ) VariadicCoutNonSep( cerr , __VA_ARGS__ ) << flush
-#define CERR_A( I , N , A ) CoutArray( cerr , I , N , A ) << endl
-#define DEBUG_OUTPUT ofs_err
+#ifdef DEBUG_OUTPUT
+  #define CERR( ... ) VariadicCout( cerr , __VA_ARGS__ ) << endl
+  #define CERRNS( ... ) VariadicCoutNonSep( cerr , __VA_ARGS__ ) << flush
+  #define CERR_A( I , N , A ) CoutArray( cerr , I , N , A ) << endl
+#else
+  #define CERR( ... ) 
+  #define CERRNS( ... ) 
+  #define CERR_A( I , N , A ) 
+#endif
 
 #define SET_ASSERT( A , MIN , MAX )                     \
   if( exec_mode == solve_mode ){                        \
