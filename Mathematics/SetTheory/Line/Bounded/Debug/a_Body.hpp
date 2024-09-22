@@ -18,15 +18,15 @@ template <typename INT , typename RET_NOR , typename RET_DEN> inline void Virtua
 
     if( m_S.count( i ) == 1 ){
   
-      cerr << m_name << "に" << i << "の挿入を試みましたが元々属していました。" << endl;
+      DERR( m_name , "に" , i , "の挿入を試みましたが元々属していました。" );
 
     } else {
 
       m_S.insert( i );
 
-      cerr << m_name << "に" << i << "を挿入しました。" << endl;
+      DERR( m_name , "に" , i , "を挿入しました。" );
       Display();
-      cerr << endl;
+      DERR( "" );
 
     }
 
@@ -53,14 +53,14 @@ template <typename INT , typename RET_NOR , typename RET_DEN> inline void Virtua
 
     if( m_S.count( i ) > 0 ){
 
-      cerr << m_name << "から" << i << "を削除しました。" << endl;
+      DERR( m_name , "から" , i , "を削除しました。" );
       m_S.erase( i );
       Display();
-      cerr << endl;
+      DERR( "" );
 
     } else {
 
-      cerr << m_name << "から" << i << "の削除を試みましたが元々属していませんでした。" << endl;
+      DERR( m_name , "から" , i , "の削除を試みましたが元々属していませんでした。" );
 
     }
 
@@ -83,7 +83,7 @@ template <typename INT , typename RET_NOR , typename RET_DEN> inline typename Vi
   
   if( m_output_mode ){
 
-    cerr << m_name << "から" << i << "を削除しました。" << endl;
+    DERR( m_name , "から" , i , "を削除しました。" );
 
   }
   
@@ -92,7 +92,7 @@ template <typename INT , typename RET_NOR , typename RET_DEN> inline typename Vi
   if( m_output_mode ){
 
     Display();
-    cerr << endl;
+    DERR( "" );
 
   }
 
@@ -114,7 +114,7 @@ template <typename INT , typename RET_NOR , typename RET_DEN> inline int Virtual
 
   if( m_output_mode ){
 
-    cerr << m_name << "の区間[" << i_start << "," << i_final << "]内の要素数は" << answer << "です。" << endl;
+    DERRNS( m_name , "の区間 [" , i_start , "," , i_final , "] 内の要素数は " , answer , " です。" );
 
   }
   
@@ -205,17 +205,17 @@ template <typename INT , typename RET_NOR , typename RET_DEN> inline const INT& 
 template <typename INT , typename RET_NOR , typename RET_DEN> void VirtualBoundedLineSubset<INT,RET_NOR,RET_DEN>::Display() noexcept
 {
 
-  cerr << "要素数: " << m_S.size() << endl;
-  cerr << "集合: " << m_S << endl;
-  cerr << "区間列:";
+  DERR( "要素数:" , m_S.size() );
+  DERR( "集合:" , m_S );
+  DERRNS( "区間列:" );
 
   for( auto&& [l,r] : GetConnectedComponent() ){
 
-    cerr << " [" << l << "," << r << "]";
+    DERRNS( " [" , l , "," , r , "]" );
 
   }
 
-  cerr << endl;
+  DERR( "" );
   return;
 
 }
@@ -232,10 +232,10 @@ template <typename INT> inline BoundedLineSubset<INT>::BoundedLineSubset( const 
   
   if( this->m_output_mode ){
     
-    cerr << this->m_name << "をデバッグモードで実行します。" << endl;
-    cerr << "各処理の計算量がO(size)増えることに注意してください。" << endl;
+    DERR( this->m_name , "をデバッグモードで実行します。" );
+    DERR( "各処理の計算量がO(size)増えることに注意してください。" );
     this->Display();
-    cerr << endl;
+    DERR( "" );
 
   }
   

@@ -39,10 +39,10 @@ template <typename INT> inline IntervalInsertCompressedSortedMultiSet<INT>::Inte
   
   this->m_name = "IntervalInsertCompressedSortedMultiSet";
   this->m_ds.Initialise( this->m_ubound , false );
-  cerr << this->m_name << "をデバッグモードで実行します。" << endl;
-  cerr << "各処理の計算量がO(size)増えることに注意してください。" << endl;
+  DERR( this->m_name , "をデバッグモードで実行します。" );
+  DERR( "各処理の計算量がO(size)増えることに注意してください。" );
   this->Display();
-  cerr << endl;
+  DERR( "" );
   
 }
 

@@ -29,9 +29,9 @@ template <typename INT , typename RET_NOR , typename RET_DEN> inline void Virtua
 
   }
   
-  cerr << m_name << "に" << i << "を" << c << "個挿入しました。" << endl;
+  DERR( m_name , "に" , i , "を" , c , "個挿入しました。" );
   Display();
-  cerr << endl;
+  DERR( "" );
   return;
 
 }
@@ -62,9 +62,9 @@ template <typename INT , typename RET_NOR , typename RET_DEN> inline void Virtua
 
   }
   
-  cerr << m_name << "に閉区間[" << i_start << "," << i_final << "]の和集合を" << c << "個取りました。" << endl;
+  DERR( m_name , " に閉区間 [" , i_start , "," , i_final , "] の和集合を " , c , " 個取りました。" );
   Display();
-  cerr << endl;
+  DERR( "" );
   return;
 
 }
@@ -95,9 +95,9 @@ template <typename INT , typename RET_NOR , typename RET_DEN> inline void Virtua
 
   }
 
-  cerr << m_name << "から" << i << "を" << c << "個削除挿入しました。" << endl;
+  DERR( m_name , "から" , i , "を" , c , "個削除挿入しました。" );
   Display();
-  cerr << endl;
+  DERR( "" );
   return;
 
 }
@@ -108,10 +108,10 @@ template <typename INT , typename RET_NOR , typename RET_DEN> inline typename Vi
   const INT i = *itr;
   assert( m_S.count( i ) > 0 && m_S_comp.empty() );
   auto& itr_ref = itr.erase_from( *this );
-  cerr << m_name << "から" << i << "を" << 1 << "個削除しました。" << endl;
+  DERR( m_name , "から" , i , "を" , 1 , "個削除しました。" );
   m_S.erase( i );
   Display();
-  cerr << endl;
+  DERR( "" );
   return itr_ref;
 
 }
@@ -141,9 +141,9 @@ template <typename INT , typename RET_NOR , typename RET_DEN> inline void Virtua
 
   }
 
-  cerr << m_name << "から" << i << "を全て削除しました。" << endl;
+  DERR( m_name , "から" , i , "を全て削除しました。" );
   Display();
-  cerr << endl;
+  DERR( "" );
   return;
 
 }
@@ -174,9 +174,9 @@ template <typename INT , typename RET_NOR , typename RET_DEN> inline void Virtua
 
   }
 
-  cerr << m_name << "から閉区間[" << i_start << "," << i_final << "]の差集合を" << c << "回取りました。" << endl;
+  DERR( m_name , " から閉区間 [" , i_start , "," , i_final , "] の差集合を " , c , " 回取りました。" );
   Display();
-  cerr << endl;
+  DERR( "" );
   return;
 
 }
@@ -192,7 +192,7 @@ template <typename INT , typename RET_NOR , typename RET_DEN> inline int Virtual
 
   assert( InRange( i_final ) && InRange( i_final ) ); 
   const INT answer = m_ds.IntervalSum( Normalise( i_start ) , Normalise( i_final ) );
-  cerr << m_name << "の区間[" << i_start << "," << i_final << "]内の重複を込めた要素数は" << answer << "です。" << endl;
+  DERR( m_name , "の区間 [" , i_start , "," , i_final , "] 内の重複を込めた要素数は " , answer , " です。" );
   return answer;
 
 }
@@ -254,9 +254,9 @@ template <typename INT , typename RET_NOR , typename RET_DEN> inline const INT& 
 template <typename INT , typename RET_NOR , typename RET_DEN> void VirtualIntervalInsertBoundedLineMultiSubset<INT,RET_NOR,RET_DEN>::Display() noexcept
 {
 
-  cerr << "重複を込めた要素数: " << int( m_S.size() ) - int( m_S_comp.size() ) << endl;
-  cerr << "集合: " << m_S << " - " << m_S_comp << endl;
-  cerr << endl;
+  DERR( "重複を込めた要素数:" , int( m_S.size() ) - int( m_S_comp.size() ) );
+  DERR( "集合:" , m_S , "-" , m_S_comp );
+  DERR( "" );
   return;
 
 }
@@ -270,10 +270,10 @@ template <typename INT> inline IntervalInsertBoundedLineMultiSubset<INT>::Interv
   this->m_ubound = ubound;
   this->m_name = "IntervalInsertBoundedLineMultiSubset";
   this->m_ds.Initialise( this->m_ubound - this->m_lbound + 1 , false );
-  cerr << this->m_name << "をデバッグモードで実行します。" << endl;
-  cerr << "各処理の計算量がO(size)増えることに注意してください。" << endl;
+  DERR( this->m_name , "をデバッグモードで実行します。" );
+  DERR( "各処理の計算量がO(size)増えることに注意してください。" );
   this->Display();
-  cerr << endl;
+  DERR( "" );
   
 }
 

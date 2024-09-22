@@ -39,10 +39,10 @@ template <typename INT> inline CompressedSortedMultiSet<INT>::CompressedSortedMu
   
   this->m_name = "CompressedSortedMultiSet";
   this->m_ds.Initialise( int( S.size() ) , false );
-  cerr << this->m_name << "をデバッグモードで実行します。" << endl;
-  cerr << "各処理の計算量がO(size)増えることに注意してください。" << endl;
+  DERR( this->m_name , "をデバッグモードで実行します。" );
+  DERR( "各処理の計算量がO(size)増えることに注意してください。" );
   this->Display();
-  cerr << endl;
+  DERR( "" );
 
 }
 template <typename INT> inline bool CompressedSortedMultiSet<INT>::InRange( const INT& i ) { return m_sorted_coord_inv.count( i ) > 0; }

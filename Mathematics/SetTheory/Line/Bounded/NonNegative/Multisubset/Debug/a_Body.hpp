@@ -13,10 +13,10 @@ template <typename INT> inline NonNegativeLineMultiSubset<INT>::NonNegativeLineM
   this->m_ubound = ubound;
   this->m_name = "NonNegativeLineMultiSubset";
   this->m_ds.Initialise( this->m_ubound + 1 , false );
-  cerr << this->m_name << "をデバッグモードで実行します。" << endl;
-  cerr << "各処理の計算量がO(size)増えることに注意してください。" << endl;
+  DERR( this->m_name , "をデバッグモードで実行します。" );
+  DERR( "各処理の計算量がO(size)増えることに注意してください。" );
   this->Display();
-  cerr << endl;
+  DERR( "" );
 
 }
 template <typename INT> inline bool NonNegativeLineMultiSubset<INT>::InRange( const INT& i ) { return this->m_lbound <= i && i <= this->m_ubound; }
