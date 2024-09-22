@@ -11,9 +11,9 @@ template <typename T , typename GRAPH> inline VirtualBreadthFirstSearch<T,GRAPH>
 
   static_assert( is_same_v<inner_t<GRAPH>,T> );
   const int& V = m_G.size();
-  DEBUG_OUTPUT << "•^[‚³’Tõ—Dæ’Tõ‚ðƒfƒoƒbƒOƒ‚[ƒh‚ÅŽÀs‚µ‚Ü‚·B" << endl;
-  DEBUG_OUTPUT << "Še’TõƒXƒeƒbƒv‚ÌŒvŽZ—Ê‚ªO(V)’Ç‰Á‚³‚ê‚é‚±‚Æ‚É’ˆÓ‚µ‚Ä‚­‚¾‚³‚¢B" << endl;
-  DEBUG_OUTPUT << "ƒOƒ‰ƒt‚Ì’¸“_”V‚Í" << V << "‚Å‚·B" << endl;
+  DERR( "•^[‚³’Tõ—Dæ’Tõ‚ðƒfƒoƒbƒOƒ‚[ƒh‚ÅŽÀs‚µ‚Ü‚·B" );
+  DERR( "Še’TõƒXƒeƒbƒv‚ÌŒvŽZ—Ê‚ªO(V)’Ç‰Á‚³‚ê‚é‚±‚Æ‚É’ˆÓ‚µ‚Ä‚­‚¾‚³‚¢B" );
+  DERR( "ƒOƒ‰ƒt‚Ì’¸“_”V‚Í" , V , "‚Å‚·B" );
 
   bool empty = true;
 
@@ -26,11 +26,11 @@ template <typename T , typename GRAPH> inline VirtualBreadthFirstSearch<T,GRAPH>
       if( empty ){
 
 	empty = false;
-	DEBUG_OUTPUT << "—LŒü•Ó‚ª" << endl;
+	DERR( "—LŒü•Ó‚ª" );
 
       }
 
-      DEBUG_OUTPUT << t << " -> " << m_G.Vertex( u ) << endl;
+      DERR( t , " -> " , m_G.Vertex( u ) );
 
     }
 
@@ -38,15 +38,15 @@ template <typename T , typename GRAPH> inline VirtualBreadthFirstSearch<T,GRAPH>
 
   if( empty ){
 
-    DEBUG_OUTPUT << "—LŒü•Ó‚ª1–{‚à‚ ‚è‚Ü‚¹‚ñB" << endl;
+    DERR( "—LŒü•Ó‚ª1–{‚à‚ ‚è‚Ü‚¹‚ñB" );
 
   } else {
 
-    DEBUG_OUTPUT << "‚Æ“\‚ç‚ê‚Ä‚¢‚Ü‚·B" << endl;
+    DERR( "‚Æ“\‚ç‚ê‚Ä‚¢‚Ü‚·B" );
 
   }
   
-  DEBUG_OUTPUT << endl;
+  DERR( "" );
 
 }
 
@@ -57,13 +57,13 @@ template <typename T , typename GRAPH> inline void VirtualBreadthFirstSearch<T,G
 
   m_initialised = true;
   const int& V = size();
-  DEBUG_OUTPUT << "s”Ô†: " << __LINE__ << endl;
-  DEBUG_OUTPUT << "•^[‚³’Tõ—Dæ’Tõ‚ð‰Šú‰»‚µ‚Ü‚·B" << endl;
+  DERR( "s”Ô†:" , __LINE__ );
+  DERR( "•^[‚³’Tõ—Dæ’Tõ‚ð‰Šú‰»‚µ‚Ü‚·B" );
 
   if( ! m_next.empty() ){
 
-    DEBUG_OUTPUT << "–K–â—\’è‚Ì’¸“_ƒŠƒXƒg‚ðíœ‚µ‚Ü‚µ‚½B" << endl;
-    DEBUG_OUTPUT << endl;
+    DERR( "–K–â—\’è‚Ì’¸“_ƒŠƒXƒg‚ðíœ‚µ‚Ü‚µ‚½B" );
+    DERR( "" );
     m_next.clear();
 
   }
@@ -79,31 +79,33 @@ template <typename T , typename GRAPH> inline void VirtualBreadthFirstSearch<T,G
   auto&& i = m_G.Enumeration_inv( init );
   const int& V = size();
   assert( 0 <= i && i < V );
-  DEBUG_OUTPUT << "s”Ô†: " << __LINE__ << endl;
-  DEBUG_OUTPUT << "-> ";
+  DERR( "s”Ô†:" , __LINE__ );
+  DERRNS( "-> " );
   Initialise();
   m_next.push_back( init );
   m_found[i] = true;
-  DEBUG_OUTPUT << "–K–â—\’è‚Ì’¸“_ƒŠƒXƒg‚É" << init << "‚ð’Ç‰Á‚µ‚Ü‚µ‚½B" << endl;
-  DEBUG_OUTPUT << "–K–â—\’è‚Ì’¸“_ƒŠƒXƒg: " << m_next << endl;
-  DEBUG_OUTPUT << "–K–â—\’è‚É’Ç‰ÁÏ‚Ý‚Ì’¸“_ƒŠƒXƒg:";
+  DERR( "–K–â—\’è‚Ì’¸“_ƒŠƒXƒg‚É" , init , "‚ð’Ç‰Á‚µ‚Ü‚µ‚½B" );
+  DERR( "–K–â—\’è‚Ì’¸“_ƒŠƒXƒg:" , m_next );
+  DERRNS( "–K–â—\’è‚É’Ç‰ÁÏ‚Ý‚Ì’¸“_ƒŠƒXƒg:" );
 
   for( int j = 0 ; j < V ; j++ ){
 
-    m_found[j] ? ( DEBUG_OUTPUT << " " << m_G.Enumeration( j ) ) : DEBUG_OUTPUT;
+    if( m_found[j] ){
+
+      DERRNS( " " , m_G.Enumeration( j ) );
 
   }
   
-  DEBUG_OUTPUT << endl;
-  DEBUG_OUTPUT << endl;
+  DERR( "" );
+  DERR( "" );
 
 }
 
 template <typename T , typename GRAPH> inline void VirtualBreadthFirstSearch<T,GRAPH>::Initialise( list<T> inits )
 {
 
-  DEBUG_OUTPUT << "s”Ô†: " << __LINE__ << endl;
-  DEBUG_OUTPUT << "-> ";
+  DERR( "s”Ô†:" , __LINE__ );
+  DERRNS( "-> " );
   Initialise();
   m_next = move( inits );
   const int& V = size();
@@ -116,18 +118,22 @@ template <typename T , typename GRAPH> inline void VirtualBreadthFirstSearch<T,G
 
   }
 
-  DEBUG_OUTPUT << "–K–â—\’è‚Ì’¸“_ƒŠƒXƒg‚É" << inits << "‚ð’Ç‰Á‚µ‚Ü‚µ‚½B" << endl;
-  DEBUG_OUTPUT << "–K–â—\’è‚Ì’¸“_ƒŠƒXƒg: " << m_next << endl;
-  DEBUG_OUTPUT << "–K–â—\’è‚É’Ç‰ÁÏ‚Ý‚Ì’¸“_ƒŠƒXƒg:";
+  DERR( "–K–â—\’è‚Ì’¸“_ƒŠƒXƒg‚É" , inits , "‚ð’Ç‰Á‚µ‚Ü‚µ‚½B" );
+  DERR( "–K–â—\’è‚Ì’¸“_ƒŠƒXƒg:" , m_next );
+        DERRNS( "–K–â—\’è‚É’Ç‰ÁÏ‚Ý‚Ì’¸“_ƒŠƒXƒg:" );
 
   for( int j = 0 ; j < V ; j++ ){
 
-    m_found[j] ? ( DEBUG_OUTPUT << " " << m_G.Enumeration( j ) ) : DEBUG_OUTPUT;
+    if( m_found[j] ){
+
+      DERRNS( " " , m_G.Enumeration( j ) );
+
+    }
 
   }
   
-  DEBUG_OUTPUT << endl;
-  DEBUG_OUTPUT << endl;
+  DERR( "" );
+  DERR( "" );
 
 }
 
@@ -140,37 +146,41 @@ template <typename T , typename GRAPH> inline void VirtualBreadthFirstSearch<T,G
     auto&& i = m_G.Enumeration_inv( init );
     assert( 0 <= i && i < V );
     m_next.clear();
-    DEBUG_OUTPUT << "s”Ô†: " << __LINE__ << endl;
+    DERR( "s”Ô†:" , __LINE__ );
 
     if( m_found[i] ){
 
-      DEBUG_OUTPUT << "–K–â—\’è‚Ì’¸“_ƒŠƒXƒg‚ðíœ‚µ‚Ü‚µ‚½B" << endl;
-      DEBUG_OUTPUT << "–K–â—\’è‚Ì’¸“_ƒŠƒXƒg: " << m_next << endl;
+      DERR( "–K–â—\’è‚Ì’¸“_ƒŠƒXƒg‚ðíœ‚µ‚Ü‚µ‚½B" );
+      DERR( "–K–â—\’è‚Ì’¸“_ƒŠƒXƒg:" , m_next );
 
     } else {
       
       m_next.push_back( init );
       m_found[i] = true;
-      DEBUG_OUTPUT << "–K–â—\’è‚Ì’¸“_ƒŠƒXƒg‚ðíœ‚µ" << init << "‚ð’Ç‰Á‚µ‚Ü‚µ‚½B" << endl;
-      DEBUG_OUTPUT << "–K–â—\’è‚Ì’¸“_ƒŠƒXƒg: " << m_next << endl;
-      DEBUG_OUTPUT << "–K–â—\’è‚É’Ç‰ÁÏ‚Ý‚Ì’¸“_ƒŠƒXƒg:";
+      DERR( "–K–â—\’è‚Ì’¸“_ƒŠƒXƒg‚ðíœ‚µ" , init , "‚ð’Ç‰Á‚µ‚Ü‚µ‚½B" );
+      DERR( "–K–â—\’è‚Ì’¸“_ƒŠƒXƒg:" , m_next );
+      DERRNS( "–K–â—\’è‚É’Ç‰ÁÏ‚Ý‚Ì’¸“_ƒŠƒXƒg:" );
 
       for( int j = 0 ; j < V ; j++ ){
 
-	m_found[j] ? ( DEBUG_OUTPUT << " " << m_G.Enumeration( j ) ) : DEBUG_OUTPUT;
+	if( m_found[j] ){
+
+          DERRNS( " " , m_G.Enumeration( j ) );
+
+        }
 
       }
   
-      DEBUG_OUTPUT << endl;
+      DERR( "" );
 
     }
 
-    DEBUG_OUTPUT << endl;
+    DERR( "" );
 
   } else {
 
-    DEBUG_OUTPUT << "s”Ô†: " << __LINE__ << endl;
-    DEBUG_OUTPUT << "-> ";
+    DERR( "s”Ô†:" , __LINE__ );
+    DERRNS( "-> " );
     Initialise( init );
 
   }
@@ -184,7 +194,7 @@ template <typename T , typename GRAPH> inline void VirtualBreadthFirstSearch<T,G
 
     m_next.clear();
     const int& V = size();
-    DEBUG_OUTPUT << "s”Ô†: " << __LINE__ << endl;
+    DERR( "s”Ô†:" , __LINE__ );
 
     for( auto& u : m_next ){
 
@@ -202,39 +212,43 @@ template <typename T , typename GRAPH> inline void VirtualBreadthFirstSearch<T,G
 
     if( m_next.empty() ){
 
-      DEBUG_OUTPUT << "s”Ô†: " << __LINE__ << endl;
-      DEBUG_OUTPUT << "–K–â—\’è‚Ì’¸“_ƒŠƒXƒg‚ðíœ‚µ‚Ü‚µ‚½B" << endl;
-      DEBUG_OUTPUT << "–K–â—\’è‚Ì’¸“_ƒŠƒXƒg:" << m_next << endl;
+      DERR( "s”Ô†:" , __LINE__ );
+      DERR( "–K–â—\’è‚Ì’¸“_ƒŠƒXƒg‚ðíœ‚µ‚Ü‚µ‚½B" );
+      DERR( "–K–â—\’è‚Ì’¸“_ƒŠƒXƒg:" , m_next );
 
     } else {
       
-      DEBUG_OUTPUT << "s”Ô†: " << __LINE__ << endl;
-      DEBUG_OUTPUT << "–K–â—\’è‚Ì’¸“_ƒŠƒXƒg‚ðíœ‚µ";
+      DERR( "s”Ô†:" , __LINE__ );
+            DERRNS( "–K–â—\’è‚Ì’¸“_ƒŠƒXƒg‚ðíœ‚µ" );
 
       for( auto begin = m_next.begin() , itr = begin , end = m_next.end() ; itr != end ; itr++ ){
 
-	( itr == begin ? DEBUG_OUTPUT : DEBUG_OUTPUT << ", " ) << *itr;
+	DERRNS( itr == begin ? "" : ", " , *itr );
 
       }
 
-      DEBUG_OUTPUT << "‚ð’Ç‰Á‚µ‚Ü‚µ‚½B" << endl;
-      DEBUG_OUTPUT << "–K–â—\’è‚É’Ç‰ÁÏ‚Ý‚Ì’¸“_ƒŠƒXƒg:";
+      DERR( "‚ð’Ç‰Á‚µ‚Ü‚µ‚½B" );
+      DERRNS( "–K–â—\’è‚É’Ç‰ÁÏ‚Ý‚Ì’¸“_ƒŠƒXƒg:" );
 
       for( int j = 0 ; j < V ; j++ ){
 
-	m_found[j] ? ( DEBUG_OUTPUT << " " << m_G.Enumeration( j ) ) : DEBUG_OUTPUT;
+	if( m_found[j] ){
+
+          DERRNS( " " , m_G.Enumeration( j ) );
+
+        }
 
       }
   
-      DEBUG_OUTPUT << endl;
+      DERR( "" );
 
     }
 
-    DEBUG_OUTPUT << endl;
+    DERR( "" );
 
   } else {
 
-    DEBUG_OUTPUT << "s”Ô†: " << __LINE__ << endl;
+    DERR( "s”Ô†:" , __LINE__ );
     Initialise( move( inits ) );
 
   }
@@ -276,37 +290,41 @@ template <typename T , typename GRAPH> inline T VirtualBreadthFirstSearch<T,GRAP
 
   if( new_next.empty() ){
 
-    DEBUG_OUTPUT << "s”Ô†: " << __LINE__ << endl;
-    DEBUG_OUTPUT << "–K–â—\’è‚Ì’¸“_ƒŠƒXƒg‚©‚ç" << t_curr << "‚ðŽæ‚èo‚µ‚Ü‚µ‚½B" << endl;
-    DEBUG_OUTPUT << "–K–â—\’è‚Ì’¸“_ƒŠƒXƒg: " << m_next << endl;
+    DERR( "s”Ô†:" , __LINE__ );
+    DERR( "–K–â—\’è‚Ì’¸“_ƒŠƒXƒg‚©‚ç" , t_curr , "‚ðŽæ‚èo‚µ‚Ü‚µ‚½B" );
+    DERR( "–K–â—\’è‚Ì’¸“_ƒŠƒXƒg:" , m_next );
 
   } else {
     
-    DEBUG_OUTPUT << "s”Ô†: " << __LINE__ << endl;
-    DEBUG_OUTPUT << "–K–â—\’è‚Ì’¸“_ƒŠƒXƒg‚©‚ç" << t_curr << "‚ðŽæ‚èo‚µ";
+    DERR( "s”Ô†:" , __LINE__ );
+    DERR( "–K–â—\’è‚Ì’¸“_ƒŠƒXƒg‚©‚ç" , t_curr , "‚ðŽæ‚èo‚µ";
 
     for( auto begin = new_next.begin() , itr = begin , end = new_next.end() ; itr != end ; itr++ ){
 
-      ( itr == begin ? DEBUG_OUTPUT : DEBUG_OUTPUT << ", " ) << *itr;
+      DERRNS( itr == begin ? "" : ", " , *itr;
 
     }
 
-    DEBUG_OUTPUT << "‚ð’Ç‰Á‚µ‚Ü‚µ‚½B" << endl;
-    DEBUG_OUTPUT << "–K–â—\’è‚Ì’¸“_ƒŠƒXƒg: " << m_next << endl;
-    DEBUG_OUTPUT << "–K–â—\’è‚É’Ç‰ÁÏ‚Ý‚Ì’¸“_ƒŠƒXƒg:";
+    DERR( "‚ð’Ç‰Á‚µ‚Ü‚µ‚½B" );
+    DERR( "–K–â—\’è‚Ì’¸“_ƒŠƒXƒg:" , m_next );
+    DERR( "–K–â—\’è‚É’Ç‰ÁÏ‚Ý‚Ì’¸“_ƒŠƒXƒg:";
     const int& V = size();
   
     for( int j = 0 ; j < V ; j++ ){
 
-      m_found[j] ? ( DEBUG_OUTPUT << " " << m_G.Enumeration( j ) ) : DEBUG_OUTPUT;
+      if( m_found[j] ){
+
+        DERRNS( " " , m_G.Enumeration( j ) );
+
+      }
 
     }
   
-    DEBUG_OUTPUT << endl;
+    DERR( "" );
 
   }
   
-  DEBUG_OUTPUT << endl;
+  DERR( "" );
   return t_curr;
 
 }
