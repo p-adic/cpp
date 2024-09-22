@@ -3,7 +3,8 @@
   #define INCLUDE_MODE
   // #define REACTIVE
   // #define USE_GETLINE
-  // #define SUBMIT_ONLY
+  /* #define SUBMIT_ONLY */
+  #define DEBUG_OUTPUT
   #define SAMPLE_CHECK dummy
 #endif
 
@@ -149,7 +150,7 @@ inline void Experiment()
 /* 圧縮時は中身だけ削除する。*/
 inline void SmallTest()
 {
-  /* 数
+  /* // 数
   CEXPR( int , bound , 10 );
   int N_min = 1 , N_max = bound;
   FOREQ( N , N_min , N_max ){
@@ -161,7 +162,7 @@ inline void SmallTest()
       }
     }
   } */
-  /* 配列
+  /* // 配列
   CEXPR( int , bound , 10 );
   int N_min = 1 , N_max = bound;
   FOREQ( N , N_min , N_max ){
@@ -173,7 +174,7 @@ inline void SmallTest()
       b = NextLoopEq( N , A_min , A_max , A );
     }
   } */
-  /* 順列
+  /* // 順列
   CEXPR( int , bound , 10 );
   int N_min = 1 , N_max = bound;
   FOREQ( N , N_min , N_max ){
@@ -184,7 +185,7 @@ inline void SmallTest()
       b = next_permutation( P.begin() , P.end() );
     }
   } */
-  /* 文字列
+  /* // 文字列
   CEXPR( int , bound , 5 );
   CEXPR( int , letter_num , 26 );
   int N_min = 1 , N_max = bound;
@@ -201,21 +202,21 @@ inline void SmallTest()
 /* 圧縮時は中身だけ削除する。*/
 inline void RandomTest( const int& test_case_num )
 {
-  /* 数
+  /* // 数
   REPEAT( test_case_num ){
     CEXPR( int , bound_N , 1e5 ); CIN_ASSERT( N , 1 , bound_N );
     CEXPR( ll , bound_M , 1e18 ); CIN_ASSERT( M , 1 , bound_M );
     CEXPR( ll , bound_K , 1e9 ); CIN_ASSERT( K , 1 , bound_K );
     COMPARE( N , M , K );
   }*/
-  /* 配列
+  /* // 配列
   REPEAT( test_case_num ){
     CEXPR( int , bound_N , 1e5 ); CIN_ASSERT( N , 1 , bound_N );
     CEXPR( int , bound_A , 1e5 ); vector<int> A( N );
     FOR( i , 0 , N ){ SET_ASSERT( A[i] , 1 , bound_A ); }
     COMPARE( N , A );
   } */
-  /* 順列
+  /* // 順列
   REPEAT( test_case_num ){
     CEXPR( int , bound_N , 1e5 ); CIN_ASSERT( N , 1 , bound_N );
     vector<int> P = id<int>( N ); ++P;
@@ -224,7 +225,7 @@ inline void RandomTest( const int& test_case_num )
     }
     COMPARE( N , P );
   } */
-  /* 文字列
+  /* // 文字列
   CEXPR( int , letter_num , 26 );
   REPEAT( test_case_num ){
     CEXPR( int , bound_N , 1e5 ); CIN_ASSERT( N , 1 , bound_N );
@@ -377,7 +378,7 @@ using namespace std;
 #define REPEAT( HOW_MANY_TIMES ) FOR( VARIABLE_FOR_REPEAT_ ## HOW_MANY_TIMES , 0 , HOW_MANY_TIMES )
 #define SET_PRECISION( DECIMAL_DIGITS ) cout << fixed << setprecision( DECIMAL_DIGITS ); cerr << fixed << setprecision( DECIMAL_DIGITS )
 #define RETURN( ... ) SOLVE_ONLY; COUT( __VA_ARGS__ ); return;
-#define COMPARE( ... ) auto naive = Naive( __VA_ARGS__ , true ); auto answer = Answer( __VA_ARGS__ ); bool match = naive == answer; COUT( "(" , #__VA_ARGS__ , ") == (" , __VA_ARGS__ , ") : Naive == " , naive , match ? "==" : "!=" , answer , "== Answer" ); if( !match ){ return; }
+#define COMPARE( ... ) auto naive = Naive( __VA_ARGS__ , true ); auto answer = Answer( __VA_ARGS__ ); bool match = naive == answer; CERR( "(" , #__VA_ARGS__ , ") == (" , __VA_ARGS__ , ") : Naive == " , naive , match ? "==" : "!=" , answer , "== Answer" ); if( !match ){ return; }
 
 /* 型のエイリアス */
 #define decldecay_t( VAR ) decay_t<decltype( VAR )>
