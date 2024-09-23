@@ -3075,49 +3075,57 @@ AC( Construction )
   CERR( "入力に関して再帰的に構築する方法を探すために、入力制約より一般化して" );
   CERR( "（例えば多変数化して）考察し、小さいケースの実験をしましょう。" );
   ASK_NUMBER(
-	     "数や配列や文字列の構築" ,
-	     "方程式の解の構築" ,
+	     "数やベクトルに関する構築" ,
+	     "配列や文字列に関する構築" ,
 	     "写像の構築" ,
-	     "経路の構築" ,
-	     "必勝戦略の構築" ,
-	     "最大化戦略の構築" ,
-	     "グリッド操作の構築" ,
-	     "数やベクトルの表示方法の構築" ,
-	     "集合の分割方法の構築" ,
+             "グラフ上の操作の構築" ,
+	     "戦略の構築" ,
+             "集合に関する構築" ,
 	     "ソースコードの構築"
 	     );
   if( num == num_temp++ ){
-    CALL_AC( ConstructionArray );
+    CALL_AC( ConstructionNumber );
   } else if( num == num_temp++ ){
-    CALL_AC( Solving );
+    CALL_AC( ConstructionArray );
   } else if( num == num_temp++ ){
     CALL_AC( ConstructionMap );
   } else if( num == num_temp++ ){
-    CALL_AC( ConstructionPath );
+    CALL_AC( ConstructionOperationOnGraph );
   } else if( num == num_temp++ ){
-    CALL_AC( DecisionGame );
+    CALL_AC( ConstructionStrategy );
   } else if( num == num_temp++ ){
-    CALL_AC( ConstructionMaximisation );
-  } else if( num == num_temp++ ){
-    CERR( "- HWが小さいケースを手作業または全探策で求めて、" );
-    CERR( "  一般のHWは小さいケースの反復" );
-    CERR( "- 規則的な操作を(mod H,mod W)し、適宜unordered_set<T2<int>>で" );
-    CERR( "  重複管理し重複時にはずらす" );
-    CERR( "検討しましょう。" );
-  } else if( num == num_temp++ ){
-    CALL_AC( DecisionPresentability );
-  } else if( num == num_temp++ ){
-    CALL_AC( ConstructionPartition );
+    CALL_AC( ConstructionSet );
   } else if( num == num_temp++ ){
     CERR( "正解を出力をするソースコードを提出しましょう。" );
   }
 }
 
+AC( ConstructionNumber )
+{
+  ASK_NUMBER(
+	     "数や固定長ベクトルの表示方法の構築" ,
+	     "方程式の解の構築"
+             );
+  if( num == num_temp++ ){
+    CALL_AC( DecisionPresentability );
+  } else {
+    CALL_AC( Solving );
+  }
+}
+
 AC( ConstructionArray )
 {
-  CERR( "- １つの配列の構成は、p進法や階差数列への翻訳を検討しましょう。" );
-  CERR( "- 何らかの関数値が一致する２つの配列の構成は、鳩の巣原理をもとに" );
-  CERR( "  動かすパラメータを設定し、全探策を検討しましょう。" );
+  ASK_NUMBER(
+	     "条件を満たす配列や文字列の構築" ,
+	     "与えられた配列や文字列の条件を満たす部分列の構築"
+             );
+  if( num == num_temp++ ){
+    CERR( "- １つの配列の構成は、p進法や階差数列への翻訳を検討しましょう。" );
+    CERR( "- 何らかの関数値が一致する２つの配列の構成は、鳩の巣原理をもとに" );
+    CERR( "  動かすパラメータを設定し、全探策を検討しましょう。" );
+  } else {
+    CALL_AC( ConstructionPartition );
+  }
 }
 
 AC( ConstructionMap )
@@ -3131,12 +3139,12 @@ AC( ConstructionMap )
   CERR( "を検討しましょう。" );
 }
 
-AC( ConstructionPath )
+AC( ConstructionOperationOnGraph )
 {
   ASK_NUMBER(
 	     "最短経路の構築" ,
 	     "最長経路の構築" ,
-	     "グリッド上の巡回セールスマン問題に対する良い解の構築"
+	     "グリッド操作の構築"
 	     );
   if( num == num_temp++ ){
     CERR( "最短経路探索アルゴリズムで経路復元をしましょう。" );
@@ -3145,9 +3153,27 @@ AC( ConstructionPath )
     CERR( "最長経路探索アルゴリズムで経路復元をしましょう。" );
     CALL_AC( MaximisationMovingDistanceSingleStart );
   } else {
-    CERR( "莫のアルゴリズムによるソート" );
-    CERR( "\\Mathematics\\SetTheory\\DirectProduct\\AfineSpace\\SqrtDecomposition\\Mo" );
+    CERR( "- HWが小さいケースを手作業または全探策で求めて、" );
+    CERR( "  一般のHWは小さいケースの反復" );
+    CERR( "- 規則的な操作を(mod H,mod W)し、適宜unordered_set<T2<int>>で" );
+    CERR( "  重複管理し重複時にはずらす" );
+    CERR( "- グリッド上の巡回セールスマン問題に対するヒューリスティック解の構築は" );
+    CERR( "  莫のアルゴリズムによるソート" );
+    CERR( "  \\Mathematics\\SetTheory\\DirectProduct\\AfineSpace\\SqrtDecomposition\\Mo" );
     CERR( "を検討しましょう。" );
+  }
+}
+
+AC( ConstructionStrategy )
+{
+  ASK_NUMBER(
+	     "必勝戦略の構築" ,
+	     "最大化戦略の構築"
+             );
+  if( num == num_temp++ ){
+    CALL_AC( DecisionGame );
+  } else {
+    CALL_AC( ConstructionMaximisation );
   }
 }
 
@@ -3159,6 +3185,36 @@ AC( ConstructionMaximisation )
   CERR( "貪欲法で解くことが可能です。" );
   CERR( "" );
   CALL_AC( Maximisation );
+}
+
+AC( ConstructionSet )
+{
+  ASK_NUMBER(
+	     "与えられた二部グラフの部分集合の構築" ,
+	     "与えられた集合の分割方法の構築"
+             );
+  if( num == num_temp++ ){
+    CALL_AC( ConstructionSubset );
+  } else {
+    CALL_AC( ConstructionPartition );
+  }
+}
+
+AC( ConstructionSubset )
+{
+  CERR( "連結二部グラフ(S,T)と、s in SとTの部分集合T0に関する条件P(s,T0)であって" );
+  CERR( "- 任意のs in SとTの部分集合T0とd(s,t)=1を満たすt in T0に対し、" );
+  CERR( "  P(s,T0)<=>!P(s,T0-{t})である。" );
+  CERR( "を満たすものが与えられているとして、" );
+  CERR( "- 任意のs in U cap Sに対し、P(s,U cap T)である。" );
+  CERR( "を満たすS cup Tの部分集合Uで濃度が補集合以上であるものの構築を考えます。" );
+  CERR( "" );
+  CERR( "Tを整列させ、各s in Sに対しd(s,t)=1を満たす最大のt in Tをf(s)と置きます。" );
+  CERR( "Uを{}で初期化してt in Tの小さい順に" );
+  CERR( "- {s in f^{-1}(t)|P(s,U cap T)}" );
+  CERR( "- {s in f^{-1}(t)|P(s,(U cap T) cup {t})} cup {t}" );
+  CERR( "のうち濃度が小さくない方の各要素をUに追加します。fの逆像はSの排他的被覆を" );
+  CERR( "与えるので、最終的なUの濃度は補集合以上になります。" );
 }
 
 AC( ConstructionPartition )

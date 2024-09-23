@@ -163,10 +163,14 @@ AC( DecisionExistence );
 AC( DecisionCoincidence );
 AC( DecisionPresentability );
 AC( Construction );
+AC( ConstructionNumber );
 AC( ConstructionArray );
 AC( ConstructionMap );
-AC( ConstructionPath );
+AC( ConstructionOperationOnGraph );
+AC( ConstructionStrategy );
 AC( ConstructionMaximisation );
+AC( ConstructionSet );
+AC( ConstructionSubset );
 AC( ConstructionPartition );
 AC( Deduction );
 
