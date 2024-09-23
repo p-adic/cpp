@@ -193,7 +193,33 @@ inline void SmallTest()
     bool b = true;
     while( b ){
       COMPARE( N , ArrayToString( A ) );
-      b = NextLoopEq( N , A_min , A_max , A );
+      b = NextLoopEq( N , A_min , A_ulim , A );
+    }
+  } */
+  /* // グラフ
+  CEXPR( int , colour , 2 );
+  int N_min = 1 , N_max = 5;
+  FOREQ( N , N_min , N_max ){
+    int M_max = N * ( N - 1 ) / 2;
+    int power = 1;
+    REPEAT( M_max ){
+      power *= colour;
+    }
+    FOR( p , 0 , power ){
+      int p_copy = p;
+      vector<T2<int>> edge{};
+      // vector<T3<int>> edge{};
+      FOR( i , 0 , N ){
+        FOR( j , i + 1 , N ){
+          int c = p_copy % colour;
+          if( c > 0 ){
+            edge.push_back( { i , j } );
+            // edge.push_back( { i , j , c } );
+          }
+          p_copy /= colour;
+        }
+      }
+      COMPARE( N , M , edge );
     }
   } */
 }
@@ -203,21 +229,21 @@ inline void RandomTest( const int& test_case_num )
 {
   /* // 数
   REPEAT( test_case_num ){
-    CEXPR( int , bound_N , 1e5 ); CIN_ASSERT( N , 1 , bound_N );
-    CEXPR( ll , bound_M , 1e18 ); CIN_ASSERT( M , 1 , bound_M );
-    CEXPR( ll , bound_K , 1e9 ); CIN_ASSERT( K , 1 , bound_K );
+    CEXPR( int , bound_N , 10 ); CIN_ASSERT( N , 1 , bound_N );
+    CEXPR( ll , bound_M , 1000 ); CIN_ASSERT( M , 1 , bound_M );
+    CEXPR( ll , bound_K , 100 ); CIN_ASSERT( K , 1 , bound_K );
     COMPARE( N , M , K );
   }*/
   /* // 配列
   REPEAT( test_case_num ){
-    CEXPR( int , bound_N , 1e5 ); CIN_ASSERT( N , 1 , bound_N );
+    CEXPR( int , bound_N , 10 ); CIN_ASSERT( N , 1 , bound_N );
     CEXPR( int , bound_A , 1e5 ); vector<int> A( N );
     FOR( i , 0 , N ){ SET_ASSERT( A[i] , 1 , bound_A ); }
     COMPARE( N , A );
   } */
   /* // 順列
   REPEAT( test_case_num ){
-    CEXPR( int , bound_N , 1e5 ); CIN_ASSERT( N , 1 , bound_N );
+    CEXPR( int , bound_N , 8 ); CIN_ASSERT( N , 1 , bound_N );
     vector<int> P = id<int>( N ); ++P;
     REPEAT( N ){
       int i = GetRand( 0 , N - 1 ) , j = GetRand( 0 , N - 1 ); swap( P[i] , P[j] );
@@ -227,10 +253,29 @@ inline void RandomTest( const int& test_case_num )
   /* // 文字列
   CEXPR( int , letter_num , 26 );
   REPEAT( test_case_num ){
-    CEXPR( int , bound_N , 1e5 ); CIN_ASSERT( N , 1 , bound_N );
-    CEXPR( int , bound_A , 1e5 ); vector<int> A( N );
-    FOR( i , 0 , N ){ SET_ASSERT( A[i] , 1 , bound_A ); }
+    CEXPR( int , bound_N , 5 ); CIN_ASSERT( N , 1 , bound_N );
+    vector<int> A( N ); FOR( i , 0 , N ){ SET_ASSERT( A[i] , 0 , letter_num - 1 ); }
     COMPARE( N , ArrayToString( A ) );
+  } */
+  /* // グラフ
+  REPEAT( test_case_num ){
+    CEXPR( int , bound_N , 10 ); CIN_ASSERT( N , 1 , bound_N );
+    CEXPR( int , bound_M , bound_N * ( bound_N - 1 ) / 2 ); CIN_ASSERT( M , 1 , bound_M );
+    vector found( N , vector<bool>( N ) );
+    vector<T2<int>> edge{};
+    // vector<T3<int>> edge{};
+    edge.reserve( M );
+    REPEAT( M ){
+      int i = GetRand( 0 , N - 2 ) , j = GetRand( i , N - 1 );
+      while( found[i][j] ){
+        j == N - 1 ? j = ( i == N - 2 ? i = 0 : ++i ) + 1 : ++j;
+      }
+      found[i][j] = true;
+      edge.push_back( { i , j } );
+      // CEXPR( int , bound_w , 1e5 ); CIN_ASSERT( w , 1 , bound_w ); 
+      // edge.push_back( { i , j , w } );
+    }
+    COMPARE( N , M , edge );
   } */
 }
 
@@ -632,7 +677,7 @@ TE <uint M> DC_OF_HASH(Mod<M>); TE <uint M> DF_OF_HASH_FOR_MOD(Mod<M>);
 TE <TY INT> bool NextLoop(CRI SZ,CO VE<INT>& lower_bound,CO VE<INT>& upper_limit,VE<INT>& index){int depth = 0;WH(depth < SZ){if(++index[depth]< upper_limit[depth]){break;}index[depth]= lower_bound[depth];depth++;}RE depth < SZ;}TE <TY INT> bool NextLoop(CO VE<INT>& lower_bound,CO VE<INT>& upper_limit,VE<INT>& index){RE NextLoop(index.SZ(),lower_bound,upper_limit,index);}TE <TY INT> bool NextLoopEq(CRI SZ,CO VE<INT>& lower_bound,CO VE<INT>& upper_bound,VE<INT>& index){int depth = 0;WH(depth < SZ){if(++index[depth]<= upper_bound[depth]){break;}index[depth]= lower_bound[depth];depth++;}RE depth < SZ;}TE <TY INT> bool NextLoopEq(CO VE<INT>& lower_bound,CO VE<INT>& upper_bound,VE<INT>& index){RE NextLoopEq(index.SZ(),lower_bound,upper_bound,index);}
 
 /* string (1KB)*/
-TE <TY INT = int> IN char IntToChar(CO INT& i,CO bool& capital = false){RE i +(capital?'A':'a');}TE <TY INT = int> IN INT CharToInt(CO char& i){RE i -(i < 'a'?'A':'a');}TE <TY INT = int>string ArrayToString(CO VE<INT>& A,CO bool& capital = false){CO int N = A.SZ();string S(N,'a');for(int i = 0;i < N;i++){S[i]= IntToChar<INT>(A[i],capital);}RE S;}TE <TY INT = int>VE<INT> StringToArray(CO string& S){CO int N = S.SZ();VE<int> A(N);for(int i = 0;i < N;i++){A[i]= CharToInt<INT>(S[i]);}RE A;}
+TE <TY INT> IN char IntToChar(CO INT& i,CO char& c = 'a'){RE c + i;}TE <TY INT> IN INT CharToInt(CO char& i){RE i -(i < 'a'?'A':'a');}TE <TY INT>string ArrayToString(CO VE<INT>& A,CO char& c = 'a'){CO int N = A.SZ();string S(N,c);for(int i = 0;i < N;i++){S[i]= IntToChar<INT>(A[i],c);}RE S;}TE <TY INT>VE<INT> StringToArray(CO string& S){CO int N = S.SZ();VE<int> A(N);for(int i = 0;i < N;i++){A[i]= CharToInt<INT>(S[i]);}RE A;}
 #endif
 /* AAA 常設ライブラリは以上に挿入する。*/
 
