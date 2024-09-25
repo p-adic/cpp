@@ -3,6 +3,8 @@
 #pragma once
 #include "../../../../Mathematics/Algebra/Monoid/Group/Module/a.hpp"
 
+// ローリングハッシュのコードの生成するモノイドのグロタンディーク化で得られる
+// 非可換Z加群に相当する型。
 template <typename MODINT , typename INT = int , typename CODE = tuple<MODINT,MODINT,INT>>
 class RollingHashModule :
   public PointedSet<CODE> ,

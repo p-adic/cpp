@@ -1,0 +1,7 @@
+#S[r,l]（0<=l<=r+1<=N）が回文か否かをO(N^2)でP[r][l]に格納。
+R=range
+S=input()
+N=len(S)
+P=[0]*N
+P[0]=[1]*2
+for r in R(1,N):P[r]=[1if r<=l else(S[l]==S[r])*P[r-1][l+1]for j in R(r+2)]
