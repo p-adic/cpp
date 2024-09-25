@@ -19,7 +19,6 @@ typename RollingHash<MODINT,INT>::Code RollingHash<MODINT,INT>::Encode( const ST
   static_assert( is_invocable_r_v<MODINT,Enum,const decldecay_t( s[0] )&> );
   const int size = s.size();
   CheckSize( size + 1 );
-  
   MODINT answer = 0;
 
   for( int i = 0 ; i < size ; i++ ){
@@ -41,7 +40,6 @@ typename RollingHash<MODINT,INT>::Code RollingHash<MODINT,INT>::CumulativeEncode
   static_assert( is_invocable_r_v<MODINT,Enum,const decldecay_t( s[0] )&> );
   const int size = s.size();
   CheckSize( size + 1 );
-  
   typename RollingHash<MODINT,INT>::Code answer( size + 1 );
 
   for( int i = 0 ; i < size ; i++ ){
@@ -63,7 +61,6 @@ vector<typename RollingHash<MODINT,INT>::Code> RollingHash<MODINT,INT>::Pointwis
   static_assert( is_invocable_r_v<MODINT,Enum,const decldecay_t( s[0] )&> );
   const int size = s.size();
   CheckSize( size + 1 );
-  
   vector<typename RollingHash<MODINT,INT>::Code> answer( size );
 
   for( int i = 0 ; i < size ; i++ ){
@@ -76,29 +73,34 @@ vector<typename RollingHash<MODINT,INT>::Code> RollingHash<MODINT,INT>::Pointwis
   
 }
 
-template <typename MODINT , typename INT> template <typename STR> inline typename RollingHash<MODINT,INT>::Code RollingHash<MODINT,INT>::FixedLengthEncode( const STR& s , const int& length , const bool& reversed ) { return FixedLengthEncode( s , length , Enumeration<decldecay_t( s[0] )> , reversed ); }
+template <typename MODINT , typename INT> template <typename STR> inline vector<typename RollingHash<MODINT,INT>::Code> RollingHash<MODINT,INT>::FixedLengthEncode( const STR& s , const int& length , const bool& reversed ) { return FixedLengthEncode( s , length , Enumeration<decldecay_t( s[0] )> , reversed ); }
 
 template <typename MODINT , typename INT> template <typename STR, typename Enum>
-typename RollingHash<MODINT,INT>::Code RollingHash<MODINT,INT>::FixedLengthEncode( const STR& s , const int& length , Enum& e , const bool& reversed )
+vector<typename RollingHash<MODINT,INT>::Code> RollingHash<MODINT,INT>::FixedLengthEncode( const STR& s , const int& length , Enum& e , const bool& reversed )
 {
 
   static_assert( is_invocable_r_v<MODINT,Enum,const decldecay_t( s[0] )&> );
   const int size = s.size();
-  CheckSize( size + 1 );
-  
-  typename RollingHash<MODINT,INT>::Code answer( size - length , { MODINT{} , m_r_power[length] , 1 } );
+  vector<typename RollingHash<MODINT,INT>::Code> answer{};
 
-  for( int i = 0 ; i < size ; i++ ){
+  if( length <= size ){
 
-    get<0>( answer[0] ) += e( s[reversed ? size - 1 - i : i] ) * m_r_power[i];
+    CheckSize( length + 1 );
+    answer.resize( size - length + 1 , { MODINT{} , m_r_power[length] , 1 } );
 
-  }
+    for( int i = 0 ; i < length ; i++ ){
 
-  const int size_shifted = size - length;
+      get<0>( answer[0] ) += e( s[reversed ? size - 1 - i : i] ) * m_r_power[i];
 
-  for( int i = 1 ; i < size_shift ; i++ ){
+    }
 
-    get<0>( answer[i] ) = get<0>( answer[i-1] ) - e( s[reversed ? size - i : i - 1] ) * m_r_power[i-1] + e( s[reversed ? size - i - length : i - 1 + length] ) * m_r_power[i-1+length];
+    const int size_shifted = size - length;
+
+    for( int i = 1 ; i <= size_shifted ; i++ ){
+
+      get<0>( answer[i] ) = ( get<0>( answer[i-1] ) - e( s[reversed ? size - i : i - 1] ) ) * m_r_inv + e( s[reversed ? size - i - length : i - 1 + length] ) * m_r_power[length-1];
+
+    }
 
   }
 
@@ -184,6 +186,6 @@ template <typename MODINT , typename INT> inline typename RollingHash<MODINT,INT
 
 template <typename MODINT , typename INT> inline typename RollingHash<MODINT,INT>::Code RollingHash<MODINT,INT>::Fold( typename RollingHash<MODINT,INT>::Code code , INT n ) { assert( n >= 0 ); typename RollingHash<MODINT,INT>::Code answer{ 0 , 1 , 0 }; auto& [h,p,s] = code; while( n > 0 ){ ( n & 1 ) == 1 ? answer = Concatenate( move( answer ) , code ) : answer; h *= p + 1; p *= p; s += s; n >>= 1; } return answer; }
 
-template <typename MODINT , typename INT> void RollingHash<MODINT,INT>::CheckSize( const INT& size ) { m_r_power.reserve( size ); while( m_size < size ){ m_r_power.push_back( m_r_power[m_size++ - 1] * m_r ); } }
+template <typename MODINT , typename INT> void RollingHash<MODINT,INT>::CheckSize( const INT& size ) { while( m_size < size ){ m_r_power.push_back( m_r_power[m_size++ - 1] * m_r ); } }
 
 template <typename MODINT , typename INT> template <typename CHAR> inline MODINT RollingHash<MODINT,INT>::Enumeration( const CHAR& c ) { return MODINT{ c }; }

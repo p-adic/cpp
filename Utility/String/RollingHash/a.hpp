@@ -34,20 +34,20 @@ public:
   using Code = tuple<MODINT,MODINT,INT>;
   
   // sを{ハッシュ,r^長さ,長さ}でコードする。（O(s.size())）
-  template <typename STR> inline Code EnCode( const STR& s , const bool& reversed = false );
-  template <typename STR , typename Enum> Code EnCode( const STR& s , Enum& e , const bool& reversed = false );
+  template <typename STR> inline Code Encode( const STR& s , const bool& reversed = false );
+  template <typename STR , typename Enum> Code Encode( const STR& s , Enum& e , const bool& reversed = false );
   
   // {s[:0]のコード,s[:1]のコード,...}を返す。（O(s.size())）
-  template <typename STR> inline Code CumulativeEnCode( const STR& s , const bool& reversed = false );
-  template <typename STR , typename Enum> Code CumulativeEnCode( const STR& s , Enum& e , const bool& reversed = false );
+  template <typename STR> inline Code CumulativeEncode( const STR& s , const bool& reversed = false );
+  template <typename STR , typename Enum> Code CumulativeEncode( const STR& s , Enum& e , const bool& reversed = false );
   
   // {s[0]のコード,s[1]のコード,...}を返す。（O(s.size())）
-  template <typename STR> inline vector<Code> PointwiseEnCode( const STR& s , const bool& reversed = false );
-  template <typename STR , typename Enum> vector<Code> PointwiseEnCode( const STR& s , Enum& e , const bool& reversed = false );
+  template <typename STR> inline vector<Code> PointwiseEncode( const STR& s , const bool& reversed = false );
+  template <typename STR , typename Enum> vector<Code> PointwiseEncode( const STR& s , Enum& e , const bool& reversed = false );
 
   // {s[0:length]のコード,s[1:length+1]のコード,...}を返す。（O(s.size())）
-  template <typename STR> inline Code FixedLengthEnCode( const STR& s , const int& length , const bool& reversed = false );
-  template <typename STR , typename Enum> Code FixedLengthEnCode( const STR& s , const int& length , Enum& e , const bool& reversed = false );
+  template <typename STR> inline vector<Code> FixedLengthEncode( const STR& s , const int& length , const bool& reversed = false );
+  template <typename STR , typename Enum> vector<Code> FixedLengthEncode( const STR& s , const int& length , Enum& e , const bool& reversed = false );
 
   template <typename CHAR> inline Code Replace( Code code , const INT& i , const CHAR& c_prev , const CHAR& c_next ) const;
   template <typename CHAR , typename Enum> Code Replace( Code code , const INT& i , const CHAR& c_prev , const CHAR& c_next , Enum& e ) const;
