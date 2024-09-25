@@ -11,28 +11,28 @@
 
 IN VO Solve()
 {
-  // // æ•°ãƒ»é…åˆ—ãƒ»æ–‡å­—åˆ—
-  // CIN( ll , N );
+  // // ”E”z—ñE•¶š—ñ
+  // CIN( int , N );
   // CIN_A( ll , 0 , N , A );
   // // CIN( string , S );
 
-  // // ã‚°ãƒªãƒƒãƒ‰
+  // // ƒOƒŠƒbƒh
   // CIN_HW;
   // // SET_HW( N , M );
   // FOR( i , 0 , H ){
-  //   SetWallStringOnGrid( i , grid ); // å…¥åŠ›ã‹ã‚‰grid[i][j]ã«'.'ã‚„'#'ã‚’æ ¼ç´
+  //   SetWallStringOnGrid( i , grid ); // “ü—Í‚©‚çgrid[i][j]‚É'.'‚â'#'‚ğŠi”[
   // }
   // // grid.resize( H , string( W , '.' ) );
-  // // GridGraph graph{ WEdgeOnGrid }; // ä¸Šä¸‹å·¦å³ã®ç§»å‹•ã‚’è¨±å®¹
-  // // AcyclicGridGraph graph{ WEdgeOnGrid }; // ä¸‹å·¦å³ã®ç§»å‹•ã‚’è¨±å®¹
-  // /* {i,j}ã¸ãƒ‡ã‚³ãƒ¼ãƒ‰: EnumHW( v )                                         */
-  // /* {i,j}ã‚’ã‚³ãƒ¼ãƒ‰: EnumHW_inv( { i , j } );                              */
-  // /* æ–¹å‘ã®æ–‡å­—åˆ—ï¼šdirection="URDL";                                       */
-  // /* (i,j)->(k,h)ã®æ–¹å‘ç•ªå·ã‚’å–å¾—: DirectionNumberOnGrid( i , j , k , h ); */
-  // /* v->wã®æ–¹å‘ç•ªå·ã‚’å–å¾—: DirectionNumberOnGrid( v , w );                 */
-  // /* æ–¹å‘ç•ªå·ã®åè»¢U<->Dã€R<->L: ReverseDirectionNumberOnGrid( n );        */
+  // // GridGraph graph{ WEdgeOnGrid }; // ã‰º¶‰E‚ÌˆÚ“®‚ğ‹–—e
+  // // AcyclicGridGraph graph{ WEdgeOnGrid }; // ‰º¶‰E‚ÌˆÚ“®‚ğ‹–—e
+  // /* {i,j}‚ÖƒfƒR[ƒh: EnumHW( v )                                         */
+  // /* {i,j}‚ğƒR[ƒh: EnumHW_inv( { i , j } );                              */
+  // /* •ûŒü‚Ì•¶š—ñFdirection="URDL";                                       */
+  // /* (i,j)->(k,h)‚Ì•ûŒü”Ô†‚ğæ“¾: DirectionNumberOnGrid( i , j , k , h ); */
+  // /* v->w‚Ì•ûŒü”Ô†‚ğæ“¾: DirectionNumberOnGrid( v , w );                 */
+  // /* •ûŒü”Ô†‚Ì”½“]U<->DAR<->L: ReverseDirectionNumberOnGrid( n );        */
 
-  // // ã‚°ãƒ©ãƒ•
+  // // ƒOƒ‰ƒt
   // CIN( int , N , M );
   // // CIN( int , N ); int M = N - 1;
   // vector<vector<int>> e( N );
@@ -46,10 +46,10 @@ IN VO Solve()
   // // DepthFirstSearchOnTree dfst{ graph , 0 };
   // // AbstractUnionFindForest uff{ graph , AdditiveGroup<int>() };
   // // auto [ts,ts_inv,prev,dir_edge] = TopologicalSortedTree( graph , 0 );
-  // // Graph graph_dir{ N , Get( dir_edge ) }; // ç„¡å‘æœ¨ã‚’ãƒˆãƒãƒ­ã‚¸ã‚«ãƒ«ã‚½ãƒ¼ãƒˆã§0ãŒæ ¹ã®æœ‰å‘åŒ–
+  // // Graph graph_dir{ N , Get( dir_edge ) }; // –³Œü–Ø‚ğƒgƒ|ƒƒWƒJƒ‹ƒ\[ƒg‚Å0‚ªª‚Ì—LŒü‰»
   // // Graph graph_dir_rev{ N , [&]( const int& i ){ return vector( prev[i] >= 0 ? 1 : 0 , prev[i] ); } };
   
-  // // é‡ã¿ä»˜ãã‚°ãƒ©ãƒ•
+  // // d‚İ•t‚«ƒOƒ‰ƒt
   // CIN( int , N , M );
   // // CIN( int , N ); int M = N - 1;
   // vector<vector<path>> e( N );
@@ -66,7 +66,7 @@ IN VO Solve()
   // // AbstractUnionFindForest uff{ graph , AdditiveGroup<ll>() };
   // // FloydWarshall fw{ infty , w }; vector<vector<decltype(infty)>> d = fw.GetDistance();
 
-  // // åŒºé–“ã‚¯ã‚¨ãƒª
+  // // ‹æŠÔƒNƒGƒŠ
   // CIN( int , Q );
   // // vector<T3<int>> query( Q );
   // FOR( q , 0 , Q ){
@@ -75,7 +75,7 @@ IN VO Solve()
   // }
   // // Sort( query );
 
-  // // å¤šç¨®ã‚¯ã‚¨ãƒª
+  // // ‘½íƒNƒGƒŠ
   // CIN( int , Q );
   // // BIT t{ N };
   // // IntervalMultiplyLazySqrtDecomposition t{ MultiplicativeMonoid<ll>( 1 ) , Module<ll,ll>() , N };
@@ -100,32 +100,32 @@ REPEAT_MAIN(1);
 
 #ifdef INCLUDE_SUB
 
-/* COMPAREã«ä½¿ç”¨ã€‚åœ§ç¸®æ™‚ã¯å‰Šé™¤ã™ã‚‹ã€‚*/
+/* COMPARE‚Ég—pBˆ³k‚Ííœ‚·‚éB*/
 MP Naive( const int& N , const int& M , const int& K , const bool& experiment = false )
 {
   MP answer = 0;
   return answer;
 }
 
-/* COMPAREã«ä½¿ç”¨ã€‚åœ§ç¸®æ™‚ã¯å‰Šé™¤ã™ã‚‹ã€‚*/
+/* COMPARE‚Ég—pBˆ³k‚Ííœ‚·‚éB*/
 MP Answer( const ll& N , const ll& M , const ll& K )
 {
   MP answer = 0;
   return answer;
 }
 
-/* åœ§ç¸®æ™‚ã¯ä¸­èº«ã ã‘å‰Šé™¤ã™ã‚‹ã€‚*/
+/* ˆ³k‚Í’†g‚¾‚¯íœ‚·‚éB*/
 IN VO Experiment()
 {
-  /* // 1å¤‰æ•°
+  /* // 1•Ï”
   CEXPR( int , bound , 10 );
   int N_min = 1 , N_max = bound;
   vector<decldecay_t(Naive(0))> naive1( N_max - N_min + 1 );
   FOREQ( N , N_min , N_max ){
     naive1[N-N_min] = Naive( N , true );
   }
-  CERRNS( "Nâˆˆ[",N_min,"--",N_max,"]: " , naive3[N] , "\n" }; */
-  /* // 2å¤‰æ•°
+  CERRNS( "N¸[",N_min,"--",N_max,"]: " , naive3[N] , "\n" }; */
+  /* // 2•Ï”
   CEXPR( int , bound , 10 );
   int N_min = 1 , N_max = bound;
   vector<vector<decldecay_t(Naive(0,0))>> naive2( N_max - N_min + 1 );
@@ -135,10 +135,10 @@ IN VO Experiment()
     FOREQ( M , M_min , M_max ){
       naive2[N-N_min][M-M_min] = Naive( N , M , true );
     }
-    CERRNS( "N=",N,",Mâˆˆ[",M_min,"--",M_max,"]: " , naive2[N-N_min] , "\n" );
+    CERRNS( "N=",N,",M¸[",M_min,"--",M_max,"]: " , naive2[N-N_min] , "\n" );
   }
   CERRNS( "Inline: " , naive2 , "\n" ); */
-  /* // 3å¤‰æ•°
+  /* // 3•Ï”
   CEXPR( int , bound , 10 );
   int N_min = 1 , N_max = bound;
   vector<vector<vector<decldecay_t(Naive(0,0,0))>>> naive3( N_max - N_min + 1 );
@@ -151,16 +151,16 @@ IN VO Experiment()
       FOREQ( K , K_min , K_max ){
   	naive3[N-N_min][M-M_min][K-K_min] = Naive( N , M , K , true );
       }
-      CERRNS( "(N,M)=(",N,",",M,"),Kâˆˆ[",K_min,"--",K_max,"]: " , naive3[N-N_min][M-M_min] , "\n" );
+      CERRNS( "(N,M)=(",N,",",M,"),K¸[",K_min,"--",K_max,"]: " , naive3[N-N_min][M-M_min] , "\n" );
     }
   }
   CERRNS( "Inline: " ); FOREQ( N , N_min , N_max ){ CERRNS( naive3[N-N_min] , " \n"[N==N_max] ) }; */
 }
 
-/* åœ§ç¸®æ™‚ã¯ä¸­èº«ã ã‘å‰Šé™¤ã™ã‚‹ã€‚*/
-inline void SmallTest()
+/* ˆ³k‚Í’†g‚¾‚¯íœ‚·‚éB*/
+IN VO SmallTest()
 {
-  /* // æ•°
+  /* // ”
   CEXPR( int , bound , 10 );
   int N_min = 1 , N_max = bound;
   FOREQ( N , N_min , N_max ){
@@ -172,7 +172,7 @@ inline void SmallTest()
       }
     }
   } */
-  /* // é…åˆ—
+  /* // ”z—ñ
   CEXPR( int , bound , 10 );
   int N_min = 1 , N_max = bound;
   FOREQ( N , N_min , N_max ){
@@ -184,7 +184,7 @@ inline void SmallTest()
       b = NextLoopEq( N , A_min , A_max , A );
     }
   } */
-  /* // é †åˆ—
+  /* // ‡—ñ
   CEXPR( int , bound , 10 );
   int N_min = 1 , N_max = bound;
   FOREQ( N , N_min , N_max ){
@@ -195,7 +195,7 @@ inline void SmallTest()
       b = next_permutation( P.begin() , P.end() );
     }
   } */
-  /* // æ–‡å­—åˆ—
+  /* // •¶š—ñ
   CEXPR( int , bound , 5 );
   CEXPR( int , letter_num , 26 );
   int N_min = 1 , N_max = bound;
@@ -207,7 +207,7 @@ inline void SmallTest()
       b = NextLoopEq( N , A_min , A_ulim , A );
     }
   } */
-  /* // ã‚°ãƒªãƒƒãƒ‰
+  /* // ƒOƒŠƒbƒh
   CEXPR( int , bound , 4 );
   FOREQ( H , 1 , bound ){
     FOREQ( W , 1 , bound ){
@@ -223,7 +223,7 @@ inline void SmallTest()
       }
     }
   } */
-  /* // ã‚°ãƒ©ãƒ•
+  /* // ƒOƒ‰ƒt
   CEXPR( int , colour , 2 );
   int N_min = 1 , N_max = 5;
   FOREQ( N , N_min , N_max ){
@@ -234,14 +234,16 @@ inline void SmallTest()
     }
     FOR( p , 0 , power ){
       int p_copy = p;
-      vector<T2<int>> edge{};
-      // vector<T3<int>> edge{};
+      vector<vector<int>> edge{};
       FOR( i , 0 , N ){
         FOR( j , i + 1 , N ){
           int c = p_copy % colour;
           if( c > 0 ){
-            edge.push_back( { i , j } );
-            // edge.push_back( { i , j , c } );
+            if constexpr ( colour > 2 ){
+              edge.push_back( { i , j , c } );
+            } else {
+              edge.push_back( { i , j } );
+            }
           }
           p_copy /= colour;
         }
@@ -249,7 +251,7 @@ inline void SmallTest()
       COMPARE( N , M , edge );
     }
   } */
- /* // åŒºé–“ã‚¯ã‚¨ãƒªï¼ˆä¸Šè¨˜ç”Ÿæˆã‚³ãƒ¼ãƒ‰ã«æŒ¿å…¥ã—ã¦ä½¿ã†ï¼‰
+  /* // ‹æŠÔƒNƒGƒŠiã‹L¶¬ƒR[ƒh‚É‘}“ü‚µ‚Äg‚¤j
   int Q_max = 3;
   int N2 = N * ( N + 1 ) / 2;   int power = 1;
   FOR ( Q , 1 , Q_max ){
@@ -271,24 +273,24 @@ inline void SmallTest()
   } */
 }
 
-/* åœ§ç¸®æ™‚ã¯ä¸­èº«ã ã‘å‰Šé™¤ã™ã‚‹ã€‚*/
-inline void RandomTest( const int& test_case_num )
+/* ˆ³k‚Í’†g‚¾‚¯íœ‚·‚éB*/
+IN VO RandomTest( const int& test_case_num )
 {
-  /* // æ•°
+  /* // ”
   REPEAT( test_case_num ){
     CEXPR( int , bound_N , 10 ); CIN_ASSERT( N , 1 , bound_N );
     CEXPR( ll , bound_M , 1000 ); CIN_ASSERT( M , 1 , bound_M );
     CEXPR( ll , bound_K , 100 ); CIN_ASSERT( K , 1 , bound_K );
     COMPARE( N , M , K );
   }*/
-  /* // é…åˆ—
+  /* // ”z—ñ
   REPEAT( test_case_num ){
     CEXPR( int , bound_N , 10 ); CIN_ASSERT( N , 1 , bound_N );
     CEXPR( int , bound_A , 1e5 ); vector<int> A( N );
     FOR( i , 0 , N ){ SET_ASSERT( A[i] , 1 , bound_A ); }
     COMPARE( N , A );
   } */
-  /* // é †åˆ—
+  /* // ‡—ñ
   REPEAT( test_case_num ){
     CEXPR( int , bound_N , 8 ); CIN_ASSERT( N , 1 , bound_N );
     vector<int> P = id<int>( N ); ++P;
@@ -297,27 +299,27 @@ inline void RandomTest( const int& test_case_num )
     }
     COMPARE( N , P );
   } */
-  /* // æ–‡å­—åˆ—
+  /* // •¶š—ñ
   CEXPR( int , letter_num , 26 );
   REPEAT( test_case_num ){
     CEXPR( int , bound_N , 5 ); CIN_ASSERT( N , 1 , bound_N );
     vector<int> A( N ); FOR( i , 0 , N ){ SET_ASSERT( A[i] , 0 , letter_num - 1 ); }
     COMPARE( N , ArrayToString( A ) );
   } */
-  /* // ã‚°ãƒªãƒƒãƒ‰
+  /* // ƒOƒŠƒbƒh
   REPEAT( test_case_num ){
     CEXPR( int , bound_H , 10 ); CIN_ASSERT( H , 1 , bound_H );
     CEXPR( int , bound_W , 10 ); CIN_ASSERT( W , 1 , bound_W );
     vector S( H , string( W , '.' ) ); FOR( i , 0 , H ){ FOR( j , 0 , W ){ S[i][j] = "#."[GetRand( 0 , 1 )]; } }
     COMPARE( H , W , S );
   } */
-  /* // ã‚°ãƒ©ãƒ•
+  /* // ƒOƒ‰ƒt
+  CEXPR( int , bound_w , 0 );
   REPEAT( test_case_num ){
     CEXPR( int , bound_N , 10 ); CIN_ASSERT( N , 1 , bound_N );
     CEXPR( int , bound_M , bound_N * ( bound_N - 1 ) / 2 ); CIN_ASSERT( M , 1 , bound_M );
     vector found( N , vector<bool>( N ) );
-    vector<T2<int>> edge{};
-    // vector<T3<int>> edge{};
+    vector<vector<int>> edge{};
     edge.reserve( M );
     REPEAT( M ){
       int i = GetRand( 0 , N - 2 ) , j = GetRand( i , N - 1 );
@@ -325,13 +327,15 @@ inline void RandomTest( const int& test_case_num )
         j == N - 1 ? j = ( i == N - 2 ? i = 0 : ++i ) + 1 : ++j;
       }
       found[i][j] = true;
-      edge.push_back( { i , j } );
-      // CEXPR( int , bound_w , 1e5 ); CIN_ASSERT( w , 1 , bound_w ); 
-      // edge.push_back( { i , j , w } );
+      if constexpr( bound_w > 0 ){
+        edge.push_back( { i , j , GetRand( 1 , bound_w ) } );
+      } else {
+        edge.push_back( { i , j } );
+      }
     }
     COMPARE( N , M , edge );
   } */
-  /* // ã‚¯ã‚¨ãƒªï¼ˆä¸Šè¨˜ç”Ÿæˆã‚³ãƒ¼ãƒ‰ã«æŒ¿å…¥ã—ã¦ä½¿ã†ï¼‰
+  /* // ƒNƒGƒŠiã‹L¶¬ƒR[ƒh‚É‘}“ü‚µ‚Äg‚¤j
   CEXPR( int , bound_Q , 10 ); CIN_ASSERT( Q , 1 , 10 );
   vector<vector<int>> query( Q );
   FOR( q , 0 , Q ){
@@ -416,10 +420,10 @@ inline void RandomTest( const int& test_case_num )
   Geometry/Graph/Algorithm/UnionFindForest/
 */
 
-/* VVV å¸¸è¨­ã§ãªã„ãƒ©ã‚¤ãƒ–ãƒ©ãƒªã¯ä»¥ä¸‹ã«æŒ¿å…¥ã™ã‚‹ã€‚*/
+/* VVV íİ‚Å‚È‚¢ƒ‰ƒCƒuƒ‰ƒŠ‚ÍˆÈ‰º‚É‘}“ü‚·‚éB*/
 
 
-/* AAA å¸¸è¨­ã§ãªã„ãƒ©ã‚¤ãƒ–ãƒ©ãƒªã¯ä»¥ä¸Šã«æŒ¿å…¥ã™ã‚‹ã€‚*/
+/* AAA íİ‚Å‚È‚¢ƒ‰ƒCƒuƒ‰ƒŠ‚ÍˆÈã‚É‘}“ü‚·‚éB*/
 
 #define INCLUDE_SUB
 #include __FILE__
@@ -492,7 +496,7 @@ using namespace std;
 #define RETURN( ... ) SOLVE_ONLY; COUT( __VA_ARGS__ ); RE
 #define COMPARE( ... ) auto naive = Naive( __VA_ARGS__ , true ); auto answer = Answer( __VA_ARGS__ ); bool match = naive == answer; CERR( "(" , #__VA_ARGS__ , ") == (" , __VA_ARGS__ , ") : Naive == " , naive , match ? "==" : "!=" , answer , "== Answer" ); if( !match ){ RE; }
 
-/* åœ§ç¸®ç”¨ */
+/* ˆ³k—p */
 #define TE template
 #define TY typename
 #define US using
@@ -529,7 +533,7 @@ using namespace std;
 #define rBE rbegin
 #define reSZ resize
 
-/* å‹ã®ã‚¨ã‚¤ãƒªã‚¢ã‚¹ */
+/* Œ^‚ÌƒGƒCƒŠƒAƒX */
 #define decldecay_t(VAR)decay_t<decltype(VAR)>
 TE <TY F,TY...Args> US ret_t = decltype(declval<F>()(declval<Args>()...));
 TE <TY T> US inner_t = TY T::type;
@@ -544,8 +548,8 @@ TE <TY INT> US T4 = tuple<INT,INT,INT,INT>;
 US path = pair<int,ll>;
 
 #ifndef DEBUG
-/* äºŒåˆ†æ¢ç´¢ç”¨ */
-/* EXPRESSIONãŒANSWERã®åºƒç¾©å˜èª¿é–¢æ•°ã®æ™‚ã€EXPRESSION >= CONST_TARGETã®æ•´æ•°è§£ã‚’æ ¼ç´ã€‚*/
+/* “ñ•ª’Tõ—p */
+/* EXPRESSION‚ªANSWER‚ÌL‹`’P’²ŠÖ”‚ÌAEXPRESSION >= CONST_TARGET‚Ì®”‰ğ‚ğŠi”[B*/
 #define BS( ANSWER , MINIMUM , MAXIMUM , EXPRESSION , DESIRED_INEQUALITY , CONST_TARGET , INEQUALITY_FOR_CHECK , UPDATE_U , UPDATE_L , UPDATE_ANSWER ) \
   static_assert( ! is_same<decldecay_t( CONST_TARGET ),uint>::value && ! is_same<decldecay_t( CONST_TARGET ),ull>::value ); \
   ll ANSWER = MINIMUM;							\
@@ -558,7 +562,7 @@ US path = pair<int,ll>;
     ll DIFFERENCE_BS;							\
     while( ANSWER ## _L < ANSWER ## _R ){                               \
       DIFFERENCE_BS = ( EXPRESSION_BS = ( EXPRESSION ) ) - CONST_TARGET_BS; \
-      CERR( "äºŒåˆ†æ¢ç´¢ä¸­:" , string{ #ANSWER } + "_L" , "=" , ANSWER ## _L , "<=" , #ANSWER , "=" , ANSWER , "<=" , ANSWER ## _R , "=" , string{ #ANSWER } + "_R" , ":" , #EXPRESSION , "=" , EXPRESSION_BS , DIFFERENCE_BS > 0 ? ">" : DIFFERENCE_BS < 0 ? "<" : "=" , CONST_TARGET_BS , "=" , #CONST_TARGET ); \
+      CERR( "“ñ•ª’Tõ’†:" , string{ #ANSWER } + "_L" , "=" , ANSWER ## _L , "<=" , #ANSWER , "=" , ANSWER , "<=" , ANSWER ## _R , "=" , string{ #ANSWER } + "_R" , ":" , #EXPRESSION , "=" , EXPRESSION_BS , DIFFERENCE_BS > 0 ? ">" : DIFFERENCE_BS < 0 ? "<" : "=" , CONST_TARGET_BS , "=" , #CONST_TARGET ); \
       if( DIFFERENCE_BS INEQUALITY_FOR_CHECK 0 ){			\
 	ANSWER ## _R = UPDATE_U;                                        \
       } else {								\
@@ -567,45 +571,45 @@ US path = pair<int,ll>;
       ANSWER = UPDATE_ANSWER;						\
     }									\
     if( ANSWER ## _L > ANSWER ## _R ){                                  \
-      CERR( "äºŒåˆ†æ¢ç´¢å¤±æ•—:" , string{ #ANSWER } + "_L" , "=" , ANSWER ## _L , ">" , ANSWER ## _R , "=" , string{ #ANSWER } + "_R" , ":" , #ANSWER , ":=" , #MAXIMUM , "+ 1 =" , MAXIMUM + 1  ); \
-      CERR( "äºŒåˆ†æ¢ç´¢ãƒã‚¯ãƒ­ã«ãƒŸã‚¹ãŒã‚ã‚‹å¯èƒ½æ€§ãŒã‚ã‚Šã¾ã™ã€‚å¤‰æ›´å‰ã®ç‰ˆã«æˆ»ã—ã¦ãã ã•ã„ã€‚" ); \
+      CERR( "“ñ•ª’Tõ¸”s:" , string{ #ANSWER } + "_L" , "=" , ANSWER ## _L , ">" , ANSWER ## _R , "=" , string{ #ANSWER } + "_R" , ":" , #ANSWER , ":=" , #MAXIMUM , "+ 1 =" , MAXIMUM + 1  ); \
+      CERR( "“ñ•ª’Tõƒ}ƒNƒ‚Éƒ~ƒX‚ª‚ ‚é‰Â”\«‚ª‚ ‚è‚Ü‚·B•ÏX‘O‚Ì”Å‚É–ß‚µ‚Ä‚­‚¾‚³‚¢B" ); \
       ANSWER = MAXIMUM + 1;						\
     } else {								\
-      CERR( "äºŒåˆ†æ¢ç´¢çµ‚äº†:" , string{ #ANSWER } + "_L" , "=" , ANSWER ## _L , "<=" , #ANSWER , "=" , ANSWER , "<=" , ANSWER ## _R , "=" , string{ #ANSWER } + "_R" ); \
-      CERR( "äºŒåˆ†æ¢ç´¢ãŒæˆåŠŸã—ãŸã‹ã‚’ç¢ºèªã™ã‚‹ãŸã‚ã«" , #EXPRESSION , "ã‚’è¨ˆç®—ã—ã¾ã™ã€‚" ); \
-      CERR( "æˆåŠŸåˆ¤å®šãŒä¸è¦ãªå ´åˆã¯ã“ã®è¨ˆç®—ã‚’å‰Šé™¤ã—ã¦ã‚‚æ§‹ã„ã¾ã›ã‚“ã€‚" );	\
+      CERR( "“ñ•ª’TõI—¹:" , string{ #ANSWER } + "_L" , "=" , ANSWER ## _L , "<=" , #ANSWER , "=" , ANSWER , "<=" , ANSWER ## _R , "=" , string{ #ANSWER } + "_R" ); \
+      CERR( "“ñ•ª’Tõ‚ª¬Œ÷‚µ‚½‚©‚ğŠm”F‚·‚é‚½‚ß‚É" , #EXPRESSION , "‚ğŒvZ‚µ‚Ü‚·B" ); \
+      CERR( "¬Œ÷”»’è‚ª•s—v‚Èê‡‚Í‚±‚ÌŒvZ‚ğíœ‚µ‚Ä‚à\‚¢‚Ü‚¹‚ñB" );	\
       EXPRESSION_BS = ( EXPRESSION );					\
-      CERR( "äºŒåˆ†æ¢ç´¢çµæœ:" , #EXPRESSION , "=" , EXPRESSION_BS , ( EXPRESSION_BS > CONST_TARGET_BS ? ">" : EXPRESSION_BS < CONST_TARGET_BS ? "<" : "=" ) , CONST_TARGET_BS ); \
+      CERR( "“ñ•ª’TõŒ‹‰Ê:" , #EXPRESSION , "=" , EXPRESSION_BS , ( EXPRESSION_BS > CONST_TARGET_BS ? ">" : EXPRESSION_BS < CONST_TARGET_BS ? "<" : "=" ) , CONST_TARGET_BS ); \
       if( EXPRESSION_BS DESIRED_INEQUALITY CONST_TARGET_BS ){		\
-	CERR( "äºŒåˆ†æ¢ç´¢æˆåŠŸ:" , #ANSWER , ":=" , ANSWER );		\
+	CERR( "“ñ•ª’Tõ¬Œ÷:" , #ANSWER , ":=" , ANSWER );		\
       } else {								\
-	CERR( "äºŒåˆ†æ¢ç´¢å¤±æ•—:" , #ANSWER , ":=" , #MAXIMUM , "+ 1 =" , MAXIMUM + 1 ); \
-	CERR( "å˜èª¿ã§ãªã„ã‹ã€å˜èª¿å¢—åŠ æ€§ã¨å˜èª¿æ¸›å°‘æ€§ã‚’é€†ã«ã—ã¦ã—ã¾ã£ãŸã‹ã€æ¢ç´¢ç¯„å›²å†…ã«è§£ãŒå­˜åœ¨ã—ã¾ã›ã‚“ã€‚" ); \
+	CERR( "“ñ•ª’Tõ¸”s:" , #ANSWER , ":=" , #MAXIMUM , "+ 1 =" , MAXIMUM + 1 ); \
+	CERR( "’P’²‚Å‚È‚¢‚©A’P’²‘‰Á«‚Æ’P’²Œ¸­«‚ğ‹t‚É‚µ‚Ä‚µ‚Ü‚Á‚½‚©A’Tõ”ÍˆÍ“à‚É‰ğ‚ª‘¶İ‚µ‚Ü‚¹‚ñB" ); \
 	ANSWER = MAXIMUM + 1;						\
       }									\
     }									\
   }									\
 
-/* å˜èª¿å¢—åŠ ã®æ™‚ã«EXPRESSION >= CONST_TARGETã®æœ€å°è§£ã‚’æ ¼ç´ã€‚*/
+/* ’P’²‘‰Á‚Ì‚ÉEXPRESSION >= CONST_TARGET‚ÌÅ¬‰ğ‚ğŠi”[B*/
 #define BS1( ANSWER , MINIMUM , MAXIMUM , EXPRESSION , CONST_TARGET ) BS( ANSWER , MINIMUM , MAXIMUM , EXPRESSION , >= , CONST_TARGET , >= , ANSWER , ANSWER + 1 , ( ANSWER ## _L + ANSWER ## _R ) / 2 )
-/* å˜èª¿å¢—åŠ ã®æ™‚ã«EXPRESSION <= CONST_TARGETã®æœ€å¤§è§£ã‚’æ ¼ç´ã€‚*/
+/* ’P’²‘‰Á‚Ì‚ÉEXPRESSION <= CONST_TARGET‚ÌÅ‘å‰ğ‚ğŠi”[B*/
 #define BS2( ANSWER , MINIMUM , MAXIMUM , EXPRESSION , CONST_TARGET ) BS( ANSWER , MINIMUM , MAXIMUM , EXPRESSION , <= , CONST_TARGET , > , ANSWER - 1 , ANSWER , ( ANSWER ## _L + 1 + ANSWER ## _R ) / 2 )
-/* å˜èª¿æ¸›å°‘ã®æ™‚ã«EXPRESSION >= CONST_TARGETã®æœ€å¤§è§£ã‚’æ ¼ç´ã€‚*/
+/* ’P’²Œ¸­‚Ì‚ÉEXPRESSION >= CONST_TARGET‚ÌÅ‘å‰ğ‚ğŠi”[B*/
 #define BS3( ANSWER , MINIMUM , MAXIMUM , EXPRESSION , CONST_TARGET ) BS( ANSWER , MINIMUM , MAXIMUM , EXPRESSION , >= , CONST_TARGET , < , ANSWER - 1 , ANSWER , ( ANSWER ## _L + 1 + ANSWER ## _R ) / 2 )
-/* å˜èª¿æ¸›å°‘ã®æ™‚ã«EXPRESSION <= CONST_TARGETã®æœ€å°è§£ã‚’æ ¼ç´ã€‚*/
+/* ’P’²Œ¸­‚Ì‚ÉEXPRESSION <= CONST_TARGET‚ÌÅ¬‰ğ‚ğŠi”[B*/
 #define BS4( ANSWER , MINIMUM , MAXIMUM , EXPRESSION , CONST_TARGET ) BS( ANSWER , MINIMUM , MAXIMUM , EXPRESSION , <= , CONST_TARGET , <= , ANSWER , ANSWER + 1 , ( ANSWER ## _L + ANSWER ## _R ) / 2 )
 
-/* å°ºå–ã‚Šæ³•ç”¨ */
-/* VAR_TPAã¯å°ºå–ã‚Šæ³•ç”¨ã®å¤‰æ•°åã®æ¥é ­è¾ã§ã€å®Ÿéš›ã®å¤‰æ•°åã§ã¯ãªãã€_Lã¨_Rã¨_infoãŒã¤ãã€‚ */
-/* ANSWER ## _temp = {VAR_TPA ## _L,VAR_TPA ## _R,VPA_TPA ## _info}ã‚’       */
-/* {INIT,INIT,INFO_init}ã§åˆæœŸåŒ–ã™ã‚‹ã€‚VPA_TPA ## _infoã¯åŒºé–“å’Œãªã©ã€‚            */
-/* ANSWER ## _tempãŒCONTINUE_CONDITIONã‚’æº€ãŸã™é™ã‚Šã€ANSWER ## _tempãŒ          */
-/* æ¡ä»¶ON_CONDITIONã‚’æº€ãŸã™ã‹å¦ã‹ã‚’åˆ¤å®šã—ã€ãã‚ŒãŒtrueã«ãªã‚‹ã‹                     */
-/* VAR_TAR ## _LãŒVAR_TAR ## _Rã«è¿½ã„ä»˜ãã¾ã§VAR_TPA ## _Lã¨VPA_TPA ## _infoã® */
-/* æ›´æ–°æ“ä½œUPDATE_Lã‚’ç¹°ã‚Šè¿”ã—ã€ãã®å¾ŒVAR_TPA ## _Rã¨VPA_TPA ## _infoã®           */
-/* æ›´æ–°æ“ä½œUPDATE_Rã‚’è¡Œã†ã€‚ï¼ˆãƒã‚¯ãƒ­ã¨ã‚³ãƒ³ãƒã®åˆ¶ç´„ä¸Šã€é–¢æ•°ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã‚’ç”¨ã„ã‚‹ï¼‰        */
-/* ON_CONDITIONãŒtrueã¨ãªã‚‹æ¥µå¤§é–‰åŒºé–“ã¨ãã®æ™‚ç‚¹ã§ã®infoã‚’ANSWERã«æ ¼ç´ã™ã‚‹ã€‚         */
-/* ä¾‹ãˆã°é•·ã•Nã®éè² æ•´æ•°å€¤é…åˆ—Aã§æ¥µå¤§ãªæ­£å€¤åŒºé–“ã¨ãã“ã§ã®ç·å’Œã‚’å–å¾—ã—ãŸã„å ´åˆ           */
+/* Úæ‚è–@—p */
+/* VAR_TPA‚ÍÚæ‚è–@—p‚Ì•Ï”–¼‚ÌÚ“ª«‚ÅAÀÛ‚Ì•Ï”–¼‚Å‚Í‚È‚­A_L‚Æ_R‚Æ_info‚ª‚Â‚­B */
+/* ANSWER ## _temp = {VAR_TPA ## _L,VAR_TPA ## _R,VPA_TPA ## _info}‚ğ       */
+/* {INIT,INIT,INFO_init}‚Å‰Šú‰»‚·‚éBVPA_TPA ## _info‚Í‹æŠÔ˜a‚È‚ÇB            */
+/* ANSWER ## _temp‚ªCONTINUE_CONDITION‚ğ–‚½‚·ŒÀ‚èAANSWER ## _temp‚ª          */
+/* ğŒON_CONDITION‚ğ–‚½‚·‚©”Û‚©‚ğ”»’è‚µA‚»‚ê‚ªtrue‚É‚È‚é‚©                     */
+/* VAR_TAR ## _L‚ªVAR_TAR ## _R‚É’Ç‚¢•t‚­‚Ü‚ÅVAR_TPA ## _L‚ÆVPA_TPA ## _info‚Ì */
+/* XV‘€ìUPDATE_L‚ğŒJ‚è•Ô‚µA‚»‚ÌŒãVAR_TPA ## _R‚ÆVPA_TPA ## _info‚Ì           */
+/* XV‘€ìUPDATE_R‚ğs‚¤Biƒ}ƒNƒ‚ÆƒRƒ“ƒ}‚Ì§–ñãAŠÖ”ƒIƒuƒWƒFƒNƒg‚ğ—p‚¢‚éj        */
+/* ON_CONDITION‚ªtrue‚Æ‚È‚é‹É‘å•Â‹æŠÔ‚Æ‚»‚Ì“_‚Å‚Ìinfo‚ğANSWER‚ÉŠi”[‚·‚éB         */
+/* —á‚¦‚Î’·‚³N‚Ì”ñ•‰®”’l”z—ñA‚Å‹É‘å‚È³’l‹æŠÔ‚Æ‚»‚±‚Å‚Ì‘˜a‚ğæ“¾‚µ‚½‚¢ê‡           */
 /* auto update_L = [&]( int& i_L , ll& i_info ){                             */
 /*   i_info -= A[i_L++];                                                     */
 /* };                                                                        */
@@ -613,7 +617,7 @@ US path = pair<int,ll>;
 /*   ++i_R < N ? i_info += A[i_R] : i_info;                                  */
 /* };                                                                        */
 /* TPA( interval , i , 0 , i_R < N , update_L( i_L , i_info ) , update_R( i_R , i_info ) , A[i_L] > 0 && A[i_R] > 0 , ll( A[0] ) ); */
-/* ã¨ã™ã‚Œã°tuple<int,int,ll>å€¤é…åˆ—intervalã«{å·¦ç«¯,å³ç«¯,ç·å’Œ}ã®åˆ—ãŒæ ¼ç´ã•ã‚Œã‚‹ã€‚      */
+/* ‚Æ‚·‚ê‚Îtuple<int,int,ll>’l”z—ñinterval‚É{¶’[,‰E’[,‘˜a}‚Ì—ñ‚ªŠi”[‚³‚ê‚éB      */
 #define TPA( ANSWER , VAR_TPA , INIT , CONTINUE_CONDITION , UPDATE_L , UPDATE_R , ON_CONDITION , INFO_init ) \
   vector<tuple<decldecay_t( INIT ),decldecay_t( INIT ),decldecay_t( INFO_init )>> ANSWER{}; \
   {									\
@@ -627,10 +631,10 @@ US path = pair<int,ll>;
     while( true ){                                                      \
       bool continuing = CONTINUE_CONDITION;				\
       bool on_TPA = continuing && ( ON_CONDITION );			\
-      CERR( continuing ? "å°ºå–ã‚Šä¸­" : "å°ºå–ã‚Šçµ‚äº†" , ": [L,R] = [" , VAR_TPA ## _L , "," , VAR_TPA ## _R , "] ," , on_TPA_prev ? "on" : "off" , "->" , on_TPA ? "on" : "off" , ", info =" , VAR_TPA ## _info ); \
+      CERR( continuing ? "Úæ‚è’†" : "Úæ‚èI—¹" , ": [L,R] = [" , VAR_TPA ## _L , "," , VAR_TPA ## _R , "] ," , on_TPA_prev ? "on" : "off" , "->" , on_TPA ? "on" : "off" , ", info =" , VAR_TPA ## _info ); \
       if( on_TPA_prev && ! on_TPA ){					\
 	ANSWER.push_back( ANSWER ## _prev );				\
-	CERR( #ANSWER , "ã«" , ANSWER ## _prev , "ã‚’æ ¼ç´ã—ã¾ã™ã€‚" );	\
+	CERR( #ANSWER , "‚É" , ANSWER ## _prev , "‚ğŠi”[‚µ‚Ü‚·B" );	\
       }									\
       if( continuing ){							\
 	if( on_TPA || VAR_TPA ## _L == VAR_TPA ## _R ){			\
@@ -648,7 +652,7 @@ US path = pair<int,ll>;
 
 #endif
 
-/* ãƒ‡ãƒ¼ã‚¿æ§‹é€ ç”¨ */
+/* ƒf[ƒ^\‘¢—p */
 TE <TY T> IN T Addition(CO T& t0,CO T& t1){RE t0 + t1;}
 TE <TY T> IN T Xor(CO T& t0,CO T& t1){RE t0 ^ t1;}
 TE <TY T> IN T MU(CO T& t0,CO T& t1){RE t0 * t1;}
@@ -658,7 +662,7 @@ TE <TY T> IN T Id(CO T& v){RE v;}
 TE <TY T> IN T Min(CO T& a,CO T& b){RE a < b?a:b;}
 TE <TY T> IN T Max(CO T& a,CO T& b){RE a < b?b:a;}
 
-/* VVV å¸¸è¨­ãƒ©ã‚¤ãƒ–ãƒ©ãƒªã¯ä»¥ä¸‹ã«æŒ¿å…¥ã™ã‚‹ã€‚*/
+/* VVV íİƒ‰ƒCƒuƒ‰ƒŠ‚ÍˆÈ‰º‚É‘}“ü‚·‚éB*/
 #ifdef DEBUG
   #include "C:/Users/user/Documents/Programming/Contest/Template/include/a_Body.hpp"
 #else
@@ -747,7 +751,7 @@ TE <TY INT> bool NextLoop(CRI SZ,CO VE<INT>& lower_bound,CO VE<INT>& upper_limit
 /* string (1KB)*/
 TE <TY INT> IN char IntToChar(CO INT& i,CO char& c = 'a'){RE c + i;}TE <TY INT> IN INT CharToInt(CO char& i){RE i -(i < 'a'?'A':'a');}TE <TY INT>string ArrayToString(CO VE<INT>& A,CO char& c = 'a'){CO int N = A.SZ();string S(N,c);for(int i = 0;i < N;i++){S[i]= IntToChar<INT>(A[i],c);}RE S;}TE <TY INT>VE<INT> StringToArray(CO string& S){CO int N = S.SZ();VE<int> A(N);for(int i = 0;i < N;i++){A[i]= CharToInt<INT>(S[i]);}RE A;}
 #endif
-/* AAA å¸¸è¨­ãƒ©ã‚¤ãƒ–ãƒ©ãƒªã¯ä»¥ä¸Šã«æŒ¿å…¥ã™ã‚‹ã€‚*/
+/* AAA íİƒ‰ƒCƒuƒ‰ƒŠ‚ÍˆÈã‚É‘}“ü‚·‚éB*/
 
 #define INCLUDE_LIBRARY
 #include __FILE__
