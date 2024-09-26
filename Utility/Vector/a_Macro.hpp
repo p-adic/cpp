@@ -36,6 +36,6 @@
   DEFINITION_OF_ARITHMETIC_FOR_VECTOR( V , % );				\
   DEFINITION_OF_INCREMENT_FOR_VECTOR( V , ++ );				\
   DEFINITION_OF_INCREMENT_FOR_VECTOR( V , -- );				\
-  template <typename T> inline V<T> operator*( const T& scalar , V<T> v ) { for( auto& t : v ){ v *= t; } return move( v ); } \
+  template <typename T> inline V<T> operator*( const T& scalar , V<T> v ) { for( auto& t : v ){ t *= scalar; } return move( v ); } \
 
 

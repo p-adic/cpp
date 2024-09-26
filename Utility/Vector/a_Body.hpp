@@ -11,7 +11,6 @@
 
 DEFINITION_OF_ARITHMETICS_FOR_VECTOR( vector );
 DEFINITION_OF_ARITHMETICS_FOR_VECTOR( list );
-template <typename T> inline operator*( const T& scalar , vector<T> v ) { for( auto& t : v ){ v *= t; } return move( v ); }
 
 template <typename V> inline auto Get( V& a ) { return [&]( const int& i = 0 ) -> const decldecay_t( a[0] )& { return a[i]; }; }
 template <typename T> inline vector<T> id( const int& size ) { vector<T> answer( size ); for( int i = 0 ; i < size ; i++ ){ answer[i] = i; } return answer; }
