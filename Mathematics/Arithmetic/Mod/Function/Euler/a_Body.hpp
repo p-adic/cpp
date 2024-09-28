@@ -3,10 +3,10 @@
 #pragma once
 #include "a.hpp"
 
-#include "../../../Prime/Constexpr/a_Body.hpp"
+#include "../../../Prime/Factorisation/a_Body.hpp"
 
 template <typename PF , typename INT>
-INT EulerFunction_Body( PF pf , const INT& n )
+tuple<INT,vector<INT>,vector<int>> EulerFunction_Body( PF pf , const INT& n )
 {
 
   auto [P,E] = pf( n );
@@ -22,16 +22,16 @@ INT EulerFunction_Body( PF pf , const INT& n )
 
 }
 
-template <typename INT> inline INT EulerFunction( const INT& n ) { return EulerFunction_Body( PrimeFactorisation , n ); }
-template <typename INT1 , INT1 val_limit , int length_max , typename INT2> inline tuple<INT2,vector<INT1>,vector<int>> EulerFunction( const PrimeEnumeration<INT1,val_limit,length_max>& pe , const INT2& n ) { return EulerFunction_Body( [&]( const int& i ){ return PrimeFactorisation( pe , i ); } , n ); }
+template <typename INT> inline tuple<INT,vector<INT>,vector<int>> EulerFunction( const INT& n ) { return EulerFunction_Body( PrimeFactorisation , n ); }
+template <typename PE , typename INT> inline tuple<INT,vector<int>,vector<int>> EulerFunction( const PE& pe , const INT& n ) { return EulerFunction_Body( [&]( const int& i ){ return PrimeFactorisation( PE , i ); } , n ); }
 
-template <typename INT1 , INT1 val_limit , int length_max , int size , typename INT2>
-vector<INT2> TotalEulerFunction( const PrimeEnumeration<INT1,val_limit,length_max>& pe , const INT2& n_max )
+template <typename PE , typename INT>
+vector<INT> TotalEulerFunction( const PE , const INT& n_max )
 {
 
-  vector<INT2> answer( n_max + 1 );
+  vector<INT> answer( n_max + 1 );
   
-  for( INT2 n = 1 ; n <= n_max ; n++ ){
+  for( INT n = 1 ; n <= n_max ; n++ ){
 
     answer[n] = n;
 
@@ -42,13 +42,13 @@ vector<INT2> TotalEulerFunction( const PrimeEnumeration<INT1,val_limit,length_ma
 
   for( int i = 0 ; i < length ; i++ ){
     
-    const INT2& p_i = pe[i];
-    INT2 n = 0;
+    auto& p_i = pe[i];
+    INT n = 0;
 
     while( ( n += p_i ) <= n_max ){
 
-      INT2& answer_n = answer[n];
-      INT2& quotient_n = quotient[n];
+      INT& answer_n = answer[n];
+      INT& quotient_n = quotient[n];
       answer_n -= answer_n / p_i;
 
       while( ( quotient_n /= p_i ) % p_i == 0 ){}
@@ -57,13 +57,13 @@ vector<INT2> TotalEulerFunction( const PrimeEnumeration<INT1,val_limit,length_ma
 
   }
   
-  for( INT2 n = val_limit ; n <= n_max ; n++ ){
+  for( INT n = length == 0 ? 2 : pe[length - 1] ; n <= n_max ; n++ ){
 
-    const INT2& quotient_n = quotient[n];
+    const INT& quotient_n = quotient[n];
 
     if( quotient_n != 1 ){
 
-      INT2& answer_n = answer[n];
+      INT& answer_n = answer[n];
       answer_n -= answer_n / quotient_n;
       
     }

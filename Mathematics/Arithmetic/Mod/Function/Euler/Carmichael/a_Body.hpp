@@ -3,13 +3,11 @@
 #pragma once
 #include "a.hpp"
 
-#include "../../../../Prime/Constexpr/a_Body.hpp"
-
-#include "../../CRT/a_Body.hpp"
+#include "../../../../Divisor/GCD/a_Body.hpp"
 #include "../../../../Prime/a_Body.hpp"
 
 template <typename PPF , typename INT>
-tuple<INT,vector<INT>,vector<INT>,vector<INT>> CarmichaelFunction_Body( PPF ppf , const INT& n )
+tuple<INT,vector<INT>,vector<int>,vector<INT>> CarmichaelFunction_Body( PPF ppf , const INT& n )
 {
   auto [P,E,Q] = ppf( n );
   INT answer = 1;
@@ -28,7 +26,7 @@ tuple<INT,vector<INT>,vector<INT>,vector<INT>> CarmichaelFunction_Body( PPF ppf 
 }
 
 template <typename INT> inline tuple<INT,vector<INT>,vector<INT>,vector<INT>> CarmichaelFunction( const INT& n ) { return CarmichaelFunction( PrimePowerFactorisation , n ); }
-template <typename INT1 , INT1 val_limit , int length_max> inline tuple<INT2,vector<INT1>,vector<int>,vector<INT1>> CarmichaelFunction( const PrimeEnumeration<INT1,val_limit,length_max>& pe , const INT2& n ) { return CarmichaelFunction( [&]( const int& i ){ return PrimePowerFactorisation( pe , i ); } , n ); }
+template <typename PE , typename INT> inline tuple<INT,vector<int>,vector<int>,vector<int>> CarmichaelFunction( const PE& pe , const INT& n ) { return CarmichaelFunction( [&]( const INT& i ){ return PrimePowerFactorisation( pe , i ); } , n ); }
 
 template <typename PRIME , typename INT>
 vector<INT> CarmichaelTransformation_Body( PRIME prime , const vector<INT>& E )
@@ -84,5 +82,12 @@ vector<INT> CarmichaelTransformation_Body( PRIME prime , const vector<INT>& E )
 
 }
 
-template <typename INT> inline vector<INT> CarmichaelTransformation( const vector<INT>& E ) { return CarmichaelTransformation_Body( prime , E ); }
-template <typename INT1 , INT1 val_limit , int length_max , typename INT2> inline vector<INT2> CarmichaelFunction( const PrimeEnumeration<INT1,val_limit,length_max>& pe , const vector<INT2>& E ) { return CarmichaelTransformation_Body( [&]( const int& i ){ return pe[i]; } , E ); }
+template <typename INT> inline vector<INT> CarmichaelTransformation( const vector<INT>& E ) { return CarmichaelTransformation_Body( GetPrime , E ); }
+template <typename PE , typename INT> inline vector<INT> CarmichaelTransformation( const PE& pe , const vector<INT>& E ) { return CarmichaelTransformation_Body( [&]( const int& i ){ return pe[i]; } , E ); }
+
+
+// 不使用だがどうせincludeする。
+#include "../../../../Prime/Enumeration/a_Body.hpp"
+#include "../../../../Prime/Enumeration/Heap/a_Body.hpp"
+#include "../../../../Divisor/Least/a_Body.hpp"
+#include "../../../../Divisor/Least//Heap/a_Body.hpp"
