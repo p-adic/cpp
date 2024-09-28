@@ -3,8 +3,6 @@
 #pragma once
 #include "a.hpp"
 
-#include "Constexpr/a_Body.hpp"
-
 template <typename INT>
 const INT& GetPrime( const INT& i ) noexcept
 {

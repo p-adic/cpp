@@ -3,332 +3,267 @@
 #pragma once
 #include "a.hpp"
 
-template <typename INT1 , typename INT2 , typename INT3>
-void SetPrimeFactorisation( INT1 n , vector<INT2>& P , vector<INT3>& exponent )
+
+template <typename INT> pair<vector<INT>,vector<int>>
+PrimeFactorisation( INT n )
 {
 
-  INT2 p = 2;
+  vector<INT> P{};
+  vector<int> E{};
+  INT p = 2;
 
-  if( n % p == 0 ){
-
-    P.push_back( p );
-    exponent.push_back( 1 );
-    INT3& exponent_back = exponent.back();
-    n /= p;
-    
-    while( n % p == 0 ){
-
-      exponent_back++;
-      n /= p;
-      
-    }
-
-  }
-
-  p++;
-
-  while( p * p <= n ){
+  while( true ){
 
     if( n % p == 0 ){
-
-      P.push_back( p );
-      exponent.push_back( 1 );
-      INT3& exponent_back = exponent.back();
-      n /= p;
-    
-      while( n % p == 0 ){
-
-	exponent_back++;
-	n /= p;
       
-      }
-
-    }
-
-    p += 2;
-
-  }
-
-  if( n != 1 ){
-
-    P.push_back( n );
-    exponent.push_back( 1 );
-    
-  }
-  
-  return;
-  
-}
-
-template <typename INT , INT val_limit , int length_max , typename INT1 , typename INT2 , typename INT3>
-void SetPrimeFactorisation( const PrimeEnumeration<INT,val_limit,length_max>& prime , INT1 n , vector<INT2>& P , vector<INT3>& exponent )
-{
-
-  int i = 0;
-  const int& length = prime.length();
-
-  while( i < length ){
-
-    const INT2& p = prime[i];
-
-    if( p * p > n ){
-
-      break;
-      
-    }
-    
-    if( n % p == 0 ){
-
-      P.push_back( p );
-      exponent.push_back( 1 );
-      INT3& exponent_back = exponent.back();
+      int e = 1;
     
       while( ( n /= p ) % p == 0 ){
 
-	exponent_back++;
+	e++;
       
       }
-
-    }
-    
-    i++;
-
-  }
-
-  if( n != 1 ){
-
-    P.push_back( n );
-    exponent.push_back( 1 );
-    
-  }
-  
-  return;
-
-}
-
-template <typename INT1 , typename INT2 , typename INT3 , typename INT4>
-void SetPrimeFactorisation( INT1 n , vector<INT2>& P , vector<INT3>& exponent , vector<INT4>& P_power )
-{
-
-  INT2 p = 2;
-
-  if( n % p == 0 ){
-
-    P.push_back( p );
-    exponent.push_back( 1 );
-    P_power.push_back( p );
-    INT3& exponent_back = exponent.back();
-    INT4& P_power_back = P_power.back();
-    n /= p;
-    
-    while( n % p == 0 ){
-
-      exponent_back++;
-      P_power_back *= p;
-      n /= p;
-      
-    }
-
-  }
-
-  p++;
-
-  while( p * p <= n ){
-
-    if( n % p == 0 ){
 
       P.push_back( p );
-      exponent.push_back( 1 );
-      P_power.push_back( p );
-      INT3& exponent_back = exponent.back();
-      INT4& P_power_back = P_power.back();
-      n /= p;
-    
-      while( n % p == 0 ){
-
-	exponent_back++;
-	P_power_back *= p;
-	n /= p;
+      E.push_back( e );
       
-      }
-
-    }
-
-    p += 2;
-
-  }
-
-  if( n != 1 ){
-
-    P.push_back( n );
-    exponent.push_back( 1 );
-    
-  }
-  
-  return;
-
-}
-
-template <typename INT , INT val_limit , int length_max , typename INT1 , typename INT2 , typename INT3 , typename INT4>
-void SetPrimeFactorisation( const PrimeEnumeration<INT,val_limit,length_max>& prime , INT1 n , vector<INT2>& P , vector<INT3>& exponent , vector<INT4>& P_power )
-{
-
-  int i = 0;
-  const int& length = prime.length();
-
-  while( i < length ){
-
-    const INT2& p = prime[i];
-
-    if( p * p > n ){
+    } else if( n / p < p ){
 
       break;
-      
-    }
-
-    if( n % p == 0 ){
-
-      P.push_back( p );
-      exponent.push_back( 1 );
-      P_power.push_back( p );
-      INT3& exponent_back = exponent.back();
-      INT4& P_power_back = P_power.back();
-      n /= p;
-    
-      while( n % p == 0 ){
-
-	exponent_back++;
-	P_power_back *= p;
-	n /= p;
-      
-      }
 
     }
 
-    p += 2;
+    p += 1 + ( p > 2 );
 
   }
 
   if( n != 1 ){
 
     P.push_back( n );
-    exponent.push_back( 1 );
-    P_power.push_back( n );
+    E.push_back( 1 );
     
   }
   
-  return;
-
+  return { move( P ) , move( E ) };
+  
 }
 
-template <typename INT1 , typename INT2 , typename INT3 , int N>
-void SetPrimeFactorisationBounded( INT1 n , INT2 ( &P )[N] , INT3 ( &exponent )[N] )
+template <typename PE , typename INT>
+auto PrimeFactorisation( const PE& pe , INT n ) -> enable_if_t<IsPE<PE>,pair<vector<int>,vector<int>>>
 {
 
-  INT2 p = 2;
-  int L = 0;
+  vector<int> P{};
+  vector<int> E{};
+  const int& length = pe.length();
 
-  if( n % p == 0 ){
+  for( int i = 0 ; i < length ; i++ ){
 
-    P[L] = p;
-    INT3& exponent_back = exponent[L];
-    exponent_back = 1;
-    n /= p;
-    L++;
+    auto& p = pe[i];
     
-    while( n % p == 0 ){
-
-      exponent_back++;
-      n /= p;
-      
-    }
-
-  }
-
-  p++;
-
-  while( p * p <= n ){
-
     if( n % p == 0 ){
 
-      P[L] = p;
-      INT3& exponent_back = exponent[L];
-      exponent_back = 1;
-      n /= p;
-      L++;
+      int e = 1;
     
-      while( n % p == 0 ){
+      while( ( n /= p ) % p == 0 ){
 
-	exponent_back++;
-	n /= p;
+	e++;
       
       }
 
+      P.push_back( p );
+      E.push_back( e );
+
+    } else if( n / p < p ){
+
+      break;
+
     }
 
-    p += 2;
-    
   }
 
-  return;
+  if( n != 1 ){
+
+    P.push_back( n );
+    E.push_back( 1 );
+    
+  }
+  
+  return { move( P ) , move( E ) };
 
 }
 
-template <typename INT1 , typename INT2 , typename INT3 , typename INT4 , int N>
-void SetPrimeFactorisationBounded( INT1 n , INT2 ( &P )[N] , INT3 ( &exponent )[N] , INT4 ( &P_power )[N] )
+template <typename LD , typename INT>
+auto PrimeFactorisation( const LD& ld , INT n ) -> enable_if_t<!IsPE<LD>,pair<vector<int>,vector<int>>>
 {
-  
-  INT2 p = 2;
-  int L = 0;
 
-  if( n % p == 0 ){
+  vector<int> P{};
+  vector<int> E{};
 
-    P[L] = p;
-    INT3& exponent_back = exponent[L];
-    INT4& P_power_back = P_power[L];
-    exponent_back = 1;
-    P_power_back = p;
-    n /= p;
-    L++;
-    
-    while( n % p == 0 ){
+  if( n > 1 ){
 
-      exponent_back++;
-      P_power_back *= p;
-      n /= p;
-      
-    }
+    P.push_back( ld[n] );
+    E.push_back( 1 );
+    n /= ld[n];
 
   }
 
-  p++;
+  while( n > 1 ){
 
-  while( p * p <= n ){
+    if( P.back() != ld[n] ){
 
+      P.push_back( ld[n] );
+      E.push_back( 1 );
+
+    } else {
+
+      E.back()++;
+
+    }
+    
+    n /= ld[n];
+
+  }
+
+  return { move( P ) , move( E ) };
+
+}
+
+template <typename INT>
+tuple<vector<INT>,vector<int>,vector<INT>> PrimePowerFactorisation( INT n )
+{
+
+  vector<INT> P{};
+  vector<int> E{};
+  vector<INT> Q{};
+  INT p = 2;
+
+  while( true ){
+    
     if( n % p == 0 ){
 
-      P[L] = p;
-      INT3& exponent_back = exponent[L];
-      INT4& P_power_back = P_power[L];
-      exponent_back = 1;
-      P_power_back = p;
-      n /= p;
-      L++;
+      int e = 1;
+      INT q = p;
     
-      while( n % p == 0 ){
+      while( ( n /= p ) % p == 0 ){
 
-	exponent_back++;
-	P_power_back *= p;
-	n /= p;
+	e++;
+	q *= p;
       
       }
 
+      P.push_back( p );
+      E.push_back( e );
+      Q.push_back( q );
+
+    } else if( n / p < p ){
+
+      break;
+
     }
 
-    p += 2;
-    
   }
 
-  return;
+  if( n != 1 ){
+
+    P.push_back( n );
+    E.push_back( 1 );
+    Q.push_back( n );
+    
+  }
+  
+  return { move( P ) , move( E ) , move( Q ) };
+
+}
+
+template <typename PE , typename INT>
+auto PrimePowerFactorisation( const PE& pe , INT n ) -> enable_if_t<IsPE<PE>,tuple<vector<int>,vector<int>,vector<INT>>>
+{
+
+  vector<int> P{};
+  vector<int> E{};
+  vector<INT> Q{};
+  const int& length = pe.length();
+
+  for( int i = 0 ; i < length ; i++ ){
+
+    auto& p = pe[i];
+    
+    if( n % p == 0 ){
+
+      int e = 1;
+      INT q = p;
+    
+      while( ( n /= p ) % p == 0 ){
+
+	e++;
+	q *= p;
+      
+      }
+
+      P.push_back( p );
+      E.push_back( e );
+      Q.push_back( q );
+
+    } else if( n / p < p ){
+
+      break;
+
+    }
+
+  }
+
+  if( n != 1 ){
+
+    P.push_back( n );
+    E.push_back( 1 );
+    Q.push_back( n );
+    
+  }
+  
+  return { move( P ) , move( E ) , move( Q ) };
   
 }
+
+template <typename LD , typename INT>
+auto PrimePowerFactorisation( const LD& ld , INT n ) -> enable_if_t<!IsPE<LD>,tuple<vector<int>,vector<int>,vector<INT>>>
+{
+
+  vector<int> P{};
+  vector<int> E{};
+  vector<int> Q{};
+
+  if( n > 1 ){
+
+    P.push_back( ld[n] );
+    E.push_back( 1 );
+    Q.push_back( ld[n] );
+    n /= ld[n];
+
+  }
+
+  while( n > 1 ){
+
+    if( P.back() != ld[n] ){
+
+      P.push_back( ld[n] );
+      E.push_back( 1 );
+      Q.push_back( ld[n] );
+
+    } else {
+
+      Q.back() *= ld[n];
+      E.back()++;
+
+    }
+    
+    n /= ld[n];
+
+  }
+
+  return { move( P ) , move( E ) , move( Q ) };
+
+}
+
+// 上では不使用だがどうせincludeする。
+#include "../Enumeration/a_Body.hpp"
+#include "../Enumeration/Heap/a_Body.hpp"
