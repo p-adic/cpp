@@ -3,41 +3,38 @@
 #pragma once
 #include "../a.hpp"
 #include "../../../Algebra/Monoid/Semirng/Ring/Algebra/a.hpp"
-#include "../../../Arithmetic/Divisor/Constexpr/a.hpp"
-#include "../../../Arithmetic/Divisor/Moevius/Constexpr/a.hpp"
 
 // verify:
-// https://yukicoder.me/submissions/970736iMultipleZetaTransform, Add, InitialSegmentSum, InverseImageSumj
+// https://yukicoder.me/submissions/1014293 (DivisorZetaTransform)
+// https://yukicoder.me/submissions/1014291 (MultipleZetaTransform, Add, InitialSegmentSum, InverseImageSum)
 
-// MU‚ÍMoeviusFunction‚ğ“Áê‰»‚µ‚½Œ^B
 // LD‚ÍLeastDivisor‚ğ“Áê‰»‚µ‚½Œ^B
-
-template <typename MU>
+template <typename LD>
 class DivisorMoeviusFunction
 {
 
 private:
-  const MU* m_p_mu;
+  vector<int> m_val;
   
 public:
-  // O( size )
-  inline constexpr DivisorMoeviusFunction( const MU& mu );
+  // O( n_max )
+  inline DivisorMoeviusFunction( const LD& ld , const int& n_max );
 
   // ŒÃ“T“I‚È‚P•Ï”ƒƒrƒEƒXŠÖ”mu‚Ìmu(t1/t0)‚É‚æ‚é‚Q•Ï”‰»B
   inline int operator()( const int& t0 , const int& t1 );
 
 };
 
-template <typename MU>
+template <typename LD>
 class MultipleMoeviusFunction
 {
 
 private:
-  const MU* m_p_mu;
+  vector<int> m_val;
 
 public:
-  // O( size )
-  inline constexpr MultipleMoeviusFunction( const MU& mu );
+  // O( n_max )
+  inline MultipleMoeviusFunction( const LD& ld , const int& n_max );
 
   // ŒÃ“T“I‚È‚P•Ï”ƒƒrƒEƒXŠÖ”mu‚Ìmu(t0/t1)‚É‚æ‚é‚Q•Ï”‰»B
   inline int operator()( const int& t0 , const int& t1 );
@@ -92,16 +89,12 @@ public:
 
 // ‹t‘œ˜aæ“¾O(d(f_inv_max(r_max)))
 // nØ•Ğ‹t‘œ˜aæ“¾O(1)
-template <typename LD , typename MU , typename U , typename Z_ALG>
+template <typename LD , typename U , typename Z_ALG>
 class AbstractDivisorZetaTransform :
-  public AbstractZetaTransform<int,Graph<DivisorEdge<LD>>,Graph<MultipleEdge>,U,Z_ALG,DivisorMoeviusFunction<MU>>
+  public AbstractZetaTransform<int,Graph<DivisorEdge<LD>>,Graph<MultipleEdge>,U,Z_ALG,DivisorMoeviusFunction<LD>>
 {
 
-private:
-  MU m_mu;
-
 public:
-  inline AbstractDivisorZetaTransform( const LD& ld , Z_ALG R , const int& size = 0 );
   inline AbstractDivisorZetaTransform( const LD& ld , Z_ALG R , vector<U> a , const bool& transformed = false );
 
   // a,b‚Ía‚ªb‚Ì–ñ”‚Å‚ ‚é’è” in [1,size)‚Æ‚µ‚ÄA
@@ -115,15 +108,16 @@ private:
   inline AbstractDivisorZetaTransform( const LD& ld , Z_ALG R , const int& size , vector<U>& a , const bool& transformed );
 
 };
-template <int val_limit , typename Z_ALG , typename...Args> AbstractDivisorZetaTransform( const LeastDivisor<int,val_limit>& , Z_ALG , Args&&... ) -> AbstractDivisorZetaTransform<LeastDivisor<int,val_limit>,MoeviusFunction<int,val_limit>,inner_t<Z_ALG>,Z_ALG>;
+template <typename LD , typename Z_ALG , typename...Args> AbstractDivisorZetaTransform( const LD& , Z_ALG , Args&&... ) -> AbstractDivisorZetaTransform<LD,inner_t<Z_ALG>,Z_ALG>;
 
-template <int val_limit , typename U>
+template <typename LD , typename U>
 class DivisorZetaTransform :
-  public AbstractDivisorZetaTransform<LeastDivisor<int,val_limit>,MoeviusFunction<int,val_limit>,U,Algebra<int,U>>
+  public AbstractDivisorZetaTransform<LD,U,Algebra<int,U>>
 {
 
 public:
-  template <typename...Args> inline DivisorZetaTransform( const LeastDivisor<int,val_limit>& ld , const U& one , Args&&... args );
+  inline DivisorZetaTransform( const LD& ld , const U& one , const int& size );
+  inline DivisorZetaTransform( const LD& ld , const U& one , vector<U> a , const bool& transformed = false );
 
 };
 
@@ -150,16 +144,12 @@ public:
 
 // ‹t‘œ˜aæ“¾O(size/t)
 // nØ•Ğ‹t‘œ˜aæ“¾O(1)
-template <typename LD , typename MU , typename U , typename Z_ALG>
+template <typename LD , typename U , typename Z_ALG>
 class AbstractMultipleZetaTransform :
-  public AbstractZetaTransform<int,Graph<MultipleEdge>,Graph<DivisorEdge<LD>>,U,Z_ALG,MultipleMoeviusFunction<MU>>
+  public AbstractZetaTransform<int,Graph<MultipleEdge>,Graph<DivisorEdge<LD>>,U,Z_ALG,MultipleMoeviusFunction<LD>>
 {
 
-private:
-  MU m_mu;
-
 public:
-  inline AbstractMultipleZetaTransform( const LD& ld , Z_ALG R , const int& size = 0 );
   inline AbstractMultipleZetaTransform( const LD& ld , Z_ALG R , vector<U> a , const bool& transformed = false );
 
   // a‚ğ’è”in [1,size)‚Æ‚µ‚Ä
@@ -173,14 +163,15 @@ private:
   inline AbstractMultipleZetaTransform( const LD& ld , Z_ALG R , const int& size , vector<U>& a , const bool& transformed );
 
 };
-template <int val_limit , typename Z_ALG , typename...Args> AbstractMultipleZetaTransform( const LeastDivisor<int,val_limit>& , Z_ALG , Args&&... ) -> AbstractMultipleZetaTransform<LeastDivisor<int,val_limit>,MoeviusFunction<int,val_limit>,inner_t<Z_ALG>,Z_ALG>;
+template <typename LD , typename Z_ALG , typename...Args> AbstractMultipleZetaTransform( const LD& , Z_ALG , Args&&... ) -> AbstractMultipleZetaTransform<LD,inner_t<Z_ALG>,Z_ALG>;
 
-template <int val_limit , typename U>
+template <typename LD , typename U>
 class MultipleZetaTransform :
-  public AbstractMultipleZetaTransform<LeastDivisor<int,val_limit>,MoeviusFunction<int,val_limit>,U,Algebra<int,U>>
+  public AbstractMultipleZetaTransform<LD,U,Algebra<int,U>>
 {
 
 public:
-  template <typename...Args> inline MultipleZetaTransform( const LeastDivisor<int,val_limit>& ld , const U& one , Args&&... args );
+  inline MultipleZetaTransform( const LD& ld , const U& one , const int& size );
+  inline MultipleZetaTransform( const LD& ld , const U& one , vector<U> a , const bool& transformed = false );
 
 };
