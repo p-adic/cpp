@@ -1,0 +1,11 @@
+  CEXPR( int , bound , 10 );
+  int N_min = 1 , N_max = bound;
+  FOREQ( N , N_min , N_max ){
+    int M_min = 1 , M_max = bound;
+    FOREQ( M , M_min , M_max ){
+      int K_min = 1 , K_max = bound;
+      FOREQ( K , K_min , K_max ){
+        COMPARE( N , M , K );
+      }
+    }
+  }

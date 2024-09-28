@@ -1,0 +1,17 @@
+  CIN( int , Q );
+  // BIT t{ N };
+  // IntervalMultiplyLazySqrtDecomposition t{ MultiplicativeMonoid<ll>( 1 ) , Module<ll,ll>() , N };
+  // vector<tuple<ll,ll,ll,int,int>> query( Q );
+  FOR( q , 0 , Q ){
+    CIN( int , type );
+    if( type == 1 ){
+      CIN( ll , l , r , x ); --l; --r;
+      // query[q] = {l,r,x,type,q};
+    } else if( type == 2 ){
+      CIN( ll , l , r ); --l; --r;
+      COUT( t.IntervalSum( l , r ) );
+      // query[q] = {l,r,0,type,q};
+    }
+  }
+  // Sort( query );
+  // Mo mo{ query };

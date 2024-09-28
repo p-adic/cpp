@@ -1,0 +1,5 @@
+    CEXPR( int , bound_H , 10 ); CIN_ASSERT( H , 1 , bound_H );
+    CEXPR( int , bound_W , 10 ); CIN_ASSERT( W , 1 , bound_W );
+    vector S( H , string( W , '.' ) );
+    FOR( i , 0 , H ){ FOR( j , 0 , W ){ S[i][j] = "#."[GetRand( 0 , 1 )]; } }
+    COMPARE( H , W , S );

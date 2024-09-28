@@ -6,420 +6,174 @@
   #define DEBUG_OUTPUT
   #define SAMPLE_CHECK dummy
 #endif
-
 #ifdef INCLUDE_MAIN
 
 IN VO Solve()
 {
-  // // 数・配列・文字列
-  // CIN( int , N );
-  // CIN_A( ll , 0 , N , A );
-  // // CIN( string , S );
+  // 数
+  // ../Contest/Template/Solve/Number.txt
+  // 配列
+  // ../Contest/Template/Solve/Array.txt
+  // 文字列
+  // ../Contest/Template/Solve/String.txt
+  // グリッド
+  // ../Contest/Template/Solve/Grid.txt
+  // グラフ
+  // ../Contest/Template/Solve/Graph.txt
+  // 重み付きグラフ
+  // ../Contest/Template/Solve/WeightedGraph.txt
+  // 区間クエリ
+  // ../Contest/Template/Solve/IntervalQuery.txt
+  // 多種クエリ
+  // ../Contest/Template/Solve/MultiTypeQuery.txt
 
-  // // グリッド
-  // CIN_HW;
-  // // SET_HW( N , M );
-  // FOR( i , 0 , H ){
-  //   SetWallStringOnGrid( i , grid ); // 入力からgrid[i][j]に'.'や'#'を格納
-  // }
-  // // grid.resize( H , string( W , '.' ) );
-  // // GridGraph graph{ WEdgeOnGrid }; // 上下左右の移動を許容
-  // // AcyclicGridGraph graph{ WEdgeOnGrid }; // 下左右の移動を許容
-  // /* {i,j}へデコード: EnumHW( v )                                         */
-  // /* {i,j}をコード: EnumHW_inv( { i , j } );                              */
-  // /* 方向の文字列：direction="URDL";                                       */
-  // /* (i,j)->(k,h)の方向番号を取得: DirectionNumberOnGrid( i , j , k , h ); */
-  // /* v->wの方向番号を取得: DirectionNumberOnGrid( v , w );                 */
-  // /* 方向番号の反転U<->D、R<->L: ReverseDirectionNumberOnGrid( n );        */
-
-  // // グラフ
-  // CIN( int , N , M );
-  // // CIN( int , N ); int M = N - 1;
-  // vector<vector<int>> e( N );
-  // REPEAT( M ){
-  //   CIN( int , u , v ); --u; --v;
-  //   e[u].push_back( v );
-  //   e[v].push_back( u );
-  // }
-  // Graph graph{ N , Get( e ) };
-  // BreadthFirstSearch bfs{ graph , -1 , 0 }; vector<int> d = bfs.GetDistance();
-  // // DepthFirstSearchOnTree dfst{ graph , 0 };
-  // // AbstractUnionFindForest uff{ graph , AdditiveGroup<int>() };
-  // // auto [ts,ts_inv,prev,dir_edge] = TopologicalSortedTree( graph , 0 );
-  // // Graph graph_dir{ N , Get( dir_edge ) }; // 無向木をトポロジカルソートで0が根の有向化
-  // // Graph graph_dir_rev{ N , [&]( const int& i ){ return vector( prev[i] >= 0 ? 1 : 0 , prev[i] ); } };
-  
-  // // 重み付きグラフ
-  // CIN( int , N , M );
-  // // CIN( int , N ); int M = N - 1;
-  // vector<vector<path>> e( N );
-  // // CEXPR( ll , infty , 1e18 );
-  // // vector w( N , vector( N , infty ) ); FOR( i , 0 , N ){ w[i][i] = 0; }
-  // REPEAT( M ){
-  //   CIN( ll , u , v , w ); --u; --v;
-  //   e[u].push_back( { v , w } );
-  //   e[v].push_back( { u , w } );
-  //   // w[u][v] = w[v][u] = w;
-  // }
-  // Graph graph{ N , Get( e ) };
-  // Dijkstra dijk{ graph }; vector<decldecay_t(dijk.Infty())> d = dijk.GetDistance( 0 );
-  // // AbstractUnionFindForest uff{ graph , AdditiveGroup<ll>() };
-  // // FloydWarshall fw{ infty , w }; vector<vector<decltype(infty)>> d = fw.GetDistance();
-
-  // // 区間クエリ
-  // CIN( int , Q );
-  // // vector<T3<int>> query( Q );
-  // FOR( q , 0 , Q ){
-  //     CIN( int , l , r ); --l; --r;
-  //     // query[q] = {l,r,q}:
-  // }
-  // // Sort( query );
-
-  // // 多種クエリ
-  // CIN( int , Q );
-  // // BIT t{ N };
-  // // IntervalMultiplyLazySqrtDecomposition t{ MultiplicativeMonoid<ll>( 1 ) , Module<ll,ll>() , N };
-  // // vector<tuple<ll,ll,ll,int,int>> query( Q );
-  // FOR( q , 0 , Q ){
-  //   CIN( int , type );
-  //   if( type == 1 ){
-  //     CIN( ll , l , r , x ); --l; --r;
-  //     // query[q] = {l,r,x,type,q};
-  //   } else if( type == 2 ){
-  //     CIN( ll , l , r ); --l; --r;
-  //     COUT( t.IntervalSum( l , r ) );
-  //     // query[q] = {l,r,0,type,q};
-  //   }
-  // }
-  // // Sort( query );
-  // // Mo mo{ query };
 }
 REPEAT_MAIN(1);
 
 #else /* INCLUDE_MAIN */
-
 #ifdef INCLUDE_SUB
 
 /* COMPAREに使用。圧縮時は削除する。*/
 MP Naive( const int& N , const int& M , const int& K , const bool& experiment = false )
 {
-  MP answer = 0;
+  MP answer{};
   return answer;
 }
 
 /* COMPAREに使用。圧縮時は削除する。*/
 MP Answer( const ll& N , const ll& M , const ll& K )
 {
-  MP answer = 0;
+  MP answer{};
   return answer;
 }
 
 /* 圧縮時は中身だけ削除する。*/
 IN VO Experiment()
 {
-  /* // 1変数
-  CEXPR( int , bound , 10 );
-  int N_min = 1 , N_max = bound;
-  vector<decldecay_t(Naive(0))> naive1( N_max - N_min + 1 );
-  FOREQ( N , N_min , N_max ){
-    naive1[N-N_min] = Naive( N , true );
-  }
-  CERRNS( "N∈[",N_min,"--",N_max,"]: " , naive3[N] , "\n" }; */
-  /* // 2変数
-  CEXPR( int , bound , 10 );
-  int N_min = 1 , N_max = bound;
-  vector<vector<decldecay_t(Naive(0,0))>> naive2( N_max - N_min + 1 );
-  FOREQ( N , N_min , N_max ){
-    int M_min = 1 , M_max = bound;
-    naive2[N-N_min].resize( M_max - M_min + 1 );
-    FOREQ( M , M_min , M_max ){
-      naive2[N-N_min][M-M_min] = Naive( N , M , true );
-    }
-    CERRNS( "N=",N,",M∈[",M_min,"--",M_max,"]: " , naive2[N-N_min] , "\n" );
-  }
-  CERRNS( "Inline: " , naive2 , "\n" ); */
-  /* // 3変数
-  CEXPR( int , bound , 10 );
-  int N_min = 1 , N_max = bound;
-  vector<vector<vector<decldecay_t(Naive(0,0,0))>>> naive3( N_max - N_min + 1 );
-  FOREQ( N , N_min , N_max ){
-    int M_min = 1 , M_max = bound;
-    naive3[N-N_min].resize( M_max - M_min + 1 );
-    FOREQ( M , M_min , M_max ){
-      int K_min = 1 , K_max = bound;
-      naive3[N-N_min][M-M_min].resize( K_max - K_min + 1 );
-      FOREQ( K , K_min , K_max ){
-  	naive3[N-N_min][M-M_min][K-K_min] = Naive( N , M , K , true );
-      }
-      CERRNS( "(N,M)=(",N,",",M,"),K∈[",K_min,"--",K_max,"]: " , naive3[N-N_min][M-M_min] , "\n" );
-    }
-  }
-  CERRNS( "Inline: " ); FOREQ( N , N_min , N_max ){ CERRNS( naive3[N-N_min] , " \n"[N==N_max] ) }; */
+  /* // 1変数                                             */
+  /* // ../Contest/Template/Experiment/OneVariable.txt   */
+  /* // 2変数                                             */
+  /* // ../Contest/Template/Experiment/TwoVariable.txt   */
+  /* // 3変数                                             */
+  /* // ../Contest/Template/Experiment/ThreeVariable.txt */
+
+  
 }
 
 /* 圧縮時は中身だけ削除する。*/
 IN VO SmallTest()
 {
-  /* // 数
-  CEXPR( int , bound , 10 );
-  int N_min = 1 , N_max = bound;
-  FOREQ( N , N_min , N_max ){
-    int M_min = 1 , M_max = bound;
-    FOREQ( M , M_min , M_max ){
-      int K_min = 1 , K_max = bound;
-      FOREQ( K , K_min , K_max ){
-        COMPARE( N , M , K );
-      }
-    }
-  } */
-  /* // 配列
-  CEXPR( int , bound , 10 );
-  int N_min = 1 , N_max = bound;
-  FOREQ( N , N_min , N_max ){
-    int Ai_min = 1 , Ai_max = bound;
-    vector<int> A_min( N , Ai_min ) , A_max( N , Ai_max ) , A = A_min;
-    bool b = Ai_min <= Ai_max;
-    while( b ){
-      COMPARE( N , A );
-      b = NextLoopEq( N , A_min , A_max , A );
-    }
-  } */
-  /* // 順列
-  CEXPR( int , bound , 10 );
-  int N_min = 1 , N_max = bound;
-  FOREQ( N , N_min , N_max ){
-    vector<int> P = id<int>( N ); ++P;
-    bool b = true;
-    while( b ){
-      COMPARE( N , P );
-      b = next_permutation( P.begin() , P.end() );
-    }
-  } */
-  /* // 文字列
-  CEXPR( int , bound , 5 );
-  CEXPR( int , letter_num , 26 );
-  int N_min = 1 , N_max = bound;
-  FOREQ( N , N_min , N_max ){
-    vector<int> A_min( N ) , A_ulim( N , letter_num ) , A = A_min;
-    bool b = true;
-    while( b ){
-      COMPARE( N , ArrayToString( A ) );
-      b = NextLoopEq( N , A_min , A_ulim , A );
-    }
-  } */
-  /* // グリッド
-  CEXPR( int , bound , 4 );
-  FOREQ( H , 1 , bound ){
-    FOREQ( W , 1 , bound ){
-      int power = 1 << ( H * W );
-      FOR( p , 0 , power ){
-        vector S( H , string( W , '.' ) );
-        FOR( i , 0 , H ){
-          FOR( j , 0 , W ){
-            S[i][j] = "#."[( p >> ( i * W + j ) ) & 1];
-          }
-        }
-        COMPARE( H , W , S );
-      }
-    }
-  } */
-  /* // グラフ
-  CEXPR( int , colour , 2 );
-  int N_min = 1 , N_max = 5;
-  FOREQ( N , N_min , N_max ){
-    int M_max = N * ( N - 1 ) / 2;
-    int power = 1;
-    REPEAT( M_max ){
-      power *= colour;
-    }
-    FOR( p , 0 , power ){
-      int p_copy = p;
-      vector<vector<int>> edge{};
-      FOR( i , 0 , N ){
-        FOR( j , i + 1 , N ){
-          int c = p_copy % colour;
-          if( c > 0 ){
-            if constexpr ( colour > 2 ){
-              edge.push_back( { i , j , c } );
-            } else {
-              edge.push_back( { i , j } );
-            }
-          }
-          p_copy /= colour;
-        }
-      }
-      COMPARE( N , M , edge );
-    }
-  } */
-  /* // 区間クエリ（上記生成コードに挿入して使う）
-  int Q_max = 3;
-  int N2 = N * ( N + 1 ) / 2;   int power = 1;
-  FOR ( Q , 1 , Q_max ){
-    power *= N2;
-    FOR( p , 0 , power ){
-      int p_copy = p;
-      vector<T2<int>> query( Q );
-      FOR( q , 0 , Q ){
-        int r = p_copy % N2 , l = 0;
-        while( r >= N - l ){
-          r -= N - l++;
-        }
-        r += l;
-        query[q] = {l+1,r+1};
-        p_copy /= N2;
-      }
-      COMPARE( N , ... , Q , query );
-    }
-  } */
+  /* // 数                                             */
+  /* // ../Contest/Template/SmallTest/Number.txt       */
+  /* // 配列                                            */
+  /* // ../Contest/Template/SmallTest/Array.txt        */
+  /* // 順列                                            */
+  /* // ../Contest/Template/SmallTest/Permutation.txt   */
+  /* // 文字列                                           */
+  /* // ../Contest/Template/SmallTest/String.txt        */
+  /* // グリッド                                         */
+  /* // ../Contest/Template/SmallTest/Grid.txt          */
+  /* // グラフ                                           */
+  /* // ../Contest/Template/SmallTest/Graph.txt         */
+  /* // 重み付きグラフ                                    */
+  /* // ../Contest/Template/SmallTest/WeightedGraph.txt */
+  /* // 区間クエリ（他生成コードに挿入して使う）              */
+  /* // ../Contest/Template/SmallTest/IntervalQuery.txt */
+  
 }
 
 /* 圧縮時は中身だけ削除する。*/
 IN VO RandomTest( const int& test_case_num )
 {
-  /* // 数
+  /* // 数                                             */
+  /* // ../Contest/Template/SmallTest/Number.txt       */
+  /* // 配列                                            */
+  /* // ../Contest/Template/SmallTest/Array.txt         */
+  /* // 順列                                             */
+  /* // ../Contest/Template/SmallTest/Permutation.txt    */
+  /* // 文字列                                            */
+  /* // ../Contest/Template/SmallTest/String.txt         */
+  /* // グリッド                                          */
+  /* // ../Contest/Template/SmallTest/Grid.txt           */
+  /* // グラフ                                            */
+  /* // ../Contest/Template/SmallTest/Graph.txt          */
+  /* // 重み付きグラフ                                     */
+  /* // ../Contest/Template/SmallTest/WeightedGraph.txt  */
+  /* // 区間クエリ（他生成コードに挿入して使う）               */
+  /* // ../Contest/Template/SmallTest/IntervalQuery.txt  */
+  /* // 多種クエリ（他生成コードに挿入して使う）               */
+  /* // ../Contest/Template/SmallTest/MultiTypeQuery.txt */
   REPEAT( test_case_num ){
-    CEXPR( int , bound_N , 10 ); CIN_ASSERT( N , 1 , bound_N );
-    CEXPR( ll , bound_M , 1000 ); CIN_ASSERT( M , 1 , bound_M );
-    CEXPR( ll , bound_K , 100 ); CIN_ASSERT( K , 1 , bound_K );
-    COMPARE( N , M , K );
-  }*/
-  /* // 配列
-  REPEAT( test_case_num ){
-    CEXPR( int , bound_N , 10 ); CIN_ASSERT( N , 1 , bound_N );
-    CEXPR( int , bound_A , 1e5 ); vector<int> A( N );
-    FOR( i , 0 , N ){ SET_ASSERT( A[i] , 1 , bound_A ); }
-    COMPARE( N , A );
-  } */
-  /* // 順列
-  REPEAT( test_case_num ){
-    CEXPR( int , bound_N , 8 ); CIN_ASSERT( N , 1 , bound_N );
-    vector<int> P = id<int>( N ); ++P;
-    REPEAT( N ){
-      int i = GetRand( 0 , N - 1 ) , j = GetRand( 0 , N - 1 ); swap( P[i] , P[j] );
-    }
-    COMPARE( N , P );
-  } */
-  /* // 文字列
-  CEXPR( int , letter_num , 26 );
-  REPEAT( test_case_num ){
-    CEXPR( int , bound_N , 5 ); CIN_ASSERT( N , 1 , bound_N );
-    vector<int> A( N ); FOR( i , 0 , N ){ SET_ASSERT( A[i] , 0 , letter_num - 1 ); }
-    COMPARE( N , ArrayToString( A ) );
-  } */
-  /* // グリッド
-  REPEAT( test_case_num ){
-    CEXPR( int , bound_H , 10 ); CIN_ASSERT( H , 1 , bound_H );
-    CEXPR( int , bound_W , 10 ); CIN_ASSERT( W , 1 , bound_W );
-    vector S( H , string( W , '.' ) ); FOR( i , 0 , H ){ FOR( j , 0 , W ){ S[i][j] = "#."[GetRand( 0 , 1 )]; } }
-    COMPARE( H , W , S );
-  } */
-  /* // グラフ
-  CEXPR( int , bound_w , 0 );
-  REPEAT( test_case_num ){
-    CEXPR( int , bound_N , 10 ); CIN_ASSERT( N , 1 , bound_N );
-    CEXPR( int , bound_M , bound_N * ( bound_N - 1 ) / 2 ); CIN_ASSERT( M , 1 , bound_M );
-    vector found( N , vector<bool>( N ) );
-    vector<vector<int>> edge{};
-    edge.reserve( M );
-    REPEAT( M ){
-      int i = GetRand( 0 , N - 2 ) , j = GetRand( i , N - 1 );
-      while( found[i][j] ){
-        j == N - 1 ? j = ( i == N - 2 ? i = 0 : ++i ) + 1 : ++j;
-      }
-      found[i][j] = true;
-      if constexpr( bound_w > 0 ){
-        edge.push_back( { i , j , GetRand( 1 , bound_w ) } );
-      } else {
-        edge.push_back( { i , j } );
-      }
-    }
-    COMPARE( N , M , edge );
-  } */
-  /* // クエリ（上記生成コードに挿入して使う）
-  CEXPR( int , bound_Q , 10 ); CIN_ASSERT( Q , 1 , 10 );
-  vector<vector<int>> query( Q );
-  FOR( q , 0 , Q ){
-    CIN_ASSERT( type , 1 , 2 );
-    CIN_ASSERT( l , 1 , N - 1 );
-    CIN_ASSERT( r , l+1 , N );
-    if( type == 1 ){
-      CIN_ASSERT( x , 1 , 10 );
-      query[q] = {type,l,r,x};
-    } else if( type == 2 ){
-      query[q] = {type,l,r};
-    }
-  } */
+
+  }  
 }
 
 #define INCLUDE_MAIN
 #include __FILE__
-
 #else /* INCLUDE_SUB */
-
 #ifdef INCLUDE_LIBRARY
 
 /*
 - BFS (6KB)
-  Geometry/Graph/Algorithm/BreadthFirstSearch/
+  Geometry/Graph/Algorithm/BreadthFirstSearch/compress.txt
   - AdicExhausiveSearch (11KB)
-    Geometry/Graph/Algorithm/BreadthFirstSearch/AdicExhausiveSearch/
+    Geometry/Graph/Algorithm/BreadthFirstSearch/AdicExhausiveSearch/compress.txt
   - BitExhausiveSearch (10KB)
-    Geometry/Graph/Algorithm/BreadthFirstSearch/BitExhausiveSearch/
+    Geometry/Graph/Algorithm/BreadthFirstSearch/BitExhausiveSearch/compress.txt
   - ZeroOneBreadthFirstSearch (4KB)
-    Geometry/Graph/Algorithm/BreadthFirstSearch/01/
+    Geometry/Graph/Algorithm/BreadthFirstSearch/01/compress.txt
 - BIT (5KB)
-  SetTheory/DirectProduct/AffineSpace/BIT/
+  SetTheory/DirectProduct/AffineSpace/BIT/compress.txt
   - IntervalAdd (9KB)
-    SetTheory/DirectProduct/AffineSpace/BIT/IntervalAdd/
+    SetTheory/DirectProduct/AffineSpace/BIT/IntervalAdd/compress.txt
   - IntervalMax (9KB)
-    SetTheory/DirectProduct/AffineSpace/BIT/IntervalMax/
+    SetTheory/DirectProduct/AffineSpace/BIT/IntervalMax/compress.txt
 - CoordinateCompress (3KB)
-  SetTheory/DirectProduct/CoordinateCompress/
+  SetTheory/DirectProduct/CoordinateCompress/compress.txt
 - DFS (6KB)
-  Geometry/Graph/Algorithm/DepthFirstSearch/
+  Geometry/Graph/Algorithm/DepthFirstSearch/compress.txt
   - Tree (11KB)
-    Geometry/Graph/Algorithm/DepthFirstSearch/Tree/
+    Geometry/Graph/Algorithm/DepthFirstSearch/Tree/compress.txt
 - DifferenceSequence (9KB)
-  SetTheory/DirectProduct/AffineSpace/DifferenceSequence/
+  SetTheory/DirectProduct/AffineSpace/DifferenceSequence/compress.txt
   - TwoDimensional (5KB)
-    SetTheory/DirectProduct/AffineSpace/DifferenceSequence/TwoDimensional/
+    SetTheory/DirectProduct/AffineSpace/DifferenceSequence/TwoDimensional/compress.txt
 - Dijkstra (6KB)
-  Geometry/Graph/Algorithm/Dijkstra/
+  Geometry/Graph/Algorithm/Dijkstra/compress.txt
   - MinimumCostFlow (16KB)
-    Geometry/Graph/Algorithm/Dijkstra/Potentialised/MinimumCostFlow/
+    Geometry/Graph/Algorithm/Dijkstra/Potentialised/MinimumCostFlow/compress.txt
 - Divisor/Prime/Factorisation (4KB)
-  Arithmetic/Divisor/
+  Arithmetic/Divisor/compress.txt
 - Knapsack (8KB)
-  Combinatorial/KnapsackProblem/
+  Combinatorial/KnapsackProblem/compress.txt
 - LineSubset (7KB)
-  SetTheory/Line/
+  SetTheory/Line/compress.txt
   - NonNegative (15KB)
-    SetTheory/Line/NonNegative/
+    SetTheory/Line/NonNegative/compress.txt
   - Bounded (15KB)
-    SetTheory/Line/Bounded/
+    SetTheory/Line/Bounded/compress.txt
   - Compressed (15KB)
-    SetTheory/Line/Compressed/
+    SetTheory/Line/Compressed/compress.txt
 - SqrtDecomposition
   - Monoid (5KB)
-    SetTheory/DirectProduct/AffineSpace/SqrtDecomposition/Monoid/
+    SetTheory/DirectProduct/AffineSpace/SqrtDecomposition/Monoid/compress.txt
   - CommutativeDual (6KB)
-    SetTheory/DirectProduct/AffineSpace/SqrtDecomposition/Dual/Commutative/
+    SetTheory/DirectProduct/AffineSpace/SqrtDecomposition/Dual/Commutative/compress.txt
   - IntervalMultiplyLazy (18KB)
-    SetTheory/DirectProduct/AffineSpace/SqrtDecomposition/LazyEvaluation/IntervalMultiply/
+    SetTheory/DirectProduct/AffineSpace/SqrtDecomposition/LazyEvaluation/IntervalMultiply/compress.txt
 - TruncatedPolynomial (31KB)
-  Polynomial/Truncate/
+  Polynomial/Truncate/compress.txt
   - NonProth (34KB)
-    Polynomial/Truncate/NonProth/
+    Polynomial/Truncate/NonProth/compress.txt
 - Matrix (6KB)
-  LinearAlgebra/
+  LinearAlgebra/compress.txt
   - TwoByTwo/TwoByOne (9KB)
-    LinearAlgebra/TwoByOne/
+    LinearAlgebra/TwoByOne/compress.txt
   - Rank (3KB)
-    LinearAlgebra/Rank/Mod/
+    LinearAlgebra/Rank/Mod/compress.txt
 - UnionFind (3KB)
-  Geometry/Graph/Algorithm/UnionFindForest/
+  Geometry/Graph/Algorithm/UnionFindForest/compress.txt
 */
-
 /* VVV 常設でないライブラリは以下に挿入する。*/
 
 
@@ -427,9 +181,7 @@ IN VO RandomTest( const int& test_case_num )
 
 #define INCLUDE_SUB
 #include __FILE__
-
 #else /* INCLUDE_LIBRARY */
-
 #ifdef DEBUG
   #define _GLIBCXX_DEBUG
 #else
@@ -687,7 +439,7 @@ TE <TY T> IN size_t hash<tuple<T>>::OP()(CO tuple<T>& n)CO{ST CO hash<T> h;RE h(
 #define DF_OF_COUT_FOR_VE(V)TE <CL Traits,TY Arg> IN OS& OP<<(OS& os,CO V<Arg>& arg){auto BE = arg.BE(),EN = arg.EN();auto IT = BE;WH(IT != EN){(IT == BE?os:os << " ")<< *IT;IT++;}RE os;}
 #define DF_OF_AR_FOR_VE(V,OPR)TE <TY T> IN V<T>& OP OPR ## =(V<T>& a,CO T& t){for(auto& s:a){s OPR ## = t;}RE a;}TE <TY T> IN V<T>& OP OPR ## =(V<T>& a0,CO V<T>& a1){AS(a0.SZ()<= a1.SZ());auto IT0 = a0.BE(),EN0 = a0.EN();auto IT1 = a1.BE();WH(IT0 != EN0){*(IT0++)OPR ## = *(IT1++);}RE a0;}TE <TY T,TY U> IN V<T> OP OPR(V<T> a,CO U& u){RE MO(a OPR ## = u);}
 #define DF_OF_INCREMENT_FOR_VE(V,INCR)TE <TY T> IN V<T>& OP INCR(V<T>& a){for(auto& i:a){INCR i;}RE a;}
-#define DF_OF_ARS_FOR_VE(V)DF_OF_AR_FOR_VE(V,+);DF_OF_AR_FOR_VE(V,-);DF_OF_AR_FOR_VE(V,*);DF_OF_AR_FOR_VE(V,/);DF_OF_AR_FOR_VE(V,%);DF_OF_INCREMENT_FOR_VE(V,++);DF_OF_INCREMENT_FOR_VE(V,--);TE <TY T> IN V<T> OP*(CO T& scalar,V<T> v){for(auto& t:v){v *= t;}RE MO(v);}u
+#define DF_OF_ARS_FOR_VE(V)DF_OF_AR_FOR_VE(V,+);DF_OF_AR_FOR_VE(V,-);DF_OF_AR_FOR_VE(V,*);DF_OF_AR_FOR_VE(V,/);DF_OF_AR_FOR_VE(V,%);DF_OF_INCREMENT_FOR_VE(V,++);DF_OF_INCREMENT_FOR_VE(V,--);TE <TY T> IN V<T> OP*(CO T& scalar,V<T> v){for(auto& t:v){t *= scalar;}RE MO(v);}
 DF_OF_COUT_FOR_VE(VE);DF_OF_COUT_FOR_VE(LI);DF_OF_COUT_FOR_VE(set);DF_OF_COUT_FOR_VE(unordered_set);DF_OF_ARS_FOR_VE(VE);DF_OF_ARS_FOR_VE(LI);IN VO VariadicResize(CRI SZ){}TE <TY Arg,TY... ARGS> IN VO VariadicResize(CRI SZ,Arg& arg,ARGS&... args){arg.resize(SZ);VariadicResize(SZ,args...);}TE <TY V> IN auto Get(V& a){RE[&](CRI i = 0)-> CO decldecay_t(a[0])&{RE a[i];};}TE <TY T = int> IN VE<T> id(CRI SZ){VE<T> AN(SZ);FOR(i,0,SZ){AN[i]= i;}RE AN;}TE <TY T> VO Sort(VE<T>& a,CO bool& reversed = false){if(reversed){ST auto comp =[](CO T& t0,CO T& t1){RE t1 < t0;};sort(a.BE(),a.EN(),comp);}else{sort(a.BE(),a.EN());}}TE <TY T> IN VE<int> IndexSort(CO VE<T>& a,CO bool& reversed = false){auto index = id<int>(a.SZ());if(reversed){sort(index.BE(),index.EN(),[&](CRI i,CRI j){RE a[j]< a[i];});}else{sort(index.BE(),index.EN(),[&](CRI i,CRI j){RE a[i]< a[j];});}RE index;}
 
 /* Map (1KB)*/
@@ -755,9 +507,6 @@ TE <TY INT> IN char IntToChar(CO INT& i,CO char& c = 'a'){RE c + i;}TE <TY INT> 
 
 #define INCLUDE_LIBRARY
 #include __FILE__
-
 #endif /* INCLUDE_LIBRARY */
-
 #endif /* INCLUDE_SUB */
-
 #endif /* INCLUDE_MAIN */

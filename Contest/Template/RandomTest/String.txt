@@ -1,0 +1,4 @@
+    CEXPR( int , bound_N , 5 ); CIN_ASSERT( N , 1 , bound_N );
+    CEXPR( int , letter_num , 26 ); vector<int> A( N );
+    FOR( i , 0 , N ){ SET_ASSERT( A[i] , 0 , letter_num - 1 ); }
+    COMPARE( N , ArrayToString( A ) );

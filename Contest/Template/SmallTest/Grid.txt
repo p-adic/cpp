@@ -1,0 +1,15 @@
+  CEXPR( int , bound , 4 );
+  FOREQ( H , 1 , bound ){
+    FOREQ( W , 1 , bound ){
+      int power = 1 << ( H * W );
+      FOR( p , 0 , power ){
+        vector S( H , string( W , '.' ) );
+        FOR( i , 0 , H ){
+          FOR( j , 0 , W ){
+            S[i][j] = "#."[( p >> ( i * W + j ) ) & 1];
+          }
+        }
+        COMPARE( H , W , S );
+      }
+    }
+  }

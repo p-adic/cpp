@@ -1,0 +1,4 @@
+    CEXPR( int , bound_N , 10 ); CIN_ASSERT( N , 1 , bound_N );
+    CEXPR( int , bound_A , 1e5 ); vector<int> A( N );
+    FOR( i , 0 , N ){ SET_ASSERT( A[i] , 1 , bound_A ); }
+    COMPARE( N , A );

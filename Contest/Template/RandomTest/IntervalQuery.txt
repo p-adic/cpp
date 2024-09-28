@@ -1,0 +1,8 @@
+  CEXPR( int , bound_Q , 10 ); CIN_ASSERT( Q , 1 , bound_Q );
+  vector<T2<int>> query( Q );
+  FOR( q , 0 , Q ){
+    CIN_ASSERT( l , 1 , N - 1 );
+    CIN_ASSERT( r , l+1 , N );
+    query[q] = {l,r};
+  }
+  COMPARE( N , Q , ... , query );

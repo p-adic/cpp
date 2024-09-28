@@ -1,0 +1,10 @@
+  CEXPR( int , bound , 10 );
+  int N_min = 1 , N_max = bound;
+  FOREQ( N , N_min , N_max ){
+    vector<int> P = id<int>( N ); ++P;
+    bool b = true;
+    while( b ){
+      COMPARE( N , P );
+      b = next_permutation( P.begin() , P.end() );
+    }
+  }

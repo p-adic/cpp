@@ -1,0 +1,20 @@
+  int N_min = 1 , N_max = 5;
+  FOREQ( N , N_min , N_max ){
+    int M_max = N * ( N - 1 ) / 2;
+    assert( M_max <= 30 );
+    int power = 1 << M_max;
+    FOR( p , 0 , power ){
+      int p_copy = p;
+      vector<T2<int>> dedge{};
+      FOR( i , 0 , N ){
+        FOR( j , i + 1 , N ){
+          if( ( p_copy & 1 ) == 1 ){
+            dedgepush_back( { ++i , ++j } );
+          }
+          p_copy >>= 1;
+        }
+      }
+      int M = dedge.size();
+      COMPARE( N , M , dedge );
+    }
+  }

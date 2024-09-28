@@ -1,0 +1,6 @@
+    CEXPR( int , bound_N , 8 ); CIN_ASSERT( N , 1 , bound_N );
+    vector<int> P = id<int>( N ); ++P;
+    REPEAT( N ){
+      int i = GetRand( 0 , N - 1 ) , j = GetRand( 0 , N - 1 ); swap( P[i] , P[j] );
+    }
+    COMPARE( N , P );

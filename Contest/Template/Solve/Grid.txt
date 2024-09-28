@@ -1,0 +1,14 @@
+  CIN_HW;
+  // SET_HW( N , M );
+  FOR( i , 0 , H ){
+    SetWallStringOnGrid( i , grid ); // 入力からgrid[i][j]に'.'や'#'を格納
+  }
+  // grid.resize( H , string( W , '.' ) );
+  // GridGraph graph{ WEdgeOnGrid }; // 上下左右の移動を許容
+  // AcyclicGridGraph graph{ WEdgeOnGrid }; // 下左右の移動を許容
+  /* {i,j}へデコード: EnumHW( v )                                         */
+  /* {i,j}をコード: EnumHW_inv( { i , j } );                              */
+  /* 方向の文字列：direction="URDL";                                       */
+  /* (i,j)->(k,h)の方向番号を取得: DirectionNumberOnGrid( i , j , k , h ); */
+  /* v->wの方向番号を取得: DirectionNumberOnGrid( v , w );                 */
+  /* 方向番号の反転U<->D、R<->L: ReverseDirectionNumberOnGrid( n );        */

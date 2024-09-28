@@ -1,0 +1,4 @@
+    CEXPR( int , bound_N , 1e5 ); CIN_ASSERT( N , 1 , bound_N );
+    CEXPR( ll , bound_M , 1e10 ); CIN_ASSERT( M , 1 , bound_M );
+    CEXPR( ll , bound_K , 1e10 ); CIN_ASSERT( K , 1 , bound_K );
+    COMPARE( N , M , K );

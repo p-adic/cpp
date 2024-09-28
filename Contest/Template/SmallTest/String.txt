@@ -1,0 +1,11 @@
+  CEXPR( int , bound , 5 );
+  CEXPR( int , letter_num , 26 );
+  int N_min = 1 , N_max = bound;
+  FOREQ( N , N_min , N_max ){
+    vector<int> A_min( N ) , A_ulim( N , letter_num ) , A = A_min;
+    bool b = true;
+    while( b ){
+      COMPARE( N , ArrayToString( A ) );
+      b = NextLoopEq( N , A_min , A_ulim , A );
+    }
+  }

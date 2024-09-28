@@ -1,0 +1,21 @@
+  int Q_max = 3;
+  int N2 = N * ( N + 1 ) / 2;
+  int power = 1;
+  FOR ( Q , 1 , Q_max ){
+    assert( power <= ( 1 << 30 ) / N2 );
+    power *= N2;
+    FOR( p , 0 , power ){
+      int p_copy = p;
+      vector<T2<int>> query( Q );
+      FOR( q , 0 , Q ){
+        int l = 0 , r = p_copy % N2;
+        while( r >= N - l ){
+          r -= N - l++;
+        }
+        r += l;
+        query[q] = {l+1,r+1};
+        p_copy /= N2;
+      }
+      COMPARE( N , ... , Q , query );
+    }
+  }

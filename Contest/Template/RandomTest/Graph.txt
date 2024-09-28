@@ -1,0 +1,13 @@
+    CEXPR( int , bound_N , 5 ); CIN_ASSERT( N , 1 , bound_N );
+    CEXPR( int , bound_M , 9 ); CIN_ASSERT( M , 1 , min( bound_M , N * ( N - 1 ) / 2 ) );
+    vector found( N , vector<bool>( N ) );
+    vector<T2<int>> dedge( M );
+    FOR( j , 0 , M ){
+      int u = GetRand( 0 , N - 2 ) , v = GetRand( u , N - 1 );
+      while( found[u][v] ){
+        v == N - 1 ? v = ( u == N - 2 ? u = 0 : ++u ) + 1 : ++v;
+      }
+      found[u][v] = true;
+      dedge.push_back( { ++u , ++v } );
+    }
+    COMPARE( N , M , dedge );

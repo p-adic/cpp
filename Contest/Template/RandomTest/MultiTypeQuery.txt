@@ -1,0 +1,14 @@
+  CEXPR( int , bound_Q , 10 ); CIN_ASSERT( Q , 1 , bound_Q );
+  vector<vector<int>> query( Q );
+  FOR( q , 0 , Q ){
+    CIN_ASSERT( type , 1 , 2 );
+    CIN_ASSERT( l , 1 , N - 1 );
+    CIN_ASSERT( r , l+1 , N );
+    if( type == 1 ){
+      CEXPR( int , bound_x , 10 ); CIN_ASSERT( x , 1 , bound_x );
+      query[q] = {type,l,r,x};
+    } else if( type == 2 ){
+      query[q] = {type,l,r};
+    }
+  }
+  COMPARE( N , Q , ... , query );

@@ -1,0 +1,11 @@
+  CEXPR( int , bound , 10 );
+  int N_min = 1 , N_max = bound;
+  FOREQ( N , N_min , N_max ){
+    int Ai_min = 1 , Ai_max = bound;
+    vector<int> A_min( N , Ai_min ) , A_max( N , Ai_max ) , A = A_min;
+    bool b = Ai_min <= Ai_max;
+    while( b ){
+      COMPARE( N , A );
+      b = NextLoopEq( N , A_min , A_max , A );
+    }
+  }

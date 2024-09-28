@@ -1,0 +1,25 @@
+  CEXPR( int , colour , 3 );
+  int N_min = 1 , N_max = 5;
+  FOREQ( N , N_min , N_max ){
+    int M_max = N * ( N - 1 ) / 2;
+    int power = 1;
+    REPEAT( M_max ){
+      assert( power <= ( 1 << 30 ) / colour );
+      power *= colour;
+    }
+    FOR( p , 0 , power ){
+      int p_copy = p;
+      vector<T3<int>> dedge{};
+      FOR( i , 0 , N ){
+        FOR( j , i + 1 , N ){
+          int c = p_copy % colour;
+          if( c > 0 ){
+            dedge.push_back( { ++i , ++j , c } );
+          }
+          p_copy /= colour;
+        }
+      }
+      int M = dedge.size();
+      COMPARE( N , M , dedge );
+    }
+  }
