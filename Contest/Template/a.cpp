@@ -416,7 +416,7 @@ TE <TY T> IN T Max(CO T& a,CO T& b){RE a < b?b:a;}
 
 /* VVV íÝƒ‰ƒCƒuƒ‰ƒŠ‚ÍˆÈ‰º‚É‘}“ü‚·‚éB*/
 #ifdef DEBUG
-  #include "C:/Users/user/Documents/Programming/Contest/Template/include/a_Body.hpp"
+  #include "C:/Users/user/Documents/Programming/Contest/Template/Local/a_Body.hpp"
 #else
 /* Random (1KB)*/
 ll GetRand(CRI Rand_min,CRI Rand_max){AS(Rand_min <= Rand_max);ll AN = time(NULL);RE AN * rand()%(Rand_max + 1 - Rand_min)+ Rand_min;}
