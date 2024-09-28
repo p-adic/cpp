@@ -3,7 +3,6 @@
 #pragma once
 #include "a.hpp"
 
-
 template <typename INT> int MoeviusFunction( const INT& n ) noexcept
 {
 
@@ -26,7 +25,7 @@ template <typename INT> int MoeviusFunction( const INT& n ) noexcept
 }
 
 template <typename PE , typename INT>
-int MoeviusFunction( const PE& pe , INT n ) noexcept
+auto MoeviusFunction( const PE& pe , INT n ) noexcept -> enable_if_t<IsPE<PE>,int>
 {
 
   const int& length = pe.length();
@@ -56,7 +55,7 @@ int MoeviusFunction( const PE& pe , INT n ) noexcept
 }
 
 template <typename LD , typename INT>
-int Moevius( const LD& ld , INT n )
+auto MoeviusFunction( const LD& ld , INT n ) -> enable_if_t<!IsPE<LD>,int>
 {
 
   int answer = 1;
@@ -78,3 +77,29 @@ int Moevius( const LD& ld , INT n )
   return answer;
 
 }
+
+
+template <typename LD , typename INT>
+vector<INT> TotalMoeviusFunction( const LD& ld , const INT& n_max )
+{
+
+  vector<INT> answer( n_max + 1 , 1 );
+  answer[0] = 0;
+  
+  for( int i = 2 ; i <= n_max ; i++ ){
+
+    auto& p = ld[i];
+    const int j = i / p;
+    answer[i] = j % p == 0 ? 0 : -answer[j];
+    
+  }
+
+  return answer;
+
+}
+
+// 不使用だがどうせincludeする。
+#include "../../Prime/Enumeration/a.hpp"
+#include "../../Prime/Enumeration/Heap/a.hpp"
+#include "../Least/a.hpp"
+#include "../Least/Heap/a.hpp"
