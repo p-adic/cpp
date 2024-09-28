@@ -143,7 +143,7 @@ inline void RandomTest( const int& test_case_num )
   - MinimumCostFlow (16KB)
     Geometry/Graph/Algorithm/Dijkstra/Potentialised/MinimumCostFlow/compress.txt
 - Divisor/Prime/Factorisation (4KB)
-  Arithmetic/Divisor/compress.txt
+  Arithmetic/Divisor/Enumeration/compress.txt
 - Knapsack (8KB)
   Combinatorial/KnapsackProblem/compress.txt
 - LineSubset (7KB)
