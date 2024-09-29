@@ -299,111 +299,6 @@ TE <TY INT> US T3 = tuple<INT,INT,INT>;
 TE <TY INT> US T4 = tuple<INT,INT,INT,INT>;
 US path = pair<int,ll>;
 
-#ifndef DEBUG
-/* 二分探索用 */
-/* EXPRESSIONがANSWERの広義単調関数の時、EXPRESSION >= CONST_TARGETの整数解を格納。*/
-#define BS( ANSWER , MINIMUM , MAXIMUM , EXPRESSION , DESIRED_INEQUALITY , CONST_TARGET , INEQUALITY_FOR_CHECK , UPDATE_U , UPDATE_L , UPDATE_ANSWER ) \
-  static_assert( ! is_same<decldecay_t( CONST_TARGET ),uint>::value && ! is_same<decldecay_t( CONST_TARGET ),ull>::value ); \
-  ll ANSWER = MINIMUM;							\
-  {									\
-    ll ANSWER ## _L = MINIMUM;                                          \
-    ll ANSWER ## _R = MAXIMUM;                                          \
-    ANSWER = UPDATE_ANSWER;						\
-    ll EXPRESSION_BS;							\
-    const ll CONST_TARGET_BS = ( CONST_TARGET );			\
-    ll DIFFERENCE_BS;							\
-    while( ANSWER ## _L < ANSWER ## _R ){                               \
-      DIFFERENCE_BS = ( EXPRESSION_BS = ( EXPRESSION ) ) - CONST_TARGET_BS; \
-      CERR( "二分探索中:" , string{ #ANSWER } + "_L" , "=" , ANSWER ## _L , "<=" , #ANSWER , "=" , ANSWER , "<=" , ANSWER ## _R , "=" , string{ #ANSWER } + "_R" , ":" , #EXPRESSION , "=" , EXPRESSION_BS , DIFFERENCE_BS > 0 ? ">" : DIFFERENCE_BS < 0 ? "<" : "=" , CONST_TARGET_BS , "=" , #CONST_TARGET ); \
-      if( DIFFERENCE_BS INEQUALITY_FOR_CHECK 0 ){			\
-	ANSWER ## _R = UPDATE_U;                                        \
-      } else {								\
-	ANSWER ## _L = UPDATE_L;                                        \
-      }									\
-      ANSWER = UPDATE_ANSWER;						\
-    }									\
-    if( ANSWER ## _L > ANSWER ## _R ){                                  \
-      CERR( "二分探索失敗:" , string{ #ANSWER } + "_L" , "=" , ANSWER ## _L , ">" , ANSWER ## _R , "=" , string{ #ANSWER } + "_R" , ":" , #ANSWER , ":=" , #MAXIMUM , "+ 1 =" , MAXIMUM + 1  ); \
-      CERR( "二分探索マクロにミスがある可能性があります。変更前の版に戻してください。" ); \
-      ANSWER = MAXIMUM + 1;						\
-    } else {								\
-      CERR( "二分探索終了:" , string{ #ANSWER } + "_L" , "=" , ANSWER ## _L , "<=" , #ANSWER , "=" , ANSWER , "<=" , ANSWER ## _R , "=" , string{ #ANSWER } + "_R" ); \
-      CERR( "二分探索が成功したかを確認するために" , #EXPRESSION , "を計算します。" ); \
-      CERR( "成功判定が不要な場合はこの計算を削除しても構いません。" );	\
-      EXPRESSION_BS = ( EXPRESSION );					\
-      CERR( "二分探索結果:" , #EXPRESSION , "=" , EXPRESSION_BS , ( EXPRESSION_BS > CONST_TARGET_BS ? ">" : EXPRESSION_BS < CONST_TARGET_BS ? "<" : "=" ) , CONST_TARGET_BS ); \
-      if( EXPRESSION_BS DESIRED_INEQUALITY CONST_TARGET_BS ){		\
-	CERR( "二分探索成功:" , #ANSWER , ":=" , ANSWER );		\
-      } else {								\
-	CERR( "二分探索失敗:" , #ANSWER , ":=" , #MAXIMUM , "+ 1 =" , MAXIMUM + 1 ); \
-	CERR( "単調でないか、単調増加性と単調減少性を逆にしてしまったか、探索範囲内に解が存在しません。" ); \
-	ANSWER = MAXIMUM + 1;						\
-      }									\
-    }									\
-  }									\
-
-/* 単調増加の時にEXPRESSION >= CONST_TARGETの最小解を格納。*/
-#define BS1( ANSWER , MINIMUM , MAXIMUM , EXPRESSION , CONST_TARGET ) BS( ANSWER , MINIMUM , MAXIMUM , EXPRESSION , >= , CONST_TARGET , >= , ANSWER , ANSWER + 1 , ( ANSWER ## _L + ANSWER ## _R ) / 2 )
-/* 単調増加の時にEXPRESSION <= CONST_TARGETの最大解を格納。*/
-#define BS2( ANSWER , MINIMUM , MAXIMUM , EXPRESSION , CONST_TARGET ) BS( ANSWER , MINIMUM , MAXIMUM , EXPRESSION , <= , CONST_TARGET , > , ANSWER - 1 , ANSWER , ( ANSWER ## _L + 1 + ANSWER ## _R ) / 2 )
-/* 単調減少の時にEXPRESSION >= CONST_TARGETの最大解を格納。*/
-#define BS3( ANSWER , MINIMUM , MAXIMUM , EXPRESSION , CONST_TARGET ) BS( ANSWER , MINIMUM , MAXIMUM , EXPRESSION , >= , CONST_TARGET , < , ANSWER - 1 , ANSWER , ( ANSWER ## _L + 1 + ANSWER ## _R ) / 2 )
-/* 単調減少の時にEXPRESSION <= CONST_TARGETの最小解を格納。*/
-#define BS4( ANSWER , MINIMUM , MAXIMUM , EXPRESSION , CONST_TARGET ) BS( ANSWER , MINIMUM , MAXIMUM , EXPRESSION , <= , CONST_TARGET , <= , ANSWER , ANSWER + 1 , ( ANSWER ## _L + ANSWER ## _R ) / 2 )
-
-/* 尺取り法用 */
-/* VAR_TPAは尺取り法用の変数名の接頭辞で、実際の変数名ではなく、_Lと_Rと_infoがつく。 */
-/* ANSWER ## _temp = {VAR_TPA ## _L,VAR_TPA ## _R,VPA_TPA ## _info}を       */
-/* {INIT,INIT,INFO_init}で初期化する。VPA_TPA ## _infoは区間和など。            */
-/* ANSWER ## _tempがCONTINUE_CONDITIONを満たす限り、ANSWER ## _tempが          */
-/* 条件ON_CONDITIONを満たすか否かを判定し、それがtrueになるか                     */
-/* VAR_TAR ## _LがVAR_TAR ## _Rに追い付くまでVAR_TPA ## _LとVPA_TPA ## _infoの */
-/* 更新操作UPDATE_Lを繰り返し、その後VAR_TPA ## _RとVPA_TPA ## _infoの           */
-/* 更新操作UPDATE_Rを行う。（マクロとコンマの制約上、関数オブジェクトを用いる）        */
-/* ON_CONDITIONがtrueとなる極大閉区間とその時点でのinfoをANSWERに格納する。         */
-/* 例えば長さNの非負整数値配列Aで極大な正値区間とそこでの総和を取得したい場合           */
-/* auto update_L = [&]( int& i_L , ll& i_info ){                             */
-/*   i_info -= A[i_L++];                                                     */
-/* };                                                                        */
-/* auto update_R = [&]( int& i_R , ll& i_info ){                             */
-/*   ++i_R < N ? i_info += A[i_R] : i_info;                                  */
-/* };                                                                        */
-/* TPA( interval , i , 0 , i_R < N , update_L( i_L , i_info ) , update_R( i_R , i_info ) , A[i_L] > 0 && A[i_R] > 0 , ll( A[0] ) ); */
-/* とすればtuple<int,int,ll>値配列intervalに{左端,右端,総和}の列が格納される。      */
-#define TPA( ANSWER , VAR_TPA , INIT , CONTINUE_CONDITION , UPDATE_L , UPDATE_R , ON_CONDITION , INFO_init ) \
-  vector<tuple<decldecay_t( INIT ),decldecay_t( INIT ),decldecay_t( INFO_init )>> ANSWER{}; \
-  {									\
-    auto init_TPA = INIT;						\
-    decldecay_t( ANSWER.front() ) ANSWER ## _temp = { init_TPA , init_TPA , INFO_init }; \
-    auto ANSWER ## _prev = ANSWER ## _temp;				\
-    auto& VAR_TPA ## _L = get<0>( ANSWER ## _temp );			\
-    auto& VAR_TPA ## _R = get<1>( ANSWER ## _temp );			\
-    auto& VAR_TPA ## _info = get<2>( ANSWER ## _temp );			\
-    bool on_TPA_prev = false;						\
-    while( true ){                                                      \
-      bool continuing = CONTINUE_CONDITION;				\
-      bool on_TPA = continuing && ( ON_CONDITION );			\
-      CERR( continuing ? "尺取り中" : "尺取り終了" , ": [L,R] = [" , VAR_TPA ## _L , "," , VAR_TPA ## _R , "] ," , on_TPA_prev ? "on" : "off" , "->" , on_TPA ? "on" : "off" , ", info =" , VAR_TPA ## _info ); \
-      if( on_TPA_prev && ! on_TPA ){					\
-	ANSWER.push_back( ANSWER ## _prev );				\
-	CERR( #ANSWER , "に" , ANSWER ## _prev , "を格納します。" );	\
-      }									\
-      if( continuing ){							\
-	if( on_TPA || VAR_TPA ## _L == VAR_TPA ## _R ){			\
-	  ANSWER ## _prev = ANSWER ## _temp;				\
-	  UPDATE_R;							\
-	} else {							\
-	  UPDATE_L;							\
-	}								\
-      } else {								\
-	break;								\
-      }									\
-      on_TPA_prev = on_TPA;						\
-    }									\
-  }									\
-
-#endif
-
 /* データ構造用 */
 TE <TY T> IN T Addition(CO T& t0,CO T& t1){RE t0 + t1;}
 TE <TY T> IN T Xor(CO T& t0,CO T& t1){RE t0 ^ t1;}
@@ -418,6 +313,35 @@ TE <TY T> IN T Max(CO T& a,CO T& b){RE a < b?b:a;}
 #ifdef DEBUG
   #include "C:/Users/user/Documents/Programming/Contest/Template/Local/a_Body.hpp"
 #else
+/* BinarySearch (2KB) */
+/* EXPRESSIONがANSWERの広義単調関数の時、EXPRESSION >= CONST_TARGETの整数解を格納。*/
+#define BS(AN,MINIMUM,MAXIMUM,EXPRESSION,DESIRED_INEQUALITY,CO_TARGET,INEQUALITY_FOR_CHECK,UPDATE_U,UPDATE_L,UPDATE_AN)ST_AS(! is_same<decldecay_t(CO_TARGET),uint>::value && ! is_same<decldecay_t(CO_TARGET),ull>::value);ll AN = MINIMUM;{ll AN ## _L = MINIMUM;ll AN ## _R = MAXIMUM;AN = UPDATE_AN;ll EXPRESSION_BS;CO ll CO_TARGET_BS =(CO_TARGET);ll DIFFERENCE_BS;WH(AN ## _L < AN ## _R){DIFFERENCE_BS =(EXPRESSION_BS =(EXPRESSION))- CO_TARGET_BS;if(DIFFERENCE_BS INEQUALITY_FOR_CHECK 0){AN ## _R = UPDATE_U;}else{AN ## _L = UPDATE_L;}AN = UPDATE_AN;}if(AN ## _L > AN ## _R || !((EXPRESSION)DESIRED_INEQUALITY CO_TARGET_BS)){AN = MAXIMUM + 1;}}
+/* 単調増加の時にEXPRESSION >= CONST_TARGETの最小解を格納。*/
+#define BS1(AN,MINIMUM,MAXIMUM,EXPRESSION,CO_TARGET)BS(AN,MINIMUM,MAXIMUM,EXPRESSION,>=,CO_TARGET,>=,AN,AN + 1,(AN ## _L + AN ## _R)/ 2)
+/* 単調増加の時にEXPRESSION <= CONST_TARGETの最大解を格納。*/
+#define BS2(AN,MINIMUM,MAXIMUM,EXPRESSION,CO_TARGET)BS(AN,MINIMUM,MAXIMUM,EXPRESSION,<=,CO_TARGET,>,AN - 1,AN,(AN ## _L + 1 + AN ## _R)/ 2)
+/* 単調減少の時にEXPRESSION >= CONST_TARGETの最大解を格納。*/
+#define BS3(AN,MINIMUM,MAXIMUM,EXPRESSION,CO_TARGET)BS(AN,MINIMUM,MAXIMUM,EXPRESSION,>=,CO_TARGET,<,AN - 1,AN,(AN ## _L + 1 + AN ## _R)/ 2)
+/* 単調減少の時にEXPRESSION <= CONST_TARGETの最小解を格納。*/
+#define BS4(AN,MINIMUM,MAXIMUM,EXPRESSION,CO_TARGET)BS(AN,MINIMUM,MAXIMUM,EXPRESSION,<=,CO_TARGET,<=,AN,AN + 1,(AN ## _L + AN ## _R)/ 2)
+
+/* TwoPoitnterApproach (2KB) */
+/* VAR_TPAは尺取り法用の変数名の接頭辞で、実際の変数名ではなく、_Lと_Rと_infoがつく。
+ANSWER ## _temp = {VAR_TPA ## _L,VAR_TPA ## _R,VPA_TPA ## _info}を
+{INIT,INIT,INFO_init}で初期化する。VPA_TPA ## _infoは区間和など。
+ANSWER ## _tempがCONTINUE_CONDITIONを満たす限り、ANSWER ## _tempが
+条件ON_CONDITIONを満たすか否かを判定し、それがtrueになるか
+VAR_TAR ## _LがVAR_TAR ## _Rに追い付くまでVAR_TPA ## _LとVPA_TPA ## _infoの
+更新操作UPDATE_Lを繰り返し、その後VAR_TPA ## _RとVPA_TPA ## _infoの
+更新操作UPDATE_Rを行う。（マクロとコンマの制約上、関数オブジェクトを用いる）
+ON_CONDITIONがtrueとなる極大閉区間とその時点でのinfoをANSWERに格納する。
+例えば長さNの非負整数値配列Aで極大な正値区間とそこでの総和を取得したい場合
+auto update_L = [&]( int& i_L , ll& i_info ){ i_info -= A[i_L++]; };
+auto update_R = [&]( int& i_R , ll& i_info ){ ++i_R < N ? i_info += A[i_R] : i_info; };
+TPA( interval , i , 0 , i_R < N , update_L( i_L , i_info ) , update_R( i_R , i_info ) , A[i_L] > 0 && A[i_R] > 0 , ll( A[0] ) );
+とすればtuple<int,int,ll>値配列intervalに{左端,右端,総和}の列が格納される。*/
+#define TPA(AN,VAR_TPA,INIT,CONTINUE_CONDITION,UPDATE_L,UPDATE_R,ON_CONDITION,INFO_init)VE<tuple<decldecay_t(INIT),decldecay_t(INIT),decldecay_t(INFO_init)>> AN{};{auto init_TPA = INIT;decldecay_t(AN.front())AN ## _temp ={init_TPA,init_TPA,INFO_init};auto AN ## _prev = AN ## _temp;auto& VAR_TPA ## _L = get<0>(AN ## _temp);auto& VAR_TPA ## _R = get<1>(AN ## _temp);auto& VAR_TPA ## _info = get<2>(AN ## _temp);bool on_TPA_prev = false;WH(true){bool continuing = CONTINUE_CONDITION;bool on_TPA = continuing &&(ON_CONDITION);if(on_TPA_prev && ! on_TPA){AN.push_back(AN ## _prev);}if(continuing){if(on_TPA || VAR_TPA ## _L == VAR_TPA ## _R){AN ## _prev = AN ## _temp;UPDATE_R;}else{UPDATE_L;}}else{break;}on_TPA_prev = on_TPA;}}
+
 /* Random (1KB)*/
 ll GetRand(CRI Rand_min,CRI Rand_max){AS(Rand_min <= Rand_max);ll AN = time(NULL);RE AN * rand()%(Rand_max + 1 - Rand_min)+ Rand_min;}
 
