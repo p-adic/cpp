@@ -1,5 +1,16 @@
 #ifdef DEBUG
-  #include "c:/Users/user/Documents/Programming/Utility/BinarySearch/a_Body.hpp"
+  #include "c:/Users/user/Documents/Programming/Utility/BinarySearch/Debug/a_Body.hpp"
 #else
-TE <TY T> IN TY set<T>::iterator MaximumLeq(set<T>& S,CO T& t){auto IT = S.upper_bound(t);RE IT == S.BE()?S.EN():--IT;}TE <TY T> IN TY set<T>::iterator MaximumLt(set<T>& S,CO T& t){auto IT = S.lower_bound(t);RE IT == S.BE()?S.EN():--IT;}TE <TY T> IN TY set<T>::iterator MinimumGeq(set<T>& S,CO T& t){RE S.lower_bound(t);}TE <TY T> IN TY set<T>::iterator MinimumGt(set<T>& S,CO T& t){RE S.upper_bound(t);}
+/* EXPRESSIONÇ™ANSWERÇÃçLã`íPí≤ä÷êîÇÃéûÅAEXPRESSION >= CONST_TARGETÇÃêÆêîâÇäiî[ÅB*/
+#define BS(AN,MINIMUM,MAXIMUM,EXPRESSION,DESIRED_INEQUALITY,CO_TARGET,INEQUALITY_FOR_CHECK,UPDATE_U,UPDATE_L,UPDATE_AN)ST_AS(! is_same<decldecay_t(CO_TARGET),uint>::value && ! is_same<decldecay_t(CO_TARGET),ull>::value);ll AN = MINIMUM;{ll AN ## _L = MINIMUM;ll AN ## _R = MAXIMUM;AN = UPDATE_AN;ll EXPRESSION_BS;CO ll CO_TARGET_BS =(CO_TARGET);ll DIFFERENCE_BS;WH(AN ## _L < AN ## _R){DIFFERENCE_BS =(EXPRESSION_BS =(EXPRESSION))- CO_TARGET_BS;if(DIFFERENCE_BS INEQUALITY_FOR_CHECK 0){AN ## _R = UPDATE_U;}else{AN ## _L = UPDATE_L;}AN = UPDATE_AN;}if(AN ## _L > AN ## _R || !((EXPRESSION)DESIRED_INEQUALITY CO_TARGET_BS)){AN = MAXIMUM + 1;}}\
+/* íPí≤ëùâ¡ÇÃéûÇ…EXPRESSION >= CONST_TARGETÇÃç≈è¨âÇäiî[ÅB*/
+#define BS1(AN,MINIMUM,MAXIMUM,EXPRESSION,CO_TARGET)BS(AN,MINIMUM,MAXIMUM,EXPRESSION,>=,CO_TARGET,>=,AN,AN + 1,(AN ## _L + AN ## _R)/ 2)
+/* íPí≤ëùâ¡ÇÃéûÇ…EXPRESSION <= CONST_TARGETÇÃç≈ëÂâÇäiî[ÅB*/
+#define BS2(AN,MINIMUM,MAXIMUM,EXPRESSION,CO_TARGET)BS(AN,MINIMUM,MAXIMUM,EXPRESSION,<=,CO_TARGET,>,AN - 1,AN,(AN ## _L + 1 + AN ## _R)/ 2)
+/* íPí≤å∏è≠ÇÃéûÇ…EXPRESSION >= CONST_TARGETÇÃç≈ëÂâÇäiî[ÅB*/
+#define BS3(AN,MINIMUM,MAXIMUM,EXPRESSION,CO_TARGET)BS(AN,MINIMUM,MAXIMUM,EXPRESSION,>=,CO_TARGET,<,AN - 1,AN,(AN ## _L + 1 + AN ## _R)/ 2)
+/* íPí≤å∏è≠ÇÃéûÇ…EXPRESSION <= CONST_TARGETÇÃç≈è¨âÇäiî[ÅB*/
+#define BS4(AN,MINIMUM,MAXIMUM,EXPRESSION,CO_TARGET)BS(AN,MINIMUM,MAXIMUM,EXPRESSION,<=,CO_TARGET,<=,AN,AN + 1,(AN ## _L + AN ## _R)/ 2)
 #endif
+
+
