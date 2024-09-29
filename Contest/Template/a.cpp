@@ -10,22 +10,14 @@
 
 IN VO Solve()
 {
-  // 数
-  // ../Contest/Template/Solve/Number.txt
-  // 配列
-  // ../Contest/Template/Solve/Array.txt
-  // 文字列
-  // ../Contest/Template/Solve/String.txt
-  // グリッド
-  // ../Contest/Template/Solve/Grid.txt
-  // グラフ
-  // ../Contest/Template/Solve/Graph.txt
-  // 重み付きグラフ
-  // ../Contest/Template/Solve/WeightedGraph.txt
-  // 区間クエリ
-  // ../Contest/Template/Solve/IntervalQuery.txt
-  // 多種クエリ
-  // ../Contest/Template/Solve/MultiTypeQuery.txt
+  // 数 ../Contest/Template/Solve/Number.txt
+  // 配列 ../Contest/Template/Solve/Array.txt
+  // 文字列 ../Contest/Template/Solve/String.txt
+  // グリッド ../Contest/Template/Solve/Grid.txt
+  // グラフ ../Contest/Template/Solve/Graph.txt
+  // 重み付きグラフ ../Contest/Template/Solve/WeightedGraph.txt
+  // 区間クエリ ../Contest/Template/Solve/IntervalQuery.txt
+  // 多種クエリ ../Contest/Template/Solve/MultiTypeQuery.txt
 
 }
 REPEAT_MAIN(1);
@@ -50,59 +42,38 @@ MP Answer( const ll& N , const ll& M , const ll& K )
 /* 圧縮時は中身だけ削除する。*/
 IN VO Experiment()
 {
-  /* // 1変数                                             */
-  /* // ../Contest/Template/Experiment/OneVariable.txt   */
-  /* // 2変数                                             */
-  /* // ../Contest/Template/Experiment/TwoVariable.txt   */
-  /* // 3変数                                             */
-  /* // ../Contest/Template/Experiment/ThreeVariable.txt */
-
+  /* // 1変数 ../Contest/Template/Experiment/OneVariable.txt */
+  /* // 2変数 ../Contest/Template/Experiment/TwoVariable.txt */
+  /* // 3変数 ../Contest/Template/Experiment/ThreeVariable.txt */
   
 }
 
 /* 圧縮時は中身だけ削除する。*/
 IN VO SmallTest()
 {
-  /* // 数                                             */
-  /* // ../Contest/Template/SmallTest/Number.txt       */
-  /* // 配列                                            */
-  /* // ../Contest/Template/SmallTest/Array.txt        */
-  /* // 順列                                            */
-  /* // ../Contest/Template/SmallTest/Permutation.txt   */
-  /* // 文字列                                           */
-  /* // ../Contest/Template/SmallTest/String.txt        */
-  /* // グリッド                                         */
-  /* // ../Contest/Template/SmallTest/Grid.txt          */
-  /* // グラフ                                           */
-  /* // ../Contest/Template/SmallTest/Graph.txt         */
-  /* // 重み付きグラフ                                    */
-  /* // ../Contest/Template/SmallTest/WeightedGraph.txt */
-  /* // 区間クエリ（他生成コードに挿入して使う）              */
-  /* // ../Contest/Template/SmallTest/IntervalQuery.txt */
+  /* // 数 ../Contest/Template/SmallTest/Number.txt */
+  /* // 配列 ../Contest/Template/SmallTest/Array.txt */
+  /* // 順列 ../Contest/Template/SmallTest/Permutation.txt */
+  /* // 文字列 ../Contest/Template/SmallTest/String.txt */
+  /* // グリッド ../Contest/Template/SmallTest/Grid.txt */
+  /* // グラフ ../Contest/Template/SmallTest/Graph.txt */
+  /* // 重み付きグラフ ../Contest/Template/SmallTest/WeightedGraph.txt */
+  /* // 区間クエリ ../Contest/Template/SmallTest/IntervalQuery.txt */
   
 }
 
 /* 圧縮時は中身だけ削除する。*/
 IN VO RandomTest( const int& test_case_num )
 {
-  /* // 数                                             */
-  /* // ../Contest/Template/SmallTest/Number.txt       */
-  /* // 配列                                            */
-  /* // ../Contest/Template/SmallTest/Array.txt         */
-  /* // 順列                                             */
-  /* // ../Contest/Template/SmallTest/Permutation.txt    */
-  /* // 文字列                                            */
-  /* // ../Contest/Template/SmallTest/String.txt         */
-  /* // グリッド                                          */
-  /* // ../Contest/Template/SmallTest/Grid.txt           */
-  /* // グラフ                                            */
-  /* // ../Contest/Template/SmallTest/Graph.txt          */
-  /* // 重み付きグラフ                                     */
-  /* // ../Contest/Template/SmallTest/WeightedGraph.txt  */
-  /* // 区間クエリ（他生成コードに挿入して使う）               */
-  /* // ../Contest/Template/SmallTest/IntervalQuery.txt  */
-  /* // 多種クエリ（他生成コードに挿入して使う）               */
-  /* // ../Contest/Template/SmallTest/MultiTypeQuery.txt */
+  /* // 数 ../Contest/Template/SmallTest/Number.txt */
+  /* // 配列 ../Contest/Template/SmallTest/Array.txt */
+  /* // 順列 ../Contest/Template/SmallTest/Permutation.txt */
+  /* // 文字列 ../Contest/Template/SmallTest/String.txt */
+  /* // グリッド ../Contest/Template/SmallTest/Grid.txt */
+  /* // グラフ ../Contest/Template/SmallTest/Graph.txt */
+  /* // 重み付きグラフ ../Contest/Template/SmallTest/WeightedGraph.txt  */
+  /* // 区間クエリ ../Contest/Template/SmallTest/IntervalQuery.txt  */
+  /* // 多種クエリ ../Contest/Template/SmallTest/MultiTypeQuery.txt */
   REPEAT( test_case_num ){
 
   }  
