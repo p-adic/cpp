@@ -313,7 +313,7 @@ TE <TY T> IN T Max(CO T& a,CO T& b){RE a < b?b:a;}
 #ifdef DEBUG
   #include "C:/Users/user/Documents/Programming/Contest/Template/Local/a_Body.hpp"
 #else
-/* BinarySearch (2KB) */
+/* BinarySearch (2KB)*/
 /* EXPRESSIONがANSWERの広義単調関数の時、EXPRESSION >= CONST_TARGETの整数解を格納。*/
 #define BS(AN,MINIMUM,MAXIMUM,EXPRESSION,DESIRED_INEQUALITY,CO_TARGET,INEQUALITY_FOR_CHECK,UPDATE_U,UPDATE_L,UPDATE_AN)ST_AS(! is_same<decldecay_t(CO_TARGET),uint>::value && ! is_same<decldecay_t(CO_TARGET),ull>::value);ll AN = MINIMUM;{ll AN ## _L = MINIMUM;ll AN ## _R = MAXIMUM;AN = UPDATE_AN;ll EXPRESSION_BS;CO ll CO_TARGET_BS =(CO_TARGET);ll DIFFERENCE_BS;WH(AN ## _L < AN ## _R){DIFFERENCE_BS =(EXPRESSION_BS =(EXPRESSION))- CO_TARGET_BS;if(DIFFERENCE_BS INEQUALITY_FOR_CHECK 0){AN ## _R = UPDATE_U;}else{AN ## _L = UPDATE_L;}AN = UPDATE_AN;}if(AN ## _L > AN ## _R || !((EXPRESSION)DESIRED_INEQUALITY CO_TARGET_BS)){AN = MAXIMUM + 1;}}
 /* 単調増加の時にEXPRESSION >= CONST_TARGETの最小解を格納。*/
@@ -325,7 +325,7 @@ TE <TY T> IN T Max(CO T& a,CO T& b){RE a < b?b:a;}
 /* 単調減少の時にEXPRESSION <= CONST_TARGETの最小解を格納。*/
 #define BS4(AN,MINIMUM,MAXIMUM,EXPRESSION,CO_TARGET)BS(AN,MINIMUM,MAXIMUM,EXPRESSION,<=,CO_TARGET,<=,AN,AN + 1,(AN ## _L + AN ## _R)/ 2)
 
-/* TwoPoitnterApproach (2KB) */
+/* TwoPoitnterApproach (2KB)*/
 /* VAR_TPAは尺取り法用の変数名の接頭辞で、実際の変数名ではなく、_Lと_Rと_infoがつく。
 ANSWER ## _temp = {VAR_TPA ## _L,VAR_TPA ## _R,VPA_TPA ## _info}を
 {INIT,INIT,INFO_init}で初期化する。VPA_TPA ## _infoは区間和など。
