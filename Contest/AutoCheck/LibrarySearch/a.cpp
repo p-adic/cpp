@@ -224,10 +224,15 @@ AC( ExplicitExpressionOneArrayEntrySum )
   CERR( "とします。必要ならば(a_i)_iをソートして広義単調増大とします。" );
   CERR( "- f(a_{i+1}) - f(a_i)がO(1)で計算できO(N)が間に合いそうならば、" );
   CERR( "  f(a_i)の差分計算による高速化" );
-  CERR( "- #im(f)が小さくf(a_)の逆像が計算しやすいならば" );
-  CERR( "  同じ返り値の纏め上げsum_i f(a_i)=sum_y #f(a_)^{-1}(y) y" );
+  CERR( "- #im(f)が小さくf(a_)の各点逆像が計算しやすいならば" );
+  CERR( "  fの各点逆像による纏め上げ" );
+  CERR( "  sum_i f(a_i)=sum_y #f(a_)^{-1}(y) y" );
+  CERR( "- #im(f)が小さくfが非負でf(a_)の始切片逆像が計算しやすいならば" );
+  CERR( "  fの始切片逆像による纏め上げ" );
+  CERR( "  sum_i f(a_i)=sum_{y>=1} #f(a_)^{-1}([y,∞))" );
   CERR( "- #dom(f)が小さく(a_)の逆像が計算しやすいならば" );
-  CERR( "  同じ代入値の纏め上げsum_i f(a_i)=sum_x #(a_)^{-1}(x) f(x)" );
+  CERR( "  (a_)の各点逆像による纏め上げ" );
+  CERR( "  sum_i f(a_i)=sum_x #(a_)^{-1}(x) f(x)" );
   CERR( "- i%j = i - floor(i/j)jを用いて剰余を商に帰着" );
   CERR( "  - iに関する和はfloor_sum" );
   CERR( "    \\Mathematics\\Combinatorial\\FloorSum" );
@@ -314,10 +319,15 @@ AC( ExplicitExpressionDoubleSum )
   CERR( "  間に合いそうならば、sum_j f(a_i,b_j)の差分計算による高速化" );
   CERR( "- f(x,y)=sum_k g_k(x) h_k(y)と表示できO(K(N+M))が間に合いそうならば" );
   CERR( "  変数分離sum_{i,j} f(a_i,b_j)=sum_k(sum_i g_k(a_i))(sum_j h_k(b_j))" );
-  CERR( "- #im(f)が小さくf(a_,b_)の逆像が計算しやすいならば" );
-  CERR( "  同じ返り値の纏め上げsum_{i,j} f(a_i,b_j)=sum_z #f(a_,b_)^{-1}(z) z" );
-  CERR( "- #dom(f)が小さく(a_,b_)の逆像が計算しやすいならば" );
-  CERR( "  同じ代入値の纏め上げsum_{i,j} f(a_i,b_j)=sum_v #(a_,b_)^{-1}(v) f(v)" );
+  CERR( "- #im(f)が小さくf(a_,b_)の各点逆像が計算しやすいならば" );
+  CERR( "  fの各点逆像による纏め上げ" );
+  CERR( "  sum_{i,j} f(a_i,b_j)=sum_z #f(a_,b_)^{-1}(z) z" );
+  CERR( "- #im(f)が小さくfが非負でf(a_,b_)の始切片逆像が計算しやすいならば" );
+  CERR( "  fの始切片逆像による纏め上げ" );
+  CERR( "  sum_{i,j} f(a_i,b_j)=sum_{z>0} #f(a_,b_)^{-1}([z,∞))" );
+  CERR( "- #dom(f)が小さく(a_,b_)の各点逆像が計算しやすいならば" );
+  CERR( "  (a_,b_)の各点逆像による纏め上げ" );
+  CERR( "  sum_{i,j} f(a_i,b_j)=sum_v #(a_,b_)^{-1}(v) f(v)" );
   CERR( "を検討しましょう。" );
 }
 
@@ -631,8 +641,8 @@ AC( Maximisation )
 	     "配列上の関数に関する最大／最小化問題" ,
 	     "配列の隣接成分間関係式を満たす部分列の最長化問題" ,
 	     "低次元アフィン空間上の関数の最大／最小化問題" ,
-	     "集合の部分集合に関するの最大／最小化問題" ,
-	     "グラフの辺集合に関する最大／最小化問題" ,
+	     "集合の部分集合に関する最大／最小化問題" ,
+	     "グラフの経路に関する最大／最小化問題" ,
 	     "木上の関数に関する最大／最小化問題" ,
 	     "文字列のマッチングに関する最大／最長化問題" ,
 	     "確率／期待値の最大化問題" ,
@@ -659,7 +669,7 @@ AC( Maximisation )
   } else if( num == num_temp++ ){
     CALL_AC( MaximisationSubsetSize );
   } else if( num == num_temp++ ){
-    CALL_AC( MinimisationGraphCost );
+    CALL_AC( MinimisationGraph );
   } else if( num == num_temp++ ){
     CALL_AC( MaximisationFunctionOnTree );
   } else if( num == num_temp++ ){
@@ -1431,11 +1441,22 @@ AC( MaximisationSubsetSize )
   }
 }
 
-AC( MinimisationGraphCost )
+AC( MinimisationGraph )
 {
 
-  CERR( "価値の最大化問題は価値を-1倍したコストを考えることで" );
-  CERR( "コストの最小化問題に帰着されます。" );
+  ASK_NUMBER(
+             "コストの最小化問題" ,
+             "価値の最大化問題"
+             );
+  if( num == num_temp++ ){
+    CALL_AC( MinimisationGraphCost );
+  } else {
+    CALL_AC( MaximisationGraphValue );
+  }
+}
+
+AC( MinimisationGraphCost )
+{
   ASK_NUMBER(
 	     "全域森のコスト最小化問題" ,
 	     "パスのコスト最小化問題"
@@ -1447,6 +1468,35 @@ AC( MinimisationGraphCost )
   } else if( num == num_temp++ ){
     CERR( "これは最短経路問題そのものです。" );
     AC( MinimisationMovingCost );
+  }
+}
+
+AC( MaximisationGraphValue )
+{
+  ASK_NUMBER(
+	     "辺のコスト最小化問題" ,
+	     "頂点のコスト最小化問題"
+	     );
+  if( num == num_temp++ ){
+    CERR( "価値を-1倍したコストを考えることで辺のコスト最小化問題に帰着されます。" );
+    CALL_AC( MinimisationGraphCost );
+  } else {
+    ASK_NUMBER(
+               "非輪状グリッドグラフに埋め込み可能なグラフ" ,
+               "その他のグラフ"
+               );
+    if( num == num_temp++ ){
+      CERR( "非輪状グリッドグラフに埋め込み、平面走査と区間max更新" );
+      CERR( "\\Mathematics\\Geometry\\Graph\\Grid\\ValueMax" );
+      CERR( "を検討しましょう。" );
+    } else {
+      CERR( "- 演算が加法ならば、始端の重み*(始点?2:1)と終端の重み*(終点?2:1)" );
+      CERR( "  の和を各辺の重みとして辺のコスト最小化問題に帰着" );
+      CERR( "- 演算がmaxならば、始端の重みと終端の重みの最大値を" );
+      CERR( "  各辺の重みとして辺のコスト最小化問題に帰着" );
+      CERR( "を検討しましょう。" );
+      CALL_AC( MinimisationGraphCost );
+    }
   }
 }
 
