@@ -1,8 +1,8 @@
 #python -m pdb a.py
 R=range
-J=lambda:map(int,input().split())
-N=*J()
-A=list(J())
+J=lambda:list(map(int,input().split()))
+N=J()[0]
+A=J()
 a=0
 for i in R(N):X,Y=J();a+=A[i]*X+Y
 print(a)
