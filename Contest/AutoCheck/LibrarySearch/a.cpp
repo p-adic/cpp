@@ -1487,7 +1487,7 @@ AC( MaximisationGraphValue )
                );
     if( num == num_temp++ ){
       CERR( "非輪状グリッドグラフに埋め込み、平面走査と区間max更新" );
-      CERR( "\\Mathematics\\Geometry\\Graph\\Grid\\ValueMax" );
+      CERR( "\\Mathematics\\Geometry\\Graph\\Grid\\ValueMaximisation" );
       CERR( "を検討しましょう。" );
     } else {
       CERR( "- 演算が加法ならば、始端の重み*(始点?2:1)と終端の重み*(終点?2:1)" );
