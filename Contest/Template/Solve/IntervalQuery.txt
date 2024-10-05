@@ -1,0 +1,9 @@
+  CIN( int , N );
+  CIN( int , Q );
+  // vector<T3<int>> query( Q );
+  FOR( q , 0 , Q ){
+    CIN( int , l , r ); --l; --r;
+    // query[q] = {l,r,q}:
+  }
+  // Sort( query );
+  // Mo mo{ query };

@@ -9,16 +9,22 @@
 #endif
 #ifdef INCLUDE_MAIN
 
-// 1変数 ../Contest/Template/Solve/OneVariable.txt
-// 2変数 ../Contest/Template/Solve/TwoVariable.txt
-// 3変数 ../Contest/Template/Solve/ThreeVariable.txt
-// 配列 ../Contest/Template/Solve/Array.txt
-// 文字列 ../Contest/Template/Solve/String.txt
-// グリッド ../Contest/Template/Solve/Grid.txt
-// グラフ ../Contest/Template/Solve/Graph.txt
-// 重み付きグラフ ../Contest/Template/Solve/WeightedGraph.txt
-// 区間クエリ ../Contest/Template/Solve/IntervalQuery.txt
-// 多種クエリ ../Contest/Template/Solve/MultiTypeQuery.txt
+inline void Solve()
+{
+  // 数 ../Contest/Template/Solve/Number.txt
+  // 配列 ../Contest/Template/Solve/Array.txt
+  // 文字列 ../Contest/Template/Solve/String.txt
+  // グリッド ../Contest/Template/Solve/Grid.txt
+  // グラフ ../Contest/Template/Solve/Graph.txt
+  // 重み付きグラフ ../Contest/Template/Solve/WeightedGraph.txt
+  // 区間クエリ ../Contest/Template/Solve/IntervalQuery.txt
+  // 多種クエリ ../Contest/Template/Solve/MultiTypeQuery.txt
+
+}
+REPEAT_MAIN(1);
+
+#else /* INCLUDE_MAIN */
+#ifdef INCLUDE_SUB
 
 /* COMPAREに使用。圧縮時は削除する。*/
 MP Naive( const int& N , const int& M , const int& K , const bool& experiment = false )
@@ -28,7 +34,11 @@ MP Naive( const int& N , const int& M , const int& K , const bool& experiment = 
 }
 
 /* COMPAREに使用。圧縮時は削除する。*/
-template <typename...Args> MP Answer( Args&&... );
+MP Answer( const ll& N , const ll& M , const ll& K )
+{
+  MP answer{};
+  return answer;
+}
 
 /* 圧縮時は中身だけ削除する。*/
 inline void Experiment()
@@ -70,7 +80,9 @@ inline void RandomTest( const int& test_case_num )
   }  
 }
 
-#else /* INCLUDE_MAIN */
+#define INCLUDE_MAIN
+#include __FILE__
+#else // INCLUDE_SUB
 #ifdef INCLUDE_LIBRARY
 
 /*
@@ -139,7 +151,7 @@ inline void RandomTest( const int& test_case_num )
 
 /* AAA 常設でないライブラリは以上に挿入する。*/
 
-#define INCLUDE_MAIN
+#define INCLUDE_SUB
 #include __FILE__
 #else /* INCLUDE_LIBRARY */
 #ifdef DEBUG
@@ -466,4 +478,5 @@ TE <TY INT> IN char IntToChar(CO INT& i,CO char& c = 'a'){RE c + i;}TE <TY INT> 
 #define INCLUDE_LIBRARY
 #include __FILE__
 #endif /* INCLUDE_LIBRARY */
+#endif /* INCLUDE_SUB */
 #endif /* INCLUDE_MAIN */

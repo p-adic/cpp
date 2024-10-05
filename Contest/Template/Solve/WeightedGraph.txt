@@ -1,0 +1,15 @@
+  CIN( int , N , M );
+  // CIN( int , N ); int M = N - 1;
+  vector<vector<path>> e( N );
+  // CEXPR( ll , infty , 1e18 );
+  // vector w( N , vector( N , infty ) ); FOR( i , 0 , N ){ w[i][i] = 0; }
+  REPEAT( M ){
+    CIN( ll , u , v , w ); --u; --v;
+    e[u].push_back( { v , w } );
+    e[v].push_back( { u , w } );
+    // w[u][v] = w[v][u] = w;
+  }
+  Graph graph{ N , Get( e ) };
+  Dijkstra dijk{ graph }; vector<decldecay_t(dijk.Infty())> d = dijk.GetDistance( 0 );
+  // AbstractUnionFindForest uff{ graph , AdditiveGroup<ll>() };
+  // FloydWarshall fw{ infty , w }; vector<vector<decltype(infty)>> d = fw.GetDistance();

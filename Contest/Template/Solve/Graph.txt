@@ -1,0 +1,15 @@
+  CIN( int , N , M );
+  // CIN( int , N ); int M = N - 1;
+  vector<vector<int>> e( N );
+  REPEAT( M ){
+    CIN( int , u , v ); --u; --v;
+    e[u].push_back( v );
+    e[v].push_back( u );
+  }
+  Graph graph{ N , Get( e ) };
+  BreadthFirstSearch bfs{ graph , -1 , 0 }; vector<int> d = bfs.GetDistance();
+  // DepthFirstSearchOnTree dfst{ graph , 0 };
+  // AbstractUnionFindForest uff{ graph , AdditiveGroup<int>() };
+  // auto [ts,ts_inv,prev,dir_edge] = TopologicalSortedTree( graph , 0 );
+  // Graph graph_dir{ N , Get( dir_edge ) }; // 無向木をトポロジカルソートで0が根の有向化
+  // Graph graph_dir_rev{ N , [&]( const int& i ){ return vector( prev[i] >= 0 ? 1 : 0 , prev[i] ); } };

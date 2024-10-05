@@ -1,0 +1,16 @@
+  CIN( int , N );
+  CIN( string , S );
+  // RollingHash<MP,int> rh{};
+  // /* ../Utility/String/RollingHash/compress.txt */
+
+  // /* pal[r] = S[0,r]‚ª‰ñ•¶‚©”Û‚© */
+  // vector<bool> pal = Palindrome( S , false );
+  // /* ../Utility/String/Palindrome/compress.txt */
+
+  // /* pal[r][l] = S[l,r]‚ª‰ñ•¶‚©”Û‚© */
+  // vector<vector<bool>> pal = TotalPalindrome( S , false );
+  // /* ../Utility/String/Palindrome/compress.txt */
+
+  // /* lcp[i] = max_j(S[i,N)‚ÆS[i+j,N)‚ÌnØ•Ğ‚ªˆê’v‚·‚é’·‚³) */
+  // vector<int> lcp = LCP( S );
+  // /* ../Utility/String/Z-Algorithm/compress.txt */
