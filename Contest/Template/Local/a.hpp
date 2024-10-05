@@ -22,8 +22,9 @@ CEXPR( uint , P , 998244353 );
 using MP = Mod<P>;
 
 inline void AlertAbort( int n );
-void AutoCheck( int& exec_mode , const bool& use_getline );
-inline void Solve();
+void AutoCheck( int& exec_mode , const bool& use_getline , const bool& sample_check , const string& problem_order );
+void Solve();
+void SampleCheck( const string& sample_path , const string& input_path , const string& output_path , const string& problem_order , const int& test_case_num_bound , ifstream& ifs , ofstream& ofs );
 inline void Experiment();
 inline void SmallTest();
 inline void RandomTest( const int& test_case_num );
@@ -43,11 +44,9 @@ int exec_mode;
   CEXPR( bool , submit_only , false );
 #endif
 
-void CompareAnswer( const string& sample_path , const string& problem_order , const string& sample_num );
 ifstream ifs{};
 ofstream ofs{};
 const string sample_path = "C:/Users/user/Documents/Programming/Contest/AutoCheck/SampleMemoriser/Sample/";
-string sample_num;
 
 #ifdef SAMPLE_CHECK
   static_assert( TO_CHAR( SAMPLE_CHECK )[0] != 'd'  );
@@ -62,6 +61,4 @@ string sample_num;
   const string input_path = "dummy.txt";
   const string output_path = "dummy.txt";
 #endif
-
-ifstream sample_count{ sample_path + problem_order + "/count.txt" };
 

@@ -8,7 +8,7 @@
 #endif
 #ifdef INCLUDE_MAIN
 
-IN VO Solve()
+VO Solve()
 {
   // ” ../Contest/Template/Solve/Number.txt
   // ”z—ñ ../Contest/Template/Solve/Array.txt

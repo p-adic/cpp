@@ -9,7 +9,7 @@
 #endif
 #ifdef INCLUDE_MAIN
 
-inline void Solve()
+void Solve()
 {
   // ” ../Contest/Template/Solve/Number.txt
   // ”z—ñ ../Contest/Template/Solve/Array.txt
