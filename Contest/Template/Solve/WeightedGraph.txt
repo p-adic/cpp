@@ -1,3 +1,16 @@
+template <typename EDGE>
+MP Answer( const int& N , const int& M , const EDGE& e )
+{
+  MP a{};
+  Graph graph{ N , Get( e ) };
+  Dijkstra dijk{ graph }; vector<decldecay_t(dijk.Infty())> d = dijk.GetDistance( 0 );
+  // AbstractUnionFindForest uff{ graph , AdditiveGroup<ll>() };
+  // FloydWarshall fw{ infty , w }; vector<vector<decltype(infty)>> d = fw.GetDistance();
+  RE a;
+}
+
+IN VO Solve()
+{
   CIN( int , N , M );
   // CIN( int , N ); int M = N - 1;
   vector<vector<path>> e( N );
@@ -9,7 +22,9 @@
     e[v].push_back( { u , w } );
     // w[u][v] = w[v][u] = w;
   }
-  Graph graph{ N , Get( e ) };
-  Dijkstra dijk{ graph }; vector<decldecay_t(dijk.Infty())> d = dijk.GetDistance( 0 );
-  // AbstractUnionFindForest uff{ graph , AdditiveGroup<ll>() };
-  // FloydWarshall fw{ infty , w }; vector<vector<decltype(infty)>> d = fw.GetDistance();
+  RETURN( Answer( N , M , e ) );
+  // RUN( Answer( N , M , e ) , a ){
+  //   COUT( a );
+  // }
+}
+REPEAT_MAIN(1);

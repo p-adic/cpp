@@ -1,5 +1,6 @@
-  CIN( int , N );
-  CIN( string , S );
+MP Answer( const int& N , const string& S )
+{
+  MP a{};
   // RollingHash<MP,int> rh{};
   // /* ../Utility/String/RollingHash/compress.txt */
 
@@ -14,3 +15,16 @@
   // /* lcp[i] = max_j(S[i,N)Ç∆S[i+j,N)ÇÃénêÿï–Ç™àÍívÇ∑ÇÈí∑Ç≥) */
   // vector<int> lcp = LCP( S );
   // /* ../Utility/String/Z-Algorithm/compress.txt */
+  RE a;
+}
+
+IN VO Solve()
+{
+  CIN( int , N );
+  CIN( string , S );
+  RETURN( Answer( N , S ) );
+  // RUN( Answer( N , S ) , a ){
+  //   COUT( a );
+  // }
+}
+REPEAT_MAIN(1);
