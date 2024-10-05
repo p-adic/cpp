@@ -8,7 +8,7 @@
 
 #include "../../Utility/StdStream/a_Body.hpp"
 
-void AutoCheck( int& exec_mode , const bool& use_getline )
+void AutoCheck( int& exec_mode , const bool& use_getline , const bool& sample_check , const string& problem_order )
 {
   int num = 0;
   int num_temp = 0;
@@ -16,19 +16,23 @@ void AutoCheck( int& exec_mode , const bool& use_getline )
   vector<string> problems{};
   int problems_size = 0;
   ASK_NUMBER(
-	     "提出用ファイルを実行する。" ,
-	     "サンプルの合わないファイルをデバッグする。" ,
-	     "提出済みファイルをデバッグする。" ,
-	     "ライブラリーを探索する。" ,
-	     "サンプルを解析する。" ,
-	     "愚直解で実験する。" ,
-	     "愚直解と提出用ファイルを入力の小さいテストケースで比較する。" ,
-	     "愚直解と提出用ファイルをランダムテストで比較する。" ,
-	     "終了する。"
-	     );
+             "提出用ファイルを実行する。" ,
+             sample_check ? "提出用ファイルが" + problem_order + "問題のサンプルと合うかを確認する。" : "（選択不可）" ,
+             "サンプルの合わない提出用ファイルをデバッグする。" ,
+             "提出済みファイルをデバッグする。" ,
+             "ライブラリーを探索する。" ,
+             "サンプルを解析する。" ,
+             "愚直解で実験する。" ,
+             "愚直解と提出用ファイルを入力の小さいテストケースで比較する。" ,
+             "愚直解と提出用ファイルをランダムテストで比較する。" ,
+             "終了する。"
+             );
   exec_mode = num;
   if( num == solve_mode ){
     CERR( "提出用ファイルを実行します。" );
+  } else if( num == sample_check_mode ){
+    assert( sample_check );
+    CERR( "提出用ファイルが" + problem_order + "問題のサンプルと合うかを確認します。" );
   } else if( num == sample_debug_mode ){
     CALL_AC( DebugHintWA );
   } else if( num == submission_debug_mode ){
@@ -105,6 +109,7 @@ AC( DebugHint )
     CERR( "    S_ijをO(1)で構築することを検討しましょう。" );
     CERR( "- multisetのcountを使っていませんか？" );
     CERR( "- リアクティブ問題でflushと改行をし忘れていませんか？" );
+    CERR( "- 特殊ジャッジ問題でassertなどに引っ掛かりジャッジの入力待ちになっていませんか？" );
     CERR( "- gccのvariadic arrayのバグの可能性がありませんか？" );
     CERR( "- 畳み込みでgccを使っていませんか？" );
     CERR( "- 構築可能性の判定問題であれば、時間を計測して打ち切りましょう。" );
