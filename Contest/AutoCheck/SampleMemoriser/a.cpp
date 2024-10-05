@@ -3,6 +3,45 @@
 #include "../../Header.hpp"
 #include "a_Body.hpp"
 
+void Solve();
+
+void SampleCheck( const string& sample_path , const string& input_path , const string& output_path , const string& problem_order , const int& test_case_num_bound , ifstream& ifs , ofstream& ofs )
+{
+
+  ifstream sample_count{ sample_path + problem_order + "/count.txt" };
+  int sample_repetition_num; sample_count >> sample_repetition_num;
+
+  for( int sample_num = 1 ; sample_num <= sample_repetition_num ; sample_num++ ){
+
+    string sample_num_str; sample_count >> sample_num_str;
+    assert( sample_num == stoi( sample_num_str ) );
+    CERRNS( "サンプル" , sample_num , "を実行します。\n" );
+    CERR( "" );
+    ifs = ifstream{ input_path + sample_num_str + ".txt" };
+    ofs = ofstream{ output_path + sample_num_str + ".txt" , ios::trunc };
+    int test_case_num = 1;
+
+    if( test_case_num_bound > 1 ){
+
+      ifs >> test_case_num;
+      assert( 1 <= test_case_num && test_case_num <= test_case_num_bound );
+        
+    }
+
+    for( int t = 0 ; t < test_case_num ; t++ ){
+
+      Solve();
+
+    }
+
+    CompareAnswer( sample_path , problem_order , sample_num_str );
+    CERRNS( "サンプル" , sample_num , "の実行を終了しました。\n" );
+    CERR( "" );
+    
+  }
+
+}
+
 void CompareAnswer( const string& sample_path , const string& problem_order , const string& sample_num )
 {
 
