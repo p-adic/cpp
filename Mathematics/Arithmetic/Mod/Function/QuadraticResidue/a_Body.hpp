@@ -3,61 +3,89 @@
 #pragma once
 #include "a.hpp"
 
+#include "../Power/a_Body.hpp"
+
 template <typename INT>
-INT QuadraticResidue( const INT& a , const INT& p )
+int QuadraticResidueSymbol( INT a , const ll& p , const bool& reduced )
 {
 
-  INT r = a % p;
+  if( !reduced ){
 
-  if( r == 0 ){
+    ( a %= p ) < 0 ? a += p : a;
+
+  }
+
+  if( a == 0 ){
 
     return 0;
 
   }
 
-  INT q = 2;
-  INT e = 0;
-  INT count = 0;
+  // p*pがオーバーフローしない時はオイラーの判定法を用いる。
+  if( ( p >> 31 ) == 0 ){
 
-  while( r % q == 0 ){
+    int answer = PowerMod( move( a ) , p >> 1 , p , true );
 
-    r /= q;
-    e++;
+    if( answer > 1 ){
+
+      assert( answer == p - 1 );
+      answer = -1;
+
+    }
+
+    return answer;
 
   }
 
-  if( e % 2 == 1 ){
+  // aの素因数pfを探索する。
+  // 前計算しても計算量は変わらない。
+  bool even_exponent = true;
+  bool qr = true;
 
-    if( ( ( p * p - 1 ) / 8 )% 2 == 1 ){
+  // pf=2のみ第2補充則を用いる。
+  while( ( a & 1 ) == 0 ){
 
-      count++;
+    a >>= 1;
+    even_exponent = !even_exponent;
+
+  }
+
+  if( !even_exponent ){
+
+    int k = ( p >> 1 ) & 3;
+
+    if( 0 < k && k < 3 ){
+
+      qr = !qr;
       
     }
 
   }
 
-  q++;
+  ll pf = 3;
   
-  while( r != 1 ){
+  while( a != 1 ){
 
-    if( r % q == 0 ){
+    if( a % pf == 0 ){
 
-      e = 0;
+      a /= pf;
+      bool even_exponent = false;
       
-      while( r % q == 0 ){
+      while( a % pf == 0 ){
 
-	r /= q;
-	e++;
+	a /= pf;
+	even_exponent = !even_exponent;
 
       }
 
-      if( e % 2 == 1 ){
+      if( !even_exponent ){
 
-	INT qr = QuadraticResidue<INT>( p , q ) * ( ( ( ( p - 1 ) * ( q - 1 ) ) / 4 ) % 2== 0 ? 1 : -1 );
+        // pf>2では相互法則を用いる。
+	int qrs = QuadraticResidueSymbol<ll>( p , pf ) * ( ( ( ( p >> 1 ) & 1 ) & ( ( pf >> 1 ) & 1 ) ) == 0 ? 1 : -1 );
 
-	if( qr == -1 ){
+	if( qrs == -1 ){
 
-	  count++;
+	  qr = !qr;
 	  
 	}
 	
@@ -65,16 +93,17 @@ INT QuadraticResidue( const INT& a , const INT& p )
 
     }
 
-    q += 2;
+    pf += 2;
 
-    if( q * q > r ){
+    if( pf > a / pf ){
 
-      q = r;
+      // 素因数分解と違って最後まで処理する必要あり。
+      pf = a;
       
     }
 
   }
 
-  return count % 2 == 0 ? 1 : -1;
+  return qr ? 1 : -1;
   
 }
