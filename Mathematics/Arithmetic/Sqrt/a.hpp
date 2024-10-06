@@ -15,3 +15,7 @@ template <typename INT> INT RoundDownSqrt( const INT& n );
 
 // √nを以上の最小の整数をO(log n)で計算する。
 template <typename INT> INT RoundUpSqrt( const INT& n );
+
+// 素数法の平方根は
+// ../Mod/Function/QuadraticResidu/TonelliShanks/
+// に実装。
