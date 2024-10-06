@@ -85,6 +85,8 @@ public:
   static inline const Mod<M>& zero() noexcept;
   static inline const Mod<M>& one() noexcept;
 
+  static inline constexpr INT_TYPE_FOR_MOD GetModulo() noexcept;
+
 private:
   template <typename INT> inline constexpr Mod<M>& PositivePower( INT exponent ) noexcept;
   template <typename INT> inline constexpr Mod<M>& NonNegativePower( INT exponent ) noexcept;

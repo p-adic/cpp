@@ -64,6 +64,8 @@ template <INT_TYPE_FOR_MOD M> inline constexpr Mod<M> Mod<M>::Derepresent( uint 
 template <INT_TYPE_FOR_MOD M> inline const Mod<M>& Mod<M>::zero() noexcept { static const Mod<M> z{}; return z; }
 template <INT_TYPE_FOR_MOD M> inline const Mod<M>& Mod<M>::one() noexcept { static const Mod<M> o{ 1 }; return o; }
 
+template <INT_TYPE_FOR_MOD M> inline constexpr INT_TYPE_FOR_MOD Mod<M>::GetModulo() noexcept { return M; }
+
 template <INT_TYPE_FOR_MOD M> constexpr ull Mod<M>::GCD( ull n0 , ull n1 ) noexcept
 {
 
