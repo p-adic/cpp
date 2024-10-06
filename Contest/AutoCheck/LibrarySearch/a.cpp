@@ -224,6 +224,16 @@ AC( ExplicitExpressionOneArrayEntrySum )
   CERR( "とします。必要ならば(a_i)_iをソートして広義単調増大とします。" );
   CERR( "- f(a_{i+1}) - f(a_i)がO(1)で計算できO(N)が間に合いそうならば、" );
   CERR( "  f(a_i)の差分計算による高速化" );
+  CERR( "- f(a_i)がiに関する等比数列K個の和で表せO(K log N)が間に合いそうならば" );
+  CERR( "  等比数列の総和の公式" );
+  CERR( "  \\Mathematics\\Arithmetic\\Power\\GeometricProgression" );
+  CERR( "- f(a_i)がK次正方行列AとK次元ベクトルvを用いて(A^i v)[0]と表せ" );
+  CERR( "  - A-Eが正則でO(K^3 log N)が間に合いそうならば、等比数列の総和の公式" );
+  CERR( "    \\Mathematics\\LinearAlgebra" );
+  CERR( "    \\Mathematics\\Arithmetic\\Power\\GeometricProgression" );
+  CERR( "  - A-Eが正則とは限らずO(K^3 log N)が間に合いそうならば、vにf(a_i)の" );
+  CERR( "    累積和を末尾挿入し、行列累乗" );
+  CERR( "    \\Mathematics\\LinearAlgebra" );
   CERR( "- #im(f)が小さくf(a_)の各点逆像が計算しやすいならば" );
   CERR( "  fの各点逆像による纏め上げ" );
   CERR( "  sum_i f(a_i)=sum_y #f(a_)^{-1}(y) y" );
