@@ -81,6 +81,8 @@ public:
   static inline const Montgomery<M>& one() noexcept;
   static inline const Montgomery<M>& two() noexcept;
 
+  static inline constexpr INT_TYPE_FOR_MONTGOMERY GetModulo() noexcept;
+  
 private:
   static inline constexpr INT_TYPE_FOR_MONTGOMERY Form( const INT_TYPE_FOR_MONTGOMERY& n ) noexcept;
   static inline constexpr ull& Reduction( ull& n ) noexcept;
