@@ -8,7 +8,7 @@
 // を満たす場合にのみサポート。
 
 // 入れ子の深さdにおけるループは添字が[lower_bound[d],upper_limit[d])の範囲を動くように
-// size重のforループを行うように添字ベクトルindexを合計計算量O(D N^D)で更新する。
+// size重のforループを行うように添字ベクトルindexを合計計算量O(size N^size)で更新する。
 template <typename INT> bool NextLoop( const int& size , const vector<INT>& lower_bound , const vector<INT>& upper_limit , vector<INT>& index );
 template <typename INT> bool NextLoop( const vector<INT>& lower_bound , const vector<INT>& upper_limit , vector<INT>& index );
 template <typename INT> bool NextLoopEq( const int& size , const vector<INT>& lower_bound , const vector<INT>& upper_bound , vector<INT>& index );

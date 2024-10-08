@@ -25,7 +25,7 @@ template <typename INT> bool NextLoop( const int& size , const vector<INT>& lowe
 
 }
 
-template <typename INT> bool NextLoop( const vector<INT>& lower_bound , const vector<INT>& upper_limit , vector<INT>& index ) { return NextLoop( index.size() , lower_bound , upper_limit , index ); }
+template <typename INT> inline bool NextLoop( const vector<INT>& lower_bound , const vector<INT>& upper_limit , vector<INT>& index ) { return NextLoop( index.size() , lower_bound , upper_limit , index ); }
 
 template <typename INT> bool NextLoopEq( const int& size , const vector<INT>& lower_bound , const vector<INT>& upper_bound , vector<INT>& index )
 {
@@ -49,4 +49,5 @@ template <typename INT> bool NextLoopEq( const int& size , const vector<INT>& lo
 
 }
 
-template <typename INT> bool NextLoopEq( const vector<INT>& lower_bound , const vector<INT>& upper_bound , vector<INT>& index ) { return NextLoopEq( index.size() , lower_bound , upper_bound , index ); }
+template <typename INT> inline bool NextLoopEq( const vector<INT>& lower_bound , const vector<INT>& upper_bound , vector<INT>& index ) { return NextLoopEq( index.size() , lower_bound , upper_bound , index ); }
+
