@@ -6,7 +6,7 @@
 
 // verify:
 // https://yukicoder.me/submissions/1014293 (DivisorZetaTransform)
-// https://yukicoder.me/submissions/1014291 (MultipleZetaTransform, Add, InitialSegmentSum, InverseImageSum)
+// https://yukicoder.me/submissions/1016342 (MultipleZetaTransform, Add, InitialSegmentSum, InverseImageSum)
 
 // LD‚ÍLeastDivisor‚ğ“Áê‰»‚µ‚½Œ^B
 template <typename LD>

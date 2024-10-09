@@ -70,11 +70,11 @@ template <typename T , typename GRAPH , typename GRAPH_INV , typename U , typena
 
 template <typename T , typename GRAPH , typename GRAPH_INV , typename U , typename Z_ALG> inline const U& VirtualZetaTransform<T,GRAPH,GRAPH_INV,U,Z_ALG>::InitialSegmentSum( const T& t ) { auto&& i = m_G.Enumeration_inv( t ); assert( i < m_G.size() ); return m_val[i]; }
 
-template <typename T , typename GRAPH , typename GRAPH_INV , typename U , typename Z_ALG> template <typename S , typename F_INV_MAX , typename RANGE>
-U VirtualZetaTransform<T,GRAPH,GRAPH_INV,U,Z_ALG>::InverseImageSum( F_INV_MAX&& f_inv_max , RANGE&& range , const S& s )
+template <typename T , typename GRAPH , typename GRAPH_INV , typename U , typename Z_ALG> template <typename F_INV_MAX , typename RANGE>
+U VirtualZetaTransform<T,GRAPH,GRAPH_INV,U,Z_ALG>::InverseImageSum( F_INV_MAX&& f_inv_max , RANGE&& range , const T& s )
 {
 
-  static_assert( is_invocable_r_v<T,F_INV_MAX,const S&> && is_invocable_r_v<vector<T>,RANGE,const S&> );
+  static_assert( is_invocable_r_v<T,F_INV_MAX,const T&> && is_invocable_r_v<vector<T>,RANGE,const T&> );
   auto&& t = f_inv_max( s );
   auto&& sub = range( s );
   U answer = m_R.Zero();
@@ -85,7 +85,7 @@ U VirtualZetaTransform<T,GRAPH,GRAPH_INV,U,Z_ALG>::InverseImageSum( F_INV_MAX&& 
     auto&& t_sub = f_inv_max( s_sub );
     auto&& i = m_G.Enumeration_inv( t_sub );
     assert( i < size );
-    answer = m_R.Sum( move( answer ) , m_R.ScalarProduct( Moevius( t_sub , t ) , m_val[i] ) );
+    answer = m_R.Sum( move( answer ) , m_R.ScalarProduct( Moevius( s_sub , s ) , m_val[i] ) );
 
   }
 
@@ -93,7 +93,7 @@ U VirtualZetaTransform<T,GRAPH,GRAPH_INV,U,Z_ALG>::InverseImageSum( F_INV_MAX&& 
 
 }
 
-template <typename T , typename GRAPH , typename GRAPH_INV , typename U , typename Z_ALG> template <typename S , typename F_INV_MAX> inline const U& VirtualZetaTransform<T,GRAPH,GRAPH_INV,U,Z_ALG>::InitialSegmentInverseImageSum( F_INV_MAX&& f_inv_max , const S& s ) { return m_val[m_G.Enumeration_inv( f_inv_max( s ) )]; }
+template <typename T , typename GRAPH , typename GRAPH_INV , typename U , typename Z_ALG> template <typename F_INV_MAX> inline const U& VirtualZetaTransform<T,GRAPH,GRAPH_INV,U,Z_ALG>::InitialSegmentInverseImageSum( F_INV_MAX&& f_inv_max , const T& s ) { return m_val[m_G.Enumeration_inv( f_inv_max( s ) )]; }
 
 
 template <typename T , typename GRAPH , typename GRAPH_INV , typename U , typename Z_ALG>

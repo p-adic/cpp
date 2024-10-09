@@ -5,9 +5,14 @@
 // 入力の範囲内で要件
 // (1) GはTの等号付き半順序構造<=のグラフ（s<=t <=> s <- t）である。
 // (2) G_invはGの辺を逆にしたグラフである。
-// (3) RはUの非単位的Z代数構造である。
+// (3) RはUの（単位的でなくても良い）Z代数構造である。
 // を満たす場合にのみサポート。
-// ただし全体加算や一点取得を行わないならばRはダミーのZ作用を持つ非単位的環でも良い。
+// ただし
+// - 全体加算や一点取得を行わないならばRはダミーのZ作用を持つ非単位的環でも良い。
+// - 全体乗算や畳み込み乗法を行わないならばRはダミーの積を持つZ加群でも良い。
+
+// T上の関数f(t)を{-∞}∪T上の隣接代数の元F(s,t)=s==-∞?f(t):0に対応させてゼータ変換する。
+// 例えば<=が倍数関係ならば倍数全体での総和、約数関係ならば約数全体での総和を取る。
 
 // R.Zero()による初期化O(size)
 // ゼータ変換前の配列による初期化O(size+始切片のサイズの総和)（可換加法モノイド性を使う）
@@ -23,7 +28,7 @@
 // 一点取得O(始切片(-∞,t]のサイズ * メビウス関数の計算量)（非単位的Z代数性を使う）
 // 始切片和取得O(1)（可換加法モノイド性を使う）
 
-// 逆像和取得O(始切片(-∞,f_inv_max(r_max)]のサイズ * メビウス関数の計算量)（非単位的Z代数性を使う）
+// 逆像和取得O(始切片(-∞,r_max]のサイズ * メビウス関数の計算量)（非単位的Z代数性を使う）
 // 始切片逆像和取得O(1)（可換加法モノイド性を使う）
 template <typename T , typename GRAPH , typename GRAPH_INV , typename U , typename Z_ALG>
 class VirtualZetaTransform
@@ -55,36 +60,36 @@ public:
   inline U Get( const T& t );
   inline const U& InitialSegmentSum( const T& t );
 
-  // 半順序集合Sと部分写像f_inv_max:S->Tと写像range:S->S^{<∞}と引数であるSの要素sが要件
+  // 部分写像f_inv_max:T->Tと写像range:T->T^{<∞}と引数であるSの要素sが要件
   // (1) f_inv_maxは定義域にrange(s)を含む
   // (2) range(s)は重複を持たない。（よってSの部分集合とみなす）
   // (3) sはrange(s)の最大元である。
   // を満たし、かつ要件
-  // (4) f_inv_max(s)を上界に持つTの要素全体R_sへのfの制限f_sは順序保存写像R_s->r(s)である。
+  // (4) f_inv_max(s)を上界に持つTの要素全体R_sへのfの制限f_sは順序保存写像R_s->range(s)である。
   // (5) range(s)の任意の要素s'に対しf_inv_max(s')が逆像f_s^{-1}(s')の最大元である。
   //    （従って特にf_sは全射）
-  // を満たす写像f:T->Sが存在する場合にのみ以下の２つをサポート。
+  // を満たす写像f:T->Tが存在する場合にのみ以下の２つをサポート。
 
   // f(t)=sを満たすR_sの要素t全体を渡るm_val[t]の総和取得。
   // 半順序に付随するメビウス関数のデフォルトの再帰式を使うため、
   // 再帰深度が浅い場合にしか使えない。
-  template <typename S , typename F_INV_MAX , typename RANGE> U InverseImageSum( F_INV_MAX&& f_inv_max , RANGE&& range , const S& s );
-  // 例１：S=T=int、<=:任意の等号つき半順序
+  template <typename F_INV_MAX , typename RANGE> U InverseImageSum( F_INV_MAX&& f_inv_max , RANGE&& range , const T& s );
+  // 例１：T=int、<=:任意の等号つき半順序
   //      f=各点の逆像が「非空かつ上に有界」を満たす単調減少写像、
   //      f_inv_max=fの逆像の最大値、range(x)=[1,x]
   //      -> f^{-1}({f(s)})の各点tをわたるm_val[t]の総和取得。
-  // 例２：S=T=[1,size)、s <= t: sはtの約数 
+  // 例２：T=[1,size)、s <= t: sはtの約数 
   //      f=gcd(lcm(a,-),b)（a,bはaがbの約数である定数in S）、f_inv_max=id_S、s=b、
   //      range=aの倍数であるbの約数全体の集合を返す定数関数
   //      -> lcm(a,t)がbの倍数であるsize未満の各正整数tをわたるm_val[t]の総和取得。
-  // 例３：S=T=[1,size)、s <= t: sはtの倍数
+  // 例３：T=[1,size)、s <= t: sはtの倍数
   //      f=gcd(a,-)（aは定数in S）、f_inv_max=id_S、s=1、
   //      range=aの約数全体の集合を返す定数関数
   //      -> aと互いに素なsize未満の各正整数tをわたるm_val[t]の総和取得。
   
   // f(t) <= sを満たすR_sの要素t全体を渡るm_val[t]の総和取得。
-  //（結果的にrangeは使わないが要件上はrの存在が必要） 
-  template <typename S , typename F_INV_MAX> inline const U& InitialSegmentInverseImageSum( F_INV_MAX&& f_inv_max , const S& s );
+  //（結果的にrangeは使わないが要件上はrangeの存在が必要） 
+  template <typename F_INV_MAX> inline const U& InitialSegmentInverseImageSum( F_INV_MAX&& f_inv_max , const T& s );
  
 private:
   virtual int Moevius( const T& t0 , const T& t1 );
