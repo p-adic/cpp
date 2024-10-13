@@ -39,8 +39,6 @@ template <typename R , typename PT_MAGMA , typename U , typename RN_BIMODULE> in
 {
 
   const int d = i / m_N_sqrt;
-  const int i_min = d * m_N_sqrt;
-  const int i_ulim = i_min + m_N_sqrt;
   U& m_ai = m_a[i];
   U& m_bd = m_b[d];
 
