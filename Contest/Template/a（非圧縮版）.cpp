@@ -234,17 +234,6 @@ template <typename INT> using T3 = tuple<INT,INT,INT>;
 template <typename INT> using T4 = tuple<INT,INT,INT,INT>;
 using path = pair<int,ll>;
 
-/* データ構造用 */
-template <typename T> inline T Addition( const T& t0 , const T& t1 ) { return t0 + t1; }
-template <typename T> inline T Xor( const T& t0 , const T& t1 ){ return t0 ^ t1; }
-template <typename T> inline T Multiplication( const T& t0 , const T& t1 ) { return t0 * t1; }
-template <typename T> inline const T& Zero() { static const T z{}; return z; }
-template <typename T> inline const T& One() { static const T o = 1; return o; }
-template <typename T> inline T AdditionInv( const T& t ) { return -t; }
-template <typename T> inline T Id( const T& v ) { return v; }
-template <typename T> inline T Min( const T& a , const T& b ){ return a < b ? a : b; }
-template <typename T> inline T Max( const T& a , const T& b ){ return a < b ? b : a; }
-
 /* 圧縮用 */
 #define TE template
 #define TY typename

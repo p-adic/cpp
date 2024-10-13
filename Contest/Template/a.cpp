@@ -270,16 +270,6 @@ TE <TY INT> US T3 = tuple<INT,INT,INT>;
 TE <TY INT> US T4 = tuple<INT,INT,INT,INT>;
 US path = pair<int,ll>;
 
-/* データ構造用 */
-TE <TY T> IN T Addition(CO T& t0,CO T& t1){RE t0 + t1;}
-TE <TY T> IN T Xor(CO T& t0,CO T& t1){RE t0 ^ t1;}
-TE <TY T> IN T MU(CO T& t0,CO T& t1){RE t0 * t1;}
-TE <TY T> IN CO T& Zero(){ST CO T z{};RE z;}
-TE <TY T> IN CO T& One(){ST CO T o = 1;RE o;}TE <TY T> IN T AdditionInv(CO T& t){RE -t;}
-TE <TY T> IN T Id(CO T& v){RE v;}
-TE <TY T> IN T Min(CO T& a,CO T& b){RE a < b?a:b;}
-TE <TY T> IN T Max(CO T& a,CO T& b){RE a < b?b:a;}
-
 /* VVV 常設ライブラリは以下に挿入する。*/
 #ifdef DEBUG
   #include "C:/Users/user/Documents/Programming/Contest/Template/Local/a_Body.hpp"
