@@ -4,12 +4,13 @@
   // /* val_limit = 448 à sqrt(2e5) -> length = 86 */
   // /* val_limit = 1e5 -> length = 9592           */
   // /* val_limit = 1e6 -> length = 78498          */
-  // PrimeEnumeration<int,316> pe{};
-  // // static PrimeEnumeration<int,int(1e5)> pe{};
+  // PrimeEnumeration<316> pe{};
+  // // constexpr PrimeEnumeration<int(2e5)> pe{};
+  // // static PrimeEnumeration<int(3e5)> pe{};
   // // auto& length = pe.length();
 
-  // auto& [pf,e] = PrimeFactorisation( pe , N );
-  // // auto& [pf,e,q] = PrimePowerFactorisation( pe , N );
+  // auto [pf,e] = PrimeFactorisation( pe , N );
+  // // auto [pf,e,q] = PrimePowerFactorisation( pe , N );
 
   // /* CountDivisor( n ):        */
   // /* n <= 1e3 -> answer <= 32  */
