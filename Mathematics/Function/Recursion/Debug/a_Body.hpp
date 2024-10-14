@@ -14,8 +14,8 @@ template <typename REC> inline NonMemorisationRecursion<REC>::NonMemorisationRec
 
   if( init ){
     
-    cerr << "NonMemorisationRecursion " << m_name << " をデバッグモードで実行します。" << endl;
-    cerr << "エラー出力以外に変更はありません。" << endl;
+    DERR( "NonMemorisationRecursion" , m_name , "をデバッグモードで実行します。" );
+    DERR( "エラー出力以外に変更はありません。" );
     init = false;
 
   }
@@ -29,8 +29,8 @@ template <typename REC> inline MemorisationRecursion<REC>::MemorisationRecursion
 
   if( init ){
     
-    cerr << "MemorisationRecursion " << m_name << " をデバッグモードで実行します。" << endl;
-    cerr << "エラー出力以外に変更はありません。" << endl;
+    DERR( "MemorisationRecursion" , m_name , "をデバッグモードで実行します。" );
+    DERR( "エラー出力以外に変更はありません。" );
     init = false;
 
   }
@@ -42,7 +42,7 @@ inline ret_t<REC,NonMemorisationRecursion<REC>&,const Args&...> NonMemorisationR
 {
 
   auto answer = REC::operator()( *this , args... );
-  cerr << "非メモ化再帰： " << m_name << "(" << tuple<Args...>{ args... } << ") = " << answer << endl;
+  DERR( "非メモ化再帰：" , m_name , "(" , tuple<Args...>{ args... } , ") =" , answer );
   return answer;
 
 }
@@ -57,7 +57,7 @@ inline const ret_t<REC,MemorisationRecursion<REC>&,const Args&...>& Memorisation
   if( memory.count( v ) == 0 ){
 
     auto& answer = memory[v] = REC::operator()( *this , args... );
-    cerr << "メモ化再帰： " << m_name << "(" << v << ") = " << answer << endl;
+    DERR( "メモ化再帰：" , m_name , "(" , v , ") =" , answer );
     return answer;
 
   }

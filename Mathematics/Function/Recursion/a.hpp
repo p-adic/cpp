@@ -9,6 +9,10 @@
 // https://yukicoder.me/submissions/998766（Recursion）
 // https://atcoder.jp/contests/math-and-algorithm/submissions/56175446（MemoRecursion）
 
+// Recursion( int , f , const int& n ){
+//   return n <= 1 ? n : ( f( n - 1 ) + f( n - 2 ) ) % 1000000007;
+// };
+
 // MemoRecursion( int , f , const int& n ){
 //   return n <= 1 ? n : ( f( n - 1 ) + f( n - 2 ) ) % 1000000007;
 // };
