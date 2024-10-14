@@ -3,11 +3,11 @@
 #pragma once
 #include "a.hpp"
 
-
-template <typename INT> pair<vector<INT>,vector<int>>
-PrimeFactorisation( INT n )
+template <typename INT>
+pair<vector<INT>,vector<int>> PrimeFactorisation( INT n )
 {
 
+  assert( n > 0 );
   vector<INT> P{};
   vector<int> E{};
   INT p = 2;
@@ -49,10 +49,12 @@ PrimeFactorisation( INT n )
 }
 
 template <typename PE , typename INT>
-auto PrimeFactorisation( const PE& pe , INT n ) -> enable_if_t<IsPE<PE>,pair<vector<int>,vector<int>>>
+auto PrimeFactorisation( const PE& pe , INT n ) -> enable_if_t<IsPE<PE>,pair<vector<INT>,vector<int>>>
 {
 
-  vector<int> P{};
+  assert( n > 0 );
+  // pe‚ÅŠÇ—‚³‚ê‚Ä‚¢‚È‚¢‘fˆö”‚ÌÏ‚ªÅŒã‚ÉŠi”[‚³‚ê‚é‚½‚ßintŒ^‚É‚Íû‚Ü‚ç‚È‚¢‰Â”\«‚ª‚ ‚éB
+  vector<INT> P{};
   vector<int> E{};
   const int& length = pe.length();
 
@@ -92,10 +94,11 @@ auto PrimeFactorisation( const PE& pe , INT n ) -> enable_if_t<IsPE<PE>,pair<vec
 
 }
 
-template <typename LD , typename INT>
-auto PrimeFactorisation( const LD& ld , INT n ) -> enable_if_t<!IsPE<LD>,pair<vector<int>,vector<int>>>
+template <typename LD>
+auto PrimeFactorisation( const LD& ld , int n ) -> enable_if_t<!IsPE<LD>,pair<vector<int>,vector<int>>>
 {
 
+  assert( n > 0 );
   vector<int> P{};
   vector<int> E{};
 
@@ -132,6 +135,7 @@ template <typename INT>
 tuple<vector<INT>,vector<int>,vector<INT>> PrimePowerFactorisation( INT n )
 {
 
+  assert( n > 0 );
   vector<INT> P{};
   vector<int> E{};
   vector<INT> Q{};
@@ -176,10 +180,11 @@ tuple<vector<INT>,vector<int>,vector<INT>> PrimePowerFactorisation( INT n )
 }
 
 template <typename PE , typename INT>
-auto PrimePowerFactorisation( const PE& pe , INT n ) -> enable_if_t<IsPE<PE>,tuple<vector<int>,vector<int>,vector<INT>>>
+auto PrimePowerFactorisation( const PE& pe , INT n ) -> enable_if_t<IsPE<PE>,tuple<vector<INT>,vector<int>,vector<INT>>>
 {
 
-  vector<int> P{};
+  assert( n > 0 );
+  vector<INT> P{};
   vector<int> E{};
   vector<INT> Q{};
   const int& length = pe.length();
@@ -224,10 +229,11 @@ auto PrimePowerFactorisation( const PE& pe , INT n ) -> enable_if_t<IsPE<PE>,tup
   
 }
 
-template <typename LD , typename INT>
-auto PrimePowerFactorisation( const LD& ld , INT n ) -> enable_if_t<!IsPE<LD>,tuple<vector<int>,vector<int>,vector<INT>>>
+template <typename LD>
+auto PrimePowerFactorisation( const LD& ld , int n ) -> enable_if_t<!IsPE<LD>,tuple<vector<int>,vector<int>,vector<int>>>
 {
 
+  assert( n > 0 );
   vector<int> P{};
   vector<int> E{};
   vector<int> Q{};
