@@ -26,6 +26,7 @@ class MemorisationRecursion : REC
 
 private:
   string m_name;
+  int m_num;
   
 public:
   inline MemorisationRecursion( REC rec );
