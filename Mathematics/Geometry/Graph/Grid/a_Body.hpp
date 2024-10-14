@@ -5,6 +5,8 @@
 
 #include "../a_Body.hpp"
 
+#include "../../../../Utility/StdStream/a_Body.hpp"
+
 inline T2<int> EnumHW( const int& v ) { return { v / W , v % W }; }
 inline int EnumHW_inv( const T2<int>& ij ) { auto& [i,j] = ij; return i * W + j; }
 
@@ -85,7 +87,7 @@ vector<pair<T2<int>,ll>> WEdgeOnGrid( const T2<int>& v ){
 
 }
 
-inline void SetWallStringOnGrid( const int& i , vector<string>& S ){ if( S.empty() ){ S.resize( H ); } cin >> S[i]; assert( int( S[i].size() ) == W ); }
+inline void SetWallStringOnGrid(){ grid.resize( H ); for( int i = 0 ; i < H ; i++ ){ SET( grid[i] ); assert( int( grid[i].size() ) == W ); } }
 
 inline int DirectionNumberOnGrid( const int& i , const int& j , const int& k , const int& h ) { return i < k ? 2 : i > k ? 0 : j < h ? 1 : ( assert( j > h ) , 3 ); }
 inline int DirectionNumberOnGrid( const T2<int>& v , const T2<int>& w ) { auto& [i,j] = v; auto& [k,h] = w; return DirectionNumberOnGrid( i , j , k , h ); }
