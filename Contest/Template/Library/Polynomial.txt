@@ -1,0 +1,24 @@
+/*
+- Polynomial (20KB)
+  Polynomial/compress.txt
+  - TruncatedPolynomial (31KB)
+    Polynomial/Truncate/compress.txt
+    - NonProth (34KB)
+      Polynomial/Truncate/NonProth/compress.txt
+  - BostanMori: f/gの1係数のみ取得 (2KB)
+    Polynomial/BostanMori/compress.txt
+  - Composition: 合成,メビウス変換,指数関数のメビウス変換を代入,メビウス変換の対数関数を合成 (5KB)
+    Polynomial/Composition/compress.txt
+  - Cumulative: 総和,総乗,べき場,指数関数の線形結合,累積和多項式 (4KB)
+    Polynomial/Cumulative/compress.txt
+    - GridStampCoveringExpectation: スタンプで被覆する回数の期待値 (3KB)
+      Polynomial/Cumulative/GridStampCoveringExpectation/compress.txt
+  - Mod: 合同式 (1KB)
+    Polynomial/Mod/compress.txt
+  - LagrangeInterpolation: ラグランジュ補間 (2KB)
+    Polynomial/LagrangeInterpolation/compress.txt
+  - IntervalEvaluation: 評価点シフト,区間に特化した多点評価 (8KB)
+    Polynomial/IntervalEvaluation/compress.txt
+  - MultipointEvaluation: 一般の多点評価 (4KB)
+    Polynomial/MultipointEvaluation/compress.txt
+*/

@@ -1,0 +1,10 @@
+/*
+- DFS (6KB)
+  Geometry/Graph/Algorithm/DepthFirstSearch/compress.txt
+  - Tree (13KB)
+    Geometry/Graph/Algorithm/DepthFirstSearch/Tree/compress.txt
+    - HeavyLightDecomposition (15KB)
+      Geometry/Graph/Algorithm/DepthFirstSearch/Tree/HeavyLightDecomposition/compress.txt
+    - WeightedTree (18KB)
+      Geometry/Graph/Algorithm/DepthFirstSearch/Tree/Weighted/compress.txt
+*/

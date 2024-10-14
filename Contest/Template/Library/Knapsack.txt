@@ -1,0 +1,27 @@
+/*
+- Knapsack (8KB)
+  Combinatorial/KnapsackProblem/compress.txt
+  - Costfree: コストなし線形版 (3KB)
+    Combinatorial/KnapsackProblem/Cosfree/compress.txt
+    - Difference (7KB)
+      Combinatorial/KnapsackProblem/Cosfree/Difference/Compress.txt
+    - InitialSegment (3KB)
+      Combinatorial/KnapsackProblem/Cosfree/InitialSegment/Compress.txt
+    - Valuewise (1KB)
+      Combinatorial/KnapsackProblem/Cosfree/Valuewise/tcompress.txt
+  - Interval: 区間和 (4KB)
+    Combinatorial/KnapsackProblem/Interval/compress.txt
+    - Costfree: コストなし線形版 (4KB)
+      Combinatorial/KnapsackProblem/Interval/Costfree/compress.txt
+      - UnboundedValueSum: 上限なし (1KB)
+        Combinatorial/KnapsackProblem/Interval/Costfree/compress.txt
+  - BoundedChoice (14KB)
+    Combinatorial/KnapsackProblem/BoundedChoice/compress.txt
+      - Costfree (14KB)
+        Combinatorial/KnapsackProblem/BoundedChoice/Costfree/compress.txt
+        - NegativeValue (17KB)
+          Combinatorial/KnapsackProblem/BoundedChoice/Costfree/NegativeValue/compress.txt
+  :
+  :
+  https://p-adic.github.io/cpp/#:~:text=ナップサック問題
+*/

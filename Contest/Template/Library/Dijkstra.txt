@@ -1,0 +1,16 @@
+/*
+- Dijkstra (6KB)
+  Geometry/Graph/Algorithm/Dijkstra/compress.tx
+  - Double: グラフのグラフ上の分割統治 (10KB)
+    Geometry/Graph/Algorithm/Dijkstra/Double/compress.txt
+    - Errand: サブゴール付き最短経路 (14KB)
+      Geometry/Graph/Algorithm/Dijkstra/Double/Errand/compress.txt
+    - Grid: グリッド上の分割統治 (11KB)
+      Geometry/Graph/Algorithm/Dijkstra/Double/Grid/compress.txt
+  - Potentialised: ポテンシャルを渡せる (9KB)
+    Geometry/Graph/Algorithm/Dijkstra/Potentialised/compress.txt
+    - BellmanFord: ポテンシャルを自動で計算する (15KB)
+      Geometry/Graph/Algorithm/Dijkstra/Potentialised/BellmanFord/compress.txt
+    - MinimumCostFlow (16KB)
+      Geometry/Graph/Algorithm/Dijkstra/Potentialised/MinimumCostFlow/compress.txt
+*/

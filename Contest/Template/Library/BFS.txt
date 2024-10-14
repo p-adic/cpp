@@ -1,0 +1,12 @@
+/*
+- BFS (6KB)
+  Geometry/Graph/Algorithm/BreadthFirstSearch/compress.txt
+  - AdicExhausiveSearch (11KB)
+    Geometry/Graph/Algorithm/BreadthFirstSearch/AdicExhausiveSearch/compress.txt
+  - BitExhausiveSearch (10KB)
+    Geometry/Graph/Algorithm/BreadthFirstSearch/BitExhausiveSearch/compress.txt
+  - QuotientSet (3KB)
+    Geometry/Graph/Algorithm/BreadthFirstSearch/QuotientSet/compress.txt
+  - ZeroOneBreadthFirstSearch (4KB)
+    Geometry/Graph/Algorithm/BreadthFirstSearch/01/compress.txt
+*/

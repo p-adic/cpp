@@ -1,0 +1,10 @@
+/*
+- BIT (5KB)
+  SetTheory/DirectProduct/AffineSpace/BIT/compress.txt
+  - IntervalAdd (9KB)
+    SetTheory/DirectProduct/AffineSpace/BIT/IntervalAdd/compress.txt
+  - IntervalMax (9KB)
+    SetTheory/DirectProduct/AffineSpace/BIT/IntervalMax/compress.txt
+  - Monoid (5KB)
+    SetTheory/DirectProduct/AffineSpace/BIT/Monoid/compress.txt
+*/

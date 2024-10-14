@@ -1,0 +1,27 @@
+/*
+- SqrtDecomposition
+  - Monoid: MonoidBITの下位互換 (5KB)
+    SetTheory/DirectProduct/AffineSpace/SqrtDecomposition/Monoid/compress.txt
+    - Commutative: 一点乗算のみMonoidBITと違ってO(1) (5KB)
+      SetTheory/DirectProduct/AffineSpace/SqrtDecomposition/Monoid/Commutative/compress.txt
+      - IntervalMultiply: (6KB)
+        SetTheory/DirectProduct/AffineSpace/SqrtDecomposition/Monoid/Commutative/IntervalMultiply/compress.txt
+    - IntervalSet (9KB)
+      SetTheory/DirectProduct/AffineSpace/SqrtDecomposition/Monoid/IntervalSet/compress.txt
+  - Dual: 非可換マグマ作用に特化,一点作用もO(√N) (4KB)
+    SetTheory/DirectProduct/AffineSpace/SqrtDecomposition/Dual/compress.txt
+    - Commutative: 可換マグマ作用,一点作用が高速 (6KB)
+      SetTheory/DirectProduct/AffineSpace/SqrtDecomposition/Dual/Commutative/compress.txt
+    - GeometricProgression: 等差／等比数列による区間min作用 (8KB)
+      SetTheory/DirectProduct/AffineSpace/SqrtDecomposition/Dual/GeometricProgression/compress.txt
+  - LazyEvluation (14KB)
+    SetTheory/DirectProduct/AffineSpace/SqrtDecomposition/LazyEvaluation/compress.txt
+    - Equivariant: 自由構成などに特化 (13KB)
+      SetTheory/DirectProduct/AffineSpace/SqrtDecomposition/LazyEvaluation/Equivariant/compress.txt
+    - IntervalMultiply (18KB)
+      SetTheory/DirectProduct/AffineSpace/SqrtDecomposition/LazyEvaluation/IntervalMultiply/compress.txt
+  - Mo (3KB)
+    SetTheory/DirectProduct/AffineSpace/SqrtDecomposition/Mo/compress.txt
+  - Optimisation: 近似的に単調関数の絶対値の最小化 (2KB)
+    SetTheory/DirectProduct/AffineSpace/SqrtDecomposition/Optimisation/compress.txt
+*/

@@ -84,69 +84,20 @@ IN VO RandomTest( const int& test_case_num )
 #else /* INCLUDE_SUB */
 #ifdef INCLUDE_LIBRARY
 
-/*
-- BFS (6KB)
-  Geometry/Graph/Algorithm/BreadthFirstSearch/compress.txt
-  - AdicExhausiveSearch (11KB)
-    Geometry/Graph/Algorithm/BreadthFirstSearch/AdicExhausiveSearch/compress.txt
-  - BitExhausiveSearch (10KB)
-    Geometry/Graph/Algorithm/BreadthFirstSearch/BitExhausiveSearch/compress.txt
-  - ZeroOneBreadthFirstSearch (4KB)
-    Geometry/Graph/Algorithm/BreadthFirstSearch/01/compress.txt
-- BIT (5KB)
-  SetTheory/DirectProduct/AffineSpace/BIT/compress.txt
-  - IntervalAdd (9KB)
-    SetTheory/DirectProduct/AffineSpace/BIT/IntervalAdd/compress.txt
-  - IntervalMax (9KB)
-    SetTheory/DirectProduct/AffineSpace/BIT/IntervalMax/compress.txt
-- CoordinateCompress (3KB)
-  SetTheory/DirectProduct/CoordinateCompress/compress.txt
-- DFS (6KB)
-  Geometry/Graph/Algorithm/DepthFirstSearch/compress.txt
-  - Tree (11KB)
-    Geometry/Graph/Algorithm/DepthFirstSearch/Tree/compress.txt
-- DifferenceSequence (9KB)
-  SetTheory/DirectProduct/AffineSpace/DifferenceSequence/compress.txt
-  - TwoDimensional (5KB)
-    SetTheory/DirectProduct/AffineSpace/DifferenceSequence/TwoDimensional/compress.txt
-- Dijkstra (6KB)
-  Geometry/Graph/Algorithm/Dijkstra/compress.txt
-  - MinimumCostFlow (16KB)
-    Geometry/Graph/Algorithm/Dijkstra/Potentialised/MinimumCostFlow/compress.txt
-- Divisor/Prime/Factorisation (4KB)
-  Arithmetic/Divisor/Enumeration/compress.txt
-- Knapsack (8KB)
-  Combinatorial/KnapsackProblem/compress.txt
-- LineSubset (7KB)
-  SetTheory/Line/compress.txt
-  - NonNegative (15KB)
-    SetTheory/Line/NonNegative/compress.txt
-  - Bounded (15KB)
-    SetTheory/Line/Bounded/compress.txt
-  - Compressed (15KB)
-    SetTheory/Line/Compressed/compress.txt
-- SqrtDecomposition
-  - Monoid (5KB)
-    SetTheory/DirectProduct/AffineSpace/SqrtDecomposition/Monoid/compress.txt
-  - CommutativeDual (6KB)
-    SetTheory/DirectProduct/AffineSpace/SqrtDecomposition/Dual/Commutative/compress.txt
-  - IntervalMultiplyLazy (18KB)
-    SetTheory/DirectProduct/AffineSpace/SqrtDecomposition/LazyEvaluation/IntervalMultiply/compress.txt
-- TruncatedPolynomial (31KB)
-  Polynomial/Truncate/compress.txt
-  - NonProth (34KB)
-    Polynomial/Truncate/NonProth/compress.txt
-- Matrix (6KB)
-  LinearAlgebra/compress.txt
-  - TwoByTwo/TwoByOne (9KB)
-    LinearAlgebra/TwoByOne/compress.txt
-  - Rank (3KB)
-    LinearAlgebra/Rank/Mod/compress.txt
-- UnionFind (3KB)
-  Geometry/Graph/Algorithm/UnionFindForest/compress.txt
-*/
 /* VVV 常設でないライブラリは以下に挿入する。*/
-
+/* // BFS ../Contest/Template/Library/BFS.txt */
+/* // BIT ../Contest/Template/Library/BIT.txt */
+/* // CoordinateCompress ../Contest/Template/Library/CoordinateCompress.txt */
+/* // DFS ../Contest/Template/Library/DFS.txt */
+/* // DifferenceSequence ../Contest/Template/Library/DifferenceSequence.txt */
+/* // Dijkstra ../Contest/Template/Library/Dijkstra.txt */
+/* // Divisor ../Contest/Template/Library/Divisor.txt */
+/* // Knapsack ../Contest/Template/Library/Knapsack.txt */
+/* // LineSubset ../Contest/Template/Library/LineSubset.txt */
+/* // Matrix ../Contest/Template/Library/Matrix.txt */
+/* // Polynomial ../Contest/Template/Library/Polynomial.txt */
+/* // SqrtDecomposition ../Contest/Template/Library/SqrtDecomposition.txt */
+/* // UnionFind ../Contest/Template/Library/UnionFind.txt */
 
 /* AAA 常設でないライブラリは以上に挿入する。*/
 

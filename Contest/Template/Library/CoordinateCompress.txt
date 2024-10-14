@@ -1,0 +1,4 @@
+/*
+- CoordinateCompress (3KB)
+  SetTheory/DirectProduct/CoordinateCompress/compress.txt
+*/
