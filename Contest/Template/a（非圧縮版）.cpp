@@ -165,17 +165,18 @@ inline void RandomTest( const int& test_case_num )
   #define DEXPR( LL , BOUND , VALUE1 , VALUE2 ) CEXPR( LL , BOUND , VALUE1 )
   #define ASSERT( A , MIN , MAX ) AS( ( MIN ) <= A && A <= ( MAX ) )
   #ifdef USE_GETLINE
-    #define GETLINE_SEPARATE( SEPARATOR , ... ) string __VA_ARGS__; VariadicGetline( cin , SEPARATOR , __VA_ARGS__ )
+    #define SET_SEPARATE( SEPARATOR , ... ) VariadicGetline( cin , SEPARATOR , __VA_ARGS__ )
+    #define SET( ... ) SET_SEPARATE( '\n' , __VA_ARGS__ )
+    #define GETLINE_SEPARATE( SEPARATOR , ... ) string __VA_ARGS__; SET_SEPARATE( SEPARATOR , __VA_ARGS__ )
     #define GETLINE( ... ) GETLINE_SEPARATE( '\n' , __VA_ARGS__ )
-    #define SET_LL( A ) { GETLINE( A ## _str ); A = stoll( A ## _str ); }
   #else
-    #define CIN( LL , ... ) LL __VA_ARGS__; VariadicCin( cin , __VA_ARGS__ )
+    #define SET( ... ) VariadicCin( cin , __VA_ARGS__ )
+    #define CIN( LL , ... ) LL __VA_ARGS__; SET( __VA_ARGS__ )
     #define SET_A( I , N , ... ) VariadicResize( N + I , __VA_ARGS__ ); FOR( VARIABLE_FOR_SET_A , 0 , N ){ VariadicSet( cin , VARIABLE_FOR_SET_A + I , __VA_ARGS__ ); }
     #define CIN_A( LL , I , N , ... ) VE<LL> __VA_ARGS__; SET_A( I , N , __VA_ARGS__ )
     #define CIN_AA( LL , I0 , N0 , I1 , N1 , VAR ) VE<VE<LL>> VAR( N0 + I0 ); FOR( VARIABLE_FOR_CIN_AA , 0 , N0 ){ SET_A( I1 , N1 , VAR[VARIABLE_FOR_CIN_AA + I0] ); }
-    #define SET_LL( A ) cin >> A
   #endif
-  #define SET_ASSERT( A , MIN , MAX ) SET_LL( A ); ASSERT( A , MIN , MAX )
+  #define SET_ASSERT( A , MIN , MAX ) SET( A ); ASSERT( A , MIN , MAX )
   #define SOLVE_ONLY 
   #define COUT( ... ) VariadicCout( cout , __VA_ARGS__ ) << ENDL
   #define COUTNS( ... ) VariadicCoutNonSep( cout , __VA_ARGS__ )
@@ -188,7 +189,7 @@ inline void RandomTest( const int& test_case_num )
   #ifdef DEBUG
     #define RSET( A , ... ) A = __VA_ARGS__
   #else
-    #define RSET( A , ... ) cin >> A
+    #define RSET( A , ... ) SET( A )
   #endif
   #define RCIN( LL , A , ... ) LL A; RSET( A , __VA_ARGS__ )
   #define ENDL endl
@@ -202,7 +203,7 @@ using namespace std;
 #define START_WATCH chrono::system_clock::time_point watch = chrono::system_clock::now(); double loop_average_time = 0.0 , loop_start_time = 0.0 , current_time = 0.0; int loop_count = 0
 #define CURRENT_TIME ( current_time = static_cast<double>( chrono::duration_cast<chrono::microseconds>( chrono::system_clock::now() - watch ).count() / 1000.0 ) )
 #define CHECK_WATCH( TL_MS ) ( CURRENT_TIME , loop_count == 0 ? loop_start_time = current_time : loop_average_time = ( current_time - loop_start_time ) / loop_count , ++loop_count , current_time < TL_MS - loop_average_time * 2 - 100.0 )
-#define CEXPR( LL , BOUND , VALUE ) constexpr LL BOUND = VALUE
+#define CEXPR( LL , BOUND , VALUE ) CE LL BOUND = VALUE
 #define SET_A_ASSERT( I , N , A , MIN , MAX ) FOR( VARIABLE_FOR_SET_A , 0 , N ){ SET_ASSERT( A[VARIABLE_FOR_SET_A + I] , MIN , MAX ); }
 #define SET_AA_ASSERT( I0 , N0 , I1 , N1 , A , MIN , MAX ) FOR( VARIABLE_FOR_SET_AA0 , 0 , N0 ){ FOR( VARIABLE_FOR_SET_AA1 , 0 , N1 ){ SET_ASSERT( A[VARIABLE_FOR_SET_AA0 + I0][VARIABLE_FOR_SET_AA1 + I1] , MIN , MAX ); } }
 #define CIN_ASSERT( A , MIN , MAX ) decldecay_t( MAX ) A; SET_ASSERT( A , MIN , MAX )
@@ -217,8 +218,8 @@ using namespace std;
 #define RUN( ARRAY , ... ) for( auto&& __VA_ARGS__ : ARRAY )
 #define REPEAT( HOW_MANY_TIMES ) FOR( VARIABLE_FOR_REPEAT_ ## HOW_MANY_TIMES , 0 , HOW_MANY_TIMES )
 #define SET_PRECISION( DECIMAL_DIGITS ) cout << fixed << setprecision( DECIMAL_DIGITS ); cerr << fixed << setprecision( DECIMAL_DIGITS )
-#define RETURN( ... ) SOLVE_ONLY; COUT( __VA_ARGS__ ); return;
-#define COMPARE( ... ) auto naive = Naive( __VA_ARGS__ , true ); auto answer = Answer( __VA_ARGS__ ); bool match = naive == answer; CERR( "(" , #__VA_ARGS__ , ") == (" , __VA_ARGS__ , ") : Naive == " , naive , match ? "==" : "!=" , answer , "== Answer" ); if( !match ){ return; }
+#define RETURN( ... ) SOLVE_ONLY; COUT( __VA_ARGS__ ); RE
+#define COMPARE( ... ) auto naive = Naive( __VA_ARGS__ , true ); auto answer = Answer( __VA_ARGS__ ); bool match = naive == answer; CERR( "(" , #__VA_ARGS__ , ") == (" , __VA_ARGS__ , ") : Naive == " , naive , match ? "==" : "!=" , answer , "== Answer" ); if( !match ){ RE; }
 
 /* 型のエイリアス */
 #define decldecay_t( VAR ) decay_t<decltype( VAR )>
@@ -434,9 +435,9 @@ TE <TY T,TY R1,TY R2,TY E> IN EdgeImplimentation<T,R1,R2,E>::EdgeImplimentation(
 /* Grid (2KB)*/
 #define SET_GRID H_minus = H - 1;W_minus = W - 1;HW = ll(H)* W
 #define SET_HW(h,w)H = h;W = w;SET_GRID
-#define CIN_HW SET_LL(H);SET_LL(W);SET_GRID
+#define CIN_HW SET(H,W);SET_GRID
 TE <TY E>CL GridGraph:PU EnumerationGraph<T2<int>,T2<int>(&)(CRI),int(&)(CO T2<int>&),E>{PU:IN GridGraph(E e);};int H,W,H_minus,W_minus;ll HW;VE<string> grid;char walkable = '.',unwalkable = '#';
-IN T2<int> EnumHW(CRI v){RE{v / W,v % W};}IN int EnumHW_inv(CO T2<int>& ij){auto&[i,j]= ij;RE i * W + j;}TE <TY E> IN GridGraph<E>::GridGraph(E e):EnumerationGraph<T2<int>,T2<int>(&)(CRI),int(&)(CO T2<int>&),E>(HW,EnumHW,EnumHW_inv,MO(e)){AS(HW >> 31 == 0 && H * W == HW);}VE<T2<int>> EdgeOnGrid(CO T2<int>& v){VE<T2<int>> AN{};auto&[i,j]= v;if(grid[i][j]== walkable){if(i > 0 && grid[i-1][j]== walkable){AN.push_back({i-1,j});}if(i+1 < H && grid[i+1][j]== walkable){AN.push_back({i+1,j});}if(j > 0 && grid[i][j-1]== walkable){AN.push_back({i,j-1});}if(j+1 < W && grid[i][j+1]== walkable){AN.push_back({i,j+1});}}RE AN;}VE<pair<T2<int>,ll>> WEdgeOnGrid(CO T2<int>& v){VE<pair<T2<int>,ll>> AN{};auto&[i,j]= v;if(grid[i][j]== walkable){if(i>0 && grid[i-1][j]== walkable){AN.push_back({{i-1,j},1});}if(i+1 < H && grid[i+1][j]== walkable){AN.push_back({{i+1,j},1});}if(j>0 && grid[i][j-1]== walkable){AN.push_back({{i,j-1},1});}if(j+1 < W && grid[i][j+1]== walkable){AN.push_back({{i,j+1},1});}}RE AN;}IN VO SetWallStringOnGrid(CRI i,VE<string>& S){if(S.empty()){S.resize(H);}cin >> S[i];AS(int(S[i].SZ())== W);}CO string direction="URDL";IN int DirectionNumberOnGrid(CRI i,CRI j,CRI k,CRI h){RE i < k?2:i > k?0:j < h?1:(AS(j > h),3);}IN int DirectionNumberOnGrid(CO T2<int>& v,CO T2<int>& w){auto&[i,j]= v;auto&[k,h]= w;RE DirectionNumberOnGrid(i,j,k,h);}IN int DirectionNumberOnGrid(CRI v,CRI w){RE DirectionNumberOnGrid(EnumHW(v),EnumHW(w));}IN int ReverseDirectionNumberOnGrid(CRI n){AS(0 <= n && n<4);RE n ^ 2;}
+IN T2<int> EnumHW(CRI v){RE{v / W,v % W};}IN int EnumHW_inv(CO T2<int>& ij){auto&[i,j]= ij;RE i * W + j;}TE <TY E> IN GridGraph<E>::GridGraph(E e):EnumerationGraph<T2<int>,T2<int>(&)(CRI),int(&)(CO T2<int>&),E>(HW,EnumHW,EnumHW_inv,MO(e)){AS(HW >> 31 == 0 && H * W == HW);}VE<T2<int>> EdgeOnGrid(CO T2<int>& v){VE<T2<int>> AN{};auto&[i,j]= v;if(grid[i][j]== walkable){if(i > 0 && grid[i-1][j]== walkable){AN.push_back({i-1,j});}if(i+1 < H && grid[i+1][j]== walkable){AN.push_back({i+1,j});}if(j > 0 && grid[i][j-1]== walkable){AN.push_back({i,j-1});}if(j+1 < W && grid[i][j+1]== walkable){AN.push_back({i,j+1});}}RE AN;}VE<pair<T2<int>,ll>> WEdgeOnGrid(CO T2<int>& v){VE<pair<T2<int>,ll>> AN{};auto&[i,j]= v;if(grid[i][j]== walkable){if(i>0 && grid[i-1][j]== walkable){AN.push_back({{i-1,j},1});}if(i+1 < H && grid[i+1][j]== walkable){AN.push_back({{i+1,j},1});}if(j>0 && grid[i][j-1]== walkable){AN.push_back({{i,j-1},1});}if(j+1 < W && grid[i][j+1]== walkable){AN.push_back({{i,j+1},1});}}RE AN;}IN VO SetWallStringOnGrid(){grid.resize(H);for(int i = 0;i < H;i++){SET(grid[i]);AS(int(grid[i].SZ())== W);}}CO string direction="URDL";IN int DirectionNumberOnGrid(CRI i,CRI j,CRI k,CRI h){RE i < k?2:i > k?0:j < h?1:(AS(j > h),3);}IN int DirectionNumberOnGrid(CO T2<int>& v,CO T2<int>& w){auto&[i,j]= v;auto&[k,h]= w;RE DirectionNumberOnGrid(i,j,k,h);}IN int DirectionNumberOnGrid(CRI v,CRI w){RE DirectionNumberOnGrid(EnumHW(v),EnumHW(w));}IN int ReverseDirectionNumberOnGrid(CRI n){AS(0 <= n && n<4);RE n ^ 2;}
 
 /* ConstexprModulo (7KB)*/
 CEXPR(uint,P,998244353);

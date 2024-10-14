@@ -84,20 +84,21 @@
   assert( ( MIN ) <= A && A <= ( MAX ) )                                    \
 
 #ifdef USE_GETLINE
-  #define GETLINE_SEPARATE( SEPARATOR , ... ) string __VA_ARGS__; if( exec_mode == sample_check_mode ){ VariadicGetline( ifs , SEPARATOR , __VA_ARGS__ ); } else { VariadicGetline( cin , SEPARATOR , __VA_ARGS__ ); }
+  #define SET_SEPARATE( SEPARATOR , ... ) if( exec_mode == sample_check_mode ){ VariadicGetline( ifs , SEPARATOR , __VA_ARGS__ ); } else { VariadicGetline( cin , SEPARATOR , __VA_ARGS__ ); }
+  #define SET( ... ) SET_SEPARATE( '\n' , __VA_ARGS__ )
+  #define GETLINE_SEPARATE( SEPARATOR , ... ) string __VA_ARGS__; SET_SEPARATE( SEPARATOR , __VA_ARGS__ )
   #define GETLINE( ... ) GETLINE_SEPARATE( '\n' , __VA_ARGS__ )
-  #define SET_LL( A ) { GETLINE( A ## _str ); A = stoll( A ## _str ); }
 #else
-  #define CIN( LL , ... ) LL __VA_ARGS__; if( exec_mode == sample_check_mode ){ VariadicCin( ifs , __VA_ARGS__ ); } else { VariadicCin( cin , __VA_ARGS__ ); }
+  #define SET( ... ) if( exec_mode == sample_check_mode ){ VariadicCin( ifs , __VA_ARGS__ ); } else { VariadicCin( cin , __VA_ARGS__ ); }
+  #define CIN( LL , ... ) LL __VA_ARGS__; SET( __VA_ARGS__ )
   #define SET_A( I , N , ... ) VariadicResize( N + I , __VA_ARGS__ ); FOR( VARIABLE_FOR_SET_A , 0 , N ){ if( exec_mode == sample_check_mode ){ VariadicSet( ifs , VARIABLE_FOR_SET_A + I , __VA_ARGS__ ); } else { VariadicSet( cin , VARIABLE_FOR_SET_A + I , __VA_ARGS__ ); } }
   #define CIN_A( LL , I , N , ... ) VE<LL> __VA_ARGS__; SET_A( I , N , __VA_ARGS__ )
   #define CIN_AA( LL , I0 , N0 , I1 , N1 , VAR ) VE<VE<LL>> VAR( N0 + I0 ); FOR( VARIABLE_FOR_CIN_AA , 0 , N0 ){ SET_A( I1 , N1 , VAR[VARIABLE_FOR_CIN_AA + I0] ); }
-  #define SET_LL( A ) if( exec_mode == sample_check_mode ){ ifs >> A; } else { cin >> A; }
 #endif
 
 #define SET_ASSERT( A , MIN , MAX )                     \
   if( exec_mode == solve_mode ){                        \
-    SET_LL( A );                                        \
+    SET( A );                                           \
     ASSERT( A , MIN , MAX );                            \
   } else if( exec_mode == random_test_mode ){           \
     A = GetRand( MIN , MAX );                           \
