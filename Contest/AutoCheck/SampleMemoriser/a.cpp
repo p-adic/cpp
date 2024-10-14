@@ -74,15 +74,15 @@ void CompareAnswer( const string& sample_path , const string& problem_order , co
 
   if( !prepared_answer.eof() ){
 
-    CERR( "サンプル" + formatted_sample_num + "に対する出力は" + to_string( count - 1 ) + "行より多い想定で、不足しています。" );
+    CERR( "サンプル" , formatted_sample_num , "に対する出力は" , count - 1 , "行より多い想定で、不足しています。" );
 
   } else if( !submitted_answer.eof() ){
 
-    CERR( "サンプル" + formatted_sample_num + "に対する出力は" + to_string( count - 1 ) + "行の想定で、余計な出力をしています。" );
+    CERR( "サンプル" , formatted_sample_num , "に対する出力は" , count - 1 , "行の想定で、余計な出力をしています。" );
 
   } else if( correct ){
 
-    CERR( "サンプル" + formatted_sample_num + "は正解です。" );
+    CERR( "サンプル" , formatted_sample_num , "は正解です。" );
 
   }
 
