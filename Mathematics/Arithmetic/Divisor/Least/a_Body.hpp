@@ -24,3 +24,4 @@ template <int val_limit> inline constexpr LeastDivisor<val_limit>::LeastDivisor(
 
 template <int val_limit> inline const int& LeastDivisor<val_limit>::operator[]( const int& i ) const { assert( 0 <= i && i < val_limit ); return m_val[i]; }
 template <int val_limit> inline constexpr const int& LeastDivisor<val_limit>::Get( const int& i ) const { return m_val[i]; }
+template <int val_limit> inline constexpr int LeastDivisor<val_limit>::length() const noexcept { return val_limit; }

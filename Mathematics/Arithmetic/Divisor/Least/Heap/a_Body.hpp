@@ -24,3 +24,4 @@ inline HeapLeastDivisor::HeapLeastDivisor( const int& val_limit ) noexcept : m_v
 
 inline const int& HeapLeastDivisor::operator[]( const int& i ) const { assert( 0 <= i && i < m_val_limit ); return m_val[i]; }
 inline const int& HeapLeastDivisor::Get( const int& i ) const { return m_val[i]; }
+inline const int& HeapLeastDivisor::length() const noexcept { return m_val_limit; }

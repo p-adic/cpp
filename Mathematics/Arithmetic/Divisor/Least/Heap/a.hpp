@@ -16,6 +16,7 @@ public:
 
   inline const int& operator[]( const int& i ) const;
   inline const int& Get( const int& i ) const;
+  inline const int& length() const noexcept;
 
 };
 
