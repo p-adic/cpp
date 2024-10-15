@@ -15,9 +15,21 @@ void AutoCheck( int& exec_mode , const bool& use_getline , const bool& sample_ch
   string reply{};
   vector<string> problems{};
   int problems_size = 0;
+  bool registered_sample = false;
+  if( sample_check ){
+    ifstream ifs{ "c:/Users/user/Documents/Programming/Contest/AutoCheck/SampleMemoriser/Sample/register_log.txt" };
+    string s_curr;
+    while( !ifs.eof() ){
+      ifs >> s_curr;
+      if( s_curr == problem_order ){
+        registered_sample = true;
+        break;
+      }
+    }
+  }
   ASK_NUMBER(
              "提出用ファイルを実行する。" ,
-             sample_check ? "提出用ファイルが" + problem_order + "問題のサンプルと合うかを確認する。" : "（選択不可）" ,
+             sample_check ? registered_sample ? "提出用ファイルが" + problem_order + "問題のサンプルと合うかを確認する。" : "（サンプル登録失敗により選択不可）" : "（サンプル確認モードでないので選択不可）" ,
              "サンプルの合わない提出用ファイルをデバッグする。" ,
              "提出済みファイルをデバッグする。" ,
              "ライブラリーを探索する。" ,
@@ -31,7 +43,7 @@ void AutoCheck( int& exec_mode , const bool& use_getline , const bool& sample_ch
   if( num == solve_mode ){
     CERR( "提出用ファイルを実行します。" );
   } else if( num == sample_check_mode ){
-    assert( sample_check );
+    assert( sample_check && registered_sample );
     CERR( "提出用ファイルが" + problem_order + "問題のサンプルと合うかを確認します。" );
   } else if( num == sample_debug_mode ){
     CALL_AC( DebugHintWA );
