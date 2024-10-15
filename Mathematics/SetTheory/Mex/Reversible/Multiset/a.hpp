@@ -1,4 +1,4 @@
-// c:/Users/user/Documents/Programming/Mathematics/SetTheory/Mex/Reversible/a.hpp
+// c:/Users/user/Documents/Programming/Mathematics/SetTheory/Mex/Reversible/Multiset/a.hpp
 
 #pragma once
 
@@ -10,16 +10,16 @@
 
 // QuerySizeは補集合の初期化にのみ必要。クエリ先読みは不要。
 
-class ReversibleMexSet
+class ReversibleMexMultiset
 {
 
 private:
   int m_QuerySize;
   set<int> m_comp;
-  set<int> m_over;
+  map<int,int> m_mult;
 
 public:
-  inline ReversibleMexSet( const int& QuerySize );
+  inline ReversibleMexMultiset( const int& QuerySize );
 
   inline int count( const int& i ) const;
   inline bool in( const int& i ) const;

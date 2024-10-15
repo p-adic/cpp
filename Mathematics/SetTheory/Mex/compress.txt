@@ -1,6 +1,6 @@
 #ifdef DEBUG
   #include "c:/Users/user/Documents/Programming/Mathematics/SetTheory/Mex/Debug/a_Body.hpp"
 #else
-CL MexSet{PU:int m_QuerySZ;VE<bool> m_in;int m_mex;IN MexSet(CRI QuerySZ);IN VO insert(CRI i);IN CRI Get()CO NE;};
-IN MexSet::MexSet(CRI QuerySZ):m_QuerySZ(QuerySZ),m_in(m_QuerySZ + 1),m_mex(0){}IN VO MexSet::insert(CRI i){AS(i >= 0);if(i < m_QuerySZ){m_in[i]= true;WH(m_in[m_mex]){m_mex++;}}}IN CRI MexSet::Get()CO NE{RE m_mex;}
+CL MexSet{PU:int m_QuerySZ;VE<bool> m_in;int m_mex;IN MexSet(CRI QuerySZ);IN VO insert(CRI i);IN CRI mex()CO NE;};
+IN MexSet::MexSet(CRI QuerySZ):m_QuerySZ(QuerySZ),m_in(m_QuerySZ + 1),m_mex(0){}IN VO MexSet::insert(CRI i){AS(i >= 0);if(i < m_QuerySZ){m_in[i]= true;WH(m_in[m_mex]){m_mex++;}}}IN CRI MexSet::mex()CO NE{RE m_mex;}
 #endif

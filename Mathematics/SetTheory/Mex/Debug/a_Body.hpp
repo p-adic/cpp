@@ -6,8 +6,8 @@
 inline MexSet::MexSet( const int& QuerySize ) : m_QuerySize( QuerySize ) , m_in( m_QuerySize + 1 ) , m_mex( 0 )
 {
 
-  cerr << "MexSetをデバッグモードで実行します。" << endl;
-  cerr << "各種処理にO(m_QuerySize)の計算量がかかることに注意してください。" << endl;
+  ofs_err << "MexSetをデバッグモードで実行します。" << endl;
+  ofs_err << "各種処理にO(m_QuerySize)の計算量がかかることに注意してください。" << endl;
 
 }
 
@@ -16,25 +16,25 @@ inline void MexSet::insert( const int& i )
 
   assert( i >= 0 );
 
-  cerr << "MexSetに " << i << " を追加します。" << endl;
+  ofs_err << "MexSetに " << i << " を追加します。" << endl;
 
   for( int j = 0 ; j < m_QuerySize ; j++ ){
 
-    cerr << j << " : ";
+    ofs_err << j << " : ";
     
     if( j == i ){
 
-      cerr << m_in << " -> 1" << endl;
+      ofs_err << m_in << " -> 1" << endl;
 
     } else {
 
-      cerr << m_in << endl;
+      ofs_err << m_in << endl;
 
     }
 
   }
 
-  cerr << "... : ..." << endl;
+  ofs_err << "... : ..." << endl;
 
   if( i < m_QuerySize ){
 
@@ -49,26 +49,26 @@ inline void MexSet::insert( const int& i )
   }
 
 }
-inline const int& MexSet::Get() const noexcept
+inline const int& MexSet::mex() const noexcept
 {
 
-  cerr << "MexSetからmexを取得します。" << endl;
+  ofs_err << "MexSetからmexを取得します。" << endl;
 
   for( int j = 0 ; j < m_QuerySize ; j++ ){
 
-    cerr << j << " : " << m_in;
+    ofs_err << j << " : " << m_in;
 
     if( j == m_mex ){
 
-      cerr << " <- mex";
+      ofs_err << " <- mex";
 
     }
       
-    cerr << endl;
+    ofs_err << endl;
 
   }
 
-  cerr << "... : ..." << endl;
+  ofs_err << "... : ..." << endl;
   return m_mex;
 
 }
