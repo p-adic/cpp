@@ -249,10 +249,12 @@ VAR_TAR ## _LがVAR_TAR ## _Rに追い付くまでVAR_TPA ## _LとVPA_TPA ## _infoの
 更新操作UPDATE_Rを行う。（マクロとコンマの制約上、関数オブジェクトを用いる）
 ON_CONDITIONがtrueとなる極大閉区間とその時点でのinfoをANSWERに格納する。
 例えば長さNの非負整数値配列Aで極大な正値区間とそこでの総和を取得したい場合
-auto update_L = [&]( int& i_L , ll& i_info ){ i_info -= A[i_L++]; };
-auto update_R = [&]( int& i_R , ll& i_info ){ ++i_R < N ? i_info += A[i_R] : i_info; };
+auto update_L = [&]( int& i_L , auto& i_info ){ i_info -= A[i_L++]; };
+auto update_R = [&]( int& i_R , auto& i_info ){ if( ++i_R < N ){ i_info += A[i_R]; } };
 TPA( interval , i , 0 , i_R < N , update_L( i_L , i_info ) , update_R( i_R , i_info ) , A[i_L] > 0 && A[i_R] > 0 , ll( A[0] ) );
-とすればtuple<int,int,ll>値配列intervalに{左端,右端,総和}の列が格納される。*/
+とすればtuple<int,int,ll>値配列intervalに{左端,右端,総和}の列が格納される。
+VAR_TPA ## _infoもintervalにコピーされるので、setやvectorなどのコピーのコストが
+大きいデータを用いてon,off判定する時はTPAより前に宣言して使う。*/
 #define TPA(AN,VAR_TPA,INIT,CONTINUE_CONDITION,UPDATE_L,UPDATE_R,ON_CONDITION,INFO_init)VE<tuple<decldecay_t(INIT),decldecay_t(INIT),decldecay_t(INFO_init)>> AN{};{auto init_TPA = INIT;decldecay_t(AN.front())AN ## _temp ={init_TPA,init_TPA,INFO_init};auto AN ## _prev = AN ## _temp;auto& VAR_TPA ## _L = get<0>(AN ## _temp);auto& VAR_TPA ## _R = get<1>(AN ## _temp);auto& VAR_TPA ## _info = get<2>(AN ## _temp);bool on_TPA_prev = false;WH(true){bool continuing = CONTINUE_CONDITION;bool on_TPA = continuing &&(ON_CONDITION);if(on_TPA_prev && ! on_TPA){AN.push_back(AN ## _prev);}if(continuing){if(on_TPA || VAR_TPA ## _L == VAR_TPA ## _R){AN ## _prev = AN ## _temp;UPDATE_R;}else{UPDATE_L;}}else{break;}on_TPA_prev = on_TPA;}}
 
 /* Random (1KB)*/
