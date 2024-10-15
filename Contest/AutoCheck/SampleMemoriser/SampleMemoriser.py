@@ -1,4 +1,4 @@
-contest_num = 515
+contest_num = 516
 start_hour = 21
 start_minute = 20
 #wait = True
@@ -41,7 +41,7 @@ for a_tag in contest_table_page.find_all("a"):
 		if len(temp) < 3:
 			print(problem_order,message_list[7],str(count%100),message_list[8])
 		else:
-			if len(temp) == 3:register_log.wrtie(problem_order+'\n')
+			if len(temp) == 3:register_log.write(problem_order+'\n')
 			else:print(problem_order,message_list[7],str(count%100),message_list[9])
 			for i,file in zip([1,2],[input_file,output_file]):
 				temp[i] = temp[i].split("</pre>")[0]
