@@ -33,16 +33,17 @@ for a_tag in contest_table_page.find_all("a"):
 	problem_page = BeautifulSoup(requests.get(problem_page_url).text,'html.parser')
 	count = 100
 	count_list = []
+	registered = True
 	for sample in problem_page.find_all("div",{"class":"sample"}):
 		count += 1
 		temp = str(sample).split("<pre>")
 		input_file = open("Sample/" + problem_order + "/input/sample" + str(count)[1:] + ".txt",'w')
 		output_file = open("Sample/" + problem_order + "/output/sample" + str(count)[1:] + ".txt",'w')
+		registered &= len(temp) == 3
 		if len(temp) < 3:
 			print(problem_order,message_list[7],str(count%100),message_list[8])
 		else:
-			if len(temp) == 3:register_log.write(problem_order+'\n')
-			else:print(problem_order,message_list[7],str(count%100),message_list[9])
+			if len(temp) != 3:print(problem_order,message_list[7],str(count%100),message_list[9])
 			for i,file in zip([1,2],[input_file,output_file]):
 				temp[i] = temp[i].split("</pre>")[0]
 				for br in ["<br>","</br>","<br/>"]:temp[i] = "\n".join(temp[i].split(br))
@@ -54,6 +55,7 @@ for a_tag in contest_table_page.find_all("a"):
 	count_file.write(str(len(count_list))+'\n')
 	for valid_count in count_list:count_file.write(valid_count)
 	count_file.close()
+	if registered:register_log.write(problem_order+'\n')
 	print(problem_order,message_list[10],len(count_list),message_list[11])
 problem_order_file = open("Sample/problem_order.txt",'w')
 problem_order_file.write(str(len(problem_order_list))+'\n')
