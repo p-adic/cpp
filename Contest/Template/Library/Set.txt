@@ -1,0 +1,15 @@
+/*
+- BinarySearch (1KB)
+  ../Utility/BinarySearch/Set/compress.txt
+- LineSubset: 区間管理に特化 (7KB)
+  SetTheory/Line/compress.txt
+  - NonNegative: 非負有界,要素数取得 (15KB)
+    SetTheory/Line/NonNegative/compress.txt
+  - Bounded: 有界,要素数取得(15KB)
+    SetTheory/Line/Bounded/compress.txt
+  - Compressed: オフライン,要素数取得 (15KB)
+    SetTheory/Line/Compressed/compress.txt
+- MexSet: insertのみ (1KB)
+  - Reversible: 削除可能 (1KB)
+    - Multiset: (2KB)
+*/
