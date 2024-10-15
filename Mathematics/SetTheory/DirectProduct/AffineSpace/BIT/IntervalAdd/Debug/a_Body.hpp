@@ -16,17 +16,17 @@ template <typename U , typename Z_MODULE> AbstractIntervalAddBIT<U,Z_MODULE>::Ab
 
     if( init ){
 
-      cerr << "IntervalAddBITをデバッグモードで実行します。" << endl;
-      cerr << "通常のIntervalAddBITと比べると一点取得にconst修飾がつき各種操作にO(N)かかる" << endl;
-      cerr << "ことにご注意ください。" << endl;
-      cerr << endl;
+      DERR( "IntervalAddBITをデバッグモードで実行します。" );
+      DERR( "通常のIntervalAddBITと比べると一点取得にconst修飾がつき各種操作にO(N)かかる" );
+      DERR( "ことにご注意ください。" );
+      DERR( "" );
       init = false;
 
     }
 
-    cerr << "IntervalAddBITの初期値：" << endl;
-    cerr << *this << endl;
-    cerr << endl;
+    DERR( "IntervalAddBITの初期値：" );
+    DERR( *this );
+    DERR( "" );
 
   }
   
@@ -43,7 +43,7 @@ template <typename U , typename Z_MODULE> inline void AbstractIntervalAddBIT<U,Z
 
   if( m_output_mode ){
     
-    cerr << "IntervalAddBITの区間[" << i_start << "," << i_final << "]に" << u << "を加算します。" << endl;
+    DERRNS( "IntervalAddBITの区間[" , i_start , "," , i_final , "]に" , u , "を加算します。" );
 
   }
 
@@ -55,9 +55,9 @@ template <typename U , typename Z_MODULE> inline void AbstractIntervalAddBIT<U,Z
 
   if( m_output_mode ){
     
-    cerr << "IntervalAddBITの更新後の成分：" << endl;
-    cerr << *this << endl;
-    cerr << endl;
+    DERR( "IntervalAddBITの更新後の成分：" );
+    DERR( *this );
+    DERR( "" );
 
   }
   
@@ -84,8 +84,8 @@ template <typename U , typename Z_MODULE> inline U AbstractIntervalAddBIT<U,Z_MO
 
   if( m_output_mode ){
     
-    cerr << "IntervalAddBITの区間[" << i_start << "," << i_final << "] における総和： " << answer << endl;
-    cerr << endl;
+    DERR( "IntervalAddBITの区間[" , i_start , "," , i_final , "] における総和： " , answer );
+    DERR( "" );
 
   }
   
