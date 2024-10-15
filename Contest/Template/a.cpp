@@ -93,8 +93,8 @@ IN VO RandomTest( const int& test_case_num )
 /* // Dijkstra ../Contest/Template/Library/Dijkstra.txt */
 /* // Divisor ../Contest/Template/Library/Divisor.txt */
 /* // Knapsack ../Contest/Template/Library/Knapsack.txt */
-/* // LineSubset ../Contest/Template/Library/LineSubset.txt */
 /* // Matrix ../Contest/Template/Library/Matrix.txt */
+/* // Set ../Contest/Template/Library/Set.txt */
 /* // Polynomial ../Contest/Template/Library/Polynomial.txt */
 /* // SqrtDecomposition ../Contest/Template/Library/SqrtDecomposition.txt */
 /* // UnionFind ../Contest/Template/Library/UnionFind.txt */
