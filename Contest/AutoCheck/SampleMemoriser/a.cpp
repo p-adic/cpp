@@ -61,11 +61,21 @@ void CompareAnswer( const string& sample_path , const string& problem_order , co
     if( line0 != line1 ){
 
       correct = false;
-      CERR( "サンプル" + formatted_sample_num + "に対する出力の" + to_string( count ) + "行目は" );
+      CERR( "サンプル" , formatted_sample_num , "に対する出力の" , count , "行目は" );
       CERR( line0 );
-      CERR( "となる想定ですが、" );
-      CERR( line1 );
-      CERR( "となりました。" );
+
+      if( line1 == "" ){
+
+        CERR( "となる想定ですが、何も出力されませんでした。" );
+
+      } else {
+        
+        CERR( "となる想定ですが、" );
+        CERR( line1 );
+        CERR( "となりました。" );
+
+      }
+
       CERR( "" );
 
     }
