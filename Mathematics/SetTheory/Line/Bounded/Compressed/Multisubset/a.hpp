@@ -20,7 +20,7 @@
 template <typename INT>
 class CompressedSortedMultiSet :
   public CompressedSortedSet<INT> ,
-  public AbstractBoundedLineMultiSubset<INT,const INT&,const INT&,BIT>
+  public AbstractBoundedLineMultiSubset<INT,const int&,const INT&,BIT>
 {
   
 public:

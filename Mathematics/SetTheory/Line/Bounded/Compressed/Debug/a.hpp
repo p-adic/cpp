@@ -7,7 +7,7 @@
 
 template <typename INT>
 class CompressedSortedSet :
-  public VirtualBoundedLineSubset<INT,const INT&,const INT&>
+  public VirtualBoundedLineSubset<INT,const int&,const INT&>
 {
 
 protected:
@@ -19,7 +19,7 @@ public:
 
 private:
   inline bool InRange( const INT& i );
-  inline constexpr const INT& Normalise( const INT& i );
-  inline constexpr const INT& Denormalise( const INT& d );
+  inline constexpr const int& Normalise( const INT& i );
+  inline constexpr const INT& Denormalise( const int& d );
 
 };

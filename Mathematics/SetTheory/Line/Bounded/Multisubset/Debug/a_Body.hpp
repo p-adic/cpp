@@ -6,9 +6,9 @@
 #include "../../Iterator/a_Body.hpp"
 #include "../../../../DirectProduct/AffineSpace/BIT/Debug/a_Body.hpp"
 
-template <typename INT , typename RET_NOR , typename RET_DEN> inline VirtualBoundedLineMultiSubset<INT,RET_NOR,RET_DEN>::VirtualBoundedLineMultiSubset() : m_lbound() , m_ubound() , m_ds( 0 , false ) , m_name() , m_S() , m_S_comp() {}
+template <typename INT , typename RET_NOR , typename RET_DEN> inline VirtualBoundedLineMultiSubset<INT,RET_NOR,RET_DEN>::VirtualBoundedLineMultiSubset() : Debug() , m_lbound() , m_ubound() , m_ds( 0 , false ) , m_name() , m_S() , m_S_comp() {}
 
-template <typename INT , typename RET_NOR , typename RET_DEN> inline void VirtualBoundedLineMultiSubset<INT,RET_NOR,RET_DEN>::insert( const INT& i , const int& c )
+template <typename INT , typename RET_NOR , typename RET_DEN> inline void VirtualBoundedLineMultiSubset<INT,RET_NOR,RET_DEN>::insert( const INT& i , const INT& c )
 {
 
   assert( InRange( i ) );
@@ -28,15 +28,20 @@ template <typename INT , typename RET_NOR , typename RET_DEN> inline void Virtua
     }
 
   }
+
+  if( m_output_mode ){
   
-  DERR( m_name , "に" , i , "を" , c , "個挿入しました。" );
-  Display();
-  DERR( "" );
+    DERR( m_name , "に" , i , "を" , c , "個挿入しました。" );
+    Display();
+    DERR( "" );
+
+  }
+  
   return;
 
 }
 
-template <typename INT , typename RET_NOR , typename RET_DEN> inline void VirtualBoundedLineMultiSubset<INT,RET_NOR,RET_DEN>::erase( const INT& i , const int& c )
+template <typename INT , typename RET_NOR , typename RET_DEN> inline void VirtualBoundedLineMultiSubset<INT,RET_NOR,RET_DEN>::erase( const INT& i , const INT& c )
 {
 
   assert( InRange( i ) && c >= 0 );
@@ -57,9 +62,14 @@ template <typename INT , typename RET_NOR , typename RET_DEN> inline void Virtua
 
   }
 
-  DERR( m_name , "から" , i , "を" , c , "個削除しました。" );
-  Display();
-  DERR( "" );
+  if( m_output_mode ){
+    
+    DERR( m_name , "から" , i , "を" , c , "個削除しました。" );
+    Display();
+    DERR( "" );
+
+  }
+  
   return;
 
 }
@@ -70,10 +80,16 @@ template <typename INT , typename RET_NOR , typename RET_DEN> inline typename Vi
   const INT i = *itr;
   assert( m_S.count( i ) > 0 && m_S_comp.empty() );
   auto& itr_ref = itr.erase_from( *this );
-  DERR( m_name , "から" , i , "を" , 1 , "個削除しました。" );
-  m_S.erase( i );
-  Display();
-  DERR( "" );
+
+  if( m_output_mode ){
+
+    DERR( m_name , "から" , i , "を" , 1 , "個削除しました。" );
+    m_S.erase( i );
+    Display();
+    DERR( "" );
+
+  }
+  
   return itr_ref;
 
 }
@@ -98,10 +114,32 @@ template <typename INT , typename RET_NOR , typename RET_DEN> inline void Virtua
 
   }
 
-  DERR( m_name , "から" , i , "を全て削除しました。" );
-  Display();
-  DERR( "" );
+  if( m_output_mode ){
+    
+    DERR( m_name , "から" , i , "を全て削除しました。" );
+    Display();
+    DERR( "" );
+
+  }
+  
   return;
+
+}
+
+template <typename INT , typename RET_NOR , typename RET_DEN> inline void VirtualBoundedLineMultiSubset<INT,RET_NOR,RET_DEN>::clear()
+{
+  
+  m_ds.Initialise( m_ds.size() );
+  m_S.clear();
+  m_S_comp.clear();
+
+  if( m_output_mode ){
+
+    DERR( m_name , "から全ての要素を削除しました。" );
+    Display();
+    DERR( "" );
+
+  }
 
 }
 
@@ -109,14 +147,21 @@ template <typename INT , typename RET_NOR , typename RET_DEN> inline int Virtual
 
 template <typename INT , typename RET_NOR , typename RET_DEN> inline bool VirtualBoundedLineMultiSubset<INT,RET_NOR,RET_DEN>::find( const INT& i ) noexcept { return count( i ) > 0; }
 
-template <typename INT , typename RET_NOR , typename RET_DEN> inline int VirtualBoundedLineMultiSubset<INT,RET_NOR,RET_DEN>::InitialSegmentCount( const INT& i_final ) { assert( InRange( i_final ) ); return m_ds.InitialSegmentSum( Normalise( i_final ) ); }
+template <typename INT , typename RET_NOR , typename RET_DEN> inline int VirtualBoundedLineMultiSubset<INT,RET_NOR,RET_DEN>::InitialSegmentCount( const INT& i_final ) { return i_final < m_lbound ? 0 : m_ds.InitialSegmentSum( Normalise( i_final ) ); }
 
 template <typename INT , typename RET_NOR , typename RET_DEN> inline int VirtualBoundedLineMultiSubset<INT,RET_NOR,RET_DEN>::IntervalCount( const INT& i_start , const INT& i_final )
 {
 
-  assert( InRange( i_start ) && InRange( i_final ) ); 
-  const INT answer = m_ds.IntervalSum( Normalise( i_start ) , Normalise( i_final ) );
-  DERRNS( m_name , " の区間 [" , i_start , "," , i_final , "] 内の重複を込めた要素数は" , answer , "です。" );
+  auto&& l = Normalise( i_start );
+  const INT answer = m_ds.IntervalSum( ( l < 0 || Denormalise( l ) < i_start ) ? l + 1 : l , Normalise( i_final ) );
+
+  if( m_output_mode ){
+  
+    DERR( m_name , "の区間[" , i_start , "," , i_final , "]内の重複を込めた要素数は" , answer , "です。" );
+    DERR( "" );
+
+  }
+  
   return answer;
 
 }
@@ -124,15 +169,15 @@ template <typename INT , typename RET_NOR , typename RET_DEN> inline int Virtual
 template <typename INT , typename RET_NOR , typename RET_DEN> inline bool VirtualBoundedLineMultiSubset<INT,RET_NOR,RET_DEN>::empty() { assert( m_S_comp.empty() ); return InitialSegmentCount( m_ubound ) == 0; }
 
 template <typename INT , typename RET_NOR , typename RET_DEN> inline typename VirtualBoundedLineMultiSubset<INT,RET_NOR,RET_DEN>::iterator VirtualBoundedLineMultiSubset<INT,RET_NOR,RET_DEN>::begin() { return MinimumGeq( m_lbound ); }
-template <typename INT , typename RET_NOR , typename RET_DEN> inline typename VirtualBoundedLineMultiSubset<INT,RET_NOR,RET_DEN>::iterator VirtualBoundedLineMultiSubset<INT,RET_NOR,RET_DEN>::end() const { assert( m_S_comp.empty() ); return typename VirtualBoundedLineMultiSubset<INT,RET_NOR,RET_DEN>::iterator( *this , m_ubound + 1 ); }
+template <typename INT , typename RET_NOR , typename RET_DEN> inline typename VirtualBoundedLineMultiSubset<INT,RET_NOR,RET_DEN>::iterator VirtualBoundedLineMultiSubset<INT,RET_NOR,RET_DEN>::end() { assert( m_S_comp.empty() ); return typename VirtualBoundedLineMultiSubset<INT,RET_NOR,RET_DEN>::iterator( *this , m_ubound + 1 ); }
 
-template <typename INT , typename RET_NOR , typename RET_DEN> inline typename VirtualBoundedLineMultiSubset<INT,RET_NOR,RET_DEN>::iterator VirtualBoundedLineMultiSubset<INT,RET_NOR,RET_DEN>::MaximumLeq( const INT& i , const int& k ) { assert( m_S_comp.empty() ); const INT num = InitialSegmentCount( i ) - k; const INT l = m_ds.Search( [&]( const INT& sum , const int& j ){ return num <= sum; } ) + m_lbound; return num >= 0 && find( l ) ? typename VirtualBoundedLineMultiSubset<INT,RET_NOR,RET_DEN>::iterator{ *this , l } : end(); }
-template <typename INT , typename RET_NOR , typename RET_DEN> inline typename VirtualBoundedLineMultiSubset<INT,RET_NOR,RET_DEN>::iterator VirtualBoundedLineMultiSubset<INT,RET_NOR,RET_DEN>::MaximumLt( const INT& i , const int& k ) { return MaximumLeq( i - 1 , k ); }
-template <typename INT , typename RET_NOR , typename RET_DEN> inline typename VirtualBoundedLineMultiSubset<INT,RET_NOR,RET_DEN>::iterator VirtualBoundedLineMultiSubset<INT,RET_NOR,RET_DEN>::MinimumGeq( const INT& i , const int& k ) { return MinimumGt( i - 1 , k ); }
-template <typename INT , typename RET_NOR , typename RET_DEN> inline typename VirtualBoundedLineMultiSubset<INT,RET_NOR,RET_DEN>::iterator VirtualBoundedLineMultiSubset<INT,RET_NOR,RET_DEN>::MinimumGt( const INT& i , const int& k ) { assert( m_S_comp.empty() ); const INT num = InitialSegmentCount( i ) + k; const INT r = m_ds.Search( [&]( const INT& sum , const int& j ){ return num < sum; } ) + m_lbound; return find( r ) ? typename VirtualBoundedLineMultiSubset<INT,RET_NOR,RET_DEN>::iterator{ *this , r } : end(); }
+template <typename INT , typename RET_NOR , typename RET_DEN> inline typename VirtualBoundedLineMultiSubset<INT,RET_NOR,RET_DEN>::iterator VirtualBoundedLineMultiSubset<INT,RET_NOR,RET_DEN>::MaximumLeq( const INT& i , const INT& k ) { assert( m_S_comp.empty() );  const INT num = InitialSegmentCount( i ) - k; if( num >= 0 ){ const int d = m_ds.Search( [&]( const INT& sum , const int& j ){ return num <= sum; } ); if( d < m_ds.size() ){ auto&& l = Denormalise( d ); if( find( l ) ){ return typename VirtualBoundedLineMultiSubset<INT,RET_NOR,RET_DEN>::iterator{ *this , l }; } } } return end(); }
+template <typename INT , typename RET_NOR , typename RET_DEN> inline typename VirtualBoundedLineMultiSubset<INT,RET_NOR,RET_DEN>::iterator VirtualBoundedLineMultiSubset<INT,RET_NOR,RET_DEN>::MaximumLt( const INT& i , const INT& k ) { return MaximumLeq( i - 1 , k ); }
+template <typename INT , typename RET_NOR , typename RET_DEN> inline typename VirtualBoundedLineMultiSubset<INT,RET_NOR,RET_DEN>::iterator VirtualBoundedLineMultiSubset<INT,RET_NOR,RET_DEN>::MinimumGeq( const INT& i , const INT& k ) { return MinimumGt( i - 1 , k ); }
+template <typename INT , typename RET_NOR , typename RET_DEN> inline typename VirtualBoundedLineMultiSubset<INT,RET_NOR,RET_DEN>::iterator VirtualBoundedLineMultiSubset<INT,RET_NOR,RET_DEN>::MinimumGt( const INT& i , const INT& k ) { assert( m_S_comp.empty() ); const INT num = InitialSegmentCount( i ) + k; const int d = m_ds.Search( [&]( const INT& sum , const int& j ){ return num < sum; } ); if( d < m_ds.size() ){ auto&& r = Denormalise( d ); if( find( r ) ){ return typename VirtualBoundedLineMultiSubset<INT,RET_NOR,RET_DEN>::iterator{ *this , r }; } } return end(); }
 
-template <typename INT , typename RET_NOR , typename RET_DEN> inline INT VirtualBoundedLineMultiSubset<INT,RET_NOR,RET_DEN>::Maximum( const int& k ) { return MaximumLeq( m_ubound , k ); }
-template <typename INT , typename RET_NOR , typename RET_DEN> inline INT VirtualBoundedLineMultiSubset<INT,RET_NOR,RET_DEN>::Minimum( const int& k ) { return MinimumGeq( m_lbound , k ); }
+template <typename INT , typename RET_NOR , typename RET_DEN> inline INT VirtualBoundedLineMultiSubset<INT,RET_NOR,RET_DEN>::Maximum( const INT& k ) { return MaximumLeq( m_ubound , k ); }
+template <typename INT , typename RET_NOR , typename RET_DEN> inline INT VirtualBoundedLineMultiSubset<INT,RET_NOR,RET_DEN>::Minimum( const INT& k ) { return MinimumGeq( m_lbound , k ); }
 
 template <typename INT , typename RET_NOR , typename RET_DEN> inline const INT& VirtualBoundedLineMultiSubset<INT,RET_NOR,RET_DEN>::lbound() const noexcept { return m_lbound; }
 template <typename INT , typename RET_NOR , typename RET_DEN> inline const INT& VirtualBoundedLineMultiSubset<INT,RET_NOR,RET_DEN>::ubound() const noexcept { return m_ubound; }
@@ -141,8 +186,17 @@ template <typename INT , typename RET_NOR , typename RET_DEN> void VirtualBounde
 {
 
   DERR( "重複を込めた要素数:" , int( m_S.size() ) - int( m_S_comp.size() ) );
-  DERR( "集合:" , m_S , "-" , m_S_comp );
-  DERR( "" );
+
+  if( m_S_comp.empty() ){
+    
+    DERR( "集合:" , m_S );
+
+  } else {
+
+    DERR( "集合:" , m_S , "-" , m_S_comp );
+
+  }
+  
   return;
 
 }
@@ -154,13 +208,28 @@ template <typename INT> inline BoundedLineMultiSubset<INT>::BoundedLineMultiSubs
   assert( lbound <= ubound + 1 );
   this->m_lbound = lbound;
   this->m_ubound = ubound;
-  this->m_name = "BoundedLineMultiSubset";
+  static int count = 0;
+  this->m_name = "BoundedLineMultiSubset" + to_string( count++ );
   this->m_ds.Initialise( this->m_ubound - this->m_lbound + 1 , false );
-  DERR( this->m_name , "をデバッグモードで実行します。" );
-  DERR( "各処理の計算量がO(size)増えることに注意してください。" );
-  this->Display();
-  DERR( "" );
 
+  if( this->m_output_mode ){
+    
+    DERR( this->m_name , "をデバッグモードで実行します。" );
+
+    static bool init = true;
+
+    if( init ){
+
+      init = true;
+      DERR( "各処理の計算量がO(size)増えることに注意してください。" );
+
+    }
+    
+    this->Display();
+    DERR( "" );
+
+  }
+  
 }
 
 template <typename INT> inline bool BoundedLineMultiSubset<INT>::InRange( const INT& i ) { return this->m_lbound <= i && i <= this->m_ubound; }

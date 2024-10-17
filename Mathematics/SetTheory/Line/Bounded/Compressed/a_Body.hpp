@@ -44,6 +44,6 @@ template <typename INT , template <typename...> typename DATA_STR> inline Abstra
 }
 
 template <typename INT , template <typename...> typename DATA_STR> inline bool AbstractCompressedSortedSet<INT,DATA_STR>::InRange( const INT& i ) { return m_sorted_coord_inv.count( i ) > 0; }
-template <typename INT , template <typename...> typename DATA_STR> inline const INT& AbstractCompressedSortedSet<INT,DATA_STR>::Normalise( const INT& i ) { return m_sorted_coord_inv[i]; }
-template <typename INT , template <typename...> typename DATA_STR> inline const INT& AbstractCompressedSortedSet<INT,DATA_STR>::Denormalise( const INT& d ) { return m_sorted_coord[d]; }
+template <typename INT , template <typename...> typename DATA_STR> inline const int& AbstractCompressedSortedSet<INT,DATA_STR>::Normalise( const INT& i ) { static const int exceptional = -1; return i < this->m_lbound || m_sorted_coord_inv.empty() ? exceptional : ( --m_sorted_coord_inv.upper_bound( i ) )->second; }
+template <typename INT , template <typename...> typename DATA_STR> inline const INT& AbstractCompressedSortedSet<INT,DATA_STR>::Denormalise( const int& d ) { return m_sorted_coord[d]; }
 

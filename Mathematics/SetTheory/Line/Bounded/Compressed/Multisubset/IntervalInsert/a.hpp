@@ -20,7 +20,7 @@
 template <typename INT>
 class IntervalInsertCompressedSortedMultiSet :
   public AbstractCompressedSortedSet<INT,IntervalAddBIT> ,
-  public AbstractIntervalInsertBoundedLineMultiSubset<INT,const INT&,const INT&>
+  public AbstractIntervalInsertBoundedLineMultiSubset<INT,const int&,const INT&>
 {
   
 public:

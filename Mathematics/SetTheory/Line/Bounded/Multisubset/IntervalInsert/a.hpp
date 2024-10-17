@@ -31,8 +31,8 @@ class AbstractIntervalInsertBoundedLineMultiSubset :
 {
   
 public:
-  inline void IntervalInsert( const INT& i_start , const INT& i_final , const int& c = 1 );
-  inline void IntervalErase( const INT& i_start , const INT& i_final , const int& c = 1 );
+  inline void IntervalInsert( const INT& i_start , const INT& i_final , const INT& c = 1 );
+  inline void IntervalErase( const INT& i_start , const INT& i_final , const INT& c = 1 );
 
 };
 

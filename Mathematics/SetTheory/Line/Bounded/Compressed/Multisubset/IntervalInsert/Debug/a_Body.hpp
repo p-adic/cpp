@@ -37,15 +37,30 @@ template <typename INT> inline IntervalInsertCompressedSortedMultiSet<INT>::Inte
 
   }
   
-  this->m_name = "IntervalInsertCompressedSortedMultiSet";
+  static int count = 0;
+  this->m_name = "IntervalInsertCompressedSortedMultiSet" + to_string( count++ );
   this->m_ds.Initialise( this->m_ubound , false );
-  DERR( this->m_name , "をデバッグモードで実行します。" );
-  DERR( "各処理の計算量がO(size)増えることに注意してください。" );
-  this->Display();
-  DERR( "" );
-  
+
+  if( this->m_output_mode ){
+    
+    DERR( this->m_name , "をデバッグモードで実行します。" );
+
+    static bool init = true;
+
+    if( init ){
+
+      init = true;
+      DERR( "各処理の計算量がO(size)増えることに注意してください。" );
+
+    }
+    
+    this->Display();
+    DERR( "" );
+
+  }
+    
 }
 
 template <typename INT> inline bool IntervalInsertCompressedSortedMultiSet<INT>::InRange( const INT& i ) { return m_sorted_coord_inv.count( i ) > 0; }
-template <typename INT> inline const INT& IntervalInsertCompressedSortedMultiSet<INT>::Normalise( const INT& i ) { return m_sorted_coord_inv[i]; }
+template <typename INT> inline const INT& IntervalInsertCompressedSortedMultiSet<INT>::Normalise( const INT& i ) { static const int exceptional = -1; return i < this->m_lbound || m_sorted_coord_inv.empty() ? exceptional : ( --m_sorted_coord_inv.upper_bound( i ) )->second; }
 template <typename INT> inline const INT& IntervalInsertCompressedSortedMultiSet<INT>::Denormalise( const INT& d ) { return m_sorted_coord[d]; }

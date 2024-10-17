@@ -21,23 +21,24 @@ class AbstractBoundedLineMultiSubset :
 {
   
 public:
-  inline void insert( const INT& i , const int& c = 1 );
-  inline void erase( const INT& i , const int& c = 1 );
+  inline void insert( const INT& i , const INT& c = 1 );
+  inline void erase( const INT& i , const INT& c = 1 );
   inline void EraseAll( const INT& i );
 
   // VVV重複度が非負の場合のみサポート
+  // deleteされていないものはVirtualBoundedLineSubset内で定義されている。
   // inline bool empty() noexcept;
 
   // inline iterator begin() noexcept;
-  // inline iterator end() const noexcept;
+  // inline iterator end() noexcept;
 
-  // inline iterator MaximumLeq( const INT& i , const int& k = 0 );
-  // inline iterator MaximumLt( const INT& i , const int& k = 0 );
-  // inline iterator MinimumGeq( const INT& i , const int& k = 0 );
-  // inline iterator MinimumGt( const INT& i , const int& k = 0 );
+  // inline iterator MaximumLeq( const INT& i , const INT& k = 0 );
+  // inline iterator MaximumLt( const INT& i , const INT& k = 0 );
+  // inline iterator MinimumGeq( const INT& i , const INT& k = 0 );
+  // inline iterator MinimumGt( const INT& i , const INT& k = 0 );
 
-  // inline INT Maximum( const int& k = 0 );
-  // inline INT Minimum( const int& k = 0 );
+  // inline INT Maximum( const INT& k = 0 );
+  // inline INT Minimum( const INT& k = 0 );
   
   INT RightEndPointOf( const INT& i , const bool& in = false ) = delete;
   INT LeftEndPointOf( const INT& i , const bool& in = false ) = delete;

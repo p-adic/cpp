@@ -9,7 +9,8 @@
 // 各処理の計算量がO(size)増えることに注意。
 
 template <typename INT , typename RET_NOR , typename RET_DEN>
-class VirtualBoundedLineMultiSubset
+class VirtualBoundedLineMultiSubset :
+  public Debug
 {
 
 protected:
@@ -26,11 +27,12 @@ public:
   
   using iterator = IteratorOfBoundedLineSubset<VirtualBoundedLineMultiSubset<INT,RET_NOR,RET_DEN>,INT>;
   
-  inline void insert( const INT& i , const int& c = 1 );
-  inline void erase( const INT& i , const int& c = 1 );
+  inline void insert( const INT& i , const INT& c = 1 );
+  inline void erase( const INT& i , const INT& c = 1 );
   // itrをインクリメントして書き換え、それへの参照を返す。
   inline iterator& erase( iterator& itr );
   inline void EraseAll( const INT& i );
+  inline void clear();
 
   inline int count( const INT& i ) noexcept;
   bool find( const INT& i ) noexcept;
@@ -42,15 +44,15 @@ public:
   inline bool empty();
 
   inline iterator begin();
-  inline iterator end() const;
+  inline iterator end();
 
-  inline iterator MaximumLeq( const INT& i , const int& k = 0 );
-  inline iterator MaximumLt( const INT& i , const int& k = 0 );
-  inline iterator MinimumGeq( const INT& i , const int& k = 0 );
-  inline iterator MinimumGt( const INT& i , const int& k = 0 );
+  inline iterator MaximumLeq( const INT& i , const INT& k = 0 );
+  inline iterator MaximumLt( const INT& i , const INT& k = 0 );
+  inline iterator MinimumGeq( const INT& i , const INT& k = 0 );
+  inline iterator MinimumGt( const INT& i , const INT& k = 0 );
 
-  inline INT Maximum( const int& k = 0 );
-  inline INT Minimum( const int& k = 0 );
+  inline INT Maximum( const INT& k = 0 );
+  inline INT Minimum( const INT& k = 0 );
   // AAA重複度が非負の場合のみサポート
 
   inline const INT& lbound() const noexcept;

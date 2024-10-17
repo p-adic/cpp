@@ -40,20 +40,30 @@ template <typename INT> inline CompressedSortedSet<INT>::CompressedSortedSet( co
 
   }
   
-  this->m_name = "CompressedSortedSet";
+  static int count = 0;
+  this->m_name = "CompressedSortedSet" + to_string( count++ );
   this->m_ds.Initialise( int( S.size() ) , false );
-  
+
   if( this->m_output_mode ){
     
     DERR( this->m_name , "をデバッグモードで実行します。" );
-    DERR( "各処理の計算量がO(size)増えることに注意してください。" );
+
+    static bool init = true;
+
+    if( init ){
+
+      init = true;
+      DERR( "各処理の計算量がO(size)増えることに注意してください。" );
+
+    }
+    
     this->Display();
     DERR( "" );
 
   }
-  
+    
 }
 
 template <typename INT> inline bool CompressedSortedSet<INT>::InRange( const INT& i ) { return m_sorted_coord_inv.count( i ) > 0; }
-template <typename INT> inline constexpr const INT& CompressedSortedSet<INT>::Normalise( const INT& i ) { return m_sorted_coord_inv[i]; }
-template <typename INT> inline constexpr const INT& CompressedSortedSet<INT>::Denormalise( const INT& d ) { return m_sorted_coord[d]; }
+template <typename INT> inline constexpr const int& CompressedSortedSet<INT>::Normalise( const INT& i ) { static const int exceptional = -1; return i < m_lbound ? exceptionali < m_lbound || m_sorted_coord_inv.empty() ? exceptional : ( --m_sorted_coord_inv.upper_bound( i ) )->second; }
+template <typename INT> inline constexpr const INT& CompressedSortedSet<INT>::Denormalise( const int& d ) { return m_sorted_coord[d]; }

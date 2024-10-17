@@ -80,17 +80,11 @@ template <typename INT , typename RET_NOR , typename RET_DEN> inline typename Vi
   const INT i = *itr;
   assert( m_S.count( i ) > 0 );
   auto& itr_ref = itr.erase_from( *this );
-  
-  if( m_output_mode ){
-
-    DERR( m_name , "から" , i , "を削除しました。" );
-
-  }
-  
   m_S.erase( i );
 
   if( m_output_mode ){
 
+    DERR( m_name , "から" , i , "を削除しました。" );
     Display();
     DERR( "" );
 
@@ -100,21 +94,37 @@ template <typename INT , typename RET_NOR , typename RET_DEN> inline typename Vi
 
 }
 
+template <typename INT , typename RET_NOR , typename RET_DEN , template <typename...> typename DATA_STR> inline void VirtualBoundedLineSubset<INT,RET_NOR,RET_DEN,DATA_STR>::clear()
+{
+
+  m_ds.Initialise( m_ds.size() );
+
+  if( m_output_mode ){
+
+    DERR( m_name , "から全ての要素を削除しました。" );
+    Display();
+    DERR( "" );
+
+  }
+  
+}
+
 template <typename INT , typename RET_NOR , typename RET_DEN> inline int VirtualBoundedLineSubset<INT,RET_NOR,RET_DEN>::count( const INT& i ) noexcept { return InRange( i ) ? m_ds[Normalise( i )] : 0; }
 
 template <typename INT , typename RET_NOR , typename RET_DEN> inline bool VirtualBoundedLineSubset<INT,RET_NOR,RET_DEN>::find( const INT& i ) noexcept { return count( i ) > 0; }
 
-template <typename INT , typename RET_NOR , typename RET_DEN> inline int VirtualBoundedLineSubset<INT,RET_NOR,RET_DEN>::InitialSegmentCount( const INT& i_final ) { assert( InRange( i_final ) ); return m_ds.InitialSegmentSum( Normalise( i_final ) ); }
+template <typename INT , typename RET_NOR , typename RET_DEN , template <typename...> typename DATA_STR> inline int VirtualBoundedLineSubset<INT,RET_NOR,RET_DEN>::InitialSegmentCount( const INT& i_final ) { return i_final < m_lbound ? 0 : m_ds.InitialSegmentSum( Normalise( i_final ) ); }
 
-template <typename INT , typename RET_NOR , typename RET_DEN> inline int VirtualBoundedLineSubset<INT,RET_NOR,RET_DEN>::IntervalCount( const INT& i_start , const INT& i_final )
+template <typename INT , typename RET_NOR , typename RET_DEN , template <typename...> typename DATA_STR> inline int VirtualBoundedLineSubset<INT,RET_NOR,RET_DEN>::IntervalCount( const INT& i_start , const INT& i_final )
 {
 
-  assert( InRange( i_start ) && InRange( i_final ) );
-  const INT answer = m_ds.IntervalSum( Normalise( i_start ) , Normalise( i_final ) );
+  auto&& l = Normalise( i_start );
+  const INT answer = m_ds.IntervalSum( ( l < 0 || Denormalise( l ) < i_start ) ? l + 1 : l , Normalise( i_final ) );
 
   if( m_output_mode ){
 
-    DERRNS( m_name , "の区間 [" , i_start , "," , i_final , "] 内の要素数は " , answer , " です。" );
+    DERR( m_name , "の区間[" , i_start , "," , i_final , "]内の要素数は" , answer , "です。" );
+    DERR( "" );
 
   }
   
@@ -127,13 +137,13 @@ template <typename INT , typename RET_NOR , typename RET_DEN> inline bool Virtua
 template <typename INT , typename RET_NOR , typename RET_DEN> inline typename VirtualBoundedLineSubset<INT,RET_NOR,RET_DEN>::iterator VirtualBoundedLineSubset<INT,RET_NOR,RET_DEN>::begin() noexcept { return MinimumGeq( m_lbound ); }
 template <typename INT , typename RET_NOR , typename RET_DEN> inline typename VirtualBoundedLineSubset<INT,RET_NOR,RET_DEN>::iterator VirtualBoundedLineSubset<INT,RET_NOR,RET_DEN>::end() noexcept { return typename VirtualBoundedLineSubset<INT,RET_NOR,RET_DEN>::iterator( *this , m_ubound + 1 ); }
 
-template <typename INT , typename RET_NOR , typename RET_DEN> inline typename VirtualBoundedLineSubset<INT,RET_NOR,RET_DEN>::iterator VirtualBoundedLineSubset<INT,RET_NOR,RET_DEN>::MaximumLeq( const INT& i , const int& k ) { const INT num = InitialSegmentCount( i ) - k; const INT l = Denormalise( m_ds.Search( [&]( const INT& sum , const int& j ){ return num <= sum; } ) ); return num >= 0 && find( l ) ? typename VirtualBoundedLineSubset<INT,RET_NOR,RET_DEN>::iterator{ *this , l } : end(); }
-template <typename INT , typename RET_NOR , typename RET_DEN> inline typename VirtualBoundedLineSubset<INT,RET_NOR,RET_DEN>::iterator VirtualBoundedLineSubset<INT,RET_NOR,RET_DEN>::MaximumLt( const INT& i , const int& k ) { const int d = Normalise( i ); if( d == 0 ){ return end(); } return MaximumLeq( Denormalise( d - 1 ) , k ); }
-template <typename INT , typename RET_NOR , typename RET_DEN> inline typename VirtualBoundedLineSubset<INT,RET_NOR,RET_DEN>::iterator VirtualBoundedLineSubset<INT,RET_NOR,RET_DEN>::MinimumGeq( const INT& i , const int& k ) { const int c = count( i ); return c > k ? typename VirtualBoundedLineSubset<INT,RET_NOR,RET_DEN>::iterator{ *this , i } : MinimumGt( i , k - c ); }
-template <typename INT , typename RET_NOR , typename RET_DEN> inline typename VirtualBoundedLineSubset<INT,RET_NOR,RET_DEN>::iterator VirtualBoundedLineSubset<INT,RET_NOR,RET_DEN>::MinimumGt( const INT& i , const int& k ) { const INT num = InitialSegmentCount( i ) + k; const INT r = m_ds.Search( [&]( const INT& sum , const int& j ){ return num < sum; } ) + m_lbound; return find( r ) ? typename VirtualBoundedLineSubset<INT,RET_NOR,RET_DEN>::iterator{ *this , r } : end(); }
+template <typename INT , typename RET_NOR , typename RET_DEN> inline typename VirtualBoundedLineSubset<INT,RET_NOR,RET_DEN>::iterator VirtualBoundedLineSubset<INT,RET_NOR,RET_DEN>::MaximumLeq( const INT& i , const INT& k ) { const INT num = InitialSegmentCount( i ) - k; if( num >= 0 ){ const int d = m_ds.Search( [&]( const INT& sum , const int& j ){ return num <= sum; } ); if( d < m_ds.size() ){ auto&& l = Denormalise( d ); if( find( l ) ){ return typename VirtualBoundedLineSubset<INT,RET_NOR,RET_DEN>::iterator{ *this , l }; } } } return end(); }
+template <typename INT , typename RET_NOR , typename RET_DEN> inline typename VirtualBoundedLineSubset<INT,RET_NOR,RET_DEN>::iterator VirtualBoundedLineSubset<INT,RET_NOR,RET_DEN>::MaximumLt( const INT& i , const INT& k ) { const int d = Normalise( i ); if( d == 0 ){ return end(); } return MaximumLeq( Denormalise( d - 1 ) , k ); }
+template <typename INT , typename RET_NOR , typename RET_DEN> inline typename VirtualBoundedLineSubset<INT,RET_NOR,RET_DEN>::iterator VirtualBoundedLineSubset<INT,RET_NOR,RET_DEN>::MinimumGeq( const INT& i , const INT& k ) { const int c = count( i ); return c > k ? typename VirtualBoundedLineSubset<INT,RET_NOR,RET_DEN>::iterator{ *this , i } : MinimumGt( i , k - c ); }
+template <typename INT , typename RET_NOR , typename RET_DEN> inline typename VirtualBoundedLineSubset<INT,RET_NOR,RET_DEN>::iterator VirtualBoundedLineSubset<INT,RET_NOR,RET_DEN>::MinimumGt( const INT& i , const INT& k ) { const INT num = InitialSegmentCount( i ) + k; const int d = m_ds.Search( [&]( const INT& sum , const int& j ){ return num < sum; } ); if( d < m_ds.size() ){ auto&& r = Denormalise( d ); if( find( r ) ){ typename VirtualBoundedLineSubset<INT,RET_NOR,RET_DEN>::iterator{ *this , r }; } } return end(); }
 
-template <typename INT , typename RET_NOR , typename RET_DEN> inline INT VirtualBoundedLineSubset<INT,RET_NOR,RET_DEN>::Maximum( const int& k ) { return MaximumLeq( m_ubound , k ); }
-template <typename INT , typename RET_NOR , typename RET_DEN> inline INT VirtualBoundedLineSubset<INT,RET_NOR,RET_DEN>::Minimum( const int& k ) { return MinimumGeq( m_lbound , k ); }
+template <typename INT , typename RET_NOR , typename RET_DEN> inline INT VirtualBoundedLineSubset<INT,RET_NOR,RET_DEN>::Maximum( const INT& k ) { return MaximumLeq( m_ubound , k ); }
+template <typename INT , typename RET_NOR , typename RET_DEN> inline INT VirtualBoundedLineSubset<INT,RET_NOR,RET_DEN>::Minimum( const INT& k ) { return MinimumGeq( m_lbound , k ); }
 
 template <typename INT , typename RET_NOR , typename RET_DEN>
 INT VirtualBoundedLineSubset<INT,RET_NOR,RET_DEN>::RightEndPointOf( const INT& i , int d , int comp_minus , const bool& in )
@@ -227,13 +237,23 @@ template <typename INT> inline BoundedLineSubset<INT>::BoundedLineSubset( const 
   this->m_output_mode = output_mode;
   this->m_lbound = lbound;
   this->m_ubound = ubound;
-  this->m_name = "BoundedLineSubset";
+  static int count = 0;
+  this->m_name = "BoundedLineSubset" + to_string( count++ );
   this->m_ds.Initialise( this->m_ubound - this->m_lbound + 1 , false );
   
   if( this->m_output_mode ){
     
     DERR( this->m_name , "をデバッグモードで実行します。" );
-    DERR( "各処理の計算量がO(size)増えることに注意してください。" );
+
+    static bool init = true;
+
+    if( init ){
+
+      init = true;
+      DERR( "各処理の計算量がO(size)増えることに注意してください。" );
+
+    }
+    
     this->Display();
     DERR( "" );
 

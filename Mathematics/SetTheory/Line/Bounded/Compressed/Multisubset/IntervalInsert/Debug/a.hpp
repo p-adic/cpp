@@ -13,7 +13,7 @@ class IntervalInsertCompressedSortedMultiSet :
 
 protected:
   vector<INT> m_sorted_coord;
-  Map<INT,int> m_sorted_coord_inv;
+  map<INT,int> m_sorted_coord_inv;
 
 public:
   inline IntervalInsertCompressedSortedMultiSet( const vector<INT>& query );

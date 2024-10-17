@@ -43,6 +43,7 @@ public:
   inline void erase( const INT& i ) noexcept;
   // itrをインクリメントして書き換え、それへの参照を返す。
   inline iterator& erase( iterator& itr );
+  inline void clear();
 
   inline int count( const INT& i ) noexcept;
   bool find( const INT& i ) noexcept;
@@ -54,13 +55,13 @@ public:
   inline iterator begin() noexcept;
   inline iterator end() noexcept;
 
-  inline iterator MaximumLeq( const INT& i , const int& k = 0 );
-  inline iterator MaximumLt( const INT& i , const int& k = 0 );
-  inline iterator MinimumGeq( const INT& i , const int& k = 0 );
-  inline iterator MinimumGt( const INT& i , const int& k = 0 );
+  inline iterator MaximumLeq( const INT& i , const INT& k = 0 );
+  inline iterator MaximumLt( const INT& i , const INT& k = 0 );
+  inline iterator MinimumGeq( const INT& i , const INT& k = 0 );
+  inline iterator MinimumGt( const INT& i , const INT& k = 0 );
 
-  inline INT Maximum( const int& k = 0 );
-  inline INT Minimum( const int& k = 0 );
+  inline INT Maximum( const INT& k = 0 );
+  inline INT Minimum( const INT& k = 0 );
 
   // iを含む連結成分の右端を返す。存在しない場合はi-1を返す。
   INT RightEndPointOf( const INT& i , int d = -1 , int comp_minus = -1 , const bool& in = false );

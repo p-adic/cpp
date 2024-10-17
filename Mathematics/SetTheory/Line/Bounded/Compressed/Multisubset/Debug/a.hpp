@@ -8,20 +8,20 @@
 
 template <typename INT>
 class CompressedSortedMultiSet :
-  public VirtualBoundedLineMultiSubset<INT,const INT&,const INT&>
+  public VirtualBoundedLineMultiSubset<INT,const int&,const INT&>
 {
 
 protected:
   vector<INT> m_sorted_coord;
-  Map<INT,int> m_sorted_coord_inv;
+  map<INT,int> m_sorted_coord_inv;
 
 public:
   inline CompressedSortedMultiSet( const vector<INT>& query );
 
 protected:
   inline bool InRange( const INT& i );
-  inline const INT& Normalise( const INT& i );
-  inline const INT& Denormalise( const INT& d );
+  inline const int& Normalise( const INT& i );
+  inline const INT& Denormalise( const int& d );
 
 };
 

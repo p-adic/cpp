@@ -11,13 +11,28 @@ template <typename INT> inline IntervalInsertNonNegativeLineMultiSubset<INT>::In
   assert( -1 <= ubound );
   this->m_lbound = 0;
   this->m_ubound = ubound;
-  this->m_name = "IntervalInsertNonNegativeLineMultiSubset";
+  static int count = 0;
+  this->m_name = "IntervalInsertNonNegativeLineMultiSubset" + to_string( count++ );
   this->m_ds.Initialise( this->m_ubound , false );
-  DERR( this->m_name , "をデバッグモードで実行します。" );
-  DERR( "各処理の計算量がO(size)増えることに注意してください。" );
-  this->Display();
-  DERR( "" );
-  
+
+  if( this->m_output_mode ){
+    
+    DERR( this->m_name , "をデバッグモードで実行します。" );
+
+    static bool init = true;
+
+    if( init ){
+
+      init = true;
+      DERR( "各処理の計算量がO(size)増えることに注意してください。" );
+
+    }
+    
+    this->Display();
+    DERR( "" );
+
+  }
+    
 }
 
 template <typename INT> inline bool IntervalInsertNonNegativeLineMultiSubset<INT>::InRange( const INT& i ) { return 0 <= i && i <= this->m_ubound; }
