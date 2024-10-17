@@ -60,7 +60,6 @@ vector<vector<ll>> AbstractCountingNegativeCostBoundedValueSumBoundedSizeKnapsac
     }
 
     S.push_back( query );
-    query.clear();
 
   }
       
