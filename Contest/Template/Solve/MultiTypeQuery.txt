@@ -1,4 +1,6 @@
   CIN( int , N );
+  CIN_A( ll , 0 , N , A );
+  // CIN( string , S );
   CIN( int , Q );
   // BIT t{ N };
   // IntervalMultiplyLazySqrtDecomposition t{ MultiplicativeMonoid<ll>( 1 ) , Module<ll,ll>() , N };

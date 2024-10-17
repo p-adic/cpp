@@ -1,4 +1,6 @@
   CIN( int , N );
+  CIN_A( ll , 0 , N , A );
+  // CIN( string , S );
   CIN( int , Q );
   // vector<T3<int>> query( Q );
   FOR( q , 0 , Q ){
