@@ -1,8 +1,8 @@
-contest_num = 516
+contest_num = 518
 start_hour = 21
 start_minute = 20
-#wait = True
-wait = False
+wait = True
+#wait = False
 
 import datetime
 two_byte_message = open("two_byte_message.txt",'r')
@@ -47,6 +47,7 @@ for a_tag in contest_table_page.find_all("a"):
 			for i,file in zip([1,2],[input_file,output_file]):
 				temp[i] = temp[i].split("</pre>")[0]
 				for br in ["<br>","</br>","<br/>"]:temp[i] = "\n".join(temp[i].split(br))
+				if temp[i] and temp[i][0] == '\n':temp[i] = temp[i][1:]
 				if temp[i][-1] != '\n':temp[i] += '\n'
 				file.write(temp[i])
 				file.close()
