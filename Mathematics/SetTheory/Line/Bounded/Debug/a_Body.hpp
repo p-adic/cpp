@@ -94,7 +94,7 @@ template <typename INT , typename RET_NOR , typename RET_DEN> inline typename Vi
 
 }
 
-template <typename INT , typename RET_NOR , typename RET_DEN , template <typename...> typename DATA_STR> inline void VirtualBoundedLineSubset<INT,RET_NOR,RET_DEN,DATA_STR>::clear()
+template <typename INT , typename RET_NOR , typename RET_DEN> inline void VirtualBoundedLineSubset<INT,RET_NOR,RET_DEN>::clear()
 {
 
   m_ds.Initialise( m_ds.size() );
@@ -109,13 +109,13 @@ template <typename INT , typename RET_NOR , typename RET_DEN , template <typenam
   
 }
 
-template <typename INT , typename RET_NOR , typename RET_DEN> inline int VirtualBoundedLineSubset<INT,RET_NOR,RET_DEN>::count( const INT& i ) noexcept { return InRange( i ) ? m_ds[Normalise( i )] : 0; }
+template <typename INT , typename RET_NOR , typename RET_DEN> inline INT VirtualBoundedLineSubset<INT,RET_NOR,RET_DEN>::count( const INT& i ) noexcept { return InRange( i ) ? m_ds[Normalise( i )] : 0; }
 
 template <typename INT , typename RET_NOR , typename RET_DEN> inline bool VirtualBoundedLineSubset<INT,RET_NOR,RET_DEN>::find( const INT& i ) noexcept { return count( i ) > 0; }
 
-template <typename INT , typename RET_NOR , typename RET_DEN , template <typename...> typename DATA_STR> inline int VirtualBoundedLineSubset<INT,RET_NOR,RET_DEN>::InitialSegmentCount( const INT& i_final ) { return i_final < m_lbound ? 0 : m_ds.InitialSegmentSum( Normalise( i_final ) ); }
+template <typename INT , typename RET_NOR , typename RET_DEN> inline INT VirtualBoundedLineSubset<INT,RET_NOR,RET_DEN>::InitialSegmentCount( const INT& i_final ) { return i_final < m_lbound ? 0 : m_ds.InitialSegmentSum( Normalise( i_final ) ); }
 
-template <typename INT , typename RET_NOR , typename RET_DEN , template <typename...> typename DATA_STR> inline int VirtualBoundedLineSubset<INT,RET_NOR,RET_DEN>::IntervalCount( const INT& i_start , const INT& i_final )
+template <typename INT , typename RET_NOR , typename RET_DEN> inline INT VirtualBoundedLineSubset<INT,RET_NOR,RET_DEN>::IntervalCount( const INT& i_start , const INT& i_final )
 {
 
   auto&& l = Normalise( i_start );
@@ -239,7 +239,7 @@ template <typename INT> inline BoundedLineSubset<INT>::BoundedLineSubset( const 
   this->m_ubound = ubound;
   static int count = 0;
   this->m_name = "BoundedLineSubset" + to_string( count++ );
-  this->m_ds.Initialise( this->m_ubound - this->m_lbound + 1 , false );
+  this->m_ds.Initialise( int( this->m_ubound - this->m_lbound + 1 ) , false );
   
   if( this->m_output_mode ){
     

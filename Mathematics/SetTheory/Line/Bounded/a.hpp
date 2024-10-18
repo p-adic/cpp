@@ -45,11 +45,11 @@ public:
   inline iterator& erase( iterator& itr );
   inline void clear();
 
-  inline int count( const INT& i ) noexcept;
+  inline INT count( const INT& i ) noexcept;
   bool find( const INT& i ) noexcept;
 
-  inline int InitialSegmentCount( const INT& i_final );
-  inline int IntervalCount( const INT& i_start , const INT& i_final );
+  inline INT InitialSegmentCount( const INT& i_final );
+  inline INT IntervalCount( const INT& i_start , const INT& i_final );
   inline bool empty() noexcept;
 
   inline iterator begin() noexcept;

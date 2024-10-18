@@ -47,11 +47,11 @@ template <typename INT , typename RET_NOR , typename RET_DEN> inline void Virtua
   assert( InRange( i_start ) && InRange( i_final ) && c >= 0 );
   m_ds.IntervalAdd( Normalise( i_start ) , Normalise( i_final ) , c );
 
-  for( int i = i_start ; i <= i_final ; i++ ){
+  for( INT i = i_start ; i <= i_final ; i++ ){
     
     auto itr = m_S_comp.find( i ) , end = m_S_comp.end();
 
-    for( int repetition = 0 ; repetition < c ; repetition++ ){
+    for( INT repetition = 0 ; repetition < c ; repetition++ ){
 
       if( itr != end && *itr == i ){
 
@@ -84,7 +84,7 @@ template <typename INT , typename RET_NOR , typename RET_DEN> inline void Virtua
     m_ds.Add( Normalise( i ) , -c );
     auto itr = m_S.find( i ) , end = m_S.end();
 
-    for( int repetition = 0 ; repetition < c ; repetition++ ){
+    for( INT repetition = 0 ; repetition < c ; repetition++ ){
 
       if( itr != end && *itr == i ){
 
@@ -175,11 +175,11 @@ template <typename INT , typename RET_NOR , typename RET_DEN> inline void Virtua
   assert( InRange( i_start ) && InRange( i_final ) && c >= 0 );
   m_ds.IntervalAdd( Normalise( i_start ) , Normalise( i_final ) , -c );
 
-  for( int i = i_start ; i <= i_final ; i++ ){
+  for( INT i = i_start ; i <= i_final ; i++ ){
     
     auto itr = m_S.find( i ) , end = m_S.end();
 
-    for( int repetition = 0 ; repetition < c ; repetition++ ){
+    for( INT repetition = 0 ; repetition < c ; repetition++ ){
 
       if( itr != end && *itr == i ){
 
@@ -224,13 +224,13 @@ template <typename INT , typename RET_NOR , typename RET_DEN> inline void Virtua
 
 }
 
-template <typename INT , typename RET_NOR , typename RET_DEN> inline int VirtualIntervalInsertBoundedLineMultiSubset<INT,RET_NOR,RET_DEN>::count( const INT& i ) noexcept { return InRange( i ) ? m_ds[Normalise( i )] : 0; }
+template <typename INT , typename RET_NOR , typename RET_DEN> inline INT VirtualIntervalInsertBoundedLineMultiSubset<INT,RET_NOR,RET_DEN>::count( const INT& i ) noexcept { return InRange( i ) ? m_ds[Normalise( i )] : 0; }
 
 template <typename INT , typename RET_NOR , typename RET_DEN> inline bool VirtualIntervalInsertBoundedLineMultiSubset<INT,RET_NOR,RET_DEN>::find( const INT& i ) noexcept { return count( i ) > 0; }
 
-template <typename INT , typename RET_NOR , typename RET_DEN> inline int VirtualIntervalInsertBoundedLineMultiSubset<INT,RET_NOR,RET_DEN>::InitialSegmentCount( const INT& i_final ) noexcept { return i_final < m_lbound ? 0 : m_ds.InitialSegmentSum( Normalise( i_final ) ); }
+template <typename INT , typename RET_NOR , typename RET_DEN> inline INT VirtualIntervalInsertBoundedLineMultiSubset<INT,RET_NOR,RET_DEN>::InitialSegmentCount( const INT& i_final ) noexcept { return i_final < m_lbound ? 0 : m_ds.InitialSegmentSum( Normalise( i_final ) ); }
   
-template <typename INT , typename RET_NOR , typename RET_DEN> inline int VirtualIntervalInsertBoundedLineMultiSubset<INT,RET_NOR,RET_DEN>::IntervalCount( const INT& i_start , const INT& i_final ) noexcept
+template <typename INT , typename RET_NOR , typename RET_DEN> inline INT VirtualIntervalInsertBoundedLineMultiSubset<INT,RET_NOR,RET_DEN>::IntervalCount( const INT& i_start , const INT& i_final ) noexcept
 {
 
   auto&& l = Normalise( i_start );
@@ -260,7 +260,7 @@ template <typename INT , typename RET_NOR , typename RET_DEN> inline typename Vi
 
   if( num >= 0 ){
 
-    const int d = m_ds.Search( [&]( const INT& sum , const int& j ){ return num <= sum; } );
+    const INT d = m_ds.Search( [&]( const INT& sum , const int& j ){ return num <= sum; } );
 
     if( d < m_ds.size() ){
 
@@ -283,7 +283,7 @@ template <typename INT , typename RET_NOR , typename RET_DEN> inline typename Vi
 template <typename INT , typename RET_NOR , typename RET_DEN> inline typename VirtualIntervalInsertBoundedLineMultiSubset<INT,RET_NOR,RET_DEN>::iterator VirtualIntervalInsertBoundedLineMultiSubset<INT,RET_NOR,RET_DEN>::MaximumLt( const INT& i , const INT& k )
 {
 
-  const int d = Normalise( i );
+  const INT d = Normalise( i );
 
   if( d == 0 ){
 
@@ -298,7 +298,7 @@ template <typename INT , typename RET_NOR , typename RET_DEN> inline typename Vi
 template <typename INT , typename RET_NOR , typename RET_DEN> inline typename VirtualIntervalInsertBoundedLineMultiSubset<INT,RET_NOR,RET_DEN>::iterator VirtualIntervalInsertBoundedLineMultiSubset<INT,RET_NOR,RET_DEN>::MinimumGeq( const INT& i , const INT& k )
 {
 
-  const int c = count( i );
+  const INT c = count( i );
   return c > k ? typename VirtualIntervalInsertBoundedLineMultiSubset<INT,RET_NOR,RET_DEN>::iterator{ *this , i } : MinimumGt( i , k - c );
 
 }
@@ -308,7 +308,7 @@ template <typename INT , typename RET_NOR , typename RET_DEN> inline typename Vi
 
   assert( m_S_comp.empty() );
   const INT num = InitialSegmentCount( i ) + k;
-  const int d = m_ds.Search( [&]( const INT& sum , const int& j ){ return num < sum; } );
+  const INT d = m_ds.Search( [&]( const INT& sum , const int& j ){ return num < sum; } );
 
   if( d < m_ds.size() ){
 
@@ -348,7 +348,7 @@ template <typename INT> inline IntervalInsertBoundedLineMultiSubset<INT>::Interv
   assert( lbound <= ubound + 1 );
   this->m_lbound = lbound;
   this->m_ubound = ubound;
-  static int count = 0;
+  static INT count = 0;
   this->m_name = "IntervalInsertBoundedLineMultiSubset" + to_string( count++ );
 
   if( this->m_output_mode ){

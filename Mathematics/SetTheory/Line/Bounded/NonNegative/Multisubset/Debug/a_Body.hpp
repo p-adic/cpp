@@ -13,7 +13,7 @@ template <typename INT> inline NonNegativeLineMultiSubset<INT>::NonNegativeLineM
   this->m_ubound = ubound;
   static int count = 0;
   this->m_name = "NonNegativeLineMultiSubset" + to_string( count++ );
-  this->m_ds.Initialise( this->m_ubound + 1 , false );
+  this->m_ds.Initialise( int( this->m_ubound + 1 ) , false );
 
   if( this->m_output_mode ){
     

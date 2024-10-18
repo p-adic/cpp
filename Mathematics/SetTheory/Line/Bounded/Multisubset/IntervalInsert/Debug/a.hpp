@@ -36,11 +36,11 @@ public:
   inline void IntervalErase( const INT& i_start , const INT& i_final , const INT& c = 1 );
   inline void clear();
 
-  inline int count( const INT& i ) noexcept;
+  inline INT count( const INT& i ) noexcept;
   bool find( const INT& i ) noexcept;
 
-  inline int InitialSegmentCount( const INT& i_final ) noexcept;
-  inline int IntervalCount( const INT& i_start , const INT& i_final ) noexcept;
+  inline INT InitialSegmentCount( const INT& i_final ) noexcept;
+  inline INT IntervalCount( const INT& i_start , const INT& i_final ) noexcept;
 
   // VVV重複度が非負の場合のみサポート（noexceptが外れていることに注意）
   inline bool empty();

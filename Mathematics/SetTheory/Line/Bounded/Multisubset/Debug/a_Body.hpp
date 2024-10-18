@@ -15,7 +15,7 @@ template <typename INT , typename RET_NOR , typename RET_DEN> inline void Virtua
   m_ds.Add( Normalise( i ) , c );
   auto itr = m_S_comp.find( i ) , end = m_S_comp.end();
 
-  for( int repetition = 0 ; repetition < c ; repetition++ ){
+  for( INT repetition = 0 ; repetition < c ; repetition++ ){
 
     if( itr != end && *itr == i ){
 
@@ -48,7 +48,7 @@ template <typename INT , typename RET_NOR , typename RET_DEN> inline void Virtua
   m_ds.Add( Normalise( i ) , -c );
   auto itr = m_S.find( i ) , end = m_S.end();
 
-  for( int repetition = 0 ; repetition < c ; repetition++ ){
+  for( INT repetition = 0 ; repetition < c ; repetition++ ){
 
     if( itr != end && *itr == i ){
 
@@ -143,13 +143,13 @@ template <typename INT , typename RET_NOR , typename RET_DEN> inline void Virtua
 
 }
 
-template <typename INT , typename RET_NOR , typename RET_DEN> inline int VirtualBoundedLineMultiSubset<INT,RET_NOR,RET_DEN>::count( const INT& i ) noexcept { return InRange( i ) ? m_ds[Normalise( i )] : 0; }
+template <typename INT , typename RET_NOR , typename RET_DEN> inline INT VirtualBoundedLineMultiSubset<INT,RET_NOR,RET_DEN>::count( const INT& i ) noexcept { return InRange( i ) ? m_ds[Normalise( i )] : 0; }
 
 template <typename INT , typename RET_NOR , typename RET_DEN> inline bool VirtualBoundedLineMultiSubset<INT,RET_NOR,RET_DEN>::find( const INT& i ) noexcept { return count( i ) > 0; }
 
-template <typename INT , typename RET_NOR , typename RET_DEN> inline int VirtualBoundedLineMultiSubset<INT,RET_NOR,RET_DEN>::InitialSegmentCount( const INT& i_final ) { return i_final < m_lbound ? 0 : m_ds.InitialSegmentSum( Normalise( i_final ) ); }
+template <typename INT , typename RET_NOR , typename RET_DEN> inline INT VirtualBoundedLineMultiSubset<INT,RET_NOR,RET_DEN>::InitialSegmentCount( const INT& i_final ) { return i_final < m_lbound ? 0 : m_ds.InitialSegmentSum( Normalise( i_final ) ); }
 
-template <typename INT , typename RET_NOR , typename RET_DEN> inline int VirtualBoundedLineMultiSubset<INT,RET_NOR,RET_DEN>::IntervalCount( const INT& i_start , const INT& i_final )
+template <typename INT , typename RET_NOR , typename RET_DEN> inline INT VirtualBoundedLineMultiSubset<INT,RET_NOR,RET_DEN>::IntervalCount( const INT& i_start , const INT& i_final )
 {
 
   auto&& l = Normalise( i_start );
@@ -171,10 +171,10 @@ template <typename INT , typename RET_NOR , typename RET_DEN> inline bool Virtua
 template <typename INT , typename RET_NOR , typename RET_DEN> inline typename VirtualBoundedLineMultiSubset<INT,RET_NOR,RET_DEN>::iterator VirtualBoundedLineMultiSubset<INT,RET_NOR,RET_DEN>::begin() { return MinimumGeq( m_lbound ); }
 template <typename INT , typename RET_NOR , typename RET_DEN> inline typename VirtualBoundedLineMultiSubset<INT,RET_NOR,RET_DEN>::iterator VirtualBoundedLineMultiSubset<INT,RET_NOR,RET_DEN>::end() { assert( m_S_comp.empty() ); return typename VirtualBoundedLineMultiSubset<INT,RET_NOR,RET_DEN>::iterator( *this , m_ubound + 1 ); }
 
-template <typename INT , typename RET_NOR , typename RET_DEN> inline typename VirtualBoundedLineMultiSubset<INT,RET_NOR,RET_DEN>::iterator VirtualBoundedLineMultiSubset<INT,RET_NOR,RET_DEN>::MaximumLeq( const INT& i , const INT& k ) { assert( m_S_comp.empty() );  const INT num = InitialSegmentCount( i ) - k; if( num >= 0 ){ const int d = m_ds.Search( [&]( const INT& sum , const int& j ){ return num <= sum; } ); if( d < m_ds.size() ){ auto&& l = Denormalise( d ); if( find( l ) ){ return typename VirtualBoundedLineMultiSubset<INT,RET_NOR,RET_DEN>::iterator{ *this , l }; } } } return end(); }
+template <typename INT , typename RET_NOR , typename RET_DEN> inline typename VirtualBoundedLineMultiSubset<INT,RET_NOR,RET_DEN>::iterator VirtualBoundedLineMultiSubset<INT,RET_NOR,RET_DEN>::MaximumLeq( const INT& i , const INT& k ) { assert( m_S_comp.empty() );  const INT num = InitialSegmentCount( i ) - k; if( num >= 0 ){ const INT d = m_ds.Search( [&]( const INT& sum , const INT& j ){ return num <= sum; } ); if( d < m_ds.size() ){ auto&& l = Denormalise( d ); if( find( l ) ){ return typename VirtualBoundedLineMultiSubset<INT,RET_NOR,RET_DEN>::iterator{ *this , l }; } } } return end(); }
 template <typename INT , typename RET_NOR , typename RET_DEN> inline typename VirtualBoundedLineMultiSubset<INT,RET_NOR,RET_DEN>::iterator VirtualBoundedLineMultiSubset<INT,RET_NOR,RET_DEN>::MaximumLt( const INT& i , const INT& k ) { return MaximumLeq( i - 1 , k ); }
 template <typename INT , typename RET_NOR , typename RET_DEN> inline typename VirtualBoundedLineMultiSubset<INT,RET_NOR,RET_DEN>::iterator VirtualBoundedLineMultiSubset<INT,RET_NOR,RET_DEN>::MinimumGeq( const INT& i , const INT& k ) { return MinimumGt( i - 1 , k ); }
-template <typename INT , typename RET_NOR , typename RET_DEN> inline typename VirtualBoundedLineMultiSubset<INT,RET_NOR,RET_DEN>::iterator VirtualBoundedLineMultiSubset<INT,RET_NOR,RET_DEN>::MinimumGt( const INT& i , const INT& k ) { assert( m_S_comp.empty() ); const INT num = InitialSegmentCount( i ) + k; const int d = m_ds.Search( [&]( const INT& sum , const int& j ){ return num < sum; } ); if( d < m_ds.size() ){ auto&& r = Denormalise( d ); if( find( r ) ){ return typename VirtualBoundedLineMultiSubset<INT,RET_NOR,RET_DEN>::iterator{ *this , r }; } } return end(); }
+template <typename INT , typename RET_NOR , typename RET_DEN> inline typename VirtualBoundedLineMultiSubset<INT,RET_NOR,RET_DEN>::iterator VirtualBoundedLineMultiSubset<INT,RET_NOR,RET_DEN>::MinimumGt( const INT& i , const INT& k ) { assert( m_S_comp.empty() ); const INT num = InitialSegmentCount( i ) + k; const INT d = m_ds.Search( [&]( const INT& sum , const INT& j ){ return num < sum; } ); if( d < m_ds.size() ){ auto&& r = Denormalise( d ); if( find( r ) ){ return typename VirtualBoundedLineMultiSubset<INT,RET_NOR,RET_DEN>::iterator{ *this , r }; } } return end(); }
 
 template <typename INT , typename RET_NOR , typename RET_DEN> inline INT VirtualBoundedLineMultiSubset<INT,RET_NOR,RET_DEN>::Maximum( const INT& k ) { return MaximumLeq( m_ubound , k ); }
 template <typename INT , typename RET_NOR , typename RET_DEN> inline INT VirtualBoundedLineMultiSubset<INT,RET_NOR,RET_DEN>::Minimum( const INT& k ) { return MinimumGeq( m_lbound , k ); }
@@ -185,7 +185,7 @@ template <typename INT , typename RET_NOR , typename RET_DEN> inline const INT& 
 template <typename INT , typename RET_NOR , typename RET_DEN> void VirtualBoundedLineMultiSubset<INT,RET_NOR,RET_DEN>::Display() noexcept
 {
 
-  DERR( "èdï°ÇçûÇﬂÇΩóvëfêî:" , int( m_S.size() ) - int( m_S_comp.size() ) );
+  DERR( "èdï°ÇçûÇﬂÇΩóvëfêî:" , INT( m_S.size() ) - INT( m_S_comp.size() ) );
 
   if( m_S_comp.empty() ){
     
@@ -208,9 +208,9 @@ template <typename INT> inline BoundedLineMultiSubset<INT>::BoundedLineMultiSubs
   assert( lbound <= ubound + 1 );
   this->m_lbound = lbound;
   this->m_ubound = ubound;
-  static int count = 0;
+  static INT count = 0;
   this->m_name = "BoundedLineMultiSubset" + to_string( count++ );
-  this->m_ds.Initialise( this->m_ubound - this->m_lbound + 1 , false );
+  this->m_ds.Initialise( int( this->m_ubound - this->m_lbound + 1 ) , false );
 
   if( this->m_output_mode ){
     

@@ -34,11 +34,11 @@ public:
   inline void EraseAll( const INT& i );
   inline void clear();
 
-  inline int count( const INT& i ) noexcept;
+  inline INT count( const INT& i ) noexcept;
   bool find( const INT& i ) noexcept;
 
-  inline int InitialSegmentCount( const INT& i_final );
-  inline int IntervalCount( const INT& i_start , const INT& i_final );
+  inline INT InitialSegmentCount( const INT& i_final );
+  inline INT IntervalCount( const INT& i_start , const INT& i_final );
 
   // VVV重複度が非負の場合のみサポート（noexceptが外れていることに注意）
   inline bool empty();

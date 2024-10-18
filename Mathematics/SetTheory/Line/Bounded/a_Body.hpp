@@ -19,12 +19,12 @@ template <typename INT , typename RET_NOR , typename RET_DEN , template <typenam
 
 template <typename INT , typename RET_NOR , typename RET_DEN , template <typename...> typename DATA_STR> inline void VirtualBoundedLineSubset<INT,RET_NOR,RET_DEN,DATA_STR>::clear() { m_ds.Initialise( m_ds.size() ); }
 
-template <typename INT , typename RET_NOR , typename RET_DEN , template <typename...> typename DATA_STR> inline int VirtualBoundedLineSubset<INT,RET_NOR,RET_DEN,DATA_STR>::count( const INT& i ) noexcept { return InRange( i ) ? m_ds[Normalise( i )] : 0; }
+template <typename INT , typename RET_NOR , typename RET_DEN , template <typename...> typename DATA_STR> inline INT VirtualBoundedLineSubset<INT,RET_NOR,RET_DEN,DATA_STR>::count( const INT& i ) noexcept { return InRange( i ) ? m_ds[Normalise( i )] : 0; }
 
 template <typename INT , typename RET_NOR , typename RET_DEN , template <typename...> typename DATA_STR> inline bool VirtualBoundedLineSubset<INT,RET_NOR,RET_DEN,DATA_STR>::find( const INT& i ) noexcept { return count( i ) > 0; }
 
-template <typename INT , typename RET_NOR , typename RET_DEN , template <typename...> typename DATA_STR> inline int VirtualBoundedLineSubset<INT,RET_NOR,RET_DEN,DATA_STR>::InitialSegmentCount( const INT& i_final ) { return i_final < m_lbound ? 0 : m_ds.InitialSegmentSum( Normalise( i_final ) ); }
-template <typename INT , typename RET_NOR , typename RET_DEN , template <typename...> typename DATA_STR> inline int VirtualBoundedLineSubset<INT,RET_NOR,RET_DEN,DATA_STR>::IntervalCount( const INT& i_start , const INT& i_final ) { auto&& l = Normalise( i_start ); return m_ds.IntervalSum( ( l < 0 || Denormalise( l ) < i_start ) ? l + 1 : l , Normalise( i_final ) ); }
+template <typename INT , typename RET_NOR , typename RET_DEN , template <typename...> typename DATA_STR> inline INT VirtualBoundedLineSubset<INT,RET_NOR,RET_DEN,DATA_STR>::InitialSegmentCount( const INT& i_final ) { return i_final < m_lbound ? 0 : m_ds.InitialSegmentSum( Normalise( i_final ) ); }
+template <typename INT , typename RET_NOR , typename RET_DEN , template <typename...> typename DATA_STR> inline INT VirtualBoundedLineSubset<INT,RET_NOR,RET_DEN,DATA_STR>::IntervalCount( const INT& i_start , const INT& i_final ) { auto&& l = Normalise( i_start ); return m_ds.IntervalSum( ( l < 0 || Denormalise( l ) < i_start ) ? l + 1 : l , Normalise( i_final ) ); }
 template <typename INT , typename RET_NOR , typename RET_DEN , template <typename...> typename DATA_STR> inline bool VirtualBoundedLineSubset<INT,RET_NOR,RET_DEN,DATA_STR>::empty() noexcept { return InitialSegmentCount( m_ubound ) == 0; }
 
 template <typename INT , typename RET_NOR , typename RET_DEN , template <typename...> typename DATA_STR> inline typename VirtualBoundedLineSubset<INT,RET_NOR,RET_DEN,DATA_STR>::iterator VirtualBoundedLineSubset<INT,RET_NOR,RET_DEN,DATA_STR>::begin() noexcept { return MinimumGeq( m_lbound ); }
@@ -105,7 +105,7 @@ template <typename INT , typename RET_NOR , typename RET_DEN , template <typenam
 template <typename INT , typename RET_NOR , typename RET_DEN , template <typename...> typename DATA_STR> inline const INT& VirtualBoundedLineSubset<INT,RET_NOR,RET_DEN,DATA_STR>::ubound() const noexcept { return m_ubound; }
 
 
-template <typename INT , template <typename...> typename DATA_STR> inline AbstractBoundedLineSubset<INT,DATA_STR>::AbstractBoundedLineSubset( const INT& lbound , const INT& ubound ) { assert( lbound <= ubound + 1 ); this->m_lbound = lbound; this->m_ubound = ubound; this->m_ds.Initialise( this->m_ubound - this->m_lbound + 1 ); }
+template <typename INT , template <typename...> typename DATA_STR> inline AbstractBoundedLineSubset<INT,DATA_STR>::AbstractBoundedLineSubset( const INT& lbound , const INT& ubound ) { assert( lbound <= ubound + 1 ); this->m_lbound = lbound; this->m_ubound = ubound; this->m_ds.Initialise( int( this->m_ubound - this->m_lbound + 1 ) ); }
 
 template <typename INT , template <typename...> typename DATA_STR> inline bool AbstractBoundedLineSubset<INT,DATA_STR>::InRange( const INT& i ) { return this->m_lbound <= i && i <= this->m_ubound; }
 template <typename INT , template <typename...> typename DATA_STR> inline INT AbstractBoundedLineSubset<INT,DATA_STR>::Normalise( const INT& i ) { return i - this->m_lbound; }
