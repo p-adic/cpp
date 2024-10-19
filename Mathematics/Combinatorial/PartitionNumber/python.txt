@@ -1,16 +1,17 @@
-#verify:https://yukicoder.me/submissions/993122
-#D[i]にiをL個の非負整数の昇順和に分割する方法の個数を格納する（合計O(LN^2)）
-D=[[n<1]*(n+1)for n in R(N)]
-for _ in R(L):
-	t=[[0]for n in R(N)]
-	for n in R(N):
-		for d in R(n+1):t[n]+=[t[n][-1]+D[n][d]]
-	D=[[t[n-d][min(n-d,d)+1]for d in R(n+1)]for n in R(N)]
-D=[t[n][n+1]for n in R(N)]
+#verify:https://yukicoder.me/submissions/1021227
+#D[i][j]にiをj以上の整数の昇順和に分割する方法の個数を格納する（合計O(N^2)）
+X=R(N+1)
+D=[[i==j for j in X]for i in X]
+for i in X:
+	for j in R(i-1,-1,-1):D[i][j]=D[i][j+1]+D[i-j][j]
+#D=[D[i][1]for i in X]
+#通常の分割数
 
-#verify:https://yukicoder.me/submissions/993127
-#D[i]にiを正整数の昇順和に分割する方法の個数を格納する（合計O(N^2)）
-D=[[1]*N for n in R(N)]
-for i in R(N-2,0,-1):
-	for n in R(i+1,N):D[n][i]=D[n][i+1]+D[n-i][i]*(n>=i*2)
-D=[D[n][1]for n in R(N)]
+#verify:https://yukicoder.me/submissions/1015750
+#D[i][j]にiをj以下の正整数の昇順和に分割する方法の個数を格納する（合計O(N^2)）
+X=R(N+1)
+D=[[i==j<1for j in X]for i in X]
+for i in X:
+	for j in X:D[i][j]=(D[i][j-1]if j else 0)+(0if i<j else D[i-j][j])
+#iをj個の非負整数の昇順和に分割する方法の個数や
+#iをj個以下の正整数の昇順和に分割する方法の個数とも等しい。
