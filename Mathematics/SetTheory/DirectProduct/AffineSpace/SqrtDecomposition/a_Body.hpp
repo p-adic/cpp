@@ -81,6 +81,7 @@ template <typename U , typename ABELIAN_GROUP> template <typename F> int Abstrac
 {
 
   const int i_min = max( i_start , 0 );
+  // d_0 = ( i_min + m_N_sqrt - 1 ) / m_N_sqrt;とすると再帰が無限ループする。
   const int d_0 = i_min / m_N_sqrt + 1;
   const int i_0 = min( d_0 * m_N_sqrt , m_N );
   
@@ -102,7 +103,7 @@ template <typename U , typename ABELIAN_GROUP> template <typename F> int Abstrac
 
     if( f( sum_next , min( ( d + 1 ) * m_N_sqrt , m_N ) - 1 ) ){
 
-      return Search_Body( d * m_N_sqrt , f , sum_temp );
+      return Search_Body( d * m_N_sqrt , f , move( sum_temp ) );
 
     }
 

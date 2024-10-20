@@ -401,4 +401,62 @@ template <typename R , typename PT_MAGMA , typename U , typename RN_BIMODULE> in
   
 }
 
+template <typename R , typename PT_MAGMA , typename U , typename RN_BIMODULE> template <typename F , SFINAE_FOR_SD_S> inline int LazySqrtDecomposition<R,PT_MAGMA,U,RN_BIMODULE>::Search( const int& i_start , const F& f ) { return Search_Body( i_start , f , m_M.One() ); }
+template <typename R , typename PT_MAGMA , typename U , typename RN_BIMODULE> inline int LazySqrtDecomposition<R,PT_MAGMA,U,RN_BIMODULE>::Search( const int& i_start , const U& u ) { return Search( i_start , [&]( const U& product , const int& ){ return !( product < u ); } ); }
+
+template <typename R , typename PT_MAGMA , typename U , typename RN_BIMODULE> template <typename F> int LazySqrtDecomposition<R,PT_MAGMA,U,RN_BIMODULE>::Search_Body( const int& i_start , const F& f , U product_temp )
+{
+
+  const int i_min = max( i_start , 0 );
+  // d_0 = ( i_min + m_N_sqrt - 1 ) / m_N_sqrt;とすると再帰が無限ループする。
+  const int d_0 = i_min / m_N_sqrt + 1;
+  const int i_0 = min( d_0 * m_N_sqrt , m_N );
+
+  if( i_min < i_0 ){
+
+    // この時d_0 > 0になる。
+    const int d_0_minus = d_0 - 1;
+
+    if( m_suspended[d_0_minus] ){
+      
+      SolveSuspendedSubstitution( d_0_minus , m_lazy_substitution[d_0_minus] );
+
+    } else {
+
+      SolveSuspendedAction( d_0_minus );
+
+    }
+    
+  }
+  
+  for( int i = i_min ; i < i_0 ; i++ ){
+
+    product_temp = m_M.Product( move( product_temp ) , m_a[i] );
+
+    if( f( product_temp , i ) ){
+
+      return i;
+
+    }
+
+  }
+  
+  for( int d = d_0 ; d < m_N_d ; d++ ){
+
+    U product_next = m_M.Product( product_temp , m_b[d] );
+
+    if( f( product_next , min( ( d + 1 ) * m_N_sqrt , m_N ) - 1 ) ){
+
+      return Search_Body( d * m_N_sqrt , f , move( product_temp ) );
+
+    }
+
+    product_temp = move( product_next );
+    
+  }
+
+  return -1;
+
+}
+
 #include "../../../../../Algebra/Monoid/Group/Module/BiModule/a_Body.hpp"

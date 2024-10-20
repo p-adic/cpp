@@ -1,6 +1,8 @@
 // c:/Users/user/Documents/Programming/Mathematics/SetTheory/DirectProduct/AffineSpace/SqrtDecomposition/LazyEvaluation/Equivariant/a.hpp
 
 #pragma once
+#include "../../a_Macro.hpp"
+
 #include "../../Sqrt/a.hpp"
 
 //verify:
@@ -63,6 +65,14 @@ public:
   inline S Get( const int& i );
   inline U IntervalProduct( const int& i_start , const int& i_final );
 
+  // Fは積順序に関して単調な写像f:U \times int -> {0,1}に相当する型。
+  // f( IntervalProduct( i_start , i ) , i )がtrueとなるi_start以上の最小のiを探索。
+  // 存在しない場合は-1を返す。
+  template <typename F , SFINAE_FOR_SD_S = nullptr> inline int Search( const int& i_start , const F& f );
+  // u <= IntervalProduct( i_start , i )を満たすi_start以上の最小のiを探索。
+  // 存在しない場合は-1を返す。
+  inline int Search( const int& i_start , const U& u );
+
 private:
   inline U Univ( const S& s , const int& n );
   inline void SetProduct( const int& i );
@@ -72,6 +82,8 @@ private:
   inline void SolveSuspendedAction( const int& d );
   inline void IntervalAct_Body( const int& i_min , const int& i_ulim , const R& r );
   inline U IntervalProduct_Body( const int& i_min , const int& i_ulim );
+
+  template <typename F> int Search_Body( const int& i_start , const F& f , U product_temp );
   
 };
 template <typename PT_MAGMA , typename S , typename R_SET , typename RN_BIMODULE , typename TRANS , typename...Args> EquivariantLazySqrtDecomposition( PT_MAGMA L , R_SET M0 , RN_BIMODULE M1 , TRANS trans , vector<S> a , const Args&... args ) -> EquivariantLazySqrtDecomposition<inner_t<PT_MAGMA>,PT_MAGMA,S,R_SET,inner_t<RN_BIMODULE>,RN_BIMODULE,TRANS>;

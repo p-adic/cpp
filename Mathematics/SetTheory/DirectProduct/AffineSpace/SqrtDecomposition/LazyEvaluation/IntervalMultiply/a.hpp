@@ -1,6 +1,8 @@
 // c:/Users/user/Documents/Programming/Mathematics/SetTheory/DirectProduct/AffineSpace/SqrtDecomposition/LazyEvaluation/IntervalMultiply/a.hpp
 
 #pragma once
+#include "../../a_Macro.hpp"
+
 #include "../../Sqrt/a.hpp"
 
 // verify:
@@ -9,8 +11,8 @@
 
 // 入力の範囲内で要件
 // (1) LはRの基点付きマグマ構造である。
-// (2) MはUの左L作用付き非可換N加群構造であって、Lの基点がMの恒等変換に対応する。
-// (3) R=intならばUの左L作用と非可換N加群構造が整合的である。
+// (2) MはUの左L作用付き可換N加群構造であって、Lの基点がMの恒等変換に対応する。
+// (3) R=intならばUの左L作用と可換N加群構造が整合的である。
 // を満たす場合にのみサポート。
 
 // 区間作用を行わない場合もm_L.Point()の作用を区間積に用いるため、
@@ -65,6 +67,14 @@ public:
   inline U Get( const int& i );
   inline U IntervalProduct( const int& i_start , const int& i_final );
 
+  // Fは積順序に関して単調な写像f:U \times int -> {0,1}に相当する型。
+  // f( IntervalProduct( i_start , i ) , i )がtrueとなるi_start以上の最小のiを探索。
+  // 存在しない場合は-1を返す。
+  template <typename F , SFINAE_FOR_SD_S = nullptr> inline int Search( const int& i_start , const F& f );
+  // u <= IntervalProduct( i_start , i )を満たすi_start以上の最小のiを探索。
+  // 存在しない場合は-1を返す。
+  inline int Search( const int& i_start , const U& u );
+
 private:
   inline void Construct();
   inline void SetProduct( const int& i );
@@ -76,5 +86,7 @@ private:
   inline void IntervalMultiply_Body( const int& i_min , const int& i_ulim , const U& u );
   inline U IntervalProduct_Body( const int& i_min , const int& i_ulim );
   
+  template <typename F> int Search_Body( const int& i_start , const F& f , U product_temp );
+
 };
 template <typename PT_MAGMA , typename RN_BIMODULE , typename...Args> IntervalMultiplyLazySqrtDecomposition( PT_MAGMA L , RN_BIMODULE M , const Args&... args ) -> IntervalMultiplyLazySqrtDecomposition<inner_t<PT_MAGMA>,PT_MAGMA,inner_t<RN_BIMODULE>,RN_BIMODULE>;
