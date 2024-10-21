@@ -502,13 +502,24 @@ AC( ExplicitExpressionOrderOfElement )
 
 AC( ExplicitExpressionRandomAccess )
 {
-  CERR( "Sの各要素sごとにs未満のSの項を数え上げ問題を考えて、" );
-  CERR( "sに関する二分探索を検討しましょう。" );
-  CALL_AC( CountingArrayBoundedTotal );
+  CERR( "Sの各要素sごとにs未満のSの項数を高速に解けるか否かで場合分けをします。" );
   ASK_YES_NO( "Sが固定長変数関数の像で与えられますか？" );
   if( reply == "y" ){
     CERR( "固定長変数関数の逆像の数え上げ問題は、" );
     CALL_AC( CountingExplicitExpression );
+  }
+  ASK_YES_NO( "Sの各要素sごとにs未満のSの項数が高速に求まりますか？" );
+  if( reply == "y" ){
+    CERR( "Sの各要素sごとにs未満のSの項を数え上げ問題を考えて、" );
+    CERR( "sに関する二分探索を検討しましょう。" );
+    CALL_AC( CountingArrayBoundedTotal );
+  } else {
+    CERR( "Sを文字列の集合とします。数は位取り記法で文字列とみなします。" );
+    CERR( "文字cに最小元である文字mをd個連続させた文字列cm...m未満の" );
+    CERR( "Sの項数dp[d][c]の漸化式を再帰関数などで実装し、dが大きい順に" );
+    CERR( "(1) dp[d][c]<iである限りcをインクリメントし、1+d桁目をcに確定させる。" );
+    CERR( "(2) iにc==m?0:dp[d][cの前者]を減算する" );
+    CERR( "という処理を繰り返しましょう。" );
   }
 }
 
@@ -2629,6 +2640,7 @@ AC( QueryArray )
 	     "序数を扱う問題" ,
 	     "区間の像の要素数を扱う問題" ,
 	     "区間と逆像の共通部分の要素数を扱う問題" ,
+	     "取得クエリの区間幅に制限のある問題" ,
 	     "2引数関数による区間max／min更新を使う問題" ,
 	     "距離関数と定数の和による区間min更新を使う問題" ,
 	     "定数とのmaxを取った値の区間演算取得を使う問題" ,
@@ -2653,6 +2665,8 @@ AC( QueryArray )
     CALL_AC( QueryArrayImageSize );
   } else if( num == num_temp++ ){
     CALL_AC( QueryArrayInverseImageSize );
+  } else if( num == num_temp++ ){
+    CALL_AC( QueryArrayBoundedInterval );
   } else if( num == num_temp++ ){
     CALL_AC( QueryArrayMaxLinearFunction );
   } else if( num == num_temp++ ){
@@ -2778,7 +2792,7 @@ AC( QueryArrayOrder )
 
 AC( QueryArrayImageSize )
 {
-  CERR( "区間の像の要素数取得が必要ならば莫のアルゴリズム" );
+  CERR( "区間の像の要素数取得が必要ならば莫のアルゴリズム（O((N+Q)√N)）" );
   CERR( "\\Mathematics\\SetTheory\\DirectProduct\\AfineSpace\\SqrtDecomposition\\Mo" );
   CERR( "を検討しましょう。" );
 }
@@ -2786,12 +2800,25 @@ AC( QueryArrayImageSize )
 AC( QueryArrayInverseImageSize )
 {
   CERR( "q番目のクエリで共通部分を取る集合をS_qと置きます。" );
-  CERR( "- 各iに対するA_iを各qに対するS_qの特性関数たちの値の連想配列で管理し直して、" );
-  CERR( "  オフライン累積積で個数取得または莫のアルゴリズムで連想配列の累積和計算" );
+  CERR( "- A_iがS_qに属すi全体の集合I_qの構築が高速に可能でかつO(Q log N)が" );
+  CERR( "  間に合いそうならば、I_qと区間の共通部分を二分探索で計算");
+  CERR( "- A_iがS_qに属すq全体の集合Q_sの構築が高速に可能でかつ各区間内でのQ_sの濃度の" );
+  CERR( "  上限をCとして、" );
+  CERR( "  - O(NC+Q log Q)が間に合いそうならば、オフライン累積積で個数取得" );
   CERR( "  \\Mathematics\\SetTheory\\DirectProduct\\AfineSpace\\CumulativePrpdict\\Offline" );
+  CERR( "  - O(C(N+Q)√N)が間に合いそうならば莫のアルゴリズムで連想配列の累積和計算" );
   CERR( "  \\Mathematics\\SetTheory\\DirectProduct\\AfineSpace\\SqrtDecomposition\\Mo" );
-  CERR( "- 各qごとにvector I_qを用意して、各iに対しA_iがS_qに属すなら" );
-  CERR( "  I_qにiをpush_backし、I_qと区間の共通部分を二分探索で計算");
+  CERR( "を検討しましょう。" );
+}
+
+AC( QueryArrayBoundedInterval )
+{
+  CERR( "取得クエリの区間幅の上限をLと置きます。" );
+  CERR( "- O(Q(√N+L))が間に合いそうならば、双対平方分割による区間更新＋一点取得" );
+  CERR( "  \\Mathematics\\SetTheory\\DirectProduct\\AfineSpace\\SqrtDecomposition\\Dual" );
+  CERR( "- 更新クエリがなく区間幅がLで一定でO(N+QL)が間に合いそうならば、" );
+  CERR( "  L-1個ずつにバケット分割しそれぞれで始切片と終切片の区間取得値を前計算し" );
+  CERR( "  取得クエリの区間が跨ぐ２つの区間の値をO(L)でマージ" );
   CERR( "を検討しましょう。" );
 }
 
@@ -2928,6 +2955,13 @@ AC( QueryString )
   CERR( "    - 遅延セグメント木に乗せて区間代入更新と区間積取得（O(log N)/O(log N)）" );
   CERR( "    - 区間代入モノイド平方分割に乗せて区間代入更新と区間積取得（O(N^{1/2})/O(N^{1/2})）" );
   CERR( "      \\Mathematics\\SetTheory\\DirectProduct\\AfineSpace\\SqrtDecomposition\\Monoid\\IntervalSet" );
+  CERR( "    で処理" );
+  CERR( "  - 区間シフト（a->b->c->）更新も必要ならば" );
+  CERR( "    - 1の原始26乗根を持つ法でローリングハッシュ" );
+  CERR( "      \\Utility\\String\\RollingHash\\Shift\\Bimodule" );
+  CERR( "    - 比較したい２つの文字列の各成分のずれ情報を1<<26未満の非負整数のbit積で管理" );
+  CERR( "    をした上で区間作用と区間積取得" );
+  CERR( "    \\Mathematics\\SetTheory\\DirectProduct\\AfineSpace\\SqrtDecomposition\\LazyEvaluation" );
   CERR( "    で処理" );
   CERR( "を検討しましょう。" );
 }
