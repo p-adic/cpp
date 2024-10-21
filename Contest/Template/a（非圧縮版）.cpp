@@ -27,14 +27,14 @@ REPEAT_MAIN(1);
 #ifdef INCLUDE_SUB
 
 /* COMPAREに使用。圧縮時は削除する。*/
-MP Naive( const int& N , const int& M , const int& K , const bool& experiment = false )
+MP Naive( int N , int M , int K , const bool& experiment = false )
 {
   MP answer{};
   return answer;
 }
 
 /* COMPAREに使用。圧縮時は削除する。*/
-MP Answer( const ll& N , const ll& M , const ll& K )
+MP Answer( ll N , ll M , ll K )
 {
   MP answer{};
   return answer;
