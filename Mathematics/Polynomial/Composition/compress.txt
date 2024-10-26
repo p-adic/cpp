@@ -7,7 +7,7 @@
 TE <TY T> TRPO<T> Composite(CO TRPO<T>& f,CO TRPO<T>& g)CO{CRUI N = f.GetTruncation();assert(N > 0 && g[0]== PO<T>::c_zero());CO uint N_minus = N - 1;if(N_minus == 0){RE *TH;}CO uint H = sqrt(N_minus);CO uint K = N_minus / H;VE<TRPO<T> > g_PW(K < 2?2:K);(g_PW[1]= g).SetTruncation(N);for(uint k = 2;k < K;k++){g_PW[k]= g_PW[k-1]* g_PW[1];}VE<TRPO<T> > g_PW2(H + 1);g_PW2[1]= K < 2?g_PW[1]:g_PW[K-1]* g_PW[1];for(uint h = 2;h <= H;h++){g_PW2[h]= g_PW2[h-1]* g_PW2[1];}uint k = 0;uint h = 0;uint n_max = N_minus;TRPO<T> AN{N};TRPO<T> AN_h{N};for(uint d = 0;d < N;d++){for(uint n = k;n <= n_max;n++){AN_h[n]+= k == 0?n == 0?f[d]:T{}:f[d]* g_PW[k][n];}ig(++k == K || d == N_minus){AN += h == 0?AN_h:AN_h *= g_PW2[h];k = 0;h++;n_max -= K;AN_h = TRPO<T>(N);}}RE AN;}
 
 // 反転のN次打ち切り
-TE <TY T> VO Reverse(CRUI N,PO<T>& f){f.reSZ(N);CO uint N_half = N / 2;for(uint d = 0;d < N_half;d++){swap(f[d],f[N - 1 - d]);}RE;}
+TE <TY T> VO Reverse(CRUI N,PO<T>& f){f.resize(N);CO uint N_half = N / 2;for(uint d = 0;d < N_half;d++){swap(f[d],f[N - 1 - d]);}RE;}
 // 平行移動
 TE <TY T> VO Shift(PO<T>& f,CO T& t,CO bool& EXial = false){f.ReMORedundantZero();CRUI SZ = f.SZ();if(SZ > 0 && t != PO<T>::c_zero()){TRPO<T> exp_t_transpose{SZ * 2};T PW_t = PO<T>::c_one();for(uint d = 0;d < SZ;d++){exp_t_transpose[SZ - 1 - d]= PW_t * T::FactorialInverse(d);PW_t *= t;}if(EXial){exp_t_transpose *= f;for(uint d = 0;d < SZ;d++){f[d]= exp_t_transpose[d + SZ - 1];}}else{for(uint d = 0;d < SZ;d++){f[d]*= T::Factorial(d);}exp_t_transpose *= f;for(uint d = 0;d < SZ;d++){f[d]= exp_t_transpose[d + SZ - 1]* T::FactorialInverse(d);}}}RE;}
 // アフィン変換
@@ -22,7 +22,7 @@ TE <TY T> TRPO<T> MoeviusComposition(CRUI N,PO<T> f,T a,T b,T c,T d){CO T& zero 
 // exp(x)の合成のN次打ち切り
 TE <TY T> TRPO<T> EXialComposition(CRUI N,CO PO<T>& f,CO T& t){CRUI SZ = f.SZ();LI<pair<T,T>> coef{};T temp = PO<T>::c_zero();for(uint d = 0;d < SZ;d++){coef.push_back({f[d],temp});temp += t;}RE EXialSum(N,coef);}
 // メビウス変換（次数打ち切りなし！）後にexp(x)の合成のN次打ち切り（メビウス変換とEXialCompositionとPWを使用）
-TE <TY T>TRPO<T> MoeviusEXialComposition(CRUI N,CO PO<T>& f,T a,T b,T c,T d,CO T& t){auto[h,u,v,e]= MoeviusComposition(f,MO(a),MO(b),MO(c),MO(d));TRPO<T> g{EXialComposition(N,h,t)};h.reSZ(2);h[0]= MO(v);h[1]= MO(u);TRPO<T> r{EXialComposition(N,h,t)};r = PW(r,e);RE MO(g /= r);}
+TE <TY T>TRPO<T> MoeviusEXialComposition(CRUI N,CO PO<T>& f,T a,T b,T c,T d,CO T& t){auto[h,u,v,e]= MoeviusComposition(f,MO(a),MO(b),MO(c),MO(d));TRPO<T> g{EXialComposition(N,h,t)};h.resize(2);h[0]= MO(v);h[1]= MO(u);TRPO<T> r{EXialComposition(N,h,t)};r = PW(r,e);RE MO(g /= r);}
 
 // ../MultipointEvaluation/compress.txtを先に貼る。（商と評価点に対するSetPartialFractionDecompositionを使用）
 // t log(1-x)の合成のN次打ち切り
