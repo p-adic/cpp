@@ -5,7 +5,7 @@
 
 #include "../a_Body.hpp"
 
-template <typename TREE> inline HeavyLightDecomposiion<TREE>::HeavyLightDecomposiion( TREE& T , const int& root , const int& digit ) : DepthFirstSearchOnTree<TREE>( T , root , digit ) , m_HL() , m_HL_inv() , m_path() , m_subtree()
+template <typename TREE> inline HeavyLightDecomposition<TREE>::HeavyLightDecomposition( TREE& T , const int& root , const int& digit ) : DepthFirstSearchOnTree<TREE>( T , root , digit ) , m_HL() , m_HL_inv() , m_path() , m_subtree()
 {
 
   // HL•ª‰ğ‚Ì\’zBÅ‚àd‚¢•Ó‚ğ¶‘¤‚ÉŠi”[‚µ‚Ä‚¢‚­‚±‚Æ‚ÅŠe•”•ª–Ø‚ğ‚P‚Â‚Ì‹æŠÔ‚É•ÏŠ·‚·‚éB
@@ -25,7 +25,7 @@ template <typename TREE> inline HeavyLightDecomposiion<TREE>::HeavyLightDecompos
 
       for( auto& j : this->Children( i ) ){
 
-	const int& heaviness_j = Heaviness( j );
+	const int& heaviness_j = this->Heaviness( j );
 
 	if( heaviness_opt < heaviness_j ){
 
@@ -98,7 +98,7 @@ template <typename TREE> inline HeavyLightDecomposiion<TREE>::HeavyLightDecompos
 
 }
 
-template <typename TREE> inline const int& HeavyLightDecomposiion<TREE>::RearragedNodeNumber( const int& n ) const { assert( 0 <= n && n < this->size() ); return m_HL[n]; }
-template <typename TREE> inline const int& HeavyLightDecomposiion<TREE>::RearragedNodeNumber_inv( const int& i ) const { assert( 0 <= i && i < this->size() ); return m_HL_inv[i]; }
-template <typename TREE> inline const vector<pair<int,int>>& HeavyLightDecomposiion<TREE>::PathFromRoot( const int& i ) const { assert( 0 <= i && i < this->size() ); return m_path[i]; }
-template <typename TREE> inline const pair<int,int> HeavyLightDecomposiion<TREE>::Subtree( const int& i ) const { assert( 0 <= i && i < this->size() ); return m_subtree[i]; }
+template <typename TREE> inline const int& HeavyLightDecomposition<TREE>::RearragedNodeNumber( const int& n ) const { assert( 0 <= n && n < this->size() ); return m_HL[n]; }
+template <typename TREE> inline const int& HeavyLightDecomposition<TREE>::RearragedNodeNumber_inv( const int& i ) const { assert( 0 <= i && i < this->size() ); return m_HL_inv[i]; }
+template <typename TREE> inline const vector<pair<int,int>>& HeavyLightDecomposition<TREE>::PathFromRoot( const int& i ) const { assert( 0 <= i && i < this->size() ); return m_path[i]; }
+template <typename TREE> inline const pair<int,int> HeavyLightDecomposition<TREE>::Subtree( const int& i ) const { assert( 0 <= i && i < this->size() ); return m_subtree[i]; }

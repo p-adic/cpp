@@ -20,13 +20,14 @@
 // 部分木和取得O(log |V_T|)（メソッドなし。部分木取得とBITなどを併用）
 
 template <typename TREE>
-class HeavyLightDecomposiion :
+class HeavyLightDecomposition :
   public DepthFirstSearchOnTree<TREE>
 {
 
 private:
-  // m_HL[i]にはHL分解後の配列の第i成分に対応するノード番号を格納。
+  // m_HL[n]にはHL分解後の配列の第n成分に対応するノード番号を格納。
   vector<int> m_HL;
+  // m_HL_innv[i]にはi番目の頂点がHL分解後の配列の第何成分に対応するかを格納。
   vector<int> m_HL_inv;
 
   // m_path[i]にはrootからiへのパスに対応するm_HLの閉区間[l,r]族を格納。
@@ -36,9 +37,11 @@ private:
   vector<pair<int,int>> m_subtree;
 
 public:
-  inline HeavyLightDecomposiion( TREE& T , const int& root = 0 , const int& digit = 0 );
+  inline HeavyLightDecomposition( TREE& T , const int& root = 0 , const int& digit = 0 );
 
+  // HL分解後の配列の第n成分に対応するノード番号を格納。
   inline const int& RearragedNodeNumber( const int& n ) const;
+  // i番目の頂点がHL分解後の配列の第何成分に対応するかを格納。
   inline const int& RearragedNodeNumber_inv( const int& i ) const;
 
   // 一般のpath i->jでの関数fのパス和などを計算したい時は、(f(m_HL[i]))_iをBITなどに乗せ

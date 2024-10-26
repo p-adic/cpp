@@ -8,7 +8,7 @@
 // ファイル容量削減のため極力vectorの成分を参照するだけの変数を用いない。
 // 実行時間に優位差はなし。
 
-template <typename TREE> inline DepthFirstSearchOnTree<TREE>::DepthFirstSearchOnTree( TREE& T , const int& root , const int& digit ) : DepthFirstSearch<int,TREE>( T , -1 , root ) , m_node_num() , m_children() , m_set_children() , m_depth() , m_set_depth() , m_height_max() , m_height_min() , m_set_height() , m_heaviness() , m_set_heaviness() , m_digit( digit ) , m_doubling( m_digit ) , m_set_doubling() { static_assert( is_same_v<TREE,Graph<decldecay_t( declval<TREE>().edge() )>> ); assert( int( ( m_node_num = this->GetNodeNumbering() ).size() ) = this->size() ); }
+template <typename TREE> inline DepthFirstSearchOnTree<TREE>::DepthFirstSearchOnTree( TREE& T , const int& root , const int& digit ) : DepthFirstSearch<int,TREE>( T , -1 , root ) , m_node_num() , m_children() , m_set_children() , m_depth() , m_set_depth() , m_height_max() , m_height_min() , m_set_height() , m_heaviness() , m_set_heaviness() , m_digit( digit ) , m_doubling( m_digit ) , m_set_doubling() { static_assert( is_same_v<TREE,Graph<decldecay_t( declval<TREE>().edge() )>> ); assert( int( ( m_node_num = this->GetNodeEnumeration() ).size() ) == this->size() ); }
 
 template <typename TREE> inline const int& DepthFirstSearchOnTree<TREE>::Root() const { return this->Point(); }
 
