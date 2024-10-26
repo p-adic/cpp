@@ -94,6 +94,8 @@ template <typename T , typename GRAPH> inline void VirtualBreadthFirstSearch<T,G
 
       DERRNS( " " , m_G.Enumeration( j ) );
 
+    }
+
   }
   
   DERR( "" );
@@ -297,17 +299,17 @@ template <typename T , typename GRAPH> inline T VirtualBreadthFirstSearch<T,GRAP
   } else {
     
     DERR( "s”Ô†:" , __LINE__ );
-    DERR( "–K–â—\’è‚Ì’¸“_ƒŠƒXƒg‚©‚ç" , t_curr , "‚ðŽæ‚èo‚µ";
+    DERR( "–K–â—\’è‚Ì’¸“_ƒŠƒXƒg‚©‚ç" , t_curr , "‚ðŽæ‚èo‚µ" );
 
     for( auto begin = new_next.begin() , itr = begin , end = new_next.end() ; itr != end ; itr++ ){
 
-      DERRNS( itr == begin ? "" : ", " , *itr;
+      DERRNS( itr == begin ? "" : ", " , *itr );
 
     }
 
     DERR( "‚ð’Ç‰Á‚µ‚Ü‚µ‚½B" );
     DERR( "–K–â—\’è‚Ì’¸“_ƒŠƒXƒg:" , m_next );
-    DERR( "–K–â—\’è‚É’Ç‰ÁÏ‚Ý‚Ì’¸“_ƒŠƒXƒg:";
+    DERR( "–K–â—\’è‚É’Ç‰ÁÏ‚Ý‚Ì’¸“_ƒŠƒXƒg:" );
     const int& V = size();
   
     for( int j = 0 ; j < V ; j++ ){
