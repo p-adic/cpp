@@ -39,8 +39,12 @@ public:
   inline U Get( const int& i );
   inline U IntervalSum( const int& i_start , const int& i_final );
 
-  template <typename F , SFINAE_FOR_SD_S> inline int Search( const int& i_start , const F& f ) = delete;
-  inline int Search( const int& i_start , const U& u ) = delete;
+  template <typename F , SFINAE_FOR_SD_S> inline int Search( const int& i_start , const F& f , const bool& reversed = false );
+  inline int Search( const int& i_start , const U& u , const bool& reversed = false );
+
+private:
+  template <typename F> int Search_Body( const int& i_start , const F& f , U sum_temp );
+  template <typename F> int SearchReverse_Body( const int& i_final , const F& f , U sum_temp );
 
 };
 template <typename Z_MODULE , typename...Args> IntervalAddAbstractSqrtDecomposition( Z_MODULE M , Args&&... args ) -> IntervalAddAbstractSqrtDecomposition<inner_t<Z_MODULE>,Z_MODULE>;

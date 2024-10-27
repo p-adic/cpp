@@ -49,7 +49,7 @@ template <typename U , typename Z_MODULE> inline void IntervalAddAbstractSqrtDec
   
 }
 
-template <typename U , typename Z_MODULE> inline U IntervalAddAbstractSqrtDecomposition<U,Z_MODULE>::operator[]( const int& i ) { assert( 0 <= i && i < this->m_N ); return this->m_M.Sum( AbstractSqrtDecomposition<U,Z_MODULE>::operator[]( i ) , m_lazy_addition[i / this->m_N_sqrt] ); }
+template <typename U , typename Z_MODULE> inline U IntervalAddAbstractSqrtDecomposition<U,Z_MODULE>::operator[]( const int& i ) { assert( 0 <= i && i < this->m_N ); return this->m_M.Sum( this->m_a[i] , m_lazy_addition[i / this->m_N_sqrt] ); }
 template <typename U , typename Z_MODULE> inline U IntervalAddAbstractSqrtDecomposition<U,Z_MODULE>::Get( const int& i ) { return operator[]( i ); }
 
 template <typename U , typename Z_MODULE> inline U IntervalAddAbstractSqrtDecomposition<U,Z_MODULE>::IntervalSum( const int& i_start , const int& i_final )
@@ -86,4 +86,86 @@ template <typename U , typename Z_MODULE> inline U IntervalAddAbstractSqrtDecomp
   answer = this->m_M.Sum( move( answer ) , AbstractSqrtDecomposition<U,Z_MODULE>::IntervalSum( i_start , i_final ) );
   return answer;
   
+}
+
+template <typename U , typename Z_MODULE> template <typename F , SFINAE_FOR_SD_S> inline int IntrvalAddAbstractSqrtDecomposition<U,Z_MODULE>::Search( const int& i_start , const F& f , const bool& reversed ) { return reversed ? SearchReverse_Body( i_start , f , m_M.Zero() ) : Search_Body( i_start , f , m_M.Zero() ); }
+template <typename U , typename Z_MODULE> inline int IntrvalAddAbstractSqrtDecomposition<U,Z_MODULE>::Search( const int& i_start , const U& u , const bool& reversed ) { return Search( i_start , [&]( const U& sum , const int& ){ return !( sum < u ); } , reversed ); }
+
+template <typename U , typename Z_MODULE> template <typename F> int IntrvalAddAbstractSqrtDecomposition<U,Z_MODULE>::Search_Body( const int& i_start , const F& f , U sum_temp )
+{
+
+  const int i_min = max( i_start , 0 );
+  // d_0 = ( i_min + this->m_N_sqrt - 1 ) / m_N_sqrt;とすると再帰が無限ループする。
+  const int d_0 = i_min / thi->m_N_sqrt + 1;
+  const int i_0 = min( d_0 * this->m_N_sqrt , this->m_N );
+  const U& lazy_addition_d = m_lazy_addition[d_0];
+  
+  for( int i = i_min ; i < i_0 ; i++ ){
+
+    sum_temp = this->m_M.Sum( move( sum_temp ) , this->m_M.Sum( this->m_a[i] , lazy_addition_d ) );
+
+    if( f( sum_temp , i ) ){
+
+      return i;
+
+    }
+
+  }
+  
+  for( int d = d_0 ; d < this->m_N_d ; d++ ){
+
+    U sum_next = this->m_M.Sum( sum_temp , this->m_M.Sum( this->m_b[d] , m_M.ScalarProduct( m_lazy_addition[d] , this->m_N_sqrt ) ) );
+
+    if( f( sum_next , min( ( d + 1 ) * this->m_N_sqrt , this->m_N ) - 1 ) ){
+
+      return Search_Body( d * this->m_N_sqrt , f , move( sum_temp ) );
+
+    }
+
+    sum_temp = move( sum_next );
+    
+  }
+
+  return -1;
+
+}
+
+template <typename U , typename Z_MODULE> template <typename F> int IntrvalAddAbstractSqrtDecomposition<U,Z_MODULE>::SearchReverse_Body( const int& i_final , const F& f , U sum_temp )
+{
+
+  const int i_max = min( i_final , this->m_N - 1 );
+  const int d_1 = i_max / this->m_N_sqrt;
+  const int i_1 = max( d_1 * this->m_N_sqrt , 0 );
+  const U& lazy_addition_d = m_lazy_addition[d_1];
+  
+  for( int i = i_max ; i >= i_1 ; i-- ){
+
+    // 可換性を用いた。
+    sum_temp = this->m_M.Sum( move( sum_temp ) , this->m_M.Sum( this->m_a[i] , lazy_addition_d ) );
+
+    if( f( sum_temp , i ) ){
+
+      return i;
+
+    }
+
+  }
+  
+  for( int d = d_1 - 1 ; d >= 0 ; d-- ){
+
+    // 可換性を用いた。
+    U sum_next = this->m_M.Sum( sum_temp , this->m_M.ScalarProduct( this->m_b[d] , this->m_M.ScalarProduct( m_lazy_addition[d] , tihs->m_N_sqrt ) ) );
+
+    if( f( sum_next , d * this->m_N_sqrt ) ){
+
+      return Search_Body( ( d + 1 ) * this->m_N_sqrt - 1 , f , move( sum_temp ) );
+
+    }
+
+    sum_temp = move( sum_next );
+    
+  }
+
+  return -1;
+
 }
