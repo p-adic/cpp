@@ -31,6 +31,12 @@
 
 // 一点取得O(1)
 // transに関する区間積取得O(N^{1/2})（M1のモノイド性を使う）
+
+// 以下入力の範囲内で要件
+// (2) bool operator<(const U&,const U&)に関してMがUの全順序可換モノイド構造である。
+// (3) m_a,m_bの全ての成分がM.One()以上である。
+// を満たす場合にのみサポート。
+// M.Product()に関する区間積の値探索O(N^{1/2})
 template <typename R , typename PT_MAGMA , typename S , typename R_SET , typename U , typename RN_BIMODULE , typename TRANS>
 class EquivariantLazySqrtDecomposition :
   public SqrtDecompositionCoordinate
@@ -68,10 +74,10 @@ public:
   // Fは積順序に関して単調な写像f:U \times int -> {0,1}に相当する型。
   // f( IntervalProduct( i_start , i ) , i )がtrueとなるi_start以上の最小のiを探索。
   // 存在しない場合は-1を返す。
-  template <typename F , SFINAE_FOR_SD_S = nullptr> inline int Search( const int& i_start , const F& f );
+  template <typename F , SFINAE_FOR_SD_S = nullptr> inline int Search( const int& i_start , const F& f , const bool& reversed = false );
   // u <= IntervalProduct( i_start , i )を満たすi_start以上の最小のiを探索。
   // 存在しない場合は-1を返す。
-  inline int Search( const int& i_start , const U& u );
+  inline int Search( const int& i_start , const U& u , const bool& reversed = false );
 
 private:
   inline U Univ( const S& s , const int& n );
@@ -84,6 +90,7 @@ private:
   inline U IntervalProduct_Body( const int& i_min , const int& i_ulim );
 
   template <typename F> int Search_Body( const int& i_start , const F& f , U product_temp );
+  template <typename F> int SearchReverse_Body( const int& i_final , const F& f , U sum_temp );
   
 };
 template <typename PT_MAGMA , typename S , typename R_SET , typename RN_BIMODULE , typename TRANS , typename...Args> EquivariantLazySqrtDecomposition( PT_MAGMA L , R_SET M0 , RN_BIMODULE M1 , TRANS trans , vector<S> a , const Args&... args ) -> EquivariantLazySqrtDecomposition<inner_t<PT_MAGMA>,PT_MAGMA,S,R_SET,inner_t<RN_BIMODULE>,RN_BIMODULE,TRANS>;
