@@ -6,7 +6,7 @@
 #include "../../Sqrt/a_Body.hpp"
 
 template <typename U , typename NON_COMM_N_MODULE> template <typename...Args> inline IntervalSetSqrtDecomposition<U,NON_COMM_N_MODULE>::IntervalSetSqrtDecomposition( NON_COMM_N_MODULE M , const int& N , const Args&... args ) : SqrtDecompositionCoordinate( N , args... ) , m_M( move( M ) ) , m_a( m_N_m , m_M.One() ) , m_b( m_N_d , m_M.One() ) , m_lazy_substitution( m_N_d , m_M.One() ) , m_suspended( m_N_d ) { static_assert( ! is_same_v<U,int> && is_same_v<U,inner_t<NON_COMM_N_MODULE>> ); }
-template <typename U , typename NON_COMM_N_MODULE> inline IntervalSetSqrtDecomposition<U,NON_COMM_N_MODULE>::IntervalSetSqrtDecomposition( NON_COMM_N_MODULE M , vector<U> a , const Args&... args ) : SqrtDecompositionCoordinate( a.size() , args... ) , m_M( move( M ) ) , m_a( move( a ) ) , m_b( m_N_d , m_M.One() ) , m_lazy_substitution( m_N_d , m_M.One() ) , m_suspended( m_N_d )
+template <typename U , typename NON_COMM_N_MODULE> template <typename...Args> inline IntervalSetSqrtDecomposition<U,NON_COMM_N_MODULE>::IntervalSetSqrtDecomposition( NON_COMM_N_MODULE M , vector<U> a , const Args&... args ) : SqrtDecompositionCoordinate( a.size() , args... ) , m_M( move( M ) ) , m_a( move( a ) ) , m_b( m_N_d , m_M.One() ) , m_lazy_substitution( m_N_d , m_M.One() ) , m_suspended( m_N_d )
 {
 
   static_assert( ! is_same_v<U,int> && is_same_v<U,inner_t<NON_COMM_N_MODULE>> );
@@ -183,8 +183,8 @@ template <typename U , typename NON_COMM_N_MODULE> inline U IntervalSetSqrtDecom
     
 }
 
-template <typename U , typename NON_COMM_N_MODULE> template <typename F , SFINAE_FOR_SD_S> inline int IntervalSetSqrtDecomposition<U,NON_COMM_N_MODULE>::Search( const int& i_start , const F& f ) { return Search_Body( i_start , f , m_M.One() ); }
-template <typename U , typename NON_COMM_N_MODULE> inline int IntervalSetSqrtDecomposition<U,NON_COMM_N_MODULE>::Search( const int& i_start , const U& u ) { return Search( i_start , [&]( const U& product , const int& ){ return !( product < u ); } ); }
+template <typename U , typename NON_COMM_N_MODULE> template <typename F , SFINAE_FOR_SD_S> inline int IntervalSetSqrtDecomposition<U,NON_COMM_N_MODULE>::Search( const int& i_start , const F& f , const bool& reversed ) { return reversed ? SearchReverse_Body( i_start , f , m_M.One() ) : Search_Body( i_start , f , m_M.One() ); }
+template <typename U , typename NON_COMM_N_MODULE> inline int IntervalSetSqrtDecomposition<U,NON_COMM_N_MODULE>::Search( const int& i_start , const U& u , const bool& reversed ) { return Search( i_start , [&]( const U& product , const int& ){ return !( product < u ); } , reversed ); }
 
 template <typename U , typename NON_COMM_N_MODULE> template <typename F> int IntervalSetSqrtDecomposition<U,NON_COMM_N_MODULE>::Search_Body( const int& i_start , const F& f , U product_temp )
 {
@@ -256,7 +256,79 @@ template <typename U , typename NON_COMM_N_MODULE> template <typename F> int Int
 
     if( f( product_next , N_sqrt_d + j_rest - 1 ) ){
 
-      return Search_Body( N_sqrt_d , f , product_temp );
+      return Search_Body( N_sqrt_d , f , move( product_temp ) );
+
+    }
+
+    product_temp = move( product_next );
+    
+  }
+
+  return -1;
+
+}
+
+template <typename U , typename NON_COMM_N_MODULE> template <typename F> int IntervalSetSqrtDecomposition<U,NON_COMM_N_MODULE>::SearchReverse_Body( const int& i_final , const F& f , U product_temp )
+{
+
+  const int i_max = min( i_final , m_N - 1 );
+  const int d_1 = i_max / m_N_sqrt;
+  const int i_1 = max( d_1 * m_N_sqrt , 0 );
+
+  if( m_suspended[d_1] ){
+
+    const U& m_lazy_substitution_d = m_lazy_substitution[d_1];
+    U product_next = m_M.Product( product_temp , m_lazy_substitution_d );
+      
+    if( f( product_next , i_max ) ){
+
+      return i_max;
+
+    }
+
+    int l = i_1 , r = i_max;
+
+    while( l + 1 < r ){
+
+      int m = ( l + r ) >> 1;
+      // îÒâ¬ä∑Nâ¡åQê´ÇégÇ¡ÇΩÅB
+      product_next = m_M.Product( m_M.Power( m_lazy_substitution_d , i_max - m + 1 ) , product_temp );
+
+      ( f( product_next , m ) ? l : r ) = m;
+
+    }
+
+    if( i_1 < l ){
+
+      return l;
+
+    }
+
+    product_temp = move( product_next );
+
+  } else {
+
+    for( int i = i_max ; i >= i_1 ; i-- ){
+
+      product_temp = m_M.Product( m_a[i] , product_temp );
+
+      if( f( product_temp , i ) ){
+
+        return i;
+
+      }
+
+    }
+
+  }
+  
+  for( int d = d_1 - 1 ; d >= 0 ; d-- ){
+
+    U product_next = m_M.Product( m_suspended[d] ? m_M.Power( m_lazy_substitution[d] , m_N_sqrt ) : m_b[d] , product_temp );
+
+    if( f( product_next , d * m_N_sqrt ) ){
+
+      return Search_Body( ( d + 1 ) * m_N_sqrt - 1 , f , move( product_temp ) );
 
     }
 

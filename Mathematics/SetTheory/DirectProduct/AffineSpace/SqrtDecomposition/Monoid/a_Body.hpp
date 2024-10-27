@@ -88,8 +88,8 @@ template <typename U , typename MONOID> inline U MonoidSqrtDecomposition<U,MONOI
   
 }
 
-template <typename U , typename MONOID> template <typename F , SFINAE_FOR_SD_S> inline int MonoidSqrtDecomposition<U,MONOID>::Search( const int& i_start , const F& f ) { return Search_Body( i_start , f , m_M.Zero() ); }
-template <typename U , typename MONOID> inline int MonoidSqrtDecomposition<U,MONOID>::Search( const int& i_start , const U& u ) { return Search( i_start , [&]( const U& product , const int& ){ return !( product < u ); } ); }
+template <typename U , typename MONOID> template <typename F , SFINAE_FOR_SD_S> inline int MonoidSqrtDecomposition<U,MONOID>::Search( const int& i_start , const F& f , const bool& reversed ) { return reversed ? SearchReverse_Body( i_start , f , m_M.Zero() ) : Search_Body( i_start , f , m_M.Zero() ); }
+template <typename U , typename MONOID> inline int MonoidSqrtDecomposition<U,MONOID>::Search( const int& i_start , const U& u , const bool& reversed ) { return Search( i_start , [&]( const U& product , const int& ){ return !( product < u ); } , reversed ); }
 
 template <typename U , typename MONOID> template <typename F> int MonoidSqrtDecomposition<U,MONOID>::Search_Body( const int& i_start , const F& f , U product_temp )
 {
@@ -116,7 +116,44 @@ template <typename U , typename MONOID> template <typename F> int MonoidSqrtDeco
 
     if( f( product_next , min( ( d + 1 ) * m_N_sqrt , m_N ) - 1 ) ){
 
-      return Search_Body( d * m_N_sqrt , f , product_temp );
+      return Search_Body( d * m_N_sqrt , f , move( product_temp ) );
+
+    }
+
+    product_temp = move( product_next );
+    
+  }
+
+  return -1;
+
+}
+
+template <typename U , typename MONOID> template <typename F> int MonoidSqrtDecomposition<U,MONOID>::SearchReverse_Body( const int& i_final , const F& f , U product_temp )
+{
+
+  const int i_max = min( i_final , m_N - 1 );
+  const int d_1 = i_max / m_N_sqrt;
+  const int i_1 = max( d_1 * m_N_sqrt , 0 );
+  
+  for( int i = i_max ; i >= i_1 ; i-- ){
+
+    product_temp = m_M.Product( m_a[i] , product_temp );
+
+    if( f( product_temp , i ) ){
+
+      return i;
+
+    }
+
+  }
+  
+  for( int d = d_1 - 1 ; d >= 0 ; d-- ){
+
+    U product_next = m_M.Product( m_b[d] , product_temp );
+
+    if( f( product_next , d * m_N_sqrt ) ){
+      
+      return Search_Body( ( d + 1 ) * m_N_sqrt - 1 , f , move( product_temp ) );
 
     }
 

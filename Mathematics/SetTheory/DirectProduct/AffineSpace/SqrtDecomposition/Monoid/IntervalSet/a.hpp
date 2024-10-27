@@ -52,15 +52,16 @@ public:
   // Fは積順序に関して単調な写像f:U \times int -> {0,1}に相当する型。
   // f( IntervalProduct( i_start , i ) , i )がtrueとなるi_start以上の最小のiを探索。
   // 存在しない場合は-1を返す。
-  template <typename F , SFINAE_FOR_SD_S = nullptr> inline int Search( const int& i_start , const F& f );
+  template <typename F , SFINAE_FOR_SD_S = nullptr> inline int Search( const int& i_start , const F& f , const bool& reversed = false );
   // u <= IntervalProduct( i_start , i )を満たすi_start以上の最小のiを探索。
   // 存在しない場合は-1を返す。
-  inline int Search( const int& i_start , const U& u );
+  inline int Search( const int& i_start , const U& u , const bool& reversed = false );
 
 private:
   inline void IntervalSet_Body( const int& i_min , const int& i_ulim , const U& u );
   inline U IntervalProduct_Body( const int& i_min , const int& i_ulim );
   template <typename F> int Search_Body( const int& i_start , const F& f , U sum_temp );
+  template <typename F> int SearchReverse_Body( const int& i_final , const F& f , U sum_temp );
   
 };
 template <typename NON_COMM_N_MODULE , typename...Args> IntervalSetSqrtDecomposition( NON_COMM_N_MODULE M , Args&&... args ) -> IntervalSetSqrtDecomposition<inner_t<NON_COMM_N_MODULE>,NON_COMM_N_MODULE>;
