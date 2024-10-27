@@ -503,6 +503,7 @@ AC( ExplicitExpressionOrderOfElement )
 AC( ExplicitExpressionRandomAccess )
 {
   CERR( "Sの各要素sごとにs未満のSの項数を高速に解けるか否かで場合分けをします。" );
+  CERR( "そのためにSの性質についていくつか確認をします。" );
   ASK_YES_NO( "Sが固定長変数関数の像で与えられますか？" );
   if( reply == "y" ){
     CERR( "固定長変数関数の逆像の数え上げ問題は、" );
@@ -514,7 +515,14 @@ AC( ExplicitExpressionRandomAccess )
     CERR( "sに関する二分探索を検討しましょう。" );
     CALL_AC( CountingArrayBoundedTotal );
   } else {
-    CERR( "Sを文字列の集合とします。数は位取り記法で文字列とみなします。" );
+    ASK_YES_NO( "SからQへの自然な単射順序保存写像であってSの要素間の幅が1以上となるものがありますか？" );
+    if( reply == "y" ){
+      CERR( "各格子点の間（半開区間）にSの要素は高々1個しかなく、a[i]以下の最大の" );
+      CERR( "格子点はSと始切片(-∞,m)の共通部分の要素数がi以上となる最小のmなので、それを" );
+      CERR( "二分探索などで求めましょう。後はm<=a[i]<m+1の条件からa[i]を決定しましょう。" );
+      CERR( "" );
+    }
+    CERR( "以下、Sを文字列の集合とします。数は位取り記法で文字列とみなします。" );
     CERR( "文字cに最小元である文字mをd個連続させた文字列cm...m未満の" );
     CERR( "Sの項数dp[d][c]の漸化式を再帰関数などで実装し、dが大きい順に" );
     CERR( "(1) dp[d][c]<iである限りcをインクリメントし、1+d桁目をcに確定させる。" );
@@ -762,7 +770,7 @@ AC( MinimisationMovingCost )
 	     "多始点１終点コスト最小化（競争）問題" ,
 	     "多始点多終点コスト最大値最小化（開被覆）問題" ,
 	     "多プレイヤーコスト総和最小化（最小費用流）問題" ,
-	     "最近接点問題"
+	     "最近点問題"
 	     );
   if( num == num_temp++ ){
     CALL_AC( MinimisationSolvingMaze );
@@ -793,9 +801,10 @@ AC( MinimisationMovingCost )
     CERR( "\\Mathematics\\Geometry\\Graph\\Algorithm\\Dijkstra\\Potentialised\\MinimumCostFlow" );
   } else if( num == num_temp++ ){
     CERR( "D次元ユークリッド空間内のN点を考えます。" );
-    CERR( "- L^p距離に関する最近点対問題でかつO(N log N)が間に合いそうならば" );
-    CERR( "  空間を２分する分割統治でマージ時に枝刈り" );
+    CERR( "- L^p距離に関する最近点対問題でかつexpected O(N log N)が間に合いそうならば" );
+    CERR( "  kd木や空間を細分する分割統治でマージ時に枝刈り" );
     CERR( "  https://people.csail.mit.edu/indyk/6.838-old/handouts/lec17.pdf" );
+    CERR( "  \\Mathematics\\Geometry\\AffineSpace\\Distance\\ANN" );
     CERR( "- D=1で１点から点群への距離の最小化問題でかつO(log N)が間に合いそうならば" );
     CERR( "  set上の２分探索" );
     CERR( "  \\Mathematics\\Geometry\\AffineSpace\\Distance" );
@@ -804,7 +813,7 @@ AC( MinimisationMovingCost )
     CERR( "  \\Mathematics\\Geometry\\AffineSpace\\Distance" );
     CERR( "- D=2でx軸上の点群から点群へのL^1距離の最小化問題でかつO(N log N)が" );
     CERR( "  間に合いそうならばx座標でソートして左右から累積min計算" );
-    CERR( "  \\Mathematics\\Geometry\\AffineSpace\\Distance\\Li" );
+    CERR( "  \\Mathematics\\Geometry\\AffineSpace\\Distance\\L1" );
     CERR( "- ハイブリッド距離ならば距離の変化点で場合分けをして、それぞれに対する" );
     CERR( "  最小化問題に帰着" );
     CERR( "- グラフにより与えられる距離で経路上に（N点の外にあるかもしれない）経由点群" );
@@ -1025,6 +1034,7 @@ AC( MaximisationMovingDistance )
   ASK_NUMBER(
 	     "１始点多終点距離最長化（最遠点探索）問題" ,
 	     "多始点多終点距離最長化（最長歩道探索）問題" ,
+             "最遠点問題"
 	     );
   if( num == num_temp++ ){
     CALL_AC( MaximisationMovingDistanceSingleStart );
@@ -1037,6 +1047,16 @@ AC( MaximisationMovingDistance )
       CERR( "始点を全探策することで、１始点多終点コスト最大化問題に帰着されます。" );
       CALL_AC( MaximisationMovingDistanceSingleStart );
     }
+  } else if( num == num_temp++ ){
+    CERR( "D次元ユークリッド空間の全点最遠点問題を考えます。" );
+    CERR( "- L^∞距離でかつ合計O(DN)が間に合いそうならば、成分ごとに" );
+    CERR( "  最小値と最大値を前計算し成分ごとに差の絶対値の最大化" );
+    CERR( "- L^1距離ならば、" );
+    CERR( "  - D=1で各点O(1)が間に合いそうならば、座標の最大値と最小値を前計算し" );
+    CERR( "    差の絶対値最大化" );
+    CERR( "  - D=2でO(N)が間に合いそうならば45度回転によるL^∞距離への座標変換" );
+    CERR( "  - D>2でO(2^D N)が間に合いそうならば符号全探策で2^D次元に埋め込み" );
+    CERR( "    L^∞距離に帰着" );
   }
   CERR( "を検討しましょう。" );
 }
@@ -1144,16 +1164,21 @@ AC( Knapsack )
     if( reply == "y" ){
       CALL_AC( KnapsackMultipleChoice );
     } else {
-      ASK_YES_NO( "何個目に選ばれたかによって項目のコストが変動しますか？" );
+      ASK_YES_NO( "何個目に選ぶかによって個々の項目のコストが変動しますか？" );
       if( reply == "y" ){
-	CALL_AC( KnapsackOrdered );
+	CALL_AC( KnapsackOrderedUnstable );
       } else {
-	ASK_YES_NO( "ナップサックは１つですか？" );
+        ASK_YES_NO( "何個目に選ぶかによって選べる項目のコスト上限が変動しますか？" );
 	if( reply == "y" ){
-	  CALL_AC( SingleKnapsack );
-	} else {
-	  CALL_AC( MultipleKnapsack );
-	}
+          AC( KnapsackOrderedStable );
+        } else {
+          ASK_YES_NO( "ナップサックは１つですか？" );
+          if( reply == "y" ){
+            CALL_AC( SingleKnapsack );
+          } else {
+            CALL_AC( MultipleKnapsack );
+          }
+        }
       }
     }
   }
@@ -1288,19 +1313,9 @@ AC( KnapsackBoundedChoiceCostfree )
   CERR( "\\Mathematics\\Combinatorial\\KnapsackProblem\\BoundedChoice\\Costfree" );
 }
 
-AC( KnapsackOrdered )
-{
-  ASK_YES_NO( "何回目に選ばれたかによって項目のコストが変動しますか？" );
-  if( reply == "y" ){
-    CALL_AC( KnapsackOrderedUnstable );
-  } else {
-    CALL_AC( KnapsackOrderedStable );
-  }
-}
-
 AC( KnapsackOrderedUnstable )
 {
-  CERR( "1 <= m <= M個目の選択におけるコスト上限をD_mとし、" );
+  CERR( "|C|=∞とし、1 <= m <= M個目の選択におけるコスト上限をD_mとし、" );
   CERR( "項iのコストが取りうる値をC_{i,1},C_{i,2}の2通りとし、" );
   CERR( "全体でm回目の選択における項iのコストがiに依存しない数1 <= k_m <= Kを用いて" );
   CERR( "C_{i,k_m}と表せるとします。つまりC_{i,k_m}<=D_mが項iの選択制約です。" );
@@ -2644,6 +2659,7 @@ AC( QueryArray )
 	     "2引数関数による区間max／min更新を使う問題" ,
 	     "距離関数と定数の和による区間min更新を使う問題" ,
 	     "定数とのmaxを取った値の区間演算取得を使う問題" ,
+             "終切片代入更新と末尾挿入と関数適用の総和を扱う問題"
 	     );
   if( num == num_temp++ ){
     CALL_AC( QueryArrayAbelianGroup );
@@ -2673,6 +2689,8 @@ AC( QueryArray )
     CALL_AC( QueryArrayMinDistance );
   } else if( num == num_temp++ ){
     CALL_AC( QueryArrayMaxConstant );
+  } else if( num == num_temp++ ){
+    CALL_AC( QueryArrayFinalSegmentSetFunctionApply );
   }
 }
 
@@ -2858,6 +2876,17 @@ AC( QueryArrayMaxConstant )
     CERR( "多重集合として管理し、その区間要素数取得で処理しましょう。" );
     CERR( "\\Mathematics\\SetTheory\\Line\\Bounded\\Compressed\\Multisubset" );
   }
+}
+
+AC( QueryArrayFinalSegmentSetFunctionApply )
+{
+  CERR( "更新する配列をAとして、２変数関数fに対するf(A[i],i)の総和c(A)を考えます。" );
+  CERR( "更新する配列を連長圧縮してvector<pair<U,int>>で管理することで、" );
+  CERR( "- 終切片代入は合計O(N+Q)" );
+  CERR( "- 末尾挿入はO(1)" );
+  CERR( "で処理可能です。並行してc(A)の更新を適宜他のデータ構造と合わせて行いましょう。" );
+  CERR( "例えばc(A)が他の配列との内積であれば、他の配列をBITなどで管理して" );
+  CERR( "区間取得を行うことで終切片代入時のc(A)の更新を高速に行えます。" );
 }
 
 AC( QueryTree )
