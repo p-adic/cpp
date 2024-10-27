@@ -74,8 +74,8 @@ template <typename U , typename ABELIAN_GROUP> inline U AbstractSqrtDecompositio
   
 }
 
-template <typename U , typename ABELIAN_GROUP> template <typename F , SFINAE_FOR_SD_S> inline int AbstractSqrtDecomposition<U,ABELIAN_GROUP>::Search( const int& i_start , const F& f ) { return Search_Body( i_start , f , m_M.Zero() ); }
-template <typename U , typename ABELIAN_GROUP> inline int AbstractSqrtDecomposition<U,ABELIAN_GROUP>::Search( const int& i_start , const U& u ) { return Search( i_start , [&]( const U& sum , const int& ){ return !( sum < u ); } ); }
+template <typename U , typename ABELIAN_GROUP> template <typename F , SFINAE_FOR_SD_S> inline int AbstractSqrtDecomposition<U,ABELIAN_GROUP>::Search( const int& i_start , const F& f , const bool& reversed ) { return reversed ? SearchReverse_Body( i_start , f , m_M.Zero() ) : Search_Body( i_start , f , m_M.Zero() ); }
+template <typename U , typename ABELIAN_GROUP> inline int AbstractSqrtDecomposition<U,ABELIAN_GROUP>::Search( const int& i_start , const U& u , const bool& reversed ) { return Search( i_start , [&]( const U& sum , const int& ){ return !( sum < u ); } , reversed ); }
 
 template <typename U , typename ABELIAN_GROUP> template <typename F> int AbstractSqrtDecomposition<U,ABELIAN_GROUP>::Search_Body( const int& i_start , const F& f , U sum_temp )
 {
@@ -104,6 +104,45 @@ template <typename U , typename ABELIAN_GROUP> template <typename F> int Abstrac
     if( f( sum_next , min( ( d + 1 ) * m_N_sqrt , m_N ) - 1 ) ){
 
       return Search_Body( d * m_N_sqrt , f , move( sum_temp ) );
+
+    }
+
+    sum_temp = move( sum_next );
+    
+  }
+
+  return -1;
+
+}
+
+template <typename U , typename ABELIAN_GROUP> template <typename F> int AbstractSqrtDecomposition<U,ABELIAN_GROUP>::SearchReverse_Body( const int& i_final , const F& f , U sum_temp )
+{
+
+  const int i_max = min( i_final , m_N - 1 );
+  const int d_1 = i_max / m_N_sqrt;
+  const int i_1 = max( d_1 * m_N_sqrt , 0 );
+  
+  for( int i = i_max ; i >= i_1 ; i-- ){
+
+    // 可換性を用いた。
+    sum_temp = m_M.Sum( move( sum_temp ) , m_a[i] );
+
+    if( f( sum_temp , i ) ){
+
+      return i;
+
+    }
+
+  }
+  
+  for( int d = d_1 - 1 ; d >= 0 ; d-- ){
+
+    // 可換性を用いた。
+    U sum_next = m_M.Sum( sum_temp , m_b[d] );
+
+    if( f( sum_next , d * m_N_sqrt ) ){
+
+      return Search_Body( ( d + 1 ) * m_N_sqrt - 1 , f , move( sum_temp ) );
 
     }
 
