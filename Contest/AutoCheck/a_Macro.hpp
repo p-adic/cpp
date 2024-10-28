@@ -43,6 +43,6 @@
     }                                                   \
   }                                                     \
 
-#define AC( BRANCH ) void BRANCH ## AutoCheck( int& num , int& num_temp , string& reply , vector<string>& problems , int& problems_size , const bool& use_getline )
-#define CALL_AC( BRANCH ) BRANCH ## AutoCheck( num , num_temp , reply , problems , problems_size , use_getline )
+#define AC( BRANCH ) void BRANCH ## AutoCheck( int& num , int& num_temp , string& reply , vector<string>& problems , int& problems_size , const bool& use_getline , const bool& sample_check , const string& problem_order )
+#define CALL_AC( BRANCH ) BRANCH ## AutoCheck( num , num_temp , reply , problems , problems_size , use_getline , sample_check , problem_order )
 
