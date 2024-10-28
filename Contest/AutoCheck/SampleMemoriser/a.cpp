@@ -15,7 +15,7 @@ void SampleCheck( const string& sample_path , const string& input_path , const s
 
     string sample_num_str; sample_count >> sample_num_str;
     assert( sample_num == stoi( sample_num_str ) );
-    CERRNS( "サンプル" , sample_num , "を実行します。\n" );
+    CERR( "サンプル" , sample_num , "を実行します。" );
     CERR( "" );
     ifs = ifstream{ input_path + sample_num_str + ".txt" };
     ofs = ofstream{ output_path + sample_num_str + ".txt" , ios::trunc };
@@ -35,7 +35,7 @@ void SampleCheck( const string& sample_path , const string& input_path , const s
     }
 
     CompareAnswer( sample_path , problem_order , sample_num_str );
-    CERRNS( "サンプル" , sample_num , "の実行を終了しました。\n" );
+    CERR( "サンプル" , sample_num , "の実行を終了しました。" );
     CERR( "" );
     
   }
