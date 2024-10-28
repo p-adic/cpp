@@ -5,7 +5,7 @@
     int M_min = 1 , M_max = bound;
     naive2[N-N_min].resize( M_max - M_min + 1 );
     FOREQ( M , M_min , M_max ){
-      naive2[N-N_min][M-M_min] = Naive( N , M , true );
+      naive2[N-N_min][M-M_min] = Naive( N , M , false );
     }
     CERRNS( "N=",N,",MÅ∏[",M_min,"--",M_max,"]: " , naive2[N-N_min] , "\n" );
   }

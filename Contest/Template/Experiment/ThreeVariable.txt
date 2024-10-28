@@ -8,7 +8,7 @@
       int K_min = 1 , K_max = bound;
       naive3[N-N_min][M-M_min].resize( K_max - K_min + 1 );
       FOREQ( K , K_min , K_max ){
-  	naive3[N-N_min][M-M_min][K-K_min] = Naive( N , M , K , true );
+  	naive3[N-N_min][M-M_min][K-K_min] = Naive( N , M , K , false );
       }
       CERRNS( "(N,M)=(",N,",",M,"),K¸[",K_min,"--",K_max,"]: " , naive3[N-N_min][M-M_min] , "\n" );
     }

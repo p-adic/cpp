@@ -2,6 +2,6 @@
   int N_min = 1 , N_max = bound;
   vector<decldecay_t(Naive(0))> naive1( N_max - N_min + 1 );
   FOREQ( N , N_min , N_max ){
-    naive1[N-N_min] = Naive( N , true );
+    naive1[N-N_min] = Naive( N , false );
   }
   CERRNS( "NÅ∏[",N_min,"--",N_max,"]: " , naive3[N] , "\n" );
