@@ -13,4 +13,4 @@
       CERRNS( "(N,M)=(",N,",",M,"),KÅ∏[",K_min,"--",K_max,"]: " , naive3[N-N_min][M-M_min] , "\n" );
     }
   }
-  CERRNS( "Inline: " ); FOREQ( N , N_min , N_max ){ CERRNS( naive3[N-N_min] , " \n"[N==N_max] ) };
+  CERRNS( "Inline: " ); FOREQ( N , N_min , N_max ){ CERRNS( naive3[N-N_min] , " \n"[N==N_max] ); }

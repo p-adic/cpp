@@ -4,4 +4,4 @@
   FOREQ( N , N_min , N_max ){
     naive1[N-N_min] = Naive( N , true );
   }
-  CERRNS( "NÅ∏[",N_min,"--",N_max,"]: " , naive3[N] , "\n" };
+  CERRNS( "NÅ∏[",N_min,"--",N_max,"]: " , naive3[N] , "\n" );
