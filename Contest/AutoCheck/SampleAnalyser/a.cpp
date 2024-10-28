@@ -16,7 +16,7 @@ AC( SampleAnalyser )
   ASK_YES_NO( "出力の法は998244353または0ですか？" );
   int P = 998244353;
   if( reply != "y" ){
-    cerr << "出力の法: "; cin >> P;
+    CERRNS( "出力の法: " ); cin >> P;
   }
   DynamicMod::SetModulo( P );
   int sample_repetition_num = 3;
@@ -33,7 +33,7 @@ AC( SampleAnalyser )
   if( !use_memorised_sample ){
     ASK_YES_NO( "サンプルの個数は3個ですか？" );
     if( reply != "y" ){
-      cerr << "サンプルの個数: "; cin >> sample_repetition_num;
+      CERRNS( "サンプルの個数: " ); cin >> sample_repetition_num;
       assert( sample_repetition_num > 0 );
     }
   }
@@ -48,16 +48,33 @@ AC( SampleAnalyser )
       ifstream ifs_input{ input_path + sample_num_str + ".txt" };
       ifstream ifs_output{ output_path + sample_num_str + ".txt" };
       while( !ifs_input.eof() ){
-        var++;
-        ll temp; ifs_input >> temp;
-        input[sample_num - 1].push_back( temp );
+        string temp; getline( ifs_input , temp );
+        if( temp == "" ){
+          continue;
+        }
+        int l = 0 , size = temp.size();
+        for( int r = 0 ; r <= size ; r++ ){
+          if( r == size || temp[r] == ' ' ){
+            if( l < r ){
+              if( sample_num == 1 ){
+                var++;
+              }
+              input[sample_num - 1].push_back( stoll( temp.substr( l , r - l ) ) );
+            }
+            l = r + 1;
+          }
+        }
+      }
+      if( sample_num == 1 ){
+        CERRNS( "サンプルの個数は" , var , "個です。\n" );
+        CERR( "" );
       }
       while( !ifs_output.eof() ){
         ifs_output >> output[sample_num - 1];
       }
     }
   } else {
-    cerr << "サンプル入力中の固定長な数値の個数: "; cin >> var;
+    CERRNS( "サンプル入力中の固定長な数値の個数: " ); cin >> var;
     CERR( "" );
     bool hand = true;
     if( var == 1 ){
@@ -74,29 +91,29 @@ AC( SampleAnalyser )
                  );
       if( num == num_temp++ ){
         FOR( sample_num , 0 , sample_repetition_num ){
-          cerr << "サンプル" << sample_num + 1 << "入力中の固定長な数値: ";
+          CERRNS( "サンプル" , sample_num + 1 , "入力中の固定長な数値: " );
           CIN_A( ll , 0 , var , A );
           input[sample_num] = move( A );
-          cerr << "サンプル" << sample_num + 1 << "出力: "; cin >> output[sample_num];
+          CERRNS( "サンプル" , sample_num + 1 , "出力: " ); cin >> output[sample_num];
           CERR( "" );
         }
       } else {
         FOR( sample_num , 0 , sample_repetition_num ){
-          cerr << "サンプル" << sample_num + 1 << "入力中の固定長な数値: ";
+          CERRNS( "サンプル" , sample_num + 1 , "入力中の固定長な数値: " );
           CIN_A( ll , 0 , var , A );
           input[sample_num] = move( A );
         }
         FOR( sample_num , 0 , sample_repetition_num ){
-          cerr << "サンプル" << sample_num + 1 << "出力: "; cin >> output[sample_num];
+          CERRNS( "サンプル" , sample_num + 1 , "出力: " ); cin >> output[sample_num];
           CERR( "" );
         }
       }
     } else {
-      cerr << "初項aと公差d: "; CIN( int , a , d );
+      CERRNS( "初項aと公差d: " ); CIN( int , a , d );
       FOR( sample_num , 0 , sample_repetition_num ){
         input[sample_num] = { a + d * sample_num };
       }
-      cerr << "出力列: "; CIN_A( DynamicMod , 0 , sample_repetition_num , A );
+      CERRNS( "出力列: " ); CIN_A( DynamicMod , 0 , sample_repetition_num , A );
       output = move( A );
     }
   }
@@ -182,18 +199,18 @@ void PowerAnalysis( const int& sample_repetition_num , const vector<DynamicMod>&
   const vector bases{2,3,5,6,7};
   int sqrtP = sqrt( P );
   RUN( bases , base ){
-    cerr << "サンプル";
+    CERRNS( "サンプル" );
     FOR( sample_num , 0 , sample_repetition_num ){
-      ( sample_num == 0 ? cerr : cerr << ", " ) << sample_num + 1;
+      CERRNS( ( sample_num == 0 ? "" : ", " ) , sample_num + 1 );
     }
-    cerr << "の出力の法" << P << "における底" << base << "の離散対数を求めます。\n";
+    CERRNS( "の出力の法" , P , "における底" , base , "の離散対数を求めます。\n" );
     FOREQ( diff , - diff_max , diff_max ){
-      cerr << "出力" << ( diff > 0 ? "+" : "" ) << ( diff == 0 ? "" : to_string( diff ) ) << ": ";
+      CERRNS( "出力" , ( diff > 0 ? "+" : "" ) , ( diff == 0 ? "" : to_string( diff ) ) , ": " );
       bool small = true;
       FOR( sample_num , 0 , sample_repetition_num ){
 	int dl = DiscreteLog( int( output[sample_num].Represent() ) + diff , base , P );
 	small &= ( int( output[sample_num].Represent() ) + diff ) % P == 0 || ( 0 <= dl && dl < sqrtP );
-	cerr << ( dl < 0 ? "NaN" : to_string( dl ) ) << ( sample_num == sample_repetition_num - 1 ? "\n" : ", " );
+	CERRNS( ( dl < 0 ? "NaN" : to_string( dl ) ) , ( sample_num == sample_repetition_num - 1 ? "\n" : ", " ) );
       }
       if( small ){
 	CERR( "(0または離散対数が有意に小さい値です。)" );
@@ -223,19 +240,19 @@ void PowerAnalysis( const int& sample_repetition_num , const vector<DynamicMod>&
 	if( small ){
 	  if( !found ){
 	    found = true;
-	    cerr << "出力からのズレ" << sqrtP << "以下の範囲で他に離散対数が有意に小さい\n";
-	    cerr << "値を列挙します。\n";
+	    CERRNS( "出力からのズレ" , sqrtP , "以下の範囲で他に離散対数が有意に小さい\n" );
+	    CERRNS( "値を列挙します。\n" );
 	  }
-	  cerr << "出力" << ( diff > 0 ? "+" : "" ) << ( diff == 0 ? "" : to_string( diff ) ) << ": ";
+	  CERRNS( "出力" , ( diff > 0 ? "+" : "" ) , ( diff == 0 ? "" : to_string( diff ) ) , ": " );
 	  FOR( sample_num , 0 , sample_repetition_num ){
-	    cerr << exponent[sample_num][diff + sqrtP] << ( sample_num == sample_repetition_num - 1 ? "" : ", " );
+	    CERRNS( exponent[sample_num][diff + sqrtP] , ( sample_num == sample_repetition_num - 1 ? "" : ", " ) );
 	  }
 	}
       }
     }
     if( !found ){
-      cerr << "出力からのズレ" << sqrtP << "以下の範囲で他に離散対数が有意に小さい値は\n";
-      cerr << "見付かりませんでした。\n";
+      CERRNS( "出力からのズレ" , sqrtP , "以下の範囲で他に離散対数が有意に小さい値は\n" );
+      CERRNS( "見付かりませんでした。\n" );
     }
     CERR( "" );
   }
@@ -255,7 +272,7 @@ void InputPolynomialAnalysis1_few( const int& sample_repetition_num , const vect
   REPEAT( length ){
     time *= 2 * numer_max + 1;
   }
-  cerr << "（予想解析時間: " << time / 16000000 << "秒）\n";
+  CERRNS( "（予想解析時間: " , time / 16000000 , "秒）\n" );
   START_WATCH;
   bool valid = true;
   bool match = false;
@@ -280,12 +297,12 @@ void InputPolynomialAnalysis1_few( const int& sample_repetition_num , const vect
   if( match ){
     CERR( "補間成功:" );
     FOR( i , 0 , size ){
-      cerr << "(" << index[i] << "/" << denom << ") * (引数1)^" << i << ( i == size - 1 ? "\n" : " +\n" );
+      CERRNS( "(" , index[i] , "/" , denom , ") * (引数1)^" , i , ( i == size - 1 ? "\n" : " +\n" ) );
     }
   } else {
     CERR( "補間失敗。" );
   }
-  cerr << "解析時間: " << int( CURRENT_TIME / 1000 ) << "秒\n";
+  CERRNS( "解析時間: " , int( CURRENT_TIME / 1000 ) , "秒\n" );
   CERR( "" );
 }
 
@@ -306,7 +323,7 @@ void InputPolynomialAnalysis1_enough( const int& sample_repetition_num , const v
     CERR( "補間成功（次数が高すぎるため信頼度はほとんどなし）:" );
   }
   FOR( i , 0 , size ){
-    cerr << "(" << answer[i] << ") * (引数1)^" << i << ( i == size - 1 ? "\n" : " +\n" );
+    CERRNS( "(" , answer[i] , ") * (引数1)^" , i , ( i == size - 1 ? "\n" : " +\n" ) );
   }
   CERR( "" );
 }
@@ -325,7 +342,7 @@ void InputPolynomialAnalysis2_few( const int& sample_repetition_num , const vect
   REPEAT( length ){
     time *= 2 * numer_max + 1;
   }
-  cerr << "（予想解析時間: " << time / 16000000 << "秒）\n";
+  CERRNS( "（予想解析時間: " , time / 16000000 , "秒）\n" );
   START_WATCH;
   bool valid = true;
   bool match = false;
@@ -357,13 +374,13 @@ void InputPolynomialAnalysis2_few( const int& sample_repetition_num , const vect
     FOR( dx , 0 , size ){
       FOR( dy , 0 , size ){
 	int i = size * dx + dy;
-	cerr << "(" << index[i] << "/" << 2 * index[i+size*size] - 1 << ") * (引数1)^" << dx << " (引数2)^" << dy << ( dx == size - 1 && dy == size - 1 ? "\n" : " +\n" );
+	CERRNS( "(" , index[i] , "/" , 2 * index[i+size*size] - 1 , ") * (引数1)^" , dx , " (引数2)^" , dy , ( dx == size - 1 && dy == size - 1 ? "\n" : " +\n" ) );
       }
     }
   } else {
     CERR( "補間失敗。" );
   }
-  cerr << "解析時間: " << int( CURRENT_TIME / 1000 ) << "秒\n";
+  CERRNS( "解析時間: " , int( CURRENT_TIME / 1000 ) , "秒\n" );
   CERR( "" );
 }
 
@@ -391,7 +408,7 @@ void InputPolynomialAnalysis2_enough( const int& sample_repetition_num , const v
     FOR( dx , 0 , size ){
       FOR( dy , 0 , size ){
 	int i = size * dx + dy;
-	cerr << "(" << index[i] << ") * (引数1)^" << dx << " (引数2)^" << dy << ( i == length - 1 ? "}\n" : "} +\n" );
+	CERRNS( "(" , index[i] , ") * (引数1)^" , dx , " (引数2)^" , dy , ( i == length - 1 ? "}\n" : "} +\n" ) );
       }
     }
   } else {
@@ -414,7 +431,7 @@ void InputPolynomialAnalysis3_few( const int& sample_repetition_num , const vect
   REPEAT( length ){
     time *= 2 * numer_max + 1;
   }
-  cerr << "（予想解析時間: " << time / 16000000 << "秒）\n";
+  CERRNS( "（予想解析時間: " , time / 16000000 , "秒）\n" );
   START_WATCH;
   bool valid = true;
   bool match = false;
@@ -451,14 +468,14 @@ void InputPolynomialAnalysis3_few( const int& sample_repetition_num , const vect
       FOR( dy , 0 , size ){
 	FOR( dz , 0 , size ){
 	  int i = size * size * dx + size * dy + dz;
-	  cerr << "(" << index[i] << "/" << denom << ") * (引数1)^" << dx << " (引数2)^" << dy << " (引数3)^" << dz << ( dx == size - 1 && dy == size - 1 && dz == size - 1 ? "\n" : " +\n" );
+	  CERRNS( "(" , index[i] , "/" , denom , ") * (引数1)^" , dx , " (引数2)^" , dy , " (引数3)^" , dz , ( dx == size - 1 && dy == size - 1 && dz == size - 1 ? "\n" : " +\n" ) );
 	}
       }
     }
   } else {
     CERR( "補間失敗。" );
   }
-  cerr << "解析時間: " << int( CURRENT_TIME / 1000 ) << "秒\n";
+  CERRNS( "解析時間: " , int( CURRENT_TIME / 1000 ) , "秒\n" );
   CERR( "" );
 }
 
@@ -491,7 +508,7 @@ void InputPolynomialAnalysis3_enough( const int& sample_repetition_num , const v
       FOR( dy , 0 , size ){
 	FOR( dz , 0 , size ){
 	  int i = size * size * dx + size * dy + dz;
-	  cerr << "(" << index[i] << ") * (引数1)^" << dx << " (引数2)^" << dy << " (引数3)^" << dz << ( i == length - 1 ? "}\n" : "} +\n" );
+	  CERRNS( "(" , index[i] , ") * (引数1)^" , dx , " (引数2)^" , dy , " (引数3)^" , dz , ( i == length - 1 ? "}\n" : "} +\n" ) );
 	}
       }
     }
@@ -515,7 +532,7 @@ void InputLinearAnalysis4( const int& sample_repetition_num , const vector<vecto
   REPEAT( length ){
     time *= 2 * numer_max + 1;
   }
-  cerr << "（予想解析時間: " << time / 16000000 << "秒）\n";
+  CERRNS( "（予想解析時間: " , time / 16000000 , "秒）\n" );
   START_WATCH;
   bool valid = true;
   bool match = false;
@@ -537,14 +554,14 @@ void InputLinearAnalysis4( const int& sample_repetition_num , const vector<vecto
   }
   if( match ){
     CERR( "補間成功:" );
-    cerr << "(" << index[var] << "/" << denom << ") +\n";
+    CERRNS( "(" , index[var] , "/" , denom , ") +\n" );
     FOR( i , 0 , var ){
-      cerr << "(" << index[i] << "/" << denom << ") * (引数" << i << ")" << ( i == var - 1 ? "\n" : " +\n" );
+      CERRNS( "(" , index[i] , "/" , denom , ") * (引数" , i , ")" , ( i == var - 1 ? "\n" : " +\n" ) );
     }
   } else {
     CERR( "補間失敗。" );
   }
-  cerr << "解析時間: " << int( CURRENT_TIME / 1000 ) << "秒\n";
+  CERRNS( "解析時間: " , int( CURRENT_TIME / 1000 ) , "秒\n" );
   CERR( "" );
 }
 
@@ -562,7 +579,7 @@ void InputExponentialAnalysis1_few( const int& sample_repetition_num , const vec
   REPEAT( length ){
     time *= 2 * numer_max + 1;
   }
-  cerr << "（予想解析時間: " << time / 16000000 << "秒）\n";
+  CERRNS( "（予想解析時間: " , time / 16000000 , "秒）\n" );
   START_WATCH;
   bool valid = true;
   bool match = false;
@@ -587,15 +604,15 @@ void InputExponentialAnalysis1_few( const int& sample_repetition_num , const vec
   }
   if( match ){
     CERR( "補間成功:" );
-    cerr << "(" << index[length-1] << "/" << denom << ") + " << "(" << index[length-2] << "/" << denom << ") (引数1) + ";
+    CERRNS( "(" , index[length-1] , "/" , denom , ") + " , "(" , index[length-2] , "/" , denom , ") (引数1) + " );
     FOR( d , 0 , size ){
       int i = d , dx = d - 1;
-      cerr << "(" << index[i] << "/" << denom << ") * (引数1)^{(引数1)" << ( dx > 0 ? "+" : "" ) << ( dx == 0 ? "" : to_string( dx ) ) << ( d == size - 1 ? "}\n" : "} +\n" );
+      CERRNS( "(" , index[i] , "/" , denom , ") * (引数1)^{(引数1)" , ( dx > 0 ? "+" : "" ) , ( dx == 0 ? "" : to_string( dx ) ) , ( d == size - 1 ? "}\n" : "} +\n" ) );
     }
   } else {
     CERR( "補間失敗。" );
   }
-  cerr << "解析時間: " << int( CURRENT_TIME / 1000 ) << "秒\n";
+  CERRNS( "解析時間: " , int( CURRENT_TIME / 1000 ) , "秒\n" );
   CERR( "" );
 }
 
@@ -617,10 +634,10 @@ void InputExponentialAnalysis1_enough( const int& sample_repetition_num , const 
   auto [rank,index] = ExtendedReducedRowEchelonForm( M );
   if( rank == length ){
     CERR( "補間成功:" );
-    cerr << "(" << index[length-1] << ") + " << "(" << index[length-2] << ") (引数1) + ";
+    CERRNS( "(" , index[length-1] , ") + " , "(" , index[length-2] , ") (引数1) + " );
     FOR( d , 0 , size ){
       int i = d , dx = d - 1;
-      cerr << "(" << index[i] << ") * (引数1)^{(引数1)" << ( dx > 0 ? "+" : "" ) << ( dx == 0 ? "" : to_string( dx ) ) << ( d == size - 1 ? "}\n" : "} +\n" );
+      CERRNS( "(" , index[i] , ") * (引数1)^{(引数1)" , ( dx > 0 ? "+" : "" ) , ( dx == 0 ? "" : to_string( dx ) ) , ( d == size - 1 ? "}\n" : "} +\n" ) );
     }
   } else {
     CERR( "補間失敗。" );
@@ -644,7 +661,7 @@ void InputExponentialAnalysis2_few( const int& sample_repetition_num , const vec
   REPEAT( length ){
     time *= 2 * numer_max + 1;
   }
-  cerr << "（予想解析時間: " << time / 16000000 << "秒）\n";
+  CERRNS( "（予想解析時間: " , time / 16000000 , "秒）\n" );
   START_WATCH;
   bool valid = true;
   bool match = false;
@@ -674,19 +691,19 @@ void InputExponentialAnalysis2_few( const int& sample_repetition_num , const vec
   }
   if( match ){
     CERR( "補間成功:" );
-    cerr << "(" << index[length-1] << "/" << denom << ") +\n";
+    CERRNS( "(" , index[length-1] , "/" , denom , ") +\n" );
     FOR( d , 0 , size ){
       int i = d , dy = d - 1;
-      cerr << "(" << index[i] << "/" << denom << ") * (引数1)^{(引数2)" << ( dy > 0 ? "+" : "" ) << ( dy == 0 ? "" : to_string( dy ) ) << "} +\n";
+      CERRNS( "(" , index[i] , "/" , denom , ") * (引数1)^{(引数2)" , ( dy > 0 ? "+" : "" ) , ( dy == 0 ? "" : to_string( dy ) ) , "} +\n" );
     }
     FOR( d , 0 , size ){
       int i = size + d , dx = d - 1;
-      cerr << "(" << index[i] << "/" << denom << ") * (引数2)^{(引数1)" << ( dx > 0 ? "+" : "" ) << ( dx == 0 ? "" : to_string( dx ) ) << ( d == size - 1 ? "}\n" : "} +\n" );
+      CERRNS( "(" , index[i] , "/" , denom , ") * (引数2)^{(引数1)" , ( dx > 0 ? "+" : "" ) , ( dx == 0 ? "" : to_string( dx ) ) , ( d == size - 1 ? "}\n" : "} +\n" ) );
     }
   } else {
     CERR( "補間失敗。" );
   }
-  cerr << "解析時間: " << int( CURRENT_TIME / 1000 ) << "秒\n";
+  CERRNS( "解析時間: " , int( CURRENT_TIME / 1000 ) , "秒\n" );
   CERR( "" );
 }
 
@@ -715,14 +732,14 @@ void InputExponentialAnalysis2_enough( const int& sample_repetition_num , const 
   auto [rank,index] = ExtendedReducedRowEchelonForm( M );
   if( rank == length ){
     CERR( "補間成功:" );
-    cerr << "(" << index[length-1] << ") +\n";
+    CERRNS( "(" , index[length-1] , ") +\n" );
     FOR( d , 0 , size ){
       int i = d , dy = d - 1;
-      cerr << "(" << index[i] << ") * (引数1)^{(引数2)" << ( dy > 0 ? "+" : "" ) << ( dy == 0 ? "" : to_string( dy ) ) << "} +\n";
+      CERRNS( "(" , index[i] , ") * (引数1)^{(引数2)" , ( dy > 0 ? "+" : "" ) , ( dy == 0 ? "" : to_string( dy ) ) , "} +\n" );
     }
     FOR( d , 0 , size ){
       int i = size + d , dx = d - 1;
-      cerr << "(" << index[i] << ") * (引数2)^{(引数1)" << ( dx > 0 ? "+" : "" ) << ( dx == 0 ? "" : to_string( dx ) ) << ( d == size - 1 ? "}\n" : "} +\n" );
+      CERRNS( "(" , index[i] , ") * (引数2)^{(引数1)" , ( dx > 0 ? "+" : "" ) , ( dx == 0 ? "" : to_string( dx ) ) , ( d == size - 1 ? "}\n" : "} +\n" ) );
     }
   } else {
     CERR( "補間失敗。" );
