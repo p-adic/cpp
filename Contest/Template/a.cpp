@@ -26,14 +26,14 @@ REPEAT_MAIN(1);
 #ifdef INCLUDE_SUB
 
 /* COMPAREに使用。圧縮時は削除する。*/
-MP Naive( int N , int M , int K , const bool& experiment = false )
+MP Naive( int N , int M , int K , const bool& debug_output = true )
 {
   MP answer{};
   return answer;
 }
 
 /* COMPAREに使用。圧縮時は削除する。*/
-MP Answer( ll N , ll M , ll K )
+MP Answer( ll N , ll M , ll K , const bool& debug_output = true )
 {
   MP answer{};
   return answer;
@@ -159,7 +159,6 @@ using namespace std;
 #define CIN_ASSERT( A , MIN , MAX ) decldecay_t( MAX ) A; SET_ASSERT( A , MIN , MAX )
 #define CIN_A_ASSERT( I , N , A , MIN , MAX ) vector<decldecay_t( MAX )> A( N + I ); SET_A_ASSERT( I , N , A , MIN , MAX )
 #define CIN_AA_ASSERT( I0 , N0 , I1 , N1 , A , MIN , MAX ) vector A( N0 + I0 , vector<decldecay_t( MAX )>( N1 + I1 ) ); SET_AA_ASSERT( I0 , N0 , I1 , N1 , A , MIN , MAX )
-#define OUTPUT_ARRAY( C , I , N , A ) FOR( VARIABLE_FOR_OUTPUT_ARRAY , I , N ){ C << A[VARIABLE_FOR_OUTPUT_ARRAY] << " \n"[VARIABLE_FOR_OUTPUT_ARRAY==(N)-1]; }
 #define FOR( VAR , INITIAL , FINAL_PLUS_ONE ) for( decldecay_t( FINAL_PLUS_ONE ) VAR = INITIAL ; VAR < FINAL_PLUS_ONE ; VAR ++ )
 #define FOREQ( VAR , INITIAL , FINAL ) for( decldecay_t( FINAL ) VAR = INITIAL ; VAR <= FINAL ; VAR ++ )
 #define FOREQINV( VAR , INITIAL , FINAL ) for( decldecay_t( INITIAL ) VAR = INITIAL ; VAR + 1 > FINAL ; VAR -- )
@@ -169,7 +168,7 @@ using namespace std;
 #define REPEAT( HOW_MANY_TIMES ) FOR( VARIABLE_FOR_REPEAT_ ## HOW_MANY_TIMES , 0 , HOW_MANY_TIMES )
 #define SET_PRECISION( DECIMAL_DIGITS ) cout << fixed << setprecision( DECIMAL_DIGITS ); cerr << fixed << setprecision( DECIMAL_DIGITS )
 #define RETURN( ... ) SOLVE_ONLY; COUT( __VA_ARGS__ ); RE
-#define COMPARE( ... ) auto naive = Naive( __VA_ARGS__ , true ); auto answer = Answer( __VA_ARGS__ ); bool match = naive == answer; CERR( "(" , #__VA_ARGS__ , ") == (" , __VA_ARGS__ , ") : Naive == " , naive , match ? "==" : "!=" , answer , "== Answer" ); if( !match ){ RE; }
+#define COMPARE( ... ) auto naive = Naive( __VA_ARGS__ , false ); auto answer = Answer( __VA_ARGS__ , false ); bool match = naive == answer; CERR( "(" , #__VA_ARGS__ , ") == (" , __VA_ARGS__ , ") : Naive == " , naive , match ? "==" : "!=" , answer , "== Answer" ); if( !match ){ RE; }
 
 /* 圧縮用 */
 #define TE template
