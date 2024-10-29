@@ -119,6 +119,7 @@ AC( CountingUndirectedGraph );
 AC( CountingDirectedGraph );
 AC( CountingPartitionOfTree );
 AC( CountingSubset );
+AC( CountingMap );
 AC( CountingStrategy );
 AC( InterpretingIncreasingSequence );
 AC( CountingPath );

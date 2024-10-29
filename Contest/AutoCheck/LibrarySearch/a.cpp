@@ -46,7 +46,7 @@ AC( ExplicitExpression )
   ASK_NUMBER(
 	     "一重和や一重積で与えられる１変数関数／数列の計算問題" ,
 	     "その他の１変数関数／数列の計算問題" ,
-	     "二重和や二重積などの計算問題" ,
+	     "二重和や二重積や積和などの計算問題" ,
 	     "順列上の関数の計算問題" ,
 	     "木上の関数の総和の計算問題" ,
 	     "木以外のグラフ上の関数の計算問題" ,
@@ -333,7 +333,9 @@ AC( ExplicitExpressionDoubleSum )
   CERR( "- sum_j (f(a_i,b_{j+1}) - f(a_i,b_j))の計算量をO(g(N))としてO(g(N)M)が" );
   CERR( "  間に合いそうならば、sum_j f(a_i,b_j)の差分計算による高速化" );
   CERR( "- f(x,y)=sum_k g_k(x) h_k(y)と表示できO(K(N+M))が間に合いそうならば" );
-  CERR( "  変数分離sum_{i,j} f(a_i,b_j)=sum_k(sum_i g_k(a_i))(sum_j h_k(b_j))" );
+  CERR( "  積和の和積化" );
+  CERR( "  sum_{i,j} f(a_i,b_j) = sum_k((sum_i g_k(a_i))(sum_j h_k(b_j)))" );
+  CERR( "- 和の動く範囲やfのパラメータなどに関する動的計画法" );
   CERR( "- #im(f)が小さくf(a_,b_)の各点逆像が計算しやすいならば" );
   CERR( "  fの各点逆像による纏め上げをする分枝限定法" );
   CERR( "  sum_{i,j} f(a_i,b_j)=sum_z #f(a_,b_)^{-1}(z) z" );
@@ -1819,7 +1821,7 @@ AC( Counting )
   CERR( "  - i番目の状態をdp[i+1]への寄与がcである状態の和集合へ細分してdp[i][c]を考える。" );
   CERR( "- dp[i][i] = *_i(dp[i][0,i))かつdp[i][j]=dp[j][j] o dp[i-1][j]を" );
   CERR( "  満たすモノイド演算*と作用oが存在するならば、dp[i][i]を別個に管理して" );
-  CERR( "  NextDPの遷移を区間加算や区間作用が可能なデータ構造で高速化＋メモリ削減。" );
+  CERR( "  NextDPの遷移を区間加算や区間作用が可能なデータ構造でinplace化。" );
   CERR( "- 状態数が多い場合、状態の満たす関係式を特定して状態数の削減。" );
   CERR( "を検討しましょう。" );
   ASK_NUMBER(
@@ -1829,6 +1831,7 @@ AC( Counting )
 	     "行列の数え上げ問題" ,
 	     "グラフの数え上げ問題" ,
 	     "部分集合の数え上げ問題" ,
+	     "写像の数え上げ問題" ,
 	     "戦略／操作方法の数え上げ問題" ,
 	     "経路の数え上げ問題" ,
 	     "タイリング／塗り分けの数え上げ問題" ,
@@ -1848,6 +1851,8 @@ AC( Counting )
     CALL_AC( CountingGraph );
   } else if( num == num_temp++ ){
     CALL_AC( CountingSubset );
+  } else if( num == num_temp++ ){
+    CALL_AC( CountingMap );
   } else if( num == num_temp++ ){
     CALL_AC( CountingStrategy );
   } else if( num == num_temp++ ){
@@ -2389,8 +2394,21 @@ AC( CountingSubset )
     CERR( "- K個の部分集合への排他的分割ならば第2種スターリング数s(N,K)" );
     CERR( "  \\Mathematics\\Combinatorial\\StirlingNumber\\SecondKind" );
     CERR( "  https://ja.wikipedia.org/wiki/スターリング数#組み合わせ数学における意味_2" );
-  CERR( "を検討しましょう。" );
+    CERR( "を検討しましょう。" );
   };
+}
+
+AC( CountingMap )
+{
+  CERR( "第2種スターリング数をs(N,M)と表します。" );
+  CERR( "\\Mathematics\\Combinatorial\\StirlingNumber\\SecondKind" );
+  CERR( "- N元集合からM元集合への全単射はN==M?N!:0" );
+  CERR( "- N元集合からM元集合への単射はN!*binom(M,N)" );
+  CERR( "- N元集合からM元集合への全射はM!*s(N,M)" );
+  CERR( "- N元集合の部分集合からM元集合への全単射はM!*binom(N,M)" );
+  CERR( "- N元集合の部分集合からM元集合への単射はsum_c c!*binom(N,c)*binom(M,c)" );
+  CERR( "- N元集合の部分集合からM元集合への全射はM!*s(N,M)+(M+1)!*s(N,M+1)" );
+  CERR( "を検討しましょう。" );
 }
 
 AC( CountingStrategy )
