@@ -504,6 +504,13 @@ AC( ExplicitExpressionOrderOfElement )
 
 AC( ExplicitExpressionRandomAccess )
 {
+  ASK_YES_NO( "Sが後続を高速に計算可能な部分集合の排他的和集合で表せますか？" );
+  if( reply == "y" ){
+    CERR( "Sがソート済みの多重集合M個の和集合でO((M+i)log M)が間に合いそうならば、" );
+    CERR( "各多重集合の先頭項を集めたpriority_queueからi回pop＋後続挿入" );
+    CERR( "を検討しましょう。" );
+    CERR( "" );
+  }
   CERR( "Sの各要素sごとにs未満のSの項数を高速に解けるか否かで場合分けをします。" );
   CERR( "そのためにSの性質についていくつか確認をします。" );
   ASK_YES_NO( "Sが固定長変数関数の像で与えられますか？" );
@@ -536,7 +543,8 @@ AC( ExplicitExpressionRandomAccess )
 AC( ExplicitExpressionTotalAccess )
 {
   CERR( "- 各iごとにa[i]が高速に求められるならば、a[i]以下のSの要素の全列挙" );
-  CERR( "- Sが多重集合M個の和集合であるならば、各多重集合をソートしてM個のpriority_queueでイベントソート" );
+  CERR( "- Sがソート済みの多重集合M個の和集合でO((M+i)log M)が間に合いそうならば、" );
+  CERR( "  各多重集合の先頭項を集めたpriority_queueからi回pop＋後続挿入" );
 }
 
 AC( ExplicitExpressionProbability )
@@ -1162,26 +1170,11 @@ AC( Knapsack )
   } else if( num == num_temp++ ){
     CALL_AC( KnapsackBoundedIntervalLength );
   } else {
-    ASK_YES_NO( "各項目が複数回選択できますか？" );
+    ASK_YES_NO( "ナップサックは１つですか？" );
     if( reply == "y" ){
-      CALL_AC( KnapsackMultipleChoice );
+      CALL_AC( SingleKnapsack );
     } else {
-      ASK_YES_NO( "何個目に選ぶかによって個々の項目のコストが変動しますか？" );
-      if( reply == "y" ){
-	CALL_AC( KnapsackOrderedUnstable );
-      } else {
-        ASK_YES_NO( "何個目に選ぶかによって選べる項目のコスト上限が変動しますか？" );
-	if( reply == "y" ){
-          AC( KnapsackOrderedStable );
-        } else {
-          ASK_YES_NO( "ナップサックは１つですか？" );
-          if( reply == "y" ){
-            CALL_AC( SingleKnapsack );
-          } else {
-            CALL_AC( MultipleKnapsack );
-          }
-        }
-      }
+      CALL_AC( MultipleKnapsack );
     }
   }
 }
@@ -1243,118 +1236,111 @@ AC( KnapsackBoundedIntervalLength )
   CERR( "で高速化することでiに関する動的計画法を処理しましょう。" );
 }
 
-AC( KnapsackMultipleChoice )
+AC( SingleKnapsack )
 {
-  ASK_YES_NO( "各項目が無制限に選択できますか？" );
+  ASK_YES_NO( "各項目が複数回選択できますか？" );
   if( reply == "y" ){
-    CALL_AC( KnapsackUnboundedChoice );
+    CALL_AC( SingleKnapsackMultipleChoice );
+  } else {
+    CALL_AC( SingleKnapsackSingleChoice );
+  }
+}
+
+AC( SingleKnapsackMultipleChoice )
+{
+  ASK_YES_NO( "各項が無制限に選択できますか？" );
+  if( reply == "y" ){
+    CALL_AC( SingleKnapsackUnboundedChoice );
   } else {
     CERR( "各項の選択回数の上限をHと置きます。" );
     ASK_YES_NO( "負の価値も許容されますか？" );
     if( reply == "y" ){
-      CALL_AC( KnapsackBoundedChoiceNegativeValue );
+      CALL_AC( SingleKnapsackBoundedChoiceNegativeValue );
     } else {
       ASK_YES_NO( "コストがありますか？" );
       if( reply == "y" ){
-	CALL_AC( KnapsackBoundedChoiceUnstable );
+	CALL_AC( SingleKnapsackBoundedChoiceUnstableCost );
       } else {
-	CALL_AC( KnapsackBoundedChoiceCostfree );
+	CALL_AC( SingleKnapsackBoundedChoiceCostfree );
       }
     }
   }
 }
 
-AC( KnapsackUnboundedChoice )
+AC( SingleKnapsackUnboundedChoice )
 {
-  CERR( "S回目の選択以降コストが定数になるとして、" );
-  CERR( "O(N S |C|)が通りそうならば" );
-  CERR( " 「i個目までの項を使ってコストの総和がc以下の時の価値の最大値dp[i][c]」" );
-  CERR( "  を管理するi,cに関する動的計画法" );
-  CERR( "  \\Mathematics\\Combinatorial\\KnapsackProblem\\BoundedChoice\\Unstable" );
-  CERR( "を検討しましょう。" );
-}
-
-AC( KnapsackUnboundedChoiceStable )
-{
+  ASK_YES_NO( "コストがありますか？" );
+  if( reply == "y" ){
+    CERR( "- 各項のコストが不変であるならば、" );
+    CERR( "  - O(N + |C|^2)が通りそうならば、" );
+    CERR( "   「コストcの項の価値の最大値v[c]」" );
+    CERR( "    を前計算し" );
+    CERR( "   「コストの総和がc以下の時の価値の最大値dp[c]」" );
+    CERR( "    を管理するcに関する動的計画法" );
+    CERR( "    \\Mathematics\\Combinatorial\\KnapsackProblem\\UnboundedChoice\\NegativeValue" );
+    CERR( "  - コストが多次元ならば、コストベクトル(W_i)_iと直交する" );
+    CERR( "    整数係数ベクトルを用いて変数決め打ち全探策" );
+    CERR( "    参考：https://yukicoder.me/problems/no/2309/editorial" );
+    CERR( "を検討しましょう。" );
+  } else {
+    CERR( "- O(N + V^2)が通りそうならば、" );
+    CERR( " 「i個目までの項を使って価値の総和がvの時のコストの最小値dp[i][v]」" );
+    CERR( "  を管理するi,vに関する動的計画法" );
+    CERR( "  \\Mathematics\\Combinatorial\\KnapsackProblem\\UnboundedChoice\\Costfree" );
+    CERR( "を検討しましょう。" );
+  }
+  CERR( "" );
   CERR( "コストから選択回数上限を設定することで選択回数上限つきの問題に" );
-  CERR( "帰着されられます。それで解けなければ、" );
-  CERR( "- O(N + V^2)が通りそうでコストがないならば、" );
-  CERR( " 「i個目までの項を使って価値の総和がvの時のコストの最小値dp[i][v]」" );
-  CERR( "  を管理するi,vに関する動的計画法" );
-  CERR( "  \\Mathematics\\Combinatorial\\KnapsackProblem\\UnboundedChoice\\Costfree" );
-  CERR( "- O(N + |C|^2)が通りそうならば、" );
-  CERR( " 「コストcの項の価値の最大値v[c]」" );
-  CERR( "  を前計算し" );
-  CERR( " 「コストの総和がc以下の時の価値の最大値dp[c]」" );
-  CERR( "  を管理するcに関する動的計画法" );
-  CERR( "  \\Mathematics\\Combinatorial\\KnapsackProblem\\UnboundedChoice\\NegativeValue" );
-  CERR( "を検討しましょう。" );
+  CERR( "帰着されることも可能です。" );
+  CERR( "" );
+  if( reply == "y" ){
+    CALL_AC( SingleKnapsackBoundedChoiceUnstableCost );
+  } else {
+    CALL_AC( SingleKnapsackBoundedChoiceCostfree );
+  }
 }
 
-AC( KnapsackBoundedChoiceNegativeValue )
+AC( SingleKnapsackBoundedChoiceNegativeValue )
 {
   CERR( "- O(N min(|C|,H 2^{N/2}) log_2 H)が通りそうならば" );
   CERR( "  重複回数を二進法で分解してまとめ、重複がない場合に帰着させましょう、" );
   CERR( "  \\Mathematics\\Combinatorial\\KnapsackProblem\\Boundedchoice\\NegativeValue" );
-  CALL_AC( SingleKnapsack );
+  CALL_AC( SingleKnapsackSingleChoice );
 }
 
-AC( KnapsackBoundedChoiceUnstable )
+AC( SingleKnapsackBoundedChoiceUnstableCost )
 {
-  CERR( "S回目の選択以降コストが定数になるとして、" );
-  CERR( "O(N S |C|)が通りそうならば" );
+  CERR( "S回目の選択以降コストが定数になるとして、O(N S |C|)が通りそうならば" );
   CERR( " 「i個目までの項を使ってコストの総和がc以下の時の価値の最大値dp[i][c]」" );
   CERR( "  を管理するi,cに関する動的計画法" );
   CERR( "  \\Mathematics\\Combinatorial\\KnapsackProblem\\BoundedChoice\\Unstable" );
   CERR( "を検討しましょう。" );
 }
 
-AC( KnapsackBoundedChoiceCostfree )
+AC( SingleKnapsackBoundedChoiceCostfree )
 {
   CERR( "価値をコストとみなしてコストがある場合に帰着させましょう。" );
   CERR( "\\Mathematics\\Combinatorial\\KnapsackProblem\\BoundedChoice\\Costfree" );
 }
 
-AC( KnapsackOrderedUnstable )
-{
-  CERR( "|C|=∞とし、1 <= m <= M個目の選択におけるコスト上限をD_mとし、" );
-  CERR( "項iのコストが取りうる値をC_{i,1},C_{i,2}の2通りとし、" );
-  CERR( "全体でm回目の選択における項iのコストがiに依存しない数1 <= k_m <= Kを用いて" );
-  CERR( "C_{i,k_m}と表せるとします。つまりC_{i,k_m}<=D_mが項iの選択制約です。" );
-  CERR( "ただしk_1 = 1としても一般性を失いません。" );
-  CERR( "" );
-  CERR( "O((N log_2 N)+M)が間に合いそうならば、(C_{i,k},i)_iの辞書順ソートを" );
-  CERR( "sC(k)と置き、(k_m,D_m,m)_mの辞書順ソートを(k_{m_j},D_{m_j},m_j)_jと置き、" );
-  CERR( "1 <= j <= Mを小さい順に探索し、sC(k_{m_j})を用いて選択可能な項iに対する" );
-  CERR( "{A_i,C_{i,2},i}をsetで管理し、その中で最大の要素を採用し、集合から削除することで" );
-  CERR( "m_j個目の選択を決定しましょう。" );
-  CERR( "\\Mathematics\\Combinatorial\\KnapsackProblem\\Ordered" );
-}
-
-AC( KnapsackOrderedStable )
-{
-  CERR( "1 <= m <= M個目の選択におけるコスト上限をD_mとし、" );
-  CERR( "項iのコストをC_iとします。つまりC_i<=D_mが項iの選択制約です。" );
-  CERR( "" );
-  CERR( "O((N log_2 N)+M)が間に合いそうならば、(C_i,i)_iの辞書順ソートをsC、" );
-  CERR( "(D_m)_mの辞書順ソートを(D_{m_j})_jと置き、" );
-  CERR( "1 <= j <= Mを小さい順に探索し、sCを用いて選択可能な項iに対する{A_i,i}を" );
-  CERR( "setで管理し、その中で最大の要素を採用し、集合から削除することで" );
-  CERR( "m_j個目の選択を決定しましょう。" );
-  CERR( "\\Mathematics\\Combinatorial\\KnapsackProblem\\Ordered" );
-}
-
-AC( SingleKnapsack )
+AC( SingleKnapsackSingleChoice )
 {
   ASK_YES_NO( "コストがありますか？" );
   if( reply == "y" ){
-    CALL_AC( SingleKnapsackWithCost );
+    ASK_YES_NO( "選ぶ順番に意味がありますか？" );
+    if( reply == "y" ){
+      CERR( "各選択をそれぞれ別のナップサックとみなすことで、項を１つだけ格納できる" );
+      CERR( "ナップサックが複数ある場合に帰着されます。" );
+      CALL_AC( MultipleKnapsackSingleItem );
+    } else {
+      CALL_AC( SingleKnapsackUnordered );
+    }
   } else {
     CALL_AC( SingleKnapsackCostfree );
   }
 }
 
-AC( SingleKnapsackWithCost )
+AC( SingleKnapsackUnordered )
 {
   ASK_YES_NO( "コストが１次元ですか？" );
   CERR( "- O(N 2^{N/2})が通りそうならば半分全列挙" );
@@ -1410,13 +1396,58 @@ AC( SingleKnapsackCostfree )
 
 AC( MultipleKnapsack )
 {
-  CERR( "ナップサックの個数をKと置きます。" );
-  CERR( "- O(K(N 2^N + K^N))が通りそうならば、高速ゼータ変換" );
-  CERR( "  \\Mathematics\\Combinatorial\\KnapsackProblem\\Negative\\Subsetwise\\Multiknapsack" );
-  CERR( "- 各ナップサックの容量が非常に小さいならば、コストの大きさで項目を分けて" );
-  CERR( "  コストの大きい順にそれらの選択数を全探策または二分探索" );
-  CERR( "  参考：https://yukicoder.me/problems/no/2617/editorial" );
-  CERR( "を検討しましょう。" );
+  ASK_YES_NO( "各ナップサックに格納できる項は高々１個ですか？" );
+  if( reply == "y" ){
+    CALL_AC( MultipleKnapsackSingleItem );
+  } else {
+    CERR( "ナップサックの個数をKと置きます。" );
+    CERR( "- O(K(N 2^N + K^N))が通りそうならば、高速ゼータ変換" );
+    CERR( "  \\Mathematics\\Combinatorial\\KnapsackProblem\\Negative\\Subsetwise\\Multiknapsack" );
+    CERR( "- 各ナップサックの容量が非常に小さいならば、コストの大きさで項目を分けて" );
+    CERR( "  コストの大きい順にそれらの選択数を全探策または二分探索" );
+    CERR( "  参考：https://yukicoder.me/problems/no/2617/editorial" );
+    CERR( "を検討しましょう。" );
+  }
+}
+
+AC( MultipleKnapsackSingleItem )
+{
+  ASK_YES_NO( "どのナップサックに格納するかによって個々の項のコストが変動しますか？" );
+  if( reply == "y" ){
+    CALL_AC( MultipleKnapsackSingleItemUnstableCost );
+  } else {
+    CALL_AC( MultipleKnapsackSingleItemStableCostUnstableCostBound );
+  }
+}
+
+AC( MultipleKnapsackSingleItemUnstableCost )
+{
+  CERR( "|C|=∞とし、1 <= m <= M個目のナップサックのコスト上限をD_mとし、" );
+  CERR( "項iのコストが取りうる値をC_{i,1},C_{i,2}の2通りとし、" );
+  CERR( "m個目のナップサックに格納する際の項iのコストがiに依存しない数" );
+  CERR( "1 <= k_m <= Kを用いてC_{i,k_m}と表せるとします。つまり" );
+  CERR( "C_{i,k_m}<=D_mが項iの選択制約です。ただしk_1 = 1としても一般性を失いません。" );
+  CERR( "" );
+  CERR( "O((N log_2 N)+M)が間に合いそうならば、(C_{i,k},i)_iの辞書順ソートを" );
+  CERR( "sC(k)と置き、(k_m,D_m,m)_mの辞書順ソートを(k_{m_j},D_{m_j},m_j)_jと置き、" );
+  CERR( "1 <= j <= Mを小さい順に探索し、sC(k_{m_j})を用いて選択可能な項iに対する" );
+  CERR( "{A_i,C_{i,2},i}をsetで管理し、その中で最大の要素を採用し、集合から削除することで" );
+  CERR( "m_j個目の選択を決定しましょう。" );
+  CERR( "\\Mathematics\\Combinatorial\\KnapsackProblem\\Ordered" );
+}
+
+AC( MultipleKnapsackSingleItemStableCostUnstableCostBound )
+{
+  CERR( "1 <= m <= M個目のナップサックのコスト上限をD_mとし、" );
+  CERR( "項iのコストをC_iとします。つまりC_i<=D_mが項iの選択制約です。" );
+  CERR( "" );
+  CERR( "O((N log_2 N)+M)が間に合いそうならば、(C_i,i)_iの辞書順ソートをsC、" );
+  CERR( "(D_m)_mの辞書順ソートを(D_{m_j})_jと置き、" );
+  CERR( "1 <= j <= Mを小さい順に探索し、sCを用いて選択可能な項iに対する{A_i,i}を" );
+  CERR( "setで管理し、その中で最大の要素を採用し、集合から削除することで" );
+  CERR( "m_j個目の選択を決定しましょう。" );
+  CERR( "\\Mathematics\\Combinatorial\\KnapsackProblem\\Ordered" );
+  CERR( "参考：https://yukicoder.me/problems/no/2422/editorial" );
 }
 
 AC( MaximisationArrayFunction )
