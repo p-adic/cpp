@@ -53,7 +53,7 @@ AC( ExplicitExpression )
 	     "序数の計算問題" ,
 	     "確率／期待値の計算問題" ,
 	     "操作回数の計算問題" ,
-	     "反復操作後の状態計算問題" ,
+	     "時系列変化後の状態計算問題" ,
 	     "始／終切片和や畳み込みの計算問題" ,
 	     "面積の計算問題" ,
 	     "極限の計算問題" ,
@@ -78,7 +78,7 @@ AC( ExplicitExpression )
   } else if( num == num_temp++ ){
     CALL_AC( ExplicitExpressionCountingOperation );
   } else if( num == num_temp++ ){
-    CALL_AC( ExplicitExpressionExecutingOperation );
+    CALL_AC( ExplicitExpressionTimeSeriesChange );
   } else if( num == num_temp++ ){
     CALL_AC( ExplicitExpressionConvolution );
   } else if( num == num_temp++ ){
@@ -606,20 +606,32 @@ AC( ReducingOperation )
   CERR( "- 操作で隣接成分との大小が変わるならば、その大小関係を管理する01列に注目" );
 }
 
-AC( ExplicitExpressionExecutingOperation )
+AC( ExplicitExpressionTimeSeriesChange )
 {
-  CERR( "配列Aに操作をk回反復した時のi番目の成分をA_{k,i}と置きます。" );
-  CERR( "- Aに１つの関数fを合成する操作ならば、fのダブリングか周期計算" );
-  CERR( "  Mathematics\\Funciton\\Iteration\\Doubling" );
-  CERR( "  Mathematics\\Funciton\\Iteration\\LoopDeection" );
-  CERR( "- 配列から配列への関数をAに施す操作ならば、kが小さい時の結果から" );
-  CERR( "  一般のA_{k,i}を表すiとkの明示式の予測" );
-  CERR( "  - A_kとA_{k+1}で変化のある成分が限られるならば、変化する条件の決定" );
-  CERR( "  - 条件A_{k,i} <= aが翻訳できればそれを満たすaの最小値計算" );
-  CERR( "  - 添字集合に何らかの有向森構造（葉から根に向う）があり根以外は" );
-  CERR( "    その有向辺に沿った成分の移動で与えられる場合、LCA計算" );
-  CERR( "    Mathematics\\Geometry\\Graph\\Algorithm\\DepthFirstSearch\\Tree" );
-  CERR( "を検討しましょう。" );
+  ASK_NUMBER(
+             "反復操作を行う問題" ,
+             "弾性衝突を行う問題" ,
+             "一般の時系列更新クエリを行う問題"
+             );
+  if( num == num_temp++ ){
+    CERR( "配列Aに操作をk回反復した時のi番目の成分をA_{k,i}と置きます。" );
+    CERR( "- Aに１つの関数fを合成する操作ならば、fのダブリングか周期計算" );
+    CERR( "  Mathematics\\Funciton\\Iteration\\Doubling" );
+    CERR( "  Mathematics\\Funciton\\Iteration\\LoopDeection" );
+    CERR( "- 配列から配列への関数をAに施す操作ならば、kが小さい時の結果から" );
+    CERR( "  一般のA_{k,i}を表すiとkの明示式の予測" );
+    CERR( "  - A_kとA_{k+1}で変化のある成分が限られるならば、変化する条件の決定" );
+    CERR( "  - 条件A_{k,i} <= aが翻訳できればそれを満たすaの最小値計算" );
+    CERR( "  - 添字集合に何らかの有向森構造（葉から根に向う）があり根以外は" );
+    CERR( "    その有向辺に沿った成分の移動で与えられる場合、LCA計算" );
+    CERR( "    Mathematics\\Geometry\\Graph\\Algorithm\\DepthFirstSearch\\Tree" );
+    CERR( "を検討しましょう。" );
+  } else if( num == num_temp++ ){
+    CERR( "弾性衝突を通過に翻訳し、全体の分布を求めましょう。位置関係は" );
+    CERR( "弾性衝突で変化しないので、全体の分布を順に見ることで各値が分かります。" );
+  } else if( num == num_temp++ ){
+    CALL_AC( QueryTimeSeriesChange );
+  }
 }
 
 AC( ExplicitExpressionConvolution )
@@ -2423,6 +2435,8 @@ AC( CountingSubset )
     CERR( "- bit演算についての条件が課された[0,2^N)の部分集合や" );
     CERR( "  集合演算についての条件が課された[0,N)の部分集合の族は、" );
     CERR( "  bit／要素ごとに分けて考察" );
+    CERR( "- 各区間との共通部分の要素数の分布についての条件が課された[0,N)の" );
+    CERR( "  部分集合は各始切片との共通部分の要素数の分布の条件に翻訳" );
     CERR( "を検討しましょう。" );
   } else {
     CERR( "- 任意有限個の部分集合への排他的分割ならばベル数B(N)" );
@@ -2676,7 +2690,7 @@ AC( Query )
 	     "文字列の範囲更新／比較クエリ問題" ,
 	     "集合の範囲更新／比較クエリ問題" ,
 	     "2変数関数の計算クエリ問題" ,
-	     "時系列データのクエリ問題"
+	     "時系列変化のクエリ問題"
 	     );
   if( num == num_temp++ ){
     CALL_AC( QueryArray );
@@ -2693,7 +2707,7 @@ AC( Query )
   } else if( num == num_temp++ ){
     CALL_AC( QueryTwoAryFunction );
   } else if( num == num_temp++ ){
-    CALL_AC( QueryTime );
+    CALL_AC( QueryTimeSeriesChange );
   }
 }
 
@@ -2926,7 +2940,7 @@ AC( QueryArrayMaxConstant )
              "一時的な区間max更新を行う。" ,
              );
   if( num == num_temp++ ){
-    CALL_AC( QueryTimeMax );
+    CALL_AC( QueryTimeSeriesChangeMax );
   } else {
     CERR( "クエリ処理を行う配列をAと置きます。区間[L,R]を[0,R]-[0,L-1]に翻訳し、" );
     CERR( "始切片に帰着させます。始切片[0,R]がR昇順になるようクエリソートし、" );
@@ -3072,20 +3086,20 @@ AC( QueryTwoAryFunction )
   CERR( "を検討しましょう。" );
 }
 
-AC( QueryTime )
+AC( QueryTimeSeriesChange )
 {
   ASK_NUMBER(
 	     "maxによる時系列更新" ,
 	     "加算による時系列更新"
 	     );
   if( num == num_temp++ ){
-    CALL_AC( QueryTimeMax );
+    CALL_AC( QueryTimeSeriesChangeMax );
   } else {
-    CALL_AC( QueryTimeAddition );
+    CALL_AC( QueryTimeSeriesChangeAddition );
   }
 }
 
-AC( QueryTimeMax )
+AC( QueryTimeSeriesChangeMax )
 {
   ASK_NUMBER(
 	     "全体max更新／区間和取得" ,
@@ -3106,7 +3120,7 @@ AC( QueryTimeMax )
   }
 }
 
-AC( QueryTimeAddition )
+AC( QueryTimeSeriesChangeAddition )
 {
   CERR( "各成分を時刻の関数とみなし、それぞれのグラフを考えます。" );
   CERR( "- グラフが合計O(N)個の単純なパーツに分かれるならば、" );
