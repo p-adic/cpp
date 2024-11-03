@@ -647,7 +647,6 @@ void InputExponentialAnalysis1_enough( const int& sample_repetition_num , const 
 
 void InputExponentialAnalysis2_few( const int& sample_repetition_num , const vector<vector<ll>>& input , const vector<DynamicMod>& output , const int& scale , const int& P , const string& P_str )
 {
-  CERR( "サンプル出力の法" + P_str + "における指数関数の一次結合による補間を試みます。" );
   CEXPR( int , size , 3 );
   CEXPR( int , var , 2 );
   CEXPR( int , length , var * ( var - 1 ) * size + 1 ); // 7
@@ -709,7 +708,6 @@ void InputExponentialAnalysis2_few( const int& sample_repetition_num , const vec
 
 void InputExponentialAnalysis2_enough( const int& sample_repetition_num , const vector<vector<ll>>& input , const vector<DynamicMod>& output , const int& scale , const int& P , const string& P_str )
 {
-  CERR( "サンプル出力の法" + P_str + "における指数関数の一次結合による補間を試みます。" );
   CEXPR( int , size , 3 );
   CEXPR( int , var , 2 );
   CEXPR( int , length , var * ( var - 1 ) * size + 1 ); // 7
