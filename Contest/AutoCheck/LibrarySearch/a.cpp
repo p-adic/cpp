@@ -3108,15 +3108,18 @@ AC( QueryTimeMax )
 
 AC( QueryTimeAddition )
 {
-  CERR( "各成分を時刻の関数とみなした時、グラフがO(N)個の単純なパーツに分かれるとします。" );
-  CERR( "各パーツでの変化量の累積値を" );
-  CERR( "- 階差数列や累積和やBIT" );
-  CERR( "  \\Mathematics\\SetTheory\\DirectProduct\\AfineSpace\\DifferenceSeqeuence" );
-  CERR( "  \\Mathematics\\SetTheory\\DirectProduct\\AfineSpace\\CumulativeProd" );
-  CERR( "  \\Mathematics\\SetTheory\\DirectProduct\\AffineSpace\\BIT" );
-  CERR( "- イベントソート" );
+  CERR( "各成分を時刻の関数とみなし、それぞれのグラフを考えます。" );
+  CERR( "- グラフが合計O(N)個の単純なパーツに分かれるならば、" );
+  CERR( "  - 各パーツでの変化量の累積値を階差数列や累積和やBITで計算" );
+  CERR( "    \\Mathematics\\SetTheory\\DirectProduct\\AfineSpace\\DifferenceSeqeuence" );
+  CERR( "    \\Mathematics\\SetTheory\\DirectProduct\\AfineSpace\\CumulativeProd" );
+  CERR( "    \\Mathematics\\SetTheory\\DirectProduct\\AffineSpace\\BIT" );
+  CERR( "  - 各パーツでの変化量の累積値をイベントソートで計算" );
   CERR( "  \\Mathematics\\SetTheory\\DirectProduct\\AffineSpace\\BIT\\TimeSeriesAdd" );
-  CERR( "で計算しましょう。" );
+  CERR( "- グラフが合計O(Q)個の曲線と傾き0の部分に分かれ曲線の両端s,tでの値の差が" );
+  CERR( "  成分に依存しない関数fを用いてf(t)-f(s)で表せるならば、fの前計算" );
+  CERR( "  参考：https://yukicoder.me/problems/no/2462/editorial" );
+  CERR( "を検討しましょう。" );
 }
 
 AC( Game )
