@@ -56,7 +56,8 @@ AC( ExplicitExpression )
 	     "反復操作後の状態計算問題" ,
 	     "始／終切片和や畳み込みの計算問題" ,
 	     "面積の計算問題" ,
-	     "極限の計算問題"
+	     "極限の計算問題" ,
+             "その他の数論的関数の計算問題"
 	     );
   if( num == num_temp++ ){
     CALL_AC( ExplicitExpressionArraySum );
@@ -84,6 +85,8 @@ AC( ExplicitExpression )
     CALL_AC( ExplicitExpressionArea );
   } else if( num == num_temp++ ){
     CALL_AC( ExplicitExpressionLimit );
+  } else if( num == num_temp++ ){
+    CALL_AC( ExplicitExpressionArithmetic );
   }
 }
 
@@ -702,6 +705,12 @@ AC( ExplicitExpressionLimit )
   CERR( "  Q(n)を満たさないもののみを集めた母集団S'(n)の要素が条件P(n)を満たす" );
   CERR( "  確率p'(n)の極限と一致" );
   CERR( "を検討しましょう。" );
+}
+
+AC( ExplicitExpressionArithmetic )
+{
+  CERR( "最大公約数と最小公倍数はユークリッドの互除法以外にも" );
+  CERR( "素因数分解で計算できることに注意しましょう。" );
 }
 
 AC( Maximisation )

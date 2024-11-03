@@ -32,6 +32,7 @@ AC( ExplicitExpressionExecutingOperation );
 AC( ExplicitExpressionConvolution );
 AC( ExplicitExpressionArea );
 AC( ExplicitExpressionLimit );
+AC( ExplicitExpressionArithmetic );
 AC( Maximisation );
 AC( MinimisationMovingCost );
 AC( MinimisationSolvingMaze );
