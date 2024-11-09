@@ -29,7 +29,11 @@ const bool& IsWinningState( Edge& edge , const T& t , const bool& reset )
 
   for( auto&& u : edge( t ) ){
 
-    b |= !IsWinningState( edge , u );
+    if( ( b |= !IsWinningState( edge , u ) ) ){
+
+      break;
+
+    }
 
   }
 
@@ -57,7 +61,7 @@ const int& GrundyNumber( AEdge& aedge , const T& t , const bool& reset )
   }
 
   auto&& next = aedge( t );
-  MexSet mex{ int( next.size() ) };
+  MexSet S{ int( next.size() ) };
 
   for( auto&& a : next ){
 
@@ -69,11 +73,11 @@ const int& GrundyNumber( AEdge& aedge , const T& t , const bool& reset )
 
     }
 
-    mex.insert( temp );
+    S.insert( temp );
     
   }
 
-  return g[t] = mex.Get();
+  return g[t] = S.mex();
 
 }
 

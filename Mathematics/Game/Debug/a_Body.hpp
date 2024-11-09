@@ -78,7 +78,7 @@ const int& GrundyNumber( AEdge& aedge , const T& t , const bool& reset )
   }
 
   auto&& next = aedge( t );
-  MexSet mex{ int( next.size() ) };
+  MexSet S{ int( next.size() ) };
 
   for( auto&& a : next ){
 
@@ -90,12 +90,12 @@ const int& GrundyNumber( AEdge& aedge , const T& t , const bool& reset )
 
     }
 
-    mex.insert( temp );
+    S.insert( temp );
     
   }
 
-  cerr << "GrundyNumber: " << t << " -> " << mex.Get() << endl;
-  return g[t] = mex.Get();
+  cerr << "GrundyNumber: " << t << " -> " << S.mex() << endl;
+  return g[t] = S.mex();
 
 }
 
