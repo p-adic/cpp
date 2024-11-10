@@ -1106,53 +1106,14 @@ AC( MaximisationMovingDistanceSingleStart )
 AC( MaximisationFunctionOnArray )
 {
   ASK_NUMBER(
-	     "問題文または入力で与えられる１つの配列に関する問題" ,
+	     "問題文または入力で与えられる１個の配列Aに関する問題" ,
+	     "問題文または入力で与えられる複数の配列A_0,A_1,...に関する問題" ,
 	     "条件を満たす任意の配列に関する問題"
 	     );
   if( num == num_temp++ ){
-    CERR( "ソートしても答えが変わらないならば適宜ソートしましょう。" );
-    ASK_NUMBER(
-	       "成分を受け取る関数の部分和の最大化問題" ,
-	       "成分を受け取る関数の部分和と別の関数の補部分和の和の最大化問題" ,
-	       "成分を受け取る関数の部分和と補部分和の差の最小化問題" ,
-	       "成分を受け取る関数の非空部分和と補集合の非空部分和の差の最小化問題" ,
-	       "0/1倍以外の配列の変更と配列を受け取る関数の合成の最大／最小化問題"
-	       );
-    if( num == num_temp++ ){
-      CALL_AC( Knapsack );
-    } else if( num == num_temp++ ){
-      CERR( "関数をfとgとした時、" );
-      CERR( "- fとgに代入する項数に制限がないならば、max(f(i),g(i))の総和" );
-      CERR( "- fに代入する項数がKで固定ならば、f(i)-g(i)を大きい順にK個" );
-      CERR( "  足したものとgの総和の和" );
-      CERR( "が求める最大値です" );
-    } else if( num == num_temp++ ){
-      CERR( "部分和と総和の半分の差の最小化を行いましょう。" );
-      CERR( "これは小さい方を考えることで上限付き部分和の最大化問題となります。" );
-      CALL_AC( Knapsack );
-    } else if( num == num_temp++ ){
-      CERR( "非空部分集合とその補集合の非空部分集合をそれぞれA,Bと置き、" );
-      CERR( "定数Cによる|#A - #B|<=Cという制約以外には制約がないとします。" );
-      CERR( "" );
-      CERR( "定義からAとBは交わりが空ですが、部分和の差を考える上では交わりを" );
-      CERR( "持たせても答えは変わらないため、結局|#A - #B| <= Cを守りつつ" );
-      CERR( "要素数が[floor(N/2),floor(N/2)+C]に属す相異なる非空部分集合" );
-      CERR( "の組全体に(A,B)を渡らせて部分和の差の最小化を" );
-      CERR( "する問題に帰着されます" );
-      CERR( "" );
-      CERR( "和を取る値の幅をv_maxと置き、集合の要素数をNと置くと、" );
-      CERR( "部分和の候補は高々v_max N通り、要素数floor(N/2)の部分集合の候補は" );
-      CERR( "約2^N/√N通りで、log_2(v_max N)の定数倍 < Nならば鳩の巣原理より" );
-      CERR( "答えは0です。" );
-      CERR( "" );
-      CERR( "以下N <= log_2(v_max N)の定数倍とします。" );
-      CERR( "排他的なA,Bを半分列挙することで答えをO(CN 3^{N/2})で求められ、" );
-      CERR( "結局O(N + C v_max^{(log_2 3)/2} log_2 v_max)で解く" );
-      CERR( "ことが可能です。" );
-      CERR( "  \\Mathematics\\Combinatorial\\Knapsack\\Costfree\\Difference" );
-    } else if( num == num_temp++ ){
-      CALL_AC( MaximisationArrayFunction );
-    }
+    CALL_AC( MaximisationFunctionOnOneArray );
+  } else if( num == num_temp++ ){
+    CALL_AC( MaximisationFunctionOnMultipleArray );
   } else if( num == num_temp++ ){
     CERR( "関数をfと置き、条件Pを満たす配列aをわたる値f(a)の最大値を考えます。" );
     CERR( "最小値は-fを考えることで最大値に帰着されます。" );
@@ -1165,6 +1126,89 @@ AC( MaximisationFunctionOnArray )
     CERR( "  ならば、yを動かしてF(y)の最大化をする分枝限定法" );
     CERR( "を検討しましょう。" );
   }
+}
+
+AC( MaximisationFunctionOnOneArray )
+{
+  CERR( "ソートしても答えが変わらないならば適宜ソートしましょう。" );
+  CERR( "成分を受け取る関数fを１つだけ考える際は予めAの各成分にfを" );
+  CERR( "適用した配列f circ AでAを置き換えて考えます。" );
+  ASK_NUMBER(
+             "Aの部分和の最大化問題" ,
+             "f circ Aの部分和とg circ Aの補部分和の和の最大化問題" ,
+             "Aの部分和と補部分和の差の最小化問題" ,
+             "Aの非空部分和と補集合の非空部分和の差の最小化問題" ,
+             "配列の変更後に配列を受け取る関数に代入した値の最大／最小化問題"
+             );
+  if( num == num_temp++ ){
+    CALL_AC( Knapsack );
+  } else if( num == num_temp++ ){
+    CERR( "f circ AをA_0、g circ AをA_1と置きます。" );
+    CALL_AC( MaximisationFunctionOnTwoArray );
+  } else if( num == num_temp++ ){
+    CERR( "「Aの部分和」と「Aの総和の半分」の差の最小化を行いましょう。これは" );
+    CERR( "２つの値のうち小さい方を考えることで上限付き部分和の最大化問題となります。" );
+    CALL_AC( Knapsack );
+  } else if( num == num_temp++ ){
+    CERR( "非空部分集合とその補集合の非空部分集合をそれぞれS,Tと置き、" );
+    CERR( "定数Cによる|#S - #T|<=Cという制約以外には制約がないとします。" );
+    CERR( "" );
+    CERR( "定義からSとTは交わりが空ですが、部分和の差を考える上では交わりを" );
+    CERR( "持たせても答えは変わらないため、結局|#S - #T| <= Cを守りつつ" );
+    CERR( "要素数が[floor(N/2),floor(N/2)+C]に属す相異なる非空部分集合" );
+    CERR( "の組全体に(S,T)を渡らせてAの部分和の差の最小化を" );
+    CERR( "する問題に帰着されます" );
+    CERR( "" );
+    CERR( "和を取る値の幅をv_maxと置き、集合の要素数をNと置くと、" );
+    CERR( "部分和の候補は高々v_max N通り、要素数floor(N/2)の部分集合の候補は" );
+    CERR( "約2^N/√N通りで、log_2(v_max N)の定数倍 < Nならば鳩の巣原理より" );
+    CERR( "答えは0です。" );
+    CERR( "" );
+    CERR( "以下N <= log_2(v_max N)の定数倍とします。" );
+    CERR( "排他的なS,Tを半分列挙することで答えをO(CN 3^{N/2})で求められ、" );
+    CERR( "結局O(N + C v_max^{(log_2 3)/2} log_2 v_max)で解く" );
+    CERR( "ことが可能です。" );
+    CERR( "  \\Mathematics\\Combinatorial\\Knapsack\\Costfree\\Difference" );
+  } else if( num == num_temp++ ){
+    CALL_AC( MaximisationArrayFunction );
+  }
+}
+
+AC( MaximisationFunctionOnMultipleArray )
+{
+  ASK_NUMBER(
+             "A_0の部分和とA_1の補部分和の最大／最小化問題" ,
+             "A_iの部分和と関数f_iの積のiをわたる総和の最大／最小化問題" ,
+             "その他の問題"
+             );
+  if( num == num_temp++ ){
+    CALL_AC( MaximisationFunctionOnTwoArray );
+  } else if( num == num_temp++ ){
+    CERR( "与えられる配列の個数をM個とし、積順序に関して順序保存である関数" );
+    CERR( "f_0,f_1,...:N^{M-1}->Nが与えられ、" );
+    CERR( "  (sum_{i in S_0} A_0[i]) f_0(#S_1,#S_2...)" );
+    CERR( "+ (sum_{i in S_1} A_1[i]) f_1(#S_0,#S_2,...)" );
+    CERR( "+ ..." );
+    CERR( "を最大化する部分集合の列(S_0,S_1,...)を考えます。" );
+    CERR( "最小化の場合は-fを考えます。" );
+    CERR( "" );
+    CERR( "A_0,A_1,...はそれぞれ昇順にソートしても良く、S_0,S_1,...は" );
+    CERR( "終切片に限っても一般性を失いません。S_0,S_1,...,S_{M-2}を" );
+    CERR( "決め打ち全探策しS_{M-1}の最適解を二分探索で求めましょう。" );
+  } else if( num == num_temp++ ){
+    CERR( "A_0,A_1,...を結合して１つの配列とみなします。" );
+    CALL_AC( MaximisationFunctionOnOneArray );
+  }
+}
+
+AC( MaximisationFunctionOnTwoArray )
+{
+  CERR( "(sum_{i in S} A_0[i])+(sum_{i in S^c} A_1[i])を最大化する" );
+  CERR( "部分集合Sを求めます。最小化はA_0,A_1を-1倍すれば良いです。" );
+  CERR( "- Sの要素数に制限がないならば、sum_i max(A_0[i],A_1[i])" );
+  CERR( "- Sの要素数がKで固定ならば、A_0[i]-A_1[i]を大きい順にK個" );
+  CERR( "  足したものとA_1の総和の和" );
+  CERR( "が求める最大値です" );
 }
 
 AC( Knapsack )
@@ -2706,27 +2750,40 @@ AC( SolvingBinaryEquations )
 AC( Query )
 {
   ASK_NUMBER(
-	     "配列の範囲更新／取得クエリ問題" ,
-	     "木の範囲更新／取得クエリ問題" ,
-	     "グリッドの範囲更新／取得クエリ問題" ,
-	     "一般のグラフの範囲更新／取得クエリ問題" ,
-	     "文字列の範囲更新／比較クエリ問題" ,
-	     "集合の範囲更新／比較クエリ問題" ,
+	     "範囲更新／取得クエリ問題" ,
+	     "範囲更新／比較クエリ問題" ,
+	     "範囲更新／数え上げクエリ問題" ,
 	     "2変数関数の計算クエリ問題" ,
 	     "時系列変化のクエリ問題"
 	     );
   if( num == num_temp++ ){
-    CALL_AC( QueryArray );
+    ASK_NUMBER(
+               "配列クエリ" ,
+               "木クエリ" ,
+               "グリッドクエリ" ,
+               "一般のグラフクエリ"
+               );
+    if( num == num_temp++ ){
+      CALL_AC( QueryArray );
+    } else if( num == num_temp++ ){
+      CALL_AC( QueryTree );
+    } else if( num == num_temp++ ){
+      CALL_AC( QueryGrid );
+    } else if( num == num_temp++ ){
+      CALL_AC( QueryGraph );
+    }
   } else if( num == num_temp++ ){
-    CALL_AC( QueryTree );
+    ASK_NUMBER(
+               "文字列クエリ" ,
+               "集合クエリ"
+               );
+    if( num == num_temp++ ){
+      CALL_AC( QueryString );
+    } else if( num == num_temp++ ){
+      CALL_AC( QuerySet );
+    }
   } else if( num == num_temp++ ){
-    CALL_AC( QueryGrid );
-  } else if( num == num_temp++ ){
-    CALL_AC( QueryGraph );
-  } else if( num == num_temp++ ){
-    CALL_AC( QueryString );
-  } else if( num == num_temp++ ){
-    CALL_AC( QuerySet );
+    CALL_AC( QueryCounting );
   } else if( num == num_temp++ ){
     CALL_AC( QueryTwoAryFunction );
   } else if( num == num_temp++ ){
@@ -3100,6 +3157,20 @@ AC( QuerySet )
   CERR( "ともに加算更新に対応するデータ構造との併用を検討しましょう。" );
 }
 
+AC( QueryCounting )
+{
+  CERR( "Lを正整数とし、配列Aの区間[l,r]の長さLの部分列Bであって条件Pを満たすもの" );
+  CERR( "の数え上げを考えます。" );
+  CERR( "- まずBを２つの区間に分割した時の条件にPを翻訳することでPから新たな条件を" );
+  CERR( "  得ることを再帰的に繰り返します。" );
+  CERR( "- 次にこうして得られた各条件ごとに、" );
+  CERR( "  「dp[i] = 第i成分のみからなる区間に対する数え上げ問題に対する答え」" );
+  CERR( "  を考えます。" );
+  CERR( "- 最後に、条件の再帰的翻訳を遡って区間のマージに対応する演算を定義し、" );
+  CERR( "  データ構造に格納します。" );
+  CALL_AC( QueryArray );
+}
+  
 AC( QueryTwoAryFunction )
 {
   CERR( "- 可換群に値を持つ配列の範囲取得は累積積" );
