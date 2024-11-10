@@ -2668,13 +2668,30 @@ AC( CountingTilingPaintable )
 
 AC( CountingYoundDiagram )
 {
-  CERR( "標準ヤングタブローの個数はフック長公式で計算できます。" );
-  CERR( "\\Mathematics\\Combinatorial\\YoungDiagram\\a.hpp" );
-  CERR( "- 2×Nの標準ヤングタブロー（行／列ともに狭義単調増加になるような番号づけ）" );
-  CERR( "  の個数=第Nカタラン数C(N)=(2N)!/((N+1)!N!)" );
-  CERR( "- RS対応（型の等しいヤングタブローと順列の対応）" );
+  CERR( "標準ヤングタブロー（行／列ともに狭義単調増加になるような全単射）と" );
+  CERR( "値の上限つき半標準ヤングタブロー（行に広義単調増加を許したもの）" );
+  CERR( "の個数はそれぞれフック長公式とフックcontent公式で計算できます。" );
+  CERR( "\\Mathematics\\Combinatorial\\YoungDiagram" );
+  CERR( "https://ncatlab.org/nlab/show/semistandard+Young+tableau#HookContentFormula" );
+  CERR( "- 標準ヤングタブローと行番号の列の対応" );
+  CERR( "  - 特に2×Nの標準ヤングタブローは対角線を跨がないN×Nの経路に対応し、" );
+  CERR( "  - その個数は第Nカタラン数C(N)=(2N)!/((N+1)!N!)で与えられる。" );
+  CERR( "- 像が始切片である半標準ヤングタブローと(行番号,重み=連続度)の列の対応" );
+  CERR( "  - 特に像が始切片2×Nの半標準ヤングタブローは対角線を跨がないN×Nの" );
+  CERR( "    歩幅正整数の経路に対応する。" );
+  CERR( "- N行の半標準ヤングタブローは無限の広さのグリッド内の非交叉なパスN本の組" );
+  CERR( "  に対応し、その個数はLindstrom-Gessel-Viennotの補題で与えられる。" );
+  CERR( "  https://en.wikipedia.org/wiki/Lindstr%C3%B6m%E2%80%93Gessel%E2%80%93Viennot_lemma#Statement" );
+  CERR( "- 半標準ヤングタブローと三角形状のGelfand-Tsetlin pattern" );
+  CERR( "  （二方向に広義単調増大な列）との対応" );
+  CERR( "  https://www.symmetricfunctions.com/gtpatterns.htm#gtpatternsAsSSYT" );
+  CERR( "- skew半標準ヤングタブローと三角形状のGelfand-Tsetlin pattern" );
+  CERR( "  （二方向に広義単調増大な列）との対応" );
+  CERR( "  https://www.symmetricfunctions.com/gtpatterns.htm#gtpatternsAsSSYT" );
+  CERR( "- 型の等しい標準ヤングタブローの組と順列のRS対応" );
   CERR( "  https://en.wikipedia.org/wiki/Robinson%E2%80%93Schensted_correspondence" );
-  CERR( "- 半標準ヤングタブローと非交叉なパスの組との対応" );
+  CERR( "- 型の等しい半標準ヤングタブローの組と非負整数係数行列のRSK対応" );
+  CERR( "  https://en.wikipedia.org/wiki/Robinson%E2%80%93Schensted%E2%80%93Knuth_correspondence" );
   CERR( "を検討しましょう。" );
 }
 
