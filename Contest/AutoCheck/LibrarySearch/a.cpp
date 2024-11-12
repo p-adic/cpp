@@ -601,7 +601,7 @@ AC( ReducingOperation )
 {
   CERR( "操作対象を何らかの不変量で分類し、操作を不変量間の遷移とみなすことで" );
   CERR( "なるべく簡単な問題に帰着させましょう。" );
-  CERR( "- 操作で階差数列の特定の成分のみが減るならば、それらの総和に注目" );
+  CERR( "- 操作で階差数列の総和が0で不変ならば、l^1ノルムに注目" );
   CERR( "- 操作で累積和の最大値と最小値の差が減るならば、その差に注目" );
   CERR( "- 操作で隣接成分との大小が変わるならば、その大小関係を管理する01列に注目" );
 }
@@ -822,7 +822,7 @@ AC( MinimisationMovingCost )
     CERR( "により１始点多終点コスト最小コスト化（迷路）問題に帰着されます。" );
     CALL_AC( MinimisationSolvingMaze );
   } else if( num == num_temp++ ){
-    CALL_AC( MinimisationSolvingOpenCovering );
+    CALL_AC( MinimisationCoveringSize );
   } else if( num == num_temp++ ){
     CERR( "各終点tjをゴールとして良い人数の上限をNjと置いて" );
     CERR( "- 各辺の容量を∞に設定" );
@@ -898,7 +898,7 @@ AC( MinimisationSolvingMazeBoundedChoice )
       CERR( "その後、その結果をMinTropicalSemirng上の|V|次正方行列に格納し、" );
       CERR( "0乗からC乗までの総minをO(V^3 C)で計算することで" );
       CERR( "合計使用回数制限のない問題に帰着できます。" );
-      CALL_AC( MinimisationSolvingOpenCovering );
+      CALL_AC( MinimisationCoveringSize );
     }
   }
 }
@@ -1026,38 +1026,6 @@ AC( MinimisationSolvingMazeUnboundedChoiceManyEdges )
   CERR( "よりシンプルな（例えば貪欲法が適用可能な）零化問題への帰着を試みましょう。" );
   CERR( "例えば経路を摂動する方法であってコストが大きくならないものを特定し、" );
   CERR( "摂動可能でない経路のみに絞ることでEを減らしましょう。" );
-}
-
-AC( MinimisationSolvingOpenCovering )
-{
-  ASK_YES_NO( "始点（被覆中心）が定まっているか、またはEが小さいですか？" );
-  if( reply == "y" ){
-    CERR( "- コストがなくO(V+E)が通りそうならば、多点幅優先探索か" );
-    CERR( "  頂点を１つ追加し各始点に辺を張ったグラフ上での幅優先探索" );
-    CERR( "  \\Mathematics\\Geometry\\Graph\\Algorithm\\BreadthFirstSearch" );
-    CERR( "- コストが0か1でO(V+E)が通りそうならば、多点01幅優先探索" );
-    CERR( "  頂点を１つ追加し各始点に辺を張ったグラフ上での01幅優先探索" );
-    CERR( "  \\Mathematics\\Geometry\\Graph\\Algorithm\\BreadthFirstSearch\\ZeroOne" );
-    CERR( "- max演算を考えておりO(E(log_2 E + α(V)))が通りそうならば、" );
-    CERR( "  重みで辺をソートして素集合データ構造" );
-    CERR( "  \\Mathematics\\Geometry\\Graph\\Algorithm\\UnionFindForest" );
-    CERR( "- O((V+E)log_2 E)が通りそうならば、" );
-    CERR( "  頂点を１つ追加し各始点に辺を張ったグラフ上でのダイクストラ法" );
-    CERR( "  \\Mathematics\\Geometry\\Graph\\Algorithm\\Dijkstra" );
-    CERR( "- O(V^3)が通りそうならば、" );
-    CERR( "  ワーシャルフロイド法" );
-    CERR( "  \\Mathematics\\Geometry\\Graph\\Algorithm\\FloydWarshall" );
-    CERR( "を検討しましょう。" );
-  } else {
-    CALL_AC( MinimisationSolvingOpenCoveringUnknownCentres );
-  }
-}
-
-AC( MinimisationSolvingOpenCoveringUnknownCentres )
-{
-  CERR( "被覆半径Lを二分探索しましょう。例えば始点（被覆中心または被覆端点）の" );
-  CERR( "候補を絞った上で始点を１つ固定してその始点から距離L以内の点を削除し、" );
-  CERR( "残りの点群に対して再帰的に問題を解くことを検討しましょう。" );
 }
 
 AC( MaximisationMovingDistance )
@@ -1595,8 +1563,7 @@ AC( MaximisationFunctionOnAffineSpace )
     CERR( "- 最大化問題の場合、絶対値を外す符号パターンの全探策" );
     CERR( "を検討しましょう。" );
   } else if( num == num_temp++ ){
-    CERR( "マンハッタン距離（l^1）は一次変換でl^∞に帰着させた上で、" );
-    CALL_AC( MinimisationSolvingOpenCoveringUnknownCentres );
+    CALL_AC( MinimisationCoveringSize );
   }
   CERR( "" );
   CERR( "複数のパラメータを決定すべき場合は、サブゴールの式の値を決め打ちましょう。" );
@@ -1751,6 +1718,7 @@ AC( MaximisationProbability )
 
 AC( MinimisationOperationCost )
 {
+  CALL_AC( ReducingOperation );
   CERR( "最適な操作の候補がある時は、その候補を特徴付ける関係式を求め、" );
   CERR( "任意の操作からコストを増加させずにその関係式を満たすように変形できるか" );
   CERR( "否かを確認しましょう。確認できればその候補のみ考えれば良く、" );
@@ -1801,15 +1769,62 @@ AC( MaximisationCountingOperation )
 
 AC( MinimisationCoveringSize )
 {
-  CERR( "サイズを決め打った二分探索で被覆可能性判定をしましょう。" );
-  ASK_YES_NO( "被覆中心は固定ですか？" );
-  if( reply == "y" ){
-    CERR( "被覆可能性を描画図形の一致判定に翻訳しましょう。" );
-    CALL_AC( DecisionImageCoincidence );
+  CERR( "頂点数をV、辺の本数をE、被覆枚数をKと置きます。" );
+  ASK_NUMBER(
+             "K個の被覆中心からの距離の最小値Lの最小化問題" ,
+             "長さL以下の辺を残す部分グラフの連結成分がK個以下となるLの最大化問題"
+             );
+  if( num == num_temp++ ){
+    CERR( "Lを決め打って被覆可能性を判定する二分探索を検討しましょう。" );
+    ASK_YES_NO( "Eが10^{-6}以下ですか？" );
+    if( reply == "y" ){
+      CALL_AC( MinimisationCoveringSizeSmallEdge );
+    }
+    ASK_YES_NO( "被覆中心（始点）は固定ですか？" );
+    if( reply == "y" ){
+      CERR( "被覆可能性を描画図形の一致判定に翻訳しましょう。" );
+      CERR( "" );
+      CALL_AC( DecisionImageCoincidence );
+    } else {
+      CERR( "始点（被覆中心または被覆端点）の候補を絞った上で" );
+      CERR( "始点を１つ決め打ってその始点から距離L以内の点を削除し、" );
+      CERR( "残りの点群に対して再帰的に問題を解くことを検討しましょう。" );
+      CERR( "特にユークリッド空間では" );
+      CERR( "- l^1距離ならば45度回転させl^∞距離に帰着" );
+      CERR( "- K=1ならば、[min,max]の端点いずれかを被覆端点として全点との距離計算" );
+      CERR( "- K>1ならば、各成分の[min,max]に注目して頂点を含む最小直方体の角を" );
+      CERR( "  １つの被覆端点に決め打って全探策し、K-1の場合に帰着" );
+      CERR( "を検討しましょう。" );
+      CERR( "" );
+      CERR( "もしくは被覆可能性を描画可能性に翻訳します。" );
+      CALL_AC( DecisionDrawability );
+    }
   } else {
-    CERR( "被覆可能性を描画可能性に翻訳しましょう。" );
-    CALL_AC( DecisionDrawability );
+    CERR( "- O((V+E)log(Lの上限))が間に合いそうならば、L決め打ち二分探索で" );
+    CERR( "  幅優先探索" );
+    CERR( "  \\Mathematics\\Geometry\\Graph\\Algorith\\BreadthFirstSearch" );
+    CERR( "- O(E(log E+α(V)))が間に合いそうならば、重みで辺をソートして" );
+    CERR( "  素集合データ構造" );
+    CERR( "  \\Mathematics\\Geometry\\Graph\\Algorithm\\UnionFindForest" );
   }
+}
+
+AC( MinimisationCoveringSizeSmallEdge )
+{
+  CERR( "- コストがなくO(V+E)が通りそうならば、多点幅優先探索" );
+  CERR( "  \\Mathematics\\Geometry\\Graph\\Algorithm\\BreadthFirstSearch" );
+  CERR( "- コストが0か1でO(V+E)が通りそうならば、多点01幅優先探索" );
+  CERR( "  \\Mathematics\\Geometry\\Graph\\Algorithm\\BreadthFirstSearch\\ZeroOne" );
+  CERR( "- max演算を考えておりO(E(log_2 E + α(V)))が通りそうならば、" );
+  CERR( "  重みで辺をソートして素集合データ構造" );
+  CERR( "  \\Mathematics\\Geometry\\Graph\\Algorithm\\UnionFindForest" );
+  CERR( "- O((V+E)log_2 E)が通りそうならば、" );
+  CERR( "  頂点を１つ追加し各始点に辺を張ったグラフ上でのダイクストラ法" );
+  CERR( "  \\Mathematics\\Geometry\\Graph\\Algorithm\\Dijkstra" );
+  CERR( "- O(V^3)が通りそうならば、" );
+  CERR( "  ワーシャルフロイド法" );
+  CERR( "  \\Mathematics\\Geometry\\Graph\\Algorithm\\FloydWarshall" );
+  CERR( "を検討しましょう。" );
 }
 
 AC( MaximisationDrawingImage )
@@ -1817,6 +1832,7 @@ AC( MaximisationDrawingImage )
   CERR( "描画個数の最大／最小化は描画サイズの最小／最大化に帰着させましょう。" );
   CERR( "描画サイズの最大／最小化問題はサイズを決め打った二分探索や各点でのサイズの最大化" );
   CERR( "などを行い描画可能性判定に帰着させましょう。" );
+  CERR( "" );
   CALL_AC( DecisionDrawability );
 }
 
@@ -2770,6 +2786,7 @@ AC( Query )
 	     "範囲更新／取得クエリ問題" ,
 	     "範囲更新／比較クエリ問題" ,
 	     "範囲更新／数え上げクエリ問題" ,
+	     "範囲更新／部分列をわたる総和クエリ問題" ,
 	     "2変数関数の計算クエリ問題" ,
 	     "時系列変化のクエリ問題"
 	     );
@@ -2801,6 +2818,8 @@ AC( Query )
     }
   } else if( num == num_temp++ ){
     CALL_AC( QueryCounting );
+  } else if( num == num_temp++ ){
+    CALL_AC( QuerySubsequenceSum );
   } else if( num == num_temp++ ){
     CALL_AC( QueryTwoAryFunction );
   } else if( num == num_temp++ ){
@@ -3176,14 +3195,23 @@ AC( QuerySet )
 
 AC( QueryCounting )
 {
-  CERR( "Lを正整数とし、配列Aの区間[l,r]の長さLの部分列Bであって条件Pを満たすもの" );
-  CERR( "の数え上げを考えます。" );
-  CERR( "- まずBを２つの区間に分割した時の条件にPを翻訳することでPから新たな条件を" );
+  CERR( "配列に関する条件Pが与えられているとします。" );
+  CERR( "配列Aの区間[l,r]の部分列BであってPを満たすものの数え上げは、" );
+  CERR( "関数P?1:0の総和計算に帰着されます。" );
+  CERR( "" );
+  CALL_AC( QuerySubsequenceSum );
+}
+
+AC( QuerySubsequenceSum )
+{
+  CERR( "配列を受け取る関数fが与えられているとします。" );
+  CERR( "配列Aの区間[l,r]の部分列Bをわたるf(B)の総和を考えます。" );
+  CERR( "- まずBを２つの区間に分割してfを2変数関数に翻訳することでfから新たな関数を" );
   CERR( "  得ることを再帰的に繰り返します。" );
-  CERR( "- 次にこうして得られた各条件ごとに、" );
-  CERR( "  「dp[i] = 第i成分のみからなる区間に対する数え上げ問題に対する答え」" );
+  CERR( "- 次にこうして得られた各関数ごとに、" );
+  CERR( "  「dp[i] = 第i成分のみからなる区間に対する関数の値」" );
   CERR( "  を考えます。" );
-  CERR( "- 最後に、条件の再帰的翻訳を遡って区間のマージに対応する演算を定義し、" );
+  CERR( "- 最後に、関数の再帰的翻訳を遡って区間のマージに対応する演算を定義し、" );
   CERR( "  データ構造に格納します。" );
   CALL_AC( QueryArray );
 }
