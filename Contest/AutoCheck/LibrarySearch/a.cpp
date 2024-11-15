@@ -2834,6 +2834,7 @@ AC( QueryArray )
   CERR( "それらの演算を計算しましょう。" );
   ASK_NUMBER(
 	     "可換群構造+を使う問題" ,
+	     "全順序構造<=を使う問題" ,
 	     "可換羃等モノイド構造∨を使う問題" ,
 	     "モノイド構造*を使う問題" ,
 	     "非結合的マグマ構造*を使う問題" ,
@@ -2851,6 +2852,8 @@ AC( QueryArray )
 	     );
   if( num == num_temp++ ){
     CALL_AC( QueryArrayAbelianGroup );
+  } else if( num == num_temp++ ){
+    CALL_AC( QueryArrayTotalOrder );
   } else if( num == num_temp++ ){
     CALL_AC( QueryArrayCommutativeIdempotentMonoid );
   } else if( num == num_temp++ ){
@@ -2907,6 +2910,18 @@ AC( QueryArrayAbelianGroup )
   CERR( "  区間乗算遅延平方分割" );
   CERR( "  \\Mathematics\\SetTheory\\DirectProduct\\AffineSpace\\SqrtDecomposition\\LazyEvaluation\\IntervalMultiply" );
   CERR( "を検討しましょう。" );
+}
+
+AC( QueryArrayTotalOrder )
+{
+  CERR( "max／minは可換羃等モノイド構造に一般化されます。" );  
+  CERR( "- 区間乗算O(log N)／更新後の一点取得O(1)が必要ならば" );
+  CERR( "  区間をソートして集合管理の差分計算を行うイベントソート" );
+  CALL_AC( QueryArrayCommutativeIdempotentMonoid );
+  CERR( "" );
+  CERR( "またq個目のクエリを時刻qのイベントとみなすことで、max／minによる時系列更新と" );
+  CERR( "みなします。" );
+  CALL_AC( QueryTimeSeriesRangeChangeMax );
 }
 
 AC( QueryArrayCommutativeIdempotentMonoid )
@@ -3250,13 +3265,18 @@ AC( QueryTimeSeriesChangeMax )
     CERR( "合計O((N + Q)log N + Q log Q)で処理できます。" );
     CERR( "\\Mathematics\\SetTheory\\DirectProduct\\AfineSpace\\BIT\\TimeSeriesSetMax" );
   } else {
-    CERR( "時刻tにおける第i成分をA[t][i]と置きます。" );
-    CERR( "A[-][i]が単調増加することに注目してxがA[t][i]>=xを満たす条件を決定し、" );
-    CERR( "そのようなxの最大値を明示式で書き下しましょう。" );
-    CERR( "" );
-    CERR( "A[t][i]の明示式にmaxが現れる場合は場合分けでmaxを外し、" );
-    CERR( "それぞれの場合の値を各種データ構造で処理しましょう。" );
+    AC( QueryTimeSeriesRangeChangeMax );
   }
+}
+
+AC( QueryTimeSeriesRangeChangeMax )
+{
+  CERR( "時刻tにおける第i成分をA[t][i]と置きます。" );
+  CERR( "A[-][i]が単調増加することに注目してxがA[t][i]>=xを満たす条件を決定し、" );
+  CERR( "そのようなxの最大値を明示式で書き下しましょう。" );
+  CERR( "" );
+  CERR( "A[t][i]の明示式にmaxが現れる場合は場合分けでmaxを外し、" );
+  CERR( "それぞれの場合の値を各種データ構造で処理しましょう。" );
 }
 
 AC( QueryTimeSeriesChangeAddition )
