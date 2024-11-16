@@ -109,6 +109,28 @@ vector<vector<INT>> TotalEnumerateDivisor( const INT& size ) noexcept
 
 }
 
+template <typename INT , typename FUNC , typename U>
+vector<U> TotalEnumerateDivisor( const INT& size , FUNC f , const U& init ) noexcept
+{
+
+  static_assert( is_invocable_r_v<U,FUNC,U,const INT&> );
+  vector<U> answer( size , init );
+
+  for( INT d = 1 ; d < size ; d++ ){
+
+    for( INT n = 0 ; n < size ; n += d ){
+
+      answer[n] = f( move( answer[n] ) , d );
+
+    }
+
+  }
+
+  return answer;
+
+
+}
+
 // 不使用だがどうせincludeする。
 #include "../../Prime/Enumeration/a_Body.hpp"
 #include "../../Prime/Enumeration/Heap/a_Body.hpp"
