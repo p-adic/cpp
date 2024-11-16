@@ -1,78 +1,57 @@
-// c:/Users/user/Documents/Programming/Mathematics/Graph/Algorithm/HeldKarp/a_Body.hpp
+// c:/Users/user/Documents/Programming/Mathematics/Geometry/Graph/Algorithm/HeldKarp/a_Body.hpp
 
 #pragma once
 #include "a.hpp"
 
-template <int NM , int P>
-const ll& HeldKarp( const int& k_start , const int& k_goal , const int& s , const int (&k_valid)[P] , const int& P_valid , const ll (&path_E)[NM][NM] , const int (&near)[P][P][2] , const ll (&E_min)[P][P] , int (&k_mid)[P] )
+#include "../../a_Body.hpp"
+#include "../../../../Algebra/Monoid/a_Body.hpp"
+
+template <typename T , typename GRAPH , typename U , typename COMM_MONOID> inline AbstractHeldKarp<T,GRAPH,U,COMM_MONOID>::AbstractHeldKarp( GRAPH& G , COMM_MONOID M , const U& infty ) : PointedSet<U>( infty ) , m_G( G ) , m_M( move( M ) ) { static_assert( is_same_v<T,inner_t<GRAPH>> ); }
+template <typename T , typename GRAPH> inline HeldKarp<T,GRAPH>::HeldKarp( GRAPH& G , const ll& infty ) : AbstractHeldKarp<T,GRAPH,ll,AdditiveMonoid<ll>>( G , AdditiveMonoid<ll>() , infty ) {}
+
+template <typename T , typename GRAPH , typename U , typename COMM_MONOID> inline U AbstractHeldKarp<T,GRAPH,U,COMM_MONOID>::GetDistance( const T& t_start , const vector<T>& t_factor , const T& t_final , const bool& revisitable ) { return move( GetDistance( t_start , t_factor , revisitable )[m_G.Enumeration_inv( t_final )] ); }
+
+template <typename T , typename GRAPH , typename U , typename COMM_MONOID>
+vector<U> AbstractHeldKarp<T,GRAPH,U,COMM_MONOID>::GetDistance( const T& t_start , const vector<T>& t_factor , const bool& revisitable )
 {
 
-  costexpr int S = ( 1 << 15 ) - 1;
-  static ll answer_E[P][P][S];
-  static int answer_mid[P][P][P];
-  static bool solved[P][P][S];
-  int (&answer_mid_kskg)[P] = answer_mid[k_start][k_goal]; 
+  const int& size = m_G.size();
+  const int& factor_size = t_factor.size();
+  assert( factor_size < 30 );
+  vector<int> t_factor_inv( size , -1 );
 
-  if( solved[k_start][k_goal][s] ){
+  for( int i = 0 ; i < factor_size ; i++ ){
 
-    int P_valid_minus = P_valid - 1;
-
-    for( int k = 0 ; k < P_valid_minus ; k++ ){
-
-      k_mid[k] = answer_mid_kskg[k];
-
-    }
-
-    return answer_E[k_start][k_goal][s];
+    assert( t_factor_inv[t_factor[i]] == -1 );
+    t_factor_inv[t_factor[i]] = i;
 
   }
 
-  if( s == 0 ){
+  const int power = 1 << factor_size;
+  const U& infty = this->Infty();
+  vector dp( power , vector<U>( size , infty ) );
+  auto&& i_start = m_G.Enumeration_inv( t_start );
+  dp[t_factor_inv[i_start] == -1 ? 0 : 1 << t_factor_inv[i_start]][i_start] = m_M.One();
 
-    k_mid[0] = answer_mid_kskg[0] = k_start;
-    k_mid[1] = answer_mid_kskg[1] = k_goal;
-    solved[k_start][k_goal][s] = true;
-    return answer_E[k_start][k_goal][s] = answer_E[k_goal][k_start][s] = E_min[k_start][k_goal];
+  for( int S = 0 ; S < power ; S++ ){
 
-  }
-  
-  int card = 0;
-  int k_s[P];
-  int k_s_i = 0;
+    for( int i = 0 ; i < size ; i++ ){
 
-  while( s_copy != 0 ){
+      if( dp[S][i] < infty ){
+        
+        for( auto& [t,w] : m_G.Edge( m_G.Enumeration( i ) ) ){
 
-    if( ( s_copy & 1 ) == 1 ){
+          auto&& j = m_G.Enumeration_inv( t );
+          auto&& k = t_factor_inv[j];
 
-      k_s[card++] = k_s_i;
+          if( revisitable || k == -1 || ( ( S >> k ) & 1 ) == 0 ){
 
-    }
+            const int S_sup = S | ( k == -1 ? 0 : ( 1 << k ) );
+            dp[S_sup][j] = min( move( dp[S_sup][j] ) , m_M.Product( dp[S][i] , w ) );
 
-    s_copy >>= 1;
-    k_s_i++;
+          }
 
-  }
-
-  // è\ï™ëÂÇ´Ç¢íl
-  ll E_current_min = ll( 1 ) << 62;
-  int k_mid_current_min[P];
-  int k_mid_current[P];
-  int card_plus = card + 1;
-
-  for( int i = 0 ; i < card ; i++ ){
-
-    int& k = k_s[i];
-    ll E_current = HeldKarp<NM,P>( k_start , k , 0 , k_valid , P_valid , path_E , near , E_min , k_mid );
-    E_current += HeldKarp<NM,P>( k_start , k , s ^ ( 1 << k ) , k_valid , P_valid , path_E , near , E_min , k_mid_current );
-    E_current += path_E[near[k_start][k][1]][near[k][k_mid_current[1]][0]];
-
-    if( E_current_min > E_current ){
-
-      E_current_min = E_current;
-
-      for( int j = 0 ; j < card_plus ; j++ ){
-
-	k_mid_current_min[j] = k_mid_current[j];
+        }
 
       }
 
@@ -80,16 +59,14 @@ const ll& HeldKarp( const int& k_start , const int& k_goal , const int& s , cons
 
   }
 
-  answer_mid_kskg[0] = k_start;
+  vector<U> weight( size , infty );
 
-  for( int i = 0 ; i < card_plus ; i++ ){
+  for( int i = 0 ; i < size ; i++ ){
 
-    answer_mid_kskg[i+1] = k_mid[i+1] = k_mid_current_min[i];
+    weight[i] = dp[power - 1][i];
 
   }
-
-  solved[k_start][k_goal][s] = true;
-  return answer_E[k_start][k_goal][s] = answer_E[k_goal][k_start][s] = E_current_min;
+  
+  return weight;
 
 }
-
