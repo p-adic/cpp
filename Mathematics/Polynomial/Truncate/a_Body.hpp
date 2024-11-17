@@ -10,14 +10,14 @@
 // 0èúéZÇÃó·äOèàóù
 #include "../../../Error/IllegalInput/a_Body.hpp"
 
-template <typename T> inline TruncatedPolynomial<T>::TruncatedPolynomial( const uint& N ) : Polynomial<T>() , m_N( N ) {}
+template <typename T> inline TruncatedPolynomial<T>::TruncatedPolynomial( const uint& N ) : Polynomial<T>() , m_N( N ) { assert( m_N > 0 ); }
 template <typename T> inline TruncatedPolynomial<T>::TruncatedPolynomial( const TruncatedPolynomial<T>& f ) : Polynomial<T>( f ) , m_N( f.m_N ) {}
 template <typename T> inline TruncatedPolynomial<T>::TruncatedPolynomial( TruncatedPolynomial<T>&& f ) : Polynomial<T>( move( f.m_f ) ) , m_N( f.m_N ) {}
-template <typename T> inline TruncatedPolynomial<T>::TruncatedPolynomial( const uint& N , T t ) : Polynomial<T>( move( t ) ) , m_N( N ) {}
-template <typename T> inline TruncatedPolynomial<T>::TruncatedPolynomial( const uint& N , const Polynomial<T>& f ) : Polynomial<T>() , m_N( N ) { Polynomial<T>::m_size = f.Polynomial<T>::m_size < m_N ? f.Polynomial<T>::m_size : m_N; Polynomial<T>::m_f = vector<T>( Polynomial<T>::m_size ); for( uint i = 0 ; i < Polynomial<T>::m_size ; i++ ){ Polynomial<T>::m_f[i] = f.Polynomial<T>::m_f[i]; } }
+template <typename T> inline TruncatedPolynomial<T>::TruncatedPolynomial( const uint& N , T t ) : Polynomial<T>( move( t ) ) , m_N( N ) { assert( m_N > 0 ); }
+template <typename T> inline TruncatedPolynomial<T>::TruncatedPolynomial( const uint& N , const Polynomial<T>& f ) : Polynomial<T>() , m_N( N ) { assert( m_N > 0 ); Polynomial<T>::m_size = f.Polynomial<T>::m_size < m_N ? f.Polynomial<T>::m_size : m_N; Polynomial<T>::m_f = vector<T>( Polynomial<T>::m_size ); for( uint i = 0 ; i < Polynomial<T>::m_size ; i++ ){ Polynomial<T>::m_f[i] = f.Polynomial<T>::m_f[i]; } }
 template <typename T> inline TruncatedPolynomial<T>::TruncatedPolynomial( const uint& N , Polynomial<T>&& f ) : Polynomial<T>() , m_N( N ) { if( f.Polynomial<T>::m_size < m_N * 2 ){ Polynomial<T>::operator=( move( f ) ); if( f.Polynomial<T>::m_size > m_N ){ TruncateFinal( m_N ); } } else { Polynomial<T>::m_f = vector<T>( m_N ); for( uint i = 0 ; i < m_N ; i++ ){ Polynomial<T>::m_f[i] = move( f.Polynomial<T>::m_f[i] ); } Polynomial<T>::m_size = m_N; } }
-template <typename T> inline TruncatedPolynomial<T>::TruncatedPolynomial( const uint& N , vector<T>&& f ) : Polynomial<T>() , m_N( N ) { const uint f_size = f.size(); if( f_size < m_N * 2 ){ Polynomial<T>::operator=( move( f ) ); if( f_size > m_N ){ TruncateFinal( m_N ); } } else { Polynomial<T>::m_f = vector<T>( m_N ); for( uint i = 0 ; i < m_N ; i++ ){ Polynomial<T>::m_f[i] = move( f[i] ); }} }
-template <typename T> inline TruncatedPolynomial<T>::TruncatedPolynomial( const uint& N , const uint& i , T t ) : Polynomial<T>() , m_N( N ) { if( i < m_N ? t != Polynomial<T>::c_zero() : false ){ Polynomial<T>::operator[]( i ) = move( t ); }}
+template <typename T> inline TruncatedPolynomial<T>::TruncatedPolynomial( const uint& N , vector<T>&& f ) : Polynomial<T>() , m_N( N ) { assert( m_N > 0 ); const uint f_size = f.size(); if( f_size < m_N * 2 ){ Polynomial<T>::operator=( move( f ) ); if( f_size > m_N ){ TruncateFinal( m_N ); } } else { Polynomial<T>::m_f = vector<T>( m_N ); for( uint i = 0 ; i < m_N ; i++ ){ Polynomial<T>::m_f[i] = move( f[i] ); }} }
+template <typename T> inline TruncatedPolynomial<T>::TruncatedPolynomial( const uint& N , const uint& i , T t ) : Polynomial<T>() , m_N( N ) { assert( m_N > 0 ); if( i < m_N ? t != Polynomial<T>::c_zero() : false ){ Polynomial<T>::operator[]( i ) = move( t ); }}
 
 template <typename T> inline TruncatedPolynomial<T>& TruncatedPolynomial<T>::operator=( TruncatedPolynomial<T> f ) { Polynomial<T>::operator=( move( f.m_f ) ); m_N = f.m_N; return *this; }
 template <typename T> inline TruncatedPolynomial<T>& TruncatedPolynomial<T>::operator=( T n ) { Polynomial<T>::operator=( move( n ) ); return *this; }
@@ -25,7 +25,7 @@ template <typename T> inline TruncatedPolynomial<T>& TruncatedPolynomial<T>::ope
 
 template <typename T> inline TruncatedPolynomial<T>& TruncatedPolynomial<T>::operator+=( const T& t ) { Polynomial<T>::operator+=( t ); return *this; }
 template <typename T> inline TruncatedPolynomial<T>& TruncatedPolynomial<T>::operator+=( const Polynomial<T>& f ) { return TruncatedPlus( f , 0 , f.m_size ); }
-template <typename T> inline TruncatedPolynomial<T>& TruncatedPolynomial<T>::operator+=( const TruncatedPolynomial<T>& f ) { return m_N == 0 ? operator=( f ) : TruncatedPlus( f , 0 , f.Polynomial<T>::m_size ); }
+template <typename T> inline TruncatedPolynomial<T>& TruncatedPolynomial<T>::operator+=( const TruncatedPolynomial<T>& f ) { return TruncatedPlus( f , 0 , f.Polynomial<T>::m_size ); }
 
 template <typename T>
 TruncatedPolynomial<T>& TruncatedPolynomial<T>::TruncatedPlus( const Polynomial<T>& f , const uint& N_input_start , const uint& N_input_lim )
@@ -69,7 +69,7 @@ template <typename T> inline TruncatedPolynomial<T>& TruncatedPolynomial<T>::ope
 
 template <typename T> inline TruncatedPolynomial<T>& TruncatedPolynomial<T>::operator-=( const Polynomial<T>& f ) { return TruncatedMinus( f , 0 , f.m_size ); }
 
-template <typename T> inline TruncatedPolynomial<T>& TruncatedPolynomial<T>::operator-=( const TruncatedPolynomial<T>& f ) { return m_N == 0 ? operator=( -f ) : TruncatedMinus( f , 0 , f.Polynomial<T>::m_size ); }
+template <typename T> inline TruncatedPolynomial<T>& TruncatedPolynomial<T>::operator-=( const TruncatedPolynomial<T>& f ) { return TruncatedMinus( f , 0 , f.Polynomial<T>::m_size ); }
 
 template <typename T>
 TruncatedPolynomial<T>& TruncatedPolynomial<T>::TruncatedMinus( const Polynomial<T>& f , const uint& N_input_start , const uint& N_input_lim )
@@ -204,7 +204,7 @@ TruncatedPolynomial<T> Differential( const uint& n , const TruncatedPolynomial<T
 
   if( f.Polynomial<T>::m_size < n ){
 
-    return TruncatedPolynomial<T>( f.m_N - n , Polynomial<T>::zero() );
+    return TruncatedPolynomial<T>( n < f.m_N ? f.m_N - n : 1 , Polynomial<T>::zero() );
 
   }
 
@@ -220,7 +220,7 @@ TruncatedPolynomial<T> Differential( const uint& n , const TruncatedPolynomial<T
 
   }
 
-  return TruncatedPolynomial<T>( f.m_N - n , move( df ) );
+  return TruncatedPolynomial<T>( n < f.m_N ? f.m_N - n : 1 , move( df ) );
 
 }
 
@@ -228,13 +228,7 @@ template <typename T>
 TruncatedPolynomial<T> TruncatedDifferential( const TruncatedPolynomial<T>& f , const uint& N_output_start_plus_one )
 {
 
-  if( f.m_N == 0 ){
-
-    ERR_INPUT( f , f.m_N );
-
-  }
-
-  TruncatedPolynomial<T> f_dif{ f.m_N - 1 };
+  TruncatedPolynomial<T> f_dif{ f.m_N > 1 ? f.m_N - 1 : 1 };
 
   if( N_output_start_plus_one < f.Polynomial<T>::m_size ){
 

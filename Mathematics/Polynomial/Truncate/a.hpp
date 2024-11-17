@@ -31,7 +31,7 @@ class TruncatedPolynomial :
   
 private:
   // mod X^{m_N}で計算する。
-  // m_N == 0でも動くが、その場合はm_size == 1の時にm_size <= m_Nが成り立たなくなることに注意
+  // m_N > 0 の時のみサポート。
   uint m_N;
   
 public:
@@ -53,7 +53,6 @@ public:
   // m_Nは変化しないことに注意
   inline TruncatedPolynomial<T>& operator+=( const T& t );
   inline TruncatedPolynomial<T>& operator+=( const Polynomial<T>& f );
-  // m_N == 0の時のみm_Nが変化する。（内積などの計算の仕様）
   inline TruncatedPolynomial<T>& operator+=( const TruncatedPolynomial<T>& f );
   
   // N_input_lim <= f.size()の場合のみサポート。
@@ -63,7 +62,6 @@ public:
   // m_Nは変化しないことに注意
   inline TruncatedPolynomial<T>& operator-=( const T& t );
   inline TruncatedPolynomial<T>& operator-=( const Polynomial<T>& f );
-  // m_N == 0の時のみm_Nが変化する。
   inline TruncatedPolynomial<T>& operator-=( const TruncatedPolynomial<T>& f );
 
   // N_input_lim <= f.size()の場合のみサポート。
@@ -72,34 +70,30 @@ public:
 
   inline TruncatedPolynomial<T>& operator*=( const T& t );
 
-  // m_N > 0の場合のみサポート。
   TruncatedPolynomial<T>& operator*=( const Polynomial<T>& f );
   inline TruncatedPolynomial<T>& operator*=( Polynomial<T>&& f );
 
-  // m_N > 0の場合のみサポート。
   // 自身をFFTによりf倍 mod X ^ { m_N }を計算した値で置き換える。
   TruncatedPolynomial<T>& FFT_Multiplication( const Polynomial<T>& f );
 
-  // m_N > 0かつf != 0の場合のみサポート。
+  // f != 0の場合のみサポート。
   // 自身をf倍した値をhとし、長さm_Nの配列
   // (f[0],...,f[N_output_start-1],h[N_output_start],...,h[N_output_lim - 1],0,...)
   // で自身を置き換える。
   TruncatedPolynomial<T>& TruncatedMultiplication( const Polynomial<T>& f , const uint& N_output_start , const uint& N_output_lim );
     
-  // m_N > 0かつf != 0の場合のみサポート。
+  // f != 0の場合のみサポート。
   // 自身のf倍をFFTにより計算した値をhとし、長さm_Nの配列
   // (f[0],...,f[N_output_start-1],h[N_output_start],...,h[N_output_lim - 1],0,...)
   // で自身を置き換える。
   TruncatedPolynomial<T>& FFT_TruncatedMultiplication( const Polynomial<T>& f , const uint& N_output_start , const uint& N_output_lim );
   TruncatedPolynomial<T>& FFT_TruncatedMultiplication( Polynomial<T>&& f , const uint& N_output_start , const uint& N_output_lim );
 
-  // m_N > 0の場合のみサポート。
   // 自身をf倍した値をhとし、長さm_Nの配列
   // (N_output_start個の0,h[N_output_start],...,h[N_output_lim - 1],0,...)
   // を返す。
   TruncatedPolynomial<T> TruncatedMultiplication_const( const Polynomial<T>& f , const uint& N_output_start , const uint& N_output_lim ) const;
 
-  // m_N > 0の場合のみサポート。
   // 自身のf倍をFFTにより計算した値をhとし、長さm_Nの配列
   // (N_output_start個の0,h[N_output_start],...,h[N_output_lim - 1],0,...)
   // を返す。
