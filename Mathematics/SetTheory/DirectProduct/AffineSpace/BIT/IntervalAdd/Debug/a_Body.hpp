@@ -122,9 +122,11 @@ template <class Traits , typename U , typename Z_MODULE> inline basic_ostream<ch
 
   auto&& size = bit.size();
 
-  #ifndef SAMPLE_CHECK
+  if( exec_mode == solve_mode ){
+
     os << "[";
-  #endif
+
+  }
 
   for( int i = 0 ; i < size ; i++ ){
 
@@ -132,9 +134,11 @@ template <class Traits , typename U , typename Z_MODULE> inline basic_ostream<ch
 
   }
 
-  #ifndef SAMPLE_CHECK
+  if( exec_mode == solve_mode ){
+
     os << "]";
-  #endif
+
+  }
 
   return os;
 
