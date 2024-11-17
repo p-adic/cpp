@@ -2,3 +2,5 @@
 
 #pragma once
 #include "a.hpp"
+
+#include "../Template/Local/Mode/a_Body.hpp"

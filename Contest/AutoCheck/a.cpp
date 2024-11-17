@@ -3,12 +3,14 @@
 #include "../Header.hpp"
 #include "a_Body.hpp"
 
+extern int exec_mode;
+
 #include "LibrarySearch/a_Body.hpp"
 #include "SampleAnalyser/a_Body.hpp"
 
 #include "../../Utility/StdStream/a_Body.hpp"
 
-void AutoCheck( int& exec_mode , const bool& use_getline , const bool& sample_check , const string& problem_order )
+void AutoCheck( const bool& use_getline , const bool& sample_check , const string& problem_order )
 {
   int num = 0;
   int num_temp = 0;
