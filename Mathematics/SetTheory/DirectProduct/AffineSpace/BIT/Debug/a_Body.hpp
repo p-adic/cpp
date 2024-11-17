@@ -48,11 +48,11 @@ template <typename U , typename ABELIAN_GROUP> inline void AbstractBIT<U,ABELIAN
 
     if( m_output_mode ){
       
-      cerr << "BITをデバッグモードで実行します。" << endl;
-      cerr << "HybridBITと比べると一点取得の戻り値の型が異なり、" << endl;
-      cerr << "通常のBITと比べると一点取得にconst修飾がつき各種操作にO(N)かかる" << endl;
-      cerr << "ことにご注意ください。" << endl;
-      cerr << endl;
+      DERR( "BITをデバッグモードで実行します。" );
+      DERR( "HybridBITと比べると一点取得の戻り値の型が異なり、" );
+      DERR( "通常のBITと比べると一点取得にconst修飾がつき各種操作にO(N)かかる" );
+      DERR( "ことにご注意ください。" );
+      DERR( "" );
 
     }
 
@@ -62,9 +62,9 @@ template <typename U , typename ABELIAN_GROUP> inline void AbstractBIT<U,ABELIAN
 
   if( m_output_mode ){
       
-    cerr << "BITの初期値：" << endl;
-    cerr << *this << endl;
-    cerr << endl;
+    DERR( "BITの初期値：" );
+    DERR( *this );
+    DERR( "" );
 
   }
   
@@ -81,7 +81,7 @@ void AbstractBIT<U,ABELIAN_GROUP>::Add( const int& i , const U& u )
   
   if( m_output_mode ){
       
-    cerr << "BITの第" << i << "成分に" << u << "を加算します。" << endl;
+    DERRNS( "BITの第" , i , "成分に" , u , "を加算します。" );
 
   }
 
@@ -103,9 +103,9 @@ void AbstractBIT<U,ABELIAN_GROUP>::Add( const int& i , const U& u )
   
   if( m_output_mode ){
       
-    cerr << "BITの更新後の成分：" << endl;
-    cerr << *this << endl;
-    cerr << endl;
+    DERR( "BITの更新後の成分：" );
+    DERR( *this );
+    DERR( "" );
 
   }
 
@@ -144,8 +144,8 @@ template <typename U , typename ABELIAN_GROUP> inline U AbstractBIT<U,ABELIAN_GR
 
   if( m_output_mode ){
       
-    cerr << "BITの区間[" << i_start << "," << i_final << "] における総和： " << answer << endl;
-    cerr << endl;
+    DERRNS( "BITの区間[" , i_start , "," , i_final , "] における総和： " , answer );
+    DERR( "" );
 
   }
 
@@ -207,9 +207,12 @@ template <class Traits , typename U , typename ABELIAN_GROUP> inline basic_ostre
 {
 
   auto&& size = bit.size();
-  #ifndef SAMPLE_CHECK
+
+  if( exec_mode == solve_mode ){
+
     os << "[";
-  #endif
+
+  }
 
   for( int i = 0 ; i < size ; i++ ){
 
@@ -217,9 +220,12 @@ template <class Traits , typename U , typename ABELIAN_GROUP> inline basic_ostre
 
   }
 
-  #ifndef SAMPLE_CHECK
-  os << "]";
-  #endif
+  if( exec_mode == solve_mode ){
+
+    os << "]";
+
+  }
+
   return os;
 
 }
