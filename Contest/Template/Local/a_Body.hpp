@@ -3,7 +3,7 @@
 #pragma once
 #include "a.hpp"
 
-// modeの定義などはAutoCheck/a.hppに記述。
+#include "Mode/a_Body.hpp"
 #include "../../AutoCheck/a_Body.hpp"
 
 #include "../../../Utility/Set/a_Body.hpp"

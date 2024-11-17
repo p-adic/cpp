@@ -42,7 +42,7 @@
   START_MAIN;                                                   \
     signal( SIGABRT , &AlertAbort );                              \
     if constexpr( !submit_only ){                                 \
-      AutoCheck( exec_mode , use_getline , sample_check , problem_order ); \
+      AutoCheck( use_getline , sample_check , problem_order );    \
     }                                                             \
     CEXPR( int , test_case_num_bound , BOUND );                   \
     if( exec_mode != solve_mode ){                                \
