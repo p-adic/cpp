@@ -157,6 +157,25 @@ TruncatedPolynomial<T> ExponentialSum( const uint& N , const V<pair<T,T>>& coef 
 }
 
 template <typename T , uint deg_max>
+Polynomial<T> MonomialSum( const uint& D )
+{
+
+  assert( D <= deg_max );
+  static const BernulliNumberCalculator<T,deg_max+1> B{ false };
+  Polynomial<T> answer{};
+
+  for( uint d = 0 ; d <= D + 1 ; d++ ){
+
+    answer[d] = T::Combination( D + 1 , d ) * B[D + 1 - d];
+
+  }
+
+  answer /= T{ D + 1 };
+  return answer;
+
+}
+
+template <typename T , uint deg_max>
 Polynomial<T> CumulativeSum( Polynomial<T> f , const bool& exponential )
 {
 
@@ -226,3 +245,29 @@ Polynomial<T> CumulativeSum( Polynomial<T> f , const bool& exponential )
   return f_transpose;
 
 }
+
+template <typename T>
+vector<T> CumulativeSum( vector<T> a , uint order )
+{
+
+  const uint size = a.size();
+
+  if( size > 0 ){
+    
+    TruncatedPolynomial<T> f{ size , move( a ) };
+    TruncatedPolynomial<T> g{ size , vector<T>( size , 1 ) };
+    f *= Power( g , move( order ) );
+    a.resize( size );
+
+    for( uint d = 0 ; d < size ; d++ ){
+
+      a[d] = move( f[d] );
+
+    }
+
+  }
+  
+  return move( a );
+
+}
+
