@@ -3,6 +3,9 @@
 #include "../../Header.hpp"
 #include "a_Body.hpp"
 
+extern int exec_mode;
+#include "../../Template/Local/Mode/a_Body.hpp"
+
 // デバッグモードでないと翻訳単位ごとに異なる実装をDynamicModが持ってしまうるので実行時に
 // Segmentation Faultとなる。
 #include "../../../Mathematics/Arithmetic/Mod/DynamicModulo/Debug/a_Body.hpp"

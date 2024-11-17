@@ -12,7 +12,7 @@
 #define CIN_A( LL , I , N , ... ) vector<LL> __VA_ARGS__; SET_A( I , N , __VA_ARGS__ )
 #define CIN_AA( LL , I0 , N0 , I1 , N1 , VAR ) vector<vector<LL>> VAR( N0 + I0 ); FOR( VARIABLE_FOR_CIN_AA , 0 , N0 ){ SET_A( I1 , N1 , VAR[VARIABLE_FOR_CIN_AA + I0] ); }
 
-#define START_WATCH chrono::system_clock::time_point watch = chrono::system_clock::now(); double loop_average_time = 0.0 , loop_start_time = 0.0 , current_time = 0.0; int loop_count = 0
+#define START_WATCH chrono::system_clock::time_point watch = chrono::system_clock::now(); double loop_average_time = 0.0 , loop_start_time = 0.0 , current_time = 0.0; int loop_count = 0; assert( loop_average_time < 1.0 && loop_start_time < 1.0 && loop_count == 0 )
 #define CURRENT_TIME ( current_time = static_cast<double>( chrono::duration_cast<chrono::microseconds>( chrono::system_clock::now() - watch ).count() / 1000.0 ) )
 #define CHECK_WATCH( TL_MS ) ( CURRENT_TIME , loop_count == 0 ? loop_start_time = current_time : loop_average_time = ( current_time - loop_start_time ) / loop_count , ++loop_count , current_time < TL_MS - loop_average_time * 2 - 100.0 )
 #define CEXPR( LL , BOUND , VALUE ) constexpr LL BOUND = VALUE
