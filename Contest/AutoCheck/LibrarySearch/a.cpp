@@ -1416,18 +1416,26 @@ AC( SingleKnapsackWithMultiCost )
 
 AC( SingleKnapsackCostfree )
 {
-  CERR( "- O(N 2^{N/2})が通りそうならば半分全列挙" );
-  CERR( "  \\Mathematics\\Combinatorial\\KnapsackProblem\\Costfree" );
-  CERR( "- O(N v_max)が通りそうかつ非負ならば[V-v_max,V+v_max]での実現可能性を" );
-  CERR( "  管理する動的計画法" );
-  CERR( "  \\Mathematics\\Combinatorial\\KnapsackProblem\\Costfree" );
-  CERR( "- O(N^4)が間に合いそうかつ選択に負価値の要素と非負価値の要素間で一方向の" );
-  CERR( "  制約があるならば、制約を容量∞の有向辺に対応させ選択するか否かを" );
-  CERR( "  二部マッチングに翻訳し最小カット（最大流）計算" );
-  CERR( "  \\Mathematics\\Geometry\\Graph\\Algorithm\\MaximumFlow" );
-  CERR( "- O((N+V)log_2 V)が通りそうかつ非負かつVが10^5オーダーでプロス素数Pを" );
-  CERR( "  法とするならば法Pでの高速フーリエ変換によるexp(logの総和)計算" );
-  CERR( "  \\Mathematics\\Polynomial\\Truncate" );
+  ASK_YES_NO( "各項が独立に選択でき、かつ選択方法に罰金や報酬がないですか？" );
+  if( reply == "y" ){
+    CERR( "- O(N 2^{N/2})が通りそうならば半分全列挙" );
+    CERR( "  \\Mathematics\\Combinatorial\\KnapsackProblem\\Costfree" );
+    CERR( "- O(N v_max)が通りそうかつ非負ならば[V-v_max,V+v_max]での実現可能性を" );
+    CERR( "  管理する動的計画法" );
+    CERR( "  \\Mathematics\\Combinatorial\\KnapsackProblem\\Costfree" );
+    CERR( "- O((N+V)log_2 V)が通りそうかつ非負かつVが10^5オーダーでプロス素数Pを" );
+    CERR( "  法とするならば法Pでの高速フーリエ変換によるexp(logの総和)計算" );
+    CERR( "  \\Mathematics\\Polynomial\\Truncate" );
+  } else {
+    CERR( "報酬は全部得た上で、実際にはもらえない報酬を差し引く罰金形式に" );
+    CERR( "翻訳し、その上で価値や依存関係や罰金を非負容量の有向辺に翻訳し、" );
+    CERR( "最小カット計算に帰着させましょう。" );
+    CERR( "対応するグラフの頂点数をN、辺の本数をM、流量上限をFと置きます。" );
+    CERR( "- O(N 2^N)が通りそうならばbit全探索" );
+    CERR( "  \\Mathematics\\Geometry\\Graph\\BreadthFirstSearch\\BitExhausiveSearch" );
+    CERR( "- O(min(N^2,F)M)が間に合いそうならば最大流計算" );
+    CERR( "  \\Mathematics\\Geometry\\Graph\\Algorithm\\MaximumFlow" );
+  }
   CERR( "を検討しましょう。" );
 }
 
