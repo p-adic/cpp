@@ -102,8 +102,8 @@ INT CostfreeInitialSegmentDoubleKnapsackValueSumBound( const ll& N , VALUE value
 
   }
   
-  vector dp( N_3 + 1 , vector<bool>( V_min + 1 ) );
-  dp[0][0] = true;
+  vector<bool> dp( V_min + 1 ) , ndp( V_min + 1 );
+  dp[0] = true;
   INT V = 0 , sum = 0;
 
   for( int i = 0 ; i < N_3 ; i++ ){
@@ -113,9 +113,11 @@ INT CostfreeInitialSegmentDoubleKnapsackValueSumBound( const ll& N , VALUE value
     
     for( INT v = 0 ; v <= V_min ; v++ ){
 
-      ( dp[i+1][v] = ( ( dp[i][v] && sum - v <= V_max ) || ( v >= value_i && dp[i][v - value_i] ) ) ) ? V = max( V , v ) : V;
+      ( ndp[v] = ( ( dp[v] && sum - v <= V_max ) || ( v >= value_i && dp[v - value_i] ) ) ) && V < v ? V = v : V;
 
     }
+
+    swap( dp , ndp );
 
   }
 
