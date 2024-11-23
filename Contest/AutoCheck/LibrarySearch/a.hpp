@@ -51,6 +51,8 @@ AC( MaximisationFunctionOnMultipleArray );
 AC( MaximisationFunctionOnTwoArray );
 AC( Knapsack );
 AC( KnapsackInitialSegment );
+AC( KnapsackInitialSegmentSingleKnapsack );
+AC( KnapsackInitialSegmentDoubleKnapsack );
 AC( KnapsackInterval );
 AC( KnapsackBoundedIntervalLength );
 AC( SingleKnapsack );

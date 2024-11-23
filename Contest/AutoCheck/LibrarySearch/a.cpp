@@ -1218,8 +1218,26 @@ AC( Knapsack )
 
 AC( KnapsackInitialSegment )
 {
-  CERR( "価値が非負ならば、先頭から何項選べるかだけが重要なのでコストのみを考えれば" );
-  CERR( "（コストを価値とするコストなし価値上限つきナップサックを考えれば）よいです。" );
+  CERR( "価値が非負ならば、先頭から何項選べるかだけが重要なのでコストのみ（コストを" );
+  CERR( "価値とするコストなし価値上限つきナップサック）を考えればよいです。" );
+  ASK_YES_NO( "ナップサックは１つですか？" );
+  if( reply == "y" ){
+    CALL_AC( KnapsackInitialSegmentSingleKnapsack );
+  } else {
+    CALL_AC( KnapsackInitialSegmentDoubleKnapsack );
+  }
+}
+
+AC( KnapsackInitialSegmentSingleKnapsack )
+{
+  CERR( "- 累積和を愚直に計算していき、Lを超えない最大の項数を計算" );
+  CERR( "- 累積和を式変形で明示的に求め、Lを超えない最大の項数を二分探索" );
+  CERR( "を検討しましょう。" );
+  CERR( "\\Mathematics\\Combinatorial\\KnapsackProblem\\Costfree\\InitialSegment" );
+}
+
+AC( KnapsackInitialSegmentDoubleKnapsack )
+{
   CERR( "コスト(W_i)_iの部分和で表せないコスト全体の集合の上限をLとします。" );
   CERR( "- 例えばW_i=i^2ならば、L=128です。" );
   CERR( "  https://oeis.org/A001422" );
@@ -1227,29 +1245,23 @@ AC( KnapsackInitialSegment )
   CERR( "  (6,9,27,45,45,57,75,81,87,105,...)の第n項です。" );
   CERR( "  \\Mathematics\\Arithmetic\\Prime\\KloveSequence" );
   CERR( "  https://oeis.org/A007414" );
-  ASK_YES_NO( "ナップサックは１つですか？" );
-  if( reply == "y" ){
-    CERR( "|C|>Lの場合は全て選択できるので、場合分けで|C|<=Lの場合に帰着し、" );
-    CERR( "後は愚直に求めるか式変形で解きましょう。" );
-  } else {
-    CERR( "ナップサックが２つであるとし、それらのコスト上限をそれぞれC_1 <= C_2と置き、" );
-    CERR( "(W_i)_iが昇順であるとします。" );
-    CERR( "- 各非負整数nに対しs_n := sum_{i=0}^{n} W_iと置き、" );
-    CERR( "- W_n > 2Lを満たす最小のnをN_1と置き、" );
-    CERR( "- s_n > C_1を満たす最小のnをN_2と置き、" );
-    CERR( "- W_n > C_1を満たす最小のnをN_3と置きます。" );
-    CERR( "選択する項目全体の集合が始切片でなければならないことから、" );
-    CERR( "- N_1 <= N_2ならば、s_{N_2+1}-s_{N_2} = W_{N_2} > 2Lより" );
-    CERR( "  max(s_{N_2+1}-C_1,C_1-s_{N_2}) > LなのでN_2+1までの項目を" );
-    CERR( "  うまく組み合わせてC_1が表せるため、コスト総和上限CがC_1 + C_2で" );
-    CERR( "  ナップサックが１つの場合に帰着" );
-    CERR( "- N_1 > N_2ならば、N_3未満の各iに対する項iのみを選択する設定で可能な" );
-    CERR( "  選択全体を考えた時のナップサック１のみのコストの最大値をC_1'と置くと、" );
-    CERR( "  N_3以上のiに対する項iはナップサック２にしか入らないため、" );
-    CERR( "  コスト総和上限CがC_1' + C_2でナップサックが１つの場合に帰着" );
-    CERR( "を検討しましょう。" );
-  }
-  CERR( "\\Mathematics\\Combinatorial\\KnapsackProblem\\Costfree\\InitialSegment" );
+  CERR( "ナップサックが２つであるとし、それらのコスト上限をそれぞれC_1 <= C_2とし、" );
+  CERR( "(W_i)_iが昇順であるとします。" );
+  CERR( "- 各非負整数nに対しs_n := sum_{i=0}^{n} W_iと置き、" );
+  CERR( "- W_n > 2Lを満たす最小のnをN_1と置き、" );
+  CERR( "- s_n > C_1を満たす最小のnをN_2と置き、" );
+  CERR( "- W_n > C_1を満たす最小のnをN_3と置きます。" );
+  CERR( "選択する項目全体の集合が始切片でなければならないことから、" );
+  CERR( "- N_1 <= N_2ならば、s_{N_2+1}-s_{N_2} = W_{N_2} > 2Lより" );
+  CERR( "  max(s_{N_2+1}-C_1,C_1-s_{N_2}) > LなのでN_2+1までの項目を" );
+  CERR( "  うまく組み合わせてC_1が表せるため、コスト総和上限CがC_1 + C_2で" );
+  CERR( "  ナップサックが１つの場合に帰着" );
+  CERR( "- N_1 > N_2ならば、N_3未満の各iに対する項iのみを選択する設定で可能な" );
+  CERR( "  選択全体を考えた時のナップサック１のみのコストの最大値をC_1'と置くと、" );
+  CERR( "  N_3以上のiに対する項iはナップサック２にしか入らないため、" );
+  CERR( "  コスト総和上限CがC_1' + C_2でナップサックが１つの場合に帰着" );
+  CERR( "を検討しましょう。以下ナップサックが１つの場合を考えます。" );
+  CALL_AC( KnapsackInitialSegmentSingleKnapsack );
 }
 
 AC( KnapsackInterval )
