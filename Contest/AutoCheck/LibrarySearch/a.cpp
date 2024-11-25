@@ -44,9 +44,10 @@ AC( LibrarySearch )
 AC( ExplicitExpression )
 {
   ASK_NUMBER(
-	     "一重和や一重積で与えられる１変数関数／数列の計算問題" ,
+	     "一重和や一重積の計算問題" ,
+	     "二重和や二重積や積和の計算問題" ,
 	     "その他の１変数関数／数列の計算問題" ,
-	     "二重和や二重積や積和などの計算問題" ,
+	     "その他の多変数関数／配列を受け取る関数の計算問題" ,
 	     "順列上の関数の計算問題" ,
 	     "木上の関数の総和の計算問題" ,
 	     "木以外のグラフ上の関数の計算問題" ,
@@ -62,9 +63,9 @@ AC( ExplicitExpression )
   if( num == num_temp++ ){
     CALL_AC( ExplicitExpressionArraySum );
   } else if( num == num_temp++ ){
-    CALL_AC( ExplicitExpressionUnary );
-  } else if( num == num_temp++ ){
     CALL_AC( ExplicitExpressionDoubleSum );
+  } else if( num == num_temp++ ){
+    CALL_AC( ExplicitExpressionUnary );
   } else if( num == num_temp++ ){
     CALL_AC( ExplicitExpressionFunctionOnPermutation );
   } else if( num == num_temp++ ){
@@ -211,6 +212,31 @@ AC( ExplicitExpressionArrayCombinatorial )
   CERR( "を検討しましょう。" );
 }
 
+AC( ExplicitExpressionDoubleSum )
+{
+  CERR( "2変数関数f(x,y)と配列(a_i)_{i=0}^{N-1}, (b_j)_{j=0}^{M-1}に対する" );
+  CERR( "二重和sum_i sum_j f(a_i,b_j)などを考えるとします。" );
+  CERR( "必要ならば(a_i)_iと(b_j)をソートしてともに広義単調増加とします。" );
+  CERR( "- sum_i f(a_i,b_j)の計算量をO(g(N))としてO(g(N)M)が間に合いそうならば、" );
+  CERR( "  和の順序交換sum_i sum_j f(a_i,b_j) = sum_j sum_i f(a_i,b_j)" );
+  CERR( "- sum_j (f(a_i,b_{j+1}) - f(a_i,b_j))の計算量をO(g(N))としてO(g(N)M)が" );
+  CERR( "  間に合いそうならば、sum_j f(a_i,b_j)の差分計算による高速化" );
+  CERR( "- f(x,y)=sum_k g_k(x) h_k(y)と表示できO(K(N+M))が間に合いそうならば" );
+  CERR( "  積和の和積化" );
+  CERR( "  sum_{i,j} f(a_i,b_j) = sum_k((sum_i g_k(a_i))(sum_j h_k(b_j)))" );
+  CERR( "- 和の動く範囲やfのパラメータなどに関する動的計画法" );
+  CERR( "- #im(f)が小さくf(a_,b_)の各点逆像が計算しやすいならば" );
+  CERR( "  fの各点逆像による纏め上げをする分割統治法" );
+  CERR( "  sum_{i,j} f(a_i,b_j)=sum_z #f(a_,b_)^{-1}(z) z" );
+  CERR( "- #im(f)が小さくfが非負でf(a_,b_)の始切片逆像が計算しやすいならば" );
+  CERR( "  fの始切片逆像による纏め上げをする分割統治法" );
+  CERR( "  sum_{i,j} f(a_i,b_j)=sum_{z>0} #f(a_,b_)^{-1}([z,∞))" );
+  CERR( "- #dom(f)が小さく(a_,b_)の各点逆像が計算しやすいならば" );
+  CERR( "  (a_,b_)の各点逆像による纏め上げをする分割統治法" );
+  CERR( "  sum_{i,j} f(a_i,b_j)=sum_v #(a_,b_)^{-1}(v) f(v)" );
+  CERR( "を検討しましょう。" );
+}
+
 AC( ExplicitExpressionUnary )
 {
   ASK_NUMBER(
@@ -326,28 +352,19 @@ AC( ExplicitExpressionUnaryOther )
   CERR( "バケット分割してソースコードに埋め込む高速化を検討しましょう。" );
 }
 
-AC( ExplicitExpressionDoubleSum )
+AC( ExplicitExpressionMultivariable )
 {
-  CERR( "2変数関数f(x,y)と配列(a_i)_{i=0}^{N-1}, (b_j)_{j=0}^{M-1}に対する" );
-  CERR( "二重和sum_i sum_j f(a_i,b_j)などを考えるとします。" );
-  CERR( "必要ならば(a_i)_iと(b_j)をソートしてともに広義単調増加とします。" );
-  CERR( "- sum_i f(a_i,b_j)の計算量をO(g(N))としてO(g(N)M)が間に合いそうならば、" );
-  CERR( "  和の順序交換sum_i sum_j f(a_i,b_j) = sum_j sum_i f(a_i,b_j)" );
-  CERR( "- sum_j (f(a_i,b_{j+1}) - f(a_i,b_j))の計算量をO(g(N))としてO(g(N)M)が" );
-  CERR( "  間に合いそうならば、sum_j f(a_i,b_j)の差分計算による高速化" );
-  CERR( "- f(x,y)=sum_k g_k(x) h_k(y)と表示できO(K(N+M))が間に合いそうならば" );
-  CERR( "  積和の和積化" );
-  CERR( "  sum_{i,j} f(a_i,b_j) = sum_k((sum_i g_k(a_i))(sum_j h_k(b_j)))" );
-  CERR( "- 和の動く範囲やfのパラメータなどに関する動的計画法" );
-  CERR( "- #im(f)が小さくf(a_,b_)の各点逆像が計算しやすいならば" );
-  CERR( "  fの各点逆像による纏め上げをする分割統治法" );
-  CERR( "  sum_{i,j} f(a_i,b_j)=sum_z #f(a_,b_)^{-1}(z) z" );
-  CERR( "- #im(f)が小さくfが非負でf(a_,b_)の始切片逆像が計算しやすいならば" );
-  CERR( "  fの始切片逆像による纏め上げをする分割統治法" );
-  CERR( "  sum_{i,j} f(a_i,b_j)=sum_{z>0} #f(a_,b_)^{-1}([z,∞))" );
-  CERR( "- #dom(f)が小さく(a_,b_)の各点逆像が計算しやすいならば" );
-  CERR( "  (a_,b_)の各点逆像による纏め上げをする分割統治法" );
-  CERR( "  sum_{i,j} f(a_i,b_j)=sum_v #(a_,b_)^{-1}(v) f(v)" );
+  CERR( "- 各引数に関して線形であるならば、標準基底に制限して計算" );
+  CERR( "- 累積和などの操作を繰り返すならば、" );
+  CERR( "  - 母関数の1/(1-x)倍などに翻訳" );
+  CERR( "    \\Mathematics\\Polynomial\\Cumulative" );
+  CERR( "  - 格子点上の経路数え上げに翻訳" );
+  CERR( "    https://en.wikipedia.org/wiki/Pascal%27s_triangle#Overall_patterns_and_properties" );
+  CERR( "    https://en.wikipedia.org/wiki/Catalan%27s_triangle" );
+  CERR( "- 交代和などの操作を繰り返すならば、２回纏めて累積和に帰着" );
+  CERR( "- 差分などの操作を繰り返すならば、母関数の1-x倍などに翻訳" );
+  CERR( "- 積分作用素を繰り返すならば、変数変換して\int dxなどに帰着" );
+  CERR( "- 微分作用素を繰り返すならば、変数変換してd/dxなどに帰着" );
   CERR( "を検討しましょう。" );
 }
 
@@ -2895,8 +2912,8 @@ AC( Query )
 	     "範囲更新／比較クエリ問題" ,
 	     "範囲更新／数え上げクエリ問題" ,
 	     "範囲更新／部分列をわたる総和クエリ問題" ,
-	     "2変数関数の計算クエリ問題" ,
-	     "時系列変化のクエリ問題"
+	     "2変数関数の計算クエリ問題（範囲更新なし区間和計算など）" ,
+	     "時系列変化のクエリ問題（時刻に関する関数の一点取得など）"
 	     );
   if( num == num_temp++ ){
     ASK_NUMBER(
@@ -3341,11 +3358,15 @@ AC( QuerySubsequenceSum )
   
 AC( QueryTwoAryFunction )
 {
+  CERR( "区間取得は" );
+  CERR( "- 始切片取得の差で表す" );
+  CERR( "- 中間で分割してマージ" );
+  CERR( "に翻訳しましょう。" );
   CERR( "- 可換群に値を持つ配列の範囲取得は累積積" );
   CERR( "  \\Mathematics\\SetTheory\\DirectProduct\\AfineSpace\\CumulativeProduct" );
   CERR( "- 片側差分がO(1)で計算できる2変数関数の計算は莫のアルゴリズム" );
   CERR( "  \\Mathematics\\SetTheory\\DirectProduct\\AfineSpace\\SqrtDecomposition\\Mo" );
-  CERR( "を検討しましょう。" );
+  CERR( "を検討しましょう。それ以外にも範囲更新可能なデータ構造も検討しましょう。" );
 }
 
 AC( QueryTimeSeriesChange )
