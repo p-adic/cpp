@@ -125,16 +125,16 @@ AC( ExplicitExpressionOneArrayEntrySum )
   CERR( "  - A-Eが正則とは限らずO(K^3 log N)が間に合いそうならば、vにf(a_i)の" );
   CERR( "    累積和を末尾挿入し、行列累乗" );
   CERR( "    \\Mathematics\\LinearAlgebra" );
-  CERR( "- f(a_i)がiに関してK個の条件分岐を持つ漸化式で表せO(K)が間に合いそうならば" );
-  CERR( "  条件分岐で総和を分割して総和の漸化式を求める分枝限定法による再帰" );
+  CERR( "- f(a_i)がiに関してK個の条件分岐を持つ漸化式で表せO(1K)が間に合いそうならば" );
+  CERR( "  条件分岐で総和を分割して総和の漸化式を求める分割統治法による再帰" );
   CERR( "- #im(f)が小さくf(a_)の各点逆像が計算しやすいならば" );
-  CERR( "  fの各点逆像による纏め上げをする分枝限定法" );
+  CERR( "  fの各点逆像による纏め上げをする分割統治法" );
   CERR( "  sum_i f(a_i)=sum_y #f(a_)^{-1}(y) y" );
   CERR( "- #im(f)が小さくfが非負でf(a_)の始切片逆像が計算しやすいならば" );
-  CERR( "  fの始切片逆像による纏め上げをする分枝限定法" );
+  CERR( "  fの始切片逆像による纏め上げをする分割統治法" );
   CERR( "  sum_i f(a_i)=sum_{y>=1} #f(a_)^{-1}([y,∞))" );
   CERR( "- #dom(f)が小さく(a_)の逆像が計算しやすいならば" );
-  CERR( "  (a_)の各点逆像による纏め上げをする分枝限定法" );
+  CERR( "  (a_)の各点逆像による纏め上げをする分割統治法" );
   CERR( "  sum_i f(a_i)=sum_x #(a_)^{-1}(x) f(x)" );
   CERR( "- i%j = i - floor(i/j)jを用いて剰余を商に帰着" );
   CERR( "  - iに関する和はfloor_sum" );
@@ -340,13 +340,13 @@ AC( ExplicitExpressionDoubleSum )
   CERR( "  sum_{i,j} f(a_i,b_j) = sum_k((sum_i g_k(a_i))(sum_j h_k(b_j)))" );
   CERR( "- 和の動く範囲やfのパラメータなどに関する動的計画法" );
   CERR( "- #im(f)が小さくf(a_,b_)の各点逆像が計算しやすいならば" );
-  CERR( "  fの各点逆像による纏め上げをする分枝限定法" );
+  CERR( "  fの各点逆像による纏め上げをする分割統治法" );
   CERR( "  sum_{i,j} f(a_i,b_j)=sum_z #f(a_,b_)^{-1}(z) z" );
   CERR( "- #im(f)が小さくfが非負でf(a_,b_)の始切片逆像が計算しやすいならば" );
-  CERR( "  fの始切片逆像による纏め上げをする分枝限定法" );
+  CERR( "  fの始切片逆像による纏め上げをする分割統治法" );
   CERR( "  sum_{i,j} f(a_i,b_j)=sum_{z>0} #f(a_,b_)^{-1}([z,∞))" );
   CERR( "- #dom(f)が小さく(a_,b_)の各点逆像が計算しやすいならば" );
-  CERR( "  (a_,b_)の各点逆像による纏め上げをする分枝限定法" );
+  CERR( "  (a_,b_)の各点逆像による纏め上げをする分割統治法" );
   CERR( "  sum_{i,j} f(a_i,b_j)=sum_v #(a_,b_)^{-1}(v) f(v)" );
   CERR( "を検討しましょう。" );
 }
@@ -497,7 +497,7 @@ AC( ExplicitExpressionOrderOfElement )
   } else {
     CERR( "s未満のSの項の数え上げを検討しましょう。" );
     CALL_AC( CountingArrayBoundedTotal );
-    ASK_YES_NO( "Sが固定長変数関数の像で与えられますか？" );
+    ASK_YES_NO( "Sが固定長変数関数の逆像で与えられますか？" );
     if( reply == "y" ){
       CERR( "固定長変数関数の逆像の数え上げ問題は、" );
       CALL_AC( CountingExplicitExpression );
@@ -1095,7 +1095,7 @@ AC( MaximisationFunctionOnArray )
     CERR( "- 「fがv以上の値を取り得るか否か」が判定可能である時は" );
     CERR( "  vに関する二分探索" );
     CERR( "- 何らかの不変量g(a)をyに固定した時のf(a)の最大値F(y)が計算可能" );
-    CERR( "  ならば、yを動かしてF(y)の最大化をする分枝限定法" );
+    CERR( "  ならば、yを動かしてF(y)の最大化をする分割統治法" );
     CERR( "を検討しましょう。" );
   }
 }
@@ -2091,7 +2091,7 @@ AC( CountingExplicitExpression )
   CERR( "  \\Mathematics\\Combinatorial\\ZetaTransform" );
   CERR( "- gcd(n,x)=1かつ1<=x<=nを満たすxの数え上げはオイラー関数" );
   CERR( "  \\Mathematics\\Arithmetic\\Mod\\Function\\Euler" );
-  CERR( "- f(g(x),g(y))=cの形ならば以下の分枝限定法：" );
+  CERR( "- f(g(x),g(y))=cの形ならば以下の分割統治法：" );
   CERR( "  - まず各b in im(g)に対しf(a,b) = cを満たすa in im(g)全体を前計算する。" );
   CERR( "  - 次に|dom(g)| = N、max im(g) = Mとして、各y in im(g)に対する" );
   CERR( "    逆像の濃度|g^{-1}(y)|を管理するg_inv[y]を" );
@@ -2102,7 +2102,7 @@ AC( CountingExplicitExpression )
   CERR( "    により管理する。" );
   CERR( "  - 最後に各yごとにf(a,g(y)) = cを満たす各a in im(g)に対しa = g(x)を満たす" );
   CERR( "    xをg_inv[a]で数え上げる" );
-  CERR( "- f(g(x),g(y))<=cの形かつfとgが単調増加するならば以下の分枝限定法：" );
+  CERR( "- f(g(x),g(y))<=cの形かつfとgが単調増加するならば以下の分割統治法：" );
   CERR( "  - まず各b in im(g)に対しf(a,b) <= cを満たすaの上限を二分探索で前計算する。" );
   CERR( "  - 次にそうして得られる各aに対しg(x)<=aを満たすxの上限を二分探索で前計算する。" );
   CERR( "  - 最後に各yごとにb = g(y)に対する前計算結果の総和を求める。" );
@@ -2252,7 +2252,7 @@ AC( CountingArrayMultipleBoundedTotal )
 {
   CERR( "配列を非負整数に翻訳すると、総和を取る順番は関係ないのでsを対応する数に" );
   CERR( "関して昇順に並べてs_0:=0<=s_1<s_2<...としてよく、その場合の数え上げを" );
-  CERR( "sの区間に分割する分枝限定法" );
+  CERR( "sの区間に分割する分割統治法" );
   CERR( "sum_i #(S cap [s_{i-1},s_i)) * i" );
   CERR( "を検討しましょう。特にSが区間でs_i = iならばsum_i iです。" );
 }

@@ -25,7 +25,7 @@ using namespace std;
   #endif
 #endif
 
-// 2024/11/16時点での
+// 2024/11/25時点での
 // #include "Utility/StdStream/a.hpp"
 template <class Traits> inline basic_istream<char,Traits>& VariadicCin( basic_istream<char,Traits>& is );
 template <class Traits , typename Arg , typename... ARGS> inline basic_istream<char,Traits>& VariadicCin( basic_istream<char,Traits>& is , Arg& arg , ARGS&... args );
@@ -61,7 +61,7 @@ template <class Traits , typename Arg1 , typename Arg2 , typename... ARGS> inlin
 
 template <class Traits , typename ARRAY> inline basic_ostream<char,Traits>& CoutArray( basic_ostream<char,Traits>& os , const int& i_start , const int& i_ulim , ARRAY&& a ) { for( int i = i_start ; i < i_ulim ; i++ ){ ( i == i_start ? os : ( os << " " ) ) << a[i]; } return os; }
 
-// 2024/11/16時点での
+// 2024/11/25時点での
 // #include "Contest/AutoCheck/a_Macro.hpp"
 #define ASK_NUMBER( ... )						\
   while( true ){                                                        \
@@ -107,9 +107,8 @@ template <class Traits , typename ARRAY> inline basic_ostream<char,Traits>& Cout
 #define AC( BRANCH ) void BRANCH ## AutoCheck( int& num , int& num_temp , string& reply , vector<string>& problems , int& problems_size , const bool& use_getline , const bool& sample_check , const string& problem_order )
 #define CALL_AC( BRANCH ) BRANCH ## AutoCheck( num , num_temp , reply , problems , problems_size , use_getline , sample_check , problem_order )
 
-// 2024/11/16時点での
+// 2024/11/25時点での
 // #include "Contest/AutoCheck/LibrarySearch/a.hpp"
-// からサンプル解析器を削除したもの
 AC( LibrarySearch );
 AC( ExplicitExpression );
 AC( ExplicitExpressionArraySum );
@@ -158,6 +157,8 @@ AC( MaximisationFunctionOnMultipleArray );
 AC( MaximisationFunctionOnTwoArray );
 AC( Knapsack );
 AC( KnapsackInitialSegment );
+AC( KnapsackInitialSegmentSingleKnapsack );
+AC( KnapsackInitialSegmentDoubleKnapsack );
 AC( KnapsackInterval );
 AC( KnapsackBoundedIntervalLength );
 AC( SingleKnapsack );
@@ -187,6 +188,10 @@ AC( MinimisationGraphCost );
 AC( MaximisationGraphValue );
 AC( MaximisationFunctionOnTree );
 AC( MaximisationStringMatching );
+AC( MaximisationPartition );
+AC( MinimisationPartitionOfArray );
+AC( MinimisationPartitionOfSet );
+AC( MaximisationPartitionOfTree );
 AC( MaximisationProbability );
 AC( MinimisationOperationCost );
 AC( MaximisationCountingOperation );
@@ -229,8 +234,11 @@ AC( CountingMatrix );
 AC( CountingGraph );
 AC( CountingUndirectedGraph );
 AC( CountingDirectedGraph );
-AC( CountingPartitionOfTree );
 AC( CountingSubset );
+AC( CountingPartition );
+AC( CountingPartitionOfArray );
+AC( CountingPartitionOfSet );
+AC( CountingPartitionOfTree );
 AC( CountingMap );
 AC( CountingStrategy );
 AC( InterpretingIncreasingSequence );
@@ -304,7 +312,7 @@ AC( ConstructionSubset );
 AC( ConstructionPartition );
 AC( Deduction );
 
-// 2024/11/16時点での
+// 2024/11/25時点での
 // #include "Contest/AutoCheck/LibrarySearch/a.cpp"
 AC( LibrarySearch )
 {
@@ -426,16 +434,16 @@ AC( ExplicitExpressionOneArrayEntrySum )
   CERR( "  - A-Eが正則とは限らずO(K^3 log N)が間に合いそうならば、vにf(a_i)の" );
   CERR( "    累積和を末尾挿入し、行列累乗" );
   CERR( "    \\Mathematics\\LinearAlgebra" );
-  CERR( "- f(a_i)がiに関してK個の条件分岐を持つ漸化式で表せO(K)が間に合いそうならば" );
-  CERR( "  条件分岐で総和を分割して総和の漸化式を求める分枝限定法による再帰" );
+  CERR( "- f(a_i)がiに関してK個の条件分岐を持つ漸化式で表せO(1K)が間に合いそうならば" );
+  CERR( "  条件分岐で総和を分割して総和の漸化式を求める分割統治法による再帰" );
   CERR( "- #im(f)が小さくf(a_)の各点逆像が計算しやすいならば" );
-  CERR( "  fの各点逆像による纏め上げをする分枝限定法" );
+  CERR( "  fの各点逆像による纏め上げをする分割統治法" );
   CERR( "  sum_i f(a_i)=sum_y #f(a_)^{-1}(y) y" );
   CERR( "- #im(f)が小さくfが非負でf(a_)の始切片逆像が計算しやすいならば" );
-  CERR( "  fの始切片逆像による纏め上げをする分枝限定法" );
+  CERR( "  fの始切片逆像による纏め上げをする分割統治法" );
   CERR( "  sum_i f(a_i)=sum_{y>=1} #f(a_)^{-1}([y,∞))" );
   CERR( "- #dom(f)が小さく(a_)の逆像が計算しやすいならば" );
-  CERR( "  (a_)の各点逆像による纏め上げをする分枝限定法" );
+  CERR( "  (a_)の各点逆像による纏め上げをする分割統治法" );
   CERR( "  sum_i f(a_i)=sum_x #(a_)^{-1}(x) f(x)" );
   CERR( "- i%j = i - floor(i/j)jを用いて剰余を商に帰着" );
   CERR( "  - iに関する和はfloor_sum" );
@@ -641,13 +649,13 @@ AC( ExplicitExpressionDoubleSum )
   CERR( "  sum_{i,j} f(a_i,b_j) = sum_k((sum_i g_k(a_i))(sum_j h_k(b_j)))" );
   CERR( "- 和の動く範囲やfのパラメータなどに関する動的計画法" );
   CERR( "- #im(f)が小さくf(a_,b_)の各点逆像が計算しやすいならば" );
-  CERR( "  fの各点逆像による纏め上げをする分枝限定法" );
+  CERR( "  fの各点逆像による纏め上げをする分割統治法" );
   CERR( "  sum_{i,j} f(a_i,b_j)=sum_z #f(a_,b_)^{-1}(z) z" );
   CERR( "- #im(f)が小さくfが非負でf(a_,b_)の始切片逆像が計算しやすいならば" );
-  CERR( "  fの始切片逆像による纏め上げをする分枝限定法" );
+  CERR( "  fの始切片逆像による纏め上げをする分割統治法" );
   CERR( "  sum_{i,j} f(a_i,b_j)=sum_{z>0} #f(a_,b_)^{-1}([z,∞))" );
   CERR( "- #dom(f)が小さく(a_,b_)の各点逆像が計算しやすいならば" );
-  CERR( "  (a_,b_)の各点逆像による纏め上げをする分枝限定法" );
+  CERR( "  (a_,b_)の各点逆像による纏め上げをする分割統治法" );
   CERR( "  sum_{i,j} f(a_i,b_j)=sum_v #(a_,b_)^{-1}(v) f(v)" );
   CERR( "を検討しましょう。" );
 }
@@ -798,7 +806,7 @@ AC( ExplicitExpressionOrderOfElement )
   } else {
     CERR( "s未満のSの項の数え上げを検討しましょう。" );
     CALL_AC( CountingArrayBoundedTotal );
-    ASK_YES_NO( "Sが固定長変数関数の像で与えられますか？" );
+    ASK_YES_NO( "Sが固定長変数関数の逆像で与えられますか？" );
     if( reply == "y" ){
       CERR( "固定長変数関数の逆像の数え上げ問題は、" );
       CALL_AC( CountingExplicitExpression );
@@ -1039,6 +1047,7 @@ AC( Maximisation )
 	     "グラフの経路に関する最大／最小化問題" ,
 	     "木上の関数に関する最大／最小化問題" ,
 	     "文字列のマッチングに関する最大／最長化問題" ,
+             "分割に関する最大／最小化問題" ,
 	     "確率／期待値の最大化問題" ,
 	     "操作コストの最小化問題" ,
 	     "操作回数の最大化問題" ,
@@ -1070,6 +1079,8 @@ AC( Maximisation )
   } else if( num == num_temp++ ){
     CALL_AC( MaximisationStringMatching );
   } else if( num == num_temp++ ){
+    CALL_AC( MaximisationPartition );
+  } else if( num == num_temp++ ){
     CALL_AC( MaximisationProbability );
   } else if( num == num_temp++ ){
     CALL_AC( MinimisationOperationCost );
@@ -1097,7 +1108,7 @@ AC( MinimisationMovingCost )
   CERR( "１始点多終点コスト最小化を選択してください。" );
   ASK_NUMBER(
 	     "１始点多終点コスト最小化（迷路）問題" ,
-	     "１始点多中間点１終点コスト最小化（二段階迷路）問題" ,
+	     "１始点多中間点１終点コスト最小化（水の採取運搬）問題" ,
 	     "１始点多経由点多終点コスト最小化（スタンプラリー）問題" ,
 	     "多始点１終点コスト最小化（競争）問題" ,
 	     "多始点多終点コスト最大値最小化（開被覆）問題" ,
@@ -1108,13 +1119,14 @@ AC( MinimisationMovingCost )
     CALL_AC( MinimisationSolvingMaze );
   } else if( num == num_temp++ ){
     CERR( "始点から各中間点への最短経路問題と、終点から各中間点への最短径路問題" );
-    CERR( "を解くことで１始点多終点コスト最小化（迷路）問題に帰着されます。" );
+    CERR( "を両方解くことで１始点多終点コスト最小化（迷路）問題に帰着されます。" );
     CALL_AC( MinimisationSolvingMaze );
   } else if( num == num_temp++ ){
     CERR( "- 経由点の経由順序が指定されているならば、グラフの線形グラフに対する" );
     CERR( "  分割統治ダイクストラ法" );
     CERR( "  \\Mathematics\\Geometry\\Graph\\Algorithm\\Dijkstra\\Double\\Errand" );
     CERR( "- 経由点の経由順序が指定されておらずかつ経由点が頂点全体ならば、HeldKarp法" );
+    CERR( "  \\Mathematics\\Geometry\\Graph\\Algorithm\\HeldKarp" );
     CERR( "を検討しましょう。" );
   } else if( num == num_temp++ ){
     CERR( "- 最短経路の始点の特定が不要ならば、始点を１つ追加して元の始点へコスト0の" );
@@ -1392,7 +1404,7 @@ AC( MaximisationFunctionOnArray )
     CERR( "- 「fがv以上の値を取り得るか否か」が判定可能である時は" );
     CERR( "  vに関する二分探索" );
     CERR( "- 何らかの不変量g(a)をyに固定した時のf(a)の最大値F(y)が計算可能" );
-    CERR( "  ならば、yを動かしてF(y)の最大化をする分枝限定法" );
+    CERR( "  ならば、yを動かしてF(y)の最大化をする分割統治法" );
     CERR( "を検討しましょう。" );
   }
 }
@@ -1515,30 +1527,50 @@ AC( Knapsack )
 
 AC( KnapsackInitialSegment )
 {
-  CERR( "価値が非負ならば、先頭から何項選べるかだけが重要であるため" );
-  CERR( "価値とコストの組を価値とみなし直すことでコストのないナップサック問題とみなせます。" );
-  CERR( "価値(A_i)_iの部分和で表せない価値全体の集合が有限の上限Lを持つとします。" );
+  CERR( "価値が非負ならば、先頭から何項選べるかだけが重要なのでコストのみ（コストを" );
+  CERR( "価値とするコストなし価値上限つきナップサック）を考えればよいです。" );
   ASK_YES_NO( "ナップサックは１つですか？" );
   if( reply == "y" ){
-    CERR( "V>Lの場合はVが答えになるので場合分けでV<=Lの場合に帰着し、" );
-    CERR( "後は愚直に求めるか式変形で解きましょう。" );
+    CALL_AC( KnapsackInitialSegmentSingleKnapsack );
   } else {
-    CERR( "ナップサックが２つであるとし、それらの価値上限をそれぞれV_1 <= V_2と置き、" );
-    CERR( "必要ならばソートして(A_i)_iが昇順であるとし、各非負整数nに対し" );
-    CERR( "s_n := sum_{i=0}^{n} A_i" );
-    CERR( "と置き、A_n > 2Lを満たす最小のnをN_1と置き、s_n > V_1を満たす" );
-    CERR( "最大のnをN_2と置き、A_n > V_1を満たす最大のnをN_3と置きます。" );
-    CERR( "選択する項目全体の集合が始切片でなければならないならば、" );
-    CERR( "- N_1 <= N_2ならばmax(V_1-s_n,s_{n+1}-V_1) > Lなのでn+1までの" );
-    CERR( "  項目をうまく組み合わせてV_1が表せるため価値上限V = V_1 + V_2の" );
-    CERR( "  場合に帰着" );
-    CERR( "- N_1 > N_2ならば、N_3未満の各iに対し[0,i]までの選択可能性及び" );
-    CERR( "  選択可能時のナップサック１のみの価値の最大値をV_1'とすると、" );
-    CERR( "  N_3未満の制約を外してもV_1より大きい値はナップサック１に入らない" );
-    CERR( "  ため価値上限V = V_1' + V_2の場合に帰着" );
-    CERR( "を検討しましょう。" );
+    CALL_AC( KnapsackInitialSegmentDoubleKnapsack );
   }
+}
+
+AC( KnapsackInitialSegmentSingleKnapsack )
+{
+  CERR( "- 累積和を愚直に計算していき、Lを超えない最大の項数を計算" );
+  CERR( "- 累積和を式変形で明示的に求め、Lを超えない最大の項数を二分探索" );
+  CERR( "を検討しましょう。" );
   CERR( "\\Mathematics\\Combinatorial\\KnapsackProblem\\Costfree\\InitialSegment" );
+}
+
+AC( KnapsackInitialSegmentDoubleKnapsack )
+{
+  CERR( "コスト(W_i)_iの部分和で表せないコスト全体の集合の上限をLとします。" );
+  CERR( "- 例えばW_i=i^2ならば、L=128です。" );
+  CERR( "  https://oeis.org/A001422" );
+  CERR( "- 例えばW_i=p(i+n)ならば、LはKlove数列" );
+  CERR( "  (6,9,27,45,45,57,75,81,87,105,...)の第n項です。" );
+  CERR( "  \\Mathematics\\Arithmetic\\Prime\\KloveSequence" );
+  CERR( "  https://oeis.org/A007414" );
+  CERR( "ナップサックが２つであるとし、それらのコスト上限をそれぞれC_1 <= C_2とし、" );
+  CERR( "(W_i)_iが昇順であるとします。" );
+  CERR( "- 各非負整数nに対しs_n := sum_{i=0}^{n} W_iと置き、" );
+  CERR( "- W_n > 2Lを満たす最小のnをN_1と置き、" );
+  CERR( "- s_n > C_1を満たす最小のnをN_2と置き、" );
+  CERR( "- W_n > C_1を満たす最小のnをN_3と置きます。" );
+  CERR( "選択する項目全体の集合が始切片でなければならないことから、" );
+  CERR( "- N_1 <= N_2ならば、s_{N_2+1}-s_{N_2} = W_{N_2} > 2Lより" );
+  CERR( "  max(s_{N_2+1}-C_1,C_1-s_{N_2}) > LなのでN_2+1までの項目を" );
+  CERR( "  うまく組み合わせてC_1が表せるため、コスト総和上限CがC_1 + C_2で" );
+  CERR( "  ナップサックが１つの場合に帰着" );
+  CERR( "- N_1 > N_2ならば、N_3未満の各iに対する項iのみを選択する設定で可能な" );
+  CERR( "  選択全体を考えた時のナップサック１のみのコストの最大値をC_1'と置くと、" );
+  CERR( "  N_3以上のiに対する項iはナップサック２にしか入らないため、" );
+  CERR( "  コスト総和上限CがC_1' + C_2でナップサックが１つの場合に帰着" );
+  CERR( "を検討しましょう。以下ナップサックが１つの場合を考えます。" );
+  CALL_AC( KnapsackInitialSegmentSingleKnapsack );
 }
 
 AC( KnapsackInterval )
@@ -1713,18 +1745,26 @@ AC( SingleKnapsackWithMultiCost )
 
 AC( SingleKnapsackCostfree )
 {
-  CERR( "- O(N 2^{N/2})が通りそうならば半分全列挙" );
-  CERR( "  \\Mathematics\\Combinatorial\\KnapsackProblem\\Costfree" );
-  CERR( "- O(N v_max)が通りそうかつ非負ならば[V-v_max,V+v_max]での実現可能性を" );
-  CERR( "  管理する動的計画法" );
-  CERR( "  \\Mathematics\\Combinatorial\\KnapsackProblem\\Costfree" );
-  CERR( "- O(N^4)が間に合いそうかつ選択に負価値の要素と非負価値の要素間で一方向の" );
-  CERR( "  制約があるならば、制約を容量∞の有向辺に対応させ選択するか否かを" );
-  CERR( "  二部マッチングに翻訳し最小カット（最大流）計算" );
-  CERR( "  \\Mathematics\\Geometry\\Graph\\Algorithm\\MaximumFlow" );
-  CERR( "- O((N+V)log_2 V)が通りそうかつ非負かつVが10^5オーダーでプロス素数Pを" );
-  CERR( "  法とするならば法Pでの高速フーリエ変換によるexp(logの総和)計算" );
-  CERR( "  \\Mathematics\\Polynomial\\Truncate" );
+  ASK_YES_NO( "各項が独立に選択でき、かつ選択方法に罰金や報酬がないですか？" );
+  if( reply == "y" ){
+    CERR( "- O(N 2^{N/2})が通りそうならば半分全列挙" );
+    CERR( "  \\Mathematics\\Combinatorial\\KnapsackProblem\\Costfree" );
+    CERR( "- O(N v_max)が通りそうかつ非負ならば[V-v_max,V+v_max]での実現可能性を" );
+    CERR( "  管理する動的計画法" );
+    CERR( "  \\Mathematics\\Combinatorial\\KnapsackProblem\\Costfree" );
+    CERR( "- O((N+V)log_2 V)が通りそうかつ非負かつVが10^5オーダーでプロス素数Pを" );
+    CERR( "  法とするならば法Pでの高速フーリエ変換によるexp(logの総和)計算" );
+    CERR( "  \\Mathematics\\Polynomial\\Truncate" );
+  } else {
+    CERR( "報酬は全部得た上で、実際にはもらえない報酬を差し引く罰金形式に" );
+    CERR( "翻訳し、その上で価値や依存関係や罰金を非負容量の有向辺に翻訳し、" );
+    CERR( "最小カット計算に帰着させましょう。" );
+    CERR( "対応するグラフの頂点数をN、辺の本数をM、流量上限をFと置きます。" );
+    CERR( "- O(N 2^N)が通りそうならばbit全探索" );
+    CERR( "  \\Mathematics\\Geometry\\Graph\\BreadthFirstSearch\\BitExhausiveSearch" );
+    CERR( "- O(min(N^2,F)M)が間に合いそうならば最大流計算" );
+    CERR( "  \\Mathematics\\Geometry\\Graph\\Algorithm\\MaximumFlow" );
+  }
   CERR( "を検討しましょう。" );
 }
 
@@ -1855,7 +1895,10 @@ AC( MaximisationFunctionOnAffineSpace )
 	     "被覆半径の最小化問題"
 	     );
   if( num == num_temp++ ){
-    CERR( "三分探索を検討しましょう。" );
+    CERR( "- 三分探索" );
+    CERR( "  \\Utility\\BinarySearch\\TernarySearch" );
+    CERR( "- 差分の正負に関する二分探索" );
+    CERR( "を検討しましょう。" );
   } else if( num == num_temp++ ){
     CERR( "ニュートン法を検討しましょう。" );
   } else if( num == num_temp++ ){
@@ -1873,33 +1916,37 @@ AC( MaximisationFunctionOnAffineSpace )
 AC( MaximisationSubsetSize )
 {
   ASK_NUMBER(
-	     "部分集合の要素数の最大化問題" ,
-	     "その他の部分集合の価値最大化問題" ,
-	     "部分集合への分割の最小化問題"
+	     "部分集合の価値最大化問題" ,
+	     "部分集合への分割に関する最小化問題"
 	     );
   if( num == num_temp++ ){
-    CALL_AC( SubsetExhusiveSearch );
-    CERR( "- 半順序の極大鎖ならば、後続関数を定義してその逆像を辺とする非輪状有向グラフ" );
-    CERR( "  を構築し、極大元からの最長歩道計算" );
-    CERR( "  \\Mathematics\\Geometry\\Graph\\Acyclic\\LongestWalk\\a.hpp" );
-    CERR( "- 半順序の極大反鎖ならば、" );
-    CERR( "  - 鎖への極小な分割が求まるならば、Dilworthの定理の証明に基く構築" );
-    CERR( "    https://en.wikipedia.org/wiki/Dilworth%27s_theorem#Inductive_proof" );
-    CERR( "  - トポロジカルソートされているならば、始切片としてNに埋め込み、" );
-    CERR( "    半順序と整合的な後続関数S:N->Nを定義して、Sの値が元の集合に入らない" );
-    CERR( "    要素全体の集合をSの単調性を用いて二分探索で計算" );
-    CERR( "- 半開区間の極大排他的集合ならば、区間スケジューリング" );
-    CERR( "  \\Mathematics\\Combinatorial\\IntervalScheduling\\a.hpp" );
-    CERR( "を検討しましょう。" );
-  } else if( num == num_temp++ ){
-    CERR( "コストなしのナップサック問題に他なりません。" );
+    ASK_YES_NO( "各要素の価値は1ですか？" );
+    if( reply == "y" ){
+      CALL_AC( SubsetExhusiveSearch );
+      CERR( "- 半順序集合の極大鎖ならば、後続関数を定義してその逆像を辺とする" );
+      CERR( "  非輪状有向グラフを構築し、極大元からの最長歩道計算" );
+      CERR( "  \\Mathematics\\Geometry\\Graph\\Acyclic\\LongestWalk\\a.hpp" );
+      CERR( "- 半順序集合の極大反鎖ならば、" );
+      CERR( "  - 鎖への極小な分割のサイズを求めてDilworthの定理" );
+      CERR( "    （あくまで個数のみの特定で、証明に基く帰納的構築は遅い）" );
+      CERR( "    https://en.wikipedia.org/wiki/Dilworth%27s_theorem#Inductive_proof" );
+      CERR( "  - トポロジカルソートされているならば、始切片としてNに埋め込み、" );
+      CERR( "    半順序と整合的な後続関数S:N->Nを定義して、Sの値が元の集合に入らない" );
+      CERR( "    要素全体の集合をSの単調性を用いて二分探索で計算" );
+      CERR( "- 半開区間の極大排他的集合ならば、区間スケジューリング" );
+      CERR( "  \\Mathematics\\Combinatorial\\IntervalScheduling\\a.hpp" );
+      CERR( "- 同値関係の独立系の最大化（完全代表系の計算）ならば、深さ１の幅優先探索や" );
+      CERR( "  による連結成分計算" );
+      CERR( "  \\Mathematics\\Geometry\\Graph\\Algorithm\\BreadthFirstSearch\\QuotientSet" );
+      CERR( "を検討しましょう。" );
+      CERR( "" );
+      CERR( "もしくはコストなしのナップサック問題を考えましょう。" );
+    } else {
+      CERR( "コストなしのナップサック問題を考えましょう。" );
+    }
     CALL_AC( SingleKnapsackCostfree );
   } else {
-    CERR( "- 鎖への分割の最小化ならば、極大反鎖からDilworthの定理の証明に基く構築" );
-    CERR( "  https://en.wikipedia.org/wiki/Dilworth%27s_theorem#Inductive_proof" );
-    CERR( "- 完全代表系の計算ならば、幅優先探索やUnionFindによる連結成分計算" );
-    CERR( "  \\Mathematics\\Geometry\\Graph\\Algorithm\\BreadthFirstSearch" );
-    CERR( "  \\Mathematics\\Geometry\\Graph\\Algorithm\\UnionFindForest" );
+    CALL_AC( MinimisationPartitionOfSet );
   }
 }
 
@@ -1980,12 +2027,7 @@ AC( MaximisationFunctionOnTree )
   if( num == num_temp++ ){
     CALL_AC( QueryTree );
   } else if( num == num_temp++ ){
-    CERR( "木を受け取る関数fが与えられているとします。" );
-    CERR( "" );
-    CALL_AC( FunctionOnTree );
-    CERR( "「第i頂点までで切った時のF(P)たちの最大値dp[i]」" );
-    CERR( "を管理するiに関する動的計画法（O(N^2×fの計算量)）" );
-    CERR( "を検討しましょう。" );
+    CALL_AC( MaximisationPartitionOfTree );
   }
 }
 
@@ -2006,6 +2048,50 @@ AC( MaximisationStringMatching )
   CERR( "  分けて内積の最大化（添え字を反転させて適当な法での畳み込み）" );
   CERR( "  \\Mathematics\\Arithmetic\\Mod" );
   CERR( "  \\Mathematics\\Polynomial" );
+  CERR( "を検討しましょう。" );
+}
+
+AC( MaximisationPartition )
+{
+  ASK_NUMBER(
+             "配列の連続部分列への分割に関する最大／最小化問題" ,
+             "集合の部分集合への分割に関する最大／最小化問題" ,
+             "木の部分木への分割に関する最大／最小化問題"
+             );
+  if( num == num_temp++ ){
+    CALL_AC( MinimisationPartitionOfArray );
+  } else if( num == num_temp++ ){
+    CALL_AC( MinimisationPartitionOfSet );
+  } else if( num == num_temp++ ){
+    CALL_AC( MaximisationPartitionOfTree );
+  }
+}
+
+AC( MinimisationPartitionOfArray )
+{
+  CERR( "始切片の分割Pに関する関数f(P)が与えられているとし、[0,N)の分割Pを" );
+  CERR( "わたるf(P)の最大値を考えます。最小値は-fを考えれば良いです。" );
+  CERR( "dp[i] = 「[0,i)の分割Pをわたるf(P)の最大値」" );
+  CERR( "を管理するiに関する動的計画法を検討しましょう。" );
+}
+
+AC( MinimisationPartitionOfSet )
+{
+  CERR( "- 半順序集合の鎖への極小な分割ならば、極大反鎖のサイズを求めて" );
+  CERR( "  Dilworthの定理（あくまで個数のみの特定で、証明に基く帰納的構築は遅い）" );
+  CERR( "  https://en.wikipedia.org/wiki/Dilworth%27s_theorem#Inductive_proof" );
+  CERR( "- 同値関係の同値な要素からなる部分集合への分割の最小化（完全代表系の計算）" );
+  CERR( "  ならば、深さ１の幅優先探索による連結成分計算" );
+  CERR( "  \\Mathematics\\Geometry\\Graph\\Algorithm\\BreadthFirstSearch\\QuotientSet" );
+}
+
+AC( MaximisationPartitionOfTree )
+{
+  CERR( "木を受け取る関数fが与えられているとします。" );
+  CERR( "" );
+  CALL_AC( FunctionOnTree );
+  CERR( "「第i頂点までで切った時のF(P)たちの最大値dp[i]」" );
+  CERR( "を管理するiに関する動的計画法（O(N^2×fの計算量)）" );
   CERR( "を検討しましょう。" );
 }
 
@@ -2244,6 +2330,7 @@ AC( Counting )
 	     "行列の数え上げ問題" ,
 	     "グラフの数え上げ問題" ,
 	     "部分集合の数え上げ問題" ,
+	     "分割の数え上げ問題" ,
 	     "写像の数え上げ問題" ,
 	     "戦略／操作方法の数え上げ問題" ,
 	     "経路の数え上げ問題" ,
@@ -2265,6 +2352,8 @@ AC( Counting )
   } else if( num == num_temp++ ){
     CALL_AC( CountingSubset );
   } else if( num == num_temp++ ){
+    CALL_AC( CountingPartition );
+  } else if( num == num_temp++ ){
     CALL_AC( CountingMap );
   } else if( num == num_temp++ ){
     CALL_AC( CountingStrategy );
@@ -2277,10 +2366,10 @@ AC( Counting )
   } else if( num == num_temp++ ){
     CALL_AC( ExplicitExpressionCountingOperation );
   }
-  // ASK_YES_NO( "サンプルを解析しますか？" );
-  // if( reply == "y" ){
-  //   CALL_AC( SampleAnalyser );
-  // }
+  ASK_YES_NO( "サンプルを解析しますか？" );
+  if( reply == "y" ){
+    CALL_AC( SampleAnalyser );
+  }
 }
 
 AC( CountingNumber )
@@ -2311,7 +2400,7 @@ AC( CountingExplicitExpression )
   CERR( "  \\Mathematics\\Combinatorial\\ZetaTransform" );
   CERR( "- gcd(n,x)=1かつ1<=x<=nを満たすxの数え上げはオイラー関数" );
   CERR( "  \\Mathematics\\Arithmetic\\Mod\\Function\\Euler" );
-  CERR( "- f(g(x),g(y))=cの形ならば以下の分枝限定法：" );
+  CERR( "- f(g(x),g(y))=cの形ならば以下の分割統治法：" );
   CERR( "  - まず各b in im(g)に対しf(a,b) = cを満たすa in im(g)全体を前計算する。" );
   CERR( "  - 次に|dom(g)| = N、max im(g) = Mとして、各y in im(g)に対する" );
   CERR( "    逆像の濃度|g^{-1}(y)|を管理するg_inv[y]を" );
@@ -2322,7 +2411,7 @@ AC( CountingExplicitExpression )
   CERR( "    により管理する。" );
   CERR( "  - 最後に各yごとにf(a,g(y)) = cを満たす各a in im(g)に対しa = g(x)を満たす" );
   CERR( "    xをg_inv[a]で数え上げる" );
-  CERR( "- f(g(x),g(y))<=cの形かつfとgが単調増加するならば以下の分枝限定法：" );
+  CERR( "- f(g(x),g(y))<=cの形かつfとgが単調増加するならば以下の分割統治法：" );
   CERR( "  - まず各b in im(g)に対しf(a,b) <= cを満たすaの上限を二分探索で前計算する。" );
   CERR( "  - 次にそうして得られる各aに対しg(x)<=aを満たすxの上限を二分探索で前計算する。" );
   CERR( "  - 最後に各yごとにb = g(y)に対する前計算結果の総和を求める。" );
@@ -2377,7 +2466,7 @@ AC( CountingArrayInverseImage )
              "fがその他のNに関して再帰的構造を持つ問題" ,
              "fが上記のいずれでもない問題"
              );
-  CERR( "- O(B^N)が間に合いそうならば、全ての配列に対する関数の値の前計算" );
+  CERR( "- O(B^N)が間に合いそうならば、全ての配列に対するfの値の前計算" );
   if( num == 0 ){
     CERR( "- O(N^2 log N)が間に合いそうでかつ配列が有界整数列でfが" );
     CERR( "  非零整数係数ベクトルCによる内積であるならば、" );
@@ -2472,7 +2561,7 @@ AC( CountingArrayMultipleBoundedTotal )
 {
   CERR( "配列を非負整数に翻訳すると、総和を取る順番は関係ないのでsを対応する数に" );
   CERR( "関して昇順に並べてs_0:=0<=s_1<s_2<...としてよく、その場合の数え上げを" );
-  CERR( "sの区間に分割する分枝限定法" );
+  CERR( "sの区間に分割する分割統治法" );
   CERR( "sum_i #(S cap [s_{i-1},s_i)) * i" );
   CERR( "を検討しましょう。特にSが区間でs_i = iならばsum_i iです。" );
 }
@@ -2793,17 +2882,6 @@ AC( CountingDirectedGraph )
   CERR( "を検討しましょう。" );
 }
 
-AC( CountingPartitionOfTree )
-{
-  CERR( "木を受け取る関数fが与えられているとします。" );
-  CERR( "" );
-  CALL_AC( FunctionOnTree );
-  CERR( "F(P)が固定された時のPの数え上げ問題は" );
-  CERR( "「第i成分までで切った時のF(P)=vを満たすPの個数dp[i][v]」" );
-  CERR( "を管理するi,vに関する動的計画法（O(N^2 v_max×fの計算量)）" );
-  CERR( "を検討しましょう。" );
-}
-
 AC( CountingSubset )
 {
   ASK_NUMBER(
@@ -2822,18 +2900,56 @@ AC( CountingSubset )
     CERR( "- 各区間との共通部分の要素数の分布についての条件が課された[0,N)の" );
     CERR( "  部分集合は各始切片との共通部分の要素数の分布の条件に翻訳" );
     CERR( "を検討しましょう。" );
-  } else {
-    CERR( "- 任意有限個の部分集合への排他的分割ならばベル数B(N)" );
-    CERR( "  https://ja.wikipedia.org/wiki/ベル数" );
-    CERR( "- 任意有限個の部分集合への非公差分割や、円上のN頂点の多角形分割や" );
-    CERR( "  円上のN+2角形の三角形分割ならば第Nカタラン数C(N)=(2N)!/((N+1)!N!)" );
-    CERR( "  https://ja.wikipedia.org/wiki/カタラン数" );
-    CERR( "  https://ja.wikipedia.org/wiki/非交差分割" );
-    CERR( "- K個の部分集合への排他的分割ならば第2種スターリング数s(N,K)" );
-    CERR( "  \\Mathematics\\Combinatorial\\StirlingNumber\\SecondKind" );
-    CERR( "  https://ja.wikipedia.org/wiki/スターリング数#組み合わせ数学における意味_2" );
-    CERR( "を検討しましょう。" );
+  } else if( num == num_temp++ ){
+    AC( CountingPartitionOfSet );
   };
+}
+
+AC( CountingPartition )
+{
+  ASK_NUMBER(
+             "配列の連続部分列への分割の数え上げ問題" ,
+             "集合の部分集合への分割の数え上げ問題" ,
+             "木の部分木への分割の数え上げ問題"
+             );
+  if( num == num_temp++ ){
+    AC( CountingPartitionOfArray );
+  } else if( num == num_temp++ ){
+    AC( CountingPartitionOfSet );
+  } else if( num == num_temp++ ){
+    AC( CountingPartitionOfTree );
+  }
+}
+
+AC( CountingPartitionOfArray )
+{
+  CERR( "dp[i] = 「第i成分までで打ち切った配列の分割の個数」" );
+  CERR( "を管理するiに関する動的計画法を検討しましょう。" );
+}
+
+AC( CountingPartitionOfSet )
+{
+  CERR( "- 任意有限個の部分集合への排他的分割ならばベル数B(N)" );
+  CERR( "  https://ja.wikipedia.org/wiki/ベル数" );
+  CERR( "- 任意有限個の部分集合への非公差分割や、円上のN頂点の多角形分割や" );
+  CERR( "  円上のN+2角形の三角形分割ならば第Nカタラン数C(N)=(2N)!/((N+1)!N!)" );
+  CERR( "  https://ja.wikipedia.org/wiki/カタラン数" );
+  CERR( "  https://ja.wikipedia.org/wiki/非交差分割" );
+  CERR( "- K個の部分集合への排他的分割ならば第2種スターリング数s(N,K)" );
+  CERR( "  \\Mathematics\\Combinatorial\\StirlingNumber\\SecondKind" );
+  CERR( "  https://ja.wikipedia.org/wiki/スターリング数#組み合わせ数学における意味_2" );
+  CERR( "を検討しましょう。" );
+}
+
+AC( CountingPartitionOfTree )
+{
+  CERR( "木を受け取る関数fが与えられているとします。" );
+  CERR( "" );
+  CALL_AC( FunctionOnTree );
+  CERR( "F(P)が固定された時のPの数え上げ問題は" );
+  CERR( "「第i成分までで切った時のF(P)=vを満たすPの個数dp[i][v]」" );
+  CERR( "を管理するi,vに関する動的計画法（O(N^2 v_max×fの計算量)）" );
+  CERR( "を検討しましょう。" );
 }
 
 AC( CountingMap )
@@ -3967,9 +4083,12 @@ AC( DecisionPresentability )
 
 AC( Construction )
 {
-  CERR( "存在定理に帰着できる問題は構成的証明を実装しましょう。" );
-  CERR( "入力に関して再帰的に構築する方法を探すために、入力制約より一般化して" );
-  CERR( "（例えば多変数化して）考察し、小さいケースの実験をしましょう。" );
+  CERR( "- 存在定理に帰着できる問題は構成的証明を実装" );
+  CERR( "- 小さいケースで実験できる時は" );
+  CERR( "  - 小さいケースでの構築を自然に拡張" );
+  CERR( "  - 入力に関して再帰的に構築する方法を探すために、入力制約より一般化したり" );
+  CERR( "  （例えば多変数化して）逆に制約を追加したりして考察" );
+  CERR( "を検討しましょう。" );
   ASK_NUMBER(
 	     "数やベクトルに関する構築" ,
 	     "配列や文字列に関する構築" ,
@@ -4022,6 +4141,8 @@ AC( ConstructionArray )
     CERR( "- １つの配列の構成は、p進法や階差数列への翻訳を検討しましょう。" );
     CERR( "- 何らかの関数値が一致する２つの配列の構成は、鳩の巣原理をもとに" );
     CERR( "  動かすパラメータを設定し、全探策を検討しましょう。" );
+    CERR( "- 順列の構成は、階乗進法や互換表示や巡回置換表示を検討し、" );
+    CERR( "  小さいケースに帰着させるためにnext_permutationで実験しましょう。" );
   } else {
     CALL_AC( ConstructionPartition );
   }
@@ -4049,7 +4170,7 @@ AC( ConstructionOperationOnGraph )
   ASK_NUMBER(
 	     "最短経路の構築" ,
 	     "最長経路の構築" ,
-	     "グリッド操作の構築"
+	     "グリッドやユークリッド空間内での操作の構築"
 	     );
   if( num == num_temp++ ){
     CERR( "最短経路探索アルゴリズムで経路復元をしましょう。" );
