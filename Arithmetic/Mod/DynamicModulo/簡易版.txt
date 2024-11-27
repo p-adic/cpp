@@ -1,0 +1,20 @@
+struct ModB
+{
+  int m_n;
+  static int g_B;
+  constexpr ModB() : m_n() {};
+  inline ModB( int n , const bool& reduced = false ) : m_n( reduced ? n : ( n %=g_B ) < 0 ? n += g_B : n ) {};
+  inline ModB( const ModB& n ) : m_n( n.m_n ) {};
+  inline ModB( ModB&& n ) : m_n( move( n.m_n ) ) {};
+  inline ModB& operator=( const ModB& n ) { m_n = n.m_n; return *this; }
+  inline ModB& operator=( ModB&& n ) { m_n = move( n.m_n ); return *this; }
+  inline ModB& operator+=( const ModB& n ) { ( m_n += n.m_n ) < g_B ? m_n : m_n -= g_B; return *this; }
+  inline ModB& operator-=( const ModB& n ) { ( m_n -= n.m_n ) < 0 ? m_n += g_B : m_n; return *this; }
+  inline ModB& operator*=( const ModB& n ) { m_n = ll( m_n ) * n.m_n % g_B; return *this; }
+};
+
+int ModB::g_B = 1;
+inline ModB operator+( const ModB& n0 , const ModB& n1 ) { int n = n0.m_n + n1.m_n; return ModB( n < ModB::g_B ? n : n -= ModB::g_B , true ); }
+inline ModB operator-( const ModB& n ) { return ModB( n.m_n == 0 ? 0 : ModB::g_B - n.m_n , true ); }
+inline ModB operator-( const ModB& n0 , const ModB& n1 ) { int n = n0.m_n - n1.m_n; return ModB( n < 0 ? n += ModB::g_B : n , true ); }
+inline ModB operator*( const ModB& n0 , const ModB& n1 ) { return ModB( ll( n0.m_n ) * n1.m_n % ModB::g_B , true ); }

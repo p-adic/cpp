@@ -1,6 +1,0 @@
-#ifdef DEBUG
-  #include "c:/Users/user/Documents/Programming/Mathematics/SetTheory/Mex/Reversible/Multiset/a_Body.hpp"
-#else
-CL ReversibleMexMultiset{PU:int m_QuerySZ;set<int> m_comp;map<int,int> m_mult;IN ReversibleMexMultiset(CRI QuerySZ);IN int count(CRI i)CO;IN bool in(CRI i)CO;IN VO insert(CRI i);IN VO erase(CRI i);IN CRI mex()CO;};
-IN ReversibleMexMultiset::ReversibleMexMultiset(CRI QuerySZ):m_QuerySZ(QuerySZ),m_comp(),m_mult(){for(int i = 0;i <= m_QuerySZ;i++){m_comp.insert(i);}}IN int ReversibleMexMultiset::count(CRI i)CO{AS(i >= 0);auto IT = m_mult.lower_bound(i);RE IT == m_mult.EN()|| IT->first != i?0:IT->second;}IN bool ReversibleMexMultiset::in(CRI i)CO{RE count(i)> 0;}IN VO ReversibleMexMultiset::insert(CRI i){AS(i >= 0);if(i <= m_QuerySZ){m_comp.erase(i);}m_mult[i]++;}IN VO ReversibleMexMultiset::erase(CRI i){AS(i >= 0);auto IT = m_mult.lower_bound(i);if(IT == m_mult.EN()|| IT->first != i){RE;}if(--IT->second == 0){m_mult.erase(IT);if(i <= m_QuerySZ){m_comp.insert(i);}}}IN CRI ReversibleMexMultiset::mex()CO{AS(!m_comp.empty());RE *(m_comp.BE());}
-#endif

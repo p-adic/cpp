@@ -1,3 +1,0 @@
-def QuadraticResidueSymbol(a,p):
-    a=pow(a,(p-1)/2,p)
-    return a if a<2 else -1

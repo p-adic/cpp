@@ -1,0 +1,17 @@
+#verify:https://yukicoder.me/submissions/1021227
+#D[i][j]にiをj以上の整数の昇順和に分割する方法の個数を格納する（合計O(N^2)）
+X=R(N+1)
+D=[[i==j for j in X]for i in X]
+for i in X:
+	for j in R(i-1,-1,-1):D[i][j]=D[i][j+1]+D[i-j][j]
+#D=[D[i][1]for i in X]
+#通常の分割数
+
+#verify:https://yukicoder.me/submissions/1015750
+#D[i][j]にiをj以下の正整数の昇順和に分割する方法の個数を格納する（合計O(N^2)）
+X=R(N+1)
+D=[[i==j<1for j in X]for i in X]
+for i in X:
+	for j in X:D[i][j]=(D[i][j-1]if j else 0)+(0if i<j else D[i-j][j])
+#iをj個の非負整数の昇順和に分割する方法の個数や
+#iをj個以下の正整数の昇順和に分割する方法の個数とも等しい。

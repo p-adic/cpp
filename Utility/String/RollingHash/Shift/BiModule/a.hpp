@@ -4,6 +4,9 @@
 #include "../a.hpp"
 #include "../../../../../Mathematics/Algebra/Monoid/Group/Module/BiModule/a.hpp"
 
+// verify:
+// https://yukicoder.me/submissions/1021517
+
 // ShiftableRollingHashのコードの生成するモノイドのグロタンディーク化で得られる
 // 非可換Z[Z/26Z]加群に相当する型。
 template <typename MODINT = Mod<999309403> , typename INT = int , typename CODE = tuple<MODINT,MODINT,INT>>

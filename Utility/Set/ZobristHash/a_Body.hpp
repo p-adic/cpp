@@ -3,6 +3,8 @@
 #pragma once
 #include "a.hpp"
 
+#include "../Mathematics/Function/Map/a_Body.hpp"
+
 template <typename T> inline ZobristHashBody<T>::ZobristHashBody( const ull& hash ) : m_hash( hash ) {}
 inline ZobristHash::ZobristHash( const ull& hash ) : ZobristHashBody<ull>( hash ) {}
 template <typename T> inline MemorisationZobristHash<T>::MemorisationZobristHash( const ull& hash ) : ZobristHashBody<T>( hash ) {}
@@ -24,11 +26,9 @@ template <typename T> ull ZobristHashBody<T>::Encode( const set<T>& S )
 
 }
 
-template <typename T> inline ull ZobristHashBody<T>::Encode( const list<T>& S , const bool& non_overlapping ) { return non_overlapping ? NonOverlappingEncode( S ) : OverlappingEncode( S ); }
+template <typename T> template <template <typename...> Vs> inline ull ZobristHashBody<T>::Encode( const V<T>& S , const bool& non_overlapping ) { return non_overlapping ? NonOverlappingEncode( S ) : OverlappingEncode( S ); }
 
-template <typename T> template <int length_max> inline ull ZobristHashBody<T>::Encode( const T ( &a )[length_max] , const int& length , const bool& non_overlapping ) { return non_overlapping ? NonOverlappingEncode( a , length ) : OverlappingEncode( a , length ); }
-
-template <typename T> ull ZobristHashBody<T>::OverlappingEncode( const list<T>& S )
+template <typename T> template <template <typename...> V> ull ZobristHashBody<T>::OverlappingEncode( const V<T>& S )
 {
 
   set<T> S_set{};
@@ -43,22 +43,7 @@ template <typename T> ull ZobristHashBody<T>::OverlappingEncode( const list<T>& 
 
 }
 
-template <typename T> template <int length_max> ull ZobristHashBody<T>::OverlappingEncode( const T ( &a )[length_max] , const int& length )
-{
-
-  set<T> S_set{};
-
-  for( int i = 0 ; i < length ; i++ ){
-
-    S_set.insert( a[i] );
-
-  }
-
-  return Encode( S_set );
-
-}
-
-template <typename T> ull ZobristHashBody<T>::NonOverlappingEncode( const list<T>& S )
+template <typename T> template <template <typename...> V> ull ZobristHashBody<T>::NonOverlappingEncode( const V<T>& S )
 {
 
   ull answer = 0;
@@ -71,21 +56,6 @@ template <typename T> ull ZobristHashBody<T>::NonOverlappingEncode( const list<T
 
   return answer;
   
-}
-
-template <typename T> template <int length_max> ull ZobristHashBody<T>::NonOverlappingEncode( const T ( &a )[length_max] , const int& length )
-{
-
-  ull answer = 0;
-
-  for( int i = 0 ; i < length ; i++ ){
-
-    answer ^= Hash( a[i] );
-
-  }
-
-  return answer;
-
 }
 
 template <typename T> inline ull ZobristHashBody<T>::SymmetricDifference( const ull& code0 , const ull& code1 ) { return code0 ^ code1; }

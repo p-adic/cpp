@@ -1,0 +1,11 @@
+#ifdef DEBUG
+  #include "c:/Users/user/Documents/Programming/Mathematics/Arithmetic/Prime/Enumeration/Heap/a_Body.hpp"
+#else
+// val_limit = 316 à sqrt(1e5) -> length = 65
+// val_limit = 448 à sqrt(2e5) -> length = 86
+// val_limit = 1e5 -> length = 9592
+// val_limit = 1e6 -> length = 78498
+CL HeapPrimeEnumeration{PU:int m_val_limit;VE<bool> m_is_composite;VE<int> m_val;int m_le;IN HeapPrimeEnumeration(CRI val_limit);IN CRI OP[](CRI i)CO;IN CRI Get(CRI i)CO;IN bool IsComposite(CRI n)CO;IN CRI length()CO NE;};
+IN HeapPrimeEnumeration::HeapPrimeEnumeration(CRI val_limit):m_val_limit(val_limit),m_is_composite(m_val_limit),m_val(),m_le(0){for(int i = 2;i < m_val_limit;i++){if(! m_is_composite[i]){if(i <=(m_val_limit - 1)/ i){for(int j = i * i;j < val_limit;j += i){m_is_composite[j]= true;}}m_val.push_back(i);}}m_le = m_val.SZ();}IN CRI HeapPrimeEnumeration::OP[](CRI i)CO{AS(0 <= i && i < m_le);RE m_val[i];}IN CRI HeapPrimeEnumeration::Get(CRI i)CO{RE OP[](i);}IN bool HeapPrimeEnumeration::IsComposite(CRI n)CO{AS(0 <= n && n < m_val_limit);RE m_is_composite[n];}IN CRI HeapPrimeEnumeration::length()CO NE{RE m_le;}
+#endif
+

@@ -1,0 +1,6 @@
+#ifdef DEBUG
+  #include "c:/Users/user/Documents/Programming/Mathematics/Geometry/AffineSpace/Distance/Linfty/a_Body.hpp"
+#else
+TE <TY INT> IN INT Linfty(CO INT& x,CO INT& y){RE max(abs(x),abs(y));}TE <TY INT> IN INT Linfty(CO pair<INT,INT>& v){RE Linfty(v.first,v.second);}TE <TY INT> IN INT Linfty_Distance(CO INT& x0,CO INT& y0,CO INT& x1,CO INT& y1){RE Linfty(x0 - x1,y0 - y1);}TE <TY INT> IN INT Linfty_Distance(CO pair<INT,INT>& v0,CO pair<INT,INT>& v1){RE Linfty(v0.first - v1.first,v0.second - v1.second);}
+#endif
+

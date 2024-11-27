@@ -1,0 +1,52 @@
+# エラトステネスの篩O(L log log L)
+# PにL未満の素数を、Cに合成数か否かを、pにPi関数の値（引数以下の素数の個数）を格納する。
+L=11**5
+P=[]
+C=[0]*L
+p=[0]*L
+for i in R(2,L):
+	if C[i]<1:
+		P+=[i]
+		j=i*i
+		while j<L:C[j],j=1,j+i
+	p[i]=len(P)
+
+
+#√n以下の素数を格納したPを用いてnの素因数分解と同時にオイラー関数を計算
+E=[];e=n
+for p in P:
+	c=0
+	while n%p<1:n//=p;c+=1
+	if c:E+=[[p,c]];e=e//p*(p-1)
+if n>1:E+=[[n,1]];e=e//n*(n-1)
+
+#verify:https://yukicoder.me/submissions/993122
+#ポラードのρ法O(n^{1/4})（ヒューリスティック）
+#Pにnの素因数分解（素因数とその指数の組）を格納する。
+#ただし反復回数の見積もりはヒューリスティックな未解決問題であり
+#n>=9**8の時はPの各成分の第1成分が実際に素数となるかは不明。
+P,t=set(),n
+for i in R(2,min(n+1,9**6)):
+	if t%i<1:P.add(i)
+	while t%i<1:t//=i
+D=[t]*(t>1)
+from math import gcd as G
+while D:
+	t=D.pop();c=int(t**0.25)*9
+	if t<9**8:P.add(t)
+	else:
+		while c:
+			x,d=c,1
+			y=(x*x+1)%t
+			while(d==1)*c:x,y,d,c=(x*x+1)%t,(y**4+2*y*y+2)%t,G(abs(x-y),t),c-1
+			if(0<d<t)*c:t//=d;c=G(t,d);D+=[t//c,d//c,c];break
+		else:P.add(t)
+P.discard(1)
+P=list(P)
+t=n
+for i in R(len(P)):
+	p,c=P[i],0
+	while t%p<1:t//=p;c+=1
+	P[i]=[p,c]
+	assert(c)
+assert(t<2)

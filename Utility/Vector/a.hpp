@@ -22,3 +22,6 @@ template <typename T = int> inline vector<T> id( const int& size );
 
 template <typename T> inline void Sort( vector<T>& a , const bool& reversed = false );
 template <typename T> inline vector<int> IndexSort( const vector<T>& a , const bool& reversed = false );
+
+template <typename T , typename U = T> inline U Sum( const vector<T>& a );
+template <typename T , typename U = T> inline U Product( const vector<T>& a );

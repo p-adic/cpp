@@ -1,5 +1,5 @@
 #ifdef DEBUG
-  #include "c:/Users/user/Documents/Programming/Utility/BinarySearch/Set/a_Body.hpp"
+  #include "c:/Users/user/Documents/Programming/Mathematics/Utility/BinarySearch/Set/a_Body.hpp"
 #else
 TE <TY T> IN TY set<T>::const_iterator MaximumLeq(CO set<T>& S,CO T& t){auto IT = S.upper_bound(t);RE IT == S.BE()?S.EN():--IT;}TE <TY T,TY U> IN TY map<T,U>::iterator MaximumLeq(map<T,U>& f,CO T& t){auto IT = f.upper_bound(t);RE IT == f.BE()?f.EN():--IT;}TE <TY T> IN TY set<T>::const_iterator MaximumLt(CO set<T>& S,CO T& t){auto IT = S.lower_bound(t);RE IT == S.BE()?S.EN():--IT;}TE <TY T,TY U> IN TY map<T,U>::iterator MaximumLt(map<T,U>& f,CO T& t){auto IT = f.lower_bound(t);RE IT == f.BE()?f.EN():--IT;}TE <TY T> IN TY set<T>::const_iterator MinimumGeq(CO set<T>& S,CO T& t){RE S.lower_bound(t);}TE <TY T,TY U> IN TY map<T,U>::iterator MinimumGeq(map<T,U>& f,CO T& t){RE f.lower_bound(t);}TE <TY T> IN TY set<T>::const_iterator MinimumGt(CO set<T>& S,CO T& t){RE S.upper_bound(t);}TE <TY T,TY U> IN TY map<T,U>::iterator MinimumGt(map<T,U>& f,CO T& t){RE f.upper_bound(t);}
 #endif

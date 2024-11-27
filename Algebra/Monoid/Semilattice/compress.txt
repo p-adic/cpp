@@ -1,0 +1,4 @@
+// êÊÇ…../../compress.txtÇì\ÇÈÅB
+
+TE <TY U>CL VirtualMeetSemilattice:VI PU VirtualMonoid<U>{PU:IN U Meet(U u0,CO U& u1);};TE <TY U>CL MinSemilattice:VI PU VirtualMeetSemilattice<U>,PU PointedSet<U>{PU:IN MinSemilattice(U infty_U);IN U Product(U u0,CO U& u1);};TE <TY U>CL MaxSemilattice:VI PU VirtualMeetSemilattice<U>,PU PointedSet<U>{PU:IN MaxSemilattice(U zero_U);IN U Product(U u0,CO U& u1);};
+TE <TY U> IN U VirtualMeetSemilattice<U>::Meet(U u0,CO U& u1){RE TH->Product(MO(u0),u1);}TE <TY U> IN MinSemilattice<U>::MinSemilattice(U infty_U):PointedSet<U>(MO(infty_U)){}TE <TY U> IN MaxSemilattice<U>::MaxSemilattice(U zero_U):PointedSet<U>(MO(zero_U)){}TE <TY U> IN U MinSemilattice<U>::Product(U u0,CO U& u1){RE u0 < u1?MO(u0):u1;}TE <TY U> IN U MaxSemilattice<U>::Product(U u0,CO U& u1){RE u1 < u0?MO(u0):u1;}

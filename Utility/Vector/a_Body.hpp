@@ -19,4 +19,7 @@ template <typename T> inline void Sort( vector<T>& a , const bool& reversed ) { 
 
 template <typename T> inline vector<int> IndexSort( const vector<T>& a , const bool& reversed ) { auto index = id<int>( a.size() ); if( reversed ){ sort( index.begin() , index.end() , [&]( const int& i , const int& j ) { return a[j] < a[i]; } ); } else { sort( index.begin() , index.end() , [&]( const int& i , const int& j ) { return a[i] < a[j]; } ); } return index; }
 
+template <typename T , typename U> inline U Sum( const vector<T>& a ) { U answer{}; for( auto& x : a ){ answer += x; } return answer; }
+template <typename T , typename U> inline U Product( const vector<T>& a ) { U answer{}; for( auto& x : a ){ answer *= x; } return answer; }
+
     

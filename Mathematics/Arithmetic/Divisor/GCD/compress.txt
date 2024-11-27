@@ -1,6 +1,0 @@
-#ifdef DEBUG
-  #include "c:/Users/user/Documents/Programming/Mathematics/Arithmetic/Divisor/GCD/a_Body.hpp"
-#else
-IN int GCD(){RE 0;}TE <TY INT1,TY...INT2>INT1 GCD(INT1 b_0,INT2... args){b_0 < 0?b_0 = -b_0:b_0;INT1 b_1 = GCD(MO(args)...);WH(b_1 != 0){swap(b_0 %= b_1,b_1);}RE MO(b_0);}TE <TY INT,TE <TY...> TY V>INT GCD(V<INT> a){INT AN = 0;for(auto& b:a){AN = GCD(MO(AN),b);}RE AN;}IN int LCM(){RE 0;}TE <TY INT1,TY...INT2>INT1 LCM(INT1 b_0,INT2... args){b_0 < 0?-b_0:b_0;INT1 b_1 = LCM(MO(args)...);RE b_1 == 0?b_0:b_0 / GCD(b_0,b_1)* b_1;}TE <TY INT,TE <TY...> TY V>INT LCM(V<INT> a){INT AN = 1;for(auto& b:a){AN = LCM(MO(AN),b);}RE AN;}
-#endif
-

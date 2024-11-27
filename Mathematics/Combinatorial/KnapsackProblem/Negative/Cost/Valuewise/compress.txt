@@ -1,6 +1,0 @@
-#ifdef DEBUG
-  #inclde "c:/Users/user/Documents/Programming/Mathematics/Combinatorial/KnapsackProblem/Negative/Cost/MinimalCostSum/a_Body.hpp"
-#else
-TE <TY INT,TY U,TY COMM_MONOID>VE<U> AbstractNegativeCostBoundedValueSumValuewiseKnapsack(COMM_MONOID M,CO VE<INT>& value,CO INT& value_sum_bound,CO VE<U>& cost,CO U& cost_sum_lbound,CO U& exceptional){AS(value_sum_bound >= 0);CO int N = value.SZ();AS(int(cost.SZ())== N);VE cost_min(value_sum_bound + 1,exceptional);CO U& one = M.One();AS(!(one < cost_sum_lbound));cost_min[0]= one;for(int i = 0;i < N;i++){auto& value_i = value[i];AS(value_i >= 0);auto& cost_i = cost[i];for(INT v = value_sum_bound,v_plus = v + 1;v_plus > value_i;v--,v_plus--){auto& cost_min_v_i = cost_min[v - value_i];if(cost_min_v_i != exceptional){auto temp = M.Product(cost_min[v - value_i],cost_i);if(!(temp < cost_sum_lbound)){auto& cost_min_v = cost_min[v];cost_min_v = cost_min_v == exceptional?MO(temp):min(cost_min_v,temp);}}}}RE cost_min;}TE <TY INT1,TY INT2> IN VE<INT2> NegativeCostBoundedValueSumValuewiseKnapsack(CO VE<INT1>& value,CO INT1& value_sum_bound,CO VE<INT2>& cost,CO INT2& cost_sum_lbound,CO INT2& exceptional){RE AbstractNegativeCostBoundedValueSumValuewiseKnapsack(AdditiveMonoid<INT2>(),value,value_sum_bound,cost,cost_sum_lbound,exceptional);}
-#endif
-

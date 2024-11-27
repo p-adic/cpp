@@ -1,0 +1,80 @@
+def TwoDimensionalAllNearestNeighbourNonBalanced( d2 , S , T ):
+	S_size = len(S)
+	if S_size == 0:return[]
+	T_size = len(T)
+	assert( T_size > 0 )
+	if T_size == 1:return[[0]for i in R(S_size)]
+	x_min,y_min = T[0]
+	x_max,y_max = T[0]
+	for j in R(1,T_size):
+		x,y = T[j]
+		x_min = min( x_min , x ); x_max = max( x , x_max )
+		y_min = min( y_min , y ); y_max = max( y , y_max )
+	neighbours = [[[1,0]]for i in R(S_size)]
+	updatable = [1]*S_size
+	divisible_block = [[x_min , x_max , y_min , y_max , list(R(T_size))]]
+	indivisible_block = []
+	while divisible_block:
+		divisible_block_size = len(divisible_block)
+		next_divisible_block = []
+		Partition = [[]for num in R(divisible_block_size)]
+		for num in R(divisible_block_size):
+			x_min,x_max,y_min,y_max,t = divisible_block[num]
+			x_mid = ( x_min + x_max ) // 2
+			y_mid = ( y_min + y_max ) // 2
+			block_sub = [[[0]*4+[[]]for num_y in R(2)]for num_x in R(2)]
+			for j in t:
+				x,y = T[j]
+				x_min_sub,x_max_sub,y_min_sub,y_max_sub,t_sub = block_sub[x > x_mid][y > y_mid]
+				if t_sub:
+					x_min_sub = min( x_min_sub , x ); x_max_sub = max( x , x_max_sub )
+					y_min_sub = min( y_min_sub , y ); y_max_sub = max( y , y_max_sub )
+				else:x_min_sub = x_max_sub = x; y_min_sub = y_max_sub = y
+				t_sub += [j]
+				block_sub[x > x_mid][y > y_mid] = [x_min_sub,x_max_sub,y_min_sub,y_max_sub,t_sub]
+			for num_x in R(2):
+				for num_y in R(2):
+					block_xy = block_sub[num_x][num_y]
+					t_size = len(block_xy[4])
+					if t_size != 0:
+						if t_size == 1:
+							Partition[num] += [[ 0 , len(indivisible_block) ]]
+							indivisible_block += [block_xy]
+						else:
+							Partition[num] += [[ 1 , len(next_divisible_block) ]]
+							next_divisible_block += [block_xy]
+		divisible_block = next_divisible_block
+		for i in R(S_size):
+			if not updatable[i]:continue
+			updatable[i] = 0
+			neighbour_partition = []
+			for coord in neighbours[i]:
+				divisible,num = coord
+				if divisible:
+					for coord_sub in Partition[num]:neighbour_partition += [coord_sub]
+				else:neighbour_partition += [coord]
+			x,y = S[i]
+			def d2_max( coord ):
+				divisible,num = coord
+				x_min,x_max,y_min,y_max,t = ( divisible_block if divisible else indivisible_block )[num]
+				return d2( [ 0 , 0 ] , [ max( abs( x - x_min ) , abs( x_max - x ) ) , max( abs( y - y_min ) , abs( y_max - y ) ) ] )
+			def d2_min( coord ):
+				divisible,num = coord
+				x_min,x_max,y_min,y_max,t = ( divisible_block if divisible else indivisible_block )[num]
+				return d2( S[i] , [ x_min if x < x_min else x_max if x_max < x else x , y_min if y < y_min else y_max if y_max < y else y ] )
+			d2_max_min = min( d2_max( np )for np in neighbour_partition )
+			neighbours[i] = []
+			for np in neighbour_partition:
+				if d2_min( np ) <= d2_max_min:
+					updatable[i] |= np[0]
+					neighbours[i] += [np]
+	answer = [[]for i in R(S_size)]
+	for i in R(S_size):
+		for divisible,num in neighbours[i]:
+			assert( not divisible )
+			x_min,x_max,y_min,y_max,t = indivisible_block[num]
+			assert( len(t) == 1 and x_min == x_max == T[t[0]][0] and y_min == y_max == T[t[0]][1] )
+			answer[i] += [t[0]]
+	return answer
+
+

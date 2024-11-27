@@ -1,6 +1,0 @@
-#ifdef DEBUG
-  #include "c:/Users/user/Documents/Programming/Mathematics/Arithmetic/Power/a_Body.hpp"
-#else
-TE <TY T> IN T Square(CO T& t){RE t * t;}TE <TY T,TY UINT>T Power(T t,UINT EX){T AN =(EX & 1)== 1?t:1;EX >>= 1;WH(EX > 0){t = Square(t);(EX & 1)== 1?AN *= t:AN;EX >>= 1;}RE AN;}TE <TY T,TY UINT>T Power(T t,UINT EX,T init){(EX & 1)== 1?init *= t:init;EX >>= 1;WH(EX > 0){t = Square(t);(EX & 1)== 1?init *= t:init;EX >>= 1;}RE MO(init);}
-#endif
-

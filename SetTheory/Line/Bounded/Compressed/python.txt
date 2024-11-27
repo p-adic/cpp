@@ -1,0 +1,175 @@
+#verify:
+#https://yukicoder.me/submissions/1002450 (insert, erase, ConnectedComponentOf)
+#https://yukicoder.me/submissions/1007707 (insert,InitialSegmentCount,IntervalCount)
+
+def rec_str(a):return"".join(["[",", ".join(rec_str(x)for x in a),"]"])if isinstance(a,list)else str(a)
+class BIT:
+	def __init__(self,x):
+		if isinstance(x,int):
+			self.N=x
+			self.F=[0]*(x+1)
+		else:
+			self.N=len(x)
+			self.F=[0]*(self.N+1)
+			for j in R(1,self.N+1):
+				i=j-1
+				self.F[j]=x[i]
+				k=j-(j&-j)
+				while i>k:
+					self.F[j]+=self.F[i]
+					i-=i&-i
+	def copy(self):
+		a=__class__([])
+		a.N=self.N
+		a.F=self.F[:]
+		return a
+	def Add(self,i,u):
+		i+=1
+		while i<=self.N:
+			self.F[i]+=u
+			i+=i&-i
+	def Set(self,i,u):self.Add(i,u-self.Get(i))
+	def Get(self,i):return self.IntervalSum(i,i)
+	def InitialSegmentSum(self,r):
+		assert(r>-2)
+		a=0
+		i=min(r+1,self.N)
+		while i:
+			a+=self.F[i]
+			i-=i&-i
+		return a
+	def IntervalSum(self,l,r):return self.InitialSegmentSum(r)-self.InitialSegmentSum(l-1)
+	def list(self):return[self.Get(i)for i in R(self.N)]
+	def __str__(self):return rec_str(self.list())
+	def Search(self,u):#Computing minimum of j such that InitialSegmentSum(j)>=u or j==N
+		j=s=n=0
+		p=1<<17 #131072
+		while p:
+			k=j|p
+			p>>=1
+			if k<=self.N:
+				n+=self.F[k]
+				if n<u:s,j=n,k
+				else:n=s
+		return j
+
+class NonNegativeLineSubset:
+	def __init__(self,ubound):
+		assert(-1<=ubound)
+		self.ubound=ubound
+		self.bit=BIT(ubound+1)
+	def copy(self):
+		a=__class__([])
+		a.ubound=self.ubound
+		a.bit=self.bit.copy()
+		return a
+	def insert(self,i):assert(0<=i<=self.ubound);self.bit.Set(i,1)
+	def erase(self,i):self.bit.Set(i,0)
+	def count(self,i):return self.bit.Get(i)if 0<=i<=self.ubound else 0
+	def find(self,i):return self.count(i)>0
+	def InitialSegmentCount(self,i_final):return self.bit.InitialSegmentSum(i_final)
+	def IntervalCount(self,i_start,i_final):return self.bit.IntervalSum(i_start,i_final)
+	def empty(self):return self.InitialSegmentCount(self.ubound)<1
+	def MaximumLeq(self,i,k=0):#Returning -1 if not exists
+		num=self.InitialSegmentCount(i)-k
+		def f(sum,j):return i<=j or num<=sum
+		a=self.Search(f)
+		return a if num>=0 and self.find(a)else -1
+	def MaximumLt(self,i,k=0):return self.MaximumLeq(i-1,k)
+	def MinimumGeq(self,i,k=0):return self.MinimumGt(i-1,k)
+	def MinimumGt(self,i,k=0):#Returning ubound+1 if not exists
+		num=self.InitialSegmentCount(i)+k
+		def f(sum,j):return i<j and num<sum
+		return self.Search(f)
+	def Maximum(self,k=0):return self.MaximumLeq(self.ubound,k)
+	def Minimum(self,k=0):return self.MinimumGeq(0,k)
+	def RightEndPointOf(self,i,b=False):
+		if not b and not self.find(i):return i-1
+		c=i-self.InitialSegmentCount(i)
+		def f(sum,j):return i<=j and sum+c<j
+		return self.Search(f)-1
+	def LeftEndPointOf(self,i,b=False):
+		if not b and not self.find(i):return i+1
+		c=i-self.InitialSegmentCount(i)
+		def f(sum,j):return i<=j or(self.find(j)and sum+c==j)
+		return self.Search(f)
+	def ConnectedComponentOf(self,i,b=False):
+		if not b:b=self.find(i)
+		return[self.LeftEndPointOf(i,b),self.RightEndPointOf(i,b)]
+	def GetConnectedComponent(self):
+		a=[]
+		l=self.Minimum()
+		while l<=self.ubound:
+			r=self.RightEndPointOf(l,True)
+			a+=[[l,r]]
+			l=self.MinimumGt(r)
+		return a
+	def __str__(self):return rec_str(self.GetConnectedComponent())
+	def ubound(self):return self.ubound
+
+	#private:
+	def Search(self,f):#Computing minimum of j satisfying f(bit.InitialSegmentSum(j),j) or j==bit.N
+		j=s=n=0
+		p=1<<17 #131072
+		while p:
+			k=j|p
+			p>>=1
+			if k<=self.bit.N:
+				n+=self.bit.F[k]
+				if f(n,k-1):n=s
+				else:s,j=n,k
+		return j
+
+class CompressedSortedSet:
+	def __init__(self,X):
+		self.sorted_list=sorted(set(X))
+		N=len(self.sorted_list)
+		self.compressed_coordinate={self.sorted_list[i]:i for i in R(N)}
+		self.nnls=NonNegativeLineSubset(N-1)
+	def copy(self):
+		a=__class__([])
+		a.sorted_list=self.sorted_list[:]
+		a.compressed_coordinate=self.copy()
+		a.nnls=self.nnls.copy()
+		return a
+	def insert(self,i):self.nnls.insert(self.compressed_coordinate[i])
+	def erase(self,i):self.nnls.erase(self.compressed_coordinate[i])
+	def count(self,i):return self.nnls.count(self.compressed_coordinate[i])if i in self.compressed_coordinate else 0
+	def find(self,i):return self.count(i)>0
+	def InitialSegmentCount(self,i_final):return self.nnls.InitialSegmentCount(self.compressed_coordinate[i_final])
+	def IntervalCount(self,i_start,i_final):return self.nnls.IntervalCount(self.compressed_coordinate[i_start],self.compressed_coordinate[i_final])
+	def empty(self):return self.InitialSegmentCount(self.nnls.bit.N-1)<1
+	def MaximumLeq(self,i,k=0):
+		t=self.nnls.MaximumLeq(self.compressed_coordinate[i],k)
+		return self.sorted_list[t]if t>=0 else None
+	def MaximumLt(self,i,k=0):
+		t=self.nnls.MaximumLt(self.compressed_coordinate[i],k)
+		return self.sorted_list[t]if t>=0 else None
+	def MinimumGeq(self,i,k=0):
+		t=self.nnls.MinimumGeq(self.compressed_coordinate[i],k)
+		return self.sorted_list[t]if t<self.nnls.bit.N else None
+	def MinimumGt(self,i,k=0):
+		t=self.nnls.MinimumGt(self.compressed_coordinate[i],k)
+		return self.sorted_list[t]if t<self.nnls.bit.N else None
+	def Maximum(self,k=0):return self.MaximumLeq(self.sorted_list[-1],k)
+	def Minimum(self,k=0):return self.MinimumGeq(self.sorted_list[0],k)
+	def RightEndPointOf(self,i,b=False):
+		j=self.compressed_coordinate[i]
+		t=self.nnls.RightEndPointOf(j,b)
+		return self.sorted_list[t]if j<=t else i-1
+	def LeftEndPointOf(self,i,b=False):
+		j=self.compressed_coordinate[i]
+		t=self.nnls.LeftEndPointOf(j,b)
+		return self.sorted_list[t]if t<=j else i+1
+	def ConnectedComponentOf(self,i,b=False):
+		if not b:b=self.find(i)
+		return[self.LeftEndPointOf(i,b),self.RightEndPointOf(i,b)]
+	def GetConnectedComponent(self):
+		a=[]
+		l=self.Minimum()
+		while l is not None:
+			r=self.RightEndPointOf(l,True)
+			a+=[[l,r]]
+			l=self.MinimumGt(r)
+		return a
+	def __str__(self):return rec_str(self.GetConnectedComponent())

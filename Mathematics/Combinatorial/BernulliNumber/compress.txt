@@ -1,4 +1,0 @@
-// ../../Polynomial/Truncate/compress.txtÇêÊÇ…ì\ÇÈÅB
-
-TE <TY T,int LE>CL BernulliNumberCalculator{PU:T m_val[LE];IN BernulliNumberCalculator(CO bool& negative = true);IN CO T& OP[](CRI i)CO;};
-TE <TY T,int LE> IN BernulliNumberCalculator<T,LE>::BernulliNumberCalculator(CO bool& negative):m_val(){TRPO<T> f{LE};for(int i = 0;i < LE;i++){f[i] = T::FactorialInverse(i + 1);}f = Inverse(f);for(int i = 0;i < LE;i++){m_val[i] = MO(f[i] *= T::Factorial(i));}if(!negative && LE > 1){m_val[1] *= -1;}}TE <TY T,int LE> IN CO T& BernulliNumberCalculator<T,LE>::OP[](CRI i)CO{assert(i < LE);RE m_val[i];}

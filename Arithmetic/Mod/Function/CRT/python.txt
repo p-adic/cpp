@@ -1,0 +1,19 @@
+# gcd(p,q),単位の分割u,v（p*u+q*v=gcd(p,q)）を返す。
+def PartitionOfUnity(p,q):
+	b,c=[p,q],[[1,0],[0,1]]
+	i=p<q
+	j=1-i
+	while b[j]:
+		d=b[i]//b[j]
+		c[i][i]-=d*c[j][i]
+		c[i][j]-=d*c[j][j]
+		b[i]-=d*b[j]
+		i,j=j,i
+	return b[i],c[i][0],c[i][1]
+
+# gcd(p,q),非負最小解a（a≡s (mod p), a≡t (mod q)）を返す。
+# ただし解がない場合はa=-1とする。
+def ChineseRemainderTheorem(p,s,q,t):
+	g,u,v=PartitionOfUnity(p,q)
+	a=-1if s%g!=t%g else(s%g+t//g*p*u+s//g*q*v)%(p*q//g)
+	return g,a

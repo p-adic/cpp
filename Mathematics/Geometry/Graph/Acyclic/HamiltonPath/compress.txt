@@ -1,7 +1,0 @@
-#ifdef DEBUG
-  #include "c:/Users/user/Documents/Programming/Mathematics/Geometry/Graph/Acyclic/HamiltonPath/a_Body.hpp"
-#else
-TE <TY ACYCLIC_GRAPH>VE<inner_t<ACYCLIC_GRAPH>> TopologicalSort(ACYCLIC_GRAPH& G){CRI SZ = G.SZ();VE<inner_t<ACYCLIC_GRAPH>> AN(SZ);VE<bool> edged(SZ),fixed(SZ);int num = SZ - 1;for(int i = 0;i < SZ;i++){if(!fixed[i]){VE<VE<int>> dfs ={{i}};WH(!dfs.empty()){auto& e = dfs.back();if(e.empty()){dfs.pop_back();}else{CRI j = e.back();if(fixed[j]){e.pop_back();}else{auto&& t = G.Enumeration(j);if(edged[j]){fixed[j]= true;AN[num--]= t;e.pop_back();}else{edged[j]= true;auto&& edge_t = G.Edge(t);VE<int> edge_j{};for(auto& u:edge_t){auto&& k = G.Enumeration_inv(u);if(!fixed[k]){edge_j.push_back(k);}}dfs.push_back(MO(edge_j));}}}}}}RE AN;}TE <TY ACYCLIC_GRAPH>tuple<VE<inner_t<ACYCLIC_GRAPH>>,VE<int>,VE<VE<int>>> TopologicalSortedGraph(ACYCLIC_GRAPH& G){VE<inner_t<ACYCLIC_GRAPH>> ts = TopologicalSort(G);CRI SZ = G.SZ();VE<int> ts_inv(SZ);VE<VE<int>> edge(SZ);for(int i = SZ - 1;i >= 0;i--){auto& t = ts[i];auto&& edge_t = G.Edge(t);auto& edge_i = edge[i];edge_i.reserve(edge_t.SZ());for(auto& u:edge_t){CRI j = ts_inv[G.Enumeration_inv(u)];edge_i.push_back(j);}ts_inv[G.Enumeration_inv(t)]= i;}RE{MO(ts),MO(ts_inv),MO(edge)};}
-
-TE <TY ACYCLIC_GRAPH>VE<inner_t<ACYCLIC_GRAPH>> HamiltonPath(ACYCLIC_GRAPH& G){auto AN = TopologicalSort(G);CO int V = G.SZ();for(int n = 1;n < V;n++){auto& t = AN[n];bool found = false;for(auto& u:G.Edge(AN[n-1])){found |= u == t;}if(!found){AN.clear();break;}}RE AN;}
-#endif

@@ -1,5 +1,0 @@
-#ifdef DEBUG
-  #include "c:/Users/user/Documents/Programming/Mathematics/Arithmetic/Prime/Enumeration/SFINAE/a_Body.hpp"
-#else
-TE <TY PE> auto CheckPE(CO PE& pe)-> decltype(pe.IsComposite(0),true_type());TE <TY...> false_type CheckPE(...);TE <TY T>CE bool IsPE = decltype(CheckPE(declval<T>()))();
-#endif

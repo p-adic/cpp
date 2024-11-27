@@ -14,6 +14,6 @@
 
 #define DEFINITION_OF_REVERSED_ARITHMETIC( OPR , TYPE , OBJ )		\
   template <typename T> inline Reversed<T>& Reversed<T>::operator OPR ## =( const TYPE& t ) { m_t OPR ## = OBJ; return *this; } \
-  template <typename T> inline Reversed<T> Reversed<T>::operator OPR( const TYPE& t ) const { return move( Reversed<T>( *this ) OPR ## = t ); } \
+  template <typename T> inline Reversed<T> Reversed<T>::operator OPR( const TYPE& t ) const { return std::move( Reversed<T>( *this ) OPR ## = t ); } \
 
 

@@ -1,6 +1,0 @@
-#ifdef DEBUG
-  #include "c:/Users/user/Documents/Programming/Utility/String/ToArray/a_Body.hpp"
-#else
-TE <TY INT = int> IN char IntToChar(CO INT& i,CO bool& capital = false){RE i +(capital?'A':'a');}TE <TY INT = int> IN INT CharToInt(CO char& i){RE i -(i < 'a'?'A':'a');}TE <TY INT = int>string ArrayToString(CO VE<INT>& A,CO bool& capital = false){CO int N = A.SZ();string S(N,'a');for(int i = 0;i < N;i++){S[i]= IntToChar<INT>(A[i],capital);}RE S;}TE <TY INT = int>VE<INT> StringToArray(CO string& S){CO int N = S.SZ();VE<int> A(N);for(int i = 0;i < N;i++){A[i]= CharToInt<INT>(S[i]);}RE A;}
-#endif
-

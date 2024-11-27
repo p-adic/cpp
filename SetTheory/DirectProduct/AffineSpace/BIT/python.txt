@@ -1,0 +1,82 @@
+#verify:
+#https://yukicoder.me/submissions/1001579（零初期化、一点加算、区間和）
+
+#零初期化
+F=[0]*(N+1)
+#配列による初期化（計算量はO(N)だがPを反復するO(N log N)の方が早い？）
+for j in R(1,N+1):
+	i=j-1;F[j]=A[i]
+	while i>j-(j&-j):F[j]+=F[i];i-=i&-i
+#一点加算P
+#始切片和L
+#区間和S
+#二分探索（u<=L(0,i)の最小解）
+def P(i,u):
+	i+=1
+	while i<=N:F[i]+=u;i+=i&-i
+def L(r):
+	a=0;i=min(r+1,N)
+	while i:a+=F[i];i-=i&-i
+	return a
+def S(l,r):return L(r)-L(l-1) #l,rは始端,終端
+def B(u):
+	j=s=n=0;p=8**6 #262144
+	while p:
+		k=j|p;p>>=1
+		if k<=N:
+			n+=F[k]
+			if n<u:s,j=n,k
+			else:n=s
+	return j
+
+
+def rec_str(a):return"".join(["[",", ".join(rec_str(x)for x in a),"]"])if isinstance(a,list)else str(a)
+class BIT:
+	def __init__(self,x):
+		if isinstance(x,int):
+			self.N=x
+			self.F=[0]*(x+1)
+		else:
+			self.N=len(x)
+			self.F=[0]*(self.N+1)
+			for j in R(1,self.N+1):
+				i=j-1
+				self.F[j]=x[i]
+				k=j-(j&-j)
+				while i>k:
+					self.F[j]+=self.F[i]
+					i-=i&-i
+	def copy(self):
+		a=__class__([])
+		a.N=__self__.N
+		a.F=__self__.F[:]
+		return a
+	def Add(self,i,u):
+		i+=1
+		while i<=self.N:
+			self.F[i]+=u
+			i+=i&-i
+	def Set(self,i,u):self.Add(i,u-self.Get(i))
+	def Get(self,i):return self.IntervalSum(i,i)
+	def InitialSegmentSum(self,r):
+		assert(r>-2)
+		a=0
+		i=min(r+1,self.N)
+		while i:
+			a+=self.F[i]
+			i-=i&-i
+		return a
+	def IntervalSum(self,l,r):return self.InitialSegmentSum(r)-self.InitialSegmentSum(l-1)
+	def list(self):return[self.Get(i)for i in R(self.N)]
+	def __str__(self):return rec_str(self.list())
+	def Search(self,u):#Computing minimum of j such that InitialSegmentSum(j)>=u or j==N
+		j=s=n=0
+		p=1<<17 #131072
+		while p:
+			k=j|p
+			p>>=1
+			if k<=self.N:
+				n+=self.F[k]
+				if n<u:s,j=n,k
+				else:n=s
+		return j

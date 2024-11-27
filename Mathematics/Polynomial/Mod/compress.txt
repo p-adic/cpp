@@ -1,8 +1,0 @@
-#ifdef DEBUG
-  #include "c:/Users/user/Documents/Programming/Mathematics/Polynomial/Mod/a_Body.hpp"
-#else
-// ../Truncate/compress.txtÇêÊÇ…ì\ÇÈÅB
-
-TE <TY T> PO<T> ModularInverse(PO<T> f,PO<T> g){CO T& zero = PO<T>::c_zero();PO<T> coeff_f{0,PO<T>::c_one()};PO<T> coeff_g{PO<T>::zero()};f %= g;WH(f.SZ() > 1u){CRUI f_SZ = f.SZ();CRUI g_SZ = g.SZ();CRUI coeff_f_SZ = coeff_f.SZ();WH(f_SZ <= g_SZ){auto diff = g_SZ - f_SZ;T& r = g[g_SZ - 1] /= f[f_SZ - 1];for(uint d = 0;d < coeff_f_SZ;d++){coeff_g[diff + d] -= r * coeff_f[d];}for(uint d = 0;d + 1 < f_SZ;d++ ){g[diff + d] -= r * f[d];}r = zero;g.ReMORedundantZero();}swap(f,g);swap(coeff_f,coeff_g);}assert(f.SZ()== 1u);CO T& one = PO<T>::c_one();CO T r = one / f[0];CRUI coeff_f_SZ = coeff_f.SZ();for(uint d = 0;d < coeff_f_SZ;d++){coeff_f[d] *= r;}RE coeff_f;}
-#endif
-

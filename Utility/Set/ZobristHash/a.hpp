@@ -2,8 +2,10 @@
 
 #pragma once
 
-// verify: https://yukicoder.me/submissions/912968
+// verify:
+// https://yukicoder.me/submissions/942404ÅiëŒèÃç∑Åj
 
+#include "../Mathematics/Function/Map/a.hpp"
 #include "a_Alias.hpp"
 
 template <typename T>
@@ -17,8 +19,7 @@ public:
   inline ZobristHashBody( const ull& hash );
 
   ull Encode( const set<T>& S );
-  inline ull Encode( const list<T>& S , const bool& non_overlapping = false );
-  template <int length_max> inline ull Encode( const T ( &a )[length_max] , const int& length , const bool& non_overlapping = false );
+  template <template <typename...> typename V> inline ull Encode( const V<T>& S , const bool& non_overlapping = false );
 
   inline ull SymmetricDifference( const ull& code0 , const ull& code1 );
   inline ull Add( set<T>& S , const ull& code , const T& t );
@@ -26,10 +27,8 @@ public:
   inline ull AddErase( const ull& code , const T& t );
   
 private:
-  ull OverlappingEncode( const list<T>& S );
-  template <int length_max> ull OverlappingEncode( const T ( &a )[length_max] , const int& length );
-  ull NonOverlappingEncode( const list<T>& S );
-  template <int length_max> ull NonOverlappingEncode( const T ( &a )[length_max] , const int& length );
+  template <template <typename...> typename V> ull OverlappingEncode( const V<T>& S );
+  template <template <typename...> typename V> ull NonOverlappingEncode( const V<T>& S );
   virtual ull Hash( const T& t ) = 0;
 
 };
@@ -68,7 +67,7 @@ class MemorisationZobristHash :
 {
 
 private:
-  map<T,ull> m_f;
+  Map<T,ull> m_f;
   
 public:
   inline MemorisationZobristHash( const ull& hash = 14177381365537266759ULL );

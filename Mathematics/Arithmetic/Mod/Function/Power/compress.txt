@@ -1,6 +1,0 @@
-#ifdef DEBUG
-  #include "c:/Users/user/Documents/Programming/Mathematics/Arithmetic/Mod/Function/Power/a_Body.hpp"
-#else
-TE <TY UINT,TY INT>ll PowerMod(ll t,UINT EX,CO INT& M,CO bool& reduced = false){AS((M >> 31)== 0);ll AN{1};if(!reduced){(t %= M)< 0?t += M:t;}WH(EX > 0){(EX & 1)== 0?AN:(AN *= t)%= M;(t *= t)%= M;EX >>= 1;}RE AN;}
-#endif
-

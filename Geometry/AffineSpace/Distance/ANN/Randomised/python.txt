@@ -1,0 +1,62 @@
+import time
+import random
+import math
+def TwoDimensionalAllNearestNeighbourRandomised(d2,S,T,bucket_size,time_bound):
+	S_size = len(S); T_size = len(T)
+	if S_size == 0:return[]
+	assert( T_size > 0 )
+	nn = [set()for i in R(S_size)]
+	for i in R(S_size):nn[i].add(0)
+	line = [0]*T_size
+	now = time.time()
+	time_bound /= 1000
+	while time.time() - now < time_bound:
+		theta = random.randint( -1000 , 1000 ) * 0.00314
+		dx = math.cos( theta ); dy = math.sin( theta )
+		for j in R(T_size):line[j] = [ T[j][0] * dx + T[j][1] * dy , j ]
+		line.sort()
+		for i in R(S_size):
+			proj_i = S[i][0] * dx + S[i][1] * dy
+			l , r = 0 , T_size
+			while l + 1 < r:
+				m = ( l + r ) >> 1
+				if proj_i < line[m][0]:r = m
+				else:l = m
+			j_min = max( 0 , l - bucket_size )
+			j_ulim = min( T_size , l + bucket_size )
+			d_opt = d2( S[i] , T[next( iter( nn[i] ) )] )
+			for j in R(j_min,j_ulim):
+				d_temp = d2( S[i] , T[line[j][1]] )
+				if d_opt > d_temp:
+					d_opt = d_temp
+					nn[i] = set(); nn[i].add( line[j][1] )
+				elif d_opt == d_temp and not line[j][1] in nn[i]:
+					nn[i].add( line[j][1] )
+	return[list(nn[i])for i in R(S_size)]
+
+
+def TwoDimensionalAllSmallestWeightRandomised(d2,S,T,bucket_size,time_bound):
+	S_size = len(S); T_size = len(T)
+	if S_size == 0:return[]
+	assert( T_size > 0 )
+	answer = [9*18]*S_size
+	line = [0]*T_size
+	now = time.time()
+	time_bound /= 1000
+	while time.time() - now < time_bound:
+		theta = random.randint( -1000 , 1000 ) * 0.00314
+		dx = math.cos( theta ) ; dy = math.sin( theta )
+		for j in R(T_size):line[j] = [ T[j][0] * dx + T[j][1] * dy , j ]
+		line.sort()
+		for i in R(S_size):
+			proj_i = S[i][0] * dx + S[i][1] * dy
+			l , r = 0 , T_size
+			while l + 1 < r:
+				m = ( l + r ) >> 1
+				if proj_i < line[m][0]:r = m
+				else:l = m
+			j_min = max( 0 , l - bucket_size )
+			j_ulim = min( T_size , l + bucket_size )
+			answer[i] = min( answer[i] , min( d2( S[i] , T[line[j][1]] ) for j in R(j_min,j_ulim) ) )
+	return answer
+

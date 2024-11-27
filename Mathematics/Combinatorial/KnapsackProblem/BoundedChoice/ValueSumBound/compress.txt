@@ -1,5 +1,0 @@
-#ifdef DEBUG
-  #include "c:/Users/user/Documents/Programming/Mathematics/Combinatorial/KnapsackProblem/BoundedChoice/ValueSumBound/a_Body.hpp"
-#else
-TE <TY U,TY N_MODULE,TY INT1,TY INT2>U AbstractValueBoundedChoiceValueSumBound(N_MODULE M,CO VE<U>& value,CO INT1& cost_sum_bound,CO VE<INT2>& choice_num_bound){CO int N = value.SZ();U AN0 = M.One(),AN1 = AN0;for(int i = 0;i < N;i++){AN0 = max(AN0,value[i]);AN1 = M.Product(MO(AN1),M.PW(value[i],int(choice_num_bound[i])));}RE max(M.PW(MO(AN0),int(cost_sum_bound)),AN1);}TE <TY INT1,TY INT2,TY INT3> IN INT1 BoundedChoiceValueSumBound(CO VE<INT1>& value,CO INT2& cost_sum_bound,CO VE<INT3>& choice_num_bound){RE AbstractValueBoundedChoiceValueSumBound(Module<int,INT1>(),value,cost_sum_bound,choice_num_bound);}
-#endif

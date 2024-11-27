@@ -1,5 +1,5 @@
 #ifdef DEBUG
-  #include "c:/Users/user/Documents/Programming/Utility/TwoPointerApproach/Debug/a_Body.hpp"
+  #include "c:/Users/user/Documents/Programming/Mathematics/Utility/TwoPointerApproach/Debug/a_Body.hpp"
 #else
 /* VAR_TPAは尺取り法用の変数名の接頭辞で、実際の変数名ではなく、_Lと_Rと_infoがつく。
 ANSWER ## _temp = {VAR_TPA ## _L,VAR_TPA ## _R,VPA_TPA ## _info}を

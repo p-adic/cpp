@@ -1,5 +1,0 @@
-#ifdef DEBUG
-  #include "c:/Users/user/Documents/Programming/Mathematics/Arithmetic/Sqrt/a_Body.hpp"
-#else
-TE <TY INT>INT RoundDownSqrt(CO INT& n){AS(n >= 0);if(n <= 1){RE n;}INT l = 1,r = n;WH(l < r - 1){CO INT m =(l + r)>> 1;(m <= n / m?l:r)= m;}RE l;}TE <TY INT>INT RoundUpSqrt(CO INT& n){AS(n >= 0);if(n <= 2){RE n;}CO INT n_minus = n - 1;INT l = 1,r = n;WH(l + 1 < r){CO INT m =(l + r)>> 1;(m <= n_minus / m?l:r)= m;}RE r;}
-#endif

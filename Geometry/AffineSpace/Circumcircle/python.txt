@@ -1,0 +1,23 @@
+#verify:
+#https://yukicoder.me/submissions/943947
+#(a,b),(c,d),(e,f)を含む最小の円の中心を(s/(t*v),u/v)、
+#半径の2乗をr*v*vと表示する。
+#外接円の場合は https://qiita.com/tatesuke/items/59133758ec25146766c3 を変形。
+
+X=[a,c,e]*2
+Y=[b,d,f]*2
+def A(x,y):
+	return x*x+y*y
+def D(x,y):
+	return A(s-x*t*v,(u-y*v)*t)
+Z=A(a,b)
+x,y,z,w,Z,W=c-a,e-a,b-d,b-f,A(c,d)-Z,A(e,f)-Z
+for i in R(3):
+	u,v=Y[i]+Y[i+1],2
+	s,t=X[i]+X[i+1],1
+	r=D(X[i],Y[i])
+	if D(X[i+2],Y[i+2])<=r:break
+else:
+	u,v=x*W-y*Z,2*(y*z-x*w)
+	s,t=[v*W+2*w*u,v*Z+2*z*u][x>0],2*[y,x][x>0]
+	r=D(a,b)

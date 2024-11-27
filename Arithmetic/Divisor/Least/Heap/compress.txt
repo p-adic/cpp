@@ -1,0 +1,6 @@
+#ifdef DEBUG
+  #include "c:/Users/user/Documents/Programming/Mathematics/Arithmetic/Divisor/Least/Heap/a_Body.hpp"
+#else
+CL HeapLeastDivisor{PU:int m_val_limit;VE<int> m_val;IN HeapLeastDivisor(CRI val_limit)NE;IN CRI OP[](CRI i)CO;IN CRI Get(CRI i)CO;IN CRI length()CO NE;};
+IN HeapLeastDivisor::HeapLeastDivisor(CRI val_limit)NE:m_val_limit(val_limit),m_val(m_val_limit){for(int d = 2;d < m_val_limit;d++){if(m_val[d]== 0){for(int n = d;n < m_val_limit;n += d){m_val[n]== 0?m_val[n]= d:d;}}}}IN CRI HeapLeastDivisor::OP[](CRI i)CO{AS(0 <= i && i < m_val_limit);RE m_val[i];}IN CRI HeapLeastDivisor::Get(CRI i)CO{RE m_val[i];}IN CRI HeapLeastDivisor::length()CO NE{RE m_val_limit;}
+#endif

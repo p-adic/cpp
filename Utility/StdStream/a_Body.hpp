@@ -20,10 +20,10 @@ template <class Traits , typename Arg , typename... ARGS> inline basic_istream<c
 template <class Traits> inline basic_istream<char,Traits>& VariadicGetline( basic_istream<char,Traits>& is , const char& separator ) { return is; }
 template <class Traits , typename Arg , typename... ARGS> inline basic_istream<char,Traits>& VariadicGetline( basic_istream<char,Traits>& is , const char& separator , Arg& arg , ARGS&... args ) { return VariadicGetline( getline( is , arg , separator ) , separator , args... ); }
 
-template <class Traits , typename Arg> inline basic_ostream<char,Traits>& VariadicCout( basic_ostream<char,Traits>& os , const Arg& arg ) { return os << arg; }
-template <class Traits , typename Arg1 , typename Arg2 , typename... ARGS> inline basic_ostream<char,Traits>& VariadicCout( basic_ostream<char,Traits>& os , const Arg1& arg1 , const Arg2& arg2 , const ARGS&... args ) { return VariadicCout( os << arg1 << " " , arg2 , args... ); }
+template <class Traits , typename Arg> inline basic_ostream<char,Traits>& VariadicCout( basic_ostream<char,Traits>& os , Arg&& arg ) { return os << forward<Arg>( arg ); }
+template <class Traits , typename Arg1 , typename Arg2 , typename... ARGS> inline basic_ostream<char,Traits>& VariadicCout( basic_ostream<char,Traits>& os , Arg1&& arg1 , Arg2&& arg2 , ARGS&&... args ) { return VariadicCout( os << forward<Arg1>( arg1 ) << " " , forward<Arg2>( arg2 ) , forward<ARGS>( args )... ); }
 
-template <class Traits , typename Arg> inline basic_ostream<char,Traits>& VariadicCoutNonSep( basic_ostream<char,Traits>& os , const Arg& arg ) { return os << arg; }
-template <class Traits , typename Arg1 , typename Arg2 , typename... ARGS> inline basic_ostream<char,Traits>& VariadicCoutNonSep( basic_ostream<char,Traits>& os , const Arg1& arg1 , const Arg2& arg2 , const ARGS&... args ) { return VariadicCoutNonSep( os << arg1 , arg2 , args... ); }
+template <class Traits , typename Arg> inline basic_ostream<char,Traits>& VariadicCoutNonSep( basic_ostream<char,Traits>& os , Arg&& arg ) { return os << forward<Arg>( arg ); }
+template <class Traits , typename Arg1 , typename Arg2 , typename... ARGS> inline basic_ostream<char,Traits>& VariadicCoutNonSep( basic_ostream<char,Traits>& os , Arg1&& arg1 , Arg2&& arg2 , ARGS&&... args ) { return VariadicCoutNonSep( os << forward<Arg1>( arg1 ) , forward<Arg2>( arg2 ) , forward<ARGS>( args )... ); }
 
-template <class Traits , typename ARRAY> inline basic_ostream<char,Traits>& CoutArray( basic_ostream<char,Traits>& os , const int& i_start , const int& i_ulim , const ARRAY& a ) { for( int i = i_start ; i < i_ulim ; i++ ){ ( i == i_start ? os : ( os << " " ) ) << a[i]; } return os; }
+template <class Traits , typename ARRAY> inline basic_ostream<char,Traits>& CoutArray( basic_ostream<char,Traits>& os , const int& i_start , const int& i_ulim , ARRAY&& a ) { for( int i = i_start ; i < i_ulim ; i++ ){ ( i == i_start ? os : ( os << " " ) ) << a[i]; } return os; }

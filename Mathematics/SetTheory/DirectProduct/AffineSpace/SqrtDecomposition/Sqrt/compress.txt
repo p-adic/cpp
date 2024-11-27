@@ -1,6 +1,0 @@
-#ifdef DEBUG
-  #include "c:/Users/user/Documents/Programming/Mathematics/SetTheory/DirectProduct/AffineSpace/SqrtDecomposition/Sqrt/a_Body.hpp"
-#else
-CL SqrtDecompositionCoordinate{PU:int m_N;int m_N_sqrt;int m_N_d;int m_N_m;IN SqrtDecompositionCoordinate(CRI N = 0);IN SqrtDecompositionCoordinate(CRI N,CRI N_sqrt);ST IN int Sqrt(CRI N)NE;};
-IN SqrtDecompositionCoordinate::SqrtDecompositionCoordinate(CRI N):SqrtDecompositionCoordinate(N,Sqrt(N)){};IN SqrtDecompositionCoordinate::SqrtDecompositionCoordinate(CRI N,CRI N_sqrt):m_N(N),m_N_sqrt(N_sqrt),m_N_d((m_N + m_N_sqrt - 1)/ m_N_sqrt),m_N_m(m_N_d * m_N_sqrt){}IN int SqrtDecompositionCoordinate::Sqrt(CRI N)NE{if(N <= 1){RE 1;}int l = 0,r = N;WH(l + 1 < r){int m =(l + r)>> 1;(m <=(N - 1)/ m?l:r)= m;}RE r;}
-#endif

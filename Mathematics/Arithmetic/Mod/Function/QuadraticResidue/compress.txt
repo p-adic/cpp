@@ -1,6 +1,0 @@
-#ifdef DEBUG
-  #include "c:/Users/user/Documents/Programming/Mathematics/Arithmetic/Mod/Function/QuadraticResidue/a_Body.hpp"
-#else
-TE <TY INT>int QuadraticResidueSymbol(INT a,CRL p,CO bool& reduced = false){if(!reduced){(a %= p)< 0?a += p:a;}if(a == 0){RE 0;}if((p >> 31)== 0){int AN = PowerMod(MO(a),p >> 1,p,true);if(AN > 1){AS(AN == p - 1);AN = -1;}RE AN;}bool even_EX = true;bool qr = true;WH((a & 1)== 0){a >>= 1;even_EX = !even_EX;}if(!even_EX){int k =(p >> 1)& 3;if(0 < k && k < 3){qr = !qr;}}ll pf = 3;WH(a != 1){if(a % pf == 0){a /= pf;bool even_EX = false;WH(a % pf == 0){a /= pf;even_EX = !even_EX;}if(!even_EX){int qrs = QuadraticResidueSymbol<ll>(p,pf)*((((p >> 1)& 1)&((pf >> 1)& 1))== 0?1:-1);if(qrs == -1){qr = !qr;}}}pf += 2;if(pf > a / pf){pf = a;}}RE qr?1:-1;}
-#endif
-

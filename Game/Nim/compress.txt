@@ -1,0 +1,6 @@
+#ifdef DEBUG
+  #include "c:/Users/user/Documents/Programming/Mathematics/Game/Nim/a_Body.hpp"
+#else
+TE <TY INT,TE <TY...> TY V> IN INT Nim(CO V<INT>& a){INT AN{};for(auto& n:a){AN ^= n;}RE AN;}TE <TY INT1,TE <TY...> TY V,TY INT2> IN INT1 BoundedNim(CO V<INT1>& a,INT2 bound){INT1 AN{};bound++;for(auto& n:a){AN ^=(n % bound);}RE AN;}
+#endif
+

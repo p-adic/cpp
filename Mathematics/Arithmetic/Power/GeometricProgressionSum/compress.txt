@@ -1,8 +1,0 @@
-#ifdef DEBUG
-  #include "c:/Users/user/Documents/Programming/Mathematics/Arithmetic/Power/GeometricProgressionSum/a_Body.hpp"
-#else
-TE <TY T> IN T Square(CO T& t){RE t * t;}TE <TY T,TY UINT>T Power(T t,UINT EX){T AN =(EX & 1)== 1?t:1;EX >>= 1;WH(EX > 0){t = Square(t);(EX & 1)== 1?AN *= t:AN;EX >>= 1;}RE AN;}TE <TY T,TY UINT>T Power(T t,UINT EX,T init){(EX & 1)== 1?init *= t:init;EX >>= 1;WH(EX > 0){t = Square(t);(EX & 1)== 1?init *= t:init;EX >>= 1;}RE MO(init);}
-
-TE <TY T,TY UINT> IN T GeometricProgressionSum(T rate,UINT EX_max,CO T& init = 1){T rate_minus = rate - 1;RE rate_minus == 0?init * ++EX_max:(Power(MO(rate),MO(++EX_max))- 1)/ MO(rate_minus)* init;}TE <TY T,TY UINT>T GeometricProgressionLinearCombinationSum(VE<T> rate,VE<UINT> EX_max,CO VE<T>& init){CO int SZ = init.SZ();AS(int(rate.SZ())== SZ && int(EX_max.SZ())== SZ);T AN{};for(int i = 0;i < SZ;i++){AN += GeometricProgressionSum(MO(rate[i]),MO(EX_max[i]),init[i]);}RE AN;}
-#endif
-

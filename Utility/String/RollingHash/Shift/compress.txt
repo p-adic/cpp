@@ -1,5 +1,5 @@
 #ifdef DEBUG
-  #include "c:/Users/user/Documents/Programming/Utility/String/RollingHash/Shift/a_Body.hpp"
+  #include "c:/Users/user/Documents/Programming/Mathematics/Utility/String/RollingHash/Shift/a_Body.hpp"
 #else
 IN int GCD(){RE 0;}TE <TY INT1,TY...INT2>INT1 GCD(INT1 b_0,INT2... args){b_0 < 0?b_0 = -b_0:b_0;INT1 b_1 = GCD(MO(args)...);WH(b_1 != 0){swap(b_0 %= b_1,b_1);}RE MO(b_0);}
 

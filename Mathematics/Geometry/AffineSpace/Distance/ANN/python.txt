@@ -1,7 +1,0 @@
-import scipy
-J=lambda:list(map(int,input().split()))
-N,M=J()
-T=[J()for t in R(N)]
-S=[J()for s in R(M)]
-t = scipy.spatial.KDTree(T)
-dist,coord=t.query(S,1)

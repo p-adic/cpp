@@ -1,0 +1,103 @@
+def gcd(n,m):
+	while m:n,m=m,n%m
+	return abs(n)
+
+class ExtendedRational:
+	zero=None
+	one=None
+	def __init__(self,n=0,d=1,reduced=0):
+		if d<0:n,d=-n,-d
+		if d!=1 and not reduced:
+			if d:
+				t=gcd(n,d)
+				n,d=n//t,d//t
+			else:n=1
+		self.n,self.d=n,d
+	def ref(x):
+		return x if __class__==x.__class__ else __class__(x)
+	def copy(self):
+		return __class__(self.n,self.d,1)
+
+	def __eq__(self,x):
+		other=ref(x)
+		return self.n==other.n and self.d==other.d
+	def __ne__(self,x):
+		return not(self==x)
+
+	def __add__(self,x):
+		other=ref(x)
+		return __class__(self.n*other.d+other.n*self.d,self.d*other.d)
+	def __radd__(self,x):
+		return self+x
+
+	def __neg__(self):
+		return __class__(-self.n,self.d)
+	def __sub__(self,x):
+		return self+(-x)
+	def __rsub__(self,x):
+		return x+(-self)
+	
+	def __mul__(self,x):
+		other=ref(x)
+		z=__class__(self.n,other.d)
+		w=__class__(other.n,self.d)
+		return __class__(z.n*w.n,z.d*w.d,1)
+	def __rmul__(self,x):
+		return self*x
+	def __pow__(self,n):
+		return __class__(self.n**n,self.d**n,1)
+	def __xor__(self,n):
+		return Inverse(self**(-n))if n<0 else self**n
+
+	def Inverse(x):
+		other=ref(x)
+		return __class__(other.d,other.n,1)
+	def __truediv__(self,x):
+		return self*Inverse(x)
+	def __rtruediv__(self,x):
+		return x*Inverse(self)
+
+	def __lshift__(self,n):
+		return __class__(self.n<<n,self.d,n<=0 or self.d&1)
+	def __rshift__(self,n):
+		return __class__(self.n,self.d<<n,n<=0 or self.n&1)
+
+	def __lt__(self,x):
+		other=ref(x)
+		return self.n*other.d<other.n*self.d
+	def __gt__(self,x):
+		other=ref(x)
+		return other.n*self.d<self.n*other.d
+	def __le__(self,x):
+		other=ref(x)
+		return not gt(self,other)
+	def __ge__(self,x):
+		other=ref(x)
+		return not lt(self,other)
+
+	def nrm(self):
+		return self.__class__(abs(self.n),self.d)
+	def to_float(self):
+		return self.n/self.d
+	def to_int(self,n=1):
+		return self.n*n//self.d
+	def to_str(self,d):
+		self=to_int(self,10**d)
+		a=str(abs(self))
+		l=len(a)
+		if d:
+			if l>d:a=a[:l-d]+"."+a[-d:]
+			else:a="0."+"0"*(d-l)+a
+		if self<0:a="-"+a
+		return a
+ExtendedRational.zero=ExtendedRational(0,1,1)
+ExtendedRational.one=ExtendedRational(1,1,1)
+
+def to_rational(s):
+	l=len(s)
+	for i in R(l):
+		if s[i]=='.':
+			n,d,c=int(s[:i]+s[i+1:]),10**(l-i-1),gcd(s[-1],10)==1
+			break
+	else:n,d,c=int(s),1,1
+	return ExtendedRational(n,d,c)

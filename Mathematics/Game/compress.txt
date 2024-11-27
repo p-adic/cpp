@@ -1,8 +1,0 @@
-#ifdef DEBUG
-  #include "c:/Users/user/Documents/Programming/Mathematics/Game/Debug/a_Body.hpp"
-#else
-CL MexSet{PU:int m_QuerySZ;VE<bool> m_in;int m_mex;IN MexSet(CRI QuerySZ);IN VO insert(CRI i);IN CRI mex()CO NE;};
-IN MexSet::MexSet(CRI QuerySZ):m_QuerySZ(QuerySZ),m_in(m_QuerySZ + 1),m_mex(0){}IN VO MexSet::insert(CRI i){AS(i >= 0);if(i < m_QuerySZ){m_in[i]= true;WH(m_in[m_mex]){m_mex++;}}}IN CRI MexSet::mex()CO NE{RE m_mex;}
-
-TE <TY Edge,TY T>CO bool& IsWinningState(Edge& edge,CO T& t,CO bool& reset = false){ST_AS(is_invocable_v<Edge,CO T&>);ST Map<T,bool> g{};if(reset){g.clear();}if(g.count(t)== 1){RE g[t];}bool b = false;for(auto&& u:edge(t)){if((b |= !IsWinningState(edge,u))){break;}}RE(g[t]= b);}TE <TY AEdge,TY T>CRI GrundyNumber(AEdge& aedge,CO T& t,CO bool& reset = false){ST_AS(is_invocable_v<AEdge,CO T&>);ST Map<T,int> g{};if(reset){g.clear();}if(g.count(t)== 1){RE g[t];}auto&& next = aedge(t);MexSet S{int(next.SZ())};for(auto&& a:next){int temp = 0;for(auto&& u:a){temp ^= GrundyNumber(aedge,u);}S.insert(temp);}RE g[t]= S.mex();}TE <TY Edge,TY T,TY INVARIANT>CRI WinningCOantsOf(Edge& edge,CO T& t,CO INVARIANT& invariant,CO bool& reset = false){ST_AS(is_invocable_v<Edge,CO T&>);ST Map<T,int> g{};if(reset){g.clear();}if(g.count(t)== 1){RE g[t];}auto&& e = edge(t);int c = e.empty()?(1 << invariant(t)):0;for(auto&& u:e){int temp = WinningCOantsOf(edge,u,invariant);for(int d = 0;d <= 1;d++){c |=((temp >>(1 ^ d))& 1)<< d;}}RE g[t]= c;}
-#endif

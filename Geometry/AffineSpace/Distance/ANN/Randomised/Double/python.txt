@@ -1,0 +1,41 @@
+import time
+import random
+import math
+def TwoDimensionalAllNearestNeighbourRandomisedDouble(d,S,T,bucket_size,time_bound):
+	S_size = len(S); T_size = len(T)
+	if S_size == 0:return[]
+	assert( T_size > 0 )
+	answer = [0]*S_size
+	line = [0]*T_size
+	now = time.time()
+	time_bound /= 1000
+	while time.time() - now < time_bound:
+		theta = random.randint( -1000 , 1000 ) * 0.00314
+		dx = math.cos( theta ); dy = math.sin( theta )
+		def proj( v ):return v[0] * dx + v[1] * dy
+		for j in R(T_size):line[j] = [ proj( T[j] ) , j ]
+		line.sort()
+		for i in R(S_size):
+			proj_i = [ proj( S[i] ) , 0 ]
+			l , r = 0 , T_size
+			while l + 1 < r:
+				m = ( l + r ) >> 1
+				if proj_i < line[m]:r = m
+				else:l = m
+			j_llim = max( -1 , l - bucket_size - 1 )
+			j_ulim = min( T_size , l + bucket_size + 1 )
+			d_opt = d( S[i] , T[answer[i]] )
+			for j in R(l-1,j_llim,-1):
+				d_temp = d( S[i] , T[line[j][1]] )
+				if d_opt > d_temp:
+					d_opt = d_temp
+					answer[i] = line[j][1]
+				elif abs( line[j][0] - proj_i[0] ) > d_opt:break
+			for j in R(l,j_ulim):
+				d_temp = d( S[i] , T[line[j][1]] )
+				if d_opt > d_temp:
+					d_opt = d_temp
+					answer[i] = line[j][1]
+				elif abs( line[j][0] - proj_i[0] ) > d_opt:break
+	return answer
+

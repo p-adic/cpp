@@ -1,0 +1,87 @@
+class TwoByTwoMatrix:
+	zero=None
+	one=None
+
+	def __init__(self,M00,M01,M10,M11):
+		self.M00 = M00
+		self.M01 = M01
+		self.M10 = M10
+		self.M11 = M11
+	def copy(self):
+		return self.__class__(self.M00,self.M01,self.M10,self.M11)
+
+	def __eq__(self,other):
+		return self.M00 == other.M00 and self.M01 == other.M01 and self.M10 == other.M10 and self.M11 == other.M11
+	def __ne__(self,other):
+		return not( self == other )
+
+	def __iadd__(self,other):
+		self.M00 += other.M00
+		self.M01 += other.M01
+		self.M10 += other.M10
+		self.M11 += other.M11
+		return self
+	def __add__(self,other):
+		M = self.copy()
+		M += other
+		return M
+
+	def __isub__(self,other):
+		self.M00 -= other.M00
+		self.M01 -= other.M01
+		self.M10 -= other.M10
+		self.M11 -= other.M11
+		return self
+	def __sub__(self,other):
+		M = self.copy()
+		M -= other
+		return M
+	def __neg__(self):
+		return self.__class__(-self.M00,-self.M01,-self.M10,-self.M11)
+
+	def __mul__(self,other):
+		return self.__class__(self.M00 * other.M00 + self.M01 * other.M10,self.M00 * other.M01 + self.M01 * other.M11,self.M10 * other.M00 + self.M11 * other.M10,self.M10 * other.M01 + self.M11 * other.M11)
+	def __imul__(self,other):
+		self.M00 , self.M01 , self.M10 , self.M11 = self.M00 * other.M00 + self.M01 * other.M10 , self.M00 * other.M01 + self.M01 * other.M11 , self.M10 * other.M00 + self.M11 * other.M10 , self.M10 * other.M01 + self.M11 * other.M11
+		return self
+	def ScalarMultiply(self,x):
+		self.M00 *= x
+		self.M01 *= x
+		self.M10 *= x
+		self.M11 *= x
+		return self
+
+	def det(self):
+		return self.M00 * self.M11 - self.M01 * self.M10
+	def tr(self):
+		return self.M00 + self.M11
+
+	def Adjugate(self):
+		return self.__class__( self.M11 , - self.M01 , - self.M10 , self.M00 )
+	def Inverse(self):
+		return self.Adjugate().ScalarMultiply( 1 / self.det() )
+		# d = self.det()
+		# assert( d in [1,-1] ) # 整数係数の場合
+		# return self.Adjugate().ScalarMultiply( d )
+	def __truediv__(self,other):
+		return self * other.Inverse()
+	def __itruediv__(self,other):
+		self *= other.Inverse()
+		return self
+
+	def __pow__(self,n): #n>=0の場合のみサポート
+		answer = self.__class__.one.copy()
+		power = self.copy()
+		while n > 0:
+			if n&1:answer *= power
+			power.Square()
+			n >>= 1
+		return answer
+	def __xor__(self,n):
+		return self.Inverse()**(-n)if n < 0 else self ** n
+
+	#private:
+	def Square(self):
+		self.M00 , self.M01 , self.M10 , self.M11 = self.M00 ** 2 + self.M01 * self.M10 , ( self.M00 + self.M11 ) * self.M01 , self.M10 * ( self.M00 + self.M11 ) , self.M10 * self.M01 + self.M11 ** 2
+TwoByTwoMatrix.zero = TwoByTwoMatrix(0,0,0,0) #ユーザー定義
+TwoByTwoMatrix.one = TwoByTwoMatrix(1,0,0,1) #ユーザー定義

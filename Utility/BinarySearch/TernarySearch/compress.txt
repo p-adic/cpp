@@ -1,5 +1,5 @@
 #ifdef DEBUG
-  #include "c:/Users/user/Documents/Programming/Utility/BinarySearch/TernarySearch/a_Body.hpp"
+  #include "c:/Users/user/Documents/Programming/Mathematics/Utility/BinarySearch/TernarySearch/a_Body.hpp"
 #else
 TE <TY FUNC>auto TernarySearch(ll l,ll r,FUNC f,CO bool& minimise = true)-> pair<ll,decltype(f(r))>{ST_AS(is_invocable_v<FUNC,CRL>);AS(l <= r);ll m =(l + r)>> 1;auto L = f(l),M = f(m),R = f(r);WH(l + 1 < m || m < r - 1){CO ll l_sub =(l + m)>> 1,r_sub =(m + r)>> 1;auto L_sub = f(l_sub),R_sub = f(r_sub);if((L_sub < M)== minimise){r = m,m = l_sub;R = MO(M),M = MO(L_sub);}else if((M < R_sub)== minimise){l = l_sub,r = r_sub;L = MO(L_sub),R = MO(R_sub);}else{l = m,m = r_sub;L = MO(M),M = MO(R_sub);}}if((L < M)== minimise){RE{l,L};}if((M < R)== minimise){RE{m,M};}RE{r,R};}
 #endif

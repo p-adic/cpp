@@ -1,0 +1,9 @@
+#ifdef DEBUG
+  #include "c:/Users/user/Documents/Programming/Mathematics/Utility/TwoPointerApproach/IntervalSumMaximisation/Debug/a_Body.hpp"
+#else
+#define DECLARAIION_OF_INTERVAL_SUM_MAX(MAX)TE <TY INT1,TY INT2,TY FUNC> VE<pair<INT1,INT2>> IntervalSum ## MAX ## imisation(CO FUNC& func,CO INT1& lim,CO INT2& i_start,CO INT2& i_final,CO INT2& LE_min = 0,INT2 LE_max = -1);
+#define DEFINIION_OF_INTERVAL_SUM_MAX(MAX,INEQ)TE <TY INT1,TY INT2,TY FUNC> VE<pair<INT1,INT2>> IntervalSum ## MAX ## imisation(CO FUNC& func,CO INT1& lim,CO INT2& i_start,CO INT2& i_final,CO INT2& LE_min,INT2 LE_max){ST_AS(is_invocable_r_v<INT1,FUNC,CO INT1&>);if(LE_max == -1){LE_max = i_final - i_start + 1;}AS(LE_min <= LE_max);VE<pair<INT1,INT2>> AN(LE_max - LE_min + 1,{lim,i_start - 1});INT1 iss{};for(INT2 L = 1;L < LE_min;L++){iss += func(i_start + L - 1);}if(LE_min == 0 && 0 INEQ lim){AN[0]={0,i_start};}for(INT2 L = max(INT2(1),LE_min);L <= LE_max;L++){INT1 temp = iss += func(i_start + L - 1);pair<INT1,INT2>& AN_L = AN[L - LE_min];for(INT2 i = i_start + L - 1;i <= i_final;i++){if((AN_L.first == lim || AN_L.first INEQ temp)&& temp INEQ lim){AN_L ={temp,i - L + 1};}if(i < i_final){temp += func(i + 1)- func(i - L + 1);}}}RE AN;}
+DECLARAIION_OF_INTERVAL_SUM_MAX(Max);DECLARAIION_OF_INTERVAL_SUM_MAX(Min);
+DEFINIION_OF_INTERVAL_SUM_MAX(Max,<);DEFINIION_OF_INTERVAL_SUM_MAX(Min,>);
+#endif
+

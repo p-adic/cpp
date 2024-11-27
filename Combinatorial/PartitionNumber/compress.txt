@@ -1,0 +1,6 @@
+#ifdef DEBUG
+  #include "c:/Users/user/Documents/Programming/Mathematics/Combinatorial/PartitionNumber/a_Body.hpp"
+#else
+TE <TY INT>VE<VE<INT>> LowerBoundedPartitionNumber(CRI n){VE AN(n + 1,VE<INT>(n + 1));for(int i = 0;i <= n;i++){AN[i][i]= 1;for(int j = i - 1;j >= 0;j--){AN[i][j]= AN[i][j+1]+ AN[i-j][j];}}RE AN;}TE <TY INT>VE<INT> PartitionNumber(CRI n){auto lbpn = LowerBoundedPartitionNumber<INT>(n);VE AN(n + 1,INT{1});for(int i = 1;i <= n;i++){AN[i]= lbpn[i][1];}RE AN;}TE <TY INT>VE<VE<INT>> UpperBoundedPartitionNumber(CRI n){VE AN(n + 1,VE<INT>(n + 1));AN[0][0]= 1;for(int i = 0;i <= n;i++){for(int j = 1;j <= i;j++){AN[i][j]= AN[i-j][j];}for(int j = 0;j < n;j++){AN[i][j+1]+= AN[i][j];}}RE AN;}
+#endif
+

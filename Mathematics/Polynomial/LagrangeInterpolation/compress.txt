@@ -1,7 +1,0 @@
-#ifdef DEBUG
-  #include "c:/Users/user/Documents/Programming/Mathematics/Polynomial/LagrangeInterpolation/a_Body.hpp"
-#else
-TE <TY T,TE <TY...> TY V1,TE <TY...> TY V2,TE <TY...> TY V3>VO SetPointTree(CO V1<T>& point,V2<V3<PO<T> > >& point_tree){CO PO<T>& x = PO<T>::x();V3<PO<T> > linear{};for(auto& p:point){linear.push_back(x - PO<T>(p));}point_tree.push_front(MO(linear));SetProductTree(point_tree);RE;}TE <TY T,TE <TY...> TY V1,TE <TY...> TY V2,TE <TY...> TY V3>VO SetPointTreeEvaluation(CO PO<T>& f,CO V1<V2<PO<T> > >& point_tree,V3<T>& AN){AS(!point_tree.empty());CO V2<PO<T> >& prod = point_tree.front();if(prod.empty()){RE;}CO PO<T>& zero = PO<T>::zero();auto IT_tree = point_tree.BE(),EN_tree = point_tree.EN();LI<PO<T> > RS ={f % IT_tree->front()};IT_tree++;WH(IT_tree != EN_tree){auto IT_RS = RS.BE(),EN_RS = RS.EN();auto IT_node = IT_tree->BE(),EN_node = IT_tree->EN();WH(IT_RS != EN_RS){CO PO<T>& f = *IT_node;IT_node++;if(IT_node != EN_node){*(RS.insert(IT_RS,zero))= *IT_RS % f;*IT_RS %= *IT_node;IT_node++;}IT_RS++;}IT_tree++;}for(auto& f:RS){AN.push_back(f[0]);}RE;}
-
-TE <TY T>PO<T> LagrangeInterpolation(CO VE<T>& arg,CO VE<T>& val){CO int SZ = arg.SZ();AS(SZ > 0 && int(val.SZ())== SZ);LI<VE<PO<T> > > pt{};SetPointTree(arg,pt);CO VE<PO<T> >& top = pt.front();auto& f = top.front();PO<T> g{Differential(1,f)};VE<T> coef{};SetPointTreeEvaluation(g,pt,coef);PO<T> AN{};auto IT = pt.back().BE();for(int i = 0;i < SZ;i++){AN += f / *(IT++)*(val[i]/ coef[i]);}AN.ReMORedundantZero();RE AN;}
-#endif

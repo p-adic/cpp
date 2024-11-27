@@ -1,8 +1,0 @@
-#ifdef DEBUG
-  #include "c:/Users/user/Documents/Programming/Mathematics/Geometry/AffineSpace/Area/a_Body.hpp"
-#else
-#define AREA_OF_TRIANGLE (x1 - x0)*(y2 - y0)-(y1 - y0)*(x2 - x0)
-#define CALL_AREA_OF_TRIANGLE Area(v0.first,v0.second,v1.first,v1.second,v2.first,v2.second)
-IN ll Area_ll(CRL x0,CRL y0,CRL x1,CRL y1,CRL x2,CRL y2){RE AREA_OF_TRIANGLE;}TE <TY INT> IN ll Area(CO INT& x0,CO INT& y0,CO INT& x1,CO INT& y1,CO INT& x2,CO INT& y2){RE Area_ll(x0,y0,x1,y1,x2,y2);}IN double Area(CO double& x0,CO double& y0,CO double& x1,CO double& y1,CO double& x2,CO double& y2){RE AREA_OF_TRIANGLE;}TE <TY INT> IN ll Area(CO pair<INT,INT>& v0,CO pair<INT,INT>& v1,CO pair<INT,INT>& v2){RE CALL_AREA_OF_TRIANGLE;}IN double Area(CO pair<double,double>& v0,CO pair<double,double>& v1,CO pair<double,double>& v2){RE CALL_AREA_OF_TRIANGLE;}
-#endif
-

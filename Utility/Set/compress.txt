@@ -1,5 +1,5 @@
 #ifdef DEBUG
-  #include "c:/Users/user/Documents/Programming/Mathematics/Utility/Set/a_Body.hpp"
+  #include "c:/Users/user/Documents/Programming/Mathematics/Mathematics/Utility/Set/a_Body.hpp"
 #else
 #define DC_OF_HASH(...)struct hash<__VA_ARGS__>{IN size_t OP()(CO __VA_ARGS__& n)CO;};
 CL is_ordered{PU:is_ordered()= delete;TE <TY T> ST CE auto Check(CO T& t)-> decltype(t < t,true_type());ST CE false_type Check(...);TE <TY T> ST CE CO bool value = is_same_v< decltype(Check(declval<T>())),true_type >;};

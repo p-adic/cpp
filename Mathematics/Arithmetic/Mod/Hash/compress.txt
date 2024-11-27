@@ -1,6 +1,0 @@
-#ifdef DEBUG
-  #include "c:/Users/user/Documents/Programming/Mathematics/Arithmetic/Mod/Hash/a_Body.hpp"
-#else
-#define DF_OF_HASH_FOR_MOD(MOD)IN size_t hash<MOD>::OP()(CO MOD& n)CO{ST CO hash<decldecay_t(n.RP())> h;RE h(n.RP());}
-#endif
-

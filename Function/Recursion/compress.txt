@@ -1,0 +1,8 @@
+#ifdef DEBUG
+  #include "c:/Users/user/Documents/Programming/Mathematics/Function/Recursion/Debug/a_Body.hpp"
+#else
+#define Recursion(RET,FUNC,...)NonMemorisationRecursion FUNC =[&](auto& FUNC,__VA_ARGS__)-> RET
+#define MemoRecursion(RET,FUNC,...)MemorisationRecursion FUNC =[&](auto& FUNC,__VA_ARGS__)-> RET
+TE <TY REC>CL NonMemorisationRecursion:REC{PU:IN NonMemorisationRecursion(REC rec);TE <TY...Args> IN ret_t<REC,NonMemorisationRecursion<REC>&,CO Args&...> OP()(CO Args&... args);};TE <TY REC>CL MemorisationRecursion:REC{PU:int m_num;IN MemorisationRecursion(REC rec);TE <TY...Args> IN CO ret_t<REC,MemorisationRecursion<REC>&,CO Args&...>& OP()(CO Args&... args);};
+TE <TY REC> IN NonMemorisationRecursion<REC>::NonMemorisationRecursion(REC rec):REC(MO(rec)){}TE <TY REC> IN MemorisationRecursion<REC>::MemorisationRecursion(REC rec):REC(MO(rec)),m_num(){ST int num = -1;m_num = ++num;}TE <TY REC> TE <TY...Args> IN ret_t<REC,NonMemorisationRecursion<REC>&,CO Args&...> NonMemorisationRecursion<REC>::OP()(CO Args&... args){RE REC::OP()(*TH,args...);}TE <TY REC> TE <TY...Args> IN CO ret_t<REC,MemorisationRecursion<REC>&,CO Args&...>& MemorisationRecursion<REC>::OP()(CO Args&... args){ST unordered_map<tuple<Args...>,ret_t<REC,MemorisationRecursion<REC>&,CO Args&...>> memory{};ST int num = -1;if(num != m_num){AS(num < m_num);num = m_num;memory.clear();}CO tuple<Args...> v{args...};RE memory.count(v)== 0?memory[v]= REC::OP()(*TH,args...):memory[v];}
+#endif

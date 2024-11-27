@@ -1,0 +1,6 @@
+#ifdef DEBUG
+  #include "c:/Users/user/Documents/Programming/Mathematics/Utility/String/Z-Algorithm/a_Body.hpp"
+#else
+VE<int> LCP(CO string& S){CO int SZ = S.SZ();VE<int> AN(SZ + 1);AN[0]= SZ;int j_curr = 0;int j_lim,j_sub,AN_j_sub;for(int i = 1;i <= SZ;i++){int& AN_i = AN[i];j_lim = SZ - i;AN_i = j_lim;WH(j_curr < j_lim){if(S[j_curr]!= S[i + j_curr]){AN_i = j_curr;break;}j_curr++;}if(j_curr != 0){j_sub = 1;AN_j_sub = AN[j_sub];WH(j_sub + AN_j_sub < j_curr){AN[++i]= AN_j_sub;j_sub++;AN_j_sub = AN[j_sub];}j_curr -= j_sub;}}RE AN;}
+#endif
+

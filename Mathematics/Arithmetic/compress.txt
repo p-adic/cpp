@@ -1,2 +1,0 @@
-#define DF_OF_PROD(FUNC,UNIT,APPLY)if(f.empty()){f.push_back(UNIT);}if(f.SZ()== 1){RE f.front();}auto IT = f.BE(),EN = f.EN();WH(IT != EN){T& t = *IT;IT++;if(IT != EN){APPLY;IT = f.erase(IT);}}RE FUNC(f);
-TE <TY T,TE <TY...> TY V,T m_T(CO T&,CO T&),CO T& e_T()>T& MonoidalProd(V<T>& f){DF_OF_PROD(MonoidalProd,e_T(),t = m_T(t,*IT));}TE <TY T,TE <TY...> TY V>T& Sum(V<T>& f){DF_OF_PROD(Sum,T(0),t += *IT);}TE <TY T,TE <TY...> TY V>T& Prod(V<T>& f){DF_OF_PROD(Prod,T(1),t += *IT);}

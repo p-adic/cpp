@@ -1,5 +1,5 @@
 #ifdef DEBUG
-  #include "c:/Users/user/Documents/Programming/Utility/Set/Map/a_Body.hpp"
+  #include "c:/Users/user/Documents/Programming/Mathematics/Utility/Set/Map/a_Body.hpp"
 #else
 #define DF_OF_AR_FOR_MAP(MAP,OPR)TE <TY T,TY U> IN MAP<T,U>& OP OPR ## =(MAP<T,U>& a,CO pair<T,U>& v){a[v.first]OPR ## = v.second;RE a;}TE <TY T,TY U> IN MAP<T,U>& OP OPR ## =(MAP<T,U>& a0,CO MAP<T,U>& a1){for(auto&[t,u]:a1){a0[t]OPR ## = u;}RE a0;}TE <TY T,TY U,TY ARG> IN MAP<T,U> OP OPR(MAP<T,U> a,CO ARG& arg){RE MO(a OPR ## = arg);}
 #define DF_OF_ARS_FOR_MAP(MAP)DF_OF_AR_FOR_MAP(MAP,+);DF_OF_AR_FOR_MAP(MAP,-);DF_OF_AR_FOR_MAP(MAP,*);DF_OF_AR_FOR_MAP(MAP,/);DF_OF_AR_FOR_MAP(MAP,%);

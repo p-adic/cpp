@@ -1,0 +1,6 @@
+#ifdef DEBUG
+  #include "c:/Users/user/Documents/Programming/Mathematics/Geometry/AffineSpace/Distance/L2/a_Body.hpp"
+#else
+TE <TY INT> IN INT L22(CO INT& x,CO INT& y){RE x * x + y * y;}TE <TY INT> IN INT L22(CO pair<INT,INT>& v){RE L22(v.first,v.second);}TE <TY INT> IN INT L22_Distance(CO INT& x0,CO INT& y0,CO INT& x1,CO INT& y1){RE L22(x0 - x1,y0 - y1);}TE <TY INT> IN INT L22_Distance(CO pair<INT,INT>& v0,CO pair<INT,INT>& v1){RE L22(v0 - v1);}TE <TY INT> IN double L2(CO INT& x,CO INT& y){RE sqrt(L22(x,y));}TE <TY INT> IN double L2(CO pair<INT,INT>& v){RE sqrt(L22(v));}TE <TY INT> IN double L2_Distance(CO INT& x0,CO INT& y0,CO INT& x1,CO INT& y1){RE sqrt(L22_Distance(x0,y0,x1,y1));}TE <TY INT> IN double L2_Distance(CO pair<INT,INT>& v0,CO pair<INT,INT>& v1){RE sqrt(L22_Distance(v0,v1));}
+#endif
+

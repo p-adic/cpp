@@ -1,0 +1,24 @@
+#零初期化
+p=1
+while N>p:p*=2
+T=[0]*p*2
+#配列による初期化
+for i in R(0,N):T[p|i]=E[i]
+for j in R(p-1,0,-1):T[j]=T[j*2]+T[j*2+1]
+
+#一点更新S
+#区間和G
+def S(i,u):
+	j=p|i
+	T[j],j=u,j>>1
+	while j:T[j],j=T[j*2]+T[j*2+1],j>>1
+def G(l,r): #l,rは始端,終端
+	l|=p
+	r+=p+1
+	a=b=0
+	while l<r:
+		if l&1:a,l=a+T[l],l+1
+		if r&1:b,r=T[r-1]+a,r-1
+		l,r=l>>1,r>>1
+	return a+b
+

@@ -1,0 +1,41 @@
+#Initialisation by an array O(N)
+
+#Set O(1)
+#Add O(1)
+
+#Get O(1)
+#IntervalSum O(N^{1/2})
+
+def rec_str(a):return"".join(["[",", ".join(rec_str(x)for x in a),"]"])if isinstance(a,list)else str(a)
+class SqrtDecomposition:
+	def __init__(self,a,N_sqrt=None):
+		self.N = len(a)
+		self.N_sqrt = int( self.N**0.5 ) + 1 if N_sqrt is None else N_sqrt
+		self.N_d = ( self.N + self.N_sqrt - 1 ) // self.N_sqrt
+		self.N_m = self.N_d * self.N_sqrt
+		self.a = a[:] #Remove [:] if unnecessary
+		self.b = [0]*self.N_d
+		self.a += [0]*( self.N_m - self.N )
+		i_min = 0
+		i_ulim = self.N_sqrt
+		for d in R(self.N_d):
+			for i in R(i_min,i_ulim):self.b[d] *= self.a[i]
+			i_min = i_ulim
+			i_ulim += self.N_sqrt
+	def __str__(self):return("\n".join([rec_str(self.a),rec_str(self.b)]))
+	def Set(self,i,u):
+		d = i // self.N_sqrt
+		self.b[d] += u - self.a[i]
+		self.a[i] = u
+	def Add(self,i,u):
+		d = i // self.N_sqrt
+		self.b[d] += u
+		self.a[i] += u
+	def IntervalSum(self,i_start,i_final):
+		i_min = max( i_start , 0 )
+		i_ulim = min( i_final + 1 , self.N )
+		d_0 = ( i_min + self.N_sqrt - 1 ) // self.N_sqrt
+		d_1 = max( d_0 , i_ulim // self.N_sqrt )
+		i_0 = min( d_0 * self.N_sqrt , i_ulim )
+		i_1 = max( i_0 , d_1 * self.N_sqrt )
+		return sum(self.a[i]for i in R(i_min,i_0)) + sum(self.b[d]for d in R(d_0,d_1)) + sum(self.a[i]for i in R(i_1,i_ulim))

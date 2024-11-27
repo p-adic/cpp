@@ -1,6 +1,0 @@
-#ifdef DEBUG
-  #include "c:/Users/user/Documents/Programming/Mathematics/SetTheory/Mex/Reversible/a_Body.hpp"
-#else
-CL ReversibleMexSet{PU:int m_QuerySZ;set<int> m_comp;set<int> m_over;IN ReversibleMexSet(CRI QuerySZ);IN int count(CRI i)CO;IN bool in(CRI i)CO;IN VO insert(CRI i);IN VO erase(CRI i);IN CRI mex()CO;};
-IN ReversibleMexSet::ReversibleMexSet(CRI QuerySZ):m_QuerySZ(QuerySZ),m_comp(),m_over(){for(int i = 0;i <= m_QuerySZ;i++){m_comp.insert(i);}}IN int ReversibleMexSet::count(CRI i)CO{AS(i >= 0);RE i <= m_QuerySZ?1 - m_comp.count(i):m_over.count(i);}IN bool ReversibleMexSet::in(CRI i)CO{RE count(i)> 0;}IN VO ReversibleMexSet::insert(CRI i){AS(i >= 0);if(i <= m_QuerySZ){m_comp.erase(i);}else{m_over.insert(i);}}IN VO ReversibleMexSet::erase(CRI i){AS(i >= 0);if(i <= m_QuerySZ){m_comp.insert(i);}else{m_over.erase(i);}}IN CRI ReversibleMexSet::mex()CO{AS(!m_comp.empty());RE *(m_comp.BE());}
-#endif
