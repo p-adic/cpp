@@ -3,15 +3,15 @@
 #pragma once
 #include "a_Macro.hpp"
 #include "../../Algebra/a.hpp"
-#include "../../../Utility/Set/Map/a.hpp"
+#include "../../Utility/Set/Map/a.hpp"
 
 // verify:
-// https://yukicoder.me/submissions/957306ï¼ˆGraphã€E:int->list<int>ï¼‰
-// https://yukicoder.me/submissions/957304ï¼ˆGraphã€E:int->list<pair<int,dummy>>ï¼‰
-// https://yukicoder.me/submissions/957307ï¼ˆEnumerationGraphã€E:int->list<int>ï¼‰
-// https://yukicoder.me/submissions/957308ï¼ˆMemorisationGraphã€E:T->list<T>ï¼‰
+// https://yukicoder.me/submissions/957306iGraphAE:int->list<int>j
+// https://yukicoder.me/submissions/957304iGraphAE:int->list<pair<int,dummy>>j
+// https://yukicoder.me/submissions/957307iEnumerationGraphAE:int->list<int>j
+// https://yukicoder.me/submissions/957308iMemorisationGraphAE:T->list<T>j
 
-// Enumeration:N->R1-->Tã¨Enumeration_inv:T->R2-->Nã¯äº’ã„ã«é€†å†™åƒã§ã‚ã‚‹ä»®æƒ³é–¢æ•°ã€‚
+// Enumeration:N->R1-->T‚ÆEnumeration_inv:T->R2-->N‚ÍŒİ‚¢‚É‹tÊ‘œ‚Å‚ ‚é‰¼‘zŠÖ”B
 template <typename T , typename R1 , typename R2 , typename E>
 class VirtualGraph :
   virtual public UnderlyingSet<T>
@@ -42,8 +42,8 @@ class EdgeImplimentation :
 
 private:
   int m_size;
-  // é…åˆ—ã¸ã®å‚ç…§ã‚’è¿”ã™é–¢æ•°ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã‚’æ§‹ç¯‰ã—ã¦è¿”ã™é–¢æ•°ã®è¿”ã‚Šå€¤ãªã©ã®å³è¾ºå€¤ã‚’å—ã‘å–ã‚‹ã“ã¨ã‚’
-  // è¨±å®¹ã—ãŸã„ã®ã§å·¦è¾ºå€¤å‚ç…§ã«ã¯ã—ãªã„ã€‚
+  // ”z—ñ‚Ö‚ÌQÆ‚ğ•Ô‚·ŠÖ”ƒIƒuƒWƒFƒNƒg‚ğ\’z‚µ‚Ä•Ô‚·ŠÖ”‚Ì•Ô‚è’l‚È‚Ç‚Ì‰E•Ó’l‚ğó‚¯æ‚é‚±‚Æ‚ğ
+  // ‹–—e‚µ‚½‚¢‚Ì‚Å¶•Ó’lQÆ‚É‚Í‚µ‚È‚¢B
   E m_edge;
 
 public:
@@ -100,9 +100,9 @@ private:
   Map<T,int> m_memory_inv;
   
 public:
-  // å‹æ¨è«–ã®ãŸã‚ã«dummyã‚’æ¸¡ã™ã€‚Eã®æˆ»ã‚Šå€¤ã®å‹ã‹ã‚‰æ¨è«–ã•ã›ã‚‹ã¨é‡ã¿ä»˜ãè¾ºã®æ™‚ã«æ©Ÿèƒ½ã—ãªã„ã€‚
+  // Œ^„˜_‚Ì‚½‚ß‚Édummy‚ğ“n‚·BE‚Ì–ß‚è’l‚ÌŒ^‚©‚ç„˜_‚³‚¹‚é‚Æd‚İ•t‚«•Ó‚Ì‚É‹@”\‚µ‚È‚¢B
   inline MemorisationGraph( const int& size , const T& dummy , E edge );
-  // push_backã™ã‚‹å¯èƒ½æ€§ã®ã‚ã‚‹vectorãªã®ã§å‚ç…§ã«ã—ãªã„ã‚ˆã†ã«æ³¨æ„
+  // push_back‚·‚é‰Â”\«‚Ì‚ ‚évector‚È‚Ì‚ÅQÆ‚É‚µ‚È‚¢‚æ‚¤‚É’ˆÓ
   inline T Enumeration( const int& i );
   inline void Reset();
   template <typename F> inline MemorisationGraph<T,F> GetGraph( F edge ) const;
