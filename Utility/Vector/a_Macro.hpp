@@ -2,6 +2,10 @@
 
 #pragma once
 
+#ifndef decldecay_t
+  #define decldecay_t( VAR ) decay_t<decltype( VAR )>
+#endif
+
 #define DECLARATION_OF_ARITHMETIC_FOR_VECTOR( V , OPR )			\
   template <typename T> inline V<T>& operator OPR ## = ( V<T>& a , const T& t ); \
   template <typename T> inline V<T>& operator OPR ## = ( V<T>& a0 , const V<T>& a1 ); \

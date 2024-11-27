@@ -1,10 +1,10 @@
-// c:/Users/user/Documents/Programming/Utility/Set/Map/StdStream/a_Body.hpp
+// c:/Users/user/Documents/Programming/Mathematics/Utility/Set/Map/StdStream/a_Body.hpp
 
 #pragma once
 #include "a.hpp"
 
 // operator<<のオーバーロードを行うため、先にincludeする。
-#include "../../../StdStream/a_Body.hpp"
+#include "../../../../../Utility/StdStream/a_Body.hpp"
 
 template <class Traits , typename T , typename U> inline basic_ostream<char,Traits>& operator<<( basic_ostream<char,Traits>& os , const map<T,U>& f )
 {

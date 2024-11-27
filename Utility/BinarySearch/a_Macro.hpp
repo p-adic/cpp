@@ -1,7 +1,7 @@
 // c:/Users/user/Documents/Programming/Utility/BinarySearch/a_Macro.hpp
 
 #pragma once
-#include "../Stdstream/a_Macro.hpp"
+#include "../../../Utility/Stdstream/a_Macro.hpp"
 
 #ifndef decldecay_t
   #define decldecay_t( VAR ) decay_t<decltype( VAR )>

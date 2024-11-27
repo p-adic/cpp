@@ -1,7 +1,7 @@
 // c:/Users/user/Documents/Programming/Utility/TwoPointerApproach/a_Macro.hpp
 
 #pragma once
-#include "../StdStream/a_Macro.hpp"
+#include "../../../Utility/StdStream/a_Macro.hpp"
 
 #ifndef decldecay_t
   #define decldecay_t( VAR ) decay_t<decltype( VAR )>
