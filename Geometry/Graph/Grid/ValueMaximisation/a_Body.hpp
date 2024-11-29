@@ -3,9 +3,7 @@
 #pragma once
 #include "a.hpp"
 
-#include "../../../../Algebra/Monoid/Group/Module/a_Body.hpp"
-#include "../../../../Algebra/Monoid/SemiLattice/a_Body.hpp"
-#include "../../../../SetTheory/DirectProduct/AffineSpace/SqrtDecomposition/Dual/a_Body.hpp"
+#include "../../../../SetTheory/DirectProduct/AffineSpace/BIT/IntervalMax/a_Body.hpp"
 
 #ifdef DEBUG
   #include "../../../../SetTheory/DirectProduct/CoordinateCompress/Debug/a_Body.hpp"
@@ -14,18 +12,17 @@
 #endif
 
 
-template <typename INT , typename U , typename MONOID , template <typename...> typename DATA_STR>
-U AbstractGridValueMaximisation_Body( MONOID M , const INT& W , const multiset<tuple<INT,INT,U>>& S , const bool& skippable )
+template <typename INT , typename U , typename MONOID>
+U AbstractGridValueMaximisation_Body( MONOID M , const INT& W , const multiset<tuple<INT,INT,U>>& S , const bool& skippable , const U& min_U )
 {
 
-  const U& one = M.One();
-  DATA_STR a{ RegularRSet{ MaxSemilattice{ one } } , RegularRSet{ MaxSemilattice{ one } } , vector( W , one ) };
+  IntervalMaxBIT a{ min_U , vector( W , min_U ) };
 
   if( skippable ){
 
     for( auto& [i,j,w] : S ){
 
-      a.IntervalAct( -j , W - 1 , M.Product( a[-j] , w ) );
+      a.SetMax( j , M.Product( a.IntervalMax( 0 , j ) , w ) );
 
     }
 
@@ -33,19 +30,18 @@ U AbstractGridValueMaximisation_Body( MONOID M , const INT& W , const multiset<t
 
     for( auto& [i,j,w] : S ){
 
-      a.Set( -j , M.Product( a[-j] , w ) );
-      a.IntervalAct( -j , W - 1 , a[-j] );
+      a.Set( j , M.Product( a.IntervalMax( 0 , j ) , w ) );
 
     }
 
   }
 
-  return a[W-1];
+  return a.IntervalMax( 0 , W-1 );
 
 }
 
-template <typename INT , typename U , typename MONOID , template <typename...> typename DATA_STR>
-U AbstractGridValueMaximisation( MONOID M , const INT& W , const vector<tuple<INT,INT,U>>& v , const bool& skippable )
+template <typename INT , typename U , typename MONOID>
+U AbstractGridValueMaximisation( MONOID M , const INT& W , const vector<tuple<INT,INT,U>>& v , const bool& skippable , const U& min_U )
 {
 
   multiset<tuple<INT,INT,U>> S{};
@@ -54,19 +50,19 @@ U AbstractGridValueMaximisation( MONOID M , const INT& W , const vector<tuple<IN
 
     if( 0 <= i && 0 <= j && j < W ){
       
-      S.insert( { i , -j , w } );
+      S.insert( { i , j , w } );
 
     }
 
   }
 
-  return AbstractGridValueMaximisation<INT,U,MONOID,DATA_STR>( move( M ) , W , S , skippable );
+  return AbstractGridValueMaximisation_Body<INT,U,MONOID>( move( M ) , W , S , skippable , min_U );
 
 }
 
-template <typename INT , typename U> inline U GridValueMaximisation( const INT& W , const vector<tuple<INT,INT,U>>& v , const bool& skippable ) { return AbstractGridValueMaximisation<INT,U,AdditiveMonoid<U>,DualSqrtDecomposition>( AdditiveMonoid<U>() , W , v , skippable ); }
+template <typename INT , typename U> inline U GridValueMaximisation( const INT& W , const vector<tuple<INT,INT,U>>& v , const bool& skippable , const U& min_U ) { return AbstractGridValueMaximisation<INT,U,AdditiveMonoid<U>>( AdditiveMonoid<U>() , W , v , skippable , min_U ); }
 
-template <typename INT , typename U> inline U CompressedGridValueMaximisation( const vector<tuple<INT,INT,U>>& v , const bool& skippable )
+template <typename INT , typename U> inline U CompressedGridValueMaximisation( const vector<tuple<INT,INT,U>>& v , const bool& skippable , const U& min_U )
 {
 
   CoordinateCompress<INT> cc{};
@@ -89,12 +85,12 @@ template <typename INT , typename U> inline U CompressedGridValueMaximisation( c
 
     if( 0 <= i && 0 <= j ){
 
-      S.insert( { i , - cc_result_inv[j] , w } );
+      S.insert( { i , cc_result_inv[j] , w } );
 
     }
 
   }
 
-  return AbstractGridValueMaximisation_Body<INT,U,AdditiveMonoid<U>,DualSqrtDecomposition>( AdditiveMonoid<U>() , INT( cc_result.size() ) , S , skippable );
+  return AbstractGridValueMaximisation_Body<INT,U,AdditiveMonoid<U>>( AdditiveMonoid<U>() , INT( cc_result.size() ) , S , skippable , min_U );
 
 }
