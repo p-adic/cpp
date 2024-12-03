@@ -10,5 +10,5 @@ template <class Traits , typename T , typename U , typename V , typename W> inli
 
 template <class Traits , typename T> inline basic_ostream<char,Traits>& operator<<( basic_ostream<char,Traits>& os , const tuple<T>& arg ) { return os << "(" << get<0>( arg ) << ")"; }
 template <class Traits , typename T , typename U , template <typename...> typename V> inline auto operator<<( basic_ostream<char,Traits>& os , const V<T,U>& arg ) -> decltype((get<0>(arg),os))& { return os << "(" << get<0>( arg ) << ", " << get<1>( arg ) << ")"; }
-  template <class Traits , typename T , typename U , typename V> inline basic_ostream<char,Traits>& operator<<( basic_ostream<char,Traits>& os , const tuple<T,U,V>& arg ) { return os << "(" << get<0>( arg ) << ", " << get<1>( arg ) << ", " << get<2>( arg ) << ")"; }
+template <class Traits , typename T , typename U , typename V> inline basic_ostream<char,Traits>& operator<<( basic_ostream<char,Traits>& os , const tuple<T,U,V>& arg ) { return os << "(" << get<0>( arg ) << ", " << get<1>( arg ) << ", " << get<2>( arg ) << ")"; }
 template <class Traits , typename T , typename U , typename V , typename W> inline basic_ostream<char,Traits>& operator<<( basic_ostream<char,Traits>& os , const tuple<T,U,V,W>& arg ) { return os << "(" << get<0>( arg ) << ", " << get<1>( arg ) << ", " << get<2>( arg ) << ", " << get<3>( arg ) << ")"; }
