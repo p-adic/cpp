@@ -4,9 +4,9 @@
 #include "a.hpp"
 
 #if !defined( SAMPLE_CHECK ) && defined( DEBUG )
-  #include "StdStream/Debug/a.hpp"
+  #include "StdStream/Debug/a_Body.hpp"
 #else
-  #include "StdStream/a.hpp"
+  #include "StdStream/a_Body.hpp"
 #endif
 
 #include "Hash/a_Body.hpp"
