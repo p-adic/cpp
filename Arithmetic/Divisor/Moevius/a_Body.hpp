@@ -99,7 +99,7 @@ vector<INT> TotalMoeviusFunction( const LD& ld , const INT& n_max )
 }
 
 // 不使用だがどうせincludeする。
-#include "../../Prime/Enumeration/a.hpp"
-#include "../../Prime/Enumeration/Heap/a.hpp"
-#include "../Least/a.hpp"
-#include "../Least/Heap/a.hpp"
+#include "../../Prime/Enumeration/a_Body.hpp"
+#include "../../Prime/Enumeration/Heap/a_Body.hpp"
+#include "../Least/a_Body.hpp"
+#include "../Least/Heap/a_Body.hpp"
