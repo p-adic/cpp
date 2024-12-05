@@ -2,7 +2,7 @@
 
 #pragma once
 #include "../../a.hpp"
-#include "../../../../../Utility/Set/Map/a.hpp"
+#include "../../../../Utility/Set/Map/a.hpp"
 
 // verify:
 // https://yukicoder.me/submissions/978898（一始点Shiftの反復による多点BFSでの全探索）
@@ -11,6 +11,11 @@
 // https://yukicoder.me/submissions/978910（一始点のGetDistance、MemorisationGraph）
 
 // GRAPHは辺Edge:T->(T \times ...)^{< \omega}を持つグラフに相当する型。
+
+// 入力の範囲内で要件
+// (1) Gは有向グラフである。
+// (2) not_foundはGの頂点でない。
+// を満たす場合にのみサポート。
 
 // 構築 O(1)/O(|V_G|)（未初期化/初期化）
 // Next()の反復でinitから到達可能な頂点を全探索 O(initの連結成分における辺の本数)
@@ -57,14 +62,13 @@ public:
   inline T Next();
 
   // m_nextに格納されている未到達点（初期化時点ではinit/inits）から到達できる未到達点の深さを
-  // 格納する。
+  // 格納した配列を返す。ただし到達できない未到達点や既到達点は深さの代わりに-1を格納する。
   template <typename U = T> auto GetDistance() -> enable_if_t<is_same_v<GRAPH,MemorisationGraph<U,decldecay_t(declval<GRAPH>().edge())>>,Map<T,int>>;
-  // 到達できない未到達点や既到達点は深さの代わりに-1を格納。
   template <typename U = T> auto GetDistance() -> enable_if_t<!is_same_v<GRAPH,MemorisationGraph<U,decldecay_t(declval<GRAPH>().edge())>>,vector<int>>;
   
-  // GRAPHがMemorisationGraphでない無向グラフである場合にのみサポート。
-  // 未到達点の全体のなす部分グラフにおける連結成分の色分けと連結成分数を格納。
-  pair<vector<int>,int> GetConnectedComponent();
+  // GRAPHがMemorisationGraphでない無向グラフ（の有向化）である場合にのみサポート。
+  // {未到達点の全体のなす部分グラフにおける連結成分の色分け,その逆像,色の種類数}を格納。
+  tuple<vector<int>,vector<vector<T>>,int> GetConnectedComponent();
 
   // m_nextに格納されている未到達点から到達できる未到達点を探索順に格納する。
   vector<T> GetNodeEnumeration();

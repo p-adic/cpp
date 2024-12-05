@@ -4,7 +4,7 @@
 #include "a.hpp"
 
 #include "../../a_Body.hpp"
-#include "../../../../../Utility/Set/Map/a_Body.hpp"
+#include "../../../../Utility/Set/Map/a_Body.hpp"
 
 template <typename T , typename GRAPH> inline VirtualBreadthFirstSearch<T,GRAPH>::VirtualBreadthFirstSearch( GRAPH& G , const T& not_found ) : m_G( G ) , m_not_found( not_found ) , m_initialised( false ) , m_next() , m_found() , m_prev() { static_assert( is_same_v<inner_t<GRAPH>,T> ); }
 template <typename T , typename GRAPH> template <typename Arg> inline VirtualBreadthFirstSearch<T,GRAPH>::VirtualBreadthFirstSearch( GRAPH& G , const T& not_found , Arg&& init ) : VirtualBreadthFirstSearch<T,GRAPH>( G , not_found ) { Initialise( forward<Arg>( init ) ); }
@@ -105,12 +105,13 @@ auto VirtualBreadthFirstSearch<T,GRAPH>::GetDistance() -> enable_if_t<!is_same_v
 }
 
 template <typename T , typename GRAPH>
-pair<vector<int>,int> VirtualBreadthFirstSearch<T,GRAPH>::GetConnectedComponent()
+tuple<vector<int>,vector<vector<T>>,int> VirtualBreadthFirstSearch<T,GRAPH>::GetConnectedComponent()
 {
 
   static_assert( !is_same_v<GRAPH,MemorisationGraph<T,decldecay_t( m_G.edge() )>> );
   const int& V = size();
   vector cc_num( V , -1 );
+  vector<vector<T>> cc_num_inv{};
   int count = 0;
 
   for( int i = 0 ; i < V ; i++ ){
@@ -122,9 +123,12 @@ pair<vector<int>,int> VirtualBreadthFirstSearch<T,GRAPH>::GetConnectedComponent(
 
       if( t != m_not_found ){
 
+        cc_num_inv.push_back( {} );
+
 	while( t != m_not_found ){
 
 	  cc_num[m_G.Enumeration_inv( t )] = count;
+          cc_num_inv[count].push_back( t );
 	  t = Next();
 
 	}
@@ -137,7 +141,7 @@ pair<vector<int>,int> VirtualBreadthFirstSearch<T,GRAPH>::GetConnectedComponent(
 
   }
 
-  return { move( cc_num ) , move( count ) };
+  return { move( cc_num ) , move( cc_num_inv ) , count };
 
 }
 

@@ -27,6 +27,7 @@ public:
 };
 
 // N進法表記の桁でN-1未満の値を1増やす方向に有向辺を貼ったグラフに対するBFS
+// 単に全探策したい場合はNextLoopを使えばよい。
 class AdicExhausiveSearch :
   public BreadthFirstSearch<int,Graph<AdicExhausiveEdge>>
 {
@@ -45,39 +46,57 @@ public:
   inline AdicExhausiveSearch( const int& N , const int& V , const bool& reversed = false );
   inline AdicExhausiveSearch( const int& N , const int& digit , const int& dummy , const bool& reversed = false );
 
+  // t < N^digitの場合のみサポート。
   // 1+d桁目をanswer[d]に格納する。
   inline vector<int> to_vec( int t );
+  // a.size() <= digitの場合のみサポート。
   inline int to_int( const vector<int>& a );
 
+  
+  // VVV以下BreadthFirstSearchの初期化（O(V)）を伴う。
+
+  // t < N^digitの場合のみサポート。
   // tのN進法表記の桁でN-1未満の値を1増やした数で未到達なものを格納し到達済みにマーク。
   inline vector<int> UnreachedAdjacentUpperboundOf( const int& t );
+  // t < N^digitの場合のみサポート。
   // tのN進法表記の桁で1以上の値を1減らした数で未到達なものを格納し到達済みにマーク。
   // O(log_N t)かかり、多点BFSではこれを使えばO(N^digit)で抑えられる。
   inline vector<int> UnreachedAdjacentLowerboundOf( const int& t );
 
+  // t < N^digitの場合のみサポート。
   // tからN進法表記の桁を真に増やした数で未到達なものを格納し到達済みにマーク。
   inline vector<int> UnreachedProperUpperboundOf( const int& t );
+  // t < N^digitの場合のみサポート。
   // tからN進法表記の桁を真に減らした数で未到達なものを格納し到達済みにマーク。
   // tのオーダーがかかるので、多点BFSでこれを使うと最悪3^digitのオーダーになることに注意。
   inline vector<int> UnreachedProperLowerboundOf( const int& t );
 
+  // AAA 以上BreadthFirstSearchの初期化（O(V)）を伴う。
+
+  
+  // t < N^digitの場合のみサポート。
   // tのN進法表記の桁でN-1未満の値を1増やした数を格納。
   inline vector<int> AdjacentUpperboundOf( const int& t );
+  // t < N^digitの場合のみサポート。
   // tからN進法表記の桁を真に増やした数を格納。
   inline vector<int> ProperUpperboundOf( const int& t );
 
+  // t < N^digitの場合のみサポート。
   // tのN進法表記の桁でN-1未満の値を1減らした数を格納。
   inline vector<int> AdjacentLowerboundOf( const int& t );
+  // t < N^digitの場合のみサポート。
   // tからN進法表記の桁を真に減らした数を格納。
   inline vector<int> ProperLowerboundOf( const int& t );
 
+  // t < N^digitの場合のみサポート。
   // N進法表記の桁の分布を変えずにtを昇順で後続に遷移させる。
   inline bool NextPermutation( int& t );
   inline bool NextPermutation( vector<int>& S );
 
+  // t < N^digitの場合のみサポート。
   // tのN進表記における桁数を返す。（O(log_N(t))）
   inline int DigitOf( const int& t );
-  // tがN羃の時のみサポート。
+  // t < N^digitかつtがN羃の場合のみサポート。
   // tのNで割り切れる回数をメモ化して返す。（合計O(max log_N t)）
   inline const int& ValuationOf( const int& t );
   inline const int& Power( const int& digit ) const;
