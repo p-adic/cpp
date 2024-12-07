@@ -1,7 +1,7 @@
 // c:/Users/user/Documents/Programming/Mathematics/Arithmetic/Mod/Hash/a_Macro.hpp
 
 #pragma once
-#include "../../../../Utility/Set/a_Macro.hpp"
+#include "../../../Utility/Set/a_Macro.hpp"
 
 #ifndef decldecay_t
   #define decldecay_t( VAR ) decay_t<decltype( VAR )>
