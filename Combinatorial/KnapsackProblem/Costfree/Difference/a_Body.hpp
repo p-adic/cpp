@@ -8,11 +8,20 @@
 
 // 多重ループの非再帰版
 template <typename INT>
-INT CostfreeDifferenceKnapsack( const vector<INT>& value , const INT& value_bound , int size_diff_bound )
+INT CostfreeDifferenceKnapsack( const vector<INT>& value , int size_diff_bound )
 {
 
   const int N = value.size();
   assert( N >= 1 + max( 0 , 1 - size_diff_bound ) );
+  INT value_bound = 0;
+
+  for( int i = 0 ; i < N ; i++ ){
+
+    assert( 0 <= value[i] );
+    value_bound = max( value_bound , value[i] );
+
+  }
+  
   INT value_sum_bound = 0;
   size_diff_bound = min( size_diff_bound , N );
   vector<ll> Comb( N + 1 , 1 );
@@ -164,11 +173,20 @@ INT CostfreeDifferenceKnapsack( const vector<INT>& value , const INT& value_boun
 
 // 多重ループの再帰版（遲い）
 // template <typename INT>
-// INT CostfreeDifferenceKnapsack( const vector<INT>& value , const INT& value_bound , int size_diff_bound )
+// INT CostfreeDifferenceKnapsack( const vector<INT>& value , int size_diff_bound )
 // {
 
 //   const int N = value.size();
 //   assert( N >= 1 + max( 0 , 1 - size_diff_bound ) );
+//   INT value_bound = 0;
+
+//   for( int i = 0 ; i < N ; i++ ){
+
+//     assert( 0 <= value[i] );
+//     value_bound = max( value_bound , value[i] );
+
+//   }
+
 //   INT value_sum_bound = 0;
 //   size_diff_bound = min( size_diff_bound , N );
 //   vector<ll> Comb( N + 1 , 1 );
