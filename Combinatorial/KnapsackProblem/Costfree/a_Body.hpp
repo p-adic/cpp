@@ -14,9 +14,11 @@ INT CostfreeKnapsackFewValues( const int& N , const vector<INT>& value , const I
 
   while( ++i < N && answer <= value_sum_bound ){
 
-    auto& value_i = value[i];
-    assert( 0 <= value_i && value_i <= value_bound );
-    answer += value[i];
+    if( value[i] <= value_sum_bound ){
+
+      answer += value[i];
+
+    }
 
   }
 
@@ -51,14 +53,18 @@ INT CostfreeKnapsackFewValues( const int& N , const vector<INT>& value , const I
   
   while( ++i < N ){
 
-    auto& value_i = value[i];
-    assert( 0 <= value_i && value_i <= value_bound );
+    if( value[i] > value_sum_bound ){
+
+      continue;
+
+    }
+
     auto u_prev = u;
     
     // 項目iの追加ステップ。
     for( INT v = 0 ; v < value_bound ; v++ ){
 
-      auto& u_v_i = u[v + value_i];
+      auto& u_v_i = u[v + value[i]];
       // 項目iを追加した場合の更新番号の最大値と元の更新番号の最大値で比較。
       u_v_i = max( u_v_i , u_prev[v] );
 
@@ -80,6 +86,12 @@ INT CostfreeKnapsackFewValues( const int& N , const vector<INT>& value , const I
       // u_prev[v - value[j]]がj以上となっている。従ってjはu[v]以上の範囲だけ探索すれば良い。
       for( INT j = u_prev[v] ; j < j_ulim ; j++ ){
 
+        if( value[j] > value_sum_bound ){
+
+          continue;
+
+        }
+        
 	auto& u_v_j = u[v - value[j]];
 	u_v_j = max( u_v_j , j );
 
@@ -106,12 +118,11 @@ INT CostfreeKnapsackFewValues( const int& N , const vector<INT>& value , const I
 }
 
 template <typename U , typename COMM_MONOID>
-U AbstractCostfreeKnapsackFewItems( COMM_MONOID M , const vector<U>& value , const U& value_bound , const U& value_sum_bound )
+U AbstractCostfreeKnapsackFewItems( COMM_MONOID M , const vector<U>& value , const U& value_sum_bound )
 {
 
   const int N = value.size();
   const U& one = M.One();
-  assert( !( value_sum_bound < one ) );
   U answer = one;
 
   if( N == 1 ){
@@ -176,5 +187,5 @@ U AbstractCostfreeKnapsackFewItems( COMM_MONOID M , const vector<U>& value , con
   
 }
 
-template <typename INT> inline INT CostfreeKnapsack( const vector<INT>& value , const INT& value_bound , const INT& value_sum_bound ) { assert( 1 <= value_bound && value_bound <= value_sum_bound ); const int N = value.size(); return value_bound >> ( N >> 1 ) == 0 ? CostfreeKnapsackFewValues( N , value , value_bound , value_sum_bound ) : AbstractCostfreeKnapsackFewItems( AdditiveMonoid<INT>() , value , value_bound , value_sum_bound ); }
+template <typename INT> inline INT CostfreeKnapsack( const vector<INT>& value , const INT& value_sum_bound ) { INT value_bound = 0; for( auto& v : value ){ assert( 0 <= v ); if( v <= value_sum_bound ){ value_bound = max( value_bound , v ); } } const int N = value.size(); return N >= 30 || value_bound >> ( N >> 1 ) == 0 ? CostfreeKnapsackFewValues( N , value , value_bound , value_sum_bound ) : AbstractCostfreeKnapsackFewItems( AdditiveMonoid<INT>() , value , value_sum_bound ); }
 
