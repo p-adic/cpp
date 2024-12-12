@@ -23,7 +23,7 @@
 // 計算量O(N min(value_sum_bound,cost_sum_bound,2^{N/2}))で
 // コストの総和cost_sum_bound以下における価値の総和の最大値とそれを実現するコストの最小値を求める。
 template <typename U , typename COMM_MONOID , typename INT> inline pair<U,INT> AbstractValueKnapsack( COMM_MONOID M , const vector<U>& value , const U& value_sum_bound , const U& exceptional , const vector<INT>& cost , const INT& cost_sum_bound );
-// 計算量O(N min(,cost_sum_bound,2^{N/2}))で
+// 計算量O(N min(cost_sum_bound,2^{N/2}))で
 // コストの総和cost_sum_bound以下における価値の総和の最大値とそれを実現するコストの最小値を求める。
 template <typename INT1 , typename INT2> inline pair<INT1,INT2> Knapsack( const vector<INT1>& value , const vector<INT2>& cost , const INT2& cost_sum_bound );
 
