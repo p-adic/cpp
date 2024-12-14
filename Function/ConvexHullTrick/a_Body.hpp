@@ -3,7 +3,7 @@
 #pragma once
 #include "a.hpp"
 
-#include "../../../Utility/Reverse/a_Body.hpp"
+#include "../Utility/Reverse/a_Body.hpp"
 
 template <typename U , typename V , typename X , typename FUNC> inline VirtualMaxCrossingHierarchy<U,V,X,FUNC>::VirtualMaxCrossingHierarchy( FUNC func , const X& x_min , const X& x_max , const U& dummy1 , const V& dummy2 ) : m_func( move( func ) ) , m_x_min( x_min ) , m_x_max( x_max ) , m_uvx() , m_xu() { assert( m_x_min <= m_x_max ); }
 template <typename U , typename V , typename X , typename FUNC> inline VirtualMinCrossingHierarchy<U,V,X,FUNC>::VirtualMinCrossingHierarchy( FUNC func , const X& x_min , const X& x_max , const U& dummy1 , const V& dummy2 ) : VirtualMaxCrossingHierarchy<Reversed<U>,Reversed<V>,X,ReversedCrossingHierarchy<U,V,X,FUNC>>( move( func ) , x_min , x_max , dummy1 , dummy2 ) {}
