@@ -16,7 +16,7 @@ template <typename INT> INT FloorSum( const INT& y , const INT& d , const INT& q
 // n >= 0かつexponent >= 0の時
 // sum( int i = 1 ; i <= n ; i++ ){ ( n / i ) ^ exponent }
 // をO(√n)で求める。
-template <typename INT> inline INT FloorRiemanZeta( const INT& n , const INT& exponent );
+template <typename INT> inline INT FloorRiemannZeta( const INT& n , const INT& exponent );
 
 // sum( int i = 1 ; i <= n ; i++ ){ ( n / i ) }
 // をO(√|n|)で求める。特にn>=0の時、xy平面内の第1象限（軸含まず）でxy<=nを満たす格子点(x,y)の

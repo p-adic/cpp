@@ -42,7 +42,7 @@ INT FloorSum( const INT& y , const INT& d , const INT& q , const INT& n )
 }
 
 template <typename INT>
-INT FloorRiemanZeta( const INT& n , const INT& exponent )
+INT FloorRiemannZeta( const INT& n , const INT& exponent )
 {
 
   INT i_max = RoundDownSqrt( n );
