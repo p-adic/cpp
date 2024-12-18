@@ -4,29 +4,29 @@
 #include "../a_Macro.hpp"
 
 // verify:
-// https://yukicoder.me/submissions/961779ï¼ˆä¸€ç‚¹ä»£å…¥ã€åŒºé–“ç©ï¼‰
+// https://yukicoder.me/submissions/961779iˆê“_‘ã“üA‹æŠÔÏj
 
-// å…¥åŠ›ã®ç¯„å›²å†…ã§è¦ä»¶
-// (1) MãŒUã®ãƒ¢ãƒã‚¤ãƒ‰æ§‹é€ ã§ã‚ã‚‹ã€‚
-// ã‚’æº€ãŸã™å ´åˆã«ã®ã¿ã‚µãƒãƒ¼ãƒˆã€‚
+// “ü—Í‚Ì”ÍˆÍ“à‚Å—vŒ
+// (1) M‚ªU‚Ìƒ‚ƒmƒCƒh\‘¢‚Å‚ ‚éB
+// ‚ğ–‚½‚·ê‡‚É‚Ì‚İƒTƒ|[ƒgB
 
-// é…åˆ—ã«ã‚ˆã‚‹åˆæœŸåŒ–O(size)
+// ”z—ñ‚É‚æ‚é‰Šú‰»O(size)
 
-// ä¸€ç‚¹å–å¾—O(1)
-// LSBåˆ‡ç‰‡ç©å–å¾—O(1)ï¼ˆleft:a[j-(j&-j)]*...*a[j-1]ã€right:a[j-1]*...*a[j+(j&-j)-1]ï¼‰
-// åŒºé–“ç©å–å¾—O(log_2 size)ï¼ˆa[i_start]*...*a[i_final]ï¼‰
+// ˆê“_æ“¾O(1)
+// LSBØ•ĞÏæ“¾O(1)ileft:a[j-(j&-j)]*...*a[j-1]Aright:a[j-1]*...*a[j+(j&-j)-1]j
+// ‹æŠÔÏæ“¾O(log_2 size)ia[i_start]*...*a[i_final]j
 
-// ä¸€ç‚¹ä»£å…¥O((log_2 size)^2)
+// ˆê“_‘ã“üO((log_2 size)^2)
 
-// ä»¥ä¸‹ã¯å…¥åŠ›ã®ç¯„å›²å†…ã§è¦ä»¶
-// (2) operator<(const U&,const U&)ã«é–¢ã—ã¦MãŒUã®å…¨é †åºãƒ¢ãƒã‚¤ãƒ‰æ§‹é€ ã§ã‚ã‚‹ã€‚
-// (3) å„æˆåˆ†ãŒM.One()ã‚ˆã‚Šå°ã•ããªã„ã€‚
-// ã‚’æº€ãŸã™å ´åˆã«ã®ã¿ã‚µãƒãƒ¼ãƒˆã€‚
-// å§‹åˆ‡ç‰‡ç©ãŒuä»¥ä¸Šã¨ãªã‚‹è¦ç´ ã®æ·»å­—ã®æœ€å°å€¤ã®äºŒåˆ†æ¢ç´¢O(log_2 size)
+// ˆÈ‰º‚Í“ü—Í‚Ì”ÍˆÍ“à‚Å—vŒ
+// (2) operator<(const U&,const U&)‚ÉŠÖ‚µ‚ÄM‚ªU‚Ì‘S‡˜ƒ‚ƒmƒCƒh\‘¢‚Å‚ ‚éB
+// (3) Še¬•ª‚ªM.One()‚æ‚è¬‚³‚­‚È‚¢B
+// ‚ğ–‚½‚·ê‡‚É‚Ì‚İƒTƒ|[ƒgB
+// nØ•ĞÏ‚ªuˆÈã‚Æ‚È‚é—v‘f‚Ì“Yš‚ÌÅ¬’l‚Ì“ñ•ª’TõO(log_2 size)
 
-// ãã®ã†ã¡ã®åŒºé–“ç©å–å¾—ã¨ä¸€ç‚¹ä»£å…¥ã¯
+// ‚»‚Ì‚¤‚¿‚Ì‹æŠÔÏæ“¾‚Æˆê“_‘ã“ü‚Í
 // M. Dima, R. Ceterchi, Efficient Range Minimum Queries using Binary Indexed Trees, Olympiads in Informatics, 2015, Vol. 9, 39--44
-// ã®æ‰‹æ³•ã‚’ä¸€èˆ¬ã®ãƒ¢ãƒã‚¤ãƒ‰ã«æ‹¡å¼µã™ã‚‹ã“ã¨ã§å®Ÿè£…
+// ‚Ìè–@‚ğˆê”Ê‚Ìƒ‚ƒmƒCƒh‚ÉŠg’£‚·‚é‚±‚Æ‚ÅÀ‘•
 template <typename U , typename MONOID>
 class MonoidBIT
 {
@@ -51,13 +51,15 @@ public:
   inline const U& LSBSegmentProduct( const int& j , const bool& left = true ) const;
   U IntervalProduct( const int& i_start , const int& i_final );
 
-  // Fã¯ç©é †åºã«é–¢ã—ã¦å˜èª¿ãªå†™åƒf:U \times int -> {0,1}ã«ç›¸å½“ã™ã‚‹å‹ã€‚
-  // f( IntervalProduct( 0 , i ) , i )ãŒtrueã¨ãªã‚‹iãŒå­˜åœ¨ã™ã‚‹å ´åˆã«ãã®æœ€å°å€¤ã‚’
-  // 2é€²æ³•ã§æ¢ç´¢ã€‚å­˜åœ¨ã—ãªã„å ´åˆã¯Nã‚’è¿”ã™ã€‚
+  // F‚ÍÏ‡˜‚ÉŠÖ‚µ‚Ä’P’²‚ÈÊ‘œf:U \times int -> {0,1}‚É‘Š“–‚·‚éŒ^B
+  // f( IntervalProduct( 0 , i ) , i )‚ªtrue‚Æ‚È‚éi‚ª‘¶İ‚·‚éê‡‚É‚»‚ÌÅ¬’l‚ğ
+  // 2i–@‚Å’TõB‘¶İ‚µ‚È‚¢ê‡‚ÍN‚ğ•Ô‚·B
   template <typename F , SFINAE_FOR_BIT_BS = nullptr> int Search( const F& f );
-  // IntervalProduct( 0 , i )ãŒuä»¥ä¸Šã¨ãªã‚‹iãŒå­˜åœ¨ã™ã‚‹å ´åˆã«ãã®æœ€å°å€¤ã‚’2é€²æ³•ã§æ¢ç´¢ã€‚
-  // å­˜åœ¨ã—ãªã„å ´åˆã¯Nã‚’è¿”ã™ã€‚
+  // IntervalProduct( 0 , i )‚ªuˆÈã‚Æ‚È‚éi‚ª‘¶İ‚·‚éê‡‚É‚»‚ÌÅ¬’l‚ğ2i–@‚Å’TõB
+  // ‘¶İ‚µ‚È‚¢ê‡‚ÍN‚ğ•Ô‚·B
   inline int Search( const U& u );
   
 };
 template <typename MONOID , typename...Args> MonoidBIT( MONOID M , Args&&... args ) -> MonoidBIT<inner_t<MONOID>,MONOID>;
+
+template <class Traits , typename U , typename MONOID> inline basic_ostream<char,Traits>& operator<<( basic_ostream<char,Traits>& os , const MonoidBIT<U,MONOID>& bit ) { auto&& size = bit.size(); for( int i = 0 ; i < size ; i++ ){ ( i == 0 ? os : os << " " ) << bit[i]; } return os; }

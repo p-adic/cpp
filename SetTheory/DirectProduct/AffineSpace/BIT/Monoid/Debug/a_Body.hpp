@@ -1,10 +1,12 @@
-// c:/Users/user/Documents/Programming/Mathematics/SetTheory/DirectProduct/AffineSpace/BIT/Abstract/Monoid/a_Body.hpp
+// c:/Users/user/Documents/Programming/Mathematics/SetTheory/DirectProduct/AffineSpace/BIT/Monoid/Debug/a_Body.hpp
 
 #pragma once
 #include "a.hpp"
 
-template <typename U , typename MONOID> inline MonoidBIT<U,MONOID>::MonoidBIT( MONOID M , const int& size ) : MonoidBIT( M , vector<U>( size , M.One() ) ) {}
-template <typename U , typename MONOID> inline MonoidBIT<U,MONOID>::MonoidBIT( MONOID M , vector<U> a ) : m_M( move( M ) ) , m_size( a.size() ) , m_a( move( a ) ) , m_fenwick_0( m_size + 1 , m_M.One() ) , m_fenwick_1( m_fenwick_0 ) , m_power( 1 )
+#include "../../../../../../../Error/Debug/a_Body.hpp"
+
+template <typename U , typename MONOID> inline MonoidBIT<U,MONOID>::MonoidBIT( MONOID M , const int& size , const bool& output_mode ) : MonoidBIT( M , vector<U>( size , M.One() ) , output_mode ) {}
+template <typename U , typename MONOID> inline MonoidBIT<U,MONOID>::MonoidBIT( MONOID M , vector<U> a , const bool& output_mode ) : Debug( output_mode ) , m_M( move( M ) ) , m_size( a.size() ) , m_a( move( a ) ) , m_fenwick_0( m_size + 1 , m_M.One() ) , m_fenwick_1( m_fenwick_0 ) , m_power( 1 )
 {
 
   static_assert( is_same_v<U,inner_t<MONOID>> );
@@ -49,6 +51,31 @@ template <typename U , typename MONOID> inline MonoidBIT<U,MONOID>::MonoidBIT( M
 
   }
 
+  static bool init = true;
+
+  if( init ){
+
+    if( m_output_mode ){
+      
+      DERR( "MonoidBITをデバッグモードで実行します。" );
+      DERR( "通常のMonoidBITと比べると各種操作にO(N)かかることに" );
+      DERR( "ご注意ください。" );
+      DERR( "" );
+
+    }
+
+    init = false;
+
+  }
+
+  if( m_output_mode ){
+      
+    DERR( "MonoidBITの初期値：" );
+    DERR( *this );
+    DERR( "" );
+
+  }
+  
 }
 
 template <typename U , typename MONOID> template <typename...Args> inline void MonoidBIT<U,MONOID>::Initialise( Args&&... args ) { MonoidBIT<U,MONOID> temp{ move( m_M ) , forward<decay_t<Args>>( args )... }; m_size = temp.m_size; m_a = move( temp.m_a ); m_fenwick_0 = move( temp.m_fenwick_0 ); m_fenwick_1 = move( temp.m_fenwick_1 ); m_power = temp.m_power; }
@@ -56,6 +83,12 @@ template <typename U , typename MONOID> template <typename...Args> inline void M
 template <typename U , typename MONOID>
 void MonoidBIT<U,MONOID>::Set( const int& i , const U& u )
 {
+
+  if( m_output_mode ){
+      
+    DERR( "MonoidBITの第" , i , "成分に" , u , "を代入します。" );
+
+  }
 
   U& ai = m_a[i] = u;
   int j = i + 1;
@@ -104,6 +137,14 @@ void MonoidBIT<U,MONOID>::Set( const int& i , const U& u )
     }
 
   }
+    
+  if( m_output_mode ){
+      
+    DERR( "MonoidBITの更新後の成分：" );
+    DERR( *this );
+    DERR( "" );
+
+  }
 
   return;
 
@@ -122,6 +163,12 @@ U MonoidBIT<U,MONOID>::IntervalProduct( const int& i_start , const int& i_final 
   const int j_max = min( i_final + 1 , m_size );
 
   if( j_min > j_max ){
+
+    if( m_output_mode ){
+      
+      DERR( "MonoidBITの区間[" , i_start , "," , i_final , "] は空であり、その総和は" , m_M.One() , "です。" );
+
+    }
 
     return m_M.One();
     
@@ -152,7 +199,15 @@ U MonoidBIT<U,MONOID>::IntervalProduct( const int& i_start , const int& i_final 
 
   }
 
-  return m_M.Product( move( answer1 ) , answer0 );
+  answer1 = m_M.Product( move( answer1 ) , answer0 );
+
+  if( m_output_mode ){
+      
+    DERR( "MonoidBITの区間[" , i_start , "," , i_final , "] における総和：" , answer1 );
+
+  }
+
+  return answer1;
 
 }
 
@@ -198,4 +253,29 @@ template <typename U , typename MONOID> template <typename F , SFINAE_FOR_BIT_BS
 
 template <typename U , typename MONOID> inline int MonoidBIT<U,MONOID>::Search( const U& u ) { return Search( [&]( const U& prod , const int& ){ return !( prod < u ); } ); }
 
-template <class Traits , typename U , typename MONOID> inline basic_ostream<char,Traits>& operator<<( basic_ostream<char,Traits>& os , const MonoidBIT<U,MONOID>& bit ) { auto&& size = bit.size(); for( int i = 0 ; i < size ; i++ ){ ( i == 0 ? os : os << " " ) << bit[i]; } return os; }
+template <class Traits , typename U , typename MONOID> inline basic_ostream<char,Traits>& operator<<( basic_ostream<char,Traits>& os , const MonoidBIT<U,MONOID>& bit )
+{
+
+  auto&& size = bit.size();
+
+  if( exec_mode == solve_mode ){
+
+    os << "[";
+
+  }
+
+  for( int i = 0 ; i < size ; i++ ){
+
+    ( i == 0 ? os : os << "," ) << bit[i];
+
+  }
+
+  if( exec_mode == solve_mode ){
+
+    os << "]";
+
+  }
+
+  return os;
+
+}

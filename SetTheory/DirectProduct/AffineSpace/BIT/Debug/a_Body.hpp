@@ -81,7 +81,7 @@ void AbstractBIT<U,ABELIAN_GROUP>::Add( const int& i , const U& u )
   
   if( m_output_mode ){
       
-    DERRNS( "BIT‚Ì‘æ" , i , "¬•ª‚É" , u , "‚ğ‰ÁZ‚µ‚Ü‚·B" );
+    DERR( "BIT‚Ì‘æ" , i , "¬•ª‚É" , u , "‚ğ‰ÁZ‚µ‚Ü‚·B" );
 
   }
 
@@ -144,8 +144,7 @@ template <typename U , typename ABELIAN_GROUP> inline U AbstractBIT<U,ABELIAN_GR
 
   if( m_output_mode ){
       
-    DERRNS( "BIT‚Ì‹æŠÔ[" , i_start , "," , i_final , "] ‚É‚¨‚¯‚é‘˜aF " , answer );
-    DERR( "" );
+    DERR( "BIT‚Ì‹æŠÔ[" , i_start , "," , i_final , "] ‚É‚¨‚¯‚é‘˜aF" , answer );
 
   }
 
@@ -216,7 +215,7 @@ template <class Traits , typename U , typename ABELIAN_GROUP> inline basic_ostre
 
   for( int i = 0 ; i < size ; i++ ){
 
-    ( i == 0 ? os : os << " " ) << bit[i];
+    ( i == 0 ? os : os << "," ) << bit[i];
 
   }
 

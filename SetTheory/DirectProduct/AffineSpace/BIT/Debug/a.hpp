@@ -10,7 +10,7 @@
 
 // デバッグ用にBITに通常の配列を折衷し出力機能を追加したもの。
 // HybridBITと比べると一点取得の戻り値の型が異なり、
-// 通常のBITと比べるとと一点取得にconst修飾がつき各種操作にO(N)かかることに注意。
+// 通常のBITと比べると一点取得にconst修飾がつき各種操作にO(N)かかることに注意。
 
 template <typename U , typename ABELIAN_GROUP>
 class AbstractBIT :

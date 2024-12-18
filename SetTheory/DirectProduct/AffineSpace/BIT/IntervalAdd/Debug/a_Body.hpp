@@ -43,7 +43,7 @@ template <typename U , typename Z_MODULE> inline void AbstractIntervalAddBIT<U,Z
 
   if( m_output_mode ){
     
-    DERRNS( "IntervalAddBIT‚Ì‹æŠÔ[" , i_start , "," , i_final , "]‚É" , u , "‚ð‰ÁŽZ‚µ‚Ü‚·B" );
+    DERR( "IntervalAddBIT‚Ì‹æŠÔ[" , i_start , "," , i_final , "]‚É" , u , "‚ð‰ÁŽZ‚µ‚Ü‚·B" );
 
   }
 
@@ -84,8 +84,7 @@ template <typename U , typename Z_MODULE> inline U AbstractIntervalAddBIT<U,Z_MO
 
   if( m_output_mode ){
     
-    DERR( "IntervalAddBIT‚Ì‹æŠÔ[" , i_start , "," , i_final , "] ‚É‚¨‚¯‚é‘˜aF " , answer );
-    DERR( "" );
+    DERR( "IntervalAddBIT‚Ì‹æŠÔ[" , i_start , "," , i_final , "] ‚É‚¨‚¯‚é‘˜aF" , answer );
 
   }
   
@@ -130,7 +129,7 @@ template <class Traits , typename U , typename Z_MODULE> inline basic_ostream<ch
 
   for( int i = 0 ; i < size ; i++ ){
 
-    ( i == 0 ? os : os << " " ) << bit[i];
+    ( i == 0 ? os : os << "," ) << bit[i];
 
   }
 
